@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('ag_present_shareholders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('general_meeting_id');
+            $table->string('shareholder_firstname');
+            $table->string('shareholder_lastname');
             $table->unsignedBigInteger('shareholder_id');
             $table->timestamps();
         });

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Gourvernance\BoardDirectors\Administrators;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -8,4 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class CaProcedure extends Model
 {
     use HasFactory;
+
+    /**
+ * Class CaProcedure
+ *
+ * @property int $id Primary
+ * @property date $send_date Primary
+ *
+ * @package App\Models
+ */
+
+ protected $fillable = [
+    'send_date',
+    'document_name',
+    'ca_administrator_id',
+    'type_document_id',
+];
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\V1\Meeting;
+namespace App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

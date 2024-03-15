@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\API\V1\Administrator;
+namespace App\Http\Controllers\API\V1\Governance\BordDirectors\Administrators;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class AdministratorController extends Controller
+class ProcedureController extends Controller
 {
     /**
      * Display a listing of the resource.
