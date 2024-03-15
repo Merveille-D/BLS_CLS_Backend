@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ag_present_shareholders', function (Blueprint $table) {
+        Schema::create('session_present_administrators', function (Blueprint $table) {
             $table->id();
-            $table->string('shareholder_firstname');
-            $table->string('shareholder_lastname');
-            $table->unsignedBigInteger('general_meeting_id');
+            $table->foreignId('session_administrator_id');
+            $table->string('administrator_lastname');
+            $table->string('administrator_firstname');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ag_present_shareholders');
+        Schema::dropIfExists('session_present_administrators');
     }
 };

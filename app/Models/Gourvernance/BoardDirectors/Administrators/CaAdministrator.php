@@ -17,21 +17,23 @@ class CaAdministrator extends Model
  * @package App\Models
  */
 
- protected $fillable = [
-    'firstname',
-    'lastname',
-    'birthday',
-    'birthplace',
-    'age',
-    'nationality',
-    'address',
-    'denomination',
-    'siege',
-    'grade',
-    'representant',
-    'quality',
-    'is_uemoa',
-    'avis_cb',
-];
+    protected $fillable = [
+        'firstname',
+        'lastname',
+        'birthday',
+        'birthplace',
+        'age',
+        'nationality',
+        'address',
+        'denomination',
+        'siege',
+        'grade',
+        'representant',
+        'quality',
+        'is_uemoa',
+        'avis_cb',
+    ];
+
+
 
 }

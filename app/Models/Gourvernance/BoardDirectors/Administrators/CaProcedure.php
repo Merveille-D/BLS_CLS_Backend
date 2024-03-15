@@ -10,18 +10,28 @@ class CaProcedure extends Model
     use HasFactory;
 
     /**
- * Class CaProcedure
- *
- * @property int $id Primary
- * @property date $send_date Primary
- *
- * @package App\Models
- */
+     * Class CaProcedure
+     *
+     * @property int $id Primary
+     * @property date $send_date Primary
+     *
+     * @package App\Models
+     */
 
- protected $fillable = [
-    'send_date',
-    'document_name',
-    'ca_administrator_id',
-    'type_document_id',
-];
+    protected $fillable = [
+        'send_date',
+        'document_name',
+        'ca_administrator_id',
+        'ca_type_document_id',
+    ];
+
+    public function caAdministrator()
+    {
+        return $this->belongsTo(CaAdministrator::class);
+    }
+
+    public function caTypeDocument()
+    {
+        return $this->belongsTo(CaTypeDocument::class);
+    }
 }

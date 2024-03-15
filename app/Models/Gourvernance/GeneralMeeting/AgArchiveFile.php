@@ -20,4 +20,9 @@ class AgArchiveFile extends Model
         'file',
         'general_meeting_id',
     );
+
+    public function generalMeeting()
+    {
+        return $this->belongsTo(GeneralMeeting::class);
+    }
 }

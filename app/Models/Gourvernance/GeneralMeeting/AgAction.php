@@ -17,4 +17,15 @@ class AgAction extends Model
         'general_meeting_id',
         'ag_type_id',
     ];
+
+    public function generalMeeting()
+    {
+        return $this->belongsTo(GeneralMeeting::class);
+    }
+
+    public function agType()
+    {
+        return $this->belongsTo(AgType::class);
+    }
+
 }

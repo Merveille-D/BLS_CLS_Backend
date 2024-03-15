@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('file');
+            $table->foreignId('conventionnal_hypothec_id');
+            $table->foreignId('hypothec_step_id');
             $table->timestamps();
         });
     }

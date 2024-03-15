@@ -18,6 +18,11 @@ class AgPresentShareholder extends Model
     protected $fillable = array(
         'shareholder_firstname',
         'shareholder_lastname',
-        'shareholder_id',
+        'general_meeting_id',
     );
+
+    public function generalMeeting()
+    {
+        return $this->belongsTo(GeneralMeeting::class);
+    }
 }

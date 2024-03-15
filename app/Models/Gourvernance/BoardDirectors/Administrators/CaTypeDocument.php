@@ -9,15 +9,15 @@ class CaTypeDocument extends Model
 {
     use HasFactory;
 
-/**
- * Class CaTypeDocument
- *
- * @property int $id Primary
- *
- * @package App\Models
- */
+    /**
+     * Class CaTypeDocument
+     *
+     * @property int $id Primary
+     *
+     * @package App\Models
+     */
 
- protected $fillable = [
-    'name',
-];
+    protected $fillable = [
+        'name',
+    ];
 }

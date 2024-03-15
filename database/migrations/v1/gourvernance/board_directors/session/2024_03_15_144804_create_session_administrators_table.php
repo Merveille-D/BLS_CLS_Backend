@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ca_prodedures', function (Blueprint $table) {
+        Schema::create('session_administrators', function (Blueprint $table) {
             $table->id();
-            $table->datetime('send_date');
-            $table->string('document_name');
-            $table->foreignId('ca_administrator_id');
-            $table->foreignId('type_document_id');
+            $table->string('reference');
+            $table->datetime('session_date');
+            $table->string('type');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ca_prodedures');
+        Schema::dropIfExists('session_administrators');
     }
 };

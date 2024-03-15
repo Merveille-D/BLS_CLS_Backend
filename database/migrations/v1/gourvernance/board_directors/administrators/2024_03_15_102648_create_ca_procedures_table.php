@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ag_present_shareholders', function (Blueprint $table) {
+        Schema::create('ca_procedures', function (Blueprint $table) {
             $table->id();
-            $table->string('shareholder_firstname');
-            $table->string('shareholder_lastname');
-            $table->unsignedBigInteger('general_meeting_id');
+            $table->datetime('send_date');
+            $table->string('document_name');
+            $table->foreignId('ca_administrator_id');
+            $table->foreignId('ca_type_document_id');
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ag_present_shareholders');
+        Schema::dropIfExists('ca_procedures');
     }
 };
