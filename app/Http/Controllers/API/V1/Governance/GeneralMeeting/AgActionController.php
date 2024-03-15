@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\API\V1\Administrator;
+namespace App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ProcedureController extends Controller
+class AgActionController extends Controller
 {
     /**
      * Display a listing of the resource.
