@@ -15,7 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('shareholder_firstname');
             $table->string('shareholder_lastname');
-            $table->unsignedBigInteger('general_meeting_id');
+
+            $table->unsignedBigInteger('general_meeting_id')->nullable();
+            $table->foreign('general_meeting_id')->references('id')->on('general_meetings')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

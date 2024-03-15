@@ -16,7 +16,10 @@ return new class extends Migration
             $table->string('type');
             $table->string('name');
             $table->string('file');
-            $table->foreignId('ag_action_id');
+
+            $table->unsignedBigInteger('ag_action_id')->nullable();
+            $table->foreign('ag_action_id')->references('id')->on('ag_actions')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

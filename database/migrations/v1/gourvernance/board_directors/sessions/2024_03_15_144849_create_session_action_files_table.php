@@ -16,7 +16,10 @@ return new class extends Migration
             $table->string('type');
             $table->string('name');
             $table->string('file');
-            $table->foreignId('session_action_id');
+
+            $table->unsignedBigInteger('session_action_id')->nullable();
+            $table->foreign('session_action_id')->references('id')->on('session_actions')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

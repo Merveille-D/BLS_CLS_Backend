@@ -15,8 +15,14 @@ return new class extends Migration
             $table->id();
             $table->datetime('send_date');
             $table->string('document_name');
-            $table->foreignId('ca_administrator_id');
-            $table->foreignId('ca_type_document_id');
+
+
+            $table->unsignedBigInteger('ca_administrator_id')->nullable();
+            $table->foreign('ca_administrator_id')->references('id')->on('ca_administrators')->onDelete('cascade');
+
+            $table->unsignedBigInteger('ca_type_document_id')->nullable();
+            $table->foreign('ca_type_document_id')->references('id')->on('ca_type_documents')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

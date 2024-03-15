@@ -17,8 +17,12 @@ return new class extends Migration
             $table->string('status');
             $table->boolean('is_file')->default(false);
             $table->datetime('closing_date')->nullable();
-            $table->foreignId('session_administrator_id')->nullable();
-            $table->foreignId('session_type_id')->nullable();
+
+            $table->unsignedBigInteger('session_administrator_id')->nullable();
+            $table->foreign('session_administrator_id')->references('id')->on('session_administrators')->onDelete('cascade');
+
+            $table->unsignedBigInteger('session_type_id')->nullable();
+            $table->foreign('session_type_id')->references('id')->on('session_types')->onDelete('cascade');
             $table->timestamps();
         });
     }

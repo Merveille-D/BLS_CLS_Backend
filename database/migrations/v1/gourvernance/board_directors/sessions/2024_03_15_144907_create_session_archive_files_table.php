@@ -15,7 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('file');
-            $table->foreignId('session_administrator_id');
+
+            $table->unsignedBigInteger('session_administrator_id')->nullable();
+            $table->foreign('session_administrator_id')->references('id')->on('session_administrators')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
