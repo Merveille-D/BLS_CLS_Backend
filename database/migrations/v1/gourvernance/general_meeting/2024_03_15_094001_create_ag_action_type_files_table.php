@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ag_action_files', function (Blueprint $table) {
+        Schema::create('ag_action_type_files', function (Blueprint $table) {
             $table->id();
-            $table->string('file');
-
+            $table->string('name');
+            
             $table->unsignedBigInteger('ag_action_id')->nullable();
             $table->foreign('ag_action_id')->references('id')->on('ag_actions')->onDelete('cascade');
-
-            $table->unsignedBigInteger('ag_action_type_file_id')->nullable();
-            $table->foreign('ag_action_type_file_id')->references('id')->on('ag_action_type_files')->onDelete('cascade');
 
 
             $table->timestamps();
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ag_action_files');
+        Schema::dropIfExists('ag_action_type_files');
     }
 };

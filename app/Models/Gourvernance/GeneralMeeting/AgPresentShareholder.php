@@ -16,8 +16,7 @@ class AgPresentShareholder extends Model
      * @property int $general_meeting_id
      */
     protected $fillable = array(
-        'shareholder_firstname',
-        'shareholder_lastname',
+        'shareholder_id',
         'general_meeting_id',
     );
 

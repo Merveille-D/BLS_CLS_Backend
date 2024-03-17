@@ -14,18 +14,16 @@ return new class extends Migration
         Schema::create('ag_actions', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('status');
-            $table->boolean('is_file')->default(false);
+            $table->string('status')->default(false);
+            $table->boolean('is_file')->default(false)->nullable();
             $table->datetime('closing_date')->nullable();
+            $table->enum('step_ag_day', ['checklist', 'procedures'])->nullable();
 
-            $table->unsignedBigInteger('general_meeting_id')->nullable();
+            $table->unsignedBigInteger('general_meeting_id');
             $table->foreign('general_meeting_id')->references('id')->on('general_meetings')->onDelete('cascade');
 
-            $table->unsignedBigInteger('ag_type_id')->nullable();
+            $table->unsignedBigInteger('ag_type_id');
             $table->foreign('ag_type_id')->references('id')->on('ag_types')->onDelete('cascade');
-
-
-
 
             $table->timestamps();
         });

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('reference');
             $table->datetime('meeting_date');
-            $table->string('type');
+            $table->enum('type', \App\Models\Gourvernance\GeneralMeeting\GeneralMeeting::GENERAL_MEETING_TYPES );
             $table->timestamps();
         });
     }

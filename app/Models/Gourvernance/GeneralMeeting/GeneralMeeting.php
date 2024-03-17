@@ -20,4 +20,21 @@ class GeneralMeeting extends Model
         'meeting_date',
         'type',
     );
+
+
+    const GENERAL_MEETING_TYPES = [
+        'ordinary',
+        'extraordinary',
+        'annual',
+    ];
+
+    public function actions()
+    {
+        return $this->hasMany(AgAction::class);
+    }
+
+    public function archives()
+    {
+        return $this->hasMany(AgArchiveFile::class);
+    }
 }

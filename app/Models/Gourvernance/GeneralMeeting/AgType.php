@@ -15,5 +15,6 @@ class AgType extends Model
      */
     protected $fillable = array(
         'name',
+        'code',
     );
 }
