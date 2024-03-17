@@ -37,4 +37,9 @@ class GeneralMeeting extends Model
     {
         return $this->hasMany(AgArchiveFile::class);
     }
+
+    public function shareholders()
+    {
+        return $this->hasMany(AgPresentShareholder::class);
+    }
 }

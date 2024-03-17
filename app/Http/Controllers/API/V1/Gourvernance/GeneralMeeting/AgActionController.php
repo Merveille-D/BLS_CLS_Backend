@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting;
 
 use App\Http\Controllers\Controller;
+use App\Models\FileUpload;
 use App\Models\Gourvernance\GeneralMeeting\AgAction;
 use App\Models\Gourvernance\GeneralMeeting\AgActionFile;
 use App\Models\Gourvernance\GeneralMeeting\AgActionTypeFile;
 use App\Models\Gourvernance\GeneralMeeting\AgType;
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class AgActionController extends Controller
 {
@@ -25,7 +27,7 @@ class AgActionController extends Controller
      */
     public function store(Request $request)
     {
-        // try {
+        try {
             $validate_request = $request->validate([
                 'title' => ['required','string'],
                 'closing_date' => ['required','date'],
@@ -50,11 +52,11 @@ class AgActionController extends Controller
                 }
             }
 
-            $general_meeting = GeneralMeeting::with('actions.actionsTypeFile', 'actions.actionsFile', 'archives')->find($validate_request['general_meeting_id']);
+            $general_meeting = GeneralMeeting::with('actions.actionsTypeFile', 'actions.actionsFile', 'archives', 'shareholders')->find($validate_request['general_meeting_id']);
             return self::apiResponse(true, "Action ajouté avec succès", $general_meeting, 200);
-        // }catch( ValidationException ) {
-        //     return self::apiResponse(false, "Echec de l'enregistrement de l'AG", [], 422);
-        // }
+        }catch( ValidationException $e ) {
+            return self::apiResponse(false, "Echec de l'enregistrement de l'AG", $e->errors(), 422);
+        }
     }
 
     /**
@@ -70,7 +72,11 @@ class AgActionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // try {
+        //
+    }
+
+    public function updateAction(Request $request) {
+        try {
             $validate_request = $request->validate([
                 'ag_action_id' => ['required','numeric'],
                 'status' => ['required'],
@@ -86,7 +92,7 @@ class AgActionController extends Controller
                 if (!is_null($file)) {
                     AgActionFile::updateOrCreate(
                         ['ag_action_type_file_id' => $key],
-                        ['file' => $file, 'ag_action_id' => $agActionId]
+                        ['file' => FileUpload::uploadFile($file['file'],'ag_action_files') , 'ag_action_id' => $agActionId]
                     );
                 }
             }
@@ -110,9 +116,9 @@ class AgActionController extends Controller
                 return self::apiResponse(true, "Liste des fichiers manquants de cette tâche", $missingAgActionTypeFiles, 200);
             }
 
-        // }catch( ValidationException ) {
-        //     return self::apiResponse(false, "Echec de la mise à jour de la tache", [], 422);
-        // }
+        }catch( ValidationException $e ) {
+            return self::apiResponse(false, "Echec de la mise à jour de la tache", $e->errors(), 422);
+        }
     }
 
     /**

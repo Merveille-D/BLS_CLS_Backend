@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('ca_administrators', function (Blueprint $table) {
             $table->id();
+            // Personne Physique
             $table->string('firstname');
             $table->string('lastname');
             $table->date('birthday');
@@ -20,13 +21,17 @@ return new class extends Migration
             $table->integer('age');
             $table->string('nationality');
             $table->string('address');
-            $table->string('denomination');
-            $table->string('siege');
             $table->string('grade');
-            $table->string('representant');
             $table->string('quality');
+
             $table->string('is_uemoa');
-            $table->string('avis_cb');
+
+            // Personne morale
+            $table->string('denomination')->nullable();
+            $table->string('siege')->nullable();
+            $table->string('representant')->nullable();
+
+            $table->string('avis_cb')->nullable();
             $table->timestamps();
         });
     }

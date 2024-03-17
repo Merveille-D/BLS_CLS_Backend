@@ -34,6 +34,9 @@ class CaAdministrator extends Model
         'avis_cb',
     ];
 
-
+    public function procedures()
+    {
+        return $this->hasMany(CaProcedure::class);
+    }
 
 }

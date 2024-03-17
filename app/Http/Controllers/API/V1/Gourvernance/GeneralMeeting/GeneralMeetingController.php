@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting;
 
 use App\Http\Controllers\Controller;
+use App\Models\FileUpload;
 use App\Models\Gourvernance\GeneralMeeting\AgActionTypeFile;
 use App\Models\Gourvernance\GeneralMeeting\AgAction;
 use App\Models\Gourvernance\GeneralMeeting\AgArchiveFile;
@@ -19,7 +20,7 @@ class GeneralMeetingController extends Controller
      */
     public function index()
     {
-        $general_meetings = GeneralMeeting::with('actions.actionsTypeFile', 'actions.actionsFile', 'archives')->get();
+        $general_meetings = GeneralMeeting::with('actions.actionsTypeFile', 'actions.actionsFile', 'archives', 'shareholders')->get();
         return self::apiResponse(true, "Liste des AG", $general_meetings, 200);
     }
 
@@ -34,7 +35,7 @@ class GeneralMeetingController extends Controller
             $validate_request =  $request->validate([
                 'reference' => ['required', 'string'],
                 'meeting_date' => ['required', 'date'],
-                'type' => ['required'],
+                'type' => ['required',  Rule::in(GeneralMeeting::GENERAL_MEETING_TYPES) ],
             ]);
 
             $general_meeting = GeneralMeeting::create($validate_request);
@@ -74,12 +75,12 @@ class GeneralMeetingController extends Controller
                 }
             }
 
-            $general_meeting = $general_meeting->load('actions.actionsTypeFile', 'actions.actionsFile', 'archives');
+            $general_meeting = $general_meeting->load('actions.actionsTypeFile', 'actions.actionsFile', 'archives', 'shareholders');
 
 
             return self::apiResponse(true, "Succès de l'enregistrement de l'AG", $general_meeting, 200);
-        }catch( ValidationException ) {
-            return self::apiResponse(false, "Echec de l'enregistrement de l'AG", [], 422);
+        }catch (ValidationException $e) {
+                return self::apiResponse(false, "Echec de l'enregistrement de l'AG", $e->errors(), 422);
         }
 
     }
@@ -87,18 +88,15 @@ class GeneralMeetingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request)
+    public function show(GeneralMeeting $general_meeting)
     {
         try {
-            $validate_request =  $request->validate([
-                'general_meeting_id' => ['required', 'numeric'],
-            ]);
 
-            $general_meeting = GeneralMeeting::find($validate_request['general_meeting_id'])->load('actions.actionsTypeFile', 'actions.actionsFile', 'archives');
+            $general_meeting = $general_meeting->load('actions.actionsTypeFile', 'actions.actionsFile', 'archives', 'shareholders');
 
             return self::apiResponse(true, "Information de l'AG", $general_meeting, 200);
-        }catch( ValidationException ) {
-            return self::apiResponse(false, "Echec de la récupération des infos de l'AG", [], 422);
+        }catch( ValidationException $e ) {
+            return self::apiResponse(false, "Echec de la récupération des infos de l'AG", $e->errors(), 422);
         }
     }
 
@@ -125,16 +123,16 @@ class GeneralMeetingController extends Controller
                 'shareholders_id' => ['required', 'array'],
             ]);
 
+            $old_present_shareholders = AgPresentShareholder::where('general_meeting_id',$validate_request['general_meeting_id'])->delete();
+
             foreach($validate_request['shareholders_id'] as $item) {
                 AgPresentShareholder::create([
-                    'shareholders_id' => $item,
+                    'shareholder_id' => $item,
                     'general_meeting_id' => $validate_request['general_meeting_id'],
                 ]);
             }
 
-            $shareholdersByGeneralMeeting = AgPresentShareholder::where('general_meeting_id', $validate_request['general_meeting_id'])->get();
-
-            return self::apiResponse(true, "Succès de l'enregistrement des actionnaires", $shareholdersByGeneralMeeting, 200);
+            return self::apiResponse(true, "Succès de l'enregistrement des actionnaires", [], 200);
         }catch( ValidationException ) {
             return self::apiResponse(false, "Echec de l'enregistrement des actionnaires", [], 422);
         }
@@ -149,33 +147,34 @@ class GeneralMeetingController extends Controller
 
             $shareholdersByGeneralMeeting = AgPresentShareholder::where('general_meeting_id', $validate_request['general_meeting_id'])->get();
             return self::apiResponse(true, "Actionnaires présent à l'AG", $shareholdersByGeneralMeeting, 200);
-        }catch( ValidationException ) {
-            return self::apiResponse(false, "Echec de la récupération des actionnaires de l'AG", [], 422);
+        }catch( ValidationException $e ) {
+            return self::apiResponse(false, "Echec de la récupération des actionnaires de l'AG", $e->errors(), 422);
         }
     }
 
     public function saveArchiveFileAg(Request $request) {
-        // try {
+        try {
             $validate_request = $request->validate([
                 'general_meeting_id' => ['required','numeric'],
-                'archive_files' => ['required','array'],
+                'archives' => ['required','array'],
             ]);
 
             $general_meeting_id = $validate_request['general_meeting_id'];
-            $archive_files = $validate_request['archive_files'];
+            $archives = $validate_request['archives'];
 
-            foreach ($archive_files as $archive_file) {
+            foreach ($archives as $archive) {
+
                     AgArchiveFile::create([
-                        'name' => $archive_file->name,
-                        'file' => $archive_file->file,
+                        'name' => $archive['name'],
+                        'file' => FileUpload::uploadFile($archive['file'],'ag_archive_files'),
                         'general_meeting_id' => $general_meeting_id,
                     ]);
             }
 
             return self::apiResponse(true, "Ajout avec succès des archives de l'AG", [], 200);
-        // }catch( ValidationException ) {
-        //     return self::apiResponse(false, "Echec de l'ajout des archives de l'AG", [], 422);
-        // }
+        }catch( ValidationException $e ) {
+            return self::apiResponse(false, "Echec de l'ajout des archives de l'AG", $e->errors(), 422);
+        }
     }
 
     public static function apiResponse($success, $message, $data = [], $status)
