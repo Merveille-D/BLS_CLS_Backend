@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('session_present_administrators', function (Blueprint $table) {
             $table->id();
 
-            $table->string('administrator_lastname');
-            $table->string('administrator_firstname');
+            $table->unsignedBigInteger('ca_administrator_id')->nullable();
+            $table->foreign('ca_administrator_id')->references('id')->on('ca_administrators')->onDelete('cascade');
 
             $table->unsignedBigInteger('session_administrator_id')->nullable();
             $table->foreign('session_administrator_id')->references('id')->on('session_administrators')->onDelete('cascade');

@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('session_action_files', function (Blueprint $table) {
             $table->id();
-            $table->string('type');
-            $table->string('name');
+
             $table->string('file');
 
             $table->unsignedBigInteger('session_action_id')->nullable();
             $table->foreign('session_action_id')->references('id')->on('session_actions')->onDelete('cascade');
+
+            $table->unsignedBigInteger('session_action_type_file_id')->nullable();
+            $table->foreign('session_action_type_file_id')->references('id')->on('session_action_type_files')->onDelete('cascade');
 
             $table->timestamps();
         });

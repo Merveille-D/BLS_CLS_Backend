@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('session_administrators', function (Blueprint $table) {
+        Schema::create('session_action_type_files', function (Blueprint $table) {
             $table->id();
-            $table->string('reference');
-            $table->datetime('session_date');
-            $table->enum('type', \App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator::SESSION_MEETING_TYPES );
+            $table->string('name');
+
+            $table->unsignedBigInteger('session_action_id')->nullable();
+            $table->foreign('session_action_id')->references('id')->on('session_actions')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('session_administrators');
+        Schema::dropIfExists('session_action_type_files');
     }
 };

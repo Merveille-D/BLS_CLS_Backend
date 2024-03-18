@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Gourvernance\BoardDirectors\Sessions;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,5 +11,6 @@ class SessionType extends Model
 
     protected $fillable = [
         'name',
+        'code',
     ];
 }

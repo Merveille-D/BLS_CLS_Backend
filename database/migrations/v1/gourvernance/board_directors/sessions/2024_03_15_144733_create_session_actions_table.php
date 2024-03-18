@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('session_actions', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('status');
+            $table->string('status')->default(false);
             $table->boolean('is_file')->default(false);
             $table->datetime('closing_date')->nullable();
+
+            $table->enum('step_ca_day', ['checklist', 'procedures'])->nullable();
 
             $table->unsignedBigInteger('session_administrator_id')->nullable();
             $table->foreign('session_administrator_id')->references('id')->on('session_administrators')->onDelete('cascade');

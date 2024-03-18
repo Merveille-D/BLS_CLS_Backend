@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('status')->default(false);
             $table->boolean('is_file')->default(false)->nullable();
             $table->datetime('closing_date')->nullable();
+            
             $table->enum('step_ag_day', ['checklist', 'procedures'])->nullable();
 
             $table->unsignedBigInteger('general_meeting_id');

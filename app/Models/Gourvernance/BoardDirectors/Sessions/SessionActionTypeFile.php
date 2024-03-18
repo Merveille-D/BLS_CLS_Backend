@@ -5,17 +5,17 @@ namespace App\Models\Gourvernance\BoardDirectors\Sessions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SessionPresentAdministrator extends Model
+class SessionActionTypeFile extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'session_administrator_id',
-        'ca_administrator_id',
+        'name',
+        'session_action_id',
     ];
 
-    public function sessionAdministrator()
+    public function actions()
     {
-        return $this->belongsTo(SessionAdministrator::class);
+        return $this->belongsTo(SessionAction::class);
     }
 }

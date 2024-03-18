@@ -133,8 +133,8 @@ class GeneralMeetingController extends Controller
             }
 
             return self::apiResponse(true, "Succès de l'enregistrement des actionnaires", [], 200);
-        }catch( ValidationException ) {
-            return self::apiResponse(false, "Echec de l'enregistrement des actionnaires", [], 422);
+        }catch( ValidationException $e ) {
+            return self::apiResponse(false, "Echec de l'enregistrement des actionnaires", $e->errors(), 422);
         }
     }
 
