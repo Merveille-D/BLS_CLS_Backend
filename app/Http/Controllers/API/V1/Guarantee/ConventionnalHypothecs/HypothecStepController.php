@@ -3,16 +3,23 @@
 namespace App\Http\Controllers\API\V1\Guarantee\ConventionnalHypothecs;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\HypothecRepository;
+use Essa\APIToolKit\Api\ApiResponse;
 use Illuminate\Http\Request;
 
 class HypothecStepController extends Controller
 {
+    use ApiResponse;
+
+    public function __construct(private HypothecRepository $hypothecRepo) {
+        
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return $this->responseSuccess(null, $this->hypothecRepo->getSteps());
     }
 
     /**
