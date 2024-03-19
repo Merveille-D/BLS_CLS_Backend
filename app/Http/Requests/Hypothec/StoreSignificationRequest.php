@@ -24,6 +24,7 @@ class StoreSignificationRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'name' => 'required|string',
             'type_actor' => 'required|string',
             'date_signification' => 'required|date',
             'signification_file' => 'required|file'

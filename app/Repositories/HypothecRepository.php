@@ -17,15 +17,17 @@ class HypothecRepository
     }
 
     function initFormalizationProcess($request) {
-        $this->storeFile($request->file);
-        $this->conv_model->actor_type = $request->actor_type;
+        $this->storeFile($request->signification_file);
+        $this->conv_model->name = $request->name;
+        $this->conv_model->type_actor = $request->type_actor;
         $this->conv_model->date_signification = $request->date_signification;
         $this->conv_model->save();
     }
 
     function storeFile($file) {
         if($file) {
-            $path = $file->store('guaranty/conventionnal');
+            $sanitized_file_name = date('Y-m-d_His-').sanitize_file_name($file->getClientOriginalName());
+            $path = $file->storeAs('guaranty/conventionnal_hypothec', $sanitized_file_name);
             return $path;
         }
     }

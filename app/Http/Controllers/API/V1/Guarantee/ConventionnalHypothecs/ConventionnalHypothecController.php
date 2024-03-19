@@ -28,7 +28,7 @@ class ConventionnalHypothecController extends Controller
     public function store(StoreSignificationRequest $request)
     {
         $this->hypothecRepo->initFormalizationProcess($request);
-        return $this->responseSuccess('Formalization initide successfully');
+        return $this->responseSuccess('Formalization initied successfully');
     }
 
     /**

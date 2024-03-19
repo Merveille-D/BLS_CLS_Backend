@@ -4,6 +4,7 @@ namespace App\Models\Guarantee\ConventionnalHypothecs;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ConventionnalHypothec extends Model
 {
@@ -31,4 +32,8 @@ class ConventionnalHypothec extends Model
         'is_publied',
         'sell_price_estate',
     );
+
+    function hypothec_files() : HasMany{
+        return $this->hasMany(HypothecFile::class);
+    }
 }
