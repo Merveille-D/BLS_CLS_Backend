@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('session_archive_files', function (Blueprint $table) {
+        Schema::create('session_step_files', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->string('file');
 
             $table->unsignedBigInteger('session_administrator_id')->nullable();
             $table->foreign('session_administrator_id')->references('id')->on('session_administrators')->onDelete('cascade');
+
+            $table->unsignedBigInteger('session_step_type_file_id')->nullable();
+            $table->foreign('session_step_type_file_id')->references('id')->on('session_step_type_files')->onDelete('cascade');
+
 
             $table->timestamps();
         });
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('session_archive_files');
+        Schema::dropIfExists('session_step_files');
     }
 };

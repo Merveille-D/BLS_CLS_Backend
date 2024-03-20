@@ -5,17 +5,23 @@ namespace App\Models\Gourvernance\BoardDirectors\Sessions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SessionActionTypeFile extends Model
+class SessionStepTypeFile extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'name',
-        'session_action_id',
+        'session_step_id',
     ];
 
-    public function actions()
+    public function step()
     {
-        return $this->belongsTo(SessionAction::class);
+        return $this->belongsTo(SessionStep::class);
     }
+
+    public function files()
+    {
+        return $this->hasMany(SessionStepFile::class);
+    }
+
 }

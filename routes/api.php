@@ -1,10 +1,6 @@
 <?php
 
-use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Administrators\CaAdministratorController;
-use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Administrators\CaProcedureController;
-use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions\SessionActionController;
 use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions\SessionAdministratorController;
-use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\AgActionController;
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\GeneralMeetingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,4 +26,11 @@ Route::resource('general_meetings', GeneralMeetingController::class);
 
 Route::post('save_attachement_meeting', [GeneralMeetingController::class, 'saveAttachmentMeeting']);
 Route::get('get_ag_steps', [GeneralMeetingController::class, 'getAgStep']);
+
+// --- General Meeting --- //
+
+// Route::resource('session_administrators', SessionAdministratorController::class);
+
+// Route::post('save_attachement_meeting', [SessionAdministratorController::class, 'saveAttachmentMeeting']);
+// Route::get('get_session_steps', [SessionAdministratorController::class, 'getSessionStep']);
 

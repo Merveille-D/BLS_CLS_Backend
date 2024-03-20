@@ -9,11 +9,14 @@ class SessionAdministrator extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
+    protected $fillable = array(
+        'libelle',
         'reference',
         'session_date',
-        'type'
-    ];
+        'type',
+        'session_step_id',
+    );
+
 
     const SESSION_MEETING_TYPES = [
         'ordinary',
@@ -21,18 +24,14 @@ class SessionAdministrator extends Model
         'annual',
     ];
 
-    public function actions()
+    public function step()
     {
-        return $this->hasMany(SessionAction::class);
+        return $this->belongsTo(SessionStep::class, 'session_step_id');
     }
 
-    public function archives()
+    public function files()
     {
-        return $this->hasMany(SessionArchiveFile::class);
+        return $this->hasMany(SessionStepFile::class);
     }
 
-    public function administrators()
-    {
-        return $this->hasMany(SessionPresentAdministrator::class);
-    }
 }
