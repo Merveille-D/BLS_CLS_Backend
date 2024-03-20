@@ -13,25 +13,14 @@ class GeneralMeeting extends Model
         'libelle',
         'reference',
         'meeting_date',
-        'type',
-        'ag_step_id',
+        'status',
+        'pv',
     );
 
 
-    const GENERAL_MEETING_TYPES = [
-        'ordinary',
-        'extraordinary',
-        'annual',
+    const GENERAL_MEETING_STATUS = [
+        'pending',
+        'in_progress',
+        'closed',
     ];
-
-    public function step()
-    {
-        return $this->belongsTo(AgStep::class, 'ag_step_id');
-    }
-
-    public function files()
-    {
-        return $this->hasMany(AgStepFile::class);
-    }
-
 }

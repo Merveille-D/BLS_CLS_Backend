@@ -16,10 +16,8 @@ return new class extends Migration
             $table->string('libelle');
             $table->string('reference');
             $table->datetime('session_date');
-            $table->enum('type', \App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator::SESSION_MEETING_TYPES );
-
-            $table->unsignedBigInteger('session_step_id')->default(1);
-            $table->foreign('session_step_id')->references('id')->on('session_steps')->onDelete('cascade');
+            $table->string('pv')->nullable();
+            $table->enum('status', \App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator::SESSION_MEETING_STATUS );
 
             $table->timestamps();
         });

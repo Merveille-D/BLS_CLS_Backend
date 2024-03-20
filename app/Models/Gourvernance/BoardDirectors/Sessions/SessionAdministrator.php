@@ -13,25 +13,14 @@ class SessionAdministrator extends Model
         'libelle',
         'reference',
         'session_date',
-        'type',
-        'session_step_id',
+        'status',
+        'pv',
     );
 
-
-    const SESSION_MEETING_TYPES = [
-        'ordinary',
-        'extraordinary',
-        'annual',
+    const SESSION_MEETING_STATUS = [
+        'pending',
+        'in_progress',
+        'closed',
     ];
-
-    public function step()
-    {
-        return $this->belongsTo(SessionStep::class, 'session_step_id');
-    }
-
-    public function files()
-    {
-        return $this->hasMany(SessionStepFile::class);
-    }
 
 }

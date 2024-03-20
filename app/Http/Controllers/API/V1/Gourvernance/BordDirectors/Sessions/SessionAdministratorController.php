@@ -4,14 +4,7 @@ namespace App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions;
 
 use App\Http\Controllers\Controller;
 use App\Models\FileUpload;
-use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAction;
-use App\Models\Gourvernance\BoardDirectors\Sessions\SessionActionTypeFile;
 use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
-use App\Models\Gourvernance\BoardDirectors\Sessions\SessionArchiveFile;
-use App\Models\Gourvernance\BoardDirectors\Sessions\SessionPresentAdministrator;
-use App\Models\Gourvernance\BoardDirectors\Sessions\SessionStep;
-use App\Models\Gourvernance\BoardDirectors\Sessions\SessionStepFile;
-use App\Models\Gourvernance\BoardDirectors\Sessions\SessionStepTypeFile;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
@@ -23,7 +16,7 @@ class SessionAdministratorController extends Controller
      */
     public function index()
     {
-        $session_administrators = SessionAdministrator::with('step.type_files','files')->get();
+        $session_administrators = SessionAdministrator::all();
         return self::apiResponse(true, "Liste des Sessions", $session_administrators, 200);
     }
 
@@ -39,19 +32,16 @@ class SessionAdministratorController extends Controller
                 'libelle' => ['required', 'string'],
                 'reference' => ['required', 'string'],
                 'session_date' => ['required', 'date'],
-                'type' => ['required',  Rule::in(SessionAdministrator::SESSION_MEETING_TYPES) ],
             ]);
+
+            $validate_request['status'] = 'pending';
 
             $session_administrator = SessionAdministrator::create($validate_request);
 
-
-            $session_administrator = $session_administrator->load('step.type_files','files');
-
             return self::apiResponse(true, "Succès de l'enregistrement du CA", $session_administrator, 200);
-        }catch (ValidationException $e) {
-                return self::apiResponse(false, "Echec de l'enregistrement du CA", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return self::apiResponse(false, "Echec de l'enregistrement du CA", $e->errors(), 422);
         }
-
     }
 
     /**
@@ -61,10 +51,8 @@ class SessionAdministratorController extends Controller
     {
         try {
 
-            $session_administrator = $session_administrator->load('step.type_files','files');
-
             return self::apiResponse(true, "Information du CA", $session_administrator, 200);
-        }catch( ValidationException $e ) {
+        } catch (ValidationException $e) {
             return self::apiResponse(false, "Echec de la récupération des infos du CA", $e->errors(), 422);
         }
     }
@@ -85,59 +73,37 @@ class SessionAdministratorController extends Controller
         //
     }
 
-    public function saveAttachmentMeeting(Request $request) {
+    public function saveAttachmentMeeting(Request $request)
+    {
+
         try {
             $validate_request = $request->validate([
-                'session_administrator_id' => ['required','numeric'],
-                'files' => ['array'],
+                'session_administrator_id' => ['required', 'numeric'],
+                'files' => ['required', 'array'],
+                'files.*' => ['required', 'file'],
+                'status' => [Rule::in(SessionAdministrator::SESSION_MEETING_STATUS)],
             ]);
 
-            $meetingId = $validate_request['session_administrator_id'];
-            $session_administrator = SessionAdministrator::find($meetingId);
+            $session_administrator = SessionAdministrator::findOrFail($validate_request['session_administrator_id']);
 
-
-            $sessionStepId = $session_administrator->session_step_id;
-
-
-            // Mise à jour ou création des fichiers
-            if ($request->has('files') && !empty($validate_request['files'])) {
-                $files = $validate_request['files'];
-                foreach ($files as $key => $file) {
-                    SessionStepFile::updateOrCreate(
-                        ['session_step_type_file_id' => $key],
-                        ['file' => FileUpload::uploadFile($file,'session_step_files') , 'session_administrator_id' => $meetingId]
-                    );
-                }
+            $files = $request->file('files');
+            foreach ($files as $fieldName => $file) {
+                $filePath = FileUpload::uploadFile($file, 'ag_documents');
+                $session_administrator->update([
+                    $fieldName => $filePath,
+                ]);
             }
 
-            // Recherche des fichiers manquants
-            $missingSessionStepTypeFilesIds = SessionStepTypeFile::where('session_step_id', $sessionStepId)
-                ->whereNotIn('id', function ($query) {
-                    $query->select('session_step_type_file_id')
-                        ->from('session_step_files');
-                })
-                ->pluck('id');
-
-
-            if ($missingSessionStepTypeFilesIds->isEmpty()) {
-                // Mise à jour du statut de l'action
-                SessionAdministrator::find($meetingId)->update(['session_step_id' => SessionStep::NEXT_STEP[$sessionStepId]]);
-                return self::apiResponse(true, "Tous les fichiers ont été enregistrés", [], 200);
-            } else {
-                // Récupération des fichiers manquants
-                $missingSessionActionTypeFiles = SessionStepTypeFile::whereIn('id', $missingSessionStepTypeFilesIds)->get();
-                return self::apiResponse(true, "Liste des fichiers manquants de cette tâche", $missingSessionActionTypeFiles, 200);
+            if ($request->has('status')) {
+                $session_administrator->update([
+                    'status' => $validate_request['status'],
+                ]);
             }
 
-        }catch( ValidationException $e ) {
-            return self::apiResponse(false, "Echec de la mise à jour de la tache", $e->errors(), 422);
+            return self::apiResponse(true, "Mis à jour du CA avec suucès", $session_administrator, 200);
+        } catch (ValidationException $e) {
+            return self::apiResponse(false, "Echec de la mise à jour du CA", $e->errors(), 422);
         }
-    }
-
-    public function getSessionStep() {
-
-        $session_steps = SessionStep::with('type_files')->get();
-        return self::apiResponse(true, "Statuts du CA", $session_steps, 200);
     }
 
     public static function apiResponse($success, $message, $data = [], $status)
