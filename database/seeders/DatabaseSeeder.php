@@ -14,8 +14,8 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call([
-            AgStepTableSeeder::class,
-            // SessionStepTableSeeder::class,
+            // AgStepTableSeeder::class,
+            SessionStepTableSeeder::class,
         ]);
     }
 }

@@ -38,7 +38,7 @@ class SessionAdministratorController extends Controller
             $validate_request =  $request->validate([
                 'libelle' => ['required', 'string'],
                 'reference' => ['required', 'string'],
-                'meeting_date' => ['required', 'date'],
+                'session_date' => ['required', 'date'],
                 'type' => ['required',  Rule::in(SessionAdministrator::SESSION_MEETING_TYPES) ],
             ]);
 
@@ -47,9 +47,9 @@ class SessionAdministratorController extends Controller
 
             $session_administrator = $session_administrator->load('step.type_files','files');
 
-            return self::apiResponse(true, "Succès de l'enregistrement de l'AG", $session_administrator, 200);
+            return self::apiResponse(true, "Succès de l'enregistrement du CA", $session_administrator, 200);
         }catch (ValidationException $e) {
-                return self::apiResponse(false, "Echec de l'enregistrement de l'AG", $e->errors(), 422);
+                return self::apiResponse(false, "Echec de l'enregistrement du CA", $e->errors(), 422);
         }
 
     }
@@ -63,9 +63,9 @@ class SessionAdministratorController extends Controller
 
             $session_administrator = $session_administrator->load('step.type_files','files');
 
-            return self::apiResponse(true, "Information de l'AG", $session_administrator, 200);
+            return self::apiResponse(true, "Information du CA", $session_administrator, 200);
         }catch( ValidationException $e ) {
-            return self::apiResponse(false, "Echec de la récupération des infos de l'AG", $e->errors(), 422);
+            return self::apiResponse(false, "Echec de la récupération des infos du CA", $e->errors(), 422);
         }
     }
 
@@ -89,26 +89,29 @@ class SessionAdministratorController extends Controller
         try {
             $validate_request = $request->validate([
                 'session_administrator_id' => ['required','numeric'],
-                'session_step_id' => ['required','numeric'],
-                'files' => ['required','array'],
+                'files' => ['array'],
             ]);
 
             $meetingId = $validate_request['session_administrator_id'];
-            $agStepId = $validate_request['session_step_id'];
-            $files = $validate_request['files'];
+            $session_administrator = SessionAdministrator::find($meetingId);
+
+
+            $sessionStepId = $session_administrator->session_step_id;
+
 
             // Mise à jour ou création des fichiers
-            foreach ($files as $key => $file) {
-                if (!is_null($file)) {
+            if ($request->has('files') && !empty($validate_request['files'])) {
+                $files = $validate_request['files'];
+                foreach ($files as $key => $file) {
                     SessionStepFile::updateOrCreate(
                         ['session_step_type_file_id' => $key],
-                        ['file' => FileUpload::uploadFile($file['file'],'session_step_files') , 'session_administrator_id' => $meetingId]
+                        ['file' => FileUpload::uploadFile($file,'session_step_files') , 'session_administrator_id' => $meetingId]
                     );
                 }
             }
 
             // Recherche des fichiers manquants
-            $missingSessionStepTypeFilesIds = SessionStepTypeFile::where('session_step_id', $agStepId)
+            $missingSessionStepTypeFilesIds = SessionStepTypeFile::where('session_step_id', $sessionStepId)
                 ->whereNotIn('id', function ($query) {
                     $query->select('session_step_type_file_id')
                         ->from('session_step_files');
@@ -118,7 +121,7 @@ class SessionAdministratorController extends Controller
 
             if ($missingSessionStepTypeFilesIds->isEmpty()) {
                 // Mise à jour du statut de l'action
-                SessionAdministrator::find($meetingId)->update(['session_step_id' => SessionStep::NEXT_STEP[$agStepId]]);
+                SessionAdministrator::find($meetingId)->update(['session_step_id' => SessionStep::NEXT_STEP[$sessionStepId]]);
                 return self::apiResponse(true, "Tous les fichiers ont été enregistrés", [], 200);
             } else {
                 // Récupération des fichiers manquants
@@ -133,8 +136,8 @@ class SessionAdministratorController extends Controller
 
     public function getSessionStep() {
 
-        $ag_steps = SessionStep::with('type_files')->get();
-        return self::apiResponse(true, "Statuts de l'AG", $ag_steps, 200);
+        $session_steps = SessionStep::with('type_files')->get();
+        return self::apiResponse(true, "Statuts du CA", $session_steps, 200);
     }
 
     public static function apiResponse($success, $message, $data = [], $status)

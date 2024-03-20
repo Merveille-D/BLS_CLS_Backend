@@ -89,20 +89,21 @@ class GeneralMeetingController extends Controller
         try {
             $validate_request = $request->validate([
                 'general_meeting_id' => ['required','numeric'],
-                'ag_step_id' => ['required','numeric'],
-                'files' => ['required','array'],
+                'files' => ['array'],
             ]);
 
             $meetingId = $validate_request['general_meeting_id'];
-            $agStepId = $validate_request['ag_step_id'];
-            $files = $validate_request['files'];
+            $general_meeting = GeneralMeeting::find($meetingId);
+
+            $agStepId = $general_meeting->ag_step_id;
 
             // Mise à jour ou création des fichiers
-            foreach ($files as $key => $file) {
-                if (!is_null($file)) {
+            if ($request->has('files') && !empty($validate_request['files'])) {
+                $files = $validate_request['files'];
+                foreach ($files as $key => $file) {
                     AgStepFile::updateOrCreate(
                         ['ag_step_type_file_id' => $key],
-                        ['file' => FileUpload::uploadFile($file['file'],'ag_step_files') , 'general_meeting_id' => $meetingId]
+                        ['file' => FileUpload::uploadFile($file,'ag_step_files') , 'general_meeting_id' => $meetingId]
                     );
                 }
             }
