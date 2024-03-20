@@ -20,12 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// --- General Meeting --- //
 Route::resource('general_meetings', GeneralMeetingController::class);
-Route::post('save_attachement_meeting', [GeneralMeetingController::class, 'saveAttachmentMeeting']);
 
-
-// --- Session Administrators --- //
 Route::resource('session_administrators', SessionAdministratorController::class);
-Route::post('save_attachement_session', [SessionAdministratorController::class, 'saveAttachmentMeeting']);
 

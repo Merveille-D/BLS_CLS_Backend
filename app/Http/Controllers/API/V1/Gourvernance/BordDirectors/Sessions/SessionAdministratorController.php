@@ -60,31 +60,14 @@ class SessionAdministratorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, SessionAdministrator $session_administrator)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
-
-    public function saveAttachmentMeeting(Request $request)
-    {
-
         try {
             $validate_request = $request->validate([
-                'session_administrator_id' => ['required', 'numeric'],
                 'files' => ['required', 'array'],
                 'files.*' => ['required', 'file'],
-                'status' => [Rule::in(SessionAdministrator::SESSION_MEETING_STATUS)],
+                'status' => ['required',Rule::in(SessionAdministrator::SESSION_MEETING_STATUS)],
             ]);
-
-            $session_administrator = SessionAdministrator::findOrFail($validate_request['session_administrator_id']);
 
             $files = $request->file('files');
             foreach ($files as $fieldName => $file) {
@@ -104,6 +87,14 @@ class SessionAdministratorController extends Controller
         } catch (ValidationException $e) {
             return self::apiResponse(false, "Echec de la mise à jour du CA", $e->errors(), 422);
         }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
     }
 
     public static function apiResponse($success, $message, $data = [], $status)

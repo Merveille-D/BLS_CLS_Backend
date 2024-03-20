@@ -32,9 +32,9 @@ class GeneralMeetingController extends Controller
                 'libelle' => ['required', 'string'],
                 'reference' => ['required', 'string'],
                 'meeting_date' => ['required', 'date'],
-                'status' => ['required',  Rule::in(GeneralMeeting::GENERAL_MEETING_STATUS) ],
             ]);
 
+            $validate_request['status'] = 'pending';
             $general_meeting = GeneralMeeting::create($validate_request);
 
             return self::apiResponse(true, "Succès de l'enregistrement de l'AG", $general_meeting, 200);
@@ -58,30 +58,14 @@ class GeneralMeetingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, GeneralMeeting $general_meeting)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
-
-    public function saveAttachmentMeeting(Request $request) {
         try {
             $validate_request = $request->validate([
-                'general_meeting_id' => ['required', 'numeric'],
                 'files' => ['required', 'array'],
                 'files.*' => ['required', 'file'],
+                'status' => [Rule::in(GeneralMeeting::GENERAL_MEETING_STATUS) ],
             ]);
-
-            $validate_request['status'] = 'pending';
-
-            $general_meeting = GeneralMeeting::findOrFail($validate_request['general_meeting_id']);
 
             $files = $request->file('files');
             foreach ($files as $fieldName => $file) {
@@ -102,6 +86,14 @@ class GeneralMeetingController extends Controller
         }catch( ValidationException $e ) {
             return self::apiResponse(false, "Echec de la mise à jour de l'AG ", $e->errors(), 422);
         }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
     }
 
     public static function apiResponse($success, $message, $data = [], $status)
