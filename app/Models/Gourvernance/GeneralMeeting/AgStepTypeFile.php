@@ -6,17 +6,23 @@ use App\Models\Gourvernance\GeneralMeeting\AgAction;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AgActionTypeFile extends Model
+class AgStepTypeFile extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'name',
-        'ag_action_id',
+        'ag_step_id',
     ];
 
-    public function agAction()
+    public function step()
     {
-        return $this->belongsTo(AgAction::class);
+        return $this->belongsTo(AgStep::class);
     }
+
+    public function files()
+    {
+        return $this->hasMany(AgStepFile::class);
+    }
+
 }

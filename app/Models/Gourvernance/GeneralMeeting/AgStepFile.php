@@ -5,7 +5,7 @@ namespace App\Models\Gourvernance\GeneralMeeting;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AgActionFile extends Model
+class AgStepFile extends Model
 {
     use HasFactory;
 
@@ -19,18 +19,18 @@ class AgActionFile extends Model
 
     protected $fillable = [
         'file',
-        'ag_action_id',
-        'ag_action_type_file_id',
+        'general_meeting_id',
+        'ag_step_type_file_id',
     ];
 
-    public function agAction()
+    public function step()
     {
-        return $this->belongsTo(AgAction::class);
+        return $this->belongsTo(AgStep::class);
     }
 
-    public function agActionTypeFile()
+    public function type_file()
     {
-        return $this->belongsTo(AgActionTypeFile::class);
+        return $this->belongsTo(AgStepTypeFile::class);
     }
 
 

@@ -14,9 +14,7 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call([
-            AgTypeTableSeeder::class,
-            SessionTypeTableSeeder::class,
-            CaTypeDocumentTableSeeder::class,
+            AgStepTableSeeder::class,
         ]);
     }
 }

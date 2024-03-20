@@ -8,6 +8,9 @@ use App\Models\Gourvernance\GeneralMeeting\AgActionTypeFile;
 use App\Models\Gourvernance\GeneralMeeting\AgAction;
 use App\Models\Gourvernance\GeneralMeeting\AgArchiveFile;
 use App\Models\Gourvernance\GeneralMeeting\AgPresentShareholder;
+use App\Models\Gourvernance\GeneralMeeting\AgStep;
+use App\Models\Gourvernance\GeneralMeeting\AgStepFile;
+use App\Models\Gourvernance\GeneralMeeting\AgStepTypeFile;
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -20,7 +23,7 @@ class GeneralMeetingController extends Controller
      */
     public function index()
     {
-        $general_meetings = GeneralMeeting::with('actions.actionsTypeFile', 'actions.actionsFile', 'archives', 'shareholders')->get();
+        $general_meetings = GeneralMeeting::with('step.type_files','files')->get();
         return self::apiResponse(true, "Liste des AG", $general_meetings, 200);
     }
 
@@ -33,6 +36,7 @@ class GeneralMeetingController extends Controller
 
         try {
             $validate_request =  $request->validate([
+                'libelle' => ['required', 'string'],
                 'reference' => ['required', 'string'],
                 'meeting_date' => ['required', 'date'],
                 'type' => ['required',  Rule::in(GeneralMeeting::GENERAL_MEETING_TYPES) ],
@@ -40,43 +44,8 @@ class GeneralMeetingController extends Controller
 
             $general_meeting = GeneralMeeting::create($validate_request);
 
-            $actions = AgAction::ACTIONS;
 
-            foreach($actions as $key => $items) {
-                foreach($items as $index => $item) {
-                    if (isset($item['title'])) {
-                        $ag_action = AgAction::create([
-                            'title' => $item['title'],
-                            'closing_date' => $item['closing_date'],
-                            'is_file' => $item['is_file'] ?? false,
-                            'general_meeting_id' => $general_meeting->id,
-                            'ag_type_id' => $key,
-                        ]);
-
-                        if($item['is_file']) {
-                            foreach($item['files'] as $file) {
-                                AgActionTypeFile::create([
-                                    'name' => $file,
-                                    'ag_action_id' => $ag_action->id,
-                                ]);
-                            }
-                        }
-
-                    } else {
-                        foreach ($item as $subitem) {
-                            AgAction::create([
-                                'title' => $subitem['title'],
-                                'general_meeting_id' => $general_meeting->id,
-                                'ag_type_id' => $key,
-                                'step_ag_day' => $index,
-                            ]);
-                        }
-                    }
-                }
-            }
-
-            $general_meeting = $general_meeting->load('actions.actionsTypeFile', 'actions.actionsFile', 'archives', 'shareholders');
-
+            $general_meeting = $general_meeting->load('step.type_files','files');
 
             return self::apiResponse(true, "Succès de l'enregistrement de l'AG", $general_meeting, 200);
         }catch (ValidationException $e) {
@@ -92,7 +61,7 @@ class GeneralMeetingController extends Controller
     {
         try {
 
-            $general_meeting = $general_meeting->load('actions.actionsTypeFile', 'actions.actionsFile', 'archives', 'shareholders');
+            $general_meeting = $general_meeting->load('step.type_files','files');
 
             return self::apiResponse(true, "Information de l'AG", $general_meeting, 200);
         }catch( ValidationException $e ) {
@@ -116,65 +85,56 @@ class GeneralMeetingController extends Controller
         //
     }
 
-    public function saveShareholdersByAg(Request $request) {
-        try {
-            $validate_request =  $request->validate([
-                'general_meeting_id' => ['required', 'numeric'],
-                'shareholders_id' => ['required', 'array'],
-            ]);
-
-            $old_present_shareholders = AgPresentShareholder::where('general_meeting_id',$validate_request['general_meeting_id'])->delete();
-
-            foreach($validate_request['shareholders_id'] as $item) {
-                AgPresentShareholder::create([
-                    'shareholder_id' => $item,
-                    'general_meeting_id' => $validate_request['general_meeting_id'],
-                ]);
-            }
-
-            return self::apiResponse(true, "Succès de l'enregistrement des actionnaires", [], 200);
-        }catch( ValidationException $e ) {
-            return self::apiResponse(false, "Echec de l'enregistrement des actionnaires", $e->errors(), 422);
-        }
-    }
-
-    public function getShareholdersByAg(Request $request) {
-
-        try {
-            $validate_request =  $request->validate([
-                'general_meeting_id' => ['required', 'numeric'],
-            ]);
-
-            $shareholdersByGeneralMeeting = AgPresentShareholder::where('general_meeting_id', $validate_request['general_meeting_id'])->get();
-            return self::apiResponse(true, "Actionnaires présent à l'AG", $shareholdersByGeneralMeeting, 200);
-        }catch( ValidationException $e ) {
-            return self::apiResponse(false, "Echec de la récupération des actionnaires de l'AG", $e->errors(), 422);
-        }
-    }
-
-    public function saveArchiveFileAg(Request $request) {
+    public function saveAttachmentMeeting(Request $request) {
         try {
             $validate_request = $request->validate([
                 'general_meeting_id' => ['required','numeric'],
-                'archives' => ['required','array'],
+                'ag_step_id' => ['required','numeric'],
+                'files' => ['required','array'],
             ]);
 
-            $general_meeting_id = $validate_request['general_meeting_id'];
-            $archives = $validate_request['archives'];
+            $meetingId = $validate_request['general_meeting_id'];
+            $agStepId = $validate_request['ag_step_id'];
+            $files = $validate_request['files'];
 
-            foreach ($archives as $archive) {
-
-                    AgArchiveFile::create([
-                        'name' => $archive['name'],
-                        'file' => FileUpload::uploadFile($archive['file'],'ag_archive_files'),
-                        'general_meeting_id' => $general_meeting_id,
-                    ]);
+            // Mise à jour ou création des fichiers
+            foreach ($files as $key => $file) {
+                if (!is_null($file)) {
+                    AgStepFile::updateOrCreate(
+                        ['ag_step_type_file_id' => $key],
+                        ['file' => FileUpload::uploadFile($file['file'],'ag_step_files') , 'general_meeting_id' => $meetingId]
+                    );
+                }
             }
 
-            return self::apiResponse(true, "Ajout avec succès des archives de l'AG", [], 200);
+            // Recherche des fichiers manquants
+            $missingAgStepTypeFilesIds = AgStepTypeFile::where('ag_step_id', $agStepId)
+                ->whereNotIn('id', function ($query) {
+                    $query->select('ag_step_type_file_id')
+                        ->from('ag_step_files');
+                })
+                ->pluck('id');
+
+
+            if ($missingAgStepTypeFilesIds->isEmpty()) {
+                // Mise à jour du statut de l'action
+                GeneralMeeting::find($meetingId)->update(['ag_step_id' => AgStep::NEXT_STEP[$agStepId]]);
+                return self::apiResponse(true, "Tous les fichiers ont été enregistrés", [], 200);
+            } else {
+                // Récupération des fichiers manquants
+                $missingAgActionTypeFiles = AgStepTypeFile::whereIn('id', $missingAgStepTypeFilesIds)->get();
+                return self::apiResponse(true, "Liste des fichiers manquants de cette tâche", $missingAgActionTypeFiles, 200);
+            }
+
         }catch( ValidationException $e ) {
-            return self::apiResponse(false, "Echec de l'ajout des archives de l'AG", $e->errors(), 422);
+            return self::apiResponse(false, "Echec de la mise à jour de la tache", $e->errors(), 422);
         }
+    }
+
+    public function getAgStep() {
+
+        $ag_steps = AgStep::with('type_files')->get();
+        return self::apiResponse(true, "Statuts de l'AG", $ag_steps, 200);
     }
 
     public static function apiResponse($success, $message, $data = [], $status)

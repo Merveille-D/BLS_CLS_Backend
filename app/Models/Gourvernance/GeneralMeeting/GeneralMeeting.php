@@ -9,16 +9,12 @@ class GeneralMeeting extends Model
 {
     use HasFactory;
 
-    /**
-     * @property int $id
-     * @property string $name
-     * @property string $file
-     * @property int $general_meeting_id
-     */
     protected $fillable = array(
+        'libelle',
         'reference',
         'meeting_date',
         'type',
+        'ag_step_id',
     );
 
 
@@ -28,18 +24,14 @@ class GeneralMeeting extends Model
         'annual',
     ];
 
-    public function actions()
+    public function step()
     {
-        return $this->hasMany(AgAction::class);
+        return $this->belongsTo(AgStep::class, 'ag_step_id');
     }
 
-    public function archives()
+    public function files()
     {
-        return $this->hasMany(AgArchiveFile::class);
+        return $this->hasMany(AgStepFile::class);
     }
 
-    public function shareholders()
-    {
-        return $this->hasMany(AgPresentShareholder::class);
-    }
 }
