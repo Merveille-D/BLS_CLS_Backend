@@ -19,7 +19,7 @@ class SessionAdministratorController extends Controller
      */
     public function index()
     {
-        $session_administrators = SessionAdministrator::all();
+        $session_administrators = SessionAdministrator::with('fileUploads')->get();
         return Utility::apiResponse(true, "Liste des Sessions", $session_administrators, 200);
     }
 
@@ -48,7 +48,7 @@ class SessionAdministratorController extends Controller
     public function show(SessionAdministrator $session_administrator)
     {
         try {
-
+            $session_administrator->load('fileUploads');
             return Utility::apiResponse(true, "Information du CA", $session_administrator, 200);
         } catch (ValidationException $e) {
             return Utility::apiResponse(false, "Echec de la récupération des infos du CA", $e->errors(), 422);

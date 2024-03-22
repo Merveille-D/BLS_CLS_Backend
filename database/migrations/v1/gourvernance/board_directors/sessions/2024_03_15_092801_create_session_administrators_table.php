@@ -16,8 +16,15 @@ return new class extends Migration
             $table->string('libelle');
             $table->string('reference');
             $table->datetime('session_date');
+
             $table->string('pv_file')->nullable();
             $table->string('pv_file_date')->nullable();
+
+            $table->string('convocation_file')->nullable();
+            $table->string('convocation_file_date')->nullable();
+
+            $table->string('agenda_file')->nullable();
+            $table->string('agenda_file_date')->nullable();
 
             $table->string('alert_msg_pending')->nullable();
             $table->string('alert_msg_in_progress')->nullable();

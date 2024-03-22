@@ -17,6 +17,10 @@ class SessionAdministrator extends Model
         'status',
         'pv_file',
         'pv_file_date',
+        'agenda_file',
+        'agenda_file_date',
+        'convocation_file',
+        'convocation_file_date',
         'alert_msg_pending',
         'alert_msg_in_progress',
         'alert_msg_closed',
@@ -36,6 +40,9 @@ class SessionAdministrator extends Model
 
     const DATE_FILE_FIELD = [
         'pv_file' => 'pv_file_date',
+        'agenda_file' => 'agenda_file_date',
+        'convocation_file' => 'convocation_file_date',
+
     ];
 
     public function fileUploads()
