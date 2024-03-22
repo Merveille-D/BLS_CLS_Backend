@@ -2,12 +2,14 @@
 
 namespace App\Http\Requests\Hypothec;
 
+use App\Concerns\Traits\Guarantee\StepsValidationRuleTrait;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class StoreSignificationRequest extends FormRequest
+class UpdateProcessRequest extends FormRequest
 {
+    use StepsValidationRuleTrait;
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -23,12 +25,10 @@ class StoreSignificationRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => 'required|string',
-            'type_actor' => 'required|string',
-            'date_signification' => 'required|date',
-            'signification_file' => 'required|file'
-        ];
+        $model = $this->route('convHypo');
+        $validationRules = $this->validationRulesByStep($model->state);
+
+        return $validationRules;
     }
 
     public function failedValidation(Validator $validator)

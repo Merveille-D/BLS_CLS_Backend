@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Support\Str;
 
 if (!function_exists('sanitize_file_name')) {
     function sanitize_file_name($filename) : string {
@@ -17,8 +18,19 @@ if (!function_exists('sanitize_file_name')) {
 }
 
 if (!function_exists('api_response')) {
-    function api_response($success, $message='', $data=[], $code=200) {
+    function api_response(bool $success = true, string $message='', $data=[], $code=200) {
         return response()->json(['success' => $success, 'message' => $message, 'data' => $data], $code);
+    }
+}
+
+if (!function_exists('generateReference')) {
+    function generateReference($prefix, $length = 6)
+    {
+        $currentYear = date('Ymd');
+        $randomPart = strtoupper(Str::random($length));
+        $reference = $prefix . '-' . $currentYear .'-' . $randomPart;
+
+        return $reference;
     }
 }
 

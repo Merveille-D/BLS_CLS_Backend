@@ -2,9 +2,10 @@
 
 namespace App\Models\Guarantee\ConventionnalHypothecs;
 
+use App\Models\Guarantee\GuaranteeDocument;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class ConventionnalHypothec extends Model
 {
@@ -21,7 +22,13 @@ class ConventionnalHypothec extends Model
     protected $fillable = array(
         'name',
         'is_verified',
-        'date_subscribed',
+        'contract_file',
+        'state',
+        'step',
+        'reference',
+        'contract_id',
+        'registration_date',
+        'registering_date',
         'is_subscribed',
         'is_approved',
         'date_signification',
@@ -31,9 +38,20 @@ class ConventionnalHypothec extends Model
         'date_deposit_specification',
         'is_publied',
         'sell_price_estate',
+
+        'registration_accepted_proof_file',
+        'registration_request_discharge_file',
+        'signification_file',
+        'agreement_file',
+        'property_file',
     );
 
-    function hypothec_files() : HasMany{
-        return $this->hasMany(HypothecFile::class);
+    /**
+     * documents relationship
+     * @return MorphMany
+     */
+    public function documents() : MorphMany
+    {
+        return $this->morphMany(GuaranteeDocument::class, 'documentable');
     }
 }

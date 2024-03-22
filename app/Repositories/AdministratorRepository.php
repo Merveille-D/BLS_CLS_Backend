@@ -11,6 +11,12 @@ class AdministratorRepository
     public function __construct(private CaAdministrator $admin) {
 
     }
+
+    /**
+     * @param Request $request
+     *
+     * @return CaAdministrator
+     */
     public function add($request) {
         if ($request->type == AdminType::INDIVIDUAL) {
             $admin = $this->admin->create($request->all());

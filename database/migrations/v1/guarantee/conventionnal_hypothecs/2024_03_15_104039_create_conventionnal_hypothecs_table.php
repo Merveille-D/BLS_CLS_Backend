@@ -14,11 +14,23 @@ return new class extends Migration
         Schema::create('conventionnal_hypothecs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('state');
+            $table->string('reference')->unique();
+            $table->enum('step', array('formalization', 'realization'));
+            $table->unsignedBigInteger('contract_id')->nullable();
+            //file
+            $table->string('contract_file')->nullable();
+            $table->string('signification_file')->nullable();
+            $table->string('agreement_file')->nullable();
+            $table->string('registration_request_discharge_file')->nullable();
+            $table->string('registration_accepted_proof_file')->nullable();
+            //end file
+            $table->date('registration_date')->nullable();
             $table->boolean('is_verified')->default(0);
-            $table->date('date_subscribed')->nullable();
             $table->boolean('is_subscribed')->default(0);
             $table->boolean('is_approved')->default(0);
             $table->date('date_signification')->nullable();
+            $table->date('visa_date')->nullable();
             $table->string('type_actor')->nullable();
             $table->boolean('is_significated')->default(0);
             $table->date('date_sell')->nullable();
