@@ -10,6 +10,18 @@ class FileUpload extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'file',
+        'status',
+    ];
+
+    const FILE_STATUS = [
+        'pending',
+        'in_progress',
+        'closed',
+    ];
+
     public static function uploadFile($file, $path) {
 
         $name_file = $file->getClientOriginalName();
@@ -19,5 +31,4 @@ class FileUpload extends Model
 
         return $url;
     }
-    
 }

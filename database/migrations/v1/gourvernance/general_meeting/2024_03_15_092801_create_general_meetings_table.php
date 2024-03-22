@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,8 +17,14 @@ return new class extends Migration
             $table->string('libelle');
             $table->string('reference');
             $table->datetime('meeting_date');
-            $table->string('pv')->nullable();
-            $table->enum('status', \App\Models\Gourvernance\GeneralMeeting\GeneralMeeting::GENERAL_MEETING_STATUS );
+            $table->string('pv_file')->nullable();
+            $table->string('pv_file_date')->nullable();
+            
+            $table->string('alert_msg_pending')->nullable();
+            $table->string('alert_msg_in_progress')->nullable();
+            $table->string('alert_msg_closed')->nullable();
+
+            $table->enum('status', GeneralMeeting::GENERAL_MEETING_STATUS )->default('pending');
 
             $table->timestamps();
         });
