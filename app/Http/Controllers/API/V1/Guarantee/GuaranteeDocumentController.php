@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API\V1\Guarantee;
 
-use App\Models\GuaranteeDocument;
+use App\Http\Controllers\Controller;
+use App\Models\Guarantee\GuaranteeDocument;
 use Illuminate\Http\Request;
 
 class GuaranteeDocumentController extends Controller

@@ -29,7 +29,7 @@ class AdministratorCollection extends ResourceCollection
         return [
             'success' => true,
             'message' => 'Recuperation des administrateurs avec succès',
-            'data' => $administrators,
+            'data' => AdministratorResource::collection($administrators),
         ];
     }
 }

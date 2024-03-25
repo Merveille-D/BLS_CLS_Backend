@@ -7,38 +7,34 @@ use App\Rules\Administrator\ArrayElementMatch;
 trait StepsValidationRuleTrait
 {
     public function validationRulesByStep($state) : array {
-        $data = array();
-
+        $data = array(
+            'documents' => 'array|required',
+            'documents.*.name' => 'required|string',
+            'documents.*.file' => 'required|file|max:8192|mimes:pdf,doc,docx',
+        );
         switch ($state) {
             case ConvHypothecState::CREATED:
-                $data = array(
-                    'property_files' => 'array|required',
-                );
+                $data = $data;
                 break;
             case ConvHypothecState::PROPERTY_VERIFIED:
-                $data = array(
-                    'agreement_file' => 'required|file|max:8192|mimes:pdf,doc,docx',
-                );
+                $data = $data;
                 break;
             case ConvHypothecState::AGREEMENT_SIGNED:
-                $data = array(
-                    'registration_request_discharge_file' => 'required|file|max:8192|mimes:pdf,doc,docx',
+                $data = array_merge($data, [
                     'registering_date' => 'required|date|date_format:Y-m-d|before_or_equal:today',
-                );
+                ]);
                 break;
             case ConvHypothecState::REGISTER_REQUESTED:
-                $data = array(
+                $data = array_merge($data, [
                     'is_approved' => ['required',  new ArrayElementMatch(array('yes', 'no'))],
-                    'registration_accepted_proof_file' => 'required|file|max:8192|mimes:pdf,doc,docx',
                     'registration_date' => 'required|date|date_format:Y-m-d|before_or_equal:today',
-                );
+                ]);
                 break;
             case ConvHypothecState::REGISTER:
-                $data = array(
+                $data = array_merge($data, [
                     'actor_type' => ['required',  new ArrayElementMatch(array('holder', 'third_party_holder'))],
-                    'signification_files' => 'required|array',
                     'date_signification' => 'required|date|date_format:Y-m-d|before_or_equal:today',
-                );
+                ]);
                 break;
             case ConvHypothecState::SIGNIFICATION_REGISTERED:
                 $data = array(
@@ -47,22 +43,32 @@ trait StepsValidationRuleTrait
                 break;
 
             case ConvHypothecState::ORDER_PAYMENT_VERIFIED:
-                $data = array(
+                $data = array_merge($data, [
                     'visa_date' => 'required|date|date_format:Y-m-d|before_or_equal:today',
-                    'order_payment_files' => 'required|array',
-                );
+                ]);
                 break;
 
             case ConvHypothecState::ORDER_PAYMENT_VISA:
-                $data = array(
+                $data = array_merge($data, [
                     'date_deposit_specification' => 'required|date|date_format:Y-m-d|before_or_equal:today',
                     'date_sell' => 'required|date|date_format:Y-m-d|before_or_equal:today',
-                    'expropriation_files' => 'required|array',
-                );
+                ]);
+                break;
+
+            case ConvHypothecState::EXPROPRIATION:
+                $data = array_merge($data, [
+                    'advertisement_date' => 'required|date|date_format:Y-m-d|before_or_equal:today',
+                ]);
+                break;
+
+            case ConvHypothecState::ADVERTISEMENT:
+                $data = array_merge($data, [
+                    'sell_price_estate' => 'required|numeric',
+                ]);
                 break;
 
             default:
-
+                //
                 break;
         }
 

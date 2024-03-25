@@ -20,11 +20,8 @@ return new class extends Migration
             $table->unsignedBigInteger('contract_id')->nullable();
             //file
             $table->string('contract_file')->nullable();
-            $table->string('signification_file')->nullable();
-            $table->string('agreement_file')->nullable();
-            $table->string('registration_request_discharge_file')->nullable();
-            $table->string('registration_accepted_proof_file')->nullable();
             //end file
+            $table->date('registering_date')->nullable();
             $table->date('registration_date')->nullable();
             $table->boolean('is_verified')->default(0);
             $table->boolean('is_subscribed')->default(0);
@@ -34,6 +31,7 @@ return new class extends Migration
             $table->string('type_actor')->nullable();
             $table->boolean('is_significated')->default(0);
             $table->date('date_sell')->nullable();
+            $table->date('advertisement_date')->nullable();
             $table->date('date_deposit_specification')->nullable();
             $table->boolean('is_publied')->default(0);
             $table->double('sell_price_estate')->nullable();

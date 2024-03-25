@@ -38,12 +38,6 @@ class ConventionnalHypothec extends Model
         'date_deposit_specification',
         'is_publied',
         'sell_price_estate',
-
-        'registration_accepted_proof_file',
-        'registration_request_discharge_file',
-        'signification_file',
-        'agreement_file',
-        'property_file',
     );
 
     /**

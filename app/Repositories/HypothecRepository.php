@@ -3,9 +3,13 @@ namespace App\Repositories;
 
 use App\Enums\ConvHypothecState;
 use App\Http\Resources\Guarantee\ConvHypothecCollection;
+use App\Http\Resources\Guarantee\ConvHypothecResource;
 use App\Models\Guarantee\ConventionnalHypothecs\ConventionnalHypothec;
 use App\Models\Guarantee\GuaranteeDocument;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Str;
 
 class HypothecRepository
 {
@@ -15,12 +19,12 @@ class HypothecRepository
     }
 
 
-    function getConvHypothecs() : ConvHypothecCollection {
-        return new ConvHypothecCollection($this->conv_model->paginate());
+    function getConvHypothecs() : ResourceCollection {
+        return ConvHypothecResource::collection($this->conv_model->paginate());
     }
 
-    function getConvHypothecById($id) : Model {
-        return $this->conv_model->findOrFail($id);
+    function getConvHypothecById($id) : JsonResource {
+        return new ConvHypothecResource($this->conv_model->with('documents')->findOrFail($id));
     }
 
     function initFormalizationProcess($request) {
@@ -56,13 +60,13 @@ class HypothecRepository
                 $data = $this->verifyProperty($request, $convHypo);
                 break;
             case ConvHypothecState::PROPERTY_VERIFIED:
-                $data = $this->insertAgreement($request);
+                $data = $this->insertAgreement($request, $convHypo);
                 break;
             case ConvHypothecState::AGREEMENT_SIGNED:
-                $data = $this->insertRegisterRequestDischarge($request);
+                $data = $this->insertRegisterRequestDischarge($request, $convHypo);
                 break;
             case ConvHypothecState::REGISTER_REQUESTED:
-                $data = $this->manageRegisterResponse($request);
+                $data = $this->manageRegisterResponse($request, $convHypo);
                 break;
             case ConvHypothecState::REGISTER:
                 $data = $this->saveSignification($request, $convHypo);
@@ -79,6 +83,13 @@ class HypothecRepository
             case ConvHypothecState::ORDER_PAYMENT_VISA:
                 $data = $this->saveExpropriation($request, $convHypo);
                 break;
+                //advertisement step
+            case ConvHypothecState::EXPROPRIATION:
+                $data = $this->saveAdvertisement($request, $convHypo);
+                break;
+            case ConvHypothecState::ADVERTISEMENT:
+                $data = $this->sellProperty($request, $convHypo);
+                break;
 
             default:
                 # code...
@@ -91,92 +102,70 @@ class HypothecRepository
     }
 
     function verifyProperty($request, $convHypo) : array {
-        if (count($request->property_files)<=0)
-            return false;
-
-        foreach ($request->property_files as $key => $property_file) {
-
-            $file_path = $this->storeFile($property_file['file']);
-
-            $doc = new GuaranteeDocument();
-            $doc->state = ConvHypothecState::PROPERTY_VERIFIED;
-            $doc->file_name = $property_file['name'];
-            $doc->file_path = $file_path;
-
-            $convHypo->documents()->save($doc);
-        }
-
-        $check_files = ($convHypo->documents()->whereState(ConvHypothecState::PROPERTY_VERIFIED)->get());
-        //check files are saved correctly before changing state
-        if ($check_files->count() > 0) {
-            return $data = array(
-                'state' => ConvHypothecState::PROPERTY_VERIFIED,
-            );
-        } else {
-            return [];
-        }
-
+        $state = ConvHypothecState::PROPERTY_VERIFIED;
+        return $this->stepCommonSavingSettings(
+            $files = $request->documents,
+            $convHypo = $convHypo,
+            $data = ['state' => $state]
+        );
     }
 
-    function insertAgreement($request) : array {
-        $file_path = $this->storeFile($request->agreement_file);
-        $data = [];
-        if ($file_path) {
-            $data = array(
-                'state' => ConvHypothecState::AGREEMENT_SIGNED,
-                'agreement_file' =>  $file_path,
-            );
-        }
+    function insertAgreement($request, $convHypo) : array {
+        $state = ConvHypothecState::AGREEMENT_SIGNED;
+        $data = array(
+            'state' => $state,
+        );
 
-        return $data;
+        return $this->stepCommonSavingSettings(
+            $files = $request->documents,
+            $convHypo = $convHypo,
+            $data = $data
+        );
     }
 
-    function insertRegisterRequestDischarge($request) : array {
-        $file_path = $this->storeFile($request->registration_request_discharge_file);
-        $data = [];
-        if ($file_path) {
-            $data = array(
-                'registering_date' => $request->registering_date,
-                'state' => ConvHypothecState::REGISTER_REQUESTED,
-                'registration_request_discharge_file' =>  $file_path,
-            );
-        }
+    function insertRegisterRequestDischarge($request, $convHypo) : array {
+        $data = array(
+            'registering_date' => $request->registering_date,
+            'state' => ConvHypothecState::REGISTER_REQUESTED,
+        );
 
-        return $data;
+        return $this->stepCommonSavingSettings(
+            $files = $request->documents,
+            $convHypo = $convHypo,
+            $data = $data
+        );
     }
 
-    function manageRegisterResponse($request) : array {
-        $file_path = $this->storeFile($request->registration_accepted_proof_file);
-        $data = [];
-        if ($file_path) {
-            $data = array(
+    function manageRegisterResponse($request, $convHypo) : array {
+        $data = array(
                 'registration_date' => $request->registration_date,
                 'state' => $request->is_approved == 'yes' ? ConvHypothecState::REGISTER : ConvHypothecState::NONREGISTER,
                 'is_approved' => $request->is_approved == 'yes' ? true : false,
-                'registration_accepted_proof_file' =>  $file_path,
             );
-        }
 
-        return $data;
+        return $this->stepCommonSavingSettings(
+            $files = $request->documents,
+            $convHypo = $convHypo,
+            $data = $data
+        );
     }
 
     function saveSignification($request, $convHypo) : array {
-        // $file_path = $this->storeFile($request->signification_file);
         if ($convHypo->is_approved == false) {
             return false;
         }
-        $saveMultiple = $this->saveMultipleFiles($request->signification_files, $convHypo, ConvHypothecState::SIGNIFICATION_REGISTERED);
 
-        $data = [];
-        if ($saveMultiple) {
-            $data = array(
+        $data = array(
                 'date_signification' => $request->date_signification,
                 'step' => 'realization',
                 'state' => ConvHypothecState::SIGNIFICATION_REGISTERED,
             );
-        }
 
-        return $data;
+        return $this->stepCommonSavingSettings(
+            $files = $request->documents,
+            $convHypo = $convHypo,
+            $data = $data
+        );
     }
 
     function verifyPayementOrder($request) {
@@ -189,32 +178,81 @@ class HypothecRepository
     }
 
     function saveOrderPayement($request, $convHypo) : array {
-        $saveMultiple = $this->saveMultipleFiles($request->order_payment_files, $convHypo, ConvHypothecState::ORDER_PAYMENT_VISA);
+        $data = array(
+            'visa_date' => $request->visa_date,
+            'state' => ConvHypothecState::ORDER_PAYMENT_VISA,
+        );
 
-        $data = [];
-        if ($saveMultiple) {
-            $data = array(
-                'visa_date' => $request->visa_date,
-                'state' => ConvHypothecState::ORDER_PAYMENT_VISA,
-            );
-        }
-
-        return $data;
+        return $this->stepCommonSavingSettings(
+            $files = $request->documents,
+            $convHypo = $convHypo,
+            $data = $data
+        );
     }
 
-    function saveExpropriation($request, $convHypo) : array {
-        $saveMultiple = $this->saveMultipleFiles($request->expropriation_files, $convHypo, ConvHypothecState::EXPROPRIATION);
+    public function saveExpropriation($request, $convHypo) : array {
+        $data = array(
+            'date_deposit_specification' => $request->date_deposit_specification,
+            'date_sell' => $request->date_sell,
+            'state' => ConvHypothecState::EXPROPRIATION,
+        );
 
-        $data = [];
-        if ($saveMultiple) {
-            $data = array(
-                'date_deposit_specification' => $request->date_deposit_specification,
-                'date_sell' => $request->date_sell,
-                'state' => ConvHypothecState::EXPROPRIATION,
-            );
+        return $this->stepCommonSavingSettings(
+            $files = $request->documents,
+            $convHypo = $convHypo,
+            $data = $data
+        );
+    }
+
+    public function saveAdvertisement($request, $convHypo) : array {
+        $data = array(
+            'advertisement_date' => $request->advertisement_date,
+            'state' => ConvHypothecState::ADVERTISEMENT,
+        );
+
+        return $this->stepCommonSavingSettings(
+            $files = $request->documents,
+            $convHypo = $convHypo,
+            $data = $data
+        );
+    }
+
+    public function sellProperty($request, $convHypo) : array {
+        $data = array(
+            'sell_price_estate' => $request->sell_price_estate,
+            'state' => ConvHypothecState::PROPERTY_SALE,
+        );
+
+        return $this->stepCommonSavingSettings(
+            $files = $request->documents,
+            $convHypo = $convHypo,
+            $data = $data
+        );
+    }
+
+    function stepCommonSavingSettings($files,Model $convHypo, array $data) : array {
+        if (count($files)<=0)
+            return false;
+        foreach ($files as $key => $file_elt) {
+
+            $file_path = $this->storeFile($file_elt['file']);
+
+            $doc = new GuaranteeDocument();
+            $doc->state = $data['state'];
+            $doc->file_name = $file_elt['name'];
+            $doc->file_path = $file_path;
+
+            $convHypo->documents()->save($doc);
         }
 
-        return $data;
+        //check files are saved correctly before changing state
+        $check_files = $convHypo->documents()->whereState($data['state'])->get();
+        if ($check_files->count() > 0) {
+            return $data;
+        } else {
+            return [];
+        }
+
     }
 
     public function saveMultipleFiles($files, $convHypo, $state) {
@@ -241,7 +279,7 @@ class HypothecRepository
 
     function storeFile($file) {
         if($file) {
-            $sanitized_file_name = date('Y-m-d_His-').sanitize_file_name($file->getClientOriginalName());
+            $sanitized_file_name = date('Y-m-d_His-').Str::random(6).auth()->id().'-'.sanitize_file_name($file->getClientOriginalName());
             $path = $file->storeAs('guarantee/conventionnal_hypothec', $sanitized_file_name);
             return $path;
         }

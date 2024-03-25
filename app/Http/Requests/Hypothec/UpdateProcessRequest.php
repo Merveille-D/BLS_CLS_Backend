@@ -33,6 +33,6 @@ class UpdateProcessRequest extends FormRequest
 
     public function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response()->json(['errors' => $validator->errors()], 422));
+        throw new HttpResponseException(response()->json(['success' => false, 'errors' => $validator->errors()], 422));
     }
 }
