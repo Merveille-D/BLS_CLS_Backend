@@ -18,25 +18,29 @@ class CaAdministrator extends Model
  */
 
     protected $fillable = [
-        'firstname',
-        'lastname',
-        'birthday',
+        'name',
+        'birthdate',
         'birthplace',
-        'age',
+        'email',
+        'age', // age he becomes administrator
         'nationality',
         'address',
-        'denomination',
-        'siege',
-        'grade',
-        'representant',
+        'shares',
         'quality',
-        'is_uemoa',
-        'avis_cb',
+        'function',
+        'permanent_representative_id',
+        'share_percentage',
+        'type',
+        // 'avis_cb',
     ];
 
-    public function procedures()
-    {
-        return $this->hasMany(CaProcedure::class);
+    public function scopeAdministrator($query) {
+        return $query->whereNotNull('type');
+    }
+
+    public function representing() {
+        return $this->hasOne(CaAdministrator::class, 'id', 'permanent_representative_id');
+
     }
 
 }
