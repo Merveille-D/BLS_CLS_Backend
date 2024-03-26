@@ -21,7 +21,7 @@ class TaskGeneralMeetingController extends Controller
     public function index()
     {
         $task_general_meetings = TaskGeneralMeeting::all();
-        return Utility::apiResponse(true, "Liste des AG", $task_general_meetings, 200);
+        return api_response(true, "Liste des AG", $task_general_meetings, 200);
     }
 
     /**
@@ -31,9 +31,9 @@ class TaskGeneralMeetingController extends Controller
     {
         try {
             $task_general_meeting = $this->task->store($request);
-            return Utility::apiResponse(true, "Succès de l'enregistrement de l'AG", $task_general_meeting, 200);
+            return api_response(true, "Succès de l'enregistrement de l'AG", $task_general_meeting, 200);
         }catch (ValidationException $e) {
-                return Utility::apiResponse(false, "Echec de l'enregistrement de l'AG", $e->errors(), 422);
+                return api_response(false, "Echec de l'enregistrement de l'AG", $e->errors(), 422);
         }
     }
 
@@ -44,9 +44,9 @@ class TaskGeneralMeetingController extends Controller
     {
         try {
 
-            return Utility::apiResponse(true, "Information de l'AG", [], 200);
+            return api_response(true, "Information de l'AG", [], 200);
         }catch( ValidationException $e ) {
-            return Utility::apiResponse(false, "Echec de la récupération des infos de l'AG", $e->errors(), 422);
+            return api_response(false, "Echec de la récupération des infos de l'AG", $e->errors(), 422);
         }
     }
 
@@ -55,7 +55,12 @@ class TaskGeneralMeetingController extends Controller
      */
     public function update(UpdateTaskGeneralMeetingRequest $request, TaskGeneralMeeting $taskGeneralMeeting)
     {
-        //
+        try {
+            $taskGeneralMeeting = $this->task->update($request);
+            return api_response(true, "Succès de l'enregistrement de la tache", $taskGeneralMeeting, 200);
+        }catch (ValidationException $e) {
+                return api_response(false, "Echec de l'enregistrement de la tache", $e->errors(), 422);
+        }
     }
 
     /**

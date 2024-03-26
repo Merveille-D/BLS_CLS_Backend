@@ -22,7 +22,7 @@ class GeneralMeetingController extends Controller
     public function index()
     {
         $general_meetings = GeneralMeeting::all();
-        return Utility::apiResponse(true, "Liste des AG", $general_meetings, 200);
+        return api_response(true, "Liste des AG", $general_meetings, 200);
     }
 
 
@@ -33,9 +33,9 @@ class GeneralMeetingController extends Controller
     {
         try {
             $general_meeting = $this->meeting->store($request);
-            return Utility::apiResponse(true, "Succès de l'enregistrement de l'AG", $general_meeting, 200);
+            return api_response(true, "Succès de l'enregistrement de l'AG", $general_meeting, 200);
         }catch (ValidationException $e) {
-                return Utility::apiResponse(false, "Echec de l'enregistrement de l'AG", $e->errors(), 422);
+                return api_response(false, "Echec de l'enregistrement de l'AG", $e->errors(), 422);
         }
     }
 
@@ -47,9 +47,9 @@ class GeneralMeetingController extends Controller
         try {
 
             $general_meeting->load('fileUploads');
-            return Utility::apiResponse(true, "Information de l'AG", $general_meeting, 200);
+            return api_response(true, "Information de l'AG", $general_meeting, 200);
         }catch( ValidationException $e ) {
-            return Utility::apiResponse(false, "Echec de la récupération des infos de l'AG", $e->errors(), 422);
+            return api_response(false, "Echec de la récupération des infos de l'AG", $e->errors(), 422);
         }
     }
 
@@ -67,10 +67,10 @@ class GeneralMeetingController extends Controller
         try {
 
             $general_meeting = $this->meeting->attachement($request);
-            return Utility::apiResponse(true, "Mis à jour de l'AG avec suucès", $general_meeting, 200);
+            return api_response(true, "Mis à jour de l'AG avec suucès", $general_meeting, 200);
 
         }catch( ValidationException $e ) {
-            return Utility::apiResponse(false, "Echec de la mise à jour de l'AG ", $e->errors(), 422);
+            return api_response(false, "Echec de la mise à jour de l'AG ", $e->errors(), 422);
         }
     }
 
