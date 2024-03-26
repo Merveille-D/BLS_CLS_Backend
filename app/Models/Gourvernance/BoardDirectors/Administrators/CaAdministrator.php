@@ -40,6 +40,7 @@ class CaAdministrator extends Model
 
     public function representing() {
         return $this->hasOne(CaAdministrator::class, 'id', 'permanent_representative_id');
+
     }
 
 }

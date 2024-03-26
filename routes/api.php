@@ -21,3 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/ca_administrators/settings', [AdministratorController::class, 'settings']);
 Route::resource('/ca_administrators', AdministratorController::class);
+
+Route::resource('general_meetings', GeneralMeetingController::class);
+Route::post('ag_attachements', [GeneralMeetingController::class, 'attachment']);
+
+Route::resource('session_administrators', SessionAdministratorController::class);
+Route::post('ca_attachements', [SessionAdministratorController::class, 'attachment']);
+

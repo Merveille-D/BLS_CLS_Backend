@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ca_procedures', function (Blueprint $table) {
             $table->id();
             $table->datetime('send_date');
-            $table->string('document_name');
+            $table->string('file');
 
 
             $table->unsignedBigInteger('ca_administrator_id')->nullable();
