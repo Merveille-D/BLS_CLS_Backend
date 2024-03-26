@@ -20,7 +20,7 @@ class CaProcedure extends Model
 
     protected $fillable = [
         'send_date',
-        'document_name',
+        'file',
         'ca_administrator_id',
         'ca_type_document_id',
     ];

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\FileUpload;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,11 +12,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('session_administrators', function (Blueprint $table) {
+        Schema::create('file_uploads', function (Blueprint $table) {
             $table->id();
-            $table->string('reference');
-            $table->datetime('session_date');
-            $table->string('type');
+            $table->string('name');
+            $table->string('file');
+            $table->enum('status', FileUpload::FILE_STATUS );
+            $table->morphs('uploadable');
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('session_administrators');
+        Schema::dropIfExists('file_uploads');
     }
 };
