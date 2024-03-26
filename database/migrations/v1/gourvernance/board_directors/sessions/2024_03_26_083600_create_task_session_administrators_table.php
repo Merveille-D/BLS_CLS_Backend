@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
-use App\Models\TaskSessionAdministrator;
+use App\Models\Gourvernance\BoardDirectors\Sessions\TaskSessionAdministrator;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

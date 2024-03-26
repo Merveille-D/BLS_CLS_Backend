@@ -22,7 +22,7 @@ class SessionAdministratorController extends Controller
     public function index()
     {
         $session_administrators = SessionAdministrator::all();
-        return Utility::apiResponse(true, "Liste des Sessions", $session_administrators, 200);
+        return api_response(true, "Liste des Sessions", $session_administrators, 200);
     }
 
     /**
@@ -33,9 +33,9 @@ class SessionAdministratorController extends Controller
         try {
 
             $session_administrator = $this->session->store($request);
-            return Utility::apiResponse(true, "Succès de l'enregistrement du CA", $session_administrator, 200);
+            return api_response(true, "Succès de l'enregistrement du CA", $session_administrator, 200);
         } catch (ValidationException $e) {
-            return Utility::apiResponse(false, "Echec de l'enregistrement du CA", $e->errors(), 422);
+            return api_response(false, "Echec de l'enregistrement du CA", $e->errors(), 422);
         }
     }
 
@@ -46,9 +46,9 @@ class SessionAdministratorController extends Controller
     {
         try {
             $session_administrator->load('fileUploads');
-            return Utility::apiResponse(true, "Information du CA", $session_administrator, 200);
+            return api_response(true, "Information du CA", $session_administrator, 200);
         } catch (ValidationException $e) {
-            return Utility::apiResponse(false, "Echec de la récupération des infos du CA", $e->errors(), 422);
+            return api_response(false, "Echec de la récupération des infos du CA", $e->errors(), 422);
         }
     }
 
@@ -64,9 +64,9 @@ class SessionAdministratorController extends Controller
     {
         try {
             $session_administrator = $this->session->attachement($request);
-            return Utility::apiResponse(true, "Mis à jour du CA avec succès", $session_administrator, 200);
+            return api_response(true, "Mis à jour du CA avec succès", $session_administrator, 200);
         }catch( ValidationException $e ) {
-            return Utility::apiResponse(false, "Echec de la mise à jour du CA ", $e->errors(), 422);
+            return api_response(false, "Echec de la mise à jour du CA ", $e->errors(), 422);
         }
     }
 
