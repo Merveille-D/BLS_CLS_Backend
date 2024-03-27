@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\FileUpload;
+use App\Models\Gourvernance\GourvernanceDocument;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,11 +12,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('file_uploads', function (Blueprint $table) {
+        Schema::create('gourvernance_documents', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('file');
-            $table->enum('status', FileUpload::FILE_STATUS );
+            $table->enum('status', GourvernanceDocument::FILE_STATUS );
             $table->morphs('uploadable');
             $table->timestamps();
         });
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('file_uploads');
+        Schema::dropIfExists('gourvernance_documents');
     }
 };

@@ -1,10 +1,8 @@
 <?php
 namespace App\Repositories;
 
-use App\Models\FileUpload;
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
-use App\Models\Utility;
-use Illuminate\Validation\ValidationException;
+use App\Models\Gourvernance\GourvernanceDocument;
 
 class GeneralMeetingRepository
 {
@@ -38,16 +36,16 @@ class GeneralMeetingRepository
 
         foreach ($files as $fieldName => $file) {
             $general_meeting->update([
-                $fieldName => FileUpload::uploadFile($file, 'ag_documents'),
+                $fieldName => uploadFile($file, 'ag_documents'),
                 GeneralMeeting::DATE_FILE_FIELD[$fieldName] => now(),
             ]);
         }
 
         foreach ($others_files as $file) {
-            $fileUpload = new FileUpload();
+            $fileUpload = new GourvernanceDocument();
 
             $fileUpload->name = $file['name'];
-            $fileUpload->file = FileUpload::uploadFile($file['file'], 'ag_documents');
+            $fileUpload->file = uploadFile($file['file'], 'ag_documents');
             $fileUpload->status = $general_meeting->status;
 
             $general_meeting->fileUploads()->save($fileUpload);

@@ -2,7 +2,7 @@
 
 namespace App\Models\Gourvernance\GeneralMeeting;
 
-use App\Models\FileUpload;
+use App\Models\Gourvernance\GourvernanceDocument;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,6 +21,8 @@ class GeneralMeeting extends Model
         'agenda_file_date',
         'convocation_file',
         'convocation_file_date',
+        'attendance_list_file',
+        'attendance_list_file_date',
         'alert_msg_pending',
         'alert_msg_in_progress',
         'alert_msg_closed',
@@ -40,10 +42,18 @@ class GeneralMeeting extends Model
 
     const DATE_FILE_FIELD = [
         'pv_file' => 'pv_file_date',
+        'agenda_file' => 'agenda_file_date',
+        'convocation_file' => 'convocation_file_date',
+        'attendance_list_file' => 'attendance_list_file_date',
     ];
 
     public function fileUploads()
     {
-        return $this->morphMany(FileUpload::class, 'uploadable');
+        return $this->morphMany(GourvernanceDocument::class, 'uploadable');
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(TaskGeneralMeeting::class);
     }
 }

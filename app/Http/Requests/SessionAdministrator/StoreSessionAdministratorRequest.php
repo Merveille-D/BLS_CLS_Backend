@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\SessionAdministrator;
 
-use App\Models\TaskSessionAdministrator;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
-class UpdateTaskSessionAdministratorRequest extends FormRequest
+class StoreSessionAdministratorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,10 +25,7 @@ class UpdateTaskSessionAdministratorRequest extends FormRequest
     {
         return [
             'libelle' => ['required', 'string'],
-            'type' => ['required', Rule::in(TaskSessionAdministrator::SESSION_TASK_TYPE) ],
-            'deadline' => ['date'],
-            'responsible' => ['string'],
-            'supervisor' => ['string'],
+            'session_date' => ['required', 'date'],
         ];
     }
 

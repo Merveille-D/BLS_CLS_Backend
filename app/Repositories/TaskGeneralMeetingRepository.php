@@ -2,6 +2,7 @@
 namespace App\Repositories;
 
 use App\Models\FileUpload;
+use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
 
 class TaskGeneralMeetingRepository

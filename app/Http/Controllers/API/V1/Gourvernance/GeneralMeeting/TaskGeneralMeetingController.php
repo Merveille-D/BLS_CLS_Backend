@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting;
 
-use App\Http\Requests\StoreTaskGeneralMeetingRequest;
-use App\Http\Requests\UpdateTaskGeneralMeetingRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\TaskGeneralMeeting\StoreTaskGeneralMeetingRequest;
+use App\Http\Requests\TaskGeneralMeeting\UpdateTaskGeneralMeetingRequest;
 use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
-use App\Models\Utility;
 use App\Repositories\TaskGeneralMeetingRepository;
 use Illuminate\Validation\ValidationException;
 
@@ -21,7 +21,7 @@ class TaskGeneralMeetingController extends Controller
     public function index()
     {
         $task_general_meetings = TaskGeneralMeeting::all();
-        return api_response(true, "Liste des AG", $task_general_meetings, 200);
+        return api_response(true, "Liste des taches de l'AG", $task_general_meetings, 200);
     }
 
     /**
@@ -31,9 +31,9 @@ class TaskGeneralMeetingController extends Controller
     {
         try {
             $task_general_meeting = $this->task->store($request);
-            return api_response(true, "Succès de l'enregistrement de l'AG", $task_general_meeting, 200);
+            return api_response(true, "Succès de l'enregistrement de la tache", $task_general_meeting, 200);
         }catch (ValidationException $e) {
-                return api_response(false, "Echec de l'enregistrement de l'AG", $e->errors(), 422);
+                return api_response(false, "Echec de l'enregistrement de la tache", $e->errors(), 422);
         }
     }
 
@@ -46,7 +46,7 @@ class TaskGeneralMeetingController extends Controller
 
             return api_response(true, "Information de l'AG", [], 200);
         }catch( ValidationException $e ) {
-            return api_response(false, "Echec de la récupération des infos de l'AG", $e->errors(), 422);
+            return api_response(false, "Echec de la récupération des infos de la tache", $e->errors(), 422);
         }
     }
 

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\GeneralMeeting;
 
-use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
+use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 
-class UpdateSessionAdministratorRequest extends FormRequest
+class UpdateGeneralMeetingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,13 +26,12 @@ class UpdateSessionAdministratorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'session_administrator_id' => ['required', 'numeric'],
+            'general_meeting_id' => ['required', 'numeric'],
             'docs' => ['required', 'array'],
             'docs.files.*' => ['required', 'file'],
             'docs.others_files.*.file' => ['required', 'file'],
             'docs.others_files.*.name' => ['required', 'string'],
-            'status' => [Rule::in(SessionAdministrator::SESSION_MEETING_STATUS)],
-
+            'status' => [Rule::in(GeneralMeeting::GENERAL_MEETING_STATUS) ],
         ];
     }
 

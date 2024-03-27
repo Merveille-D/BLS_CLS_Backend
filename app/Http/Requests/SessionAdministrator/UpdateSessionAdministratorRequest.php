@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\SessionAdministrator;
 
+use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
-class StoreSessionAdministratorRequest extends FormRequest
+class UpdateSessionAdministratorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +26,13 @@ class StoreSessionAdministratorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'libelle' => ['required', 'string'],
-            'session_date' => ['required', 'date'],
+            'session_administrator_id' => ['required', 'numeric'],
+            'docs' => ['required', 'array'],
+            'docs.files.*' => ['required', 'file'],
+            'docs.others_files.*.file' => ['required', 'file'],
+            'docs.others_files.*.name' => ['required', 'string'],
+            'status' => [Rule::in(SessionAdministrator::SESSION_MEETING_STATUS)],
+
         ];
     }
 

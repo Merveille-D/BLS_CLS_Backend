@@ -1,10 +1,8 @@
 <?php
 namespace App\Repositories;
 
-use App\Models\FileUpload;
 use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
-use App\Models\Utility;
-use Illuminate\Validation\ValidationException;
+use App\Models\Gourvernance\GourvernanceDocument;
 
 class SessionAdministratorRepository
 {
@@ -38,16 +36,16 @@ class SessionAdministratorRepository
 
         foreach ($files as $fieldName => $file) {
             $session_administrator->update([
-                $fieldName => FileUpload::uploadFile($file, 'ag_documents'),
+                $fieldName => uploadFile($file, 'ca_documents'),
                 SessionAdministrator::DATE_FILE_FIELD[$fieldName] => now(),
             ]);
         }
 
         foreach ($others_files as $file) {
-            $fileUpload = new FileUpload();
+            $fileUpload = new GourvernanceDocument();
 
             $fileUpload->name = $file['name'];
-            $fileUpload->file = FileUpload::uploadFile($file['file'], 'ca_documents');
+            $fileUpload->file = uploadFile($file['file'], 'ca_documents');
             $fileUpload->status = $session_administrator->status;
 
             $session_administrator->fileUploads()->save($fileUpload);

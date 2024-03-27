@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Gourvernance;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
-class FileUpload extends Model
+class GourvernanceDocument extends Model
 {
     use HasFactory;
 
@@ -21,14 +21,4 @@ class FileUpload extends Model
         'in_progress',
         'closed',
     ];
-
-    public static function uploadFile($file, $path) {
-
-        $name_file = $file->getClientOriginalName();
-        $file->storeAs($path, $name_file, 'public');
-
-        $url = Storage::disk('public')->url($path . '/' . $name_file);
-
-        return $url;
-    }
 }

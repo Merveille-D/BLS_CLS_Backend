@@ -1,4 +1,6 @@
 <?php
+
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 if (!function_exists('sanitize_file_name')) {
@@ -33,5 +35,19 @@ if (!function_exists('generateReference')) {
         return $reference;
     }
 }
+
+if(!function_exists('uploadFile')) {
+    function uploadFile($file, $path) {
+
+        $name_file = $file->getClientOriginalName();
+        $file->storeAs($path, $name_file, 'public');
+
+        $url = Storage::disk('public')->url($path . '/' . $name_file);
+
+        return $url;
+    }
+}
+
+
 
 

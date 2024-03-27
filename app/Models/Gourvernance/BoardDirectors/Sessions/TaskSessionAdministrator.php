@@ -17,6 +17,7 @@ class TaskSessionAdministrator extends Model
         'status',
         'responsible',
         'supervisor',
+        'session_administrator_id',
     ];
 
     const SESSION_TASK_TYPE = [
@@ -25,8 +26,8 @@ class TaskSessionAdministrator extends Model
         'post_ag'
     ];
 
-    public function general_meeting()
+    public function session_administrator()
     {
-        return $this->belongsTo(GeneralMeeting::class);
+        return $this->belongsTo(SessionAdministrator::class);
     }
 }

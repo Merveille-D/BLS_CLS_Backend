@@ -17,6 +17,7 @@ class TaskGeneralMeeting extends Model
         'status',
         'responsible',
         'supervisor',
+        'general_meeting_id',
     ];
 
     const MEETING_TASK_TYPE = [
@@ -25,8 +26,8 @@ class TaskGeneralMeeting extends Model
         'post_ag'
     ];
 
-    public function session_administrator()
+    public function general_meeting()
     {
-        return $this->belongsTo(SessionAdministrator::class);
+        return $this->belongsTo(GeneralMeeting::class);
     }
 }
