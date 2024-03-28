@@ -20,7 +20,12 @@ class GeneralMeetingController extends Controller
      */
     public function index()
     {
-        $general_meetings = GeneralMeeting::all();
+        // $general_meetings = GeneralMeeting::all();
+
+        $general_meetings = GeneralMeeting::when(request('status') != null, function($query) {
+            $query->where('status', request('status'));
+        })->get();
+
         return api_response(true, "Liste des AG", $general_meetings, 200);
     }
 
