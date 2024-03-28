@@ -16,6 +16,6 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        $this->call(ConventionnalHypothecSeeder::class);
+        // $this->call(ConventionnalHypothecSeeder::class);
     }
 }
