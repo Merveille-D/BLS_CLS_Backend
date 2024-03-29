@@ -29,9 +29,13 @@ class ConventionnalHypothecController extends Controller
      */
     public function store(InitConvHypothecRequest $request)
     {
-        $data = $this->hypothecRepo->initFormalizationProcess($request, null);
+        try {
+            $data = $this->hypothecRepo->initFormalizationProcess($request, null);
 
-        return api_response($success = true, 'Hypotheque conventionnelle initié avec succès', $data);
+            return api_response($success = true, 'Hypotheque conventionnelle initié avec succès', $data);
+        } catch (\Throwable $th) {
+            return api_response($success = false, 'Une erreur s\'est produite lors de l\'operation', ['error' => $th->getMessage()]);
+        }
     }
 
     /**

@@ -4,11 +4,17 @@ namespace App\Repositories;
 use App\Enums\ConvHypothecState;
 use App\Http\Resources\Guarantee\ConvHypothecCollection;
 use App\Http\Resources\Guarantee\ConvHypothecResource;
+use App\Jobs\SendNotification;
+use App\Models\Alert\Notification;
 use App\Models\Guarantee\ConventionnalHypothecs\ConventionnalHypothec;
 use App\Models\Guarantee\GuaranteeDocument;
+use App\Models\User;
+use App\Notifications\Guarantee\ConvHypothecNextStep;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\Notification as FacadesNotification;
 use Illuminate\Support\Str;
 
 class HypothecRepository
@@ -40,6 +46,9 @@ class HypothecRepository
         );
 
         $convHypo = $this->conv_model->create($data);
+    //     $user = User::find(1);
+
+    // $user->notify((new ConvHypothecNextStep($convHypo))/* ->delay(Carbon::now()->addMinutes(1)) */);
         return $convHypo;
     }
 

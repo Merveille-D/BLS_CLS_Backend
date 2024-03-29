@@ -23,6 +23,12 @@ if (!function_exists('api_response')) {
     }
 }
 
+if (!function_exists('api_error')) {
+    function api_error(bool $success = false, string $message='', $data=[], $code=500) {
+        return response()->json(['success' => $success, 'message' => $message, 'error' => $data], $code);
+    }
+}
+
 if (!function_exists('generateReference')) {
     function generateReference($prefix, $length = 6)
     {
