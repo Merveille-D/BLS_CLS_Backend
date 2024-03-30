@@ -3,6 +3,7 @@ namespace App\Repositories;
 
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use App\Models\Gourvernance\GourvernanceDocument;
+use DateTime;
 
 class GeneralMeetingRepository
 {
@@ -16,7 +17,13 @@ class GeneralMeetingRepository
      * @return GeneralMeeting
      */
     public function store($request) {
-        $request['reference'] = 'AG-' . date('m') . '-' . date('Y');
+        $date = $request->meeting_date;
+        $meetingDate = new DateTime($date);
+        $month = $meetingDate->format('m');
+        $year = $meetingDate->format('Y');
+        $request['reference'] = 'AG-' . $month . '-' . $year;
+        // $request['reference'] = 'AG-' . date('m') . '-' . date('Y');
+
         $general_meeting = $this->meeting->create($request->all());
         $general_meeting->status = "pending";
 
