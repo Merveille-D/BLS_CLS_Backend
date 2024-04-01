@@ -21,9 +21,27 @@ class TaskSessionAdministrator extends Model
     ];
 
     const SESSION_TASK_TYPE = [
+        'pre_ca',
         'checklist',
         'procedures',
-        'post_ag'
+        'post_ca'
+    ];
+
+    CONST TASKS = [
+        'pre_ca' => [
+
+        ],
+        'procedures' => [
+            ['libelle' => "PCA ouvre la séance, préside et confirme quorum"],
+            ['libelle' => "PCA annonce ordre du jour et lit Rapport de Gestion"],
+        ],
+        'checklist' => [
+            ['libelle' => "Vérifier salle et sonorisation"],
+            ['libelle' => "Installer PCA, Administrateurs, CC et invités"],
+            ['libelle' => "Imprimer Liste de présence"],
+            ['libelle' => "Vérifier Quorum"],
+            ['libelle' => "Remettre Liste de présence au PCA"],
+        ],
     ];
 
     public function session_administrator()

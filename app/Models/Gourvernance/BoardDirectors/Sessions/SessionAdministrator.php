@@ -23,20 +23,15 @@ class SessionAdministrator extends Model
         'convocation_file_date',
         'attendance_list_file',
         'attendance_list_file_date',
-        'alert_msg_pending',
-        'alert_msg_in_progress',
-        'alert_msg_closed',
     ];
 
     const SESSION_MEETING_STATUS = [
         'pending',
-        'in_progress',
         'closed',
     ];
 
     const SESSION_MEETING_STATUS_VALUES = [
-        'pending' => 'En attente',
-        'in_progress' => 'En cours',
+        'pending' => 'En cours',
         'closed' => 'Terminé',
     ];
 

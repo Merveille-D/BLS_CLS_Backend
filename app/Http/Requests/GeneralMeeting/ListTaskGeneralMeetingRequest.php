@@ -6,14 +6,14 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateGeneralMeetingRequest extends FormRequest
+class ListTaskGeneralMeetingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,7 +24,7 @@ class UpdateGeneralMeetingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'meeting_date' => ['required', 'date'],
+            'general_meeting_id' => ['required', 'numeric'],
         ];
     }
 

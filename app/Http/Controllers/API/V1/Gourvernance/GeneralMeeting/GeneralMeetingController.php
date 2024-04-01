@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GeneralMeeting\StoreGeneralMeetingRequest;
 use App\Http\Requests\GeneralMeeting\UpdateGeneralMeetingRequest;
+use App\Http\Requests\UpdateAttachementGeneralMeetingRequest;
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use App\Repositories\GeneralMeetingRepository;
 use Illuminate\Validation\ValidationException;
@@ -20,8 +21,6 @@ class GeneralMeetingController extends Controller
      */
     public function index()
     {
-        // $general_meetings = GeneralMeeting::all();
-
         $general_meetings = GeneralMeeting::when(request('status') != null, function($query) {
             $query->where('status', request('status'));
         })->get();
@@ -62,11 +61,17 @@ class GeneralMeetingController extends Controller
      */
     public function update(UpdateGeneralMeetingRequest $request, GeneralMeeting $general_meeting)
     {
-        //
+        try {
+
+            $this->meeting->update($general_meeting, $request->all());
+            return api_response(true, "AG mis à jour avec succès", $general_meeting, 200);
+        } catch (ValidationException $e) {
+
+            return api_response(false, "Echec de la mise à jour de l'AG", $e->errors(), 422);
+        }
     }
 
-
-    public function attachment(UpdateGeneralMeetingRequest $request)
+    public function attachment(UpdateAttachementGeneralMeetingRequest $request)
     {
         try {
 

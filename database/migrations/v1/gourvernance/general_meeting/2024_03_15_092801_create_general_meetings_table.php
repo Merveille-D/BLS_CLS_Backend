@@ -30,10 +30,6 @@ return new class extends Migration
             $table->string('attendance_list_file')->nullable();
             $table->string('attendance_list_file_date')->nullable();
 
-            $table->string('alert_msg_pending')->nullable();
-            $table->string('alert_msg_in_progress')->nullable();
-            $table->string('alert_msg_closed')->nullable();
-
             $table->enum('status', GeneralMeeting::GENERAL_MEETING_STATUS )->default('pending');
 
             $table->timestamps();

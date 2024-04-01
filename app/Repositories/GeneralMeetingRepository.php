@@ -2,6 +2,7 @@
 namespace App\Repositories;
 
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
+use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
 use App\Models\Gourvernance\GourvernanceDocument;
 use DateTime;
 
@@ -17,15 +18,26 @@ class GeneralMeetingRepository
      * @return GeneralMeeting
      */
     public function store($request) {
-        $date = $request->meeting_date;
-        $meetingDate = new DateTime($date);
-        $month = $meetingDate->format('m');
-        $year = $meetingDate->format('Y');
-        $request['reference'] = 'AG-' . $month . '-' . $year;
-        // $request['reference'] = 'AG-' . date('m') . '-' . date('Y');
+
+        $date = new DateTime($request->meeting_date);
+        $reference = (GeneralMeeting::max('id') + 1) . 'e-AG-' . $date->format('d') . '-' . $date->format('m') . '-' . $date->format('Y');
+        $request['reference'] = $reference;
 
         $general_meeting = $this->meeting->create($request->all());
-        $general_meeting->status = "pending";
+
+        $this->createTasks($general_meeting);
+        return $general_meeting;
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return GeneralMeeting
+     */
+    public function update(GeneralMeeting $general_meeting, $request) {
+
+        $general_meeting->update($request->all());
+        $this->createTasks($general_meeting);
 
         return $general_meeting;
     }
@@ -56,6 +68,31 @@ class GeneralMeetingRepository
             $fileUpload->status = $general_meeting->status;
 
             $general_meeting->fileUploads()->save($fileUpload);
+        }
+
+        return $general_meeting;
+    }
+
+    public function createTasks($general_meeting) {
+
+        if($general_meeting->tasks()->count() > 0) {
+            $general_meeting->tasks()->delete();
+        }
+
+        $known_tasks = TaskGeneralMeeting::TASKS;
+        foreach($known_tasks as $type => $tasks) {
+            foreach($tasks as $task) {
+                $task['type'] = $type;
+                $task['general_meeting_id'] = $general_meeting->id;
+
+                if($type == "pre_ag") {
+                    $meeting_date = new DateTime($general_meeting->meeting_date);
+                    $sign = $task['days'] >= 0 ? 1 : -1;
+                    $deadline = $meeting_date->modify($sign * abs($task['days']) . ' days');
+                    $task['deadline'] = $deadline;
+                }
+                TaskGeneralMeeting::create($task);
+            }
         }
 
         return $general_meeting;

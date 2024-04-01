@@ -16,6 +16,17 @@ class TaskGeneralMeetingRepository
      *
      * @return TaskGeneralMeeting
      */
+    public function all($request) {
+
+        $task_general_meeting = $this->task->where('general_meeting_id', $request->general_meeting_id)->get();
+        return $task_general_meeting;
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return TaskGeneralMeeting
+     */
     public function store($request) {
         $task_general_meeting = $this->task->create($request->all());
         return $task_general_meeting;
@@ -26,8 +37,8 @@ class TaskGeneralMeetingRepository
      *
      * @return TaskGeneralMeeting
      */
-    public function update($request) {
-        $task_general_meeting = $this->task->update($request->all());
-        return $task_general_meeting;
+    public function update(TaskGeneralMeeting $taskGeneralMeeting, $request) {
+        $taskGeneralMeeting->update($request->all());
+        return $taskGeneralMeeting;
     }
 }

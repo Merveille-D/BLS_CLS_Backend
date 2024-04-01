@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\GeneralMeeting\ListTaskGeneralMeetingRequest;
 use App\Http\Requests\TaskGeneralMeeting\StoreTaskGeneralMeetingRequest;
 use App\Http\Requests\TaskGeneralMeeting\UpdateTaskGeneralMeetingRequest;
 use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
@@ -18,10 +19,10 @@ class TaskGeneralMeetingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(ListTaskGeneralMeetingRequest $request)
     {
-        $task_general_meetings = TaskGeneralMeeting::all();
-        return api_response(true, "Liste des taches de l'AG", $task_general_meetings, 200);
+        $task_general_meeting = $this->task->all($request);
+        return api_response(true, "Liste des taches de l'AG", $task_general_meeting, 200);
     }
 
     /**
@@ -42,12 +43,7 @@ class TaskGeneralMeetingController extends Controller
      */
     public function show(TaskGeneralMeeting $taskGeneralMeeting)
     {
-        try {
-
-            return api_response(true, "Information de l'AG", [], 200);
-        }catch( ValidationException $e ) {
-            return api_response(false, "Echec de la récupération des infos de la tache", $e->errors(), 422);
-        }
+        //
     }
 
     /**
@@ -56,7 +52,7 @@ class TaskGeneralMeetingController extends Controller
     public function update(UpdateTaskGeneralMeetingRequest $request, TaskGeneralMeeting $taskGeneralMeeting)
     {
         try {
-            $taskGeneralMeeting = $this->task->update($request);
+            $this->task->update($taskGeneralMeeting, $request->all());
             return api_response(true, "Succès de l'enregistrement de la tache", $taskGeneralMeeting, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement de la tache", $e->errors(), 422);
@@ -68,6 +64,13 @@ class TaskGeneralMeetingController extends Controller
      */
     public function destroy(TaskGeneralMeeting $taskGeneralMeeting)
     {
-        //
+        try {
+            $taskGeneralMeeting->delete();
+            return api_response(true, "Succès de la suppression de la tache", null, 200);
+        }catch (ValidationException $e) {
+                return api_response(false, "Echec de la supression de la tache", $e->errors(), 422);
+        }
+
+
     }
 }
