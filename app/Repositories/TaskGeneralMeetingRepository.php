@@ -19,8 +19,16 @@ class TaskGeneralMeetingRepository
      */
     public function all($request) {
 
-        $task_general_meeting = $this->task->where('general_meeting_id', $request->general_meeting_id)->get();
-        return $task_general_meeting;
+    $task_general_meetings = $this->task
+            ->where('general_meeting_id', $request->general_meeting_id)
+            ->when(request('type') !== null, function($query) {
+                $query->where('type', request('type'));
+            }, function($query) {
+                $query->whereNotIn('type', ['checklist', 'procedures']);
+            })
+            ->get();
+
+        return $task_general_meetings;
     }
 
     /**
