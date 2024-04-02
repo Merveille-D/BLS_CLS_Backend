@@ -48,7 +48,6 @@ class GeneralMeetingController extends Controller
     public function show(GeneralMeeting $general_meeting)
     {
         try {
-
             $general_meeting->load('fileUploads','tasks');
             return api_response(true, "Information de l'AG", $general_meeting, 200);
         }catch( ValidationException $e ) {

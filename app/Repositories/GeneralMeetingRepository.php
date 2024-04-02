@@ -70,6 +70,8 @@ class GeneralMeetingRepository
             $general_meeting->fileUploads()->save($fileUpload);
         }
 
+        $this->checkFilesFilled($general_meeting);
+
         return $general_meeting;
     }
 
@@ -97,4 +99,27 @@ class GeneralMeetingRepository
 
         return $general_meeting;
     }
+
+    public function checkFilesFilled($general_meeting) {
+
+        $fileFields = GeneralMeeting::FILE_FIELD;
+        $allFilled = true;
+
+        foreach ($fileFields as $field) {
+            if (empty($general_meeting->$field)) {
+                $allFilled = false;
+                break;
+            }
+        }
+
+        if ($allFilled) {
+            $general_meeting->update([
+                'status' => 'post_ag',
+            ]);
+        }
+
+        return $general_meeting;
+    }
+
+
 }

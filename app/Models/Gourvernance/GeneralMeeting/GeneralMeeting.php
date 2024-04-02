@@ -32,7 +32,15 @@ class GeneralMeeting extends Model
 
     const GENERAL_MEETING_STATUS_VALUES = [
         'pending' => 'En cours',
+        'post_ag' => 'Post AG',
         'closed' => 'Terminé',
+    ];
+
+    const FILE_FIELD = [
+        'pv_file',
+        'agenda_file',
+        'convocation_file',
+        'attendance_list_file',
     ];
 
     const DATE_FILE_FIELD = [
