@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\GeneralMeeting;
 
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use Illuminate\Contracts\Validation\Validator;
@@ -27,11 +27,10 @@ class UpdateAttachementGeneralMeetingRequest extends FormRequest
     {
         return [
             'general_meeting_id' => ['required', 'numeric'],
-            'docs' => ['required', 'array'],
-            'docs.files.*' => ['required', 'file'],
-            'docs.others_files.*.file' => ['required', 'file'],
-            'docs.others_files.*.name' => ['required', 'string'],
-            'status' => [Rule::in(GeneralMeeting::GENERAL_MEETING_STATUS) ],
+            'pv_file' => ['file'],
+            'convocation_file' => ['file'],
+            'agenda_file' => ['file'],
+            'attendance_list_file' => ['file'],
         ];
     }
 

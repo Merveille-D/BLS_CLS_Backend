@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests\GeneralMeeting;
 
+use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class StoreGeneralMeetingRequest extends FormRequest
 {
@@ -26,6 +28,7 @@ class StoreGeneralMeetingRequest extends FormRequest
         return [
             'libelle' => ['required', 'string'],
             'meeting_date' => ['required', 'date'],
+            'type' => ['required',  Rule::in(GeneralMeeting::GENERAL_MEETING_TYPES) ],
         ];
     }
 

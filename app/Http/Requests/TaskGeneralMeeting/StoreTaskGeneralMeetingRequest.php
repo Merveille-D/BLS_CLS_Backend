@@ -27,14 +27,11 @@ class StoreTaskGeneralMeetingRequest extends FormRequest
     {
         $rules = [
             'libelle' => ['required', 'string'],
-            'type' => ['required', Rule::in(TaskGeneralMeeting::MEETING_TASK_TYPE)],
+            'general_meeting_id' => ['required', 'numeric'],
+            'responsible' => ['string'],
+            'deadline' => ['date'],
+            'supervisor' => ['string'],
         ];
-
-        if ($this->input('type') === 'post_ag') {
-            $rules['responsible'] = ['required', 'string'];
-            $rules['deadline'] = ['required', 'date'];
-            $rules['supervisor'] = ['required', 'string'];
-        }
 
         return $rules;
     }

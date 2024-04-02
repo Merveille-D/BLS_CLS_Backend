@@ -23,16 +23,20 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/ca_administrators/settings', [AdministratorController::class, 'settings']);
-Route::resource('/ca_administrators', AdministratorController::class);
-
 Route::resource('general_meetings', GeneralMeetingController::class);
 Route::post('ag_attachements', [GeneralMeetingController::class, 'attachment']);
+
+Route::resource('task_general_meetings', TaskGeneralMeetingController::class);
+
+//
+
+Route::get('/ca_administrators/settings', [AdministratorController::class, 'settings']);
+Route::resource('/ca_administrators', AdministratorController::class);
 
 Route::resource('session_administrators', SessionAdministratorController::class);
 Route::post('ca_attachements', [SessionAdministratorController::class, 'attachment']);
 
-Route::resource('task_general_meetings', TaskGeneralMeetingController::class);
+
 
 Route::resource('task_session_administrators', TaskSessionAdministratorController::class);
 

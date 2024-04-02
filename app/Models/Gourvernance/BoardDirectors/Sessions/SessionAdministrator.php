@@ -27,12 +27,21 @@ class SessionAdministrator extends Model
 
     const SESSION_MEETING_STATUS = [
         'pending',
+        'post_ag',
         'closed',
     ];
 
     const SESSION_MEETING_STATUS_VALUES = [
         'pending' => 'En cours',
+        'post_ag' => 'Post AG',
         'closed' => 'Terminé',
+    ];
+
+    const FILE_FIELD = [
+        'pv_file',
+        'agenda_file',
+        'convocation_file',
+        'attendance_list_file',
     ];
 
     const DATE_FILE_FIELD = [
@@ -40,7 +49,6 @@ class SessionAdministrator extends Model
         'agenda_file' => 'agenda_file_date',
         'convocation_file' => 'convocation_file_date',
         'attendance_list_file' => 'attendance_list_file_date',
-
     ];
 
     public function fileUploads()

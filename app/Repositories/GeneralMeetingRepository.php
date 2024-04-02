@@ -36,7 +36,7 @@ class GeneralMeetingRepository
      */
     public function update(GeneralMeeting $general_meeting, $request) {
 
-        $general_meeting->update($request->all());
+        $general_meeting->update($request);
         $this->createTasks($general_meeting);
 
         return $general_meeting;
@@ -48,23 +48,23 @@ class GeneralMeetingRepository
      * @return GeneralMeeting
      */
     public function attachement($request) {
+
         $general_meeting = GeneralMeeting::find($request->general_meeting_id);
 
-        $files = $request->docs['files'];
-        $others_files = $request->docs['others_files'];
+        $fieldName = collect($request->except('general_meeting_id'))->keys()->first();
 
-        foreach ($files as $fieldName => $file) {
+        $generalMeeting = new GeneralMeeting();
+        if ($generalMeeting->isFillable($fieldName)) {
+
             $general_meeting->update([
-                $fieldName => uploadFile($file, 'ag_documents'),
+                $fieldName => uploadFile( $request->$fieldName, 'ag_documents'),
                 GeneralMeeting::DATE_FILE_FIELD[$fieldName] => now(),
             ]);
-        }
+        }else {
 
-        foreach ($others_files as $file) {
             $fileUpload = new GourvernanceDocument();
 
-            $fileUpload->name = $file['name'];
-            $fileUpload->file = uploadFile($file['file'], 'ag_documents');
+            $fileUpload->file = uploadFile($request->$fieldName, 'ag_documents');
             $fileUpload->status = $general_meeting->status;
 
             $general_meeting->fileUploads()->save($fileUpload);

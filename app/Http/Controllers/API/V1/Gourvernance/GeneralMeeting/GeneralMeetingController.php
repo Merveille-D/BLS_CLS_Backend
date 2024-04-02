@@ -4,8 +4,8 @@ namespace App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GeneralMeeting\StoreGeneralMeetingRequest;
+use App\Http\Requests\GeneralMeeting\UpdateAttachementGeneralMeetingRequest;
 use App\Http\Requests\GeneralMeeting\UpdateGeneralMeetingRequest;
-use App\Http\Requests\UpdateAttachementGeneralMeetingRequest;
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use App\Repositories\GeneralMeetingRepository;
 use Illuminate\Validation\ValidationException;
@@ -60,6 +60,7 @@ class GeneralMeetingController extends Controller
      */
     public function update(UpdateGeneralMeetingRequest $request, GeneralMeeting $general_meeting)
     {
+        // dd($request->all());
         try {
 
             $this->meeting->update($general_meeting, $request->all());

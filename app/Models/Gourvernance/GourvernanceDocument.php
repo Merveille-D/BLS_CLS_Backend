@@ -18,7 +18,7 @@ class GourvernanceDocument extends Model
 
     const FILE_STATUS = [
         'pending',
-        'in_progress',
+        'post_ag',
         'closed',
     ];
 }

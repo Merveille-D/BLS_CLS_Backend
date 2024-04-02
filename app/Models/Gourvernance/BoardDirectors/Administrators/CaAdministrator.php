@@ -22,7 +22,7 @@ class CaAdministrator extends Model
         'birthdate',
         'birthplace',
         'email',
-        'age', // age he becomes administrator
+        'age',
         'nationality',
         'address',
         'shares',
@@ -31,7 +31,6 @@ class CaAdministrator extends Model
         'permanent_representative_id',
         'share_percentage',
         'type',
-        // 'avis_cb',
     ];
 
     public function scopeAdministrator($query) {
@@ -40,7 +39,6 @@ class CaAdministrator extends Model
 
     public function representing() {
         return $this->hasOne(CaAdministrator::class, 'id', 'permanent_representative_id');
-
     }
 
 }

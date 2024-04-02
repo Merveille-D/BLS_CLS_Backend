@@ -14,6 +14,7 @@ class GeneralMeeting extends Model
         'libelle',
         'reference',
         'meeting_date',
+        'type',
         'status',
         'pv_file',
         'pv_file_date',
@@ -25,8 +26,15 @@ class GeneralMeeting extends Model
         'attendance_list_file_date',
     ];
 
+    const GENERAL_MEETING_TYPES = [
+        'ordinary',
+        'extraordinary',
+        'annual',
+    ];
+
     const GENERAL_MEETING_STATUS = [
         'pending',
+        'post_ag',
         'closed',
     ];
 

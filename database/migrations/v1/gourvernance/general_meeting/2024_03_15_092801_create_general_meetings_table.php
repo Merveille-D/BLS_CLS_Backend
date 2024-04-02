@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('reference');
             $table->datetime('meeting_date');
 
+            $table->enum('type', GeneralMeeting::GENERAL_MEETING_TYPES );
+
             $table->string('pv_file')->nullable();
             $table->string('pv_file_date')->nullable();
 

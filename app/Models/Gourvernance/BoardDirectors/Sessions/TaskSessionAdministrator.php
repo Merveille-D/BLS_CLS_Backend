@@ -27,8 +27,37 @@ class TaskSessionAdministrator extends Model
         'post_ca'
     ];
 
+    public function session_administrator()
+    {
+        return $this->belongsTo(SessionAdministrator::class);
+    }
+
     CONST TASKS = [
         'pre_ca' => [
+            [
+                'libelle' => "Préparation de la convocation, ODJ et documents à étudier",
+                'days' => -45,
+            ],
+            [
+                'libelle' => "Transmission de la convocation aux administrateurs",
+                'days' => -15,
+            ],
+            [
+                'libelle' => "Tenue CA",
+                'days' => 0,
+            ],
+            [
+                'libelle' => "Rédaction du PV et signature",
+                'days' => 10,
+            ],
+            [
+                'libelle' => "Transmission du PV au Notaire",
+                'days' => 15,
+            ],
+            [
+                'libelle' => "Reception PV enrégistré et classement",
+                'days' => 25,
+            ],
 
         ],
         'procedures' => [
@@ -44,8 +73,5 @@ class TaskSessionAdministrator extends Model
         ],
     ];
 
-    public function session_administrator()
-    {
-        return $this->belongsTo(SessionAdministrator::class);
-    }
+
 }

@@ -28,8 +28,7 @@ return new class extends Migration
 
             $table->unsignedBigInteger('session_administrator_id')->nullable();
             $table->foreign('session_administrator_id')->references('id')->on('session_administrators')->onDelete('cascade');
-
-
+            
             $table->timestamps();
         });
     }
