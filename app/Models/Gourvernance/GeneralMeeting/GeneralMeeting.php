@@ -67,4 +67,10 @@ class GeneralMeeting extends Model
     {
         return $this->hasMany(TaskGeneralMeeting::class);
     }
+
+    public function attendanceList()
+    {
+        return $this->hasMany(AttendanceListGeneralMeeting::class);
+    }
 }
+

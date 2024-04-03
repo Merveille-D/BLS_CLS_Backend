@@ -5,6 +5,7 @@ use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions\SessionAdmin
 use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions\TaskSessionAdministratorController;
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\GeneralMeetingController;
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\TaskGeneralMeetingController;
+use App\Http\Controllers\AttendanceListGeneralMeetingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,7 @@ Route::resource('general_meetings', GeneralMeetingController::class);
 Route::post('ag_attachements', [GeneralMeetingController::class, 'attachment']);
 
 Route::resource('task_general_meetings', TaskGeneralMeetingController::class);
+Route::resource('attendance_list_general_meetings', AttendanceListGeneralMeetingController::class);
 
 //
 
