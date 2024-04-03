@@ -26,7 +26,7 @@ class UpdateTaskGeneralMeetingRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'libelle' => ['required', 'string'],
+            'libelle' => ['string'],
             'responsible' => ['string'],
             'deadline' => ['date'],
             'supervisor' => ['string'],
