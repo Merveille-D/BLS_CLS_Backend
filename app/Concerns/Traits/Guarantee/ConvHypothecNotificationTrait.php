@@ -7,8 +7,8 @@ trait ConvHypothecNotificationTrait
 {
     function nextStepBasedOnState($state) : array {
         $data = array(
-            'subject' => '',
-            'message' => '',
+            'subject' => 'default title',
+            'message' => 'default message',
         );
 
         switch ($state) {
@@ -29,12 +29,12 @@ trait ConvHypothecNotificationTrait
                 break;
             case ConvHypothecState::REGISTER:
                 $data['subject'] = 'RAPPEL : Étape de '.ConvHypothecState::STATES_VALUES[ConvHypothecState::SIGNIFICATION_REGISTERED];
-                $data['message'] = 'Attacher à l\'hypothèque conventionnelle la reponse de l\inscription';
+                $data['message'] = 'Procéder à l\'étape de réalisation en commençant par joindre la signfication';
                 break;
-            // case ConvHypothecState::SIGNIFICATION_REGISTERED:
-            //     $data['subject'] = 'RAPPEL : Document de la reponse d\inscription';
-            //     $data['message'] = 'Attacher à l\'hypothèque conventionnelle la reponse de l\inscription';
-            //     break;
+            case ConvHypothecState::SIGNIFICATION_REGISTERED:
+                $data['subject'] = 'RAPPEL : Étape de '.ConvHypothecState::STATES_VALUES[ConvHypothecState::ORDER_PAYMENT_VERIFIED];
+                $data['message'] = 'Procéder à la vérification de l\'ordre de paiement ';
+                break;
 
             // case ConvHypothecState::ORDER_PAYMENT_VERIFIED:
             //     $data['subject'] = 'RAPPEL : Document de la reponse d\inscription';

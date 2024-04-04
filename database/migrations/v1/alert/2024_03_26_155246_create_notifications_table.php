@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('state')->default('created');
             $table->string('sent_by')->default('system');
             $table->string('sent_to')->nullable();
+            $table->string('type')->default('alert');
             $table->text('data');
-            $table->string('type')->nullable();
+            // $table->foreignId('alert_id')->constrained()->onDelete('cascade');
             $table->morphs('notifiable');
             $table->timestamp('read_at')->nullable();
             // $table->timestamp('trigger_at')->nullable();

@@ -2,6 +2,8 @@
 
 namespace App\Models\Guarantee\ConventionnalHypothecs;
 
+use App\Concerns\Traits\Alert\Alertable;
+use App\Models\Alert\Alert;
 use App\Models\Guarantee\GuaranteeDocument;
 use App\Observers\ConvHypothecObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
@@ -13,7 +15,7 @@ use Illuminate\Notifications\Notifiable;
 #[ObservedBy([ConvHypothecObserver::class])]
 class ConventionnalHypothec extends Model
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Alertable;
 
     /**
      * @property int $id
@@ -52,4 +54,5 @@ class ConventionnalHypothec extends Model
     {
         return $this->morphMany(GuaranteeDocument::class, 'documentable');
     }
+
 }

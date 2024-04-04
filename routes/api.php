@@ -5,7 +5,6 @@ use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions\SessionAdmin
 use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions\TaskSessionAdministratorController;
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\GeneralMeetingController;
 use App\Http\Controllers\TaskGeneralMeetingController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,10 +17,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 Route::get('/ca_administrators/settings', [AdministratorController::class, 'settings']);
 Route::resource('/ca_administrators', AdministratorController::class);

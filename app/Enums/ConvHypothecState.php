@@ -28,5 +28,10 @@ enum ConvHypothecState {
         ConvHypothecState::REGISTER_REQUESTED => 'Demande d\'inscription',
         ConvHypothecState::REGISTER => 'Réponse de l\'inscription',
         ConvHypothecState::SIGNIFICATION_REGISTERED => 'Demande de signification',
+        ConvHypothecState::ORDER_PAYMENT_VERIFIED => 'Ordre de payement',
+        ConvHypothecState::ORDER_PAYMENT_VISA => 'visa de payement',
+        ConvHypothecState::EXPROPRIATION => 'Expropriation',
+        ConvHypothecState::ADVERTISEMENT => 'Publicité de vente',
+        ConvHypothecState::PROPERTY_SALE => 'Vente de la propriété',
     ];
 }

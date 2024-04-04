@@ -2,6 +2,8 @@
 
 namespace App\Observers;
 
+use App\Concerns\Traits\Guarantee\ConvHypothecNotificationTrait;
+use App\Models\Alert\Alert;
 use App\Models\Guarantee\ConventionnalHypothecs\ConventionnalHypothec;
 use App\Models\User;
 use App\Notifications\Guarantee\ConvHypothecInit;
@@ -12,24 +14,37 @@ use Illuminate\Support\Facades\Log;
 
 class ConvHypothecObserver implements ShouldHandleEventsAfterCommit
 {
+    use ConvHypothecNotificationTrait;
     /**
      * Handle the ConventionnalHypothec "created" event.
      */
-    public function created(ConventionnalHypothec $conventionnalHypothec): void
+    public function created(ConventionnalHypothec $convHypo): void
     {
-        $user = User::find(1);
+        $alert = new Alert();
+        $alert->title = 'test title';
+        $alert->type = 'hypothec';
+        $alert->message = 'message content';
+        $alert->trigger_at = Carbon::now()->addMinutes(5); //TODO : correct delay
 
-        $user->notify((new ConvHypothecInit($conventionnalHypothec))/* ->delay(Carbon::now()->addMinutes(2)) */);
+        $convHypo->alerts()->save($alert);
+        // $user = User::find(1);
+
+        // $user->notify((new ConvHypothecInit($conventionnalHypothec))/* ->delay(Carbon::now()->addMinutes(2)) */);
     }
 
     /**
      * Handle the ConventionnalHypothec "updated" event.
      */
-    public function updated(ConventionnalHypothec $conventionnalHypothec): void
+    public function updated(ConventionnalHypothec $convHypo): void
     {
-        $user = User::find(1);
+        $data = $this->nextStepBasedOnState($convHypo->state);
 
-        $user->notify((new ConvHypothecNextStep($conventionnalHypothec))/* ->delay(Carbon::now()->addMinutes(2)) */);
+        $alert = new Alert();
+        $alert->title = $data['subject'];
+        $alert->type = 'hypothec';
+        $alert->message = $data['message'];
+        $alert->trigger_at = Carbon::now()->addMinutes(5);
+        $convHypo->alerts()->save($alert);
     }
 
     /**

@@ -17,7 +17,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Notification as FacadesNotification;
 use Illuminate\Support\Str;
 
-class HypothecRepository
+class ConvHypothecRepository
 {
     public function __construct(
         private ConventionnalHypothec $conv_model

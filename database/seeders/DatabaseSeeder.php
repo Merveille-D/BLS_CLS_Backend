@@ -13,11 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::firstOrCreate([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => Hash::make('password')
-        ]);
+
+        $this->call(UserSeeder::class);
         // $this->call(ConventionnalHypothecSeeder::class);
     }
 }
