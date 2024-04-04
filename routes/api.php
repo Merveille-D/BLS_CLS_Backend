@@ -3,9 +3,9 @@
 use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Administrators\AdministratorController;
 use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions\SessionAdministratorController;
 use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions\TaskSessionAdministratorController;
+use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\AttendanceListGeneralMeetingController;
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\GeneralMeetingController;
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\TaskGeneralMeetingController;
-use App\Http\Controllers\AttendanceListGeneralMeetingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

@@ -27,8 +27,8 @@ class AttendanceListGeneralMeetingRepository
      *
      * @return AttendanceListGeneralMeeting
      */
-    public function update($attendanceListGeneralMeeting, $request) {
-        $attendanceListGeneralMeeting->update($request);
-        return $attendanceListGeneralMeeting;
+    public function update($attendanceListGeneralMeeting) {
+        $attendanceListGeneralMeeting->delete();
+        return 0;
     }
 }

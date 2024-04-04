@@ -19,8 +19,8 @@ class GeneralMeetingRepository
      */
     public function store($request) {
 
-        $date = new DateTime($request->meeting_date);
-        $reference = (GeneralMeeting::max('id') + 1) . 'e-AG-' . $date->format('d') . '-' . $date->format('m') . '-' . $date->format('Y');
+        $date = new DateTime(now());
+        $reference = 'AG-' . (GeneralMeeting::max('id') + 1) . '-' . $date->format('d') . '' . $date->format('m') . '' . $date->format('Y');
         $request['reference'] = $reference;
 
         $general_meeting = $this->meeting->create($request->all());
