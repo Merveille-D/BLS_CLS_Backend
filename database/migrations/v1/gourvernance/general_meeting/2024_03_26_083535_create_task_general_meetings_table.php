@@ -21,7 +21,8 @@ return new class extends Migration
 
             $table->enum('type', TaskGeneralMeeting::MEETING_TASK_TYPE );
 
-            $table->boolean("status")->default(0);
+            
+            $table->boolean('status')->default(false);
 
             $table->string('responsible')->nullable();
             $table->string('supervisor')->nullable();
