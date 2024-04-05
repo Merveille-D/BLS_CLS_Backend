@@ -10,6 +10,16 @@ class TaskGeneralMeeting extends Model
 {
     use HasFactory;
 
+
+    /**
+     * Les attributs qui doivent être castés vers des types natifs.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'status' => 'boolean',
+    ];
+
     protected $fillable = [
         'libelle',
         'deadline',
@@ -18,6 +28,7 @@ class TaskGeneralMeeting extends Model
         'responsible',
         'supervisor',
         'general_meeting_id',
+
     ];
 
     const MEETING_TASK_TYPE = [
