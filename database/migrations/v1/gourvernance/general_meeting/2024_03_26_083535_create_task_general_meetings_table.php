@@ -20,7 +20,8 @@ return new class extends Migration
             $table->datetime('deadline')->nullable();
 
             $table->enum('type', TaskGeneralMeeting::MEETING_TASK_TYPE );
-            $table->boolean('status')->default(false);
+
+            $table->boolean("status")->default(0);
 
             $table->string('responsible')->nullable();
             $table->string('supervisor')->nullable();
