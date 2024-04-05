@@ -43,7 +43,11 @@ class TaskGeneralMeetingController extends Controller
      */
     public function show(TaskGeneralMeeting $taskGeneralMeeting)
     {
-        //
+        try {
+            return api_response(true, "Information de la tache", $taskGeneralMeeting, 200);
+        }catch( ValidationException $e ) {
+            return api_response(false, "Echec de la récupération des infos de la tache", $e->errors(), 422);
+        }
     }
 
     /**
