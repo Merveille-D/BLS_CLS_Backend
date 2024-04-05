@@ -47,55 +47,55 @@ class TaskGeneralMeeting extends Model
         'pre_ag' => [
             [
                 'libelle' => "Premier rappel des écheances du CA et de l'AG aux chefs departements.",
-                'days' => -76,
+                'days' => -105,
             ],
             [
                 'libelle' => "Second rappel aux chefs departements",
-                'days' => -61,
+                'days' => -90,
             ],
             [
                 'libelle' => "Appreter les dossiers de : CA (ODJ, rapports DG, rapports comités CA...) - AG (ODJ, rapports CA, rapports CC, projet de résolutions)",
-                'days' => -36,
+                'days' => -65,
             ],
             [
                 'libelle' => "Convoquer le CA",
-                'days' => -29,
+                'days' => -60,
             ],
             [
                 'libelle' => "Réception des rapports des Commissaires aux Comptes (CC)",
-                'days' => -25,
+                'days' => -55,
             ],
             [
                 'libelle' => "Envoyer les dossiers du CA (et dossiers de l'AG à valider) aux administrateurs",
-                'days' => -20,
+                'days' => -50,
             ],
             [
                 'libelle' => "Tenue du premier CA de l'année",
-                'days' => -15,
+                'days' => -45,
             ],
             [
                 'libelle' => "Premiere publication dans la presse de l'avis de convocation",
-                'days' => 0,
+                'days' => -30,
             ],
             [
                 'libelle' => "Deuxième publication dans la presse de l'avis de convocation",
-                'days' => 15
+                'days' => -15
             ],
             [
                 'libelle' => "Tenue de l'AG",
-                'days' => 30
+                'days' => 0
             ],
             [
                 'libelle' => "Rédaction du Procèsverbal de l'AG et signature",
-                'days' => 46
+                'days' => 15
             ],
             [
                 'libelle' => "Transmission du PV de l'AG au Notaire pour les formalités légales",
-                'days' => 51
+                'days' => 20
             ],
             [
                 'libelle' => "Réception PV enrégistré et classement",
-                'days' => 61
+                'days' => 30
             ],
         ],
         'procedures' => [
