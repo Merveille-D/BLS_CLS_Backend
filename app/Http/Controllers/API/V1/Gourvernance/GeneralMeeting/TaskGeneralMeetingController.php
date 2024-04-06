@@ -80,7 +80,7 @@ class TaskGeneralMeetingController extends Controller
     public function deleteArrayTaskGeneralMeeting(Request $request)
     {
         try {
-            TaskGeneralMeeting::destroy($request->task_ids);
+            TaskGeneralMeeting::destroy($request['task_ids']);
             return api_response(true, "Succès de la suppression des taches", null, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de la supression des taches", $e->errors(), 422);
