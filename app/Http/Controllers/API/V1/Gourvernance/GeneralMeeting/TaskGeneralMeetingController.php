@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GeneralMeeting\ListTaskGeneralMeetingRequest;
+use App\Http\Requests\TaskGeneralMeeting\DeleteTaskGeneralMeetingRequest;
 use App\Http\Requests\TaskGeneralMeeting\StoreTaskGeneralMeetingRequest;
 use App\Http\Requests\TaskGeneralMeeting\UpdateTaskGeneralMeetingRequest;
 use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
@@ -77,7 +78,7 @@ class TaskGeneralMeetingController extends Controller
         }
     }
 
-    public function deleteArrayTaskGeneralMeeting(Request $request)
+    public function deleteArrayTaskGeneralMeeting(DeleteTaskGeneralMeetingRequest $request)
     {
         try {
             TaskGeneralMeeting::destroy($request['task_ids']);
