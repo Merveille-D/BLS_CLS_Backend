@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\GeneralMeeting\ListTaskGeneralMeetingRequest;
 use App\Http\Requests\TaskGeneralMeeting\DeleteTaskGeneralMeetingRequest;
 use App\Http\Requests\TaskGeneralMeeting\StoreTaskGeneralMeetingRequest;
+use App\Http\Requests\TaskGeneralMeeting\UpdateStatusTaskGeneralMeetingRequest;
 use App\Http\Requests\TaskGeneralMeeting\UpdateTaskGeneralMeetingRequest;
 use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
 use App\Repositories\TaskGeneralMeetingRepository;
@@ -81,11 +82,23 @@ class TaskGeneralMeetingController extends Controller
     public function deleteArrayTaskGeneralMeeting(DeleteTaskGeneralMeetingRequest $request)
     {
         try {
-            TaskGeneralMeeting::destroy($request['task_ids']);
+            $this->task->deleteArray($request);
             return api_response(true, "Succès de la suppression des taches", null, 200);
         } catch (ValidationException $e) {
-            return api_response(false, "Echec de la supression des taches", $e->errors(), 422);
+            return api_response(false, "Echec de la suppression des taches", $e->errors(), 422);
         }
     }
+
+    public function updateStatusTaskGeneralMeeting(UpdateStatusTaskGeneralMeetingRequest $request)
+    {
+        try {
+            $this->task->updateStatus($request);
+            return api_response(true, "Succès de la mise à jour des taches", null, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de la mise à jour des taches", $e->errors(), 422);
+        }
+    }
+
+
 
 }

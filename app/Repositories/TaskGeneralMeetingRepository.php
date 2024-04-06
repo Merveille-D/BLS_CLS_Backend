@@ -57,4 +57,34 @@ class TaskGeneralMeetingRepository
         $taskGeneralMeeting->update($request);
         return $taskGeneralMeeting;
     }
+
+    /**
+     * @param Request $request
+     *
+     * @return TaskGeneralMeeting
+     */
+
+    public function updateStatus($request) {
+        foreach ($request['tasks'] as $data) {
+            $taskGeneralMeeting = $this->task->findOrFail($data['id']);
+            $taskGeneralMeeting->update(['status' => $data['status']]);
+            $updatedTasks[] = $taskGeneralMeeting;
+        }
+
+        return $taskGeneralMeeting;
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return TaskGeneralMeeting
+     */
+    public function deleteArray($request) {
+        foreach ($request['tasks'] as $data) {
+            $taskGeneralMeeting = $this->task->findOrFail($data['id']);
+            $taskGeneralMeeting->delete();
+        }
+        return true;
+    }
+
 }

@@ -2,13 +2,11 @@
 
 namespace App\Http\Requests\TaskGeneralMeeting;
 
-use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
-class DeleteTaskGeneralMeetingRequest extends FormRequest
+class UpdateStatusTaskGeneralMeetingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,13 +23,12 @@ class DeleteTaskGeneralMeetingRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = [
+        return [
             'tasks' => 'required|array',
             'tasks.*' => 'required|array',
             'tasks.*.id' => 'required|integer',
+            'tasks.*.status' => 'required|boolean',
         ];
-
-        return $rules;
     }
 
     public function failedValidation(Validator $validator)
