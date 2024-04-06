@@ -28,6 +28,8 @@ Route::resource('general_meetings', GeneralMeetingController::class);
 Route::post('ag_attachements', [GeneralMeetingController::class, 'attachment']);
 
 Route::resource('task_general_meetings', TaskGeneralMeetingController::class);
+Route::post('delete_array_task_general_meetings', [TaskGeneralMeetingController::class, 'deleteArrayTaskGeneralMeeting'] );
+
 Route::resource('attendance_list_general_meetings', AttendanceListGeneralMeetingController::class);
 
 //

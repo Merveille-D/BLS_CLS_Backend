@@ -8,6 +8,7 @@ use App\Http\Requests\TaskGeneralMeeting\StoreTaskGeneralMeetingRequest;
 use App\Http\Requests\TaskGeneralMeeting\UpdateTaskGeneralMeetingRequest;
 use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
 use App\Repositories\TaskGeneralMeetingRepository;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Validation\ValidationException;
 
 class TaskGeneralMeetingController extends Controller
@@ -74,7 +75,15 @@ class TaskGeneralMeetingController extends Controller
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de la supression de la tache", $e->errors(), 422);
         }
+    }
 
-
+    public function deleteArrayTaskGeneralMeeting(Request $request)
+    {
+        try {
+            TaskGeneralMeeting::destroy($request->task_ids);
+            return api_response(true, "Succès de la suppression des taches", null, 200);
+        }catch (ValidationException $e) {
+                return api_response(false, "Echec de la supression des taches", $e->errors(), 422);
+        }
     }
 }
