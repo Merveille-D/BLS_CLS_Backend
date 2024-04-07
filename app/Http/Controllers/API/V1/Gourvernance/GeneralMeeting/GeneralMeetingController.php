@@ -48,7 +48,7 @@ class GeneralMeetingController extends Controller
     public function show(GeneralMeeting $general_meeting)
     {
         try {
-            $data = $general_meeting->load('attendanceList')->toArray();
+            $data = $general_meeting->toArray();
             $data['files'] = $general_meeting->files;
 
             return api_response(true, "Information de l'AG", $data, 200);
