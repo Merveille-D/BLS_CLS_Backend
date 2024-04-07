@@ -48,8 +48,10 @@ class GeneralMeetingController extends Controller
     public function show(GeneralMeeting $general_meeting)
     {
         try {
-            $general_meeting->load('fileUploads','tasks','attendanceList');
-            return api_response(true, "Information de l'AG", $general_meeting, 200);
+            $data = $general_meeting->load('attendanceList')->toArray();
+            $data['files'] = $general_meeting->files;
+
+            return api_response(true, "Information de l'AG", $data, 200);
         }catch( ValidationException $e ) {
             return api_response(false, "Echec de la récupération des infos de l'AG", $e->errors(), 422);
         }
