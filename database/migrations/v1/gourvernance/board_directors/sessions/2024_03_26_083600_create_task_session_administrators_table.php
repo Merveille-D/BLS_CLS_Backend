@@ -22,13 +22,12 @@ return new class extends Migration
             $table->enum('type', TaskSessionAdministrator::SESSION_TASK_TYPE );
             $table->enum('status', SessionAdministrator::SESSION_MEETING_STATUS );
 
-
             $table->string('responsible')->nullable();
             $table->string('supervisor')->nullable();
 
             $table->unsignedBigInteger('session_administrator_id')->nullable();
             $table->foreign('session_administrator_id')->references('id')->on('session_administrators')->onDelete('cascade');
-            
+
             $table->timestamps();
         });
     }

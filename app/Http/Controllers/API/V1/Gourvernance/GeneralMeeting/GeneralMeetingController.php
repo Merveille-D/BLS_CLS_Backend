@@ -61,7 +61,6 @@ class GeneralMeetingController extends Controller
     public function update(UpdateGeneralMeetingRequest $request, GeneralMeeting $general_meeting)
     {
         try {
-
             $this->meeting->update($general_meeting, $request->all());
             return api_response(true, "AG mis à jour avec succès", $general_meeting, 200);
         } catch (ValidationException $e) {
@@ -73,7 +72,6 @@ class GeneralMeetingController extends Controller
     public function attachment(UpdateAttachementGeneralMeetingRequest $request)
     {
         try {
-
             $general_meeting = $this->meeting->attachement($request);
             return api_response(true, "Mis à jour de l'AG avec suucès", $general_meeting, 200);
 

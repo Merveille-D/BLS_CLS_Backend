@@ -24,7 +24,7 @@ class TaskGeneralMeetingRepository
             ->when(request('type') !== null, function($query) {
                 $query->where('type', request('type'));
             }, function($query) {
-                $query->whereNotIn('type', ['checklist', 'procedures']);
+                $query->whereNotIn('type', ['checklist', 'procedure']);
             })
             ->get();
 

@@ -20,10 +20,10 @@ class TaskSessionAdministratorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(ListTaskSessionAdministratorRequest $request)
     {
-        $task_general_meetings = TaskGeneralMeeting::all();
-        return api_response(true, "Liste des Taches", $task_general_meetings, 200);
+        $task_general_meetings = $this->task->all($request);
+        return api_response(true, "Liste des Taches du CA", $task_general_meetings, 200);
     }
 
     /**

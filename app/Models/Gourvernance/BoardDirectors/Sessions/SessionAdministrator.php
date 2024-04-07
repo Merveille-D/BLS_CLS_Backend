@@ -14,6 +14,7 @@ class SessionAdministrator extends Model
         'libelle',
         'reference',
         'session_date',
+        'type',
         'status',
         'pv_file',
         'pv_file_date',
@@ -25,15 +26,19 @@ class SessionAdministrator extends Model
         'attendance_list_file_date',
     ];
 
+    const SESSION_MEETING_TYPES = [
+        'ordinary',
+        'extraordinary',
+        'mixte',
+    ];
+
     const SESSION_MEETING_STATUS = [
         'pending',
-        'post_ag',
         'closed',
     ];
 
     const SESSION_MEETING_STATUS_VALUES = [
         'pending' => 'En cours',
-        'post_ag' => 'Post AG',
         'closed' => 'Terminé',
     ];
 

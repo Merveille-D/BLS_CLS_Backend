@@ -34,7 +34,7 @@ class TaskGeneralMeeting extends Model
     const MEETING_TASK_TYPE = [
         'pre_ag',
         'checklist',
-        'procedures',
+        'procedure',
         'post_ag'
     ];
 
@@ -98,7 +98,7 @@ class TaskGeneralMeeting extends Model
                 'days' => 30
             ],
         ],
-        'procedures' => [
+        'procedure' => [
             ['libelle' => "PCA ouvre la séance, préside et confirme quorum"],
             ['libelle' => "PCA: Désignation Bureau (Scrutateurs + Secrétaire)"],
             ['libelle' => "PCA confirme présence CC et documents légaux"],
