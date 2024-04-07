@@ -84,6 +84,7 @@ class TaskGeneralMeetingRepository
             $taskGeneralMeeting = $this->task->findOrFail($data['id']);
             $taskGeneralMeeting->delete();
         }
+
         return true;
     }
 

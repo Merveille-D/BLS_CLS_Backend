@@ -29,7 +29,7 @@ class GeneralMeeting extends Model
     const GENERAL_MEETING_TYPES = [
         'ordinary',
         'extraordinary',
-        'annual',
+        'mixte',
     ];
 
     const GENERAL_MEETING_STATUS = [
