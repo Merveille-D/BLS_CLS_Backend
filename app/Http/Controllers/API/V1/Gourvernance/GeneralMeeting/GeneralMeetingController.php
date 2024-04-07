@@ -25,7 +25,7 @@ class GeneralMeetingController extends Controller
             $query->where('status', request('status'));
         })->get();
 
-        return api_response(true, "Liste des AG", $general_meetings, 200);
+        return api_response(true, "AG en cours", $general_meetings, 200);
     }
 
 
@@ -64,7 +64,7 @@ class GeneralMeetingController extends Controller
     {
         try {
             $this->meeting->update($general_meeting, $request->all());
-            return api_response(true, "AG mis à jour avec succès", $general_meeting, 200);
+            return api_response(true, "Ajout du document avec succès", $general_meeting, 200);
         } catch (ValidationException $e) {
 
             return api_response(false, "Echec de la mise à jour de l'AG", $e->errors(), 422);
