@@ -50,6 +50,7 @@ class GeneralMeetingController extends Controller
         try {
             $data = $general_meeting->toArray();
             $data['files'] = $general_meeting->files;
+            $data['next_task'] = $general_meeting->next_task;
 
             return api_response(true, "Information de l'AG", $data, 200);
         }catch( ValidationException $e ) {

@@ -125,5 +125,11 @@ class GeneralMeeting extends Model
         return $files;
     }
 
+    public function getNextTaskAttribute()
+    {
+        $task = $this->tasks()->orderBy('deadline', 'asc')->where('status', false)->first();
+        return $task;
+    }
+
 }
 

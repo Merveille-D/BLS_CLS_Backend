@@ -48,6 +48,14 @@ if(!function_exists('uploadFile')) {
     }
 }
 
+if(!function_exists('getClientOriginalName')) {
+    function getFileName($file) {
+
+        $name_file = pathinfo($file, PATHINFO_FILENAME);
+        return $name_file;
+    }
+}
+
 
 
 

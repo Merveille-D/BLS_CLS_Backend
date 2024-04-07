@@ -38,7 +38,6 @@ class GeneralMeetingRepository
 
         $general_meeting->update($request);
         $this->createTasks($general_meeting);
-
         return $general_meeting;
     }
 
@@ -50,7 +49,6 @@ class GeneralMeetingRepository
     public function attachement($request) {
 
         $general_meeting = GeneralMeeting::find($request->general_meeting_id);
-
         $files = $request['files'];
 
         foreach($files as $item) {
@@ -68,7 +66,7 @@ class GeneralMeetingRepository
 
                 $fileUpload = new GourvernanceDocument();
 
-                $fileUpload->name = pathinfo($item['file']->getClientOriginalName(), PATHINFO_FILENAME);
+                $fileUpload->name = getFileName($item['file']);
                 $fileUpload->file = uploadFile($item['file'], 'ag_documents');
                 $fileUpload->status = $general_meeting->status;
 
