@@ -50,21 +50,20 @@ class GeneralMeetingRepository
     public function attachement($request) {
 
         $general_meeting = GeneralMeeting::find($request->general_meeting_id);
-
-        $fieldName = collect($request->except('general_meeting_id'))->keys()->first();
+        $fieldName = GeneralMeeting::TYPE_FILE_FIELD_VALUE[$request->files['type']];
 
         $generalMeeting = new GeneralMeeting();
         if ($generalMeeting->isFillable($fieldName)) {
 
             $general_meeting->update([
-                $fieldName => uploadFile( $request->$fieldName, 'ag_documents'),
+                $fieldName => uploadFile( $request->files['file'], 'ag_documents'),
                 GeneralMeeting::DATE_FILE_FIELD[$fieldName] => now(),
             ]);
         }else {
 
             $fileUpload = new GourvernanceDocument();
 
-            $fileUpload->file = uploadFile($request->$fieldName, 'ag_documents');
+            $fileUpload->file = uploadFile($request->files['file'], 'ag_documents');
             $fileUpload->status = $general_meeting->status;
 
             $general_meeting->fileUploads()->save($fileUpload);

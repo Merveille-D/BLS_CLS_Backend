@@ -38,17 +38,28 @@ class GeneralMeeting extends Model
         'closed',
     ];
 
-    const GENERAL_MEETING_STATUS_VALUES = [
-        'pending' => 'En cours',
-        'post_ag' => 'Post AG',
-        'closed' => 'Terminé',
-    ];
 
     const FILE_FIELD = [
         'pv_file',
         'agenda_file',
         'convocation_file',
         'attendance_list_file',
+    ];
+
+    const TYPE_FILE_FIELD = [
+        'pv',
+        'agenda',
+        'convocation',
+        'attendance_list',
+        'other'
+    ];
+
+    const TYPE_FILE_FIELD_VALUE = [
+        'pv' => 'pv_file',
+        'agenda' => 'agenda_file',
+        'convocation' => 'convocation_file',
+        'attendance_list' => 'attendance_list_file',
+        'other' => 'other_file',
     ];
 
     const DATE_FILE_FIELD = [
