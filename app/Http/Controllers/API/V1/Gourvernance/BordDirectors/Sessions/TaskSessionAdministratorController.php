@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskSessionAdministrator\StoreTaskSessionAdministratorRequest;
 use App\Http\Requests\TaskSessionAdministrator\UpdateTaskSessionAdministratorRequest;
 use App\Models\Gourvernance\BoardDirectors\Sessions\TaskSessionAdministrator;
-use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
 use App\Repositories\TaskSessionAdministratorRepository;
 use Illuminate\Validation\ValidationException;
 
@@ -32,8 +31,8 @@ class TaskSessionAdministratorController extends Controller
     public function store(StoreTaskSessionAdministratorRequest $request)
     {
         try {
-            $task_general_meeting = $this->task->store($request);
-            return api_response(true, "Succès de l'enregistrement de la tache", $task_general_meeting, 200);
+            $task_session_administrator = $this->task->store($request);
+            return api_response(true, "Succès de l'enregistrement de la tache", $task_session_administrator, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement de la tache", $e->errors(), 422);
         }
@@ -58,7 +57,7 @@ class TaskSessionAdministratorController extends Controller
     public function update(UpdateTaskSessionAdministratorRequest $request, TaskSessionAdministrator $taskSessionAdministrator)
     {
         try {
-            $taskSessionAdministrator = $this->task->update($request);
+            $this->task->update($taskSessionAdministrator, $request->all());
             return api_response(true, "Succès de l'enregistrement de la tache", $taskSessionAdministrator, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement de la tache", $e->errors(), 422);
@@ -71,5 +70,25 @@ class TaskSessionAdministratorController extends Controller
     public function destroy(TaskSessionAdministrator $taskSessionAdministrator)
     {
         //
+    }
+
+    public function deleteArrayTaskSessionAdministrator(DeleteTaskSessionAdministratorRequest $request)
+    {
+        try {
+            $this->task->deleteArray($request);
+            return api_response(true, "Succès de la suppression des taches", null, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de la suppression des taches", $e->errors(), 422);
+        }
+    }
+
+    public function updateStatusTaskSessionAdministrator(UpdateStatusTaskSessionAdministratorRequest $request)
+    {
+        try {
+            $this->task->updateStatus($request);
+            return api_response(true, "Succès de la mise à jour des taches", null, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de la mise à jour des taches", $e->errors(), 422);
+        }
     }
 }

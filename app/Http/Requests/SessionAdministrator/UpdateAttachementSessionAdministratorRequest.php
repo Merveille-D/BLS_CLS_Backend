@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 
-class UpdateSessionAdministratorRequest extends FormRequest
+class UpdateAttachementSessionAdministratorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +26,11 @@ class UpdateSessionAdministratorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'session_date' => ['required', 'numeric'],
-
+            'session_administrator_id' => ['required', 'numeric'],
+            'files' => ['required', 'array'],
+            'files.*' => ['required', 'array'],
+            'files.*.type' => ['required',  Rule::in(SessionAdministrator::TYPE_FILE_FIELD) ],
+            'files.*.file' => ['required', 'file']
         ];
     }
 

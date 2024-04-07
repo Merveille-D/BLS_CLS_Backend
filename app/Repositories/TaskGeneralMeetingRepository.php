@@ -1,7 +1,6 @@
 <?php
 namespace App\Repositories;
 
-use App\Models\FileUpload;
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
 use Carbon\Carbon;
@@ -19,7 +18,7 @@ class TaskGeneralMeetingRepository
      */
     public function all($request) {
 
-    $task_general_meetings = $this->task
+        $task_general_meetings = $this->task
             ->where('general_meeting_id', $request->general_meeting_id)
             ->when(request('type') !== null, function($query) {
                 $query->where('type', request('type'));

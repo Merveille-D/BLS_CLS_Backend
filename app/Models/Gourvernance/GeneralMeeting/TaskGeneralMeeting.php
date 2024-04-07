@@ -10,7 +10,6 @@ class TaskGeneralMeeting extends Model
 {
     use HasFactory;
 
-
     /**
      * Les attributs qui doivent être castés vers des types natifs.
      *
@@ -28,7 +27,6 @@ class TaskGeneralMeeting extends Model
         'responsible',
         'supervisor',
         'general_meeting_id',
-
     ];
 
     const MEETING_TASK_TYPE = [

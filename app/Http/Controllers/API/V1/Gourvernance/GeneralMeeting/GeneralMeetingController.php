@@ -77,7 +77,6 @@ class GeneralMeetingController extends Controller
         try {
             $general_meeting = $this->meeting->attachement($request);
             return api_response(true, "Mis à jour de l'AG avec suucès", $general_meeting, 200);
-
         }catch( ValidationException $e ) {
             return api_response(false, "Echec de la mise à jour de l'AG ", $e->errors(), 422);
         }

@@ -95,7 +95,7 @@ class GeneralMeeting extends Model
     {
         $files = [];
 
-        $type = array_flip(GeneralMeeting::TYPE_FILE_FIELD_VALUE);
+        $type = array_flip(self::TYPE_FILE_FIELD_VALUE);
 
         $directFiles = [
             'pv_file',

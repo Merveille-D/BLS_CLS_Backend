@@ -34,12 +34,8 @@ class SessionAdministrator extends Model
 
     const SESSION_MEETING_STATUS = [
         'pending',
+        'post_ca',
         'closed',
-    ];
-
-    const SESSION_MEETING_STATUS_VALUES = [
-        'pending' => 'En cours',
-        'closed' => 'Terminé',
     ];
 
     const FILE_FIELD = [
@@ -47,6 +43,29 @@ class SessionAdministrator extends Model
         'agenda_file',
         'convocation_file',
         'attendance_list_file',
+    ];
+
+    const TYPE_FILE_FIELD = [
+        'pv',
+        'agenda',
+        'convocation',
+        'attendance_list',
+        'other'
+    ];
+
+    const TYPE_FILE_FIELD_VALUE = [
+        'pv' => 'pv_file',
+        'agenda' => 'agenda_file',
+        'convocation' => 'convocation_file',
+        'attendance_list' => 'attendance_list_file',
+        'other' => 'other_file',
+    ];
+
+    const FILE_FIELD_VALUE = [
+        'pv' => 'Procès verbal',
+        'agenda' => 'Ordre du jour',
+        'convocation' => 'Convocation',
+        'attendance_list' => 'Liste de présence des actionnaires',
     ];
 
     const DATE_FILE_FIELD = [
@@ -64,6 +83,45 @@ class SessionAdministrator extends Model
     public function tasks()
     {
         return $this->hasMany(TaskSessionAdministrator::class);
+    }
+
+    public function getFilesAttribute()
+    {
+        $files = [];
+
+        $type = array_flip(self::TYPE_FILE_FIELD_VALUE);
+
+        $directFiles = [
+            'pv_file',
+            'convocation_file',
+            'agenda_file',
+            'attendance_list_file'
+        ];
+
+        foreach ($directFiles as $field) {
+            if (!empty($this->$field)) {
+                $files[] = [
+                    'filename' => self::FILE_FIELD_VALUE[$type[$field]],
+                    'file_url' => $this->$field,
+                    'type' => $type[$field],
+                ];
+            }
+        }
+
+        foreach ($this->fileUploads as $fileUpload) {
+            $files[] = [
+                'filename' => $fileUpload->name ?? null,
+                'file_url' => $fileUpload->file,
+                'type' => 'other',
+            ];
+        }
+        return $files;
+    }
+
+    public function getNextTaskAttribute()
+    {
+        $task = $this->tasks()->orderBy('deadline', 'asc')->where('status', false)->first();
+        return $task;
     }
 
 }

@@ -31,9 +31,7 @@ Route::resource('task_general_meetings', TaskGeneralMeetingController::class);
 Route::delete('delete_array_task_general_meetings', [TaskGeneralMeetingController::class, 'deleteArrayTaskGeneralMeeting'] );
 Route::put('update_status_task_general_meetings', [TaskGeneralMeetingController::class, 'updateStatusTaskGeneralMeeting'] );
 
-Route::resource('attendance_list_general_meetings', AttendanceListGeneralMeetingController::class);
-
-//
+// Route::resource('attendance_list_general_meetings', AttendanceListGeneralMeetingController::class);
 
 Route::get('/ca_administrators/settings', [AdministratorController::class, 'settings']);
 Route::resource('/ca_administrators', AdministratorController::class);
@@ -41,8 +39,9 @@ Route::resource('/ca_administrators', AdministratorController::class);
 Route::resource('session_administrators', SessionAdministratorController::class);
 Route::post('ca_attachements', [SessionAdministratorController::class, 'attachment']);
 
-
-
 Route::resource('task_session_administrators', TaskSessionAdministratorController::class);
+Route::delete('delete_array_task_session_administrators', [TaskSessionAdministratorController::class, 'deleteArrayTaskSessionAdministrator'] );
+Route::put('update_status_task_session_administrators', [TaskSessionAdministratorController::class, 'updateStatusTaskSessionAdministrator'] );
+
 
 

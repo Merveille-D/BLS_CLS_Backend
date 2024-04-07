@@ -46,8 +46,11 @@ class SessionAdministratorController extends Controller
     public function show(SessionAdministrator $session_administrator)
     {
         try {
-            $session_administrator->load('fileUploads','tasks');
-            return api_response(true, "Information du CA", $session_administrator, 200);
+            $data = $session_administrator->toArray();
+            $data['files'] = $session_administrator->files;
+            $data['next_task'] = $session_administrator->next_task;
+
+            return api_response(true, "Information du CA", $data, 200);
         } catch (ValidationException $e) {
             return api_response(false, "Echec de la récupération des infos du CA", $e->errors(), 422);
         }

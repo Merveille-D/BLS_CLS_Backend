@@ -37,7 +37,10 @@ class GeneralMeetingRepository
     public function update(GeneralMeeting $general_meeting, $request) {
 
         $general_meeting->update($request);
-        $this->createTasks($general_meeting);
+
+        if($request->has('meeting_date')) {
+            $this->createTasks($general_meeting);
+        }
         return $general_meeting;
     }
 
@@ -73,9 +76,7 @@ class GeneralMeetingRepository
                 $general_meeting->fileUploads()->save($fileUpload);
             }
         }
-
-
-
+        
         $this->checkFilesFilled($general_meeting);
 
         return $general_meeting;

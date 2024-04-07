@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Requests\SessionAdministrator;
+namespace App\Http\Requests\TaskGeneralMeeting;
 
-use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
-class UpdateSessionAdministratorRequest extends FormRequest
+class UpdateStatusTaskSessionAdministratorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +24,10 @@ class UpdateSessionAdministratorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'session_date' => ['required', 'numeric'],
-
+            'tasks' => 'required|array',
+            'tasks.*' => 'required|array',
+            'tasks.*.id' => 'required|integer',
+            'tasks.*.status' => 'required|boolean',
         ];
     }
 

@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests\SessionAdministrator;
 
+use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class StoreSessionAdministratorRequest extends FormRequest
 {
@@ -26,6 +28,7 @@ class StoreSessionAdministratorRequest extends FormRequest
         return [
             'libelle' => ['required', 'string'],
             'session_date' => ['required', 'date'],
+            'type' => ['required',  Rule::in(SessionAdministrator::SESSION_MEETING_TYPES) ],
         ];
     }
 
