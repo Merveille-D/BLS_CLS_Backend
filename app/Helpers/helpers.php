@@ -48,10 +48,10 @@ if(!function_exists('uploadFile')) {
     }
 }
 
-if(!function_exists('getClientOriginalName')) {
+if(!function_exists('getFileName')) {
     function getFileName($file) {
 
-        $name_file = pathinfo($file, PATHINFO_FILENAME);
+        $name_file = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         return $name_file;
     }
 }

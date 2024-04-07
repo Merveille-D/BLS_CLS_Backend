@@ -121,7 +121,6 @@ class GeneralMeeting extends Model
                 'type' => 'other',
             ];
         }
-
         return $files;
     }
 
