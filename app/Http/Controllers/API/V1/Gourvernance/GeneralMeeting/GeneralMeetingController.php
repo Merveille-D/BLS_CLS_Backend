@@ -21,11 +21,15 @@ class GeneralMeetingController extends Controller
      */
     public function index()
     {
-        $general_meetings = GeneralMeeting::when(request('status') != null, function($query) {
+        $general_meeting = GeneralMeeting::when(request('status') != null, function($query) {
             $query->where('status', request('status'));
-        })->get();
+        })->first();
 
-        return api_response(true, "AG en cours", $general_meetings, 200);
+        $data = $general_meeting->toArray();
+        $data['files'] = $general_meeting->files;
+        $data['next_task'] = $general_meeting->next_task;
+
+        return api_response(true, "AG en cours", $data, 200);
     }
 
 

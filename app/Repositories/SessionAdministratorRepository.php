@@ -20,7 +20,7 @@ class SessionAdministratorRepository
     public function store($request) {
 
         $date = new DateTime(now());
-        $reference = 'AG-' . (SessionAdministrator::max('id') + 1) . '-' . $date->format('d') . '' . $date->format('m') . '' . $date->format('Y');
+        $reference = 'CA-' . (SessionAdministrator::max('id') + 1) . '-' . $date->format('d') . '' . $date->format('m') . '' . $date->format('Y');
         $request['reference'] = $reference;
 
         $session_administrator = $this->session->create($request->all());

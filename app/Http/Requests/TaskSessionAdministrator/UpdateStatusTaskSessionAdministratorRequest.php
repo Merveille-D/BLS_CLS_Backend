@@ -24,7 +24,7 @@ class UpdateStatusTaskSessionAdministratorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tasks' => 'required|array',
+            'taskspA' => 'required|array',
             'tasks.*' => 'required|array',
             'tasks.*.id' => 'required|integer',
             'tasks.*.status' => 'required|boolean',
