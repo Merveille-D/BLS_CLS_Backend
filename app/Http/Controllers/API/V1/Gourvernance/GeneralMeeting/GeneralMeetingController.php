@@ -48,7 +48,7 @@ class GeneralMeetingController extends Controller
     public function show(GeneralMeeting $general_meeting)
     {
         try {
-            $data = $general_meeting->toArray();
+            $data = $general_meeting->load('tasks')->toArray();
             $data['files'] = $general_meeting->files;
             $data['next_task'] = $general_meeting->next_task;
 

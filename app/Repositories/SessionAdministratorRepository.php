@@ -20,7 +20,7 @@ class SessionAdministratorRepository
     public function store($request) {
 
         $date = new DateTime(now());
-        $reference = 'CA-' . (SessionAdministrator::max('id') + 1) . '-' . $date->format('d') . '' . $date->format('m') . '' . $date->format('Y');
+        $reference = 'CA-' . (SessionAdministrator::max('id') + 1) . '-' . $date->format('d') . '/' . $date->format('m') . '/' . $date->format('Y');
         $request['reference'] = $reference;
 
         $session_administrator = $this->session->create($request->all());
@@ -36,11 +36,12 @@ class SessionAdministratorRepository
      */
     public function update(SessionAdministrator $session_administrator, $request) {
 
-        $session_administrator->update($request);
-
         if($request["session_date"] != $session_administrator->session_date) {
             $this->createTasks($session_administrator);
         }
+
+        $session_administrator->update($request);
+
         return $session_administrator;
     }
 
@@ -78,7 +79,7 @@ class SessionAdministratorRepository
             }
         }
 
-        $this->checkFilesFilled($session_administrator);
+        // $this->checkFilesFilled($session_administrator);
 
         return $session_administrator;
     }

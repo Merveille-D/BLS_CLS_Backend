@@ -26,7 +26,7 @@ class UpdateSessionAdministratorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'session_date' => ['required', 'numeric'],
+            'session_date' => ['required', 'date'],
 
         ];
     }

@@ -20,7 +20,7 @@ class GeneralMeetingRepository
     public function store($request) {
 
         $date = new DateTime(now());
-        $reference = 'AG-' . (GeneralMeeting::max('id') + 1) . '-' . $date->format('d') . '' . $date->format('m') . '' . $date->format('Y');
+        $reference = 'AG-' . (GeneralMeeting::max('id') + 1) . '-' . $date->format('d') . '/' . $date->format('m') . '/' . $date->format('Y');
         $request['reference'] = $reference;
 
         $general_meeting = $this->meeting->create($request->all());
@@ -36,11 +36,12 @@ class GeneralMeetingRepository
      */
     public function update(GeneralMeeting $general_meeting, $request) {
 
-        $general_meeting->update($request);
-
         if($request["meeting_date"] != $general_meeting->meeting_date) {
             $this->createTasks($general_meeting);
         }
+
+        $general_meeting->update($request);
+
         return $general_meeting;
     }
 
@@ -77,7 +78,7 @@ class GeneralMeetingRepository
             }
         }
 
-        $this->checkFilesFilled($general_meeting);
+        // $this->checkFilesFilled($general_meeting);
 
         return $general_meeting;
     }
