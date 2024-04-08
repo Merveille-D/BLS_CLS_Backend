@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SessionAdministrator\StoreSessionAdministratorRequest;
+use App\Http\Requests\SessionAdministrator\UpdateAttachementSessionAdministratorRequest;
 use App\Http\Requests\SessionAdministrator\UpdateSessionAdministratorRequest;
 use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
 use App\Repositories\SessionAdministratorRepository;
@@ -70,7 +71,7 @@ class SessionAdministratorController extends Controller
         }
     }
 
-    public function attachment(UpdateSessionAdministratorRequest $request)
+    public function attachment(UpdateAttachementSessionAdministratorRequest $request)
     {
         try {
             $session_administrator = $this->session->attachement($request);

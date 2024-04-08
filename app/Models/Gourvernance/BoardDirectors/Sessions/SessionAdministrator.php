@@ -120,7 +120,7 @@ class SessionAdministrator extends Model
 
     public function getNextTaskAttribute()
     {
-        $task = $this->tasks()->orderBy('deadline', 'asc')->where('status', false)->first();
+        $task = $this->tasks()->whereNotNull('deadline')->orderBy('deadline', 'asc')->where('status', false)->first();
         return $task;
     }
 

@@ -94,7 +94,7 @@ class SessionAdministratorRepository
                 $task['type'] = $type;
                 $task['session_administrator_id'] = $session_administrator->id;
 
-                if($type == "pre_ag") {
+                if($type == "pre_ca") {
                     $session_date = new DateTime($session_administrator->session_date);
                     $sign = $task['days'] >= 0 ? 1 : -1;
                     $deadline = $session_date->modify($sign * abs($task['days']) . ' days');
