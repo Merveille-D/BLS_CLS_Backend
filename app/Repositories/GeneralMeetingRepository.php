@@ -38,7 +38,7 @@ class GeneralMeetingRepository
 
         $general_meeting->update($request);
 
-        if($request["meeting_date"] != null) {
+        if($request["meeting_date"] != $general_meeting->meeting_date) {
             $this->createTasks($general_meeting);
         }
         return $general_meeting;

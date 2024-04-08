@@ -38,7 +38,7 @@ class SessionAdministratorRepository
 
         $session_administrator->update($request);
 
-        if($request->has('session_date')) {
+        if($request["session_date"] != $session_administrator->session_date) {
             $this->createTasks($session_administrator);
         }
         return $session_administrator;
