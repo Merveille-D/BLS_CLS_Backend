@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('alerts', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('state')->default('created');
             $table->string('type')->nullable();
             $table->string('title')->nullable();
             $table->text('message')->nullable();
             $table->timestamp('trigger_at');
-            $table->morphs('alertable');
+            $table->uuidMorphs('alertable');
             $table->timestamps();
         });
     }

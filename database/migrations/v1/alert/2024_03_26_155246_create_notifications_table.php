@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('type')->default('alert');
             $table->text('data');
             // $table->foreignId('alert_id')->constrained()->onDelete('cascade');
-            $table->morphs('notifiable');
+            $table->uuidMorphs('notifiable');
             $table->timestamp('read_at')->nullable();
             // $table->timestamp('trigger_at')->nullable();
             $table->timestamps();
