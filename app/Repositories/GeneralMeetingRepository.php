@@ -42,6 +42,7 @@ class GeneralMeetingRepository
         $date_diff = $current_date->diff($old_date);
 
         if($date_diff->format('%R%a') != 0) {
+            dd(1);
             $this->createTasks($general_meeting);
         }
 
