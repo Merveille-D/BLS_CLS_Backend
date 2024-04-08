@@ -36,7 +36,11 @@ class SessionAdministratorRepository
      */
     public function update(SessionAdministrator $session_administrator, $request) {
 
-        if($request["session_date"] != $session_administrator->session_date) {
+        $current_date = new DateTime($request["meeting_date"]);
+        $old_date = new DateTime($session_administrator->meeting_date);
+
+        $date_diff = $current_date->diff($old_date);
+        if($date_diff->format('%R%a') != 0) {
             $this->createTasks($session_administrator);
         }
 
