@@ -23,7 +23,7 @@ class SessionAdministratorController extends Controller
     {
         $session_administrator = SessionAdministrator::when(request('status') != null, function($query) {
             $query->where('status', request('status'));
-        })->firstt();
+        })->first();
 
         $data = $session_administrator->toArray();
         $data['files'] = $session_administrator->files;
