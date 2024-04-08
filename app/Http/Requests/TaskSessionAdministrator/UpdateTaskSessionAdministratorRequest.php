@@ -26,15 +26,11 @@ class UpdateTaskSessionAdministratorRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'libelle' => ['required', 'string'],
-            'type' => ['required', Rule::in(TaskSessionAdministrator::SESSION_TASK_TYPE)],
+            'libelle' => ['string'],
+            'responsible' => ['string'],
+            'deadline' => ['date'],
+            'supervisor' => ['string'],
         ];
-
-        if ($this->input('type') === 'post_ag') {
-            $rules['responsible'] = ['required', 'string'];
-            $rules['deadline'] = ['required', 'date'];
-            $rules['supervisor'] = ['required', 'string'];
-        }
 
         return $rules;
     }

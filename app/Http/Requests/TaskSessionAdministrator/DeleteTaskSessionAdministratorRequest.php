@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Requests\TaskGeneralMeeting;
+namespace App\Http\Requests\TaskSessionAdministrator;
 
-use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;

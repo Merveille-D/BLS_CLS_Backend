@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\TaskGeneralMeeting;
+namespace App\Http\Requests\TaskSessionAdministrator;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;

@@ -76,7 +76,7 @@ class GeneralMeetingRepository
                 $general_meeting->fileUploads()->save($fileUpload);
             }
         }
-        
+
         $this->checkFilesFilled($general_meeting);
 
         return $general_meeting;

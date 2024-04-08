@@ -52,14 +52,15 @@ class SessionAdministratorRepository
     public function attachement($request) {
 
         $session_administrator = SessionAdministrator::find($request->session_administrator_id);
+
         $files = $request['files'];
 
         foreach($files as $item) {
 
             $fieldName = SessionAdministrator::TYPE_FILE_FIELD_VALUE[$item['type']];
 
-            $session_administrator = new SessionAdministrator();
-            if ($session_administrator->isFillable($fieldName)) {
+            $sessionAdministrator = new SessionAdministrator();
+            if ($sessionAdministrator->isFillable($fieldName)) {
 
                 $session_administrator->update([
                     $fieldName => uploadFile( $item['file'], 'ca_documents'),

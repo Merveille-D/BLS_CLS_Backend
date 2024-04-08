@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\GeneralMeeting;
+namespace App\Http\Requests\SessionAdministrator;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class ListTaskGeneralMeetingRequest extends FormRequest
+class ListTaskSessionAdministratorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
