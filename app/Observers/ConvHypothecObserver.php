@@ -15,21 +15,20 @@ use Illuminate\Support\Facades\Log;
 class ConvHypothecObserver implements ShouldHandleEventsAfterCommit
 {
     use ConvHypothecNotificationTrait;
+
     /**
      * Handle the ConventionnalHypothec "created" event.
      */
     public function created(ConventionnalHypothec $convHypo): void
     {
+        $data = $this->nextStepBasedOnState($convHypo->state);
+
         $alert = new Alert();
-        $alert->title = 'test title';
+        $alert->title = $data['subject'];
         $alert->type = 'hypothec';
-        $alert->message = 'message content';
-        $alert->trigger_at = Carbon::now()->addMinutes(5); //TODO : correct delay
-
+        $alert->message = $data['message'];
+        $alert->trigger_at = Carbon::now()->addDays(3);
         $convHypo->alerts()->save($alert);
-        // $user = User::find(1);
-
-        // $user->notify((new ConvHypothecInit($conventionnalHypothec))/* ->delay(Carbon::now()->addMinutes(2)) */);
     }
 
     /**
@@ -43,7 +42,7 @@ class ConvHypothecObserver implements ShouldHandleEventsAfterCommit
         $alert->title = $data['subject'];
         $alert->type = 'hypothec';
         $alert->message = $data['message'];
-        $alert->trigger_at = Carbon::now()->addMinutes(5);
+        $alert->trigger_at = Carbon::now()->addDays(3);
         $convHypo->alerts()->save($alert);
     }
 

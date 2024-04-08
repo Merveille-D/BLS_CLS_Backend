@@ -7,8 +7,8 @@ trait ConvHypothecNotificationTrait
 {
     function nextStepBasedOnState($state) : array {
         $data = array(
-            'subject' => 'default title',
-            'message' => 'default message',
+            'subject' => 'RAPPEL : Étape de '.ConvHypothecState::STATES_VALUES[ConvHypothecState::AGREEMENT_SIGNED],
+            'message' => 'Veuillez attacher les documents de la propriété pour vérification',
         );
 
         switch ($state) {

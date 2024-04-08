@@ -5,6 +5,7 @@ namespace App\Observers\Alert;
 use App\Models\Alert\Alert;
 use App\Models\User;
 use App\Notifications\AlertNotification;
+use Illuminate\Support\Facades\Queue;
 
 class AlertObserver
 {
