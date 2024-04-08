@@ -21,11 +21,15 @@ class SessionAdministratorController extends Controller
      */
     public function index()
     {
-        $session_administrators = SessionAdministrator::when(request('status') != null, function($query) {
+        $session_administrator = SessionAdministrator::when(request('status') != null, function($query) {
             $query->where('status', request('status'));
-        })->get();
+        })->firstt();
 
-        return api_response(true, "Liste des Sessions", $session_administrators, 200);
+        $data = $session_administrator->toArray();
+        $data['files'] = $session_administrator->files;
+        $data['next_task'] = $session_administrator->next_task;
+
+        return api_response(true, "Liste des Sessions", $data, 200);
     }
 
     /**
