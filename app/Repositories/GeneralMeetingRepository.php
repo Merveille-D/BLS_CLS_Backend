@@ -36,7 +36,7 @@ class GeneralMeetingRepository
      */
     public function update(GeneralMeeting $general_meeting, $request) {
 
-        $general_meeting->update($request);
+        $general_meeting->update($request->all());
 
         if($request->has('meeting_date')) {
             $this->createTasks($general_meeting);
