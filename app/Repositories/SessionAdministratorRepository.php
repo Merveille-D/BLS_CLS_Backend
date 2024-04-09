@@ -37,7 +37,7 @@ class SessionAdministratorRepository
     public function update(SessionAdministrator $session_administrator, $request) {
 
         $current_date = new DateTime($request["session_date"]);
-        $old_date = new DateTime($session_administrator->meeting_date);
+        $old_date = new DateTime($session_administrator->session_date);
 
         $date_diff = $current_date->diff($old_date);
         if($date_diff->format('%R%a') != 0) {
