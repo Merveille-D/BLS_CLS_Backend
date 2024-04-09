@@ -21,8 +21,11 @@ class SessionAdministratorController extends Controller
      */
     public function index()
     {
-        $session_administrators = SessionAdministrator::when(request('status') != null, function($query) {
-            $query->where('status', request('status'));
+        $session_administrators = SessionAdministrator::when(request('status') === 'pending', function($query) {
+            $query->where('status', 'pending');
+        }, function($query) {
+            $query->where('status', 'post_ca')
+                  ->orWhere('status', 'closed');
         })->get();
 
         return api_response(true, "Liste des Sessions", $session_administrators, 200);
