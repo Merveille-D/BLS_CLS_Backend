@@ -21,12 +21,17 @@ class GeneralMeetingController extends Controller
      */
     public function index()
     {
+
         $general_meetings = GeneralMeeting::when(request('status') === 'pending', function($query) {
             $query->where('status', 'pending');
         }, function($query) {
             $query->where('status', 'post_ag')
                   ->orWhere('status', 'closed');
-        })->get();
+        })->get()->map(function ($meeting) {
+            $meeting->files = $meeting->files;
+            $meeting->next_task = $meeting->next_task;
+            return $meeting;
+        });
 
         return api_response(true, "AG en cours", $general_meetings, 200);
     }
