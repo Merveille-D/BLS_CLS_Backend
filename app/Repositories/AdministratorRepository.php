@@ -12,6 +12,7 @@ class AdministratorRepository
 
     }
 
+    
     /**
      * @param Request $request
      *
