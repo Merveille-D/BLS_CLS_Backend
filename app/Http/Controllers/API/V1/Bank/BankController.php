@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1\Bank;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Bank\ListBankRequest;
 use App\Http\Requests\Bank\StoreBankRequest;
+use App\Http\Requests\Bank\UpdateBankRequest;
 use App\Models\Bank\Bank;
 use App\Repositories\BankRepository;
 use Illuminate\Http\Request;
@@ -22,7 +23,6 @@ class BankController extends Controller
      */
     public function index(ListBankRequest $request)
     {
-
         $banks = Bank::when(request('type') !== null, function($query) {
                 $query->where('type', request('type'));
             })->get();
@@ -58,9 +58,15 @@ class BankController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Bank $bank)
+    public function update(UpdateBankRequest $request, Bank $bank)
     {
-        //
+        try {
+            $this->bank->update($bank, $request->all());
+            return api_response(true, "Mis à jour du texte avec succès", $bank, 200);
+        } catch (ValidationException $e) {
+
+            return api_response(false, "Echec de la mise à jour", $e->errors(), 422);
+        }
     }
 
     /**

@@ -26,4 +26,15 @@ class BankRepository
         return $bank;
     }
 
+     /**
+     * @param Request $request
+     *
+     * @return Bank
+     */
+    public function update(Bank $bank, $request) {
+        $bank->update($request);
+        return $bank;
+    }
+
+
 }
