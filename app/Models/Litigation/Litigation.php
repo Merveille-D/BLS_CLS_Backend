@@ -13,7 +13,7 @@ class Litigation extends Model
     use HasFactory,  HasUuids;
 
     protected $fillable = [
-        'name', 'nature_id', 'party_id', 'jurisdiction_id', 'reference',
+        'name', 'nature_id', 'party_id', 'jurisdiction_id', 'reference', 'nature_id', 'jurisdiction_id', 'party_id', 'lawyer_id', 'jurisdiction_id',
     ];
 
 
@@ -34,6 +34,26 @@ class Litigation extends Model
      */
     public function nature(): HasOne
     {
-        return $this->hasOne(LitigationResource::class);
+        return $this->hasOne(LitigationResource::class, 'id', 'nature_id');
+    }
+
+    /**
+     * jurisdiction
+     *
+     * @return void
+     */
+    public function jurisdiction()
+    {
+        return $this->hasOne(LitigationResource::class, 'id', 'jurisdiction_id');
+    }
+
+    /**
+     * party
+     *
+     * @return void
+     */
+    public function party()
+    {
+        return $this->hasOne(LitigationParty::class, 'id', 'party_id');
     }
 }

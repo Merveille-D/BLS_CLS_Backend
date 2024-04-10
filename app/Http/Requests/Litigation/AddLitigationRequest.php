@@ -23,9 +23,9 @@ class AddLitigationRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'nature_id' => 'required',
-            'jurisdiction_id' => 'required',
-            'party_id' => 'required',
+            'nature_id' => 'required|exists:litigation_resources,id',
+            'jurisdiction_id' => 'required|exists:litigation_resources,id',
+            'party_id' => 'required|exists:litigation_parties,id',
             'documents' => 'array|required',
             'documents.*.name' => 'required|string',
             'documents.*.file' => 'required|file|max:8192|mimes:pdf,doc,docx',

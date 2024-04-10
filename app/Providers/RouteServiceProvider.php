@@ -34,6 +34,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/V1/guarantee.php'))
                 ->group(base_path('routes/V1/auth.php'))
                 ->group(base_path('routes/V1/litigation.php'))
+                ->group(base_path('routes/V1/legal_watch.php'))
                 ->group(base_path('routes/api.php'));
 
             Route::middleware('web')

@@ -18,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
             database_path('migrations/v1/guarantee/conventionnal_hypothecs'),
             database_path('migrations/v1/alert'),
             database_path('migrations/v1/litigation'),
+            database_path('migrations/v1/legal_watch'),
         ]);
     }
 
