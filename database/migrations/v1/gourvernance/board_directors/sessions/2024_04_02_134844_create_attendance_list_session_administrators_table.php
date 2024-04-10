@@ -19,10 +19,11 @@ return new class extends Migration
             $table->string('firstname')->nullable();
 
             $table->unsignedBigInteger('administrator_id');
-            $table->foreign('administrator_id')->references('id')->on('ca_administrators')->onDelete('cascade');
+            // $table->foreign('administrator_id')->references('id')->on('ca_administrators')->onDelete('cascade');
+
 
             $table->unsignedBigInteger('session_id');
-            $table->foreign('session_id')->references('id')->on('session_administrators')->onDelete('cascade');
+            // $table->foreign('session_id')->references('id')->on('session_administrators')->onDelete('cascade');
 
             $table->timestamps();
         });
