@@ -2,14 +2,21 @@
 
 namespace App\Models\Guarantee\ConventionnalHypothecs;
 
+use App\Concerns\Traits\Alert\Alertable;
+use App\Models\Alert\Alert;
 use App\Models\Guarantee\GuaranteeDocument;
+use App\Observers\ConvHypothecObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Notifications\Notifiable;
 
+#[ObservedBy([ConvHypothecObserver::class])]
 class ConventionnalHypothec extends Model
 {
-    use HasFactory;
+    use HasFactory, Alertable, HasUuids;
 
     /**
      * @property int $id
@@ -41,11 +48,13 @@ class ConventionnalHypothec extends Model
     );
 
     /**
-     * documents relationship
+     * documents
+     *
      * @return MorphMany
      */
     public function documents() : MorphMany
     {
         return $this->morphMany(GuaranteeDocument::class, 'documentable');
     }
+
 }

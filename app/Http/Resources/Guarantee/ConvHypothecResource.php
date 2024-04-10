@@ -16,6 +16,7 @@ class ConvHypothecResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'state' => $this->state,
             'reference' => $this->reference,
             'contract_id' => $this->contract_id,
             'contract_file' => '/storage/'.$this->contract_file,

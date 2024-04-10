@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('conventionnal_hypothecs', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('name');
             $table->string('state');
             $table->string('reference')->unique();

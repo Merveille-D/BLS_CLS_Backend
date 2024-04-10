@@ -11,6 +11,7 @@ use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\AttendanceListGenera
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\GeneralMeetingController;
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\TaskGeneralMeetingController;
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Route;
 
 /*
