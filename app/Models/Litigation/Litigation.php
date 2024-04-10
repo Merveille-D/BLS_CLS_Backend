@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Models\Litigation;
+
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+
+class Litigation extends Model
+{
+    use HasFactory,  HasUuids;
+
+    protected $fillable = [
+        'name', 'nature_id', 'party_id', 'jurisdiction_id', 'reference',
+    ];
+
+
+    /**
+     * documents
+     *
+     * @return MorphMany
+     */
+    public function documents() : MorphMany
+    {
+        return $this->morphMany(LitigationDocument::class, 'documentable');
+    }
+
+    /**
+     * nature
+     *
+     * @return HasOne
+     */
+    public function nature(): HasOne
+    {
+        return $this->hasOne(LitigationResource::class);
+    }
+}
