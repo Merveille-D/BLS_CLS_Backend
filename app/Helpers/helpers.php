@@ -39,10 +39,11 @@ if (!function_exists('generateReference')) {
 if(!function_exists('uploadFile')) {
     function uploadFile($file, $path) {
 
-        $name_file = $file->getClientOriginalName();
+        $name_file = str_replace(' ', '-', $file->getClientOriginalName());
         $file->storeAs($path, $name_file, 'public');
 
         $url = Storage::disk('public')->url($path . '/' . $name_file);
+
         return $url;
     }
 }
