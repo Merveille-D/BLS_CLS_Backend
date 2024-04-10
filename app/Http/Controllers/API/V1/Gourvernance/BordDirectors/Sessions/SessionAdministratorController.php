@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreSessionAdministratorRequest;
-use App\Http\Requests\UpdateSessionAdministratorRequest;
+use App\Http\Requests\SessionAdministrator\StoreSessionAdministratorRequest;
+use App\Http\Requests\SessionAdministrator\UpdateAttachementSessionAdministratorRequest;
+use App\Http\Requests\SessionAdministrator\UpdateSessionAdministratorRequest;
 use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
-use App\Models\Utility;
 use App\Repositories\SessionAdministratorRepository;
 use Illuminate\Validation\ValidationException;
 
@@ -21,7 +21,17 @@ class SessionAdministratorController extends Controller
      */
     public function index()
     {
-        $session_administrators = SessionAdministrator::all();
+        $session_administrators = SessionAdministrator::when(request('status') === 'pending', function($query) {
+            $query->where('status', 'pending');
+        }, function($query) {
+            $query->where('status', 'post_ag')
+                  ->orWhere('status', 'closed');
+        })->get()->map(function ($meeting) {
+            $meeting->files = $meeting->files;
+            $meeting->next_task = $meeting->next_task;
+            return $meeting;
+        });
+
         return api_response(true, "Liste des Sessions", $session_administrators, 200);
     }
 
@@ -31,7 +41,6 @@ class SessionAdministratorController extends Controller
     public function store(StoreSessionAdministratorRequest $request)
     {
         try {
-
             $session_administrator = $this->session->store($request);
             return api_response(true, "Succès de l'enregistrement du CA", $session_administrator, 200);
         } catch (ValidationException $e) {
@@ -45,8 +54,11 @@ class SessionAdministratorController extends Controller
     public function show(SessionAdministrator $session_administrator)
     {
         try {
-            $session_administrator->load('fileUploads');
-            return api_response(true, "Information du CA", $session_administrator, 200);
+            $data = $session_administrator->toArray();
+            $data['files'] = $session_administrator->files;
+            $data['next_task'] = $session_administrator->next_task;
+
+            return api_response(true, "Information du CA", $data, 200);
         } catch (ValidationException $e) {
             return api_response(false, "Echec de la récupération des infos du CA", $e->errors(), 422);
         }
@@ -57,10 +69,16 @@ class SessionAdministratorController extends Controller
      */
     public function update(UpdateSessionAdministratorRequest $request, SessionAdministrator $session_administrator)
     {
-        //
+        try {
+            $this->session->update($session_administrator, $request->all());
+            return api_response(true, "CA mis à jour avec succès", $session_administrator, 200);
+        } catch (ValidationException $e) {
+
+            return api_response(false, "Echec de la mise à jour du CA", $e->errors(), 422);
+        }
     }
 
-    public function attachment(UpdateSessionAdministratorRequest $request)
+    public function attachment(UpdateAttachementSessionAdministratorRequest $request)
     {
         try {
             $session_administrator = $this->session->attachement($request);

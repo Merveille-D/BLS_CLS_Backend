@@ -26,7 +26,6 @@ return new class extends Migration
             $table->enum('function', AdminFunction::ADMIN_FUNCTIONS)->nullable();
             $table->enum('quality', Quality::QUALITIES)->nullable();
             $table->double('shares')->nullable();
-            // $table->string('representant')->nullable();
             $table->enum('type', AdminType::TYPES)->nullable();
             $table->double('share_percentage')->nullable();
             $table->unsignedBigInteger('permanent_representative_id')->nullable();

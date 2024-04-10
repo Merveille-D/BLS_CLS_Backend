@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('reference');
             $table->datetime('meeting_date');
 
+            $table->enum('type', GeneralMeeting::GENERAL_MEETING_TYPES );
+
             $table->string('pv_file')->nullable();
             $table->string('pv_file_date')->nullable();
 
@@ -27,9 +29,8 @@ return new class extends Migration
             $table->string('agenda_file')->nullable();
             $table->string('agenda_file_date')->nullable();
 
-            $table->string('alert_msg_pending')->nullable();
-            $table->string('alert_msg_in_progress')->nullable();
-            $table->string('alert_msg_closed')->nullable();
+            $table->string('attendance_list_file')->nullable();
+            $table->string('attendance_list_file_date')->nullable();
 
             $table->enum('status', GeneralMeeting::GENERAL_MEETING_STATUS )->default('pending');
 

@@ -15,7 +15,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
         // $this->call(UserSeeder::class);
         $this->call(LitigationResourceSeeder::class);
         // $this->call(ConventionnalHypothecSeeder::class);
