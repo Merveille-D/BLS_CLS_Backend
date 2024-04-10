@@ -4,7 +4,9 @@ namespace App\Http\Requests\Watch;
 
 use App\Enums\Watch\WatchType;
 use App\Rules\Administrator\ArrayElementMatch;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 
 class AddWatchRequest extends FormRequest
@@ -41,5 +43,10 @@ class AddWatchRequest extends FormRequest
             'mail_content' => 'required_if:is_archived,false',
             'mail_addresses' => 'required_if:is_archived,false',
         ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(api_error(false, $validator->errors()->first(),  $validator->errors()));
     }
 }
