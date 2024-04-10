@@ -32,9 +32,12 @@ class BankRepository
      * @return Bank
      */
     public function update(Bank $bank, $request) {
-        if($request['type'] == 'file') {
-            $request['file_name'] = getFileName($request['file']);
-            $request['file_url'] = uploadFile($request['file'], 'bank_documents');
+
+        if (isset($request['type'])) {
+            if($request['type'] == 'file') {
+                $request['file_name'] = getFileName($request['file']);
+                $request['file_url'] = uploadFile($request['file'], 'bank_documents');
+            }
         }
 
         $bank->update($request);
