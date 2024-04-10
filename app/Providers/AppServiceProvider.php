@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
             // database_path('migrations/v1/guarantee/conventionnal_hypothecs'),
 
             database_path('migrations/v1/contract'),
-            // database_path('migrations/v1/bank'),
+            database_path('migrations/v1/bank'),
         ]);
     }
 
