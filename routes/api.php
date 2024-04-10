@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\V1\Bank\BankController;
 use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Administrators\AdministratorController;
 use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions\SessionAdministratorController;
 use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions\TaskSessionAdministratorController;
@@ -42,6 +43,10 @@ Route::post('ca_attachements', [SessionAdministratorController::class, 'attachme
 Route::resource('task_session_administrators', TaskSessionAdministratorController::class);
 Route::delete('delete_array_task_session_administrators', [TaskSessionAdministratorController::class, 'deleteArrayTaskSessionAdministrator'] );
 Route::put('update_status_task_session_administrators', [TaskSessionAdministratorController::class, 'updateStatusTaskSessionAdministrator'] );
+
+
+// Banque de textes
+Route::resource('banks', BankController::class);
 
 
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Bank\Bank;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,16 +12,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contracts', function (Blueprint $table) {
+        Schema::create('banks', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('category');
-            $table->string('type_category');
-            $table->string('contract_file');
-            $table->date('date_signature')->nullable();
-            $table->date('date_effective')->nullable();
-            $table->date('date_expiration')->nullable();
-            $table->date('date_renewal')->nullable();
+            $table->string('file_name')->nullable();
+            $table->string('file_url')->nullable();
+            $table->string('link')->nullable();
+            $table->enum('type', Bank::TYPES);
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contracts');
+        Schema::dropIfExists('banks');
     }
 };
