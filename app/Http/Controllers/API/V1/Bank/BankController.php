@@ -23,8 +23,8 @@ class BankController extends Controller
     public function index(ListBankRequest $request)
     {
 
-        $banks = Bank::when(request('type'), function($query) {
-            $query->where('type', request('type'));
+        $banks = Bank::when($request->type, function($query) {
+            $query->where('type', $request->type);
         })->get();
 
         return api_response(true, "Liste des donnée de la banque de texte", $banks, 200);
