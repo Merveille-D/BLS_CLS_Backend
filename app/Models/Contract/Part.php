@@ -21,6 +21,7 @@ class Part extends Model
         'id_card',
         'capital',
         'permanent_representative_id',
+        'type',
     ];
 
     const TYPES_PART = [

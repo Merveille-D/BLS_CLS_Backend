@@ -18,7 +18,7 @@ class ContractRepository
      */
     public function store($request) {
 
-        $request['contract_file'] = uploadFile($request['contract_file'], 'contract_documents');;
+        $request->merge(['contract_file' => uploadFile($request['contract_file'], 'contract_documents')]);
         $contract = $this->contract->create($request->all());
 
         return $contract;

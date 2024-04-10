@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\Bank;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Bank\ListBankRequest;
 use App\Http\Requests\Bank\StoreBankRequest;
 use App\Models\Bank\Bank;
 use App\Repositories\BankRepository;
@@ -19,9 +20,15 @@ class BankController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(ListBankRequest $request)
     {
         $banks = Bank::all();
+
+        $type = $request->input('type');
+        $banks = $banks->when($type, function ($query) use ($type) {
+            return $query->where('type', $type);
+        });
+
         return api_response(true, "Liste des donnée de la banque de texte", $banks, 200);
     }
 
@@ -63,6 +70,11 @@ class BankController extends Controller
      */
     public function destroy(Bank $bank)
     {
-        //
+        try {
+            $bank->delete();
+            return api_response(true, "Succès de la suppression de la banque de texte", null, 200);
+        }catch (ValidationException $e) {
+                return api_response(false, "Echec de la supression de la banque de texte", $e->errors(), 422);
+        }
     }
 }

@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\API\V1\Bank\BankController;
+use App\Http\Controllers\API\V1\Contract\ContractController;
+use App\Http\Controllers\API\V1\Contract\PartController;
+use App\Http\Controllers\API\V1\Contract\TaskController;
 use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Administrators\AdministratorController;
 use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions\SessionAdministratorController;
 use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions\TaskSessionAdministratorController;
@@ -47,6 +50,12 @@ Route::put('update_status_task_session_administrators', [TaskSessionAdministrato
 
 // Banque de textes
 Route::resource('banks', BankController::class);
+
+// Contrats
+Route::resource('contracts', ContractController::class);
+Route::resource('parts', PartController::class);
+Route::resource('tasks', TaskController::class);
+
 
 
 

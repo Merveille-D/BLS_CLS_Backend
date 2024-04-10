@@ -26,9 +26,12 @@ class PartRepository
                 'name' => $request->denomination,
                 'number_rccm' => $request->number_rccm,
                 'number_ifu' => $request->number_ifu,
-                'number_ifu' => $request->number_ifu,
-                'capital' => $request->caîtal,
+                'id_card' => $request->id_card,
+                'capital' => $request->capital,
+                'type' => 'corporate'
             ];
+
+            $request->merge(['type' => 'individual']);
             $representant = $this->part->create($request->except('denomination', 'number_rccm', 'number_ifu', 'id_card', 'capital'));
 
             $corporate = $this->part->create(array_merge(['permanent_representative_id' => $representant->id], $company_info));

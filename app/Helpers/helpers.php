@@ -43,7 +43,6 @@ if(!function_exists('uploadFile')) {
         $file->storeAs($path, $name_file, 'public');
 
         $url = Storage::disk('public')->url($path . '/' . $name_file);
-
         return $url;
     }
 }

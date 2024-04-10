@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API\V1\Contract;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Contract\ListTaskContractRequest;
 use App\Http\Requests\TaskContract\DeleteTaskContractRequest;
 use App\Http\Requests\TaskContract\StoreTaskContractRequest;

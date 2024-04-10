@@ -6,7 +6,6 @@ use App\Models\Contract\Contract;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
 class StoreContractRequest extends FormRequest
 {

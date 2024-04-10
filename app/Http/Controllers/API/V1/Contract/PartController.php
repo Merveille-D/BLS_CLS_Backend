@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API\V1\Contract;
 
-use App\Http\Requests\Administrator\StorePartRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\PartContract\StorePartRequest;
 use App\Models\Contract\Part;
 use App\Repositories\PartRepository;
 use Illuminate\Http\Request;
@@ -19,7 +20,12 @@ class PartController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $parts = Part::all();
+            return api_response(true, 'Liste des parties', $parts);
+        }catch (\Exception $e) {
+            return api_response(false, "Echec de la récupération des parties", $e->getMessage(), 500);
+        }
     }
 
     /**
@@ -40,7 +46,11 @@ class PartController extends Controller
      */
     public function show(Part $part)
     {
-        //
+        try {
+            return api_response(true, "Information de la partie", $part, 200);
+        }catch( ValidationException $e ) {
+            return api_response(false, "Echec de la récupération des infos de la partie", $e->errors(), 422);
+        }
     }
 
     /**

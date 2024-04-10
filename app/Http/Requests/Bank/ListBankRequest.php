@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Requests\PartContract;
+namespace App\Http\Requests\Bank;
 
-use App\Models\Contract\Part;
+use App\Models\Bank\Bank;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 
-class StorePartRequest extends FormRequest
+class ListBankRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,22 +25,9 @@ class StorePartRequest extends FormRequest
      */
     public function rules(): array
     {
-
         return [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'telephone' => 'required|numeric',
-            'residence' => 'required|string|max:255',
-            'number_id' => 'required|numeric',
-            'zip_code' => 'required|numeric',
+            'type' => [Rule::in(Bank::TYPES) ],
 
-            'type' => ['required', Rule::in(Part::TYPES_PART)],
-
-            'denomination' => 'required_if:type,corporate',
-            'number_rccm' => 'required_if:type,corporate|numeric',
-            'number_ifu' => 'required_if:type,corporate|numeric',
-            'id_card' => 'required_if:type,corporate|numeric',
-            'capital' => 'required_if:type,corporate|numeric',
         ];
     }
 

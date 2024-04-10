@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API\V1\Contract;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Contract\StoreContractRequest;
 use App\Http\Requests\Contract\UpdateContractRequest;
 use App\Models\Contract\Contract;
