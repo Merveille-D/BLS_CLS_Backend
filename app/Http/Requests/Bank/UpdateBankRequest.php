@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests\Bank;
 
+use App\Models\Bank\Bank;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class UpdateBankRequest extends FormRequest
 {
@@ -24,6 +26,10 @@ class UpdateBankRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'title' => ['string'],
+            'type' => [Rule::in(Bank::TYPES) ],
+            'file' => ['file'],
+            'link' => ['string'],
 
         ];
     }

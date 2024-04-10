@@ -30,7 +30,6 @@ class StoreBankRequest extends FormRequest
             'type' => ['required',  Rule::in(Bank::TYPES) ],
             'file' => ['required_if:type,file', 'file'],
             'link' => ['required_if:type,link', 'string'],
-
         ];
     }
 
