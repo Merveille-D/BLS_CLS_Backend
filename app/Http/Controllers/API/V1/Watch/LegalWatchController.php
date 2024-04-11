@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Watch;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Watch\AddWatchRequest;
+use App\Http\Resources\Watch\LegalWatchResource;
 use App\Models\Watch\LegalWatch;
 use App\Repositories\Watch\LegalWatchRepository;
 use Illuminate\Http\Request;
@@ -38,7 +39,7 @@ class LegalWatchController extends Controller
      */
     public function show(LegalWatch $legalWatch)
     {
-        //
+        return api_response(true, 'Veille juridique recuperé', $data = new LegalWatchResource($legalWatch));
     }
 
     /**
