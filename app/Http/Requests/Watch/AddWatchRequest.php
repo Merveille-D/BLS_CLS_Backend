@@ -38,9 +38,7 @@ class AddWatchRequest extends FormRequest
             'effective_date' => 'nullable|date',
             'nature_id' => 'nullable|exists:litigation_resources,id',
             'jurisdiction_id' => 'nullable|exists:litigation_resources,id',
-            // 'recipient_type' => 'required_if:is_archived,false',
-
-            'recipient_type' =>  ['required_if:is_archived,false', new ArrayElementMatch(array('admin', 'persoonel'))],
+            'recipient_type' =>  ['required_if:is_archived,false', new ArrayElementMatch(array('admin', 'personnel'))],
             'mail_object' =>'required_if:is_archived,false',
             'mail_content' => 'required_if:is_archived,false',
             'mail_addresses' => 'required_if:is_archived,false',
