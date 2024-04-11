@@ -25,7 +25,11 @@ class LegalWatchRepository
      */
     public function getList($request) : ResourceCollection {
         $search = $request->search;
+        $type = $request->type;
         $query = $this->watch_model
+                ->when(!blank($type), function($qry) use($type) {
+                    $qry->whereType($type);
+                })
                 ->when(!blank($search), function($qry) use($search) {
                     $qry->where('name', 'like', '%'.$search.'%');
                 })
