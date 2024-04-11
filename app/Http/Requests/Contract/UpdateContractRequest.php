@@ -24,7 +24,10 @@ class UpdateContractRequest extends FormRequest
     public function rules(): array
     {
         return [
-            
+            'title' => ['string'],
+            'category' => ['string'],
+            'type_category' => ['string'],
+            'contract_file' => ['file'],
         ];
     }
 

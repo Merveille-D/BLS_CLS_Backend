@@ -55,7 +55,10 @@ Route::resource('banks', BankController::class);
 // Contrats
 Route::resource('contracts', ContractController::class);
 Route::resource('parts', PartController::class);
+
 Route::resource('tasks', TaskController::class);
+Route::delete('delete_array_task_contracts', [TaskController::class, 'deleteArrayTaskContract'] );
+Route::put('update_status_task_contracts', [TaskController::class, 'updateStatusTaskContract'] );
 
 
 
