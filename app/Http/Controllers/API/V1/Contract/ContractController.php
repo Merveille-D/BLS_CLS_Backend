@@ -78,10 +78,10 @@ class ContractController extends Controller
 
     public function getCategories()
     {
-        return api_response(true, "Liste des catégories de contrats", Contract::CATEGORIES, 200);
+        return api_response(true, "Liste des catégories de contrats", Contract::CATEGORIES_VALUES, 200);
     }
 
     public function getTypeCategories() {
-        return api_response(true, "Liste des type de categories", Contract::TYPE_CATEGORIES, 200);
+        return api_response(true, "Liste des type de categories", Contract::TYPE_CATEGORIES_VALUES, 200);
     }
 }

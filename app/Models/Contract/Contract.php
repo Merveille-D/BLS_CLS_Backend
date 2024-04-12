@@ -27,6 +27,36 @@ class Contract extends Model
         'warranties',
         'services',
     ];
+
+    const TYPE_CATEGORIES = [
+        'lease' => [],
+        'credits' => [
+            'amortizable',
+            'aval_discount',
+            'discoveries_ovecouvertes',
+            'spots_relay',
+            'campaign',
+            'syndications',
+        ],
+        'job' => [
+            'cdi',
+            'cdd',
+            'secondment',
+            'trial_engagement',
+            'academic_internship',
+            'professional_internship',
+        ],
+        'warranty' => [
+            'guarantees',
+            'personal_sureties',
+            'real_estate_sureties',
+        ],
+        'service' => [
+            'supplier',
+            'service_provider',
+        ],
+    ];
+
     const CATEGORIES_VALUES = [
         'leases' => 'Baux',
         'credits' => 'Crédits',
@@ -35,7 +65,7 @@ class Contract extends Model
         'services' => 'Services',
     ];
 
-    const TYPE_CATEGORIES = [
+    const TYPE_CATEGORIES_VALUES = [
         'lease' => [],
         'credits' => [
             'amortizable' => 'Amortissable',
