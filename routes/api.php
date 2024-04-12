@@ -10,6 +10,9 @@ use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions\TaskSessionA
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\AttendanceListGeneralMeetingController;
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\GeneralMeetingController;
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\TaskGeneralMeetingController;
+use App\Http\Controllers\API\V1\Incident\AuthorIncidentController;
+use App\Http\Controllers\API\V1\Incident\IncidentController;
+use App\Http\Controllers\API\V1\Incident\TaskIncidentController;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Route;
@@ -55,8 +58,17 @@ Route::resource('banks', BankController::class);
 // Contrats
 Route::resource('contracts', ContractController::class);
 Route::resource('parts', PartController::class);
+
 Route::resource('tasks', TaskController::class);
+Route::delete('delete_array_task_contracts', [TaskController::class, 'deleteArrayTaskContract'] );
+Route::put('update_status_task_contracts', [TaskController::class, 'updateStatusTaskContract'] );
 
 
+// Incidents
+
+Route::resource('incidents', IncidentController::class);
+Route::resource('author_incidents', AuthorIncidentController::class);
+Route::resource('task_incidents', TaskIncidentController::class);
+Route::get('get_current_task_incidents', [TaskIncidentController::class, 'getCurrentTaskIncident'] );
 
 

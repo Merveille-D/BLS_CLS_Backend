@@ -69,6 +69,11 @@ class ContractController extends Controller
      */
     public function destroy(Contract $contract)
     {
-        //
+        try {
+            $contract->delete();
+            return api_response(true, "Suppression du contrat avec succès", null, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de la suppression du contrat", $e->errors(), 422);
+        }
     }
 }

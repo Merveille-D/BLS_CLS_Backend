@@ -18,8 +18,11 @@ class ContractRepository
      */
     public function store($request) {
 
-        $request->merge(['contract_file' => uploadFile($request['contract_file'], 'contract_documents')]);
-        $contract = $this->contract->create($request->all());
+        $path = uploadFile($request['contract_file'], 'contract_documents');
+
+        $requestData = $request->except('contract_file');
+        $requestData['contract_file'] = $path;
+        $contract = $this->contract->create($requestData);
 
         return $contract;
     }

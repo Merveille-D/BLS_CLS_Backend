@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Requests\Contract;
+namespace App\Http\Requests\AuthorIncident;
 
-use App\Models\Contract\Contract;
+use App\Models\Bank\Bank;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class UpdateContractRequest extends FormRequest
+class StoreAuthorIncidentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +23,12 @@ class UpdateContractRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(Request $request): array
+    public function rules(): array
     {
         return [
-            'title' => ['string'],
-            'category' => [Rule::in(Contract::CATEGORIES)],
-            'type_category' => ['string'],
-            'contract_file' => ['file'],
+            'name' => ['required', 'string'],
+            'email' => ['required', 'email' ],
+            'telephone' => ['required', 'numeric'],
         ];
     }
 

@@ -20,7 +20,14 @@ class Contract extends Model
         'date_renewal',
     ];
 
-    const CONTRACT_CATEGORIES = [
+    const CATEGORIES = [
+        'leases',
+        'credits',
+        'jobs',
+        'warranties',
+        'services',
+    ];
+    const CATEGORIES_VALUES = [
         'leases' => 'Baux',
         'credits' => 'Crédits',
         'jobs' => 'Emplois',
@@ -28,7 +35,7 @@ class Contract extends Model
         'services' => 'Services',
     ];
 
-    const CONTRACT_TYPE_CATEGORIES = [
+    const TYPE_CATEGORIES = [
         'lease' => [],
         'credits' => [
             'Amortissable',
