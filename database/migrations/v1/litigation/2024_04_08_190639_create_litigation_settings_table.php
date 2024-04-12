@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('litigation_resources', function (Blueprint $table) {
+        Schema::create('litigation_settings', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('type');
             $table->string('name');
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('litigation_jurisdictions');
+        Schema::dropIfExists('litigation_settings');
     }
 };

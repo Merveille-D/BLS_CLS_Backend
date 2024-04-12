@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('contracts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->enum('category', Contract::CATEGORIES );
+            $table->enum('category', Contract::CATEGORIES);
             $table->string('type_category');
             $table->string('contract_file');
             $table->date('date_signature')->nullable();

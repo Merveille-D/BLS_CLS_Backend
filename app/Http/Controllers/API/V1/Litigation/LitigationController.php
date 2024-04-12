@@ -46,9 +46,9 @@ class LitigationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Litigation $litigation)
+    public function show($litigation)
     {
-        return api_response(true, 'Contentieux recuperé', $data = new LitigationResource($litigation));
+        return api_response(true, 'Contentieux recuperé', $data = $this->litigationRepo->getByIdWithDocuments($litigation));
     }
 
     /**
@@ -57,6 +57,21 @@ class LitigationController extends Controller
     public function update(Request $request, Litigation $litigation)
     {
         //
+    }
+    /**
+     * Update the specified resource in storage.
+     */
+    public function updateLitigation(Request $request, $litigation)
+    {
+        try {
+            DB::beginTransaction();
+            $data = $this->litigationRepo->edit($litigation, $request);
+            DB::commit();
+            return api_response($success = true, 'Contentieux modifié avec succès', $data);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
+        }
     }
 
     /**

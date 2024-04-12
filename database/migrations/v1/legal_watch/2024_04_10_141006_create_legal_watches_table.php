@@ -22,9 +22,9 @@ return new class extends Migration
             $table->date('event_date')->nullable();
             $table->date('effective_date')->nullable();
             $table->uuid('nature_id')->index()->nullable();
-            $table->foreign('nature_id')->references('id')->on('litigation_resources');
+            $table->foreign('nature_id')->references('id')->on('litigation_settings');
             $table->uuid('jurisdiction_id')->index()->nullable();
-            $table->foreign('jurisdiction_id')->references('id')->on('litigation_resources');
+            $table->foreign('jurisdiction_id')->references('id')->on('litigation_settings');
 
             $table->string('recipient_type')->nullable();
             $table->string('mail_object')->nullable();

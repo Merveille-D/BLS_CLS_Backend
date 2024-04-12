@@ -6,8 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Contract\StoreContractRequest;
 use App\Http\Requests\Contract\UpdateContractRequest;
 use App\Models\Contract\Contract;
-use App\Repositories\ContractRepository;
-use Illuminate\Http\Request;
+use App\Repositories\Contract\ContractRepository;
 use Illuminate\Validation\ValidationException;
 
 class ContractController extends Controller
@@ -75,5 +74,14 @@ class ContractController extends Controller
         } catch (ValidationException $e) {
             return api_response(false, "Echec de la suppression du contrat", $e->errors(), 422);
         }
+    }
+
+    public function getCategories()
+    {
+        return api_response(true, "Liste des catégories de contrats", Contract::CATEGORIES_VALUES, 200);
+    }
+
+    public function getTypeCategories() {
+        return api_response(true, "Liste des type de categories", Contract::TYPE_CATEGORIES_VALUES, 200);
     }
 }

@@ -41,6 +41,7 @@ class TaskIncident extends Model
                 'atd_1' => [
                         'title' => 'Prendre des mesures conservatoires avec les Cso (Bloquer les fonds sur le compte)',
                         'rules' => [
+                            'date' => ['required', 'date'],
                         ],
                         "delay" => 0,
                         "next" => null,
@@ -48,6 +49,7 @@ class TaskIncident extends Model
                 'atd_2' => [
                         'title' => 'Adresser un courrier d\'information au client',
                         'rules' => [
+                            'info_channel' => ['required', 'in:email,phone'],
                         ],
                         "delay" => 0,
                         "next" => null,
@@ -55,6 +57,7 @@ class TaskIncident extends Model
                 'atd_3' => [
                         'title' => 'Transmission d\'une lettre signee par la DG de la banque et de l\'accuse de reception signe',
                         'rules' => [
+                            'date' => ['required', 'date'],
                         ],
                         "delay" => 0,
                         "next" => null,

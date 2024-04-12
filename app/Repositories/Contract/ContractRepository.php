@@ -1,5 +1,5 @@
 <?php
-namespace App\Repositories;
+namespace App\Repositories\Contract;
 
 use App\Models\Contract\Contract;
 use App\Models\Gourvernance\GourvernanceDocument;

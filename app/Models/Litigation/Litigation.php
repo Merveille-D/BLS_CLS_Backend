@@ -34,7 +34,7 @@ class Litigation extends Model
      */
     public function nature(): HasOne
     {
-        return $this->hasOne(LitigationResource::class, 'id', 'nature_id');
+        return $this->hasOne(LitigationSetting::class, 'id', 'nature_id');
     }
 
     /**
@@ -44,7 +44,7 @@ class Litigation extends Model
      */
     public function jurisdiction()
     {
-        return $this->hasOne(LitigationResource::class, 'id', 'jurisdiction_id');
+        return $this->hasOne(LitigationSetting::class, 'id', 'jurisdiction_id');
     }
 
     /**

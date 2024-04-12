@@ -3,7 +3,7 @@
 namespace Database\Seeders\Litigation;
 
 use App\Enums\Litigation\LitigationType;
-use App\Models\Litigation\LitigationResource;
+use App\Models\Litigation\LitigationSetting;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -17,17 +17,17 @@ class LitigationResourceSeeder extends Seeder
     {
         $resources = $this->litigation_natures();
         foreach ($resources as $resource) {
-            $exist = LitigationResource::where('name', $resource)->first();
+            $exist = LitigationSetting::where('name', $resource)->first();
             if (!$exist) {
-                LitigationResource::create(['name' => $resource, 'type' => LitigationType::NATURE] );
+                LitigationSetting::create(['name' => $resource, 'type' => LitigationType::NATURE] );
             }
         }
 
         $jurisdictions = $this->litigation_jurisdictions();
         foreach ($jurisdictions as $jurisdiction) {
-            $exist = LitigationResource::where('name', $jurisdiction)->first();
+            $exist = LitigationSetting::where('name', $jurisdiction)->first();
             if (!$exist) {
-                LitigationResource::create(['name' => $jurisdiction, 'type' => LitigationType::JURISDICTION] );
+                LitigationSetting::create(['name' => $jurisdiction, 'type' => LitigationType::JURISDICTION] );
             }
         }
     }
