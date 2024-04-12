@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories\Watch;
 
+use App\Enums\Watch\WatchType;
 use App\Http\Resources\Watch\LegalWatchResource;
 use App\Mail\Watch\LegalWatchEmail;
 use App\Models\Watch\LegalWatch;
@@ -30,7 +31,10 @@ class LegalWatchRepository
         $search = $request->search;
         $type = $request->type;
         $query = $this->watch_model
-                ->when(!blank($type), function($qry) use($type) {
+                ->when(!blank($type) && $type == 'mixte', function($qry) use($type) {
+                    $qry->whereIn('type',  [WatchType::LEGISLATION, WatchType::REGULATION]);
+                })
+                ->when(!blank($type) && $type != 'mixte', function($qry) use($type) {
                     $qry->whereType($type);
                 })
                 ->when(!blank($search), function($qry) use($search) {

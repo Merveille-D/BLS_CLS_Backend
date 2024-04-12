@@ -2,7 +2,7 @@
 
 namespace App\Models\Watch;
 
-use App\Models\Litigation\LitigationResource;
+use App\Models\Litigation\LitigationSetting;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -41,7 +41,7 @@ class LegalWatch extends Model
      */
     public function nature()
     {
-        return $this->hasOne(LitigationResource::class, 'id', 'nature_id');
+        return $this->hasOne(LitigationSetting::class, 'id', 'nature_id');
     }
     /**
      * jurisdiction
@@ -50,7 +50,7 @@ class LegalWatch extends Model
      */
     public function jurisdiction()
     {
-        return $this->hasOne(LitigationResource::class, 'id', 'jurisdiction_id');
+        return $this->hasOne(LitigationSetting::class, 'id', 'jurisdiction_id');
     }
 
 }

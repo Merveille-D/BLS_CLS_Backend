@@ -22,7 +22,7 @@ class AddNatureRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:litigation_resources,name',
+            'name' => 'required|unique:litigation_settings,name',
             'description' => 'nullable',
         ];
     }

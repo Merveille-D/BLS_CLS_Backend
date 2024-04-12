@@ -10,6 +10,6 @@ use App\Http\Controllers\API\V1\Guarantee\ConventionnalHypothecs\HypothecStepCon
 */
 
 //conventionnal hypothec
-Route::get('/conventionnal_hypotec/steps', [HypothecStepController::class, ]);
+// Route::get('/conventionnal_hypotec/steps', [HypothecStepController::class, ]);
 Route::post('/conventionnal_hypothec/update/{convHypo}', array(ConventionnalHypothecController::class, 'updateProcess'));
 Route::resource('/conventionnal_hypothec', ConventionnalHypothecController::class);

@@ -15,15 +15,15 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->string('state')->default('created');
-            $table->string('reference');
+            $table->string('reference')->nullable();
             $table->double('estimated_amount')->nullable();
             $table->double('added_amount')->nullable();
             $table->double('remaining_amount')->nullable();
             $table->boolean('is_achirved')->default(0);
             $table->uuid('jurisdiction_id')->index()->nullable();
-            $table->foreign('jurisdiction_id')->references('id')->on('litigation_resources');
+            $table->foreign('jurisdiction_id')->references('id')->on('litigation_settings');
             $table->uuid('nature_id')->index()->nullable();
-            $table->foreign('nature_id')->references('id')->on('litigation_resources');
+            $table->foreign('nature_id')->references('id')->on('litigation_settings');
             $table->uuid('lawyer_id')->nullable();
             $table->foreign('lawyer_id')->references('id')->on('litigation_lawyers');
             $table->uuid('party_id')->nullable();

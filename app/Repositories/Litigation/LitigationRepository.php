@@ -2,11 +2,11 @@
 namespace App\Repositories\Litigation;
 
 use Illuminate\Support\Str;
-use App\Http\Resources\Litigation\LitigationResource as LitigationLitigationResource;
-use App\Http\Resources\Litigation\LitigationResourceResource;
+use App\Http\Resources\Litigation\LitigationResource;
+use App\Http\Resources\Litigation\LitigationSettingResource;
 use App\Models\Litigation\Litigation;
 use App\Models\Litigation\LitigationDocument;
-use App\Models\Litigation\LitigationResource;
+use App\Models\Litigation\LitigationSetting;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
@@ -17,11 +17,22 @@ class LitigationRepository {
      * @return void
      */
     public function __construct(
-        private LitigationResource $resource_model,
+        private LitigationSetting $setting_model,
         private Litigation $litigation_model,
     ) {
     }
 
+    /**
+     * getByIdWithDocuments
+     *
+     * @param  mixed $id
+     * @return JsonResource
+     */
+    public function getByIdWithDocuments($id) : JsonResource {
+        $litigation = $this->litigation_model->with('documents')->find($id);
+
+        return new LitigationResource($litigation);
+    }
 
     public function getList($request) : ResourceCollection {
         $search = $request->search;
@@ -32,7 +43,7 @@ class LitigationRepository {
                 ->paginate();
 
 
-        return LitigationLitigationResource::collection($query);
+        return LitigationResource::collection($query);
     }
 
     public function add($request) : JsonResource {
@@ -40,7 +51,7 @@ class LitigationRepository {
 
         $litigation = $this->litigation_model->create([
             'name' => $request->name,
-            'reference' => generateReference('LG'),
+            'reference' => $request->reference,
             'nature_id' => $request->nature_id,
             'party_id' => $request->party_id,
             'jurisdiction_id' => $request->jurisdiction_id,
@@ -50,7 +61,23 @@ class LitigationRepository {
 
         $this->saveDocuments($files, $litigation);
 
-        return new LitigationLitigationResource($litigation);
+        return new LitigationResource($litigation);
+    }
+
+    public function edit($id, $request) : JsonResource {
+        $litigation = $this->getByIdWithDocuments($id);
+
+        $litigation->update([
+            'name' => $request->name,
+            'reference' => $request->reference,
+            'nature_id' => $request->nature_id,
+            'party_id' => $request->party_id,
+            'jurisdiction_id' => $request->jurisdiction_id,
+            'email' => $request->email,
+            'phone' => $request->phone,
+        ]);
+
+        return new LitigationResource($litigation);
     }
 
     /**
@@ -63,7 +90,7 @@ class LitigationRepository {
         $query = $this->queryByType($type);
 
 
-        return LitigationResourceResource::collection($query);
+        return LitigationSettingResource::collection($query);
     }
 
     /**
@@ -72,7 +99,7 @@ class LitigationRepository {
      * @return Returntype
      */
     public function queryByType($type) {
-        return $this->resource_model->whereType($type)->paginate();
+        return $this->setting_model->whereType($type)->paginate();
     }
 
     /**
@@ -83,13 +110,13 @@ class LitigationRepository {
      * @return void
      */
     public function addResource($request, $type) : JsonResource {
-        $resource = $this->resource_model->create([
+        $resource = $this->setting_model->create([
             'name' => $request->name,
             'description' => $request->description,
             'type' => $type,
         ]);
 
-        return new LitigationResourceResource($resource);
+        return new LitigationSettingResource($resource);
     }
 
     public function saveDocuments($files, $litigation) {
