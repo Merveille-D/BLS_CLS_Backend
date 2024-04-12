@@ -20,7 +20,7 @@ class ContractController extends Controller
      */
     public function index()
     {
-        $contracts = Contract::with('contractParts')->get()->map(function ($contract) {
+        $contracts = Contract::get()->map(function ($contract) {
             $contract->parts = $contract->parts;
             return $contract;
         });
