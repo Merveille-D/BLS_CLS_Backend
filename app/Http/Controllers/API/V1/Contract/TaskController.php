@@ -9,7 +9,7 @@ use App\Http\Requests\TaskContract\StoreTaskContractRequest;
 use App\Http\Requests\TaskContract\UpdateStatusTaskContractRequest;
 use App\Http\Requests\TaskContract\UpdateTaskContractRequest;
 use App\Models\Contract\Task;
-use App\Repositories\TaskContractRepository;
+use App\Repositories\Contract\TaskContractRepository;
 use Illuminate\Validation\ValidationException;
 
 class TaskController extends Controller

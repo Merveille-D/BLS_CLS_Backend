@@ -29,7 +29,9 @@ class Contract extends Model
     ];
 
     const TYPE_CATEGORIES = [
-        'lease' => [],
+        'leases' => [
+
+        ],
         'credits' => [
             'amortizable',
             'aval_discount',
@@ -38,7 +40,7 @@ class Contract extends Model
             'campaign',
             'syndications',
         ],
-        'job' => [
+        'jobs' => [
             'cdi',
             'cdd',
             'secondment',
@@ -46,12 +48,12 @@ class Contract extends Model
             'academic_internship',
             'professional_internship',
         ],
-        'warranty' => [
+        'warranties' => [
             'guarantees',
             'personal_sureties',
             'real_estate_sureties',
         ],
-        'service' => [
+        'services' => [
             'supplier',
             'service_provider',
         ],
@@ -66,7 +68,7 @@ class Contract extends Model
     ];
 
     const TYPE_CATEGORIES_VALUES = [
-        'lease' => [],
+        'leases' => [],
         'credits' => [
             'amortizable' => 'Amortissable',
             'aval_discount' => 'Aval / Escompte',
@@ -75,7 +77,7 @@ class Contract extends Model
             'campaign' => 'Campagne',
             'syndications' => 'Syndications',
         ],
-        'job' => [
+        'jobs' => [
             'cdi' => 'CDI',
             'cdd' => 'CDD',
             'secondment' => 'Détachement / Mise en disponibilité',
@@ -83,12 +85,12 @@ class Contract extends Model
             'academic_internship' => 'Stage académique',
             'professional_internship' => 'Stage professionnel',
         ],
-        'warranty' => [
+        'warranties' => [
             'guarantees' => 'Garanties',
             'personal_sureties' => 'Sûretés personnelles',
             'real_estate_sureties' => 'Sûretés immobilières',
         ],
-        'service' => [
+        'services' => [
             'supplier' => 'Fournisseur',
             'service_provider' => 'Prestataire',
         ],

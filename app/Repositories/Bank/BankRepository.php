@@ -1,5 +1,5 @@
 <?php
-namespace App\Repositories;
+namespace App\Repositories\Bank;
 
 use App\Models\Bank\Bank;
 use App\Models\Gourvernance\GourvernanceDocument;

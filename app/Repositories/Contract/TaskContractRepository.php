@@ -1,5 +1,5 @@
 <?php
-namespace App\Repositories;
+namespace App\Repositories\Contract;
 
 use App\Models\Contract\Task;
 use Carbon\Carbon;

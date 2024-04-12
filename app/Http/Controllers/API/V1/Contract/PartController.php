@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\V1\Contract;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PartContract\StorePartRequest;
 use App\Models\Contract\Part;
-use App\Repositories\PartRepository;
+use App\Repositories\Contract\PartRepository;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
