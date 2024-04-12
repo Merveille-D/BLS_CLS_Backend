@@ -60,7 +60,7 @@ class ContractController extends Controller
     {
         try {
             $this->contract->update($contract, $request->all());
-            return api_response(true, "Mis à jour du contrat avec succès", $contract, 200);
+            return api_response(true, "Mis à jour du contrat avec succès", $contract->load('contractParts'), 200);
         } catch (ValidationException $e) {
 
             return api_response(false, "Echec de la mise à jour du contrat", $e->errors(), 422);
