@@ -59,6 +59,9 @@ Route::resource('banks', BankController::class);
 
 // Contrats
 Route::resource('contracts', ContractController::class);
+Route::get('get_contract_categories', [ContractController::class, 'getCategories']);
+Route::get('get_contract_type_categories', [ContractController::class, 'getTypeCategories']);
+
 Route::resource('parts', PartController::class);
 
 Route::resource('tasks', TaskController::class);
