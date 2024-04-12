@@ -31,6 +31,9 @@ class ContractController extends Controller
     {
         try {
             $contract = $this->contract->store($request);
+
+            $contract = Contract::find($contract->id)->load('contractParts')->toArray();
+
             return api_response(true, "Succès de l'enregistrement du contrat", $contract, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement du contrat", $e->errors(), 422);
@@ -43,6 +46,7 @@ class ContractController extends Controller
     public function show(Contract $contract)
     {
         try {
+            $contract->load('contractParts')->toArray();
             return api_response(true, "Information du contrat", $contract, 200);
         }catch( ValidationException $e ) {
             return api_response(false, "Echec de la récupération des infos du contrat", $e->errors(), 422);
