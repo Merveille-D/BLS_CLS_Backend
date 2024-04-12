@@ -14,31 +14,31 @@ class AppServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom([
             // database_path('migrations/base'),
 
-            // database_path('migrations/v1/gourvernance/board_directors/administrators'),
-            // database_path('migrations/v1/gourvernance/board_directors/sessions'),
+            database_path('migrations/v1/gourvernance/board_directors/administrators'),
+            database_path('migrations/v1/gourvernance/board_directors/sessions'),
 
-            // database_path('migrations/v1/gourvernance/executive_management/directors'),
-            // database_path('migrations/v1/gourvernance/executive_management/management_committees'),
+            database_path('migrations/v1/gourvernance/executive_management/directors'),
+            database_path('migrations/v1/gourvernance/executive_management/management_committees'),
 
-            // database_path('migrations/v1/gourvernance/general_meeting'),
+            database_path('migrations/v1/gourvernance/general_meeting'),
 
-            database_path('migrations/v1/gourvernance/shareholder'),
+            // database_path('migrations/v1/gourvernance/shareholder'),
 
-            database_path('migrations/v1/gourvernance'),
+            // database_path('migrations/v1/gourvernance'),
 
-            // database_path('migrations/v1/guarantee/conventionnal_hypothecs'),
+            database_path('migrations/v1/guarantee/conventionnal_hypothecs'),
 
-            // database_path('migrations/v1/alert'),
+            database_path('migrations/v1/alert'),
 
-            // database_path('migrations/v1/litigation'),
+            database_path('migrations/v1/litigation'),
 
-            // database_path('migrations/v1/legal_watch'),
+            database_path('migrations/v1/legal_watch'),
 
-            // database_path('migrations/v1/contract'),
+            database_path('migrations/v1/contract'),
 
-            // database_path('migrations/v1/bank'),
+            database_path('migrations/v1/bank'),
 
-            // database_path('migrations/v1/incident'),
+            database_path('migrations/v1/incident'),
         ]);
     }
 
