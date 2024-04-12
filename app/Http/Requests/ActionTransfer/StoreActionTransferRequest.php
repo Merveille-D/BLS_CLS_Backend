@@ -25,11 +25,12 @@ class StoreActionTransferRequest extends FormRequest
     {
         return [
             'owner_id' => 'required|integer',
-            'buyer_id' => 'required|integer',
+            'buyer_id' => 'integer',
             'count_actions' => 'required|integer',
-            'lastname' => 'required|string',
-            'firstname' => 'required|string',
-            'agrement_ca' => 'required|string',
+            'lastname' => 'string',
+            'firstname' => 'string',
+            'ask_date' => ['required_if:buyer_id,null', 'date'],
+            'ask_agrement' => ['required_if:buyer_id,null', 'file']
         ];
     }
 

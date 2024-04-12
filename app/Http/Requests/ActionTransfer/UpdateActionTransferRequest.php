@@ -24,12 +24,14 @@ class UpdateActionTransferRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'owner_id' => 'integer',
-            'buyer_id' => 'integer',
+            'owner_id' => 'numeric',
+            'buyer_id' => 'numeric',
             'count_actions' => 'integer',
             'lastname' => 'string',
             'firstname' => 'string',
-            'agrement_ca' => 'string',
+
+            'response_agrement' => 'boolean',
+            'file_agrement_ca' => ['required_if:buyer_id,true', 'file'],
         ];
     }
 

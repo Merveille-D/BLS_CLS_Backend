@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('file');
-            $table->enum('status', GourvernanceDocument::FILE_STATUS );
+            $table->enum('status', GourvernanceDocument::FILE_STATUS);
             $table->morphs('uploadable');
             $table->timestamps();
         });

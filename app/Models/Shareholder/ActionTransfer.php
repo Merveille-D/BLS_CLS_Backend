@@ -2,6 +2,7 @@
 
 namespace App\Models\Shareholder;
 
+use App\Models\Gourvernance\GourvernanceDocument;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,9 +16,18 @@ class ActionTransfer extends Model
         'count_actions',
         'lastname',
         'firstname',
-        'agrement_ca',
+        'status',
+        'ask_date',
+        'ask_agrement',
     ];
 
     const STATUS = ['pending', 'accepted', 'rejected'];
+
+    public function fileUploads()
+    {
+        return $this->morphMany(GourvernanceDocument::class, 'uploadable');
+    }
+
+
 
 }
