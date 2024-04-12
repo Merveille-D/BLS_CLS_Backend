@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Litigation;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Litigation\AddLitigationRequest;
+use App\Http\Requests\Litigation\AssignUserRequest;
 use App\Http\Resources\Litigation\LitigationResource;
 use App\Models\Litigation\Litigation;
 use App\Repositories\Litigation\LitigationRepository;
@@ -70,6 +71,18 @@ class LitigationController extends Controller
             return api_response($success = true, 'Contentieux modifié avec succès', $data);
         } catch (\Throwable $th) {
             DB::rollBack();
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
+        }
+    }
+    /**
+     * Update the specified resource in storage.
+     */
+    public function assignUser(AssignUserRequest $request, $litigation)
+    {
+        try {
+            $data = $this->litigationRepo->assign($litigation, $request);
+            return api_response($success = true, 'Contentieux modifié avec succès', $data);
+        } catch (\Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }

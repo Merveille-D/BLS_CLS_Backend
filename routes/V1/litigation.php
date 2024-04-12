@@ -16,4 +16,5 @@ Route::resource('/litigation/parties', LitigationPartyController::class);
 Route::resource('/litigation/natures', NatureController::class);
 Route::resource('/litigation/jurisdiction', JurisdictionController::class);
 Route::post('/litigation/modify/{id}',  [LitigationController::class, 'updateLitigation']);
+Route::put('/litigation/assign-user/{id}',  [LitigationController::class, 'assignUser']);
 Route::resource('/litigation', LitigationController::class);

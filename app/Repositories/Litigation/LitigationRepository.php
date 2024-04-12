@@ -28,6 +28,11 @@ class LitigationRepository {
      * @param  mixed $id
      * @return JsonResource
      */
+    public function findById($id) : JsonResource {
+        $litigation = $this->litigation_model->find($id);
+
+        return new LitigationResource($litigation);
+    }
     public function getByIdWithDocuments($id) : JsonResource {
         $litigation = $this->litigation_model->with('documents')->find($id);
 
@@ -65,7 +70,7 @@ class LitigationRepository {
     }
 
     public function edit($id, $request) : JsonResource {
-        $litigation = $this->getByIdWithDocuments($id);
+        $litigation = $this->findById($id);
 
         $litigation->update([
             'name' => $request->name,
@@ -75,6 +80,17 @@ class LitigationRepository {
             'jurisdiction_id' => $request->jurisdiction_id,
             'email' => $request->email,
             'phone' => $request->phone,
+        ]);
+
+        return new LitigationResource($litigation);
+    }
+
+    public function assign($id, $request) {
+        $litigation = $this->findById($id);
+
+        $litigation->update([
+            'lawyer_id' => $request->lawyer_id,
+            'user_id' => $request->user_id,
         ]);
 
         return new LitigationResource($litigation);

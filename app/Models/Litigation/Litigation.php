@@ -2,6 +2,7 @@
 
 namespace App\Models\Litigation;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +14,7 @@ class Litigation extends Model
     use HasFactory,  HasUuids;
 
     protected $fillable = [
-        'name', 'nature_id', 'party_id', 'jurisdiction_id', 'reference', 'nature_id', 'jurisdiction_id', 'party_id', 'lawyer_id', 'jurisdiction_id',
+        'name', 'nature_id', 'party_id', 'jurisdiction_id', 'reference', 'nature_id', 'jurisdiction_id', 'party_id', 'lawyer_id', 'jurisdiction_id', 'user_id'
     ];
 
 
@@ -55,5 +56,25 @@ class Litigation extends Model
     public function party()
     {
         return $this->hasOne(LitigationParty::class, 'id', 'party_id');
+    }
+
+    /**
+     * user
+     *
+     * @return void
+     */
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    /**
+     * lawyer
+     *
+     * @return void
+     */
+    public function lawyer()
+    {
+        return $this->hasOne(LitigationLawyer::class, 'id', 'lawyer_id');
     }
 }

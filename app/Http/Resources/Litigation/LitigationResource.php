@@ -14,20 +14,20 @@ class LitigationResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // dd($this->nature);
         return [
             'id' => $this->id,
             'name' => $this->name,
             'reference' => $this->reference,
             'state' => $this->state,
             'is_achirved' => $this->is_achirved,
-            'nature' => $this->nature->name ?? null,
-            'party' => $this->party->name ?? null,
-            'jurisdiction' => $this->jurisdiction->name ?? null,
+            'nature' => $this->nature ?? null,
+            'party' => $this->party ?? null,
+            'jurisdiction' => $this->jurisdiction ?? null,
             'estimated_amount' => $this->estimated_amount,
             'added_amount' => $this->added_amount,
             'remaining_amount' => $this->remaining_amount,
-            'lawyer' => $this->lawyer->name ?? null,
+            'lawyer' => $this->lawyer ?? null,
+            'user' => $this->user ?? null,
             'created_at' => $this->created_at,
             'documents' => DocumentResource::collection($this->whenLoaded('documents')),
         ];

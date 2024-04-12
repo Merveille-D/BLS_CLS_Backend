@@ -22,7 +22,7 @@ class LegalWatchRepository
     ) {}
 
     /**
-     * getList
+     * get legal watches list
      *
      * @param  mixed $request
      * @return ResourceCollection
@@ -46,7 +46,7 @@ class LegalWatchRepository
         return LegalWatchResource::collection($query);
     }
     /**
-     * add
+     * add new legal watch resource
      *
      * @param  mixed $request
      * @return JsonResource

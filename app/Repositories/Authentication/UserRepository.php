@@ -1,11 +1,36 @@
 <?php
-namespace App\Repositories;
+namespace App\Repositories\Authentication;
 
+use App\Http\Resources\User\UserResource;
 use App\Models\User;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Hash;
 
 class UserRepository
 {
+
+    /**
+     * __construct
+     *
+     * @return void
+     */
+    public function __construct(
+        private User $user_model,
+    ) {
+    }
+
+    public function getList($request) : ResourceCollection {
+        $search = $request->search;
+        $query = $this->user_model
+                ->when(!blank($search), function($qry) use($search) {
+                    $qry->where('name', 'like', '%'.$search.'%');
+                })
+                ->paginate();
+
+
+        return UserResource::collection($query);
+    }
+
     public function add($request) {
         $user = User::create([
             'name' => $request['name'],
