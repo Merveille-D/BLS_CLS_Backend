@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Requests\TaskSessionAdministrator;
+namespace App\Http\Requests\ManagementCommittee;
 
+use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\ManagementCommittee;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
-class UpdateStatusTaskSessionAdministratorRequest extends FormRequest
+class StoreManagementCommitteeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +26,9 @@ class UpdateStatusTaskSessionAdministratorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tasks' => 'required|array',
-            'tasks.*' => 'required|array',
-            'tasks.*.id' => 'required|integer',
-            'tasks.*.status' => 'required|boolean',
+            'libelle' => ['required', 'string'],
+            'session_date' => ['required', 'date'],
+            'type' => ['required',  Rule::in(ManagementCommittee::SESSION_MEETING_TYPES) ],
         ];
     }
 

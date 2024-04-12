@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\TaskSessionAdministrator;
+namespace App\Http\Requests\TaskManagementCommittee;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateStatusTaskSessionAdministratorRequest extends FormRequest
+class UpdateStatusTaskManagementCommitteeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

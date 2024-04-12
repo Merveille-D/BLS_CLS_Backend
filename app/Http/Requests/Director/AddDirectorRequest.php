@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\TaskSessionAdministrator;
+namespace App\Http\Requests\Director;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateStatusTaskSessionAdministratorRequest extends FormRequest
+class AddDirectorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,11 @@ class UpdateStatusTaskSessionAdministratorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tasks' => 'required|array',
-            'tasks.*' => 'required|array',
-            'tasks.*.id' => 'required|integer',
-            'tasks.*.status' => 'required|boolean',
+            'name' => 'required|string|max:255',
+            'birthdate' => 'required|date',
+            'birthplace' => 'required|string|max:255',
+            'nationality' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
         ];
     }
 

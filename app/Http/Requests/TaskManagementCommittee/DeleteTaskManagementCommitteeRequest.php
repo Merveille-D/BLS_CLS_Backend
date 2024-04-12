@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Requests\TaskSessionAdministrator;
+namespace App\Http\Requests\TaskManagementCommittee;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
-class UpdateStatusTaskSessionAdministratorRequest extends FormRequest
+class DeleteTaskManagementCommitteeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,12 +24,13 @@ class UpdateStatusTaskSessionAdministratorRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'tasks' => 'required|array',
             'tasks.*' => 'required|array',
             'tasks.*.id' => 'required|integer',
-            'tasks.*.status' => 'required|boolean',
         ];
+
+        return $rules;
     }
 
     public function failedValidation(Validator $validator)
