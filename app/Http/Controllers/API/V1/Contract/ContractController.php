@@ -20,7 +20,7 @@ class ContractController extends Controller
      */
     public function index()
     {
-        $contracts = Contract::all();
+        $contracts = Contract::with('contractParts')->get();
         return api_response(true, "Liste des contrats", $contracts, 200);
     }
 
