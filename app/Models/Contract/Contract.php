@@ -68,7 +68,6 @@ class Contract extends Model
     ];
 
     const TYPE_CATEGORIES_VALUES = [
-        'leases' => [],
         'credits' => [
             'amortizable' => 'Amortissable',
             'aval_discount' => 'Aval / Escompte',

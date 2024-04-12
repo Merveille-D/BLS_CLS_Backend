@@ -5,7 +5,7 @@ use App\Models\Shareholder\ActionTransfer;
 
 class ActionTransferRepository
 {
-    public function __construct(private ActionTransfer $ActionTransfer) {
+    public function __construct(private ActionTransfer $action_transfer) {
 
     }
 
@@ -16,8 +16,8 @@ class ActionTransferRepository
      */
     public function store($request) {
 
-        $ActionTransfer = $this->ActionTransfer->create($request->all());
-        return $ActionTransfer;
+        $action_transfer = $this->ActionTransfer->create($request->all());
+        return $action_transfer;
     }
 
     /**
@@ -25,11 +25,10 @@ class ActionTransferRepository
      *
      * @return ActionTransfer
      */
-    public function update(ActionTransfer $ActionTransfer, $request) {
+    public function update(ActionTransfer $action_transfer, $request) {
 
-        $ActionTransfer = $this->ActionTransfer->create($request->all());
-        return $ActionTransfer;
+        $action_transfer = $this->ActionTransfer->create($request->all());
+        return $action_transfer;
     }
-
 
 }

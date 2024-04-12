@@ -63,12 +63,4 @@ class ActionTransferController extends Controller
             return api_response(false, "Echec de la mise à jour", $e->errors(), 422);
         }
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(ActionTransfer $action_transfer)
-    {
-        //
-    }
 }
