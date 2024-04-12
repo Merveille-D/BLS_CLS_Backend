@@ -12,7 +12,7 @@ class ContractPart extends Model
     protected $fillable = [
         'description',
         'type',
-        'contract_id',
+        'contract_ipd',
         'part_id',
     ];
 
@@ -31,3 +31,4 @@ class ContractPart extends Model
         return $this->belongsTo(Part::class);
     }
 }
+

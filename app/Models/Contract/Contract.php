@@ -94,4 +94,15 @@ class Contract extends Model
             'service_provider' => 'Prestataire',
         ],
     ];
+
+    public function contractParts()
+    {
+        return $this->hasMany(ContractPart::class);
+    }
+
+
+
+
+
+
 }
