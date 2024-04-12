@@ -62,6 +62,23 @@ if(!function_exists('getFileName')) {
     }
 }
 
+if(!function_exists('searchElementIndice')) {
+    function searchElementIndice($tableau, $indiceRecherche) {
+        foreach ($tableau as $indice => $element) {
+            if ($indice === $indiceRecherche) {
+                return $element;
+            }
+            if (is_array($element)) {
+                $resultat = searchElementIndice($element, $indiceRecherche);
+                if ($resultat !== null) {
+                    return $resultat;
+                }
+            }
+        }
+        return true;
+    }
+}
+
 
 
 
