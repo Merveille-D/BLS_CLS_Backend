@@ -20,7 +20,11 @@ class ContractController extends Controller
      */
     public function index()
     {
-        $contracts = Contract::with('contractParts')->get();
+        $contracts = Contract::with('contractParts')->get()->map(function ($contract) {
+            $contract->parts = $contract->parts;
+            return $contract;
+        });
+
         return api_response(true, "Liste des contrats", $contracts, 200);
     }
 
@@ -32,9 +36,10 @@ class ContractController extends Controller
         try {
             $contract = $this->contract->store($request);
 
-            $contract = Contract::find($contract->id)->load('contractParts')->toArray();
+            $data = $contract->toArray();
+            $data['parts'] = $contract->parts;
 
-            return api_response(true, "Succès de l'enregistrement du contrat", $contract, 200);
+            return api_response(true, "Succès de l'enregistrement du contrat", $data, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement du contrat", $e->errors(), 422);
         }
@@ -46,8 +51,11 @@ class ContractController extends Controller
     public function show(Contract $contract)
     {
         try {
-            $contract->load('contractParts')->toArray();
-            return api_response(true, "Information du contrat", $contract, 200);
+
+            $data = $contract->toArray();
+            $data['parts'] = $contract->parts;
+
+            return api_response(true, "Information du contrat", $data, 200);
         }catch( ValidationException $e ) {
             return api_response(false, "Echec de la récupération des infos du contrat", $e->errors(), 422);
         }
@@ -60,7 +68,11 @@ class ContractController extends Controller
     {
         try {
             $this->contract->update($contract, $request->all());
-            return api_response(true, "Mis à jour du contrat avec succès", $contract->load('contractParts'), 200);
+
+            $data = $contract->toArray();
+            $data['parts'] = $contract->parts;
+
+            return api_response(true, "Mis à jour du contrat avec succès", $data, 200);
         } catch (ValidationException $e) {
 
             return api_response(false, "Echec de la mise à jour du contrat", $e->errors(), 422);

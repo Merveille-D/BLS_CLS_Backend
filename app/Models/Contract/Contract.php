@@ -99,6 +99,35 @@ class Contract extends Model
     {
         return $this->hasMany(ContractPart::class);
     }
+    
+    public function getPartsAttribute() {
+
+        $parts = $this->contractParts()->get();
+
+        $part1 = [];
+        $part2 = [];
+
+        foreach ($parts as $part) {
+            if ($part->type === 'part_1') {
+                $part1[] = [
+                    'description' => $part->description,
+                    'part_id' => $part->part_id,
+                ];
+            } else {
+                $part2[] = [
+                    'description' => $part->description,
+                    'part_id' => $part->part_id,
+                ];
+            }
+        }
+
+        $parts = [
+            "first_part" => $part1,
+            "second_part" => $part2,
+        ];
+
+        return $parts;
+    }
 
 
 
