@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('legal_watches', function (Blueprint $table) {
             $table->uuid('id');
             $table->string('name');
-            $table->string('reference');
+            $table->string('reference')->nullable();
             $table->string('type');
             $table->text('summary');
             $table->text('innovation');
