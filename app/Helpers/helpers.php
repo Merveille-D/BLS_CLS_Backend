@@ -66,7 +66,7 @@ if(!function_exists('searchElementIndice')) {
     function searchElementIndice($tableau, $indiceRecherche) {
         foreach ($tableau as $indice => $element) {
             if ($indice === $indiceRecherche) {
-                return $element;
+                return $element; 
             }
             if (is_array($element)) {
                 $resultat = searchElementIndice($element, $indiceRecherche);
@@ -75,7 +75,7 @@ if(!function_exists('searchElementIndice')) {
                 }
             }
         }
-        return true;
+        return null;
     }
 }
 

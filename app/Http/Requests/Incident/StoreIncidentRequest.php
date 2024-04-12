@@ -29,9 +29,9 @@ class StoreIncidentRequest extends FormRequest
         return [
             'title' => ['required', 'string'],
             'type' => ['required',  Rule::in(Incident::TYPES) ],
-            'date' => ['required', 'date'],
+            'date_received' => ['required', 'date'],
             'author_incident_id' => ['required', 'numeric'],
-            'user_id' => ['required', 'numeric'],
+            'user_id' => ['numeric'],
             'client' => ['required', 'boolean'],
         ];
     }

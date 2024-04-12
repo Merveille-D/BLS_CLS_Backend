@@ -6,7 +6,7 @@ use App\Models\Incident\TaskIncident;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class UpdateTaskIncidentRequest extends FormRequest

@@ -62,6 +62,7 @@ class TaskIncident extends Model
                 'atd_4' => [
                         'title' => 'Avez vous recu de Main levee ?',
                         'rules' => [
+                            'raised_hand' => ['required', 'boolean'],
                         ],
                         "delay" => 0,
                         "next" => [
@@ -128,7 +129,6 @@ class TaskIncident extends Model
                         "delay" => 0,
                         "next" => false,
                     ],
-
             ],
         ],
         'requisition' => [

@@ -19,7 +19,7 @@ return new class extends Migration
 
             $table->enum('type', Incident::TYPES );
 
-            $table->unsignedBigInteger('author_incident_id')->nullable();
+            $table->unsignedBigInteger('author_incident_id');
             $table->foreign('author_incident_id')->references('id')->on('author_incidents')->onDelete('cascade');
 
             $table->unsignedBigInteger('user_id')->nullable();

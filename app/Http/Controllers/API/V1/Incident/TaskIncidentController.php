@@ -43,6 +43,11 @@ class TaskIncidentController extends Controller
      */
     public function update(UpdateTaskIncidentRequest $request, TaskIncident $taskIncident)
     {
+        $current_task_incident = TaskIncident::where('incident_id', $taskIncident->incident_id)->where('status', false)->first();
+        if($current_task_incident->id != $taskIncident->id) {
+            return api_response(false, "Ce n'est pas la tache suivante à modifier", null, 422);
+        }
+
         try {
             $this->taskIncident->update($taskIncident, $request->all());
             return api_response(true, "Succès de l'enregistrement de la tache", $taskIncident, 200);
@@ -51,7 +56,7 @@ class TaskIncidentController extends Controller
         }
     }
 
-    public function getCurrentTask(GetCurrentTaskIncidentRequest $request)
+    public function getCurrentTaskIncident(GetCurrentTaskIncidentRequest $request)
     {
         $task_incident = $this->taskIncident->getCurrentTask($request);
         return api_response(true, "Liste des taches de l'incident ", $task_incident, 200);

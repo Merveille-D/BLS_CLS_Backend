@@ -17,10 +17,9 @@ class IncidentRepository
      */
     public function store($request) {
 
-
-        $this->createTasks($request['type'], $request['client']);
-
         $incident = $this->incident->create($request->all());
+
+        $this->createTasks($incident);
         return $incident;
     }
 
@@ -35,7 +34,10 @@ class IncidentRepository
         return $incident;
     }
 
-    private function createTasks($type, $client) {
+    private function createTasks($incident) {
+
+        $type = $incident->type;
+        $client = $incident->client;
 
         $tasks = TaskIncident::TASKS[$type][$client];
 
@@ -43,6 +45,7 @@ class IncidentRepository
             TaskIncident::create([
                 'title' => $task['title'],
                 'code' => $key,
+                'incident_id' => $incident->id,
             ]);
         }
 

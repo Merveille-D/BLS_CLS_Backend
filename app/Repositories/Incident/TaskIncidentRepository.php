@@ -39,7 +39,7 @@ class TaskIncidentRepository
                     $taskIncident->fileUploads()->save($fileUpload);
             }
         }
-
+        $request['status'] = true;
         $taskIncident->update($request);
 
         $this->createNextTasks($taskIncident);
@@ -54,15 +54,15 @@ class TaskIncidentRepository
      */
     public function getCurrentTask($request) {
 
-        $task_incidents = $this->taskIncident->where('incident_id', $request->incident_id)->where('status', false)->first();
-        return $task_incidents;
+        $task_incident = $this->taskIncident->where('incident_id', $request->incident_id)->where('status', false)->first();
+        return $task_incident;
     }
 
 
     private function createNextTasks($taskIncident) {
 
         $type = $taskIncident->code;
-        $response = $taskIncident->response;
+        $response = $taskIncident->raised_hand;
 
 
         $next_task = searchElementIndice(TaskIncident::TASKS, $type);
@@ -74,12 +74,13 @@ class TaskIncidentRepository
             $incident->save();
 
             return true;
-        }else if (is_array($next_task[$response])) {
+        }else if (is_array($next_task['next'][$response])) {
 
-            foreach ($next_task[$response] as $key => $task) {
+            foreach ($next_task['next'][$response] as $key => $task) {
                 TaskIncident::create([
                     'title' => $task['title'],
                     'code' => $key,
+                    'incident_id' => $taskIncident->incident_id,
                 ]);
             }
         }

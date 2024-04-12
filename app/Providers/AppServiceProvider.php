@@ -27,9 +27,11 @@ class AppServiceProvider extends ServiceProvider
 
             // database_path('migrations/v1/legal_watch'),
 
-            database_path('migrations/v1/contract'),
+            // database_path('migrations/v1/contract'),
 
-            database_path('migrations/v1/bank'),
+            // database_path('migrations/v1/bank'),
+
+            database_path('migrations/v1/incident'),
         ]);
     }
 

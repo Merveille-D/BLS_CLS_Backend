@@ -6,6 +6,8 @@ use App\Models\Contract\Contract;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class StoreContractRequest extends FormRequest
 {
@@ -22,14 +24,17 @@ class StoreContractRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules(Request $request): array
     {
-        return [
+        $rules = [
             'title' => ['required', 'string'],
-            'category' => ['required', 'string'],
+            'category' => ['required',  Rule::in(Contract::CATEGORIES) ],
+            // 'type_category' => ['required',  Rule::in(Contract::TYPE_CATEGORIES[$request->input('category')]) ],
             'type_category' => ['required', 'string'],
             'contract_file' => ['required', 'file'],
         ];
+
+        return $rules;
     }
 
     public function failedValidation(Validator $validator)
