@@ -18,7 +18,7 @@ class TaskIncidentRepository
     public function all($request) {
 
         $task_incidents = $this->taskIncident->where('incident_id', $request->incident_id)->get()->map(function ($taskIncident) {
-            $taskIncident->forms = $taskIncident->forms;
+            $taskIncident->form = $taskIncident->form;
             return $taskIncident;
         });
         return $task_incidents;
