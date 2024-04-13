@@ -3,12 +3,13 @@
 namespace App\Models\Gourvernance\GeneralMeeting;
 
 use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class TaskGeneralMeeting extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     /**
      * Les attributs qui doivent être castés vers des types natifs.
@@ -92,7 +93,7 @@ class TaskGeneralMeeting extends Model
                 'days' => 20
             ],
             [
-                'libelle' => "Réception PV enrégistré et classement",
+                'libelle' => "Réception du PV enrégistré et classement",
                 'days' => 30
             ],
         ],
@@ -107,7 +108,7 @@ class TaskGeneralMeeting extends Model
         'checklist' => [
             ['libelle' => "Vérifier salle et sonorisation"],
             ['libelle' => "Enregistrer actionnaires à l'arrivée dans le système IT"],
-            ['libelle' => "Installer PCA, Administrateurs, CC et invités"],
+            ['libelle' => "Installer PCA, Administrateurs, CAC et invités"],
             ['libelle' => "Imprimer Liste de présence"],
             ['libelle' => "Vérifier Quorum"],
             ['libelle' => "Remettre Liste de présence au PCA"],

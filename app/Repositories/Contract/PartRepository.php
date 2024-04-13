@@ -1,5 +1,5 @@
 <?php
-namespace App\Repositories;
+namespace App\Repositories\Contract;
 
 use App\Enums\AdminType;
 use App\Models\Contract\Part;

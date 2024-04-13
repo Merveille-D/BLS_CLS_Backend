@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('general_meetings', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('libelle');
             $table->string('reference');
             $table->datetime('meeting_date');

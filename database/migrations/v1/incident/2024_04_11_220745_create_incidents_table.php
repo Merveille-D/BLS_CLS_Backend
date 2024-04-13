@@ -13,16 +13,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('incidents', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('title');
             $table->date('date_received');
 
             $table->enum('type', Incident::TYPES );
 
-            $table->unsignedBigInteger('author_incident_id');
+            $table->uuid('author_incident_id');
             $table->foreign('author_incident_id')->references('id')->on('author_incidents')->onDelete('cascade');
 
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->uuid('user_id')->nullable();
 
             $table->boolean('client');
             $table->boolean('status')->default(false);

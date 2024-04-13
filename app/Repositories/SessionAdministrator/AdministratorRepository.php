@@ -1,5 +1,5 @@
 <?php
-namespace App\Repositories;
+namespace App\Repositories\SessionAdministrator;
 
 use App\Enums\AdminFunction;
 use App\Enums\AdminType;
@@ -12,7 +12,7 @@ class AdministratorRepository
 
     }
 
-    
+
     /**
      * @param Request $request
      *

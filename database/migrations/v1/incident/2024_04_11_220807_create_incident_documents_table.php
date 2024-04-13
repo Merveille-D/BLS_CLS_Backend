@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('incident_documents', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('name')->nullable();
             $table->string('file');
-            $table->morphs('uploadable');
+            $table->uuidMorphs('uploadable');
             $table->timestamps();
         });
     }

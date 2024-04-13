@@ -2,12 +2,13 @@
 
 namespace App\Models\Contract;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Contract extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     protected $fillable = [
         'title',
@@ -29,7 +30,9 @@ class Contract extends Model
     ];
 
     const TYPE_CATEGORIES = [
-        'lease' => [],
+        'leases' => [
+
+        ],
         'credits' => [
             'amortizable',
             'aval_discount',
@@ -38,7 +41,7 @@ class Contract extends Model
             'campaign',
             'syndications',
         ],
-        'job' => [
+        'jobs' => [
             'cdi',
             'cdd',
             'secondment',
@@ -46,12 +49,12 @@ class Contract extends Model
             'academic_internship',
             'professional_internship',
         ],
-        'warranty' => [
+        'warranties' => [
             'guarantees',
             'personal_sureties',
             'real_estate_sureties',
         ],
-        'service' => [
+        'services' => [
             'supplier',
             'service_provider',
         ],
@@ -66,7 +69,6 @@ class Contract extends Model
     ];
 
     const TYPE_CATEGORIES_VALUES = [
-        'lease' => [],
         'credits' => [
             'amortizable' => 'Amortissable',
             'aval_discount' => 'Aval / Escompte',
@@ -75,7 +77,7 @@ class Contract extends Model
             'campaign' => 'Campagne',
             'syndications' => 'Syndications',
         ],
-        'job' => [
+        'jobs' => [
             'cdi' => 'CDI',
             'cdd' => 'CDD',
             'secondment' => 'Détachement / Mise en disponibilité',
@@ -83,14 +85,78 @@ class Contract extends Model
             'academic_internship' => 'Stage académique',
             'professional_internship' => 'Stage professionnel',
         ],
-        'warranty' => [
+        'warranties' => [
             'guarantees' => 'Garanties',
             'personal_sureties' => 'Sûretés personnelles',
             'real_estate_sureties' => 'Sûretés immobilières',
         ],
-        'service' => [
+        'services' => [
             'supplier' => 'Fournisseur',
             'service_provider' => 'Prestataire',
         ],
     ];
+
+    public function contractParts()
+    {
+        return $this->hasMany(ContractPart::class);
+    }
+
+    public function getInfoCategoryAttribute()
+    {
+        $value = $this->category;
+        $label = self::CATEGORIES_VALUES[$value];
+
+        return [
+            'value' => $value,
+            'label' => $label,
+        ];
+    }
+
+    public function getInfoTypeCategoryAttribute()
+    {
+        $value = $this->getAttribute('type_category');
+
+        $label = ($this->category != 'leases') ? self::TYPE_CATEGORIES_VALUES[$this->category][$value] : "";
+
+        return [
+            'value' => $value,
+            'label' => $label,
+        ];
+    }
+
+    public function getFirstPartAttribute() {
+
+        $parts = $this->contractParts()->get();
+
+        $part1 = [];
+
+        foreach ($parts as $part) {
+            if ($part->type === 'part_1') {
+                $part1[] = [
+                    'description' => $part->description,
+                    'part_id' => $part->part_id,
+                ];
+            }
+        }
+
+        return $part1;
+    }
+
+
+    public function getSecondPartAttribute() {
+
+        $parts = $this->contractParts()->get();
+
+        $part2 = [];
+
+        foreach ($parts as $part) {
+            if ($part->type === 'part_2') {
+                $part2[] = [
+                    'description' => $part->description,
+                    'part_id' => $part->part_id,
+                ];
+            }
+        }
+        return $part2;
+    }
 }

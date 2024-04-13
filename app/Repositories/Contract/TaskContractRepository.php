@@ -1,5 +1,5 @@
 <?php
-namespace App\Repositories;
+namespace App\Repositories\Contract;
 
 use App\Models\Contract\Task;
 use Carbon\Carbon;
@@ -38,6 +38,7 @@ class TaskContractRepository
      * @return Task
      */
     public function update(Task $task, $request) {
+
         $task->update($request);
         return $task;
     }

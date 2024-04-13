@@ -1,5 +1,6 @@
 <?php
-namespace App\Repositories\Guarantee;
+
+namespace App\Repositories\Hypothec;
 
 use App\Enums\ConvHypothecState;
 use App\Http\Resources\Guarantee\ConvHypothecCollection;

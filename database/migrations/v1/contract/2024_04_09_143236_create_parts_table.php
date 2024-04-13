@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('parts', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('name');
             $table->string('email')->nullable();
             $table->string('telephone')->nullable();
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('id_card')->nullable();
             $table->string('capital')->nullable();
             $table->enum('type', Part::TYPES_PART)->nullable();
-            $table->unsignedBigInteger('permanent_representative_id')->nullable();
+            $table->uuid('permanent_representative_id')->nullable();
             $table->timestamps();
         });
     }

@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('banks', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('title');
             $table->string('file_name')->nullable();
             $table->string('file_url')->nullable();

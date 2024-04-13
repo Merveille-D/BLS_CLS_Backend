@@ -24,7 +24,7 @@ class ListTaskContractRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'contract_id' => ['required', 'numeric'],
+            'contract_id' => ['required', 'uuid'],
         ];
     }
 

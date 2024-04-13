@@ -26,7 +26,7 @@ class UpdateAttachementSessionAdministratorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'session_administrator_id' => ['required', 'numeric'],
+            'session_administrator_id' => ['required', 'uuid'],
             'files' => ['required', 'array'],
             'files.*' => ['required', 'array'],
             'files.*.type' => ['required',  Rule::in(SessionAdministrator::TYPE_FILE_FIELD) ],

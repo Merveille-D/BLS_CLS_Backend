@@ -24,7 +24,7 @@ class ListTaskIncidentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'incident_id' => ['required', 'numeric'],
+            'incident_id' => ['required', 'uuid'],
         ];
     }
 

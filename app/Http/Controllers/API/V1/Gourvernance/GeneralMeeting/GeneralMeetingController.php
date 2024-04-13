@@ -7,7 +7,7 @@ use App\Http\Requests\GeneralMeeting\StoreGeneralMeetingRequest;
 use App\Http\Requests\GeneralMeeting\UpdateAttachementGeneralMeetingRequest;
 use App\Http\Requests\GeneralMeeting\UpdateGeneralMeetingRequest;
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
-use App\Repositories\GeneralMeetingRepository;
+use App\Repositories\GeneralMeeting\GeneralMeetingRepository;
 use Illuminate\Validation\ValidationException;
 
 class GeneralMeetingController extends Controller

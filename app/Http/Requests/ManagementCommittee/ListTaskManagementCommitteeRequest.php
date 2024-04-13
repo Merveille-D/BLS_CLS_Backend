@@ -24,7 +24,7 @@ class ListTaskManagementCommitteeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'management_committee_id' => ['required', 'numeric'],
+            'management_committee_id' => ['required', 'uuid'],
         ];
     }
 

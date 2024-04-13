@@ -30,8 +30,8 @@ class UpdateIncidentRequest extends FormRequest
             'title' => ['string'],
             'type' => [ Rule::in(Incident::TYPES) ],
             'date' => ['date'],
-            'author_incident_id' => ['numeric'],
-            'user_id' => ['numeric'],
+            'author_incident_id' => ['uuid'],
+            'user_id' => ['uuid'],
             'client' => ['boolean'],
 
         ];

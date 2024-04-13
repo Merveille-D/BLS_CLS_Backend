@@ -27,7 +27,7 @@ class StoreTaskGeneralMeetingRequest extends FormRequest
     {
         $rules = [
             'libelle' => ['required', 'string'],
-            'general_meeting_id' => ['required', 'numeric'],
+            'general_meeting_id' => ['required', 'uuid'],
             'responsible' => ['string'],
             'deadline' => ['date'],
             'supervisor' => ['string'],

@@ -9,7 +9,7 @@ use App\Http\Requests\TaskContract\StoreTaskContractRequest;
 use App\Http\Requests\TaskContract\UpdateStatusTaskContractRequest;
 use App\Http\Requests\TaskContract\UpdateTaskContractRequest;
 use App\Models\Contract\Task;
-use App\Repositories\TaskContractRepository;
+use App\Repositories\Contract\TaskContractRepository;
 use Illuminate\Validation\ValidationException;
 
 class TaskController extends Controller
@@ -71,7 +71,12 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        try {
+            $task->delete();
+            return api_response(true, "Succès de la suppression de la tache", null, 200);
+        }catch (ValidationException $e) {
+                return api_response(false, "Echec de la supression de la tache", $e->errors(), 422);
+        }
     }
 
     public function deleteArrayTaskContract(DeleteTaskContractRequest $request)

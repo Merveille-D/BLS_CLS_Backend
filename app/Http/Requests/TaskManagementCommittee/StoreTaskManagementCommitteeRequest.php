@@ -26,7 +26,7 @@ class StoreTaskManagementCommitteeRequest extends FormRequest
     {
         $rules = [
             'libelle' => ['required', 'string'],
-            'management_committee_id' => ['required', 'numeric'],
+            'management_committee_id' => ['required', 'uuid'],
             'responsible' => ['string'],
             'deadline' => ['date'],
             'supervisor' => ['string'],

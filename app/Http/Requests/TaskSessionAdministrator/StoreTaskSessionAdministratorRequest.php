@@ -27,7 +27,7 @@ class StoreTaskSessionAdministratorRequest extends FormRequest
     {
         $rules = [
             'libelle' => ['required', 'string'],
-            'session_administrator_id' => ['required', 'numeric'],
+            'session_administrator_id' => ['required', 'uuid'],
             'responsible' => ['string'],
             'deadline' => ['date'],
             'supervisor' => ['string'],
