@@ -100,9 +100,9 @@ class Contract extends Model
         return $this->hasMany(ContractPart::class);
     }
 
-    public function getCategoryAttribute()
+    public function getInfoCategoryAttribute()
     {
-        $value =$this->getAttribute('category');
+        $value = $this->category;
         $label = self::CATEGORIES_VALUES[$value];
 
         return [
@@ -111,10 +111,11 @@ class Contract extends Model
         ];
     }
 
-    public function getTypeCategoryAttribute()
+    public function getInfoTypeCategoryAttribute()
     {
         $value = $this->getAttribute('type_category');
-        $label = self::TYPE_CATEGORIES_VALUES[$this->getAttribute('category')][$value];
+
+        $label = ($this->category != 'leases') ? self::TYPE_CATEGORIES_VALUES[$this->category][$value] : "";
 
         return [
             'value' => $value,
