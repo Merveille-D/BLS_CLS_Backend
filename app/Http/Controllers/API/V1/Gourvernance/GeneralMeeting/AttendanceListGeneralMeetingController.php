@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AttendanceListGeneralMeeting\StoreAttendanceListGeneralMeetingRequest;
 use App\Http\Requests\AttendanceListGeneralMeeting\UpdateAttendanceListGeneralMeetingRequest;
 use App\Models\Gourvernance\GeneralMeeting\AttendanceListGeneralMeeting;
-use App\Repositories\AttendanceListGeneralMeetingRepository;
+use App\Repositories\GeneralMeeting\AttendanceListGeneralMeetingRepository;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 

@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Administrator\AddAdministratorRequest;
 use App\Http\Resources\Administrator\AdministratorCollection;
 use App\Models\Gourvernance\BoardDirectors\Administrators\CaAdministrator;
-use App\Repositories\AdministratorRepository;
+use App\Repositories\SessionAdministrator\AdministratorRepository;
 use Illuminate\Http\Request;
 
 class AdministratorController extends Controller

@@ -9,7 +9,7 @@ use App\Http\Requests\TaskSessionAdministrator\StoreTaskSessionAdministratorRequ
 use App\Http\Requests\TaskSessionAdministrator\UpdateStatusTaskSessionAdministratorRequest;
 use App\Http\Requests\TaskSessionAdministrator\UpdateTaskSessionAdministratorRequest;
 use App\Models\Gourvernance\BoardDirectors\Sessions\TaskSessionAdministrator;
-use App\Repositories\TaskSessionAdministratorRepository;
+use App\Repositories\SessionAdministrator\TaskSessionAdministratorRepository;
 use Illuminate\Validation\ValidationException;
 
 class TaskSessionAdministratorController extends Controller

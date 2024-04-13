@@ -7,7 +7,7 @@ use App\Http\Requests\SessionAdministrator\StoreSessionAdministratorRequest;
 use App\Http\Requests\SessionAdministrator\UpdateAttachementSessionAdministratorRequest;
 use App\Http\Requests\SessionAdministrator\UpdateSessionAdministratorRequest;
 use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
-use App\Repositories\SessionAdministratorRepository;
+use App\Repositories\SessionAdministrator\SessionAdministratorRepository;
 use Illuminate\Validation\ValidationException;
 
 class SessionAdministratorController extends Controller

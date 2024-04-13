@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Hypothec\InitConvHypothecRequest;
 use App\Http\Requests\Hypothec\UpdateProcessRequest;
 use App\Models\Guarantee\ConventionnalHypothecs\ConventionnalHypothec;
-use App\Repositories\ConvHypothecRepository;
+use App\Repositories\Hypothec\ConvHypothecRepository;
 use Essa\APIToolKit\Api\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
