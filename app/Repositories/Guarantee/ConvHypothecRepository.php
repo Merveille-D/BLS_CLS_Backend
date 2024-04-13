@@ -6,7 +6,6 @@ use App\Http\Resources\Guarantee\ConvHypothecCollection;
 use App\Http\Resources\Guarantee\ConvHypothecResource;
 use App\Jobs\SendNotification;
 use App\Models\Alert\Notification;
-use App\Models\Guarantee\ConventionnalHypothecs\ConventionnalHypothec;
 use App\Models\Guarantee\ConvHypothec;
 use App\Models\Guarantee\ConvHypothecStep;
 use App\Models\Guarantee\GuaranteeDocument;
@@ -27,21 +26,25 @@ class ConvHypothecRepository
     }
 
 
-    function getConvHypothecs() : ResourceCollection {
+    public function getConvHypothecs() : ResourceCollection {
         return ConvHypothecResource::collection($this->conv_model->paginate());
     }
 
-    function getConvHypothecById($id) : JsonResource {
+    public function getConvHypothecById($id) : JsonResource {
         return new ConvHypothecResource($this->conv_model->with('documents')->findOrFail($id));
     }
 
 
-    function getHypthecSteps($hypothecId, $request) {
+    public function getHypthecSteps($hypothecId, $request) {
+        if ($this->conv_model->find($hypothecId) == null) {
+            return array();
+        }
         $type = $request->type;
         $steps = ConvHypothecStep::select('conv_hypothec_steps.id', 'code', 'conv_hypothec_steps.name', 'conv_hypothec_steps.type',
-                 'hypothec_step.hypothec_id')
-                ->leftJoin('hypothec_step', function ($join) use ($hypothecId) {
-                    $join->on('conv_hypothec_steps.id', '=', 'hypothec_step.hypothec_id')
+                 'conv_hypothecs.id as hypothec_id', 'hypothec_step.created_at')
+                ->leftJoin('hypothec_step', 'conv_hypothec_steps.id', '=', 'hypothec_step.step_id')
+                ->leftJoin('conv_hypothecs', function ($join) use ($hypothecId) {
+                    $join->on('conv_hypothecs.id', '=', 'hypothec_step.hypothec_id')
                         ->where('hypothec_step.hypothec_id', $hypothecId);
                 })
                 ->when(!blank($type), function($qry) use($type) {
@@ -67,20 +70,30 @@ class ConvHypothecRepository
 
         $convHypo = $this->conv_model->create($data);
 
-        $convHypo->steps()->save(ConvHypothecStep::first());
+        $convHypo->steps()->save($this->currentStep($convHypo->state));
 
-    //     $user = User::find(1);
-
-    // $user->notify((new ConvHypothecNextStep($convHypo))/* ->delay(Carbon::now()->addMinutes(1)) */);
-        return $convHypo;
+        // $user->notify((new ConvHypothecNextStep($convHypo))/* ->delay(Carbon::now()->addMinutes(1)) */);
+        return new ConvHypothecResource($convHypo);
     }
 
-    public function updateProcess($request, $convHypo) : ConventionnalHypothec {
+    public function currentStep($state) : Model {
+        return ConvHypothecStep::whereCode($state)->first();
+    }
+
+    public function nextStep($state) : Model {
+        $current =  ConvHypothecStep::whereCode($state)->first();
+        return $next = ConvHypothecStep::where('rank', $current->rank+1)->first();
+    }
+
+
+    public function updateProcess($request, $convHypo) {
         $data = array();
 
         if ($convHypo) {
             $data = $this->updateProcessByState($request, $convHypo);
-            return $data;
+
+            $data->steps()->save($this->currentStep($data->state));
+            return new ConvHypothecResource($data);
         }
     }
 

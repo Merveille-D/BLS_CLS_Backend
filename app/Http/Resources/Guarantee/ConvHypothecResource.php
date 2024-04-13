@@ -14,10 +14,13 @@ class ConvHypothecResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $id = $request->route('conventionnal_hypothec');
+        // dd($request->route('conventionnal_hypothec'));
         return [
             'id' => $this->id,
             'state' => $this->state,
             'reference' => $this->reference,
+            'type' => $this->step,
             'contract_id' => $this->contract_id,
             'contract_file' => '/storage/'.$this->contract_file,
             'is_approved' => $this->is_approved,
@@ -29,6 +32,9 @@ class ConvHypothecResource extends JsonResource
             'sell_price_estate' => $this->sell_price_estate,
             // 'documents' => new DocumentCollection(new DocumentResource($this->documents))
             'documents' => DocumentResource::collection($this->whenLoaded('documents')),
+            'next_step' => $this->when($id, new ConvHypothecStepResource($this->next_step)),
+            'current_step' => $this->when($id, new ConvHypothecStepResource($this->current_step)),
+            'steps' => $this->when($id, $this->steps)
         ];
     }
 }

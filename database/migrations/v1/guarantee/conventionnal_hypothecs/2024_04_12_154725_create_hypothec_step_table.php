@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('hypothec_step', function (Blueprint $table) {
             $table->id();
-            $table->uuid('hypothec_id');
-            $table->unsignedBigInteger('step_id');
-            // $table->foreign('conv_hypothec_id')->references('id')->on('conv_hypothecs');
+            $table->uuid('hypothec_id')->index();
+            $table->foreign('hypothec_id')->references('id')->on('conv_hypothecs');
+            $table->uuid('step_id')->index();
+            $table->foreign('step_id')->references('id')->on('conv_hypothec_steps');
             $table->timestamps();
         });
     }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Hypothec\InitConvHypothecRequest;
 use App\Http\Requests\Hypothec\UpdateProcessRequest;
 use App\Models\Guarantee\ConventionnalHypothecs\ConventionnalHypothec;
+use App\Models\Guarantee\ConvHypothec;
 use App\Repositories\Guarantee\ConvHypothecRepository;
 use Essa\APIToolKit\Api\ApiResponse;
 use Illuminate\Http\Request;
@@ -45,7 +46,7 @@ class ConvHypothecController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function updateProcess(UpdateProcessRequest $request, ConventionnalHypothec $convHypo)
+    public function updateProcess(UpdateProcessRequest $request, ConvHypothec $convHypo)
     {
         try {
             DB::beginTransaction();

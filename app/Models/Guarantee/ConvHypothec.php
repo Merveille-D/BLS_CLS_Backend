@@ -57,13 +57,36 @@ class ConvHypothec extends Model
         return $this->morphMany(GuaranteeDocument::class, 'documentable');
     }
 
-    // public function steps() : MorphMany
-    // {
-    //     return $this->morphMany(GuaranteeStep::class, 'steppable');
-    // }
     public function steps()
     {
         return $this->belongsToMany(ConvHypothecStep::class, 'hypothec_step', 'hypothec_id', 'step_id');
+    }
+
+    function getCurrentStepAttribute() {
+        return $this->steps()->orderBy('rank', 'desc')->first();
+    }
+
+    public function getNextStepAttribute()
+    {
+        $currentStep = $this->current_step;
+        $nextStep = ConvHypothecStep::where('rank', $currentStep->rank+1)->orderBy('rank')->first();
+        return $nextStep;
+    }
+
+    public function getStepsAttribute() {
+        $steps = ConvHypothecStep::select('conv_hypothec_steps.id', 'code', 'conv_hypothec_steps.name', 'conv_hypothec_steps.type',
+                 'conv_hypothecs.id as hypothec_id', 'hypothec_step.created_at')
+                ->leftJoin('hypothec_step', 'conv_hypothec_steps.id', '=', 'hypothec_step.step_id')
+                ->leftJoin('conv_hypothecs', function ($join){
+                    $join->on('conv_hypothecs.id', '=', 'hypothec_step.hypothec_id')
+                        ->where('hypothec_step.hypothec_id', $this->id);
+                })
+                ->when($this->step == 'formalization', function($qry) {
+                    $qry->where('conv_hypothec_steps.type', 'formalization');
+                })
+                ->orderBy('conv_hypothec_steps.id')
+                ->get();
+        return $steps;
     }
 
 }
