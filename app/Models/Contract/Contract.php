@@ -99,7 +99,7 @@ class Contract extends Model
     {
         return $this->hasMany(ContractPart::class);
     }
-    
+
     public function getPartsAttribute() {
 
         $parts = $this->contractParts()->get();
@@ -128,10 +128,5 @@ class Contract extends Model
 
         return $parts;
     }
-
-
-
-
-
 
 }

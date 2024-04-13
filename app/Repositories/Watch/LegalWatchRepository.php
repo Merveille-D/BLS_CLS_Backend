@@ -53,7 +53,7 @@ class LegalWatchRepository
      */
     public function add($request) : JsonResource {
         $legal_watch = $this->watch_model->create($request->all());
-        if ($legal_watch && count($legal_watch->mail_addresses) >=1) {
+        if ($legal_watch && !blank($legal_watch->mail_addresses) && count($legal_watch->mail_addresses) >=1) {
             $this->sendMessage($legal_watch);
         }
         return new LegalWatchResource($legal_watch);
