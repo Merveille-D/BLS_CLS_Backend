@@ -102,7 +102,9 @@ class Contract extends Model
 
     public function getCategoryAttribute()
     {
-        $value = $this->category;
+        dd(1);
+    // dd($this['category']);
+        // $value = $this->category;
         $label = self::CATEGORIES_VALUES[$value];
 
         return [
