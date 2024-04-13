@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Concerns\Traits\Guarantee\ConvHypothecNotificationTrait;
 use App\Models\Alert\Alert;
 use App\Models\Guarantee\ConventionnalHypothecs\ConventionnalHypothec;
+use App\Models\Guarantee\ConvHypothec;
 use App\Models\User;
 use App\Notifications\Guarantee\ConvHypothecInit;
 use App\Notifications\Guarantee\ConvHypothecNextStep;
@@ -19,7 +20,7 @@ class ConvHypothecObserver implements ShouldHandleEventsAfterCommit
     /**
      * Handle the ConventionnalHypothec "created" event.
      */
-    public function created(ConventionnalHypothec $convHypo): void
+    public function created(ConvHypothec $convHypo): void
     {
         $data = $this->nextStepBasedOnState($convHypo->state);
 
@@ -34,7 +35,7 @@ class ConvHypothecObserver implements ShouldHandleEventsAfterCommit
     /**
      * Handle the ConventionnalHypothec "updated" event.
      */
-    public function updated(ConventionnalHypothec $convHypo): void
+    public function updated(ConvHypothec $convHypo): void
     {
         $data = $this->nextStepBasedOnState($convHypo->state);
 

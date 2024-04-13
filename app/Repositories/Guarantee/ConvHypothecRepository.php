@@ -1,5 +1,5 @@
 <?php
-namespace App\Repositories;
+namespace App\Repositories\Guarantee;
 
 use App\Enums\ConvHypothecState;
 use App\Http\Resources\Guarantee\ConvHypothecCollection;
@@ -7,6 +7,8 @@ use App\Http\Resources\Guarantee\ConvHypothecResource;
 use App\Jobs\SendNotification;
 use App\Models\Alert\Notification;
 use App\Models\Guarantee\ConventionnalHypothecs\ConventionnalHypothec;
+use App\Models\Guarantee\ConvHypothec;
+use App\Models\Guarantee\ConvHypothecStep;
 use App\Models\Guarantee\GuaranteeDocument;
 use App\Models\User;
 use App\Notifications\Guarantee\ConvHypothecNextStep;
@@ -20,7 +22,7 @@ use Illuminate\Support\Str;
 class ConvHypothecRepository
 {
     public function __construct(
-        private ConventionnalHypothec $conv_model
+        private ConvHypothec $conv_model
     ) {
     }
 
@@ -31,6 +33,24 @@ class ConvHypothecRepository
 
     function getConvHypothecById($id) : JsonResource {
         return new ConvHypothecResource($this->conv_model->with('documents')->findOrFail($id));
+    }
+
+
+    function getHypthecSteps($hypothecId, $request) {
+        $type = $request->type;
+        $steps = ConvHypothecStep::select('conv_hypothec_steps.id', 'code', 'conv_hypothec_steps.name', 'conv_hypothec_steps.type',
+                 'hypothec_step.hypothec_id')
+                ->leftJoin('hypothec_step', function ($join) use ($hypothecId) {
+                    $join->on('conv_hypothec_steps.id', '=', 'hypothec_step.hypothec_id')
+                        ->where('hypothec_step.hypothec_id', $hypothecId);
+                })
+                ->when(!blank($type), function($qry) use($type) {
+                    $qry->where('conv_hypothec_steps.type', $type);
+                })
+                ->orderBy('conv_hypothec_steps.id')
+                ->get();
+        return $steps;
+        // return new ConvHypothecResource($this->conv_model->with('documents')->findOrFail($id));
     }
 
     function initFormalizationProcess($request) {
@@ -46,6 +66,9 @@ class ConvHypothecRepository
         );
 
         $convHypo = $this->conv_model->create($data);
+
+        $convHypo->steps()->save(ConvHypothecStep::first());
+
     //     $user = User::find(1);
 
     // $user->notify((new ConvHypothecNextStep($convHypo))/* ->delay(Carbon::now()->addMinutes(1)) */);
