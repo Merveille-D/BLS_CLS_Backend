@@ -3,12 +3,13 @@
 namespace App\Models\Shareholder;
 
 use App\Models\Gourvernance\GourvernanceDocument;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class ActionTransfer extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     protected $fillable = [
         'owner_id',

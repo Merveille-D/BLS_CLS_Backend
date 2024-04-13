@@ -28,7 +28,7 @@ return new class extends Migration
             $table->double('shares')->nullable();
             $table->enum('type', AdminType::TYPES)->nullable();
             $table->double('share_percentage')->nullable();
-            $table->unsignedBigInteger('permanent_representative_id')->nullable();
+            $table->uuid('permanent_representative_id')->nullable();
             $table->timestamps();
         });
     }

@@ -13,12 +13,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('action_transfers', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
 
-            $table->unsignedBigInteger('owner_id')->nullable();
+            $table->uuid('owner_id')->nullable();
             $table->foreign('owner_id')->references('id')->on('shareholders')->onDelete('cascade');
 
-            $table->unsignedBigInteger('buyer_id')->nullable();
+            $table->uuid('buyer_id')->nullable();
             $table->foreign('buyer_id')->references('id')->on('shareholders')->onDelete('cascade');
 
             $table->integer('count_actions');

@@ -12,15 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('attendance_list_general_meetings', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
 
             $table->string('grade')->nullable();
             $table->string('lastname')->nullable();
             $table->string('firstname')->nullable();
 
-            $table->unsignedBigInteger('shareholder_id')->nullable();
+            $table->uuid('shareholder_id')->nullable();
 
-            $table->unsignedBigInteger('general_meeting_id');
+            $table->uuid('general_meeting_id');
             $table->foreign('general_meeting_id')->references('id')->on('general_meetings')->onDelete('cascade');
 
             $table->timestamps();

@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('contracts', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('title');
             $table->enum('category', Contract::CATEGORIES);
             $table->string('type_category');

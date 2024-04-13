@@ -2,12 +2,13 @@
 
 namespace App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class TaskManagementCommittee extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     /**
      * Les attributs qui doivent être castés vers des types natifs.

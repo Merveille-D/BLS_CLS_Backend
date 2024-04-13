@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('task_incidents', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
 
             $table->text('title');
 
@@ -22,7 +22,7 @@ return new class extends Migration
 
             $table->boolean('raised_hand')->nullable();
 
-            $table->unsignedBigInteger('incident_id')->nullable();
+            $table->uuid('incident_id')->nullable();
             $table->foreign('incident_id')->references('id')->on('incidents')->onDelete('cascade');
 
             $table->boolean('status')->default(false);

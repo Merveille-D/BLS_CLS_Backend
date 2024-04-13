@@ -12,17 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('attendance_list_session_administrators', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
 
             $table->string('grade')->nullable();
             $table->string('lastname')->nullable();
             $table->string('firstname')->nullable();
 
-            $table->unsignedBigInteger('administrator_id');
+            $table->uuid('administrator_id');
             // $table->foreign('administrator_id')->references('id')->on('ca_administrators')->onDelete('cascade');
 
 
-            $table->unsignedBigInteger('session_id');
+            $table->uuid('session_id');
             // $table->foreign('session_id')->references('id')->on('session_administrators')->onDelete('cascade');
 
             $table->timestamps();

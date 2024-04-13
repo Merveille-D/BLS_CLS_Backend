@@ -2,13 +2,14 @@
 
 namespace App\Models\Incident;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 
 class TaskIncident extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     /**
      * Les attributs qui doivent être castés vers des types natifs.
@@ -58,7 +59,7 @@ class TaskIncident extends Model
                                     'label' => 'Date de blocage',
                                 ],
                             ],
-                            'title' => ''
+                            'form_title' => ''
                         ],
                         "next" => null,
                     ],
@@ -77,7 +78,7 @@ class TaskIncident extends Model
                                     'label' => 'Joindre le courrier d\'information au client',
                                 ]
                             ],
-                            'title' => ''
+                            'form_title' => ''
                         ],
                         "next" => null,
                     ],
@@ -96,7 +97,7 @@ class TaskIncident extends Model
                                     'label' => 'Lettre signée par la DG & Accusé de réception signé',
                                 ]
                             ],
-                            'title' => ''
+                            'form_title' => ''
                         ],
                         "next" => null,
                     ],
@@ -114,7 +115,7 @@ class TaskIncident extends Model
                                     'label' => 'Avez vous recu de Main levee ?',
                                 ]
                             ],
-                            'title' => ''
+                            'form_title' => ''
                         ],
                         "next" => [
                             true => [
@@ -133,7 +134,7 @@ class TaskIncident extends Model
                                                     'label' => 'Attacher le document de la main levée',
                                                 ]
                                             ],
-                                            'title' => ''
+                                            'form_title' => ''
                                         ],
                                         "next" => null,
                                     ],
@@ -157,7 +158,7 @@ class TaskIncident extends Model
                                                     'label' => 'Date de blocage',
                                                 ],
                                             ],
-                                            'title' => ''
+                                            'form_title' => ''
                                         ],
                                         "next" => null,
                                     ],
@@ -176,7 +177,7 @@ class TaskIncident extends Model
                                                     'label' => 'Joindre le courrier d\'information au client',
                                                 ]
                                             ],
-                                            'title' => ''
+                                            'form_title' => ''
                                         ],
                                         "next" => false,
                                     ],
@@ -197,7 +198,7 @@ class TaskIncident extends Model
                                                     'label' => 'Avis d\'execution de l\'administration fiscale',
                                                 ]
                                             ],
-                                            'title' => ''
+                                            'form_title' => ''
                                         ],
                                         "next" => null,
                                     ],
@@ -216,7 +217,7 @@ class TaskIncident extends Model
                                                     'label' => 'Joindre une copie du chèque',
                                                 ]
                                             ],
-                                            'title' => ''
+                                            'form_title' => ''
                                         ],
                                         "next" => null,
                                     ],
@@ -235,7 +236,7 @@ class TaskIncident extends Model
                                                     'label' => 'Joindre le courrier d\'information au client',
                                                 ]
                                             ],
-                                            'title' => ''
+                                            'form_title' => ''
                                         ],
                                         "next" => false,
                                     ],
@@ -261,7 +262,7 @@ class TaskIncident extends Model
                                     'label' => 'Joindre le courrier à l\'adresse de l\'ADM Fiscale',
                                 ]
                             ],
-                            'title' => ''
+                            'form_title' => ''
                         ],
                         "next" => false,
                     ],
@@ -284,7 +285,7 @@ class TaskIncident extends Model
                                     'label' => 'Joindre le courrier d\'information au client',
                                 ]
                             ],
-                            'title' => ''
+                            'form_title' => ''
                         ],
                         "next" => null,
                     ],
@@ -303,7 +304,7 @@ class TaskIncident extends Model
                                     'label' => 'Joindre le courrier de transmission signee',
                                 ]
                             ],
-                            'title' => ''
+                            'form_title' => ''
                         ],
                         "next" => false,
                     ],
@@ -324,7 +325,7 @@ class TaskIncident extends Model
                                     'label' => 'Joindre le courrier signée à l\'adresse de l\'autorité concernée',
                                 ]
                             ],
-                            'title' => ''
+                            'form_title' => ''
                         ],
                         "next" => false,
                     ],
@@ -347,7 +348,7 @@ class TaskIncident extends Model
                                     'label' => 'Joindre la fiche de déclaration',
                                 ]
                             ],
-                            'title' => ''
+                            'form_title' => ''
                         ],
                         "next" => null,
                     ],
@@ -366,7 +367,7 @@ class TaskIncident extends Model
                                     'label' => 'Joinndre la fiche de prelevement',
                                 ]
                             ],
-                            'title' => ''
+                            'form_title' => ''
                         ],
                         "next" => null,
                     ],
@@ -385,7 +386,7 @@ class TaskIncident extends Model
                                     'label' => 'Joindre le courrier d\'information du client',
                                 ]
                             ],
-                            'title' => ''
+                            'form_title' => ''
                         ],
                         "next" => null,
                     ],
@@ -403,7 +404,7 @@ class TaskIncident extends Model
                                     'label' => 'Avez vous recu de Main levee ?',
                                 ]
                             ],
-                            'title' => ''
+                            'form_title' => ''
                         ],
                         "next" => [
                             true => [
@@ -422,7 +423,7 @@ class TaskIncident extends Model
                                                     'label' => 'Joindre le document de la main levee',
                                                 ]
                                             ],
-                                            'title' => ''
+                                            'form_title' => ''
                                         ],
                                         "next" => null,
                                     ],
@@ -441,7 +442,7 @@ class TaskIncident extends Model
                                                     'label' => 'Joindre la preuve de la levee des restrictions',
                                                 ]
                                             ],
-                                            'title' => ''
+                                            'form_title' => ''
                                         ],
                                         "next" => null,
                                     ],
@@ -460,7 +461,7 @@ class TaskIncident extends Model
                                                     'label' => 'Joindre le courrier d\'information du client',
                                                 ]
                                             ],
-                                            'title' => ''
+                                            'form_title' => ''
                                         ],
                                         "next" => false,
                                     ],
@@ -479,7 +480,7 @@ class TaskIncident extends Model
                                                 'label' => '',
                                             ]
                                         ],
-                                        'title' => ''
+                                        'form_title' => ''
                                     ],
                                     "next" => [
                                         true => [
@@ -498,7 +499,7 @@ class TaskIncident extends Model
                                                                 'label' => 'Joindre la caducite de la saisie',
                                                             ]
                                                         ],
-                                                        'title' => ''
+                                                        'form_title' => ''
                                                     ],
                                                     "next" => null,
                                                 ],
@@ -517,7 +518,7 @@ class TaskIncident extends Model
                                                                 'label' => 'Attacher le document de la main levée',
                                                             ]
                                                         ],
-                                                        'title' => ''
+                                                        'form_title' => ''
                                                     ],
                                                     "next" => false,
                                                 ],
@@ -538,7 +539,7 @@ class TaskIncident extends Model
                                                                 'label' => 'Joindre les documents',
                                                             ]
                                                         ],
-                                                        'title' => ''
+                                                        'form_title' => ''
                                                     ],
                                                     "next" => null,
                                                 ],
@@ -557,7 +558,7 @@ class TaskIncident extends Model
                                                                 'label' => 'Joindre la fiche de paiement du creancier',
                                                             ]
                                                         ],
-                                                        'title' => ''
+                                                        'form_title' => ''
                                                     ],
                                                     "next" => false,
                                                 ],
@@ -584,7 +585,7 @@ class TaskIncident extends Model
                                     'label' => 'Joindre la fiche de déclaration',
                                 ]
                             ],
-                            'title' => ''
+                            'form_title' => ''
                         ],
                         "next" => false,
                     ],
@@ -608,7 +609,7 @@ class TaskIncident extends Model
                                     'label' => 'Joindre la fiche de déclaration',
                                 ]
                             ],
-                            'title' => ''
+                            'form_title' => ''
                         ],
                         "next" => null,
                     ],
@@ -627,7 +628,7 @@ class TaskIncident extends Model
                                     'label' => 'Joinndre la fiche de prelevement',
                                 ]
                             ],
-                            'title' => ''
+                            'form_title' => ''
                         ],
                         "next" => null,
                     ],
@@ -646,7 +647,7 @@ class TaskIncident extends Model
                                     'label' => 'Joindre le courrier d\'information du client',
                                 ]
                             ],
-                            'title' => ''
+                            'form_title' => ''
                         ],
                         "next" => null,
                     ],
@@ -664,7 +665,7 @@ class TaskIncident extends Model
                                     'label' => 'Avez vous recu de Main levee ?',
                                 ]
                             ],
-                            'title' => ''
+                            'form_title' => ''
                         ],
                         "next" => [
                             true => [
@@ -683,7 +684,7 @@ class TaskIncident extends Model
                                                     'label' => 'Joindre le document de la main levee',
                                                 ]
                                             ],
-                                            'title' => ''
+                                            'form_title' => ''
                                         ],
                                         "next" => null,
                                     ],
@@ -702,7 +703,7 @@ class TaskIncident extends Model
                                                     'label' => 'Joindre la preuve de la levee des restrictions',
                                                 ]
                                             ],
-                                            'title' => ''
+                                            'form_title' => ''
                                         ],
                                         "next" => null,
                                     ],
@@ -721,7 +722,7 @@ class TaskIncident extends Model
                                                     'label' => 'Joindre le courrier d\'information du client',
                                                 ]
                                             ],
-                                            'title' => ''
+                                            'form_title' => ''
                                         ],
                                         "next" => false,
                                     ],
@@ -740,7 +741,7 @@ class TaskIncident extends Model
                                                     'label' => '',
                                                 ]
                                             ],
-                                            'title' => ''
+                                            'form_title' => ''
                                         ],
                                         "next" => [
                                             true => [
@@ -759,7 +760,7 @@ class TaskIncident extends Model
                                                                     'label' => 'Joindre la caducite de la saisie',
                                                                 ]
                                                             ],
-                                                            'title' => ''
+                                                            'form_title' => ''
                                                         ],
                                                         "next" => null,
                                                     ],
@@ -779,7 +780,7 @@ class TaskIncident extends Model
                                                                     'label' => 'Joindre le document de la main levée',
                                                                 ]
                                                             ],
-                                                            'title' => ''
+                                                            'form_title' => ''
                                                         ],
                                                         "next" => false,
                                                     ],
@@ -800,7 +801,7 @@ class TaskIncident extends Model
                                                                     'label' => 'Joindre la copie du chèque',
                                                                 ]
                                                             ],
-                                                            'title' => ''
+                                                            'form_title' => ''
                                                         ],
                                                         "next" => null,
                                                     ],
@@ -819,7 +820,7 @@ class TaskIncident extends Model
                                                                     'label' => 'Joindre le courrier d\'information du client',
                                                                 ]
                                                             ],
-                                                            'title' => ''
+                                                            'form_title' => ''
                                                         ],
                                                         "next" => false,
                                                     ],
@@ -846,7 +847,7 @@ class TaskIncident extends Model
                                     'label' => 'Joindre sur la fiche de déclaration',
                                 ]
                             ],
-                            'title' => ''
+                            'form_title' => ''
                         ],
                         "next" => false,
                     ],

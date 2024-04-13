@@ -14,7 +14,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('shareholders', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('name');
             $table->enum('type', Shareholder::TYPES);
             $table->enum('corporate_type', Shareholder::CORPORATE_TYPES);

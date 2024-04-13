@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('state');
             $table->string('reference')->unique();
             $table->enum('step', array('formalization', 'realization'));
-            $table->unsignedBigInteger('contract_id')->nullable();
+            $table->uuid('contract_id')->nullable();
             //file
             $table->string('contract_file')->nullable();
             //end file

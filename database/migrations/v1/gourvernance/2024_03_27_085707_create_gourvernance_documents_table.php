@@ -13,11 +13,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('gourvernance_documents', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('name')->nullable();
             $table->string('file');
             $table->enum('status', GourvernanceDocument::FILE_STATUS);
-            $table->morphs('uploadable');
+            $table->uuidMorphs('uploadable');
             $table->timestamps();
         });
     }

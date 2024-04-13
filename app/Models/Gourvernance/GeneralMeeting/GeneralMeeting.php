@@ -3,12 +3,13 @@
 namespace App\Models\Gourvernance\GeneralMeeting;
 
 use App\Models\Gourvernance\GourvernanceDocument;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class GeneralMeeting extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     protected $fillable =  [
         'libelle',
@@ -30,6 +31,7 @@ class GeneralMeeting extends Model
         'ordinary',
         'extraordinary',
         'mixte',
+        'special',
     ];
 
     const GENERAL_MEETING_STATUS = [

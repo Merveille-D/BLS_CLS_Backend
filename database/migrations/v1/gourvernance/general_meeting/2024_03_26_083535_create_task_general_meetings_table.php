@@ -14,7 +14,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('task_general_meetings', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
 
             $table->string('libelle');
             $table->datetime('deadline')->nullable();
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('responsible')->nullable();
             $table->string('supervisor')->nullable();
 
-            $table->unsignedBigInteger('general_meeting_id')->nullable();
+            $table->uuid('general_meeting_id')->nullable();
             $table->foreign('general_meeting_id')->references('id')->on('general_meetings')->onDelete('cascade');
 
             $table->timestamps();

@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('task_management_committees', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
 
             $table->string('libelle');
             $table->datetime('deadline')->nullable();
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('responsible')->nullable();
             $table->string('supervisor')->nullable();
 
-            $table->unsignedBigInteger('management_committee_id')->nullable();
+            $table->uuid('management_committee_id')->nullable();
             $table->foreign('management_committee_id')->references('id')->on('management_committees')->onDelete('cascade');
 
             $table->timestamps();
