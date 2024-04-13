@@ -25,7 +25,7 @@ class UpdateAttendanceListGeneralMeetingRequest extends FormRequest
     {
         return [
             'general_meeting_id' => ['required', 'uuid'],
-            'shareholder_id' => ['numeric'],
+            'shareholder_id' => ['uuid'],
             'grade' => ['string'],
             'lastname' => ['string'],
             'firstname' => ['string'],

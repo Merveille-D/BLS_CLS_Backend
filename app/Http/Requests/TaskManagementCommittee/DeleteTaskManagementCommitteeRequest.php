@@ -27,7 +27,7 @@ class DeleteTaskManagementCommitteeRequest extends FormRequest
         $rules = [
             'tasks' => 'required|array',
             'tasks.*' => 'required|array',
-            'tasks.*.id' => 'required|integer',
+            'tasks.*.id' => 'required|uuid',
         ];
 
         return $rules;

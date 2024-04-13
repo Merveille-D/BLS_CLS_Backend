@@ -33,10 +33,10 @@ class StoreContractRequest extends FormRequest
             'contract_file' => ['required', 'file'],
 
             'first_part' => ['required', 'array'],
-            'first_part.*.part_id' => ['required', 'exists:parts,id'],
+            'first_part.*.part_id' => ['required', 'uuid', 'exists:parts,id'],
             'first_part.*.description' => ['required', 'string'],
             'second_part' => ['required', 'array'],
-            'second_part.*.part_id' => ['required', 'exists:parts,id'],
+            'second_part.*.part_id' => ['required', 'uuid', 'exists:parts,id'],
             'second_part.*.description' => ['required', 'string'],
 
         ];
