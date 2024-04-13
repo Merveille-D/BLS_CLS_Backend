@@ -22,6 +22,8 @@ class ContractController extends Controller
     {
         $contracts = Contract::get()->map(function ($contract) {
             $contract->parts = $contract->parts;
+            $contract->category = $contract->category;
+            $contract->type_category = $contract->type_category;
             return $contract;
         });
 
@@ -38,6 +40,8 @@ class ContractController extends Controller
 
             $data = $contract->toArray();
             $data['parts'] = $contract->parts;
+            $data['category'] = $contract->category;
+            $data['type_category'] = $contract->type_category;
 
             return api_response(true, "Succès de l'enregistrement du contrat", $data, 200);
         }catch (ValidationException $e) {
@@ -54,6 +58,8 @@ class ContractController extends Controller
 
             $data = $contract->toArray();
             $data['parts'] = $contract->parts;
+            $data['category'] = $contract->category;
+            $data['type_category'] = $contract->type_category;
 
             return api_response(true, "Information du contrat", $data, 200);
         }catch( ValidationException $e ) {
@@ -71,6 +77,8 @@ class ContractController extends Controller
 
             $data = $contract->toArray();
             $data['parts'] = $contract->parts;
+            $data['category'] = $contract->category;
+            $data['type_category'] = $contract->type_category;
 
             return api_response(true, "Mis à jour du contrat avec succès", $data, 200);
         } catch (ValidationException $e) {

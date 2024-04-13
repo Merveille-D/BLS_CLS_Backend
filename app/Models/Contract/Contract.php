@@ -100,6 +100,28 @@ class Contract extends Model
         return $this->hasMany(ContractPart::class);
     }
 
+    public function getCategoryAttribute()
+    {
+        $value = $this->category;
+        $label = self::CATEGORIES_VALUES[$value];
+
+        return [
+            'value' => $value,
+            'label' => $label,
+        ];
+    }
+
+    public function getTypeCategoryAttribute()
+    {
+        $value = $this->type_category;
+        $label = self::TYPE_CATEGORIES_VALUES[$this->category][$value];
+
+        return [
+            'value' => $value,
+            'label' => $label,
+        ];
+    }
+
     public function getPartsAttribute() {
 
         $parts = $this->contractParts()->get();
