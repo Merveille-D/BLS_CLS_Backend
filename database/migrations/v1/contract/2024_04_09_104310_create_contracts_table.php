@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Contract\Contract;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +15,7 @@ return new class extends Migration
         Schema::create('contracts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('category');
+            $table->enum('category', Contract::CATEGORIES);
             $table->string('type_category');
             $table->string('contract_file');
             $table->date('date_signature')->nullable();

@@ -8,6 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     use HasFactory;
+    /**
+     * Les attributs qui doivent être castés vers des types natifs.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'status' => 'boolean',
+    ];
 
     protected $fillable = [
         'libelle',

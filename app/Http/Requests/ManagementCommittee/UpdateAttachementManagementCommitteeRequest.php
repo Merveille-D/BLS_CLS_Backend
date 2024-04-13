@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Requests\Contract;
+namespace App\Http\Requests\ManagementCommittee;
 
-use App\Models\Contract\Contract;
+use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\ManagementCommittee;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class StoreContractRequest extends FormRequest
+class UpdateAttachementManagementCommitteeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,17 +23,15 @@ class StoreContractRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(Request $request): array
+    public function rules(): array
     {
-        $rules = [
-            'title' => ['required', 'string'],
-            'category' => ['required',  Rule::in(Contract::CATEGORIES) ],
-            'type_category' => ['required',  Rule::in(Contract::TYPE_CATEGORIES[$request->input('category')]) ],
-            'type_category' => ['required', 'string'],
-            'contract_file' => ['required', 'file'],
+        return [
+            'management_committee_id' => ['required', 'numeric'],
+            'files' => ['required', 'array'],
+            'files.*' => ['required', 'array'],
+            'files.*.type' => ['required',  Rule::in(ManagementCommittee::TYPE_FILE_FIELD) ],
+            'files.*.file' => ['required', 'file']
         ];
-
-        return $rules;
     }
 
     public function failedValidation(Validator $validator)

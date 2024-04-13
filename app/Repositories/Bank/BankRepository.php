@@ -26,7 +26,7 @@ class BankRepository
         return $bank;
     }
 
-     /**
+    /**
      * @param Request $request
      *
      * @return Bank

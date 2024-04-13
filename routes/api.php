@@ -7,9 +7,14 @@ use App\Http\Controllers\API\V1\Contract\TaskController;
 use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Administrators\AdministratorController;
 use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions\SessionAdministratorController;
 use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions\TaskSessionAdministratorController;
-use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\AttendanceListGeneralMeetingController;
+use App\Http\Controllers\API\V1\Gourvernance\ExecutiveManagement\Directors\DirectorController;
+use App\Http\Controllers\API\V1\Gourvernance\ExecutiveManagement\ManagementCommittee\ManagementCommitteeController;
+use App\Http\Controllers\API\V1\Gourvernance\ExecutiveManagement\ManagementCommittee\TaskManagementCommitteeController;
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\GeneralMeetingController;
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\TaskGeneralMeetingController;
+use App\Http\Controllers\API\V1\Incident\AuthorIncidentController;
+use App\Http\Controllers\API\V1\Incident\IncidentController;
+use App\Http\Controllers\API\V1\Incident\TaskIncidentController;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Route;
@@ -54,9 +59,35 @@ Route::resource('banks', BankController::class);
 
 // Contrats
 Route::resource('contracts', ContractController::class);
-Route::resource('parts', PartController::class);
-Route::resource('tasks', TaskController::class);
+Route::get('get_contract_categories', [ContractController::class, 'getCategories']);
+Route::get('get_contract_type_categories', [ContractController::class, 'getTypeCategories']);
 
+Route::resource('parts', PartController::class);
+
+Route::resource('tasks', TaskController::class);
+Route::delete('delete_array_task_contracts', [TaskController::class, 'deleteArrayTaskContract'] );
+Route::put('update_status_task_contracts', [TaskController::class, 'updateStatusTaskContract'] );
+
+
+// Incidents
+
+Route::resource('incidents', IncidentController::class);
+Route::resource('author_incidents', AuthorIncidentController::class);
+Route::resource('task_incidents', TaskIncidentController::class);
+Route::get('get_current_task_incidents', [TaskIncidentController::class, 'getCurrentTaskIncident'] );
+
+
+
+// DIRECTION GENERALE
+
+Route::resource('directors', DirectorController::class);
+
+Route::resource('management_committees', ManagementCommitteeController::class);
+Route::post('cd_attachements', [ManagementCommitteeController::class, 'attachment']);
+
+Route::resource('task_management_committees', TaskManagementCommitteeController::class);
+Route::delete('delete_array_task_management_committees', [TaskManagementCommitteeController::class, 'deleteArrayTaskManagementCommittee'] );
+Route::put('update_status_task_management_committees', [TaskManagementCommitteeController::class, 'updateStatusTaskManagementCommittee'] );
 
 
 

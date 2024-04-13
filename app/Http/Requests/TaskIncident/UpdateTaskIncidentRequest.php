@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Requests\Contract;
+namespace App\Http\Requests\TaskIncident;
 
-use App\Models\Contract\Contract;
+use App\Models\Incident\TaskIncident;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class StoreContractRequest extends FormRequest
+class UpdateTaskIncidentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,13 +26,14 @@ class StoreContractRequest extends FormRequest
      */
     public function rules(Request $request): array
     {
-        $rules = [
-            'title' => ['required', 'string'],
-            'category' => ['required',  Rule::in(Contract::CATEGORIES) ],
-            'type_category' => ['required',  Rule::in(Contract::TYPE_CATEGORIES[$request->input('category')]) ],
-            'type_category' => ['required', 'string'],
-            'contract_file' => ['required', 'file'],
-        ];
+        $rules = [];
+
+        if (!$request->has('type')) {
+            $rules['type'] = 'required';
+        }else {
+            $task = searchElementIndice(TaskIncident::TASKS, $request->input('type'));
+            $rules = $task['rules'];
+        }
 
         return $rules;
     }

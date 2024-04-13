@@ -20,7 +20,44 @@ class Contract extends Model
         'date_renewal',
     ];
 
-    const CONTRACT_CATEGORIES = [
+    const CATEGORIES = [
+        'leases',
+        'credits',
+        'jobs',
+        'warranties',
+        'services',
+    ];
+
+    const TYPE_CATEGORIES = [
+        'lease' => [],
+        'credits' => [
+            'amortizable',
+            'aval_discount',
+            'discoveries_ovecouvertes',
+            'spots_relay',
+            'campaign',
+            'syndications',
+        ],
+        'job' => [
+            'cdi',
+            'cdd',
+            'secondment',
+            'trial_engagement',
+            'academic_internship',
+            'professional_internship',
+        ],
+        'warranty' => [
+            'guarantees',
+            'personal_sureties',
+            'real_estate_sureties',
+        ],
+        'service' => [
+            'supplier',
+            'service_provider',
+        ],
+    ];
+
+    const CATEGORIES_VALUES = [
         'leases' => 'Baux',
         'credits' => 'Crédits',
         'jobs' => 'Emplois',
@@ -28,32 +65,32 @@ class Contract extends Model
         'services' => 'Services',
     ];
 
-    const CONTRACT_TYPE_CATEGORIES = [
+    const TYPE_CATEGORIES_VALUES = [
         'lease' => [],
         'credits' => [
-            'Amortissable',
-            'Aval / Escompte',
-            'Découvertes / Facilités de caisse',
-            'Spots / Relais',
-            'Campagne',
-            'Syndications',
+            'amortizable' => 'Amortissable',
+            'aval_discount' => 'Aval / Escompte',
+            'discoveries_overdrafts' => 'Découvertes / Facilités de caisse',
+            'spots_relay' => 'Spots / Relais',
+            'campaign' => 'Campagne',
+            'syndications' => 'Syndications',
         ],
         'job' => [
-            'CDI',
-            'CDD',
-            'Détachement / Mise en disponibilité',
-            'Engagement à l\'essai',
-            'Stage académique',
-            'Stage professionnel',
+            'cdi' => 'CDI',
+            'cdd' => 'CDD',
+            'secondment' => 'Détachement / Mise en disponibilité',
+            'trial_engagement' => 'Engagement à l\'essai',
+            'academic_internship' => 'Stage académique',
+            'professional_internship' => 'Stage professionnel',
         ],
         'warranty' => [
-            'Garanties',
-            'Sûretés personnelles',
-            'Sûretés immobilières',
+            'guarantees' => 'Garanties',
+            'personal_sureties' => 'Sûretés personnelles',
+            'real_estate_sureties' => 'Sûretés immobilières',
         ],
         'service' => [
-            'Fournisseur',
-            'Prestataire',
+            'supplier' => 'Fournisseur',
+            'service_provider' => 'Prestataire',
         ],
     ];
 }

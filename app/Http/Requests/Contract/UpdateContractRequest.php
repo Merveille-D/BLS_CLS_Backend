@@ -2,9 +2,12 @@
 
 namespace App\Http\Requests\Contract;
 
+use App\Models\Contract\Contract;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class UpdateContractRequest extends FormRequest
 {
@@ -21,10 +24,13 @@ class UpdateContractRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules(Request $request): array
     {
         return [
-            
+            'title' => ['string'],
+            'category' => [Rule::in(Contract::CATEGORIES)],
+            'type_category' => ['string'],
+            'contract_file' => ['file'],
         ];
     }
 
