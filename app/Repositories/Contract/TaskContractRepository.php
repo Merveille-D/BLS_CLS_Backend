@@ -38,6 +38,7 @@ class TaskContractRepository
      * @return Task
      */
     public function update(Task $task, $request) {
+
         $task->update($request);
         return $task;
     }

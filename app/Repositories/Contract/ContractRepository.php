@@ -55,7 +55,38 @@ class ContractRepository
      */
     public function update(Contract $contract, $request) {
 
-        $contract->update($request);
+        if (isset($request['contract_file'])) {
+            $path = uploadFile($request['contract_file'], 'contract_documents');
+            $requestData = $request->except('contract_file');
+            $requestData['contract_file'] = $path;
+        } else {
+            $requestData = $request;
+        }
+
+        $contract->contractParts()->delete();
+        $first_part = $request['first_part'];
+        $second_part = $request['second_part'];
+
+        $first_part = array_map(function ($part) {
+            return [
+                'description' => $part['description'],
+                'type' => 'part_1',
+                'part_id' => $part['part_id'],
+            ];
+        }, $first_part);
+
+        $second_part = array_map(function ($part) {
+            return [
+                'description' => $part['description'],
+                'type' => 'part_2',
+                'part_id' => $part['part_id'],
+            ];
+        }, $second_part);
+
+        $contract->contractParts()->createMany(array_merge($first_part, $second_part));
+
+        $contract->update($requestData);
+
         return $contract;
     }
 

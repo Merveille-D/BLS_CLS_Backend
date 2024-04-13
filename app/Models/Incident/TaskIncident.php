@@ -47,7 +47,7 @@ class TaskIncident extends Model
                         ],
                         "delay" => 0,
                         "form" => [
-                            'field' => [
+                            'fields' => [
                                 [
                                     'type' => 'select',
                                     'name' => 'info_channel',
@@ -71,7 +71,7 @@ class TaskIncident extends Model
                         ],
                         "delay" => 0,
                         "form" => [
-                            'field' => [
+                            'fields' => [
                                 [
                                     'type' => 'files',
                                     'name' => 'files',
@@ -90,7 +90,7 @@ class TaskIncident extends Model
                         ],
                         "delay" => 0,
                         "form" => [
-                            'field' => [
+                            'fields' => [
                                 [
                                     'type' => 'files',
                                     'name' => 'files',
@@ -108,7 +108,7 @@ class TaskIncident extends Model
                         ],
                         "delay" => 0,
                         "form" => [
-                            'field' => [
+                            'fields' => [
                                 [
                                     'type' => 'checkbox',
                                     'name' => 'raised_hand',
@@ -127,7 +127,7 @@ class TaskIncident extends Model
                                         ],
                                         "delay" => 0,
                                         "form" => [
-                                            'field' => [
+                                            'fields' => [
                                                 [
                                                     'type' => 'files',
                                                     'name' => 'files',
@@ -146,7 +146,7 @@ class TaskIncident extends Model
                                         ],
                                         "delay" => 0,
                                         "form" => [
-                                            'field' => [
+                                            'fields' => [
                                                 [
                                                     'type' => 'select',
                                                     'name' => 'info_channel',
@@ -170,7 +170,7 @@ class TaskIncident extends Model
                                         ],
                                         "delay" => 0,
                                         "form" => [
-                                            'field' => [
+                                            'fields' => [
                                                 [
                                                     'type' => 'files',
                                                     'name' => 'files',
@@ -191,7 +191,7 @@ class TaskIncident extends Model
                                         ],
                                         "delay" => 0,
                                         "form" => [
-                                            'field' => [
+                                            'fields' => [
                                                 [
                                                     'type' => 'files',
                                                     'name' => 'files',
@@ -210,7 +210,7 @@ class TaskIncident extends Model
                                         ],
                                         "delay" => 0,
                                         "form" => [
-                                            'field' => [
+                                            'fields' => [
                                                 [
                                                     'type' => 'files',
                                                     'name' => 'files',
@@ -229,7 +229,7 @@ class TaskIncident extends Model
                                         ],
                                         "delay" => 0,
                                         "form" => [
-                                            'field' => [
+                                            'fields' => [
                                                 [
                                                     'type' => 'files',
                                                     'name' => 'files',
@@ -255,7 +255,7 @@ class TaskIncident extends Model
                         ],
                         "delay" => 0,
                         "form" => [
-                            'field' => [
+                            'fields' => [
                                 [
                                     'type' => 'files',
                                     'name' => 'files',
@@ -278,7 +278,7 @@ class TaskIncident extends Model
                         ],
                         "delay" => 0,
                         "form" => [
-                            'field' => [
+                            'fields' => [
                                 [
                                     'type' => 'files',
                                     'name' => 'files',
@@ -297,7 +297,7 @@ class TaskIncident extends Model
                         ],
                         "delay" => 0,
                         "form" => [
-                            'field' => [
+                            'fields' => [
                                 [
                                     'type' => 'files',
                                     'name' => 'files',
@@ -318,7 +318,7 @@ class TaskIncident extends Model
                         ],
                         "delay" => 0,
                         "form" => [
-                            'field' => [
+                            'fields' => [
                                 [
                                     'type' => 'files',
                                     'name' => 'files',
@@ -341,7 +341,7 @@ class TaskIncident extends Model
                         ],
                         "delay" => 0,
                         "form" => [
-                            'field' => [
+                            'fields' => [
                                 [
                                     'type' => 'files',
                                     'name' => 'files',
@@ -360,7 +360,7 @@ class TaskIncident extends Model
                         ],
                         "delay" => 0,
                         "form" => [
-                            'field' => [
+                            'fields' => [
                                 [
                                     'type' => 'files',
                                     'name' => 'files',
@@ -379,7 +379,7 @@ class TaskIncident extends Model
                         ],
                         "delay" => 0,
                         "form" => [
-                            'field' => [
+                            'fields' => [
                                 [
                                     'type' => 'files',
                                     'name' => 'files',
@@ -397,7 +397,7 @@ class TaskIncident extends Model
                         ],
                         "delay" => 0,
                         "form" => [
-                            'field' => [
+                            'fields' => [
                                 [
                                     'type' => 'checkbox',
                                     'name' => 'raised_hand',
@@ -416,7 +416,7 @@ class TaskIncident extends Model
                                         ],
                                         "delay" => 0,
                                         "form" => [
-                                            'field' => [
+                                            'fields' => [
                                                 [
                                                     'type' => 'files',
                                                     'name' => 'files',
@@ -435,7 +435,7 @@ class TaskIncident extends Model
                                         ],
                                         "delay" => 0,
                                         "form" => [
-                                            'field' => [
+                                            'fields' => [
                                                 [
                                                     'type' => 'files',
                                                     'name' => 'files',
@@ -454,7 +454,7 @@ class TaskIncident extends Model
                                         ],
                                         "delay" => 0,
                                         "form" => [
-                                            'field' => [
+                                            'fields' => [
                                                 [
                                                     'type' => 'files',
                                                     'name' => 'files',
@@ -473,7 +473,7 @@ class TaskIncident extends Model
                                     ],
                                     "delay" => 0,
                                     "form" => [
-                                        'field' => [
+                                        'fields' => [
                                             [
                                                 'type' => '',
                                                 'name' => '',
@@ -492,7 +492,7 @@ class TaskIncident extends Model
                                                     ],
                                                     "delay" => 0,
                                                     "form" => [
-                                                        'field' => [
+                                                        'fields' => [
                                                             [
                                                                 'type' => 'files',
                                                                 'name' => 'files',
@@ -511,7 +511,7 @@ class TaskIncident extends Model
                                                     ],
                                                     "delay" => 0,
                                                     "form" => [
-                                                        'field' => [
+                                                        'fields' => [
                                                             [
                                                                 'type' => 'files',
                                                                 'name' => 'files',
@@ -532,7 +532,7 @@ class TaskIncident extends Model
                                                     ],
                                                     "delay" => 0,
                                                     "form" => [
-                                                        'field' => [
+                                                        'fields' => [
                                                             [
                                                                 'type' => 'files',
                                                                 'name' => 'files',
@@ -551,7 +551,7 @@ class TaskIncident extends Model
                                                     ],
                                                     "delay" => 0,
                                                     "form" => [
-                                                        'field' => [
+                                                        'fields' => [
                                                             [
                                                                 'type' => 'files',
                                                                 'name' => 'files',
@@ -578,7 +578,7 @@ class TaskIncident extends Model
                         ],
                         "delay" => 0,
                         "form" => [
-                            'field' => [
+                            'fields' => [
                                 [
                                     'type' => 'files',
                                     'name' => 'files',
@@ -602,7 +602,7 @@ class TaskIncident extends Model
                         ],
                         "delay" => 0,
                         "form" => [
-                            'field' => [
+                            'fields' => [
                                 [
                                     'type' => 'files',
                                     'name' => 'files',
@@ -621,7 +621,7 @@ class TaskIncident extends Model
                         ],
                         "delay" => 0,
                         "form" => [
-                            'field' => [
+                            'fields' => [
                                 [
                                     'type' => 'files',
                                     'name' => 'files',
@@ -640,7 +640,7 @@ class TaskIncident extends Model
                         ],
                         "delay" => 0,
                         "form" => [
-                            'field' => [
+                            'fields' => [
                                 [
                                     'type' => 'files',
                                     'name' => 'files',
@@ -658,7 +658,7 @@ class TaskIncident extends Model
                         ],
                         "delay" => 0,
                         "form" => [
-                            'field' => [
+                            'fields' => [
                                 [
                                     'type' => 'checkbox',
                                     'name' => 'raised_hand',
@@ -677,7 +677,7 @@ class TaskIncident extends Model
                                         ],
                                         "delay" => 0,
                                         "form" => [
-                                            'field' => [
+                                            'fields' => [
                                                 [
                                                     'type' => 'files',
                                                     'name' => 'files',
@@ -696,7 +696,7 @@ class TaskIncident extends Model
                                         ],
                                         "delay" => 0,
                                         "form" => [
-                                            'field' => [
+                                            'fields' => [
                                                 [
                                                     'type' => 'files',
                                                     'name' => 'files',
@@ -715,7 +715,7 @@ class TaskIncident extends Model
                                         ],
                                         "delay" => 0,
                                         "form" => [
-                                            'field' => [
+                                            'fields' => [
                                                 [
                                                     'type' => 'files',
                                                     'name' => 'files',
@@ -734,7 +734,7 @@ class TaskIncident extends Model
                                         ],
                                         "delay" => 0,
                                         "form" => [
-                                            'field' => [
+                                            'fields' => [
                                                 [
                                                     'type' => '',
                                                     'name' => '',
@@ -753,7 +753,7 @@ class TaskIncident extends Model
                                                         ],
                                                         "delay" => 0,
                                                         "form" => [
-                                                            'field' => [
+                                                            'fields' => [
                                                                 [
                                                                     'type' => 'files',
                                                                     'name' => 'files',
@@ -773,7 +773,7 @@ class TaskIncident extends Model
                                                         ],
                                                         "delay" => 0,
                                                         "form" => [
-                                                            'field' => [
+                                                            'fields' => [
                                                                 [
                                                                     'type' => 'files',
                                                                     'name' => 'files',
@@ -794,7 +794,7 @@ class TaskIncident extends Model
                                                         ],
                                                         "delay" => 0,
                                                         "form" => [
-                                                            'field' => [
+                                                            'fields' => [
                                                                 [
                                                                     'type' => 'files',
                                                                     'name' => 'files',
@@ -813,7 +813,7 @@ class TaskIncident extends Model
                                                         ],
                                                         "delay" => 0,
                                                         "form" => [
-                                                            'field' => [
+                                                            'fields' => [
                                                                 [
                                                                     'type' => 'files',
                                                                     'name' => 'files',
@@ -840,7 +840,7 @@ class TaskIncident extends Model
                         ],
                         "delay" => 0,
                         "form" => [
-                            'field' => [
+                            'fields' => [
                                 [
                                     'type' => 'files',
                                     'name' => 'files',
