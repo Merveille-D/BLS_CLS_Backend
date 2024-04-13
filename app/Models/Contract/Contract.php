@@ -102,9 +102,7 @@ class Contract extends Model
 
     public function getCategoryAttribute()
     {
-        dd(1);
-    // dd($this['category']);
-        // $value = $this->category;
+        $value =$this->getAttribute('category');
         $label = self::CATEGORIES_VALUES[$value];
 
         return [
@@ -115,8 +113,8 @@ class Contract extends Model
 
     public function getTypeCategoryAttribute()
     {
-        $value = $this->type_category;
-        $label = self::TYPE_CATEGORIES_VALUES[$this->category][$value];
+        $value = $this->getAttribute('type_category');
+        $label = self::TYPE_CATEGORIES_VALUES[$this->getAttribute('category')][$value];
 
         return [
             'value' => $value,

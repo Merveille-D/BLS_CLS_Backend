@@ -92,7 +92,7 @@ class TaskGeneralMeeting extends Model
                 'days' => 20
             ],
             [
-                'libelle' => "Réception PV enrégistré et classement",
+                'libelle' => "Réception du PV enrégistré et classement",
                 'days' => 30
             ],
         ],
@@ -107,7 +107,7 @@ class TaskGeneralMeeting extends Model
         'checklist' => [
             ['libelle' => "Vérifier salle et sonorisation"],
             ['libelle' => "Enregistrer actionnaires à l'arrivée dans le système IT"],
-            ['libelle' => "Installer PCA, Administrateurs, CC et invités"],
+            ['libelle' => "Installer PCA, Administrateurs, CAC et invités"],
             ['libelle' => "Imprimer Liste de présence"],
             ['libelle' => "Vérifier Quorum"],
             ['libelle' => "Remettre Liste de présence au PCA"],

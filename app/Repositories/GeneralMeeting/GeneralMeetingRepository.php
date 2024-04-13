@@ -19,7 +19,7 @@ class GeneralMeetingRepository
      */
     public function store($request) {
 
-        $date = new DateTime(now());
+        $date = new DateTime($request['meeting_date']);
         $reference = 'AG-' . (GeneralMeeting::max('id') + 1) . '-' . $date->format('d') . '/' . $date->format('m') . '/' . $date->format('Y');
         $request['reference'] = $reference;
 
