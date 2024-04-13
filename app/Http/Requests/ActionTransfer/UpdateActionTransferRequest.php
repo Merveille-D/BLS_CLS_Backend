@@ -24,8 +24,8 @@ class UpdateActionTransferRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'owner_id' => 'numeric',
-            'buyer_id' => 'numeric',
+            'owner_id' => 'uuid',
+            'buyer_id' => 'uuid',
             'count_actions' => 'integer',
             'lastname' => 'string',
             'firstname' => 'string',

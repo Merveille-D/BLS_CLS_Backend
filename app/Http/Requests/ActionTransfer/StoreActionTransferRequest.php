@@ -24,9 +24,9 @@ class StoreActionTransferRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'owner_id' => 'required|integer',
-            'buyer_id' => 'integer',
-            'count_actions' => 'required|integer',
+            'owner_id' => 'required|uuid',
+            'buyer_id' => 'integer|uuid',
+            'count_actions' => 'required|uuid',
             'lastname' => 'string',
             'firstname' => 'string',
             'ask_date' => ['required_if:buyer_id,null', 'date'],

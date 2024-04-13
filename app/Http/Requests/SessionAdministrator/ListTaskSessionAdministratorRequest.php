@@ -24,7 +24,7 @@ class ListTaskSessionAdministratorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'session_administrator_id' => ['required', 'numeric'],
+            'session_administrator_id' => ['required', 'uuid'],
         ];
     }
 

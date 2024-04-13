@@ -26,7 +26,7 @@ class UpdateAttachementManagementCommitteeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'management_committee_id' => ['required', 'numeric'],
+            'management_committee_id' => ['required', 'uuid'],
             'files' => ['required', 'array'],
             'files.*' => ['required', 'array'],
             'files.*.type' => ['required',  Rule::in(ManagementCommittee::TYPE_FILE_FIELD) ],
