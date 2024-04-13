@@ -71,7 +71,12 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        try {
+            $task->delete();
+            return api_response(true, "Succès de la suppression de la tache", null, 200);
+        }catch (ValidationException $e) {
+                return api_response(false, "Echec de la supression de la tache", $e->errors(), 422);
+        }
     }
 
     public function deleteArrayTaskContract(DeleteTaskContractRequest $request)

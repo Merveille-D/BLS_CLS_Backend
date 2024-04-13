@@ -26,7 +26,7 @@ class StoreActionTransferRequest extends FormRequest
         return [
             'owner_id' => 'required|uuid',
             'buyer_id' => 'integer|uuid',
-            'count_actions' => 'required|uuid',
+            'count_actions' => 'required|numeric',
             'lastname' => 'string',
             'firstname' => 'string',
             'ask_date' => ['required_if:buyer_id,null', 'date'],
