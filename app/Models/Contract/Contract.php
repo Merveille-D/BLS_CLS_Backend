@@ -123,12 +123,11 @@ class Contract extends Model
         ];
     }
 
-    public function getPartsAttribute() {
+    public function getFirstPartAttribute() {
 
         $parts = $this->contractParts()->get();
 
         $part1 = [];
-        $part2 = [];
 
         foreach ($parts as $part) {
             if ($part->type === 'part_1') {
@@ -136,20 +135,27 @@ class Contract extends Model
                     'description' => $part->description,
                     'part_id' => $part->part_id,
                 ];
-            } else {
+            }
+        }
+
+        return $part1;
+    }
+
+
+    public function getSecondPartAttribute() {
+
+        $parts = $this->contractParts()->get();
+
+        $part2 = [];
+
+        foreach ($parts as $part) {
+            if ($part->type === 'part_2') {
                 $part2[] = [
                     'description' => $part->description,
                     'part_id' => $part->part_id,
                 ];
             }
         }
-
-        $parts = [
-            "first_part" => $part1,
-            "second_part" => $part2,
-        ];
-
-        return $parts;
+        return $part2;
     }
-
 }

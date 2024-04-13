@@ -21,7 +21,8 @@ class ContractController extends Controller
     public function index()
     {
         $contracts = Contract::get()->map(function ($contract) {
-            $contract->parts = $contract->parts;
+            $contract->first_part = $contract->first_part;
+            $contract->second_part = $contract->second_part;
             $contract->type_category = $contract->info_type_category;
             $contract->category = $contract->info_category;
             return $contract;
@@ -39,7 +40,8 @@ class ContractController extends Controller
             $contract = $this->contract->store($request);
 
             $data = $contract->toArray();
-            $data['parts'] = $contract->parts;
+            $data['first_part'] = $contract->first_part;
+            $data['second_part'] = $contract->second_part;
             $data['type_category'] = $contract->info_type_category;
             $data['category'] = $contract->info_category;
 
@@ -57,7 +59,8 @@ class ContractController extends Controller
         try {
 
             $data = $contract->toArray();
-            $data['parts'] = $contract->parts;
+            $data['first_part'] = $contract->first_part;
+            $data['second_part'] = $contract->second_part;
             $data['type_category'] = $contract->info_type_category;
             $data['category'] = $contract->info_category;
 
@@ -76,7 +79,8 @@ class ContractController extends Controller
             $this->contract->update($contract, $request->all());
 
             $data = $contract->toArray();
-            $data['parts'] = $contract->parts;
+            $data['first_part'] = $contract->first_part;
+            $data['second_part'] = $contract->second_part;
             $data['type_category'] = $contract->info_type_category;
             $data['category'] = $contract->info_category;
 
