@@ -52,13 +52,13 @@ class ConvHypothecRepository
                 ->when(!blank($type), function($qry) use($type) {
                     $qry->where('conv_hypothec_steps.type', $type);
                 })
-                ->selectRaw('CASE WHEN conv_hypothecs.id IS NULL THEN false ELSE true END as state')
+                ->selectRaw('CASE WHEN conv_hypothecs.id IS NULL THEN false ELSE true END as status')
                 ->orderBy('conv_hypothec_steps.id')
                 ->get();
 
         $steps->transform(function ($step) {
 
-            $step->state = $step->state ? true : false;
+            $step->status = $step->status ? true : false;
             $step->form = $this->getCustomFormFields($step->code);
             return $step;
         });
