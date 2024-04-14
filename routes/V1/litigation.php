@@ -17,4 +17,7 @@ Route::resource('/litigation/natures', NatureController::class);
 Route::resource('/litigation/jurisdiction', JurisdictionController::class);
 Route::post('/litigation/modify/{id}',  [LitigationController::class, 'updateLitigation']);
 Route::put('/litigation/assign-user/{id}',  [LitigationController::class, 'assignUser']);
+Route::put('/litigation/update-estimated-amount/{id}',  [LitigationController::class, 'updateEstimatedAmount']);
+Route::put('/litigation/update-added-amount/{id}',  [LitigationController::class, 'updateAddedAmount']);
+Route::put('/litigation/update-remaining-amount/{id}',  [LitigationController::class, 'updateRemainingAmount']);
 Route::resource('/litigation', LitigationController::class);

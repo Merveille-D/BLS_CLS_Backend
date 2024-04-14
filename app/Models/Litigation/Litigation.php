@@ -14,7 +14,8 @@ class Litigation extends Model
     use HasFactory,  HasUuids;
 
     protected $fillable = [
-        'name', 'nature_id', 'party_id', 'jurisdiction_id', 'reference', 'nature_id', 'jurisdiction_id', 'party_id', 'lawyer_id', 'jurisdiction_id', 'user_id'
+        'name', 'nature_id', 'party_id', 'jurisdiction_id', 'reference', 'nature_id', 'jurisdiction_id', 'party_id', 'lawyer_id', 'jurisdiction_id', 'user_id',
+        'estimated_amount', 'added_amount', 'remaining_amount'
     ];
 
 

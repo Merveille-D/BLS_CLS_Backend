@@ -96,6 +96,30 @@ class LitigationRepository {
         return new LitigationResource($litigation);
     }
 
+    public function updateEstimatedAmount($id, $amount) : JsonResource {
+        $litigation = $this->findById($id);
+        $litigation->update([
+            'estimated_amount' => $amount,
+        ]);
+        return new LitigationResource($litigation);
+    }
+
+    public function updateAddedAmount($id, $amount) : JsonResource {
+        $litigation = $this->findById($id);
+        $litigation->update([
+            'added_amount' => $amount,
+        ]);
+        return new LitigationResource($litigation);
+    }
+
+    public function updateRemainingAmount($id, $amount) : JsonResource {
+        $litigation = $this->findById($id);
+        $litigation->update([
+            'remaining_amount' => $amount,
+        ]);
+        return new LitigationResource($litigation);
+    }
+
     /**
      * getResources
      *

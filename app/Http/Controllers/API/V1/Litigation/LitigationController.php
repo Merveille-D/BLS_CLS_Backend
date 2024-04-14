@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1\Litigation;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Litigation\AddLitigationRequest;
 use App\Http\Requests\Litigation\AssignUserRequest;
+use App\Http\Requests\Litigation\UpdateAmountRequest;
 use App\Http\Resources\Litigation\LitigationResource;
 use App\Models\Litigation\Litigation;
 use App\Repositories\Litigation\LitigationRepository;
@@ -87,6 +88,44 @@ class LitigationController extends Controller
         }
     }
 
+    /**
+     * Update the estimated amount field.
+     */
+    public function updateEstimatedAmount(UpdateAmountRequest $request, $litigation)
+    {
+        try {
+            $data = $this->litigationRepo->updateEstimatedAmount($litigation, $request->amount);
+            return api_response($success = true, 'Montant constitué mis à jour avec succès', $data);
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
+        }
+    }
+
+    /**
+        * Update the added amount field.
+        */
+    public function updateAddedAmount(UpdateAmountRequest $request, $litigation)
+    {
+        try {
+            $data = $this->litigationRepo->updateAddedAmount($litigation, $request->amount);
+            return api_response($success = true, 'Montant ajouté mis à jour avec succès', $data);
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
+        }
+    }
+
+    /**
+     * Update the remaining amount field.
+     */
+    public function updateRemainingAmount(UpdateAmountRequest $request, $litigation)
+    {
+        try {
+            $data = $this->litigationRepo->updateRemainingAmount($litigation, $request->amount);
+            return api_response($success = true, 'Montant restant mis à jour avec succès', $data);
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
+        }
+    }
     /**
      * Remove the specified resource from storage.
      */
