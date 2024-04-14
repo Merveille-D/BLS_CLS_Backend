@@ -92,7 +92,7 @@ class ConvHypothecSeeder extends Seeder
             ],
             [
                 'name' => 'Poursuivre l\'expropriation : DEPOSER CAHIER DE CHARGES',
-                'code' => ConvHypothecState::EXPROPRIATION,
+                'code' => ConvHypothecState::EXPROPRIATION_SPECIFICATION,
                 'type' => 'realization',
                 'rank' => 4,
                 'min_delay' => null,
@@ -100,7 +100,7 @@ class ConvHypothecSeeder extends Seeder
             ],
             [
                 'name' => 'Poursuivre l\'expropriation : FIXER DATE DE LA VENTE',
-                'code' => ConvHypothecState::EXPROPRIATION,
+                'code' => ConvHypothecState::EXPROPRIATION_SALE,
                 'type' => 'realization',
                 'rank' => 5,
                 'min_delay' => 45,
@@ -108,7 +108,7 @@ class ConvHypothecSeeder extends Seeder
             ],
             [
                 'name' => 'Poursuivre l\'expropriation : ADRESSER SOMMATION A PRENDRE CONNAISSANCE DU CAHIER DES CHARGES',
-                'code' => ConvHypothecState::EXPROPRIATION,
+                'code' => ConvHypothecState::EXPROPRIATION_SUMMATION,
                 'type' => 'realization',
                 'rank' => 6,
                 'min_delay' => null,

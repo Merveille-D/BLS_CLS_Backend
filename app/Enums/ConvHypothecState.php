@@ -12,7 +12,9 @@ enum ConvHypothecState {
     const SIGNIFICATION_REGISTERED = 'signification_registered';
     const ORDER_PAYMENT_VERIFIED = 'order_payment_verified';
     const ORDER_PAYMENT_VISA = 'order_payment_visa';
-    const EXPROPRIATION = 'expropriation';
+    const EXPROPRIATION_SPECIFICATION = 'expropriation-specification';
+    const EXPROPRIATION_SALE = 'expropriation-sale';
+    const EXPROPRIATION_SUMMATION = 'expropriation-summation';
     const ADVERTISEMENT = 'advertisement';
     const PROPERTY_SALE = 'property_sale';
 
@@ -30,7 +32,9 @@ enum ConvHypothecState {
         ConvHypothecState::SIGNIFICATION_REGISTERED => 'Demande de signification',
         ConvHypothecState::ORDER_PAYMENT_VERIFIED => 'Ordre de payement',
         ConvHypothecState::ORDER_PAYMENT_VISA => 'visa de payement',
-        ConvHypothecState::EXPROPRIATION => 'Expropriation',
+        ConvHypothecState::EXPROPRIATION_SPECIFICATION => 'Expropriation : Dépôt de cahier de charges',
+        ConvHypothecState::EXPROPRIATION_SALE => 'Expropriation : Fixation de la date de vente',
+        ConvHypothecState::EXPROPRIATION_SUMMATION => 'Expropriation : Adresser Sommation à prendre connaissance du cahier de charges',
         ConvHypothecState::ADVERTISEMENT => 'Publicité de vente',
         ConvHypothecState::PROPERTY_SALE => 'Vente de la propriété',
     ];
