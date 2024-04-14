@@ -70,4 +70,19 @@ class Incident extends Model
             'label' => $label,
         ];
     }
+
+    public function getFilesAttribute() {
+
+        $files = [];
+
+        foreach ($this->taskIncident as $taskIncident) {
+            foreach ($taskIncident->fileUploads as $fileUpload) {
+                $files[] = [
+                    'filename' => $fileUpload->name ?? null,
+                    'file_url' => $fileUpload->file,
+                ];
+            }
+        }
+        return $files;
+    }
 }

@@ -27,6 +27,7 @@ class IncidentController extends Controller
         })->get()->map(function ($incident) {
             $incident->category = $incident->category;
             $incident->current_task = $incident->current_task;
+            $incident->files = $incident->files;
             return $incident;
         });
 
@@ -45,6 +46,8 @@ class IncidentController extends Controller
             $data = $incident->toArray();
             $data['category'] = $incident->category;
             $data['current_task'] = $incident->current_task;
+            $data['files'] = $incident->files;
+
 
             return api_response(true, "Succès de l'enregistrement dans l'incident", $data, 200);
         }catch (ValidationException $e) {
@@ -62,6 +65,7 @@ class IncidentController extends Controller
             $data = $incident->toArray();
             $data['category'] = $incident->category;
             $data['current_task'] = $incident->current_task;
+            $data['files'] = $incident->files;
 
             return api_response(true, "Infos de l'incident", $data, 200);
         }catch( ValidationException $e ) {
@@ -80,6 +84,8 @@ class IncidentController extends Controller
             $incident->load('authorIncident');
             $data = $incident->toArray();
             $data['category'] = $incident->category;
+            $data['current_task'] = $incident->current_task;
+            $data['files'] = $incident->files;
 
             return api_response(true, "Mis à jour du texte avec succès", $data, 200);
         } catch (ValidationException $e) {
