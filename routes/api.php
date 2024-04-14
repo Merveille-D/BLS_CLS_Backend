@@ -75,7 +75,7 @@ Route::resource('incidents', IncidentController::class);
 Route::resource('author_incidents', AuthorIncidentController::class);
 Route::resource('task_incidents', TaskIncidentController::class);
 Route::get('get_current_task_incidents', [TaskIncidentController::class, 'getCurrentTaskIncident'] );
-Route::get('complete_task_incidents', [TaskIncidentController::class, 'completeTaskIncident'] );
+Route::post('complete_task_incidents', [TaskIncidentController::class, 'completeTaskIncident'] );
 
 
 
