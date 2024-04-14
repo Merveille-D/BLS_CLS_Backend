@@ -67,7 +67,12 @@ class TaskIncidentController extends Controller
 
         try {
             $this->taskIncident->update($taskIncident, $request->all());
-            return api_response(true, "Succès de l'enregistrement de la tache", $taskIncident, 200);
+
+            $data = $taskIncident->toArray();
+            $data['form'] = $taskIncident->form;
+
+
+            return api_response(true, "Succès de l'enregistrement de la tache", $data, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement de la tache", $e->errors(), 422);
         }
