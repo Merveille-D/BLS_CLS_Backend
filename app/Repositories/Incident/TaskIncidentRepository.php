@@ -70,7 +70,7 @@ class TaskIncidentRepository
 
         $next_task = searchElementIndice(TaskIncident::TASKS, $type);
 
-        if($next_task['next'] == false) {
+        if($next_task['next'] === false) {
 
             $incident = $taskIncident->incident;
             $incident->status = true;
