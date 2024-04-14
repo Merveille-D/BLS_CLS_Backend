@@ -38,7 +38,7 @@ trait StepsValidationRuleTrait
                 break;
             case ConvHypothecState::SIGNIFICATION_REGISTERED:
                 $data = array(
-                    'is_verified' => 'required|string',
+                    'is_verified' => ['required',  new ArrayElementMatch(array('yes', 'no'))],
                 );
                 break;
 

@@ -18,4 +18,10 @@ class ConvHypothecStep extends Model
     {
         return $this->hasMany(ConvHypothecStep::class, 'stepable_id');
     }
+
+    // public function getFormAttribute() {
+    //     // return   {};
+    // }
+
+
 }

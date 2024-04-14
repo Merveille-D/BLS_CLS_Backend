@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories\Guarantee;
 
+use App\Concerns\Traits\Guarantee\HypothecFormFieldTrait;
 use App\Enums\ConvHypothecState;
 use App\Http\Resources\Guarantee\ConvHypothecCollection;
 use App\Http\Resources\Guarantee\ConvHypothecResource;
@@ -20,6 +21,7 @@ use Illuminate\Support\Str;
 
 class ConvHypothecRepository
 {
+    use HypothecFormFieldTrait;
     public function __construct(
         private ConvHypothec $conv_model
     ) {
@@ -52,6 +54,13 @@ class ConvHypothecRepository
                 })
                 ->orderBy('conv_hypothec_steps.id')
                 ->get();
+
+        $steps->transform(function ($step) {
+
+            $step->form = $this->getCustomFormFields($step->code);
+            return $step;
+        });
+
         return $steps;
         // return new ConvHypothecResource($this->conv_model->with('documents')->findOrFail($id));
     }
