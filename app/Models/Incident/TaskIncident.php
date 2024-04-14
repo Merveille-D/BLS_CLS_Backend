@@ -867,7 +867,7 @@ class TaskIncident extends Model
         return $this->belongsTo(Incident::class);
     }
 
-    public function getFormsAttribute() {
+    public function getFormAttribute() {
 
         $next_task = searchElementIndice(TaskIncident::TASKS, $this->code);
 
