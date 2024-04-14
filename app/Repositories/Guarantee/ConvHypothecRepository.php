@@ -52,7 +52,7 @@ class ConvHypothecRepository
                 ->when(!blank($type), function($qry) use($type) {
                     $qry->where('conv_hypothec_steps.type', $type);
                 })
-                ->selectRaw('CASE WHEN conv_hypothecs.id IS NULL THEN true ELSE false END as state')
+                ->selectRaw('CASE WHEN conv_hypothecs.id IS NULL THEN false ELSE true END as state')
                 ->orderBy('conv_hypothec_steps.id')
                 ->get();
 
