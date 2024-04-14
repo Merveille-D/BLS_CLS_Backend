@@ -59,34 +59,34 @@ class ConvHypothec extends Model
 
     public function steps()
     {
-        return $this->belongsToMany(ConvHypothecStep::class, 'hypothec_step', 'hypothec_id', 'step_id');
+        return $this->belongsToMany(ConvHypothecStep::class, 'hypothec_step', 'hypothec_id', 'step_id')
+                ->select('conv_hypothec_steps.id', 'code', 'rank', 'conv_hypothec_steps.name', 'conv_hypothec_steps.type', 'hypothec_step.max_deadline', 'hypothec_step.min_deadline', 'hypothec_step.created_at')
+                ->selectRaw('case when hypothec_step.status = 1 then true else false end as status');
     }
 
     function getCurrentStepAttribute() {
-        return $this->steps()->orderBy('rank', 'desc')->first();
+        return $this->steps()->orderBy('rank', 'desc')->where('status', true)->first();
     }
 
     public function getNextStepAttribute()
     {
-        $currentStep = $this->current_step;
-        $nextStep = ConvHypothecStep::where('rank', $currentStep->rank+1)->orderBy('rank')->first();
-        return $nextStep;
+        return $this->steps()->orderBy('rank')->where('status', false)->first();
     }
 
-    public function getStepsAttribute() {
-        $steps = ConvHypothecStep::select('conv_hypothec_steps.id', 'code', 'conv_hypothec_steps.name', 'conv_hypothec_steps.type',
-                 'conv_hypothecs.id as hypothec_id', 'hypothec_step.created_at')
-                ->leftJoin('hypothec_step', 'conv_hypothec_steps.id', '=', 'hypothec_step.step_id')
-                ->leftJoin('conv_hypothecs', function ($join){
-                    $join->on('conv_hypothecs.id', '=', 'hypothec_step.hypothec_id')
-                        ->where('hypothec_step.hypothec_id', $this->id);
-                })
-                ->when($this->step == 'formalization', function($qry) {
-                    $qry->where('conv_hypothec_steps.type', 'formalization');
-                })
-                ->orderBy('conv_hypothec_steps.id')
-                ->get();
-        return $steps;
-    }
+    // public function getStepsAttribute() {
+    //     $steps = ConvHypothecStep::select('conv_hypothec_steps.id', 'code', 'conv_hypothec_steps.name', 'conv_hypothec_steps.type',
+    //              'conv_hypothecs.id as hypothec_id', 'hypothec_step.created_at')
+    //             ->leftJoin('hypothec_step', 'conv_hypothec_steps.id', '=', 'hypothec_step.step_id')
+    //             ->leftJoin('conv_hypothecs', function ($join){
+    //                 $join->on('conv_hypothecs.id', '=', 'hypothec_step.hypothec_id')
+    //                     ->where('hypothec_step.hypothec_id', $this->id);
+    //             })
+    //             ->when($this->step == 'formalization', function($qry) {
+    //                 $qry->where('conv_hypothec_steps.type', 'formalization');
+    //             })
+    //             ->orderBy('conv_hypothec_steps.id')
+    //             ->get();
+    //     return $steps;
+    // }
 
 }

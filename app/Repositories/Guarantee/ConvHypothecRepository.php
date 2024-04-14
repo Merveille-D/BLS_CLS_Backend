@@ -81,7 +81,11 @@ class ConvHypothecRepository
 
         $convHypo = $this->conv_model->create($data);
 
-        $convHypo->steps()->save($this->currentStep($convHypo->state));
+        $all_steps = ConvHypothecStep::orderBy('rank')->whereType('formalization')->get();
+
+        $convHypo->steps()->syncWithoutDetaching($all_steps);
+        $this->updatePivotState($convHypo);
+
 
         // $user->notify((new ConvHypothecNextStep($convHypo))/* ->delay(Carbon::now()->addMinutes(1)) */);
         return new ConvHypothecResource($convHypo);
@@ -96,14 +100,30 @@ class ConvHypothecRepository
         return $next = ConvHypothecStep::where('rank', $current->rank+1)->first();
     }
 
+    public function updatePivotState($convHypo) {
+        if ($convHypo->state == ConvHypothecState::REGISTER && $convHypo->is_approved == true) {
+            $all_steps = ConvHypothecStep::orderBy('rank')->whereType('realization')->get();
+
+            $convHypo->steps()->syncWithoutDetaching($all_steps);
+        }
+        $currentStep = $this->currentStep($convHypo->state);
+
+        if ($currentStep) {
+            $pivotValues = [
+                $currentStep->id => ['status' => true]
+            ];
+            $convHypo->steps()->syncWithoutDetaching($pivotValues);
+        }
+    }
+
 
     public function updateProcess($request, $convHypo) {
         $data = array();
 
         if ($convHypo) {
             $data = $this->updateProcessByState($request, $convHypo);
-
-            $data->steps()->save($this->currentStep($data->state));
+            $this->updatePivotState($convHypo);
+            // $data->steps()->save($this->currentStep($data->state));
             return new ConvHypothecResource($data);
         }
     }

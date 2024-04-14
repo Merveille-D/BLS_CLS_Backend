@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('hypothec_step', function (Blueprint $table) {
             $table->id();
+            $table->string('status')->default(false);
             $table->uuid('hypothec_id')->index();
             $table->foreign('hypothec_id')->references('id')->on('conv_hypothecs');
             $table->uuid('step_id')->index();
             $table->foreign('step_id')->references('id')->on('conv_hypothec_steps');
+            $table->date('min_deadline')->nullable();
+            $table->date('max_deadline')->nullable();
             $table->timestamps();
         });
     }
