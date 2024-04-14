@@ -33,6 +33,7 @@ class UpdateTaskIncidentRequest extends FormRequest
         }else {
             $task = searchElementIndice(TaskIncident::TASKS, $request->input('type'));
             $rules = $task['rules'];
+            $rules['task_incident_id'] = ['required', 'uuid'];
         }
 
         return $rules;

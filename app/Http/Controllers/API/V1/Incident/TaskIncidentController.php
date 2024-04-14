@@ -56,6 +56,23 @@ class TaskIncidentController extends Controller
         }
     }
 
+    public function completeTaskIncident(UpdateTaskIncidentRequest $request)
+    {
+        $taskIncident = TaskIncident::find($request->task_incident_id);
+
+        $current_task_incident = TaskIncident::where('incident_id', $taskIncident->incident_id)->where('status', false)->first();
+        if($current_task_incident->id != $taskIncident->id) {
+            return api_response(false, "Ce n'est pas la tache suivante à modifier", null, 422);
+        }
+
+        try {
+            $this->taskIncident->update($taskIncident, $request->all());
+            return api_response(true, "Succès de l'enregistrement de la tache", $taskIncident, 200);
+        }catch (ValidationException $e) {
+                return api_response(false, "Echec de l'enregistrement de la tache", $e->errors(), 422);
+        }
+    }
+
     public function getCurrentTaskIncident(GetCurrentTaskIncidentRequest $request)
     {
         $task_incident = $this->taskIncident->getCurrentTask($request);
