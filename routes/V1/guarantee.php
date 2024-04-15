@@ -14,5 +14,6 @@ use App\Http\Controllers\API\V1\Guarantee\ConvHypothecStepController;
 //conventionnal hypothec
 // Route::resource('/conv-hypothec/steps', ConvHypothecStepController::class);
 Route::get('/conv-hypothec/steps/{id}',  [ConvHypothecController::class, 'showSteps']);
+Route::get('/conv-hypothec/steps/{id}/{step_id}',  [ConvHypothecController::class, 'showOneStep']);
 Route::post('/conventionnal_hypothec/update/{convHypo}', array(ConvHypothecController::class, 'updateProcess'));
 Route::resource('/conventionnal_hypothec', ConvHypothecController::class);
