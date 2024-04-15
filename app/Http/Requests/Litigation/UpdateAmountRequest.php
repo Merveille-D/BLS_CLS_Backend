@@ -22,7 +22,9 @@ class UpdateAmountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'amount' => 'numeric|required'
+            'estimated_amount' => 'numeric|required|min:0',
+            'added_amount' => 'numeric|nullable|min:0',
+            'remaining_amount' => 'numeric|nullable|min:0',
         ];
     }
 }

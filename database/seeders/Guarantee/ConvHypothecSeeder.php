@@ -3,9 +3,11 @@
 namespace Database\Seeders\Guarantee;
 
 use App\Enums\ConvHypothecState;
+use App\Models\Guarantee\ConvHypothec;
 use App\Models\Guarantee\ConvHypothecStep;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ConvHypothecSeeder extends Seeder
 {
@@ -14,12 +16,48 @@ class ConvHypothecSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('conv_hypothecs')->insert([
+            'id' => '9bce26d8-32c0-4b96-afcd-300d051cf9f0',
+            'state' => 'created',
+            'reference' => 'HC-1234',
+            'name' => 'Test init. convention d\'hypothèque',
+            'contract_file' => '/storage/guarantee/conventionnal_hypothec/2024-04-14_131932-tpa33X-sun_tzu_art_de_la_guerre_.pdf',
+        ]);
+
+        $convHypo = ConvHypothec::find('9bce26d8-32c0-4b96-afcd-300d051cf9f0');
+
+        $all_steps = ConvHypothecStep::orderBy('rank')->whereType('formalization')->get();
+
+        $convHypo->steps()->syncWithoutDetaching($all_steps);
+        $this->updatePivotState($convHypo);
+
         $steps = $this->getSteps();
 
         foreach ($steps as $step) {
             ConvHypothecStep::create($step);
         }
     }
+
+    public function updatePivotState($convHypo) {
+        if ($convHypo->state == ConvHypothecState::REGISTER && $convHypo->is_approved == true) {
+            $all_steps = ConvHypothecStep::orderBy('rank')->whereType('realization')->get();
+
+            $convHypo->steps()->syncWithoutDetaching($all_steps);
+        }
+        $currentStep = $this->currentStep($convHypo->state);
+
+        if ($currentStep) {
+            $pivotValues = [
+                $currentStep->id => ['status' => true]
+            ];
+            $convHypo->steps()->syncWithoutDetaching($pivotValues);
+        }
+    }
+
+    public function currentStep($state) {
+        return ConvHypothecStep::whereCode($state)->first();
+    }
+
 
     function getSteps() : array {
         return [

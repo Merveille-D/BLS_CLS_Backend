@@ -9,4 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 class LitigationLawyer extends Model
 {
     use HasFactory, HasUuids;
+
+    protected $fillable = [
+        'name', 'phone', 'email'
+    ];
 }

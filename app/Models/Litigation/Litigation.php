@@ -15,7 +15,11 @@ class Litigation extends Model
 
     protected $fillable = [
         'name', 'nature_id', 'party_id', 'jurisdiction_id', 'reference', 'nature_id', 'jurisdiction_id', 'party_id', 'lawyer_id', 'jurisdiction_id', 'user_id',
-        'estimated_amount', 'added_amount', 'remaining_amount'
+        'estimated_amount', 'added_amount', 'remaining_amount', 'is_archived'
+    ];
+
+    protected $casts = [
+        'added_amount' => 'array'
     ];
 
 

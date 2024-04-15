@@ -91,11 +91,23 @@ class LitigationController extends Controller
     /**
      * Update the estimated amount field.
      */
-    public function updateEstimatedAmount(UpdateAmountRequest $request, $litigation)
+    public function updateAmount(UpdateAmountRequest $request, $litigation)
     {
         try {
-            $data = $this->litigationRepo->updateEstimatedAmount($litigation, $request->amount);
-            return api_response($success = true, 'Montant constitué mis à jour avec succès', $data);
+            $data = $this->litigationRepo->updateAmount($litigation, $request);
+            return api_response($success = true, 'Provisions ajoutées  avec succès', $data);
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
+        }
+    }
+    /**
+     * Update the estimated amount field.
+     */
+    public function archive(Request $request, $litigation)
+    {
+        try {
+            $data = $this->litigationRepo->archive($litigation);
+            return api_response($success = true, 'Archivage effectué avec succès', $data);
         } catch (\Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
