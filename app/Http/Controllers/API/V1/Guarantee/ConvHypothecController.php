@@ -69,11 +69,19 @@ class ConvHypothecController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the all steps for an hypothec.
      */
     public function showSteps(string $id)
     {
         return api_response(true, 'Etapes recuperé', $data = $this->hypothecRepo->getHypthecSteps($id, request()));
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function showOneSteps(string $hypothec_id, string $step_id)
+    {
+        return api_response(true, 'Etapes recuperé', $data = $this->hypothecRepo->getOneStep($hypothec_id, $step_id()));
     }
 
     /**

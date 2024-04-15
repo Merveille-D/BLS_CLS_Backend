@@ -58,6 +58,19 @@ class ConvHypothecRepository
         // return new ConvHypothecResource($this->conv_model->with('documents')->findOrFail($id));
     }
 
+    public function getOneStep($hypothec_id, $step_id) {
+        $hypothec = $this->conv_model->find($hypothec_id);
+        if ($hypothec == null)
+            return array();
+
+        $step = ($hypothec->steps)->where('id', $step_id)->first();
+        $form = $this->getCustomFormFields($step->code);
+        if ($form) {
+            $step->form = $form;
+        }
+        return $step;
+    }
+
     function initFormalizationProcess($request) {
 
         $file_path = $this->storeFile($request->contract_file);
