@@ -16,9 +16,16 @@ class ConvHypothecSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('conv_hypothecs')->insert([
+        $steps = $this->getSteps();
+
+        foreach ($steps as $step) {
+            ConvHypothecStep::create($step);
+        }
+
+        $hypothec = DB::table('conv_hypothecs')->insert([
             'id' => '9bce26d8-32c0-4b96-afcd-300d051cf9f0',
             'state' => 'created',
+            'step' => 'formalization',
             'reference' => 'HC-1234',
             'name' => 'Test init. convention d\'hypothèque',
             'contract_file' => '/storage/guarantee/conventionnal_hypothec/2024-04-14_131932-tpa33X-sun_tzu_art_de_la_guerre_.pdf',
@@ -30,12 +37,6 @@ class ConvHypothecSeeder extends Seeder
 
         $convHypo->steps()->syncWithoutDetaching($all_steps);
         $this->updatePivotState($convHypo);
-
-        $steps = $this->getSteps();
-
-        foreach ($steps as $step) {
-            ConvHypothecStep::create($step);
-        }
     }
 
     public function updatePivotState($convHypo) {
@@ -91,7 +92,7 @@ class ConvHypothecSeeder extends Seeder
                 'type' => 'formalization',
                 'rank' => 4,
                 'min_delay' => null,
-                'max_delay' => null,
+                'max_delay' => 8,
             ],
             [
                 'name' => 'Inscription',
@@ -112,8 +113,7 @@ class ConvHypothecSeeder extends Seeder
                 'max_delay' => null,
             ],
             [
-                'name' => 'Demande D\'inscription et publication du commendement de payer
-                dans  les registres de la propriété foncière',
+                'name' => 'Demande D\'inscription et publication du commendement de payer dans  les registres de la propriété foncière',
                 'code' => ConvHypothecState::ORDER_PAYMENT_VERIFIED,
                 'type' => 'realization',
                 'rank' => 2,

@@ -45,6 +45,7 @@ class ConvHypothec extends Model
         'date_deposit_specification',
         'is_publied',
         'sell_price_estate',
+        'summation_date',
     );
 
     /**

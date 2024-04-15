@@ -57,24 +57,23 @@ trait HypothecFormFieldTrait
                     ['date', 'date_signification', 'Date de la signification'],
 
                 );
-
                 break;
+
             case ConvHypothecState::ORDER_PAYMENT_VERIFIED:
                 $customFields = $this->commonProperties(ConvHypothecState::STATES_VALUES[ConvHypothecState::ORDER_PAYMENT_VERIFIED],
                     ['text', 'is_verified', 'Vérification'],
-
                 );
-
                 break;
+
             case ConvHypothecState::ORDER_PAYMENT_VISA:
                 $customFields = $this->commonProperties(ConvHypothecState::STATES_VALUES[ConvHypothecState::ORDER_PAYMENT_VISA],
-                    ['file', 'documents', 'INSERER COMMENDEMENT DE PAYER VISE'],
+                    ['file', 'documents', 'Insérer commendement de payer visé'],
                     ['text', 'is_verified', 'Vérification'],
                     ['date', 'visa_date', 'Date du visa'],
 
                 );
-
                 break;
+
             case ConvHypothecState::EXPROPRIATION_SPECIFICATION:
                 $customFields = $this->commonProperties(ConvHypothecState::STATES_VALUES[ConvHypothecState::EXPROPRIATION_SPECIFICATION],
                     ['file', 'documents', 'INSERER COPIE DU CAHIER DE CHARGES'],
@@ -83,12 +82,13 @@ trait HypothecFormFieldTrait
             break;
             case ConvHypothecState::EXPROPRIATION_SALE:
                 $customFields = $this->commonProperties(ConvHypothecState::STATES_VALUES[ConvHypothecState::EXPROPRIATION_SALE],
-                    ['date', 'date_sell', 'Date de vente fixée'],
+                    ['file', 'documents', 'Insérer une copie de la sommation'],
+                    ['date', 'date_sell', 'Renseigner la date de vente fixée'],
                 );
             break;
             case ConvHypothecState::EXPROPRIATION_SUMMATION:
                 $customFields = $this->commonProperties(ConvHypothecState::STATES_VALUES[ConvHypothecState::EXPROPRIATION_SUMMATION],
-                    ['text', 'summation_is_sent', 'Confirmation de l\'envoi de la sommation'],
+                    ['date', 'summation_date', 'Date d\'envoi de la sommation'],
                 );
             break;
 

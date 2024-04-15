@@ -122,7 +122,7 @@ class LitigationRepository {
     public function archive($id) : JsonResource {
         $litigation = $this->findById($id);
         $litigation->update([
-            'is_archived' => true,
+            'is_archived' => !$litigation->is_archived,
         ]);
 
         return new LitigationResource($litigation);

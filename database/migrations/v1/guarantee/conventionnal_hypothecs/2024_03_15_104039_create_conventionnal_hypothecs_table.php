@@ -32,6 +32,7 @@ return new class extends Migration
             $table->boolean('is_significated')->default(0);
             $table->date('date_sell')->nullable();
             $table->date('advertisement_date')->nullable();
+            $table->date('summation_date')->nullable();
             $table->date('date_deposit_specification')->nullable();
             $table->boolean('is_publied')->default(0);
             $table->double('sell_price_estate')->nullable();
