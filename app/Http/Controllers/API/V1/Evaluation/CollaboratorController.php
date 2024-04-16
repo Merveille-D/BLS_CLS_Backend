@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API\V1\Evaluation;
 
-use App\Models\Collaborator;
+use App\Http\Controllers\Controller;
+use App\Models\Evaluation\Collaborator;
 use Illuminate\Http\Request;
 
 class CollaboratorController extends Controller

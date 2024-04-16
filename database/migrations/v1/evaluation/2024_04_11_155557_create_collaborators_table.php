@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('collaborators', function (Blueprint $table) {
             $table->id();
+
+            $table->string('lastname');
+            $table->string('firstname');
+
+            $table->uuid('user_id')->nullable();
+
+            $table->uuid('performance_indicator_id')->nullable();
+            $table->foreign('performance_indicator_id')->references('id')->on('performance_indicators')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

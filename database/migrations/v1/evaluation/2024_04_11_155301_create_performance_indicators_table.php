@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Evaluation\PerformanceIndicator;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,7 +13,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('performance_indicators', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+            $table->string('title');
+            $table->string('position_name');
+            $table->enum('type', PerformanceIndicator::TYPES);
+            $table->string('note');
+            $table->string('description');
             $table->timestamps();
         });
     }

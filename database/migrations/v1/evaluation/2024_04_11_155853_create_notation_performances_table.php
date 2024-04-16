@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('notation_performances', function (Blueprint $table) {
             $table->id();
+
+            $table->uuid('notation_id');
+            $table->foreign('notation_id')->references('id')->on('notations')->onDelete('cascade');
+
+            $table->uuid('collaborator_id');
+            $table->foreign('collaborator_id')->references('id')->on('collaborators')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
