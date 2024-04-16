@@ -61,7 +61,7 @@ class ConvHypothec extends Model
     public function steps()
     {
         return $this->belongsToMany(ConvHypothecStep::class, 'hypothec_step', 'hypothec_id', 'step_id')
-                ->select('conv_hypothec_steps.id', 'code', 'rank', 'conv_hypothec_steps.name', 'conv_hypothec_steps.type', 'hypothec_step.max_deadline', 'hypothec_step.min_deadline', 'hypothec_step.created_at')
+                ->select('conv_hypothec_steps.id', 'code', 'rank', 'min_delay', 'max_delay', 'conv_hypothec_steps.name', 'conv_hypothec_steps.type', 'hypothec_step.max_deadline', 'hypothec_step.min_deadline', 'hypothec_step.created_at')
                 ->selectRaw('case when hypothec_step.status = 1 then true else false end as status');
     }
 
