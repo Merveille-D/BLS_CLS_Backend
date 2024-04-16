@@ -19,6 +19,7 @@ class TaskIncident extends Model
     protected $casts = [
         'raised_hand' => 'boolean',
         'status' => 'boolean',
+        'conversion certificate' => 'boolean',
     ];
 
     protected $fillable = [
