@@ -99,32 +99,30 @@ class ConvHypothecRepository
         return ConvHypothecStep::whereCode($state)->first();
     }
 
-    public function nextStep($state) : Model {
-        $current =  ConvHypothecStep::whereCode($state)->first();
-        return $next = ConvHypothecStep::where('rank', $current->rank+1)->first();
+    public function nextStep($convHypo) : Model|null {
+        return $next = $convHypo->next_step;
     }
 
-    function setDeadline($currentStep, $convHypo) {
-        // dd($currentStep);
-        $data = [
-            'status' => true,
-        ];
-        $minDelay = $currentStep->min_delay;
-        $maxDelay = $currentStep->max_delay;
+    function setDeadline($convHypo) {
+        $nextStep = $convHypo->next_step;
+
+        $minDelay = $nextStep->min_delay;
+        $maxDelay = $nextStep->max_delay;
+        $data = array();
+        //date by hypothec state
         $operationDate = $this->getOperationDateByState($convHypo);
+        if ($operationDate == null)
+            return $data;
+        $formatted_date = Carbon::createFromFormat('Y-m-d', $operationDate);
 
         if ($minDelay && $maxDelay) {
-            $data['max_delay'] = Carbon::now()->addDays($maxDelay);
-            $data['min_delay'] = Carbon::now()->addDays($minDelay);
+            $data['max_deadline'] = $formatted_date->addDays($maxDelay);
+            $data['min_deadline'] = $formatted_date->addDays($minDelay);
         }elseif ($minDelay) {
-            $data['min_delay'] = Carbon::now()->addDays($minDelay);
+            $data['min_deadline'] = $formatted_date->addDays($minDelay);
         }elseif ($maxDelay) {
-            $data['max_delay'] = Carbon::now()->addDays($maxDelay);
+            $data['max_deadline'] = $formatted_date->addDays($maxDelay);
         }
-
-        // $currentDate = date('Y-m-d');
-        // $minDate = date('Y-m-d', strtotime("+$minDelay days", strtotime($currentDate)));
-        // $maxDate = date('Y-m-d', strtotime("+$maxDelay days", strtotime($currentDate)));
         return $data;
     }
 
@@ -166,9 +164,23 @@ class ConvHypothecRepository
         $currentStep = $this->currentStep($convHypo->state);
 
         if ($currentStep) {
-            $pivotData = $this->setDeadline($currentStep, $convHypo);
             $pivotValues = [
-                $currentStep->id => $pivotData
+                $currentStep->id => [
+                    'status' => true,
+                ]
+            ];
+            $convHypo->steps()->syncWithoutDetaching($pivotValues);
+        }
+
+        $nextStep = $this->nextStep($convHypo);
+        if ($nextStep) {
+            $data = $this->setDeadline($convHypo);
+
+            if ($data == [])
+                return false;
+
+            $pivotValues = [
+                $nextStep->id => $data
             ];
             $convHypo->steps()->syncWithoutDetaching($pivotValues);
         }
@@ -180,6 +192,7 @@ class ConvHypothecRepository
 
         if ($convHypo) {
             $data = $this->updateProcessByState($request, $convHypo);
+
             $this->updatePivotState($convHypo);
             // $data->steps()->save($this->currentStep($data->state));
 
@@ -333,7 +346,7 @@ class ConvHypothecRepository
     public function saveExpropriationSpec($request, $convHypo) : array {
         $data = array(
             'date_deposit_specification' => $request->date_deposit_specification,
-            // 'date_sell' => $request->date_sell,
+            'date_sell' => $request->date_sell,
             'state' => ConvHypothecState::EXPROPRIATION_SPECIFICATION,
         );
 

@@ -78,17 +78,19 @@ trait HypothecFormFieldTrait
                 $customFields = $this->commonProperties(ConvHypothecState::STATES_VALUES[ConvHypothecState::EXPROPRIATION_SPECIFICATION],
                     ['file', 'documents', 'INSERER COPIE DU CAHIER DE CHARGES'],
                     ['date', 'date_deposit_specification', 'Date de dépôt du cahier de charges'],
-                );
-            break;
-            case ConvHypothecState::EXPROPRIATION_SALE:
-                $customFields = $this->commonProperties(ConvHypothecState::STATES_VALUES[ConvHypothecState::EXPROPRIATION_SALE],
-                    ['file', 'documents', 'Insérer une copie de la sommation'],
                     ['date', 'date_sell', 'Renseigner la date de vente fixée'],
                 );
             break;
+            // case ConvHypothecState::EXPROPRIATION_SALE:
+            //     $customFields = $this->commonProperties(ConvHypothecState::STATES_VALUES[ConvHypothecState::EXPROPRIATION_SALE],
+            //         ['file', 'documents', 'Insérer une copie de la sommation'],
+            //         ['date', 'date_sell', 'Renseigner la date de vente fixée'],
+            //     );
+            // break;
             case ConvHypothecState::EXPROPRIATION_SUMMATION:
                 $customFields = $this->commonProperties(ConvHypothecState::STATES_VALUES[ConvHypothecState::EXPROPRIATION_SUMMATION],
                     ['date', 'summation_date', 'Date d\'envoi de la sommation'],
+                    ['file', 'documents', 'Insérer une copie de la sommation'],
                 );
             break;
 
