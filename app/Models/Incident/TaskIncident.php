@@ -253,8 +253,9 @@ class TaskIncident extends Model
                     'rules' => [
                         'conversion_certificate' => ['required', 'boolean'],
                         'documents' => ['required', 'array'],
-                        'documents.*.name' => ['required', 'string'],
-                        'documents.*.file' => ['required', 'file'],
+                        // 'documents.*.name' => ['required', 'string'],
+                        // 'documents.*.file' => ['required', 'file'],
+                        'documents.*' => ['required', 'file'],
                     ],
                     "delay" => 0,
                     "form" => [
