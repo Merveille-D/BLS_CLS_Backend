@@ -65,15 +65,15 @@ class TaskIncident extends Model
                 'atd_2' => [
                         'title' => 'Adresser un courrier d\'information au client',
                         'rules' => [
-                            'files' => ['required', 'array'],
-                            'files.*' => ['required', 'file']
+                            'documents' => ['required', 'array'],
+                            'documents.*' => ['required', 'file']
                         ],
                         "delay" => 0,
                         "form" => [
                             'fields' => [
                                 [
-                                    'type' => 'files',
-                                    'name' => 'files',
+                                    'type' => 'documents',
+                                    'name' => 'documents',
                                     'label' => 'Joindre le courrier d\'information au client',
                                 ]
                             ],
@@ -83,15 +83,15 @@ class TaskIncident extends Model
                 'atd_3' => [
                         'title' => 'Transmission d\'une lettre signee par la DG de la banque et de l\'accuse de reception signe',
                         'rules' => [
-                            'files' => ['required', 'array'],
-                            'files.*' => ['required', 'file']
+                            'documents' => ['required', 'array'],
+                            'documents.*' => ['required', 'file']
                         ],
                         "delay" => 0,
                         "form" => [
                             'fields' => [
                                 [
-                                    'type' => 'files',
-                                    'name' => 'files',
+                                    'type' => 'documents',
+                                    'name' => 'documents',
                                     'label' => 'Lettre signée par la DG & Accusé de réception signé',
                                 ]
                             ],
@@ -119,15 +119,15 @@ class TaskIncident extends Model
                                 'atd_4_1' => [
                                         'title' => 'Attacher le document de la main levee',
                                         'rules' => [
-                                            'files' => ['required', 'array'],
-                                            'files.*' => ['required', 'file']
+                                            'documents' => ['required', 'array'],
+                                            'documents.*' => ['required', 'file']
                                         ],
                                         "delay" => 0,
                                         "form" => [
                                             'fields' => [
                                                 [
-                                                    'type' => 'files',
-                                                    'name' => 'files',
+                                                    'type' => 'documents',
+                                                    'name' => 'documents',
                                                     'label' => 'Attacher le document de la main levée',
                                                 ]
                                             ],
@@ -160,15 +160,15 @@ class TaskIncident extends Model
                                 'atd_4_3' => [
                                         'title' => 'Informer le client par un courrier',
                                         'rules' => [
-                                            'files' => ['required', 'array'],
-                                            'files.*' => ['required', 'file']
+                                            'documents' => ['required', 'array'],
+                                            'documents.*' => ['required', 'file']
                                         ],
                                         "delay" => 0,
                                         "form" => [
                                             'fields' => [
                                                 [
-                                                    'type' => 'files',
-                                                    'name' => 'files',
+                                                    'type' => 'documents',
+                                                    'name' => 'documents',
                                                     'label' => 'Joindre le courrier d\'information au client',
                                                 ]
                                             ],
@@ -181,15 +181,15 @@ class TaskIncident extends Model
                                 'atd_4_4' => [
                                         'title' => 'Reception d\'un avis d\'execution de l\'administration fiscale par Labanque',
                                         'rules' => [
-                                            'files' => ['required', 'array'],
-                                            'files.*' => ['required', 'file']
+                                            'documents' => ['required', 'array'],
+                                            'documents.*' => ['required', 'file']
                                         ],
                                         "delay" => 0,
                                         "form" => [
                                             'fields' => [
                                                 [
-                                                    'type' => 'files',
-                                                    'name' => 'files',
+                                                    'type' => 'documents',
+                                                    'name' => 'documents',
                                                     'label' => 'Avis d\'execution de l\'administration fiscale',
                                                 ]
                                             ],
@@ -199,15 +199,15 @@ class TaskIncident extends Model
                                 'atd_4_4' => [
                                         'title' => 'Etablissement d\'un cheque à l\'ordre de \'adm fiscale à concurrence du montant saisi',
                                         'rules' => [
-                                            'files' => ['required', 'array'],
-                                            'files.*' => ['required', 'file']
+                                            'documents' => ['required', 'array'],
+                                            'documents.*' => ['required', 'file']
                                         ],
                                         "delay" => 0,
                                         "form" => [
                                             'fields' => [
                                                 [
-                                                    'type' => 'files',
-                                                    'name' => 'files',
+                                                    'type' => 'documents',
+                                                    'name' => 'documents',
                                                     'label' => 'Joindre une copie du chèque',
                                                 ]
                                             ],
@@ -217,15 +217,15 @@ class TaskIncident extends Model
                                 'atd_5_5' => [
                                         'title' => 'Informer le client par un courrier',
                                         'rules' => [
-                                            'files' => ['required', 'array'],
-                                            'files.*' => ['required', 'file']
+                                            'documents' => ['required', 'array'],
+                                            'documents.*' => ['required', 'file']
                                         ],
                                         "delay" => 0,
                                         "form" => [
                                             'fields' => [
                                                 [
-                                                    'type' => 'files',
-                                                    'name' => 'files',
+                                                    'type' => 'documents',
+                                                    'name' => 'documents',
                                                     'label' => 'Joindre le courrier d\'information au client',
                                                 ]
                                             ],
@@ -243,15 +243,15 @@ class TaskIncident extends Model
                 'atd_5' => [
                         'title' => 'Rediger un courrier à l\'adresse de l\'ADM Fiscale à signer par la DG de la banque',
                         'rules' => [
-                            'files' => ['required', 'array'],
-                            'files.*' => ['required', 'file']
+                            'documents' => ['required', 'array'],
+                            'documents.*' => ['required', 'file']
                         ],
                         "delay" => 0,
                         "form" => [
                             'fields' => [
                                 [
-                                    'type' => 'files',
-                                    'name' => 'files',
+                                    'type' => 'documents',
+                                    'name' => 'documents',
                                     'label' => 'Joindre le courrier à l\'adresse de l\'ADM Fiscale',
                                 ]
                             ],
@@ -266,15 +266,15 @@ class TaskIncident extends Model
                 'req_1' => [
                         'title' => ' Attacher le courrier d`\'information du client à signer par la DG de la banque',
                         'rules' => [
-                            'files' => ['required', 'array'],
-                            'files.*' => ['required', 'file']
+                            'documents' => ['required', 'array'],
+                            'documents.*' => ['required', 'file']
                         ],
                         "delay" => 0,
                         "form" => [
                             'fields' => [
                                 [
-                                    'type' => 'files',
-                                    'name' => 'files',
+                                    'type' => 'documents',
+                                    'name' => 'documents',
                                     'label' => 'Joindre le courrier d\'information au client',
                                 ]
                             ],
@@ -284,15 +284,15 @@ class TaskIncident extends Model
                 'req_2' => [
                         'title' => 'Attacher le courrier de transmission signee par la DG de la banque',
                         'rules' => [
-                            'files' => ['required', 'array'],
-                            'files.*' => ['required', 'file']
+                            'documents' => ['required', 'array'],
+                            'documents.*' => ['required', 'file']
                         ],
                         "delay" => 0,
                         "form" => [
                             'fields' => [
                                 [
-                                    'type' => 'files',
-                                    'name' => 'files',
+                                    'type' => 'documents',
+                                    'name' => 'documents',
                                     'label' => 'Joindre le courrier de transmission signee',
                                 ]
                             ],
@@ -305,15 +305,15 @@ class TaskIncident extends Model
                 'req_3' => [
                         'title' => 'Rediger un courrier à l\'adresse de l\'autorité concernée à signer par la DG de la banque',
                         'rules' => [
-                            'files' => ['required', 'array'],
-                            'files.*' => ['required', 'file']
+                            'documents' => ['required', 'array'],
+                            'documents.*' => ['required', 'file']
                         ],
                         "delay" => 0,
                         "form" => [
                             'fields' => [
                                 [
-                                    'type' => 'files',
-                                    'name' => 'files',
+                                    'type' => 'documents',
+                                    'name' => 'documents',
                                     'label' => 'Joindre le courrier signée à l\'adresse de l\'autorité concernée',
                                 ]
                             ],
@@ -328,15 +328,15 @@ class TaskIncident extends Model
                 'sc_1' => [
                         'title' => 'Declarer la nature et le solde des comptes du client sur l\'acte d\'huissier',
                         'rules' => [
-                            'files' => ['required', 'array'],
-                            'files.*' => ['required', 'file']
+                            'documents' => ['required', 'array'],
+                            'documents.*' => ['required', 'file']
                         ],
                         "delay" => 0,
                         "form" => [
                             'fields' => [
                                 [
-                                    'type' => 'files',
-                                    'name' => 'files',
+                                    'type' => 'documents',
+                                    'name' => 'documents',
                                     'label' => 'Joindre la fiche de déclaration',
                                 ]
                             ],
@@ -346,15 +346,15 @@ class TaskIncident extends Model
                 'sc_2' => [
                         'title' => 'Remplir une fiche de prelement signe par le responsable juridique a adresser a la direction des operations',
                         'rules' => [
-                            'files' => ['required', 'array'],
-                            'files.*' => ['required', 'file']
+                            'documents' => ['required', 'array'],
+                            'documents.*' => ['required', 'file']
                         ],
                         "delay" => 0,
                         "form" => [
                             'fields' => [
                                 [
-                                    'type' => 'files',
-                                    'name' => 'files',
+                                    'type' => 'documents',
+                                    'name' => 'documents',
                                     'label' => 'Joindre la fiche de prelevement',
                                 ]
                             ],
@@ -364,15 +364,15 @@ class TaskIncident extends Model
                 'sc_3' => [
                         'title' => 'Infomer le client concerne par telecall ou courrier',
                         'rules' => [
-                            'files' => ['required', 'array'],
-                            'files.*' => ['required', 'file']
+                            'documents' => ['required', 'array'],
+                            'documents.*' => ['required', 'file']
                         ],
                         "delay" => 0,
                         "form" => [
                             'fields' => [
                                 [
-                                    'type' => 'files',
-                                    'name' => 'files',
+                                    'type' => 'documents',
+                                    'name' => 'documents',
                                     'label' => 'Joindre le courrier d\'information du client',
                                 ]
                             ],
@@ -400,15 +400,15 @@ class TaskIncident extends Model
                                 'sc_4_1' => [
                                         'title' => 'Attacher le document de la main levee',
                                         'rules' => [
-                                            'files' => ['required', 'array'],
-                                            'files.*' => ['required', 'file']
+                                            'documents' => ['required', 'array'],
+                                            'documents.*' => ['required', 'file']
                                         ],
                                         "delay" => 0,
                                         "form" => [
                                             'fields' => [
                                                 [
-                                                    'type' => 'files',
-                                                    'name' => 'files',
+                                                    'type' => 'documents',
+                                                    'name' => 'documents',
                                                     'label' => 'Joindre le document de la main levee',
                                                 ]
                                             ],
@@ -418,15 +418,15 @@ class TaskIncident extends Model
                                 'sc_4_2' => [
                                         'title' => 'Levee des restriction du compte client',
                                         'rules' => [
-                                            'files' => ['required', 'array'],
-                                            'files.*' => ['required', 'file']
+                                            'documents' => ['required', 'array'],
+                                            'documents.*' => ['required', 'file']
                                         ],
                                         "delay" => 0,
                                         "form" => [
                                             'fields' => [
                                                 [
-                                                    'type' => 'files',
-                                                    'name' => 'files',
+                                                    'type' => 'documents',
+                                                    'name' => 'documents',
                                                     'label' => 'Joindre la preuve de la levee des restrictions',
                                                 ]
                                             ],
@@ -436,15 +436,15 @@ class TaskIncident extends Model
                                 'sc_4_3' => [
                                         'title' => 'Informer le client par un courrier',
                                         'rules' => [
-                                            'files' => ['required', 'array'],
-                                            'files.*' => ['required', 'file']
+                                            'documents' => ['required', 'array'],
+                                            'documents.*' => ['required', 'file']
                                         ],
                                         "delay" => 0,
                                         "form" => [
                                             'fields' => [
                                                 [
-                                                    'type' => 'files',
-                                                    'name' => 'files',
+                                                    'type' => 'documents',
+                                                    'name' => 'documents',
                                                     'label' => 'Joindre le courrier d\'information du client',
                                                 ]
                                             ],
@@ -475,15 +475,15 @@ class TaskIncident extends Model
                                             'sc_4_4_1' => [
                                                     'title' => 'Caducite de la saisie en l\'absence de la presentation d\'un titre executoire',
                                                     'rules' => [
-                                                        'files' => ['required', 'array'],
-                                                        'files.*' => ['required', 'file']
+                                                        'documents' => ['required', 'array'],
+                                                        'documents.*' => ['required', 'file']
                                                     ],
                                                     "delay" => 0,
                                                     "form" => [
                                                         'fields' => [
                                                             [
-                                                                'type' => 'files',
-                                                                'name' => 'files',
+                                                                'type' => 'documents',
+                                                                'name' => 'documents',
                                                                 'label' => 'Joindre la caducite de la saisie',
                                                             ]
                                                         ],
@@ -493,15 +493,15 @@ class TaskIncident extends Model
                                             'sc_4_4_2' => [
                                                     'title' => 'Attachement de la main levée de la saisie',
                                                     'rules' => [
-                                                        'files' => ['required', 'array'],
-                                                        'files.*' => ['required', 'file']
+                                                        'documents' => ['required', 'array'],
+                                                        'documents.*' => ['required', 'file']
                                                     ],
                                                     "delay" => 0,
                                                     "form" => [
                                                         'fields' => [
                                                             [
-                                                                'type' => 'files',
-                                                                'name' => 'files',
+                                                                'type' => 'documents',
+                                                                'name' => 'documents',
                                                                 'label' => 'Attacher le document de la main levée',
                                                             ]
                                                         ],
@@ -514,15 +514,15 @@ class TaskIncident extends Model
                                             'sc_4_4_3' => [
                                                     'title' => 'Presentation d\'un titre executoire, d\'un acte de conversion de saisie conservatoire en saisie attribution et d\'une preuve d\'absence d\'opposition',
                                                     'rules' => [
-                                                        'files' => ['required', 'array'],
-                                                        'files.*' => ['required', 'file']
+                                                        'documents' => ['required', 'array'],
+                                                        'documents.*' => ['required', 'file']
                                                     ],
                                                     "delay" => 0,
                                                     "form" => [
                                                         'fields' => [
                                                             [
-                                                                'type' => 'files',
-                                                                'name' => 'files',
+                                                                'type' => 'documents',
+                                                                'name' => 'documents',
                                                                 'label' => 'Joindre les documents',
                                                             ]
                                                         ],
@@ -532,15 +532,15 @@ class TaskIncident extends Model
                                             'sc_4_4_4' => [
                                                     'title' => 'Paiement du creancier par l\'etablissement d\'un cheque',
                                                     'rules' => [
-                                                        'files' => ['required', 'array'],
-                                                        'files.*' => ['required', 'file']
+                                                        'documents' => ['required', 'array'],
+                                                        'documents.*' => ['required', 'file']
                                                     ],
                                                     "delay" => 0,
                                                     "form" => [
                                                         'fields' => [
                                                             [
-                                                                'type' => 'files',
-                                                                'name' => 'files',
+                                                                'type' => 'documents',
+                                                                'name' => 'documents',
                                                                 'label' => 'Joindre la fiche de paiement du creancier',
                                                             ]
                                                         ],
@@ -559,15 +559,15 @@ class TaskIncident extends Model
                 'sc_5' => [
                         'title' => 'Declaration signee de l\'agent sur l\'acte d\'huissier',
                         'rules' => [
-                            'files' => ['required', 'array'],
-                            'files.*' => ['required', 'file']
+                            'documents' => ['required', 'array'],
+                            'documents.*' => ['required', 'file']
                         ],
                         "delay" => 0,
                         "form" => [
                             'fields' => [
                                 [
-                                    'type' => 'files',
-                                    'name' => 'files',
+                                    'type' => 'documents',
+                                    'name' => 'documents',
                                     'label' => 'Joindre la fiche de déclaration',
                                 ]
                             ],
@@ -583,15 +583,15 @@ class TaskIncident extends Model
                 'sa_1' => [
                         'title' => 'Declarer la nature et le solde des comptes du client sur l\'acte d\'huissier',
                         'rules' => [
-                            'files' => ['required', 'array'],
-                            'files.*' => ['required', 'file']
+                            'documents' => ['required', 'array'],
+                            'documents.*' => ['required', 'file']
                         ],
                         "delay" => 0,
                         "form" => [
                             'fields' => [
                                 [
-                                    'type' => 'files',
-                                    'name' => 'files',
+                                    'type' => 'documents',
+                                    'name' => 'documents',
                                     'label' => 'Joindre la fiche de déclaration',
                                 ]
                             ],
@@ -601,15 +601,15 @@ class TaskIncident extends Model
                 'sa_2' => [
                         'title' => 'Remplir une fiche de prelement signe par le responsable juridique a adresser a la direction des operations',
                         'rules' => [
-                            'files' => ['required', 'array'],
-                            'files.*' => ['required', 'file']
+                            'documents' => ['required', 'array'],
+                            'documents.*' => ['required', 'file']
                         ],
                         "delay" => 0,
                         "form" => [
                             'fields' => [
                                 [
-                                    'type' => 'files',
-                                    'name' => 'files',
+                                    'type' => 'documents',
+                                    'name' => 'documents',
                                     'label' => 'Joinndre la fiche de prelevement',
                                 ]
                             ],
@@ -619,15 +619,15 @@ class TaskIncident extends Model
                 'sa_3' => [
                         'title' => 'Infomer le client concerne par telecall ou courrier',
                         'rules' => [
-                            'files' => ['required', 'array'],
-                            'files.*' => ['required', 'file']
+                            'documents' => ['required', 'array'],
+                            'documents.*' => ['required', 'file']
                         ],
                         "delay" => 0,
                         "form" => [
                             'fields' => [
                                 [
-                                    'type' => 'files',
-                                    'name' => 'files',
+                                    'type' => 'documents',
+                                    'name' => 'documents',
                                     'label' => 'Joindre le courrier d\'information du client',
                                 ]
                             ],
@@ -655,15 +655,15 @@ class TaskIncident extends Model
                                 'sa_4_1' => [
                                         'title' => 'Attacher le document de la main levee',
                                         'rules' => [
-                                            'files' => ['required', 'array'],
-                                            'files.*' => ['required', 'file']
+                                            'documents' => ['required', 'array'],
+                                            'documents.*' => ['required', 'file']
                                         ],
                                         "delay" => 0,
                                         "form" => [
                                             'fields' => [
                                                 [
-                                                    'type' => 'files',
-                                                    'name' => 'files',
+                                                    'type' => 'documents',
+                                                    'name' => 'documents',
                                                     'label' => 'Joindre le document de la main levee',
                                                 ]
                                             ],
@@ -673,15 +673,15 @@ class TaskIncident extends Model
                                 'sa_4_2' => [
                                         'title' => 'Levee des restriction du compte client',
                                         'rules' => [
-                                            'files' => ['required', 'array'],
-                                            'files.*' => ['required', 'file']
+                                            'documents' => ['required', 'array'],
+                                            'documents.*' => ['required', 'file']
                                         ],
                                         "delay" => 0,
                                         "form" => [
                                             'fields' => [
                                                 [
-                                                    'type' => 'files',
-                                                    'name' => 'files',
+                                                    'type' => 'documents',
+                                                    'name' => 'documents',
                                                     'label' => 'Joindre la preuve de la levee des restrictions',
                                                 ]
                                             ],
@@ -691,15 +691,15 @@ class TaskIncident extends Model
                                 'sa_4_3' => [
                                         'title' => 'Informer le client par un courrier',
                                         'rules' => [
-                                            'files' => ['required', 'array'],
-                                            'files.*' => ['required', 'file']
+                                            'documents' => ['required', 'array'],
+                                            'documents.*' => ['required', 'file']
                                         ],
                                         "delay" => 0,
                                         "form" => [
                                             'fields' => [
                                                 [
-                                                    'type' => 'files',
-                                                    'name' => 'files',
+                                                    'type' => 'documents',
+                                                    'name' => 'documents',
                                                     'label' => 'Joindre le courrier d\'information du client',
                                                 ]
                                             ],
@@ -730,15 +730,15 @@ class TaskIncident extends Model
                                                 'sa_4_4_1' => [
                                                         'title' => 'Caducite de la saisie en l\'absence de la presentation d\'un titre executoire',
                                                         'rules' => [
-                                                            'files' => ['required', 'array'],
-                                                            'files.*' => ['required', 'file']
+                                                            'documents' => ['required', 'array'],
+                                                            'documents.*' => ['required', 'file']
                                                         ],
                                                         "delay" => 0,
                                                         "form" => [
                                                             'fields' => [
                                                                 [
-                                                                    'type' => 'files',
-                                                                    'name' => 'files',
+                                                                    'type' => 'documents',
+                                                                    'name' => 'documents',
                                                                     'label' => 'Joindre la caducite de la saisie',
                                                                 ]
                                                             ],
@@ -749,15 +749,15 @@ class TaskIncident extends Model
                                                 'sa_4_4_2' => [
                                                         'title' => 'Attachement de la main levée de la saisie',
                                                         'rules' => [
-                                                            'files' => ['required', 'array'],
-                                                            'files.*' => ['required', 'file']
+                                                            'documents' => ['required', 'array'],
+                                                            'documents.*' => ['required', 'file']
                                                         ],
                                                         "delay" => 0,
                                                         "form" => [
                                                             'fields' => [
                                                                 [
-                                                                    'type' => 'files',
-                                                                    'name' => 'files',
+                                                                    'type' => 'documents',
+                                                                    'name' => 'documents',
                                                                     'label' => 'Joindre le document de la main levée',
                                                                 ]
                                                             ],
@@ -770,15 +770,15 @@ class TaskIncident extends Model
                                                 'sa_4_4_3' => [
                                                         'title' => 'Etablir un cheque au nom du creancier ou son mandataire dans la limite du montant saisi',
                                                         'rules' => [
-                                                            'files' => ['required', 'array'],
-                                                            'files.*' => ['required', 'file']
+                                                            'documents' => ['required', 'array'],
+                                                            'documents.*' => ['required', 'file']
                                                         ],
                                                         "delay" => 0,
                                                         "form" => [
                                                             'fields' => [
                                                                 [
-                                                                    'type' => 'files',
-                                                                    'name' => 'files',
+                                                                    'type' => 'documents',
+                                                                    'name' => 'documents',
                                                                     'label' => 'Joindre la copie du chèque',
                                                                 ]
                                                             ],
@@ -788,15 +788,15 @@ class TaskIncident extends Model
                                                 'sa_4_4_4' => [
                                                         'title' => 'Informer le client',
                                                         'rules' => [
-                                                            'files' => ['required', 'array'],
-                                                            'files.*' => ['required', 'file']
+                                                            'documents' => ['required', 'array'],
+                                                            'documents.*' => ['required', 'file']
                                                         ],
                                                         "delay" => 0,
                                                         "form" => [
                                                             'fields' => [
                                                                 [
-                                                                    'type' => 'files',
-                                                                    'name' => 'files',
+                                                                    'type' => 'documents',
+                                                                    'name' => 'documents',
                                                                     'label' => 'Joindre le courrier d\'information du client',
                                                                 ]
                                                             ],
@@ -815,15 +815,15 @@ class TaskIncident extends Model
                 'sa_5' => [
                         'title' => 'Declaration de l\'agent sur l\'exploit d\'huisser',
                         'rules' => [
-                            'files' => ['required', 'array'],
-                            'files.*' => ['required', 'file']
+                            'documents' => ['required', 'array'],
+                            'documents.*' => ['required', 'file']
                         ],
                         "delay" => 0,
                         "form" => [
                             'fields' => [
                                 [
-                                    'type' => 'files',
-                                    'name' => 'files',
+                                    'type' => 'documents',
+                                    'name' => 'documents',
                                     'label' => 'Joindre sur la fiche de déclaration',
                                 ]
                             ],

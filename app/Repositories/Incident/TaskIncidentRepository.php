@@ -31,8 +31,8 @@ class TaskIncidentRepository
      */
     public function update(TaskIncident $taskIncident, $request) {
 
-        if(isset($request['files'])) {
-            foreach($request['files'] as $item) {
+        if(isset($request['documents'])) {
+            foreach($request['documents'] as $item) {
 
                     $fileUpload = new IncidentDocument();
 
