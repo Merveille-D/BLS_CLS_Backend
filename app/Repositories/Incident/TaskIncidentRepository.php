@@ -36,7 +36,8 @@ class TaskIncidentRepository
 
                     $fileUpload = new IncidentDocument();
 
-                    $fileUpload->name = getFileName($item['file']);
+                    $fileUpload->name = 'Fichier';
+                    // $fileUpload->name = getFileName($item['file']);
                     $fileUpload->file = uploadFile($item['file'], 'ag_documents');
 
                     $taskIncident->fileUploads()->save($fileUpload);
