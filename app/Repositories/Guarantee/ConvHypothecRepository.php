@@ -104,21 +104,60 @@ class ConvHypothecRepository
         return $next = ConvHypothecStep::where('rank', $current->rank+1)->first();
     }
 
-    function setDeadline($step) {
-        $minDelay = $step->min_delay;
-        $maxDelay = $step->max_delay;
+    function setDeadline($currentStep, $convHypo) {
+        // dd($currentStep);
+        $data = [
+            'status' => true,
+        ];
+        $minDelay = $currentStep->min_delay;
+        $maxDelay = $currentStep->max_delay;
+        $operationDate = $this->getOperationDateByState($convHypo);
 
-        $currentDate = date('Y-m-d');
-        $minDate = date('Y-m-d', strtotime("+$minDelay days", strtotime($currentDate)));
-        $maxDate = date('Y-m-d', strtotime("+$maxDelay days", strtotime($currentDate)));
         if ($minDelay && $maxDelay) {
-            return "Du $minDelay au  $maxDelay";
+            $data['max_delay'] = Carbon::now()->addDays($maxDelay);
+            $data['min_delay'] = Carbon::now()->addDays($minDelay);
         }elseif ($minDelay) {
-            return "Au plus tard: $minDelay";
+            $data['min_delay'] = Carbon::now()->addDays($minDelay);
         }elseif ($maxDelay) {
-            return "Au plus tard: $maxDelay";
-
+            $data['max_delay'] = Carbon::now()->addDays($maxDelay);
         }
+
+        // $currentDate = date('Y-m-d');
+        // $minDate = date('Y-m-d', strtotime("+$minDelay days", strtotime($currentDate)));
+        // $maxDate = date('Y-m-d', strtotime("+$maxDelay days", strtotime($currentDate)));
+        return $data;
+    }
+
+    public function getOperationDateByState($convHypo) {
+        $state = $convHypo->state;
+        $date = null;
+        switch ($state) {
+            case ConvHypothecState::REGISTER_REQUESTED:
+                $date = $convHypo->registering_date;
+                break;
+            case ConvHypothecState::SIGNIFICATION_REGISTERED:
+                $date = $convHypo->date_signification;
+                break;
+            // case ConvHypothecState::ORDER_PAYMENT_VISA:
+            //     $date = $convHypo->visa_date;
+            //     break;
+            case ConvHypothecState::EXPROPRIATION_SPECIFICATION:
+                $date = $convHypo->visa_date;
+                break;
+            case ConvHypothecState::EXPROPRIATION_SALE:
+                $date = $convHypo->date_deposit_specification;
+                break;
+            case ConvHypothecState::EXPROPRIATION_SUMMATION:
+                $date = $convHypo->summation_date;
+                break;
+            case ConvHypothecState::ADVERTISEMENT:
+                $date = $convHypo->advertisement_date;
+                break;
+            default:
+                # code...
+                break;
+        }
+        return $date;
     }
 
     public function updatePivotState($convHypo) {
@@ -130,13 +169,9 @@ class ConvHypothecRepository
         $currentStep = $this->currentStep($convHypo->state);
 
         if ($currentStep) {
+            $pivotData = $this->setDeadline($currentStep, $convHypo);
             $pivotValues = [
-                $currentStep->id => [
-                                        'status' => true,
-                                        'min_delay' => $currentStep->min_delay ? Carbon::now()->addDays($currentStep->min_delay) : null,
-                                        'max_delay' => $currentStep->max_delay ? Carbon::now()->addDays($currentStep->min_delay) : null,
-                                        'deadline' => Carbon::now()->addDays($currentStep->max_delay),
-                                    ]
+                $currentStep->id => $pivotData
             ];
             $convHypo->steps()->syncWithoutDetaching($pivotValues);
         }

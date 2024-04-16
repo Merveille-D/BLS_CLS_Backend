@@ -92,7 +92,7 @@ class ConvHypothecSeeder extends Seeder
                 'type' => 'formalization',
                 'rank' => 4,
                 'min_delay' => null,
-                'max_delay' => 8,
+                'max_delay' => null,
             ],
             [
                 'name' => 'Inscription',
@@ -100,7 +100,7 @@ class ConvHypothecSeeder extends Seeder
                 'type' => 'formalization',
                 'rank' => 5,
                 'min_delay' => null,
-                'max_delay' => null,
+                'max_delay' => 8,
             ],
 
             //realizations steps
@@ -125,8 +125,8 @@ class ConvHypothecSeeder extends Seeder
                 'code' => ConvHypothecState::ORDER_PAYMENT_VISA,
                 'type' => 'realization',
                 'rank' => 3,
-                'min_delay' => 20,
-                'max_delay' => 60,
+                'min_delay' => null,
+                'max_delay' => null,
             ],
             [
                 'name' => 'Poursuivre l\'expropriation : DEPOSER CAHIER DE CHARGES',
