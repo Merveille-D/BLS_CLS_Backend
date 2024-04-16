@@ -99,26 +99,60 @@ class ConvHypothecRepository
         return ConvHypothecStep::whereCode($state)->first();
     }
 
-    public function nextStep($state) : Model {
-        $current =  ConvHypothecStep::whereCode($state)->first();
-        return $next = ConvHypothecStep::where('rank', $current->rank+1)->first();
+    public function nextStep($convHypo) : Model|null {
+        return $next = $convHypo->next_step;
     }
 
-    function setDeadline($step) {
-        $minDelay = $step->min_delay;
-        $maxDelay = $step->max_delay;
+    function setDeadline($convHypo) {
+        $nextStep = $convHypo->next_step;
 
-        $currentDate = date('Y-m-d');
-        $minDate = date('Y-m-d', strtotime("+$minDelay days", strtotime($currentDate)));
-        $maxDate = date('Y-m-d', strtotime("+$maxDelay days", strtotime($currentDate)));
+        $minDelay = $nextStep->min_delay;
+        $maxDelay = $nextStep->max_delay;
+        $data = array();
+        //date by hypothec state
+        $operationDate = $this->getOperationDateByState($convHypo);
+        if ($operationDate == null)
+            return $data;
+        $formatted_date = Carbon::createFromFormat('Y-m-d', $operationDate);
+
         if ($minDelay && $maxDelay) {
-            return "Du $minDelay au  $maxDelay";
+            $data['max_deadline'] = $formatted_date->addDays($maxDelay);
+            $data['min_deadline'] = $formatted_date->addDays($minDelay);
         }elseif ($minDelay) {
-            return "Au plus tard: $minDelay";
+            $data['min_deadline'] = $formatted_date->addDays($minDelay);
         }elseif ($maxDelay) {
-            return "Au plus tard: $maxDelay";
-
+            $data['max_deadline'] = $formatted_date->addDays($maxDelay);
         }
+        return $data;
+    }
+
+    public function getOperationDateByState($convHypo) {
+        $state = $convHypo->state;
+        $date = null;
+        switch ($state) {
+            case ConvHypothecState::REGISTER_REQUESTED:
+                $date = $convHypo->registering_date;
+                break;
+            case ConvHypothecState::SIGNIFICATION_REGISTERED:
+                $date = $convHypo->date_signification;
+                break;
+            // case ConvHypothecState::ORDER_PAYMENT_VISA:
+            //     $date = $convHypo->visa_date;
+            //     break;
+            case ConvHypothecState::EXPROPRIATION_SPECIFICATION:
+                $date = $convHypo->visa_date;
+                break;
+            case ConvHypothecState::EXPROPRIATION_SUMMATION:
+                $date = $convHypo->summation_date;
+                break;
+            case ConvHypothecState::ADVERTISEMENT:
+                $date = $convHypo->advertisement_date;
+                break;
+            default:
+                # code...
+                break;
+        }
+        return $date;
     }
 
     public function updatePivotState($convHypo) {
@@ -132,11 +166,21 @@ class ConvHypothecRepository
         if ($currentStep) {
             $pivotValues = [
                 $currentStep->id => [
-                                        'status' => true,
-                                        // 'min_delay' => $currentStep->min_delay ? Carbon::now()->addDays($currentStep->min_delay) : null,
-                                        // 'max_delay' => $currentStep->max_delay ? Carbon::now()->addDays($currentStep->min_delay) : null,
-                                        // 'deadline' => Carbon::now()->addDays($currentStep->max_delay),
-                                    ]
+                    'status' => true,
+                ]
+            ];
+            $convHypo->steps()->syncWithoutDetaching($pivotValues);
+        }
+
+        $nextStep = $this->nextStep($convHypo);
+        if ($nextStep) {
+            $data = $this->setDeadline($convHypo);
+
+            if ($data == [])
+                return false;
+
+            $pivotValues = [
+                $nextStep->id => $data
             ];
             $convHypo->steps()->syncWithoutDetaching($pivotValues);
         }
@@ -148,6 +192,7 @@ class ConvHypothecRepository
 
         if ($convHypo) {
             $data = $this->updateProcessByState($request, $convHypo);
+
             $this->updatePivotState($convHypo);
             // $data->steps()->save($this->currentStep($data->state));
 
@@ -186,11 +231,11 @@ class ConvHypothecRepository
             case ConvHypothecState::ORDER_PAYMENT_VISA:
                 $data = $this->saveExpropriationSpec($request, $convHypo);
                 break;
-            case ConvHypothecState::EXPROPRIATION_SPECIFICATION:
-                $data = $this->saveExpropriationSale($request);
-                break;
+            // case ConvHypothecState::EXPROPRIATION_SPECIFICATION:
+            //     $data = $this->saveExpropriationSale($request);
+            //     break;
 
-            case ConvHypothecState::EXPROPRIATION_SALE:
+            case ConvHypothecState::EXPROPRIATION_SPECIFICATION:
                 $data = $this->saveExpropriationSummation($request, $convHypo);
                 break;
                 //advertisement step
@@ -301,7 +346,7 @@ class ConvHypothecRepository
     public function saveExpropriationSpec($request, $convHypo) : array {
         $data = array(
             'date_deposit_specification' => $request->date_deposit_specification,
-            // 'date_sell' => $request->date_sell,
+            'date_sell' => $request->date_sell,
             'state' => ConvHypothecState::EXPROPRIATION_SPECIFICATION,
         );
 
@@ -312,14 +357,14 @@ class ConvHypothecRepository
         );
     }
 
-    public function saveExpropriationSale($request) : array {
-        $data = array(
-            'date_sell' => $request->date_sell,
-            'state' => ConvHypothecState::EXPROPRIATION_SALE,
-        );
+    // public function saveExpropriationSale($request) : array {
+    //     $data = array(
+    //         'date_sell' => $request->date_sell,
+    //         'state' => ConvHypothecState::EXPROPRIATION_SALE,
+    //     );
 
-        return $data;
-    }
+    //     return $data;
+    // }
 
     public function saveExpropriationSummation($request, $convHypo) {
         $data = array(

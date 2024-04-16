@@ -21,12 +21,14 @@ class ConvHypothecStep extends Model
 
 
     public function getDeadlineAttribute() {
-        return 'Du 01/02-23/02/2022';
+        if ($this->max_deadline && $this->min_deadline)
+            return 'Du '.$this->min_deadline. ' au ' . $this->max_deadline;
+        elseif ($this->max_deadline)
+            return $this->max_deadline;
+        elseif ($this->min_deadline)
+            return $this->min_deadline;
+
+        return null;
     }
-
-    // public function getFormAttribute() {
-    //     // return   {};
-    // }
-
 
 }

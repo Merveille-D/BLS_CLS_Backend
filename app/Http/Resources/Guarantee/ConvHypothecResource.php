@@ -32,9 +32,9 @@ class ConvHypothecResource extends JsonResource
             'date_deposit_specification' => $this->date_deposit_specification,
             'sell_price_estate' => $this->sell_price_estate,
             // 'documents' => new DocumentCollection(new DocumentResource($this->documents))
-            'documents' => DocumentResource::collection($this->whenLoaded('documents')),
             'next_step' => $this->when($id, new ConvHypothecStepResource($this->next_step)),
             'current_step' => $this->when($id, new ConvHypothecStepResource($this->current_step)),
+            'documents' => DocumentResource::collection($this->whenLoaded('documents')),
             // 'steps' => $this->when($id, $this->steps)
             // 'steps' => $this->when($id, ConvHypothecStepResource::collection($this->steps))
         ];

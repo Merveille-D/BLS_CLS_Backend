@@ -19,8 +19,8 @@ class ConvHypothecStepResource extends JsonResource
             'code' => $this->code,
             'name' => $this->name,
             'status' => $this->status ? true : false,
-            'max_delay' => $this->max_delay,
-            'min_delay' => $this->min_delay,
+            'max_deadline' => $this->max_deadline,
+            'min_deadline' => $this->min_deadline,
             'type' => $this->type,
             'deadline' => $this->deadline
             // 'steps' => ConvHypothecStepResource::collection($this->whenLoaded('steps')),
