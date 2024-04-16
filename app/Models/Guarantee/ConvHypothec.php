@@ -74,20 +74,4 @@ class ConvHypothec extends Model
         return $this->steps()->orderBy('rank')->where('status', false)->first();
     }
 
-    // public function getStepsAttribute() {
-    //     $steps = ConvHypothecStep::select('conv_hypothec_steps.id', 'code', 'conv_hypothec_steps.name', 'conv_hypothec_steps.type',
-    //              'conv_hypothecs.id as hypothec_id', 'hypothec_step.created_at')
-    //             ->leftJoin('hypothec_step', 'conv_hypothec_steps.id', '=', 'hypothec_step.step_id')
-    //             ->leftJoin('conv_hypothecs', function ($join){
-    //                 $join->on('conv_hypothecs.id', '=', 'hypothec_step.hypothec_id')
-    //                     ->where('hypothec_step.hypothec_id', $this->id);
-    //             })
-    //             ->when($this->step == 'formalization', function($qry) {
-    //                 $qry->where('conv_hypothec_steps.type', 'formalization');
-    //             })
-    //             ->orderBy('conv_hypothec_steps.id')
-    //             ->get();
-    //     return $steps;
-    // }
-
 }

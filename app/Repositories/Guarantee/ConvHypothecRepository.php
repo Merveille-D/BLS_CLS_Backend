@@ -104,6 +104,23 @@ class ConvHypothecRepository
         return $next = ConvHypothecStep::where('rank', $current->rank+1)->first();
     }
 
+    function setDeadline($step) {
+        $minDelay = $step->min_delay;
+        $maxDelay = $step->max_delay;
+
+        $currentDate = date('Y-m-d');
+        $minDate = date('Y-m-d', strtotime("+$minDelay days", strtotime($currentDate)));
+        $maxDate = date('Y-m-d', strtotime("+$maxDelay days", strtotime($currentDate)));
+        if ($minDelay && $maxDelay) {
+            return "Du $minDelay au  $maxDelay";
+        }elseif ($minDelay) {
+            return "Au plus tard: $minDelay";
+        }elseif ($maxDelay) {
+            return "Au plus tard: $maxDelay";
+
+        }
+    }
+
     public function updatePivotState($convHypo) {
         if ($convHypo->state == ConvHypothecState::REGISTER && $convHypo->is_approved == true) {
             $all_steps = ConvHypothecStep::orderBy('rank')->whereType('realization')->get();
@@ -114,7 +131,12 @@ class ConvHypothecRepository
 
         if ($currentStep) {
             $pivotValues = [
-                $currentStep->id => ['status' => true]
+                $currentStep->id => [
+                                        'status' => true,
+                                        'min_delay' => $currentStep->min_delay ? Carbon::now()->addDays($currentStep->min_delay) : null,
+                                        'max_delay' => $currentStep->max_delay ? Carbon::now()->addDays($currentStep->min_delay) : null,
+                                        'deadline' => Carbon::now()->addDays($currentStep->max_delay),
+                                    ]
             ];
             $convHypo->steps()->syncWithoutDetaching($pivotValues);
         }
