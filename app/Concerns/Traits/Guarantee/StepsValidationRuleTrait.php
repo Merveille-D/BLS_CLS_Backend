@@ -51,11 +51,21 @@ trait StepsValidationRuleTrait
             case ConvHypothecState::ORDER_PAYMENT_VISA:
                 $data = array_merge($data, [
                     'date_deposit_specification' => 'required|date|date_format:Y-m-d|before_or_equal:today',
-                    'date_sell' => 'required|date|date_format:Y-m-d|before_or_equal:today',
+                    // 'date_sell' => 'required|date|date_format:Y-m-d|before_or_equal:today',
                 ]);
                 break;
 
-            case ConvHypothecState::EXPROPRIATION:
+            case ConvHypothecState::EXPROPRIATION_SPECIFICATION:
+                $data = [
+                    'date_sell' => 'required|date|date_format:Y-m-d',
+                ];
+                break;
+            case ConvHypothecState::EXPROPRIATION_SALE:
+                $data = array_merge($data, [
+                    'summation_date' => 'required|date|date_format:Y-m-d|before_or_equal:today',
+                ]);
+                break;
+            case ConvHypothecState::EXPROPRIATION_SUMMATION:
                 $data = array_merge($data, [
                     'advertisement_date' => 'required|date|date_format:Y-m-d|before_or_equal:today',
                 ]);

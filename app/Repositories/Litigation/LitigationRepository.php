@@ -29,21 +29,26 @@ class LitigationRepository {
      * @return JsonResource
      */
     public function findById($id) : JsonResource {
-        $litigation = $this->litigation_model->find($id);
+        $litigation = $this->litigation_model->findOrFail($id);
 
         return new LitigationResource($litigation);
     }
     public function getByIdWithDocuments($id) : JsonResource {
-        $litigation = $this->litigation_model->with('documents')->find($id);
+        $litigation = $this->litigation_model->with('documents')->findOrFail($id);
 
         return new LitigationResource($litigation);
     }
 
     public function getList($request) : ResourceCollection {
         $search = $request->search;
+        $is_archived = $request->is_archived;
         $query = $this->litigation_model
                 ->when(!blank($search), function($qry) use($search) {
                     $qry->where('name', 'like', '%'.$search.'%');
+                })
+                ->when(!blank($is_archived), function($qry) use($is_archived) {
+                    $archive = $is_archived == 'yes' ? true : false;
+                    $qry->where('is_archived', $archive);
                 })
                 ->paginate();
 
@@ -96,27 +101,30 @@ class LitigationRepository {
         return new LitigationResource($litigation);
     }
 
-    public function updateEstimatedAmount($id, $amount) : JsonResource {
+    public function updateAmount($id, $request) : JsonResource {
         $litigation = $this->findById($id);
         $litigation->update([
-            'estimated_amount' => $amount,
+            'estimated_amount' => $request->estimated_amount,
+            'added_amount' => $this->manageAddedAmount($request, $litigation),
+            'remaining_amount' => $request->remaining_amount,
         ]);
+
         return new LitigationResource($litigation);
     }
 
-    public function updateAddedAmount($id, $amount) : JsonResource {
-        $litigation = $this->findById($id);
-        $litigation->update([
-            'added_amount' => $amount,
-        ]);
-        return new LitigationResource($litigation);
+    public function manageAddedAmount($request, $litigation) {
+        $existingAddedAmount = $litigation->added_amount ?? [];
+        $existingAddedAmount[] = ['amount' => $request->added_amount, 'date' => now()];
+
+        return $existingAddedAmount;
     }
 
-    public function updateRemainingAmount($id, $amount) : JsonResource {
+    public function archive($id) : JsonResource {
         $litigation = $this->findById($id);
         $litigation->update([
-            'remaining_amount' => $amount,
+            'is_archived' => !$litigation->is_archived,
         ]);
+
         return new LitigationResource($litigation);
     }
 

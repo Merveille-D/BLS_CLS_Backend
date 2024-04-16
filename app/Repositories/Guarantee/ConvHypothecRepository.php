@@ -38,33 +38,37 @@ class ConvHypothecRepository
 
 
     public function getHypthecSteps($hypothecId, $request) {
-        if ($this->conv_model->find($hypothecId) == null) {
+        $hypothec = $this->conv_model->find($hypothecId);
+        if ($hypothec == null)
             return array();
-        }
+
+        $steps = ($hypothec->steps);
         $type = $request->type;
-        $steps = ConvHypothecStep::select('conv_hypothec_steps.id', 'code', 'conv_hypothec_steps.name', 'conv_hypothec_steps.type',
-                 'conv_hypothecs.id as hypothec_id', 'hypothec_step.created_at')
-                ->leftJoin('hypothec_step', 'conv_hypothec_steps.id', '=', 'hypothec_step.step_id')
-                ->leftJoin('conv_hypothecs', function ($join) use ($hypothecId) {
-                    $join->on('conv_hypothecs.id', '=', 'hypothec_step.hypothec_id')
-                        ->where('hypothec_step.hypothec_id', $hypothecId);
-                })
-                ->when(!blank($type), function($qry) use($type) {
-                    $qry->where('conv_hypothec_steps.type', $type);
-                })
-                ->selectRaw('CASE WHEN conv_hypothecs.id IS NULL THEN false ELSE true END as status')
-                ->orderBy('conv_hypothec_steps.id')
-                ->get();
 
         $steps->transform(function ($step) {
-
             $step->status = $step->status ? true : false;
-            $step->form = $this->getCustomFormFields($step->code);
+            $form = $this->getCustomFormFields($step->code);
+            if ($form) {
+                $step->form = $form;
+            }
             return $step;
         });
 
         return $steps;
         // return new ConvHypothecResource($this->conv_model->with('documents')->findOrFail($id));
+    }
+
+    public function getOneStep($hypothec_id, $step_id) {
+        $hypothec = $this->conv_model->find($hypothec_id);
+        if ($hypothec == null)
+            return array();
+
+        $step = ($hypothec->steps)->where('id', $step_id)->first();
+        $form = $this->getCustomFormFields($step->code);
+        if ($form) {
+            $step->form = $form;
+        }
+        return $step;
     }
 
     function initFormalizationProcess($request) {
@@ -124,6 +128,7 @@ class ConvHypothecRepository
             $data = $this->updateProcessByState($request, $convHypo);
             $this->updatePivotState($convHypo);
             // $data->steps()->save($this->currentStep($data->state));
+
             return new ConvHypothecResource($data);
         }
     }
@@ -157,10 +162,17 @@ class ConvHypothecRepository
                 break;
 
             case ConvHypothecState::ORDER_PAYMENT_VISA:
-                $data = $this->saveExpropriation($request, $convHypo);
+                $data = $this->saveExpropriationSpec($request, $convHypo);
+                break;
+            case ConvHypothecState::EXPROPRIATION_SPECIFICATION:
+                $data = $this->saveExpropriationSale($request);
+                break;
+
+            case ConvHypothecState::EXPROPRIATION_SALE:
+                $data = $this->saveExpropriationSummation($request, $convHypo);
                 break;
                 //advertisement step
-            case ConvHypothecState::EXPROPRIATION:
+            case ConvHypothecState::EXPROPRIATION_SUMMATION:
                 $data = $this->saveAdvertisement($request, $convHypo);
                 break;
             case ConvHypothecState::ADVERTISEMENT:
@@ -171,8 +183,6 @@ class ConvHypothecRepository
                 # code...
                 break;
         }
-
-
         $convHypo->update($data);
         return $convHypo->refresh();
     }
@@ -266,11 +276,33 @@ class ConvHypothecRepository
         );
     }
 
-    public function saveExpropriation($request, $convHypo) : array {
+    public function saveExpropriationSpec($request, $convHypo) : array {
         $data = array(
             'date_deposit_specification' => $request->date_deposit_specification,
+            // 'date_sell' => $request->date_sell,
+            'state' => ConvHypothecState::EXPROPRIATION_SPECIFICATION,
+        );
+
+        return $this->stepCommonSavingSettings(
+            $files = $request->documents,
+            $convHypo = $convHypo,
+            $data = $data
+        );
+    }
+
+    public function saveExpropriationSale($request) : array {
+        $data = array(
             'date_sell' => $request->date_sell,
-            'state' => ConvHypothecState::EXPROPRIATION,
+            'state' => ConvHypothecState::EXPROPRIATION_SALE,
+        );
+
+        return $data;
+    }
+
+    public function saveExpropriationSummation($request, $convHypo) {
+        $data = array(
+            'summation_date' =>  $request->summation_date,
+            'state' => ConvHypothecState::EXPROPRIATION_SUMMATION,
         );
 
         return $this->stepCommonSavingSettings(

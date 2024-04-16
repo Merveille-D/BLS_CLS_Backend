@@ -65,15 +65,23 @@ class ConvHypothecController extends Controller
      */
     public function show(string $id)
     {
-        return api_response(true, 'Hypothèque conventionnelle recuperé', $data = $this->hypothecRepo->getConvHypothecById($id));
+        return api_response(true, 'Hypothèque conventionnelle recuperée', $data = $this->hypothecRepo->getConvHypothecById($id));
+    }
+
+    /**
+     * Display the all steps for an hypothec.
+     */
+    public function showSteps(string $id)
+    {
+        return api_response(true, 'Etapes recuperées', $data = $this->hypothecRepo->getHypthecSteps($id, request()));
     }
 
     /**
      * Display the specified resource.
      */
-    public function showSteps(string $id)
+    public function showOneStep(string $hypothec_id, string $step_id)
     {
-        return api_response(true, 'Etapes recuperé', $data = $this->hypothecRepo->getHypthecSteps($id, request()));
+        return api_response(true, 'Etape recuperée', $data = $this->hypothecRepo->getOneStep($hypothec_id, $step_id));
     }
 
     /**

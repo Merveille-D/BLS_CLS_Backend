@@ -3,6 +3,7 @@
 namespace Database\Seeders\Litigation;
 
 use App\Enums\Litigation\LitigationType;
+use App\Models\Litigation\LitigationParty;
 use App\Models\Litigation\LitigationSetting;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -30,6 +31,14 @@ class LitigationResourceSeeder extends Seeder
                 LitigationSetting::create(['name' => $jurisdiction, 'type' => LitigationType::JURISDICTION] );
             }
         }
+
+        LitigationParty::create( [
+            'name' => 'Test init. litigation party',
+            'category' => 'intervenant',
+            'type' => 'client',
+            'phone' => '123456789',
+            'email' => 'test@test.com'
+        ] );
     }
 
     /**

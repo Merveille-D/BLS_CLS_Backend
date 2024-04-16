@@ -3,9 +3,11 @@
 namespace Database\Seeders\Guarantee;
 
 use App\Enums\ConvHypothecState;
+use App\Models\Guarantee\ConvHypothec;
 use App\Models\Guarantee\ConvHypothecStep;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ConvHypothecSeeder extends Seeder
 {
@@ -19,7 +21,44 @@ class ConvHypothecSeeder extends Seeder
         foreach ($steps as $step) {
             ConvHypothecStep::create($step);
         }
+
+        $hypothec = DB::table('conv_hypothecs')->insert([
+            'id' => '9bce26d8-32c0-4b96-afcd-300d051cf9f0',
+            'state' => 'created',
+            'step' => 'formalization',
+            'reference' => 'HC-1234',
+            'name' => 'Test init. convention d\'hypothèque',
+            'contract_file' => '/storage/guarantee/conventionnal_hypothec/2024-04-14_131932-tpa33X-sun_tzu_art_de_la_guerre_.pdf',
+        ]);
+
+        $convHypo = ConvHypothec::find('9bce26d8-32c0-4b96-afcd-300d051cf9f0');
+
+        $all_steps = ConvHypothecStep::orderBy('rank')->whereType('formalization')->get();
+
+        $convHypo->steps()->syncWithoutDetaching($all_steps);
+        $this->updatePivotState($convHypo);
     }
+
+    public function updatePivotState($convHypo) {
+        if ($convHypo->state == ConvHypothecState::REGISTER && $convHypo->is_approved == true) {
+            $all_steps = ConvHypothecStep::orderBy('rank')->whereType('realization')->get();
+
+            $convHypo->steps()->syncWithoutDetaching($all_steps);
+        }
+        $currentStep = $this->currentStep($convHypo->state);
+
+        if ($currentStep) {
+            $pivotValues = [
+                $currentStep->id => ['status' => true]
+            ];
+            $convHypo->steps()->syncWithoutDetaching($pivotValues);
+        }
+    }
+
+    public function currentStep($state) {
+        return ConvHypothecStep::whereCode($state)->first();
+    }
+
 
     function getSteps() : array {
         return [
@@ -53,7 +92,7 @@ class ConvHypothecSeeder extends Seeder
                 'type' => 'formalization',
                 'rank' => 4,
                 'min_delay' => null,
-                'max_delay' => null,
+                'max_delay' => 8,
             ],
             [
                 'name' => 'Inscription',
@@ -74,8 +113,7 @@ class ConvHypothecSeeder extends Seeder
                 'max_delay' => null,
             ],
             [
-                'name' => 'Demande D\'inscription et publication du commendement de payer
-                dans  les registres de la propriété foncière',
+                'name' => 'Demande D\'inscription et publication du commendement de payer dans  les registres de la propriété foncière',
                 'code' => ConvHypothecState::ORDER_PAYMENT_VERIFIED,
                 'type' => 'realization',
                 'rank' => 2,
@@ -92,7 +130,7 @@ class ConvHypothecSeeder extends Seeder
             ],
             [
                 'name' => 'Poursuivre l\'expropriation : DEPOSER CAHIER DE CHARGES',
-                'code' => ConvHypothecState::EXPROPRIATION,
+                'code' => ConvHypothecState::EXPROPRIATION_SPECIFICATION,
                 'type' => 'realization',
                 'rank' => 4,
                 'min_delay' => null,
@@ -100,7 +138,7 @@ class ConvHypothecSeeder extends Seeder
             ],
             [
                 'name' => 'Poursuivre l\'expropriation : FIXER DATE DE LA VENTE',
-                'code' => ConvHypothecState::EXPROPRIATION,
+                'code' => ConvHypothecState::EXPROPRIATION_SALE,
                 'type' => 'realization',
                 'rank' => 5,
                 'min_delay' => 45,
@@ -108,7 +146,7 @@ class ConvHypothecSeeder extends Seeder
             ],
             [
                 'name' => 'Poursuivre l\'expropriation : ADRESSER SOMMATION A PRENDRE CONNAISSANCE DU CAHIER DES CHARGES',
-                'code' => ConvHypothecState::EXPROPRIATION,
+                'code' => ConvHypothecState::EXPROPRIATION_SUMMATION,
                 'type' => 'realization',
                 'rank' => 6,
                 'min_delay' => null,
