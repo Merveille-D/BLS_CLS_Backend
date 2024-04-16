@@ -18,10 +18,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call(UserSeeder::class);
-        // $this->call(LitigationResourceSeeder::class); //containing test data
+        $this->call(UserSeeder::class);
+        $this->call(LitigationResourceSeeder::class); //containing test data
         $this->call(ConvHypothecSeeder::class);
-        // $this->call(LitigationSeeder::class); //for test
-        // $this->call(LawyerSeeder::class); //for test
+        $this->call(LitigationSeeder::class); //for test
+        $this->call(LawyerSeeder::class); //for test
     }
 }

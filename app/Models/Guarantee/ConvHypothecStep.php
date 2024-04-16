@@ -19,6 +19,11 @@ class ConvHypothecStep extends Model
         return $this->hasMany(ConvHypothecStep::class, 'stepable_id');
     }
 
+
+    public function getDeadlineAttribute() {
+        return 'Du 01/02-23/02/2022';
+    }
+
     // public function getFormAttribute() {
     //     // return   {};
     // }

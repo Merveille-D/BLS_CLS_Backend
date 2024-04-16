@@ -21,7 +21,7 @@ trait HypothecFormFieldTrait
 
                 break;
             case ConvHypothecState::PROPERTY_VERIFIED:
-                $customFields = $this->commonProperties('Attacher propriété de l\'immeuble',  ['file', 'documents', 'documents de la propriété']);
+                $customFields = $this->commonProperties('Insérer document de propriété',  ['file', 'documents', 'documents de la propriété']);
 
                 break;
 
