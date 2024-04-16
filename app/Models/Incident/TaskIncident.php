@@ -253,10 +253,6 @@ class TaskIncident extends Model
                     'title' => 'Joindre l\'acte de conversion',
                     'rules' => [
                         'conversion_certificate' => ['required', 'boolean'],
-                        'documents' => ['required', 'array'],
-                        // 'documents.*.name' => ['required', 'string'],
-                        // 'documents.*.file' => ['required', 'file'],
-                        'documents.*' => ['required', 'file'],
                     ],
                     "delay" => 0,
                     "form" => [
@@ -266,11 +262,6 @@ class TaskIncident extends Model
                                 'name' => 'conversion_certificate',
                                 'label' => 'Avez vous recu l\'acte de conversion ?',
                             ],
-                            [
-                                'type' => 'documents',
-                                'name' => 'documents',
-                                'label' => 'Joindre le courrier d\'information du client',
-                            ]
                         ],
                         'form_title' => 'Preuve de l\'acte de conversion'
                     ],

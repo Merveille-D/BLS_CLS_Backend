@@ -36,11 +36,8 @@ class TaskIncidentRepository
 
                     $fileUpload = new IncidentDocument();
 
-                    $fileUpload->name = getFileName($item);
-                    $fileUpload->file = uploadFile($item, 'incident_documents');
-
-                    // $fileUpload->name = $item['name'];
-                    // $fileUpload->file = uploadFile($item['file'], 'incident_documents');
+                    $fileUpload->name = $item['name'];
+                    $fileUpload->file = uploadFile($item['file'], 'incident_documents');
 
                     $taskIncident->fileUploads()->save($fileUpload);
             }
@@ -68,8 +65,6 @@ class TaskIncidentRepository
     private function createNextTasks($taskIncident) {
 
         $type = $taskIncident->code;
-        $response = $taskIncident->raised_hand;
-
 
         $next_task = searchElementIndice(TaskIncident::TASKS, $type);
 
@@ -83,7 +78,7 @@ class TaskIncidentRepository
 
                 return true;
             }else {
-
+                $response = $taskIncident->raised_hand ?? $taskIncident->conversion_certificate;
                 foreach ($next_task['next'][$response] as $key => $task) {
                     TaskIncident::create([
                         'title' => $task['title'],
