@@ -70,26 +70,31 @@ class TaskIncidentRepository
 
         $next_task = searchElementIndice(TaskIncident::TASKS, $type);
 
-        if($next_task['next'] === false) {
+        if(isset($next_task['next'])) {
 
-            $incident = $taskIncident->incident;
-            $incident->status = true;
-            $incident->save();
+            if($next_task['next'] === false) {
 
-            return true;
-        }else if (is_array($next_task['next'][$response])) {
+                $incident = $taskIncident->incident;
+                $incident->status = true;
+                $incident->save();
 
-            foreach ($next_task['next'][$response] as $key => $task) {
-                TaskIncident::create([
-                    'title' => $task['title'],
-                    'code' => $key,
-                    'incident_id' => $taskIncident->incident_id,
-                ]);
+                return true;
+            }else {
+
+                foreach ($next_task['next'][$response] as $key => $task) {
+                    TaskIncident::create([
+                        'title' => $task['title'],
+                        'code' => $key,
+                        'incident_id' => $taskIncident->incident_id,
+                    ]);
+                }
             }
+
         }
+
+
 
         return true;
     }
-
 
 }
