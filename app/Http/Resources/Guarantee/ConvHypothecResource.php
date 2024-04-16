@@ -23,7 +23,7 @@ class ConvHypothecResource extends JsonResource
             'name' => $this->name,
             'type' => $this->step,
             'contract_id' => $this->contract_id,
-            'contract_file' => '/storage/'.$this->contract_file,
+            'contract_file' => $this->contract_file ? '/storage/'.$this->contract_file : null,
             'is_approved' => $this->is_approved,
             'is_subscribed' => $this->is_subscribed,
             'registering_date' => $this->registering_date,
