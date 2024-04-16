@@ -133,9 +133,9 @@ class ConvHypothecRepository
             $pivotValues = [
                 $currentStep->id => [
                                         'status' => true,
-                                        'min_delay' => $currentStep->min_delay ? Carbon::now()->addDays($currentStep->min_delay) : null,
-                                        'max_delay' => $currentStep->max_delay ? Carbon::now()->addDays($currentStep->min_delay) : null,
-                                        'deadline' => Carbon::now()->addDays($currentStep->max_delay),
+                                        // 'min_delay' => $currentStep->min_delay ? Carbon::now()->addDays($currentStep->min_delay) : null,
+                                        // 'max_delay' => $currentStep->max_delay ? Carbon::now()->addDays($currentStep->min_delay) : null,
+                                        // 'deadline' => Carbon::now()->addDays($currentStep->max_delay),
                                     ]
             ];
             $convHypo->steps()->syncWithoutDetaching($pivotValues);
