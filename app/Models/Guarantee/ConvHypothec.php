@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Notifications\Notifiable;
 
-#[ObservedBy([ConvHypothecObserver::class])]
+// #[ObservedBy([ConvHypothecObserver::class])]
 class ConvHypothec extends Model
 {
     use HasFactory, Alertable, HasUuids;
