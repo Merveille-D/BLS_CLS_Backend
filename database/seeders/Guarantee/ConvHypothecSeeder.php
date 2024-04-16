@@ -136,14 +136,14 @@ class ConvHypothecSeeder extends Seeder
                 'min_delay' => null,
                 'max_delay' => 50,
             ],
-            [
-                'name' => 'Poursuivre l\'expropriation : FIXER DATE DE LA VENTE',
-                'code' => ConvHypothecState::EXPROPRIATION_SALE,
-                'type' => 'realization',
-                'rank' => 5,
-                'min_delay' => 45,
-                'max_delay' => 90,
-            ],
+            // [
+            //     'name' => 'Poursuivre l\'expropriation : FIXER DATE DE LA VENTE',
+            //     'code' => ConvHypothecState::EXPROPRIATION_SALE,
+            //     'type' => 'realization',
+            //     'rank' => 5,
+            //     'min_delay' => 45,
+            //     'max_delay' => 90,
+            // ],
             [
                 'name' => 'Poursuivre l\'expropriation : ADRESSER SOMMATION A PRENDRE CONNAISSANCE DU CAHIER DES CHARGES',
                 'code' => ConvHypothecState::EXPROPRIATION_SUMMATION,

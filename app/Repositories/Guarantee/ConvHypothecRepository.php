@@ -144,9 +144,6 @@ class ConvHypothecRepository
             case ConvHypothecState::EXPROPRIATION_SPECIFICATION:
                 $date = $convHypo->visa_date;
                 break;
-            case ConvHypothecState::EXPROPRIATION_SALE:
-                $date = $convHypo->date_deposit_specification;
-                break;
             case ConvHypothecState::EXPROPRIATION_SUMMATION:
                 $date = $convHypo->summation_date;
                 break;
@@ -221,11 +218,11 @@ class ConvHypothecRepository
             case ConvHypothecState::ORDER_PAYMENT_VISA:
                 $data = $this->saveExpropriationSpec($request, $convHypo);
                 break;
-            case ConvHypothecState::EXPROPRIATION_SPECIFICATION:
-                $data = $this->saveExpropriationSale($request);
-                break;
+            // case ConvHypothecState::EXPROPRIATION_SPECIFICATION:
+            //     $data = $this->saveExpropriationSale($request);
+            //     break;
 
-            case ConvHypothecState::EXPROPRIATION_SALE:
+            case ConvHypothecState::EXPROPRIATION_SPECIFICATION:
                 $data = $this->saveExpropriationSummation($request, $convHypo);
                 break;
                 //advertisement step
@@ -347,14 +344,14 @@ class ConvHypothecRepository
         );
     }
 
-    public function saveExpropriationSale($request) : array {
-        $data = array(
-            'date_sell' => $request->date_sell,
-            'state' => ConvHypothecState::EXPROPRIATION_SALE,
-        );
+    // public function saveExpropriationSale($request) : array {
+    //     $data = array(
+    //         'date_sell' => $request->date_sell,
+    //         'state' => ConvHypothecState::EXPROPRIATION_SALE,
+    //     );
 
-        return $data;
-    }
+    //     return $data;
+    // }
 
     public function saveExpropriationSummation($request, $convHypo) {
         $data = array(
