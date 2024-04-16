@@ -32,13 +32,12 @@ class TaskIncidentRepository
     public function update(TaskIncident $taskIncident, $request) {
 
         if(isset($request['documents'])) {
-            foreach($request['documents'] as $item) {
+            foreach($request['documents'] as $file) {
 
                     $fileUpload = new IncidentDocument();
 
-                    $fileUpload->name = 'Fichier';
-                    // $fileUpload->name = getFileName($item['file']);
-                    $fileUpload->file = uploadFile($item['file'], 'ag_documents');
+                    $fileUpload->name = getFileName($file);
+                    $fileUpload->file = uploadFile($file, 'incident_documents');
 
                     $taskIncident->fileUploads()->save($fileUpload);
             }
