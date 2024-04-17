@@ -51,7 +51,7 @@ trait HypothecFormFieldTrait
                 break;
             case ConvHypothecState::SIGNIFICATION_REGISTERED:
                 $customFields = $this->commonProperties(ConvHypothecState::STATES_VALUES[ConvHypothecState::SIGNIFICATION_REGISTERED],
-                    ['text', 'actor_type', 'Type d\'acteur'],
+                    ['select', 'actor_type', 'Type d\'acteur'],
                     ['date', 'date_signification', 'Date de la signification'],
                     ['file', 'documents', 'Inserer la preuve de l\'inscription'],
                 );
