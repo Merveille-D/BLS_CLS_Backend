@@ -95,10 +95,6 @@ class ConvHypothecRepository
         return new ConvHypothecResource($convHypo);
     }
 
-    public function currentStep($state) : Model {
-        return ConvHypothecStep::whereCode($state)->first();
-    }
-
     public function nextStep($convHypo) : Model|null {
         return $next = $convHypo->next_step;
     }
@@ -161,7 +157,7 @@ class ConvHypothecRepository
 
             $convHypo->steps()->syncWithoutDetaching($all_steps);
         }
-        $currentStep = $this->currentStep($convHypo->state);
+        $currentStep = $convHypo->current_step;
 
         if ($currentStep) {
             $pivotValues = [
@@ -194,8 +190,6 @@ class ConvHypothecRepository
             $data = $this->updateProcessByState($request, $convHypo);
 
             $this->updatePivotState($convHypo);
-            // $data->steps()->save($this->currentStep($data->state));
-
             return new ConvHypothecResource($data);
         }
     }
@@ -292,8 +286,8 @@ class ConvHypothecRepository
     function manageRegisterResponse($request, $convHypo) : array {
         $data = array(
                 'registration_date' => $request->registration_date,
-                'state' => $request->is_approved == 'yes' ? ConvHypothecState::REGISTER : ConvHypothecState::NONREGISTER,
-                'is_approved' => $request->is_approved == 'yes' ? true : false,
+                'state' => $request->is_approved == true ? ConvHypothecState::REGISTER : ConvHypothecState::NONREGISTER,
+                'is_approved' => $request->is_approved/*  == 'yes' ? true : false */,
             );
 
         return $this->stepCommonSavingSettings(
@@ -323,7 +317,7 @@ class ConvHypothecRepository
 
     function verifyPayementOrder($request) {
         $data = array(
-            'is_verified' => $request->is_verified == 'yes' ? true : false,
+            'is_verified' => $request->is_verified/*  == 'yes' ? true : false */,
             'state' => ConvHypothecState::ORDER_PAYMENT_VERIFIED,
         );
 
