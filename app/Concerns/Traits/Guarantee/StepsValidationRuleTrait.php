@@ -3,6 +3,7 @@ namespace App\Concerns\Traits\Guarantee;
 
 use App\Enums\ConvHypothecState;
 use App\Rules\Administrator\ArrayElementMatch;
+use App\Rules\IsBooleanRule;
 
 trait StepsValidationRuleTrait
 {
@@ -26,7 +27,7 @@ trait StepsValidationRuleTrait
                 break;
             case ConvHypothecState::REGISTER_REQUESTED:
                 $data = array_merge($data, [
-                    'is_approved' => ['required',  new ArrayElementMatch(array('yes', 'no'))],
+                    'is_approved' => ['required', new IsBooleanRule  /* new ArrayElementMatch(array('yes', 'no')) */],
                     'registration_date' => 'required|date|date_format:Y-m-d|before_or_equal:today',
                 ]);
                 break;
@@ -38,7 +39,7 @@ trait StepsValidationRuleTrait
                 break;
             case ConvHypothecState::SIGNIFICATION_REGISTERED:
                 $data = array(
-                    'is_verified' => ['required',  new ArrayElementMatch(array('yes', 'no'))],
+                    'is_verified' => ['required', new IsBooleanRule  /* new ArrayElementMatch(array('yes', 'no')) */],
                 );
                 break;
 
