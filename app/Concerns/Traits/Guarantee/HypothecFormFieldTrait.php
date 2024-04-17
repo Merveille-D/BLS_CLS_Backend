@@ -65,7 +65,7 @@ trait HypothecFormFieldTrait
 
             case ConvHypothecState::ORDER_PAYMENT_VISA:
                 $customFields = $this->commonProperties(ConvHypothecState::STATES_VALUES[ConvHypothecState::ORDER_PAYMENT_VISA],
-                    ['checkbox', 'is_verified', 'Vérification'],
+                    // ['checkbox', 'is_verified', 'Vérification'],
                     ['date', 'visa_date', 'Date du visa'],
                     ['file', 'documents', 'Insérer commendement de payer visé'],
                 );
