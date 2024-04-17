@@ -75,6 +75,7 @@ trait HypothecFormFieldTrait
                 $customFields = $this->commonProperties(ConvHypothecState::STATES_VALUES[ConvHypothecState::EXPROPRIATION_SPECIFICATION],
                     ['date', 'date_deposit_specification', 'Date de dépôt du cahier de charges'],
                     ['date', 'date_sell', 'Renseigner la date de vente fixée'],
+                    ['file', 'documents', 'Insérer commendement de payer visé'],
                 );
             break;
             // case ConvHypothecState::EXPROPRIATION_SALE:
