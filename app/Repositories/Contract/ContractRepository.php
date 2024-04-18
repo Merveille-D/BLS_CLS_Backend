@@ -63,25 +63,28 @@ class ContractRepository
             $requestData = $request;
         }
 
-        $contract->contractParts()->delete();
-        $first_part = $request['first_part'];
-        $second_part = $request['second_part'];
+        if(isset($request['first_part']) && isset($request['second_part'])) {
 
-        $first_part = array_map(function ($part) {
-            return [
-                'description' => $part['description'],
-                'type' => 'part_1',
-                'part_id' => $part['part_id'],
-            ];
-        }, $first_part);
+            $contract->contractParts()->delete();
+            $first_part = $request['first_part'];
+            $second_part = $request['second_part'];
 
-        $second_part = array_map(function ($part) {
-            return [
-                'description' => $part['description'],
-                'type' => 'part_2',
-                'part_id' => $part['part_id'],
-            ];
-        }, $second_part);
+            $first_part = array_map(function ($part) {
+                return [
+                    'description' => $part['description'],
+                    'type' => 'part_1',
+                    'part_id' => $part['part_id'],
+                ];
+            }, $first_part);
+
+            $second_part = array_map(function ($part) {
+                return [
+                    'description' => $part['description'],
+                    'type' => 'part_2',
+                    'part_id' => $part['part_id'],
+                ];
+            }, $second_part);
+        }
 
         $contract->contractParts()->createMany(array_merge($first_part, $second_part));
 
