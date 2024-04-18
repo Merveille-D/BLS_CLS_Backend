@@ -86,7 +86,7 @@ class ContractRepository
         //     }, $second_part);
         // }
 
-        $contract->contractParts()->createMany(array_merge($first_part, $second_part));
+        // $contract->contractParts()->createMany(array_merge($first_part, $second_part));
 
         $contract->update($requestData);
 
