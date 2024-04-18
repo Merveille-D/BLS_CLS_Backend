@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('title');
 
             $table->enum('info_channel', TaskIncident::CHANNELS)->nullable();
+            $table->text('info_channel_value')->nullable();
             $table->date('date')->nullable();
 
             $table->boolean('raised_hand')->nullable();

@@ -25,6 +25,7 @@ class TaskIncident extends Model
     protected $fillable = [
         'title',
         'info_channel',
+        'info_channel_value',
         'date',
         'raised_hand',
         'incident_id',
@@ -46,6 +47,7 @@ class TaskIncident extends Model
                         'rules' => [
                             'date' => ['required', 'date'],
                             'info_channel' => ['required', 'in:email,call'],
+                            'info_channel_value' => ['required', 'string'],
                         ],
                         "delay" => 0,
                         "form" => [
@@ -54,6 +56,11 @@ class TaskIncident extends Model
                                     'type' => 'select',
                                     'name' => 'info_channel',
                                     'label' => 'Cannal d\'information',
+                                ],
+                                [
+                                    'type' => 'text',
+                                    'name' => 'info_channel_value',
+                                    'label' => 'Addresse de l\'information',
                                 ],
                                 [
                                     'type' => 'date',
@@ -144,6 +151,7 @@ class TaskIncident extends Model
                                         'rules' => [
                                             'date' => ['required', 'date'],
                                             'info_channel' => ['required', 'in:email,call'],
+                                            'info_channel_value' => ['required', 'string'],
                                         ],
                                         "delay" => 0,
                                         "form" => [
@@ -152,6 +160,11 @@ class TaskIncident extends Model
                                                     'type' => 'select',
                                                     'name' => 'info_channel',
                                                     'label' => 'Cannal d\'information',
+                                                ],
+                                                [
+                                                    'type' => 'text',
+                                                    'name' => 'info_channel_value',
+                                                    'label' => 'Addresse de l\'information',
                                                 ],
                                                 [
                                                     'type' => 'date',
