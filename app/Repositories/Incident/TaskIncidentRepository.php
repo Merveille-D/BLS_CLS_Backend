@@ -42,6 +42,15 @@ class TaskIncidentRepository
                     $taskIncident->fileUploads()->save($fileUpload);
             }
         }
+
+        if(isset($request['raised_hand'])) {
+            $request['raised_hand'] = ($request['raised_hand'] === 'yes') ? true : false;
+        }
+
+        if(isset($request['conversion_certificate'])) {
+            $request['conversion_certificate'] = ($request['conversion_certificate'] === 'yes') ? true : false;
+        }
+
         $request['status'] = true;
         $taskIncident->update($request);
 
