@@ -102,6 +102,8 @@ class ConvHypothecRepository
             $real_steps = ConvHypothecStep::orderBy('rank')->whereType('realization')->get();
 
             $convHypo->steps()->syncWithoutDetaching($real_steps);
+            $convHypo->step = 'realization';
+            $convHypo->save();
         }
         return ConvHypothecStepResource::collection($convHypo->steps);
     }
@@ -119,11 +121,11 @@ class ConvHypothecRepository
         }
 
         ////TODO: will be removed when realized route will be available
-        if ($convHypo->state == ConvHypothecState::REGISTER && $convHypo->is_approved == true) {
-            $all_steps = ConvHypothecStep::orderBy('rank')->whereType('realization')->get();
+        // if ($convHypo->state == ConvHypothecState::REGISTER && $convHypo->is_approved == true) {
+        //     $all_steps = ConvHypothecStep::orderBy('rank')->whereType('realization')->get();
 
-            $convHypo->steps()->syncWithoutDetaching($all_steps);
-        }
+        //     $convHypo->steps()->syncWithoutDetaching($all_steps);
+        // }
 
         $nextStep = $convHypo->next_step;
         if ($nextStep) {
@@ -138,7 +140,6 @@ class ConvHypothecRepository
             $convHypo->steps()->syncWithoutDetaching($pivotValues);
         }
     }
-
 
     public function updateProcess($request, $convHypo) {
         $data = array();
@@ -261,7 +262,7 @@ class ConvHypothecRepository
 
         $data = array(
                 'date_signification' => $request->date_signification,
-                'step' => 'realization',
+                // 'step' => 'realization',
                 'state' => ConvHypothecState::SIGNIFICATION_REGISTERED,
             );
 
@@ -397,8 +398,8 @@ class ConvHypothecRepository
         $formatted_date = Carbon::createFromFormat('Y-m-d', $operationDate);
 
         if ($minDelay && $maxDelay) {
-            $data['max_deadline'] = $formatted_date->addDays($maxDelay);
             $data['min_deadline'] = $formatted_date->addDays($minDelay);
+            $data['max_deadline'] = $formatted_date->addDays($maxDelay);
         }elseif ($minDelay) {
             $data['min_deadline'] = $formatted_date->addDays($minDelay);
         }elseif ($maxDelay) {
