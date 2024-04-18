@@ -51,7 +51,7 @@ trait HypothecFormFieldTrait
                 break;
             case ConvHypothecState::SIGNIFICATION_REGISTERED:
                 $customFields = $this->commonProperties(ConvHypothecState::STATES_VALUES[ConvHypothecState::SIGNIFICATION_REGISTERED],
-                    ['text', 'actor_type', 'Type d\'acteur'],
+                    ['select', 'actor_type', 'Type d\'acteur'],
                     ['date', 'date_signification', 'Date de la signification'],
                     ['file', 'documents', 'Inserer la preuve de l\'inscription'],
                 );
@@ -65,7 +65,7 @@ trait HypothecFormFieldTrait
 
             case ConvHypothecState::ORDER_PAYMENT_VISA:
                 $customFields = $this->commonProperties(ConvHypothecState::STATES_VALUES[ConvHypothecState::ORDER_PAYMENT_VISA],
-                    ['checkbox', 'is_verified', 'Vérification'],
+                    // ['checkbox', 'is_verified', 'Vérification'],
                     ['date', 'visa_date', 'Date du visa'],
                     ['file', 'documents', 'Insérer commendement de payer visé'],
                 );
@@ -75,6 +75,7 @@ trait HypothecFormFieldTrait
                 $customFields = $this->commonProperties(ConvHypothecState::STATES_VALUES[ConvHypothecState::EXPROPRIATION_SPECIFICATION],
                     ['date', 'date_deposit_specification', 'Date de dépôt du cahier de charges'],
                     ['date', 'date_sell', 'Renseigner la date de vente fixée'],
+                    ['file', 'documents', 'Insérer une copie du cahier de charge'],
                 );
             break;
             // case ConvHypothecState::EXPROPRIATION_SALE:
@@ -101,7 +102,7 @@ trait HypothecFormFieldTrait
             case ConvHypothecState::PROPERTY_SALE:
                 $customFields = $this->commonProperties(ConvHypothecState::STATES_VALUES[ConvHypothecState::ADVERTISEMENT],
                     ['number', 'sell_price_estate', 'Montant de vente'],
-                    ['file', 'documents', 'INSERER COMMENDEMENT DE PAYER VISE'],
+                    ['file', 'documents', 'Insérer PV de la vente'],
                 );
 
                 break;

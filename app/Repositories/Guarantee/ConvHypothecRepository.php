@@ -95,73 +95,8 @@ class ConvHypothecRepository
         return new ConvHypothecResource($convHypo);
     }
 
-    public function currentStep($state) : Model {
-        return ConvHypothecStep::whereCode($state)->first();
-    }
-
-    public function nextStep($convHypo) : Model|null {
-        return $next = $convHypo->next_step;
-    }
-
-    function setDeadline($convHypo) {
-        $nextStep = $convHypo->next_step;
-
-        $minDelay = $nextStep->min_delay;
-        $maxDelay = $nextStep->max_delay;
-        $data = array();
-        //date by hypothec state
-        $operationDate = $this->getOperationDateByState($convHypo);
-        if ($operationDate == null)
-            return $data;
-        $formatted_date = Carbon::createFromFormat('Y-m-d', $operationDate);
-
-        if ($minDelay && $maxDelay) {
-            $data['max_deadline'] = $formatted_date->addDays($maxDelay);
-            $data['min_deadline'] = $formatted_date->addDays($minDelay);
-        }elseif ($minDelay) {
-            $data['min_deadline'] = $formatted_date->addDays($minDelay);
-        }elseif ($maxDelay) {
-            $data['max_deadline'] = $formatted_date->addDays($maxDelay);
-        }
-        return $data;
-    }
-
-    public function getOperationDateByState($convHypo) {
-        $state = $convHypo->state;
-        $date = null;
-        switch ($state) {
-            case ConvHypothecState::REGISTER_REQUESTED:
-                $date = $convHypo->registering_date;
-                break;
-            case ConvHypothecState::SIGNIFICATION_REGISTERED:
-                $date = $convHypo->date_signification;
-                break;
-            // case ConvHypothecState::ORDER_PAYMENT_VISA:
-            //     $date = $convHypo->visa_date;
-            //     break;
-            case ConvHypothecState::EXPROPRIATION_SPECIFICATION:
-                $date = $convHypo->visa_date;
-                break;
-            case ConvHypothecState::EXPROPRIATION_SUMMATION:
-                $date = $convHypo->summation_date;
-                break;
-            case ConvHypothecState::ADVERTISEMENT:
-                $date = $convHypo->advertisement_date;
-                break;
-            default:
-                # code...
-                break;
-        }
-        return $date;
-    }
-
     public function updatePivotState($convHypo) {
-        if ($convHypo->state == ConvHypothecState::REGISTER && $convHypo->is_approved == true) {
-            $all_steps = ConvHypothecStep::orderBy('rank')->whereType('realization')->get();
-
-            $convHypo->steps()->syncWithoutDetaching($all_steps);
-        }
-        $currentStep = $this->currentStep($convHypo->state);
+        $currentStep = $convHypo->next_step; //because the current step is not  updated yet
 
         if ($currentStep) {
             $pivotValues = [
@@ -171,8 +106,13 @@ class ConvHypothecRepository
             ];
             $convHypo->steps()->syncWithoutDetaching($pivotValues);
         }
+        if ($convHypo->state == ConvHypothecState::REGISTER && $convHypo->is_approved == true) {
+            $all_steps = ConvHypothecStep::orderBy('rank')->whereType('realization')->get();
 
-        $nextStep = $this->nextStep($convHypo);
+            $convHypo->steps()->syncWithoutDetaching($all_steps);
+        }
+
+        $nextStep = $convHypo->next_step;
         if ($nextStep) {
             $data = $this->setDeadline($convHypo);
 
@@ -194,8 +134,6 @@ class ConvHypothecRepository
             $data = $this->updateProcessByState($request, $convHypo);
 
             $this->updatePivotState($convHypo);
-            // $data->steps()->save($this->currentStep($data->state));
-
             return new ConvHypothecResource($data);
         }
     }
@@ -292,8 +230,8 @@ class ConvHypothecRepository
     function manageRegisterResponse($request, $convHypo) : array {
         $data = array(
                 'registration_date' => $request->registration_date,
-                'state' => $request->is_approved == 'yes' ? ConvHypothecState::REGISTER : ConvHypothecState::NONREGISTER,
-                'is_approved' => $request->is_approved == 'yes' ? true : false,
+                'state' => $request->is_approved == true ? ConvHypothecState::REGISTER : ConvHypothecState::NONREGISTER,
+                'is_approved' => $request->is_approved/*  == 'yes' ? true : false */,
             );
 
         return $this->stepCommonSavingSettings(
@@ -323,7 +261,7 @@ class ConvHypothecRepository
 
     function verifyPayementOrder($request) {
         $data = array(
-            'is_verified' => $request->is_verified == 'yes' ? true : false,
+            'is_verified' => $request->is_verified/*  == 'yes' ? true : false */,
             'state' => ConvHypothecState::ORDER_PAYMENT_VERIFIED,
         );
 
@@ -428,6 +366,58 @@ class ConvHypothecRepository
             return [];
         }
 
+    }
+
+    function setDeadline($convHypo) {
+        $nextStep = $convHypo->next_step;
+
+        $minDelay = $nextStep->min_delay;
+        $maxDelay = $nextStep->max_delay;
+        $data = array();
+        //date by hypothec state
+        $operationDate = $this->getOperationDateByState($convHypo);
+        if ($operationDate == null)
+            return $data;
+        $formatted_date = Carbon::createFromFormat('Y-m-d', $operationDate);
+
+        if ($minDelay && $maxDelay) {
+            $data['max_deadline'] = $formatted_date->addDays($maxDelay);
+            $data['min_deadline'] = $formatted_date->addDays($minDelay);
+        }elseif ($minDelay) {
+            $data['min_deadline'] = $formatted_date->addDays($minDelay);
+        }elseif ($maxDelay) {
+            $data['max_deadline'] = $formatted_date->addDays($maxDelay);
+        }
+        return $data;
+    }
+
+    public function getOperationDateByState($convHypo) {
+        $state = $convHypo->state;
+        $date = null;
+        switch ($state) {
+            case ConvHypothecState::REGISTER_REQUESTED:
+                $date = $convHypo->registering_date;
+                break;
+            case ConvHypothecState::SIGNIFICATION_REGISTERED:
+                $date = $convHypo->date_signification;
+                break;
+            // case ConvHypothecState::ORDER_PAYMENT_VISA:
+            //     $date = $convHypo->visa_date;
+            //     break;
+            case ConvHypothecState::EXPROPRIATION_SPECIFICATION:
+                $date = $convHypo->visa_date;
+                break;
+            case ConvHypothecState::EXPROPRIATION_SUMMATION:
+                $date = $convHypo->summation_date;
+                break;
+            case ConvHypothecState::ADVERTISEMENT:
+                $date = $convHypo->advertisement_date;
+                break;
+            default:
+                # code...
+                break;
+        }
+        return $date;
     }
 
     public function saveMultipleFiles($files, $convHypo, $state) {
