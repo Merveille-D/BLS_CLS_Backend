@@ -60,6 +60,19 @@ class ConvHypothecController extends Controller
         }
     }
 
+    public function realization($convHypo) {
+        try {
+            DB::beginTransaction();
+            $data = $this->hypothecRepo->realization($convHypo);
+            DB::commit();
+            return api_response($success = true, 'Procédure de réalisation  éffectuée avec succès', $data);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Log::error($th->getMessage());
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
+        }
+    }
+
     /**
      * Display the specified resource.
      */

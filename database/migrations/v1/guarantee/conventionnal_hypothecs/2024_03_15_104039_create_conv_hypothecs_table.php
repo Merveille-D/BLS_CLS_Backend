@@ -36,6 +36,7 @@ return new class extends Migration
             $table->date('date_deposit_specification')->nullable();
             $table->boolean('is_publied')->default(0);
             $table->double('sell_price_estate')->nullable();
+            $table->boolean('is_archived')->default(0);
             $table->timestamps();
         });
     }

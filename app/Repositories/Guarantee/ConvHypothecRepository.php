@@ -5,6 +5,7 @@ use App\Concerns\Traits\Guarantee\HypothecFormFieldTrait;
 use App\Enums\ConvHypothecState;
 use App\Http\Resources\Guarantee\ConvHypothecCollection;
 use App\Http\Resources\Guarantee\ConvHypothecResource;
+use App\Http\Resources\Guarantee\ConvHypothecStepResource;
 use App\Jobs\SendNotification;
 use App\Models\Alert\Notification;
 use App\Models\Guarantee\ConvHypothec;
@@ -54,7 +55,7 @@ class ConvHypothecRepository
             return $step;
         });
 
-        return $steps;
+        return ConvHypothecStepResource::collection($steps);
         // return new ConvHypothecResource($this->conv_model->with('documents')->findOrFail($id));
     }
 
@@ -95,6 +96,16 @@ class ConvHypothecRepository
         return new ConvHypothecResource($convHypo);
     }
 
+    public function realization($convHypoId) {
+        $convHypo = $this->conv_model->findOrfail($convHypoId);
+        if ($convHypo->is_approved) {
+            $real_steps = ConvHypothecStep::orderBy('rank')->whereType('realization')->get();
+
+            $convHypo->steps()->syncWithoutDetaching($real_steps);
+        }
+        return ConvHypothecStepResource::collection($convHypo->steps);
+    }
+
     public function updatePivotState($convHypo) {
         $currentStep = $convHypo->next_step; //because the current step is not  updated yet
 
@@ -106,6 +117,8 @@ class ConvHypothecRepository
             ];
             $convHypo->steps()->syncWithoutDetaching($pivotValues);
         }
+
+        ////TODO: will be removed when realized route will be available
         if ($convHypo->state == ConvHypothecState::REGISTER && $convHypo->is_approved == true) {
             $all_steps = ConvHypothecStep::orderBy('rank')->whereType('realization')->get();
 
@@ -230,8 +243,8 @@ class ConvHypothecRepository
     function manageRegisterResponse($request, $convHypo) : array {
         $data = array(
                 'registration_date' => $request->registration_date,
-                'state' => $request->is_approved == true ? ConvHypothecState::REGISTER : ConvHypothecState::NONREGISTER,
-                'is_approved' => $request->is_approved/*  == 'yes' ? true : false */,
+                'state' => $request->is_approved == 'yes' ? ConvHypothecState::REGISTER : ConvHypothecState::NONREGISTER,
+                'is_approved' => $request->is_approved == 'yes' ? true : false,
             );
 
         return $this->stepCommonSavingSettings(
@@ -261,7 +274,7 @@ class ConvHypothecRepository
 
     function verifyPayementOrder($request) {
         $data = array(
-            'is_verified' => $request->is_verified/*  == 'yes' ? true : false */,
+            'is_verified' => $request->is_verified == 'yes' ? true : false,
             'state' => ConvHypothecState::ORDER_PAYMENT_VERIFIED,
         );
 
@@ -269,6 +282,9 @@ class ConvHypothecRepository
     }
 
     function saveOrderPayement($request, $convHypo) : array {
+        if ($convHypo->is_verified == false) {
+            return false;
+        }
         $data = array(
             'visa_date' => $request->visa_date,
             'state' => ConvHypothecState::ORDER_PAYMENT_VISA,

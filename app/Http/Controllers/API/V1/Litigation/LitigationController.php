@@ -26,7 +26,7 @@ class LitigationController extends Controller
      */
     public function index()
     {
-        return api_response(true, 'Liste des parties', $data = $this->litigationRepo->getList(request()));
+        return api_response(true, 'Liste des contentieux', $data = $this->litigationRepo->getList(request()));
     }
 
     /**
