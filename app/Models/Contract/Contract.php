@@ -17,7 +17,7 @@ class Contract extends Model
         'contract_file',
         'date_signature',
         'date_effective',
-        'date_signature',
+        'date_expiration',
         'date_renewal',
     ];
 
