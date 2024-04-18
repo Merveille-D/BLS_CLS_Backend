@@ -21,7 +21,10 @@ class ConvHypothecStep extends Model
 
 
     public function getDeadlineAttribute() {
-        if ($this->max_deadline && $this->min_deadline)
+        // dd($this);
+        if ($this->status)
+            return $this->created_at;
+        elseif ($this->max_deadline && $this->min_deadline)
             return 'Du '.$this->min_deadline. ' au ' . $this->max_deadline;
         elseif ($this->max_deadline)
             return $this->max_deadline;

@@ -42,7 +42,7 @@ trait HypothecFormFieldTrait
 
             case ConvHypothecState::REGISTER:
                 $customFields = $this->commonProperties(ConvHypothecState::STATES_VALUES[ConvHypothecState::REGISTER],
-                    ['checkbox', 'is_approved', 'L\'inscription est elle approuvée'],
+                    ['radio', 'is_approved', 'L\'inscription est elle approuvée'],
                     ['date', 'registration_date', 'Insérer preuve'],
                     ['file', 'documents', 'Inserer la preuve de l\'inscription'],
 
@@ -59,7 +59,7 @@ trait HypothecFormFieldTrait
 
             case ConvHypothecState::ORDER_PAYMENT_VERIFIED:
                 $customFields = $this->commonProperties(ConvHypothecState::STATES_VALUES[ConvHypothecState::ORDER_PAYMENT_VERIFIED],
-                    ['checkbox', 'is_verified', 'Vérification'],
+                    ['radio', 'is_verified', 'Est-ce que la demande d\'inscription est éffectué et le commendement de payer est publié'],
                 );
                 break;
 
