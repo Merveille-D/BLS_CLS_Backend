@@ -17,9 +17,7 @@ class TaskIncident extends Model
      * @var array
      */
     protected $casts = [
-        'raised_hand' => 'boolean',
         'status' => 'boolean',
-        'conversion certificate' => 'boolean',
     ];
 
     protected $fillable = [
@@ -105,13 +103,13 @@ class TaskIncident extends Model
                 'atd_4' => [
                         'title' => 'Avez vous recu de Main levee ?',
                         'rules' => [
-                            'raised_hand' => ['required', 'boolean'],
+                            'raised_hand' => ['required', 'in:yes,no'],
                         ],
                         "delay" => 0,
                         "form" => [
                             'fields' => [
                                 [
-                                    'type' => 'checkbox',
+                                    'type' => 'radio',
                                     'name' => 'raised_hand',
                                     'label' => 'Avez vous recu de Main levee ?',
                                 ]
@@ -252,13 +250,13 @@ class TaskIncident extends Model
                 'atd_5' => [
                     'title' => 'Joindre l\'acte de conversion',
                     'rules' => [
-                        'conversion_certificate' => ['required', 'boolean'],
+                        'conversion_certificate' => ['required', 'in:yes,no'],
                     ],
                     "delay" => 0,
                     "form" => [
                         'fields' => [
                             [
-                                'type' => 'checkbox',
+                                'type' => 'radio',
                                 'name' => 'conversion_certificate',
                                 'label' => 'Avez vous recu l\'acte de conversion ?',
                             ],
@@ -415,13 +413,13 @@ class TaskIncident extends Model
                 'sc_4' => [
                         'title' => 'Avez vous recu de Main levee ?',
                         'rules' => [
-                            'raised_hand' => ['required', 'boolean'],
+                            'raised_hand' => ['required', 'in:yes,no'],
                         ],
                         "delay" => 0,
                         "form" => [
                             'fields' => [
                                 [
-                                    'type' => 'checkbox',
+                                    'type' => 'radio',
                                     'name' => 'raised_hand',
                                     'label' => 'Avez vous recu de Main levee ?',
                                 ]
@@ -493,7 +491,7 @@ class TaskIncident extends Model
                                 'sc_4_4' => [
                                     'title' => 'Joindre l\'acte de conversion',
                                     'rules' => [
-                                        'conversion_certificate' => ['required', 'boolean'],
+                                        'conversion_certificate' => ['required', 'in:yes,no'],
                                         'documents' => ['required', 'array'],
                                         'documents.*.name' => ['required', 'string'],
                                         'documents.*.file' => ['required', 'file'],
@@ -502,7 +500,7 @@ class TaskIncident extends Model
                                     "form" => [
                                         'fields' => [
                                             [
-                                                'type' => 'checkbox',
+                                                'type' => 'radio',
                                                 'name' => 'conversion_certificate',
                                                 'label' => 'Avez vous recu l\'acte de conversion ?',
                                             ],
@@ -689,13 +687,13 @@ class TaskIncident extends Model
                 'sa_4' => [
                         'title' => 'Avez vous recu de Main levee ?',
                         'rules' => [
-                            'raised_hand' => ['required', 'boolean'],
+                            'raised_hand' => ['required', 'in:yes,no'],
                         ],
                         "delay" => 0,
                         "form" => [
                             'fields' => [
                                 [
-                                    'type' => 'checkbox',
+                                    'type' => 'radio',
                                     'name' => 'raised_hand',
                                     'label' => 'Avez vous recu de Main levee ?',
                                 ]

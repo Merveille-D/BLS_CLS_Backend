@@ -20,8 +20,8 @@ return new class extends Migration
             $table->enum('info_channel', TaskIncident::CHANNELS)->nullable();
             $table->date('date')->nullable();
 
-            $table->boolean('raised_hand')->nullable();
-            $table->boolean('conversion_certificate')->nullable();
+            $table->enum('raised_hand', ['yes','no'])->nullable();
+            $table->enum('conversion_certificate', ['yes','no'])->nullable();
 
             $table->uuid('incident_id')->nullable();
             $table->foreign('incident_id')->references('id')->on('incidents')->onDelete('cascade');
