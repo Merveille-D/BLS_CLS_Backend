@@ -23,7 +23,8 @@ class ConvHypothecStepResource extends JsonResource
             'max_deadline' => $this->max_deadline,
             // 'done_at' => $this->,
             'type' => $this->type,
-            'deadline' => $this->deadline,
+            // 'deadline' => $this->deadline,
+            'form' => $this->when($this->form, $this->form),
             // 'steps' => ConvHypothecStepResource::collection($this->whenLoaded('steps')),
         ];
     }
