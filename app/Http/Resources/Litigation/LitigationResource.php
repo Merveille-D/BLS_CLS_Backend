@@ -21,7 +21,6 @@ class LitigationResource extends JsonResource
             'state' => $this->state,
             'is_archived' => $this->is_archived ? true : false,
             'nature' => $this->nature ?? null,
-            // 'party' => $this->party ?? null,
             'parties' => PartyResource::collection($this->parties),
             'jurisdiction' => $this->jurisdiction ?? null,
             'estimated_amount' => $this->estimated_amount,
