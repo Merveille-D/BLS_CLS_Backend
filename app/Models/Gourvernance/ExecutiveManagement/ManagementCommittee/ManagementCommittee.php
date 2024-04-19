@@ -3,12 +3,13 @@
 namespace App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee;
 
 use App\Models\Gourvernance\GourvernanceDocument;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class ManagementCommittee extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     protected $fillable =  [
         'libelle',
@@ -24,12 +25,6 @@ class ManagementCommittee extends Model
         'convocation_file_date',
         'attendance_list_file',
         'attendance_list_file_date',
-    ];
-
-    const SESSION_MEETING_TYPES = [
-        'ordinary',
-        'extraordinary',
-        'mixte',
     ];
 
     const SESSION_MEETING_STATUS = [
@@ -65,7 +60,7 @@ class ManagementCommittee extends Model
         'pv' => 'Procès verbal',
         'agenda' => 'Ordre du jour',
         'convocation' => 'Convocation',
-        'attendance_list' => 'Liste de présence des actionnaires',
+        'attendance_list' => 'Liste de présence des directeurs',
     ];
 
     const DATE_FILE_FIELD = [

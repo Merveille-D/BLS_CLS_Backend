@@ -52,7 +52,7 @@ class TaskManagementCommittee extends Model
                 'days' => -4,
             ],
             [
-                'libelle' => "Tenue CA",
+                'libelle' => "Tenue session CODIR",
                 'days' => 0,
             ],
             [

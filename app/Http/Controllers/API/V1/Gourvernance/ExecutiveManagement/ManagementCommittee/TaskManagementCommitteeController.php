@@ -55,6 +55,19 @@ class TaskManagementCommitteeController extends Controller
     }
 
     /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(TaskManagementCommittee $taskManagementCommittee)
+    {
+        try {
+            $taskManagementCommittee->delete();
+            return api_response(true, "Succès de la suppression de la tache", null, 200);
+        }catch (ValidationException $e) {
+                return api_response(false, "Echec de la supression de la tache", $e->errors(), 422);
+        }
+    }
+
+    /**
      * Update the specified resource in storage.
      */
     public function update(UpdateTaskManagementCommitteeRequest $request, TaskManagementCommittee $taskManagementCommittee)

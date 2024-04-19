@@ -28,7 +28,6 @@ class StoreManagementCommitteeRequest extends FormRequest
         return [
             'libelle' => ['required', 'string'],
             'session_date' => ['required', 'date'],
-            'type' => ['required',  Rule::in(ManagementCommittee::SESSION_MEETING_TYPES) ],
         ];
     }
 
