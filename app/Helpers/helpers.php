@@ -48,18 +48,8 @@ if(!function_exists('uploadFile')) {
         $name_file = str_replace(' ', '-', $file->getClientOriginalName());
         $file->storeAs($path, $name_file, 'public');
 
-        $url = Storage::disk('public')->url($path . '/' . $name_file);
-
-        return $url;
-    }
-}
-
-if(!function_exists('uploadFileNew')) {
-    function uploadFileNew($file, $path) {
-        $name_file = str_replace(' ', '-', $file->getClientOriginalName());
-        $file->move(public_path($path), $name_file);
-
-        $url = asset($path . '/' . $name_file);
+        // $url = Storage::disk('public')->url($path . '/' . $name_file);
+        $url = Storage::disk('public')->url('public/' . $path . '/' . $name_file);
 
         return $url;
     }
