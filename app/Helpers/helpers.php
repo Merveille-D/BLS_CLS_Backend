@@ -54,6 +54,17 @@ if(!function_exists('uploadFile')) {
     }
 }
 
+if(!function_exists('uploadFileNew')) {
+    function uploadFileNew($file, $path) {
+        $name_file = str_replace(' ', '-', $file->getClientOriginalName());
+        $file->move(public_path($path), $name_file);
+
+        $url = asset($path . '/' . $name_file);
+
+        return $url;
+    }
+}
+
 if(!function_exists('getFileName')) {
     function getFileName($file) {
 
@@ -66,7 +77,7 @@ if(!function_exists('searchElementIndice')) {
     function searchElementIndice($tableau, $indiceRecherche) {
         foreach ($tableau as $indice => $element) {
             if ($indice === $indiceRecherche) {
-                return $element; 
+                return $element;
             }
             if (is_array($element)) {
                 $resultat = searchElementIndice($element, $indiceRecherche);

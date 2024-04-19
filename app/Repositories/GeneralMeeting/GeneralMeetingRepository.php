@@ -76,7 +76,7 @@ class GeneralMeetingRepository
                 $fileUpload = new GourvernanceDocument();
 
                 $fileUpload->name = getFileName($item['file']);
-                $fileUpload->file = uploadFile($item['file'], 'ag_documents');
+                $fileUpload->file = uploadFileNew($item['file'], 'ag_documents');
                 $fileUpload->status = $general_meeting->status;
 
                 $general_meeting->fileUploads()->save($fileUpload);
