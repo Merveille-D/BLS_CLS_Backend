@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('litigationables', function (Blueprint $table) {
             $table->id();
-            $table->uuid('litigation_id');
+            $table->uuid('litigation_id')->index();
             $table->foreign('litigation_id')->references('id')->on('litigations');
             $table->uuidMorphs('litigationable');
             $table->string('category')->nullable();

@@ -22,8 +22,10 @@ class AssignUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required',
-            'lawyer_id' => 'nullable',
+            'users' => 'required|array',
+            'users.*' => 'required|exists:users,id',
+            'lawyers' => 'nullable|array',
+            'lawyers.*' => 'required|exists:litigation_lawyers,id',
         ];
     }
 }

@@ -27,9 +27,9 @@ return new class extends Migration
             $table->foreign('nature_id')->references('id')->on('litigation_settings');
             $table->uuid('lawyer_id')->nullable();
             // $table->foreign('lawyer_id')->references('id')->on('litigation_lawyers');
-            $table->uuid('party_id')->nullable();
-            $table->foreign('party_id')->references('id')->on('litigation_parties');
-            $table->uuid('user_id')->nullable();
+            // $table->uuid('party_id')->nullable();
+            // $table->foreign('party_id')->references('id')->on('litigation_parties');
+            // $table->uuid('user_id')->nullable();
             // $table->foreign('user_id')->references('id')->on('users'); //TODO: uncomment after auth implementation
             $table->timestamps();
         });

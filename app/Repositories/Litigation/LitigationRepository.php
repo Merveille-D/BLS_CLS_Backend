@@ -6,8 +6,10 @@ use App\Http\Resources\Litigation\LitigationResource;
 use App\Http\Resources\Litigation\LitigationSettingResource;
 use App\Models\Litigation\Litigation;
 use App\Models\Litigation\LitigationDocument;
+use App\Models\Litigation\LitigationLawyer;
 use App\Models\Litigation\LitigationParty;
 use App\Models\Litigation\LitigationSetting;
+use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
@@ -98,12 +100,18 @@ class LitigationRepository {
     }
 
     public function assign($id, $request) {
-        $litigation = $this->findById($id);
-
-        $litigation->update([
-            'lawyer_id' => $request->lawyer_id,
-            'user_id' => $request->user_id,
-        ]);
+        $litigation = $this->litigation_model->findOrFail($id);
+        // save assigned users
+        foreach ($request->users as $key => $user_id) {
+            $user = User::find($user_id);
+            $user->litigations()->attach($litigation);
+        }
+        // save assigned lawyers
+        if ($request->lawyers && count($request->lawyers) > 0 ){
+            foreach ($request->lawyers as $key => $lawyer_id) {
+                LitigationLawyer::find($lawyer_id)->litigations()->attach($litigation) ;
+            }
+        }
 
         return new LitigationResource($litigation);
     }

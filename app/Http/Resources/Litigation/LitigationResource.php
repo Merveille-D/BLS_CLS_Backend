@@ -14,7 +14,6 @@ class LitigationResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // dd((collect($this->added_amount))->sum('amount'));
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -29,8 +28,8 @@ class LitigationResource extends JsonResource
             'added_amount' => collect($this->added_amount)->sum('amount'),
             'added_amount_detail' => $this->added_amount,
             'remaining_amount' => $this->remaining_amount,
-            'lawyer' => $this->lawyer ?? null,
-            'user' => $this->user ?? null,
+            'lawyers' => $this->lawyers ?? null,
+            'users' => $this->users ?? null,
             'created_at' => $this->created_at,
             'documents' => DocumentResource::collection($this->whenLoaded('documents')),
         ];
