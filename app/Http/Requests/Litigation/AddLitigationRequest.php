@@ -5,7 +5,9 @@ namespace App\Http\Requests\Litigation;
 use App\Enums\Litigation\PartyCategory;
 use App\Enums\Litigation\PartyType;
 use App\Rules\Administrator\ArrayElementMatch;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class AddLitigationRequest extends FormRequest
 {
@@ -38,5 +40,10 @@ class AddLitigationRequest extends FormRequest
             'documents.*.name' => 'required|string',
             'documents.*.file' => 'required|file|max:8192|mimes:pdf,doc,docx',
         ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(api_error(false, $validator->errors()->first(),  $validator->errors()));
     }
 }

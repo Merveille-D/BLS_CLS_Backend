@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Litigation;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class AddNatureRequest extends FormRequest
 {
@@ -25,5 +27,10 @@ class AddNatureRequest extends FormRequest
             'name' => 'required|unique:litigation_settings,name',
             'description' => 'nullable',
         ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(api_error(false, $validator->errors()->first(),  $validator->errors()));
     }
 }
