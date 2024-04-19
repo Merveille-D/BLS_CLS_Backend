@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Litigation extends Model
 {
@@ -15,7 +17,7 @@ class Litigation extends Model
 
     protected $fillable = [
         'name', 'nature_id', 'party_id', 'jurisdiction_id', 'reference', 'nature_id', 'jurisdiction_id', 'party_id', 'lawyer_id', 'jurisdiction_id', 'user_id',
-        'estimated_amount', 'added_amount', 'remaining_amount', 'is_archived'
+        'estimated_amount', 'added_amount', 'remaining_amount', 'is_archived', 'jurisdiction_location'
     ];
 
     protected $casts = [
@@ -54,16 +56,6 @@ class Litigation extends Model
     }
 
     /**
-     * party
-     *
-     * @return void
-     */
-    public function party()
-    {
-        return $this->hasOne(LitigationParty::class, 'id', 'party_id');
-    }
-
-    /**
      * user
      *
      * @return void
@@ -78,8 +70,21 @@ class Litigation extends Model
      *
      * @return void
      */
-    public function lawyer()
+    public function lawyers() : MorphToMany
     {
-        return $this->hasOne(LitigationLawyer::class, 'id', 'lawyer_id');
+        return $this->morphedByMany(LitigationLawyer::class, 'litigationable');
     }
+
+    public function parties() : MorphToMany
+    {
+        return $this->morphedByMany(LitigationParty::class, 'litigationable')
+                    ->withPivot('category', 'type')
+                    ;
+    }
+
+    public function users() : MorphToMany
+    {
+        return $this->morphedByMany(User::class, 'litigationable');
+    }
+
 }

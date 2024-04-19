@@ -33,7 +33,7 @@ class PartyRepository
     {
         $party = $this->party_model->create([
             'name' => $request->name,
-            'category' => $request->category,
+            // 'category' => $request->category,
             'type' => $request->type,
             'phone' => $request->phone,
             'email' => $request->email,
