@@ -3,12 +3,13 @@
 namespace App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee;
 
 use App\Models\Gourvernance\GourvernanceDocument;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class ManagementCommittee extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     protected $fillable =  [
         'libelle',
