@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Litigation;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateAmountRequest extends FormRequest
 {
@@ -26,5 +28,10 @@ class UpdateAmountRequest extends FormRequest
             'added_amount' => 'numeric|nullable|min:0',
             'remaining_amount' => 'numeric|nullable|min:0',
         ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(api_error(false, $validator->errors()->first(),  $validator->errors()));
     }
 }

@@ -6,7 +6,7 @@ enum PartyCategory : string
 {
     const INTERVENANT = 'intervenant';
     const DEFENDANT = 'defendant';
-    const PLAINTIFF = ' plaintiff';
+    const PLAINTIFF = 'plaintiff';
     const FORCED_INTERVENANT = 'forced_intervenant';
 
     const CATEGORIES = [

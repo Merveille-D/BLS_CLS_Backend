@@ -98,14 +98,16 @@ class ConvHypothecRepository
 
     public function realization($convHypoId) {
         $convHypo = $this->conv_model->findOrfail($convHypoId);
-        if ($convHypo->is_approved) {
+        if ($convHypo->is_approved && $convHypo->state == ConvHypothecState::REGISTER) {
             $real_steps = ConvHypothecStep::orderBy('rank')->whereType('realization')->get();
 
             $convHypo->steps()->syncWithoutDetaching($real_steps);
             $convHypo->step = 'realization';
             $convHypo->save();
+            return ConvHypothecStepResource::collection($convHypo->steps);
+        } else {
+            return false;
         }
-        return ConvHypothecStepResource::collection($convHypo->steps);
     }
 
     public function updatePivotState($convHypo) {
@@ -398,12 +400,15 @@ class ConvHypothecRepository
         $formatted_date = Carbon::createFromFormat('Y-m-d', $operationDate);
 
         if ($minDelay && $maxDelay) {
-            $data['min_deadline'] = $formatted_date->addDays($minDelay);
-            $data['max_deadline'] = $formatted_date->addDays($maxDelay);
+            $data['min_deadline'] = $formatted_date->copy()->addDays($minDelay);
+            $data['max_deadline'] = $formatted_date->copy()->addDays($maxDelay);
+            return $data;
         }elseif ($minDelay) {
             $data['min_deadline'] = $formatted_date->addDays($minDelay);
+            return $data;
         }elseif ($maxDelay) {
             $data['max_deadline'] = $formatted_date->addDays($maxDelay);
+            return $data;
         }
         return $data;
     }

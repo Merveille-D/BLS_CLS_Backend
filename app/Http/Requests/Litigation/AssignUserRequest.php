@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Litigation;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class AssignUserRequest extends FormRequest
 {
@@ -22,8 +24,15 @@ class AssignUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required',
-            'lawyer_id' => 'nullable',
+            'users' => 'required|array',
+            'users.*' => 'required|exists:users,id',
+            'lawyers' => 'nullable|array',
+            'lawyers.*' => 'required|exists:litigation_lawyers,id',
         ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(api_error(false, $validator->errors()->first(),  $validator->errors()));
     }
 }

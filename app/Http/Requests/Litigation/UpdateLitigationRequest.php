@@ -9,7 +9,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class AddLitigationRequest extends FormRequest
+class UpdateLitigationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -36,7 +36,7 @@ class AddLitigationRequest extends FormRequest
             'parties.*.category' => ['required', new ArrayElementMatch(PartyCategory::CATEGORIES)],
             'parties.*.type' =>  ['required', new ArrayElementMatch(PartyType::TYPES)],
             'parties.*.party_id' =>  'required|exists:litigation_parties,id',
-            'documents' => 'array|required',
+            'documents' => 'array|nullable',
             'documents.*.name' => 'required|string',
             'documents.*.file' => 'required|file|max:8192|mimes:pdf,doc,docx',
         ];

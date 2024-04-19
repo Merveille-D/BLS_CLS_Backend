@@ -5,7 +5,9 @@ namespace App\Http\Requests\Litigation;
 use App\Enums\Litigation\PartyCategory;
 use App\Enums\Litigation\PartyType;
 use App\Rules\Administrator\ArrayElementMatch;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class AddPartyRequest extends FormRequest
 {
@@ -26,10 +28,16 @@ class AddPartyRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'category' => ['required', new ArrayElementMatch(PartyCategory::CATEGORIES)],
-            'type' => ['required', new ArrayElementMatch(PartyType::TYPES)],
+            // 'category' => ['required', new ArrayElementMatch(PartyCategory::CATEGORIES)],
+            'type' => ['required', new ArrayElementMatch(['legal', 'individual'])],
+            'address' => 'required',
             'phone' => 'required|numeric',
             'email' => 'required|email',
         ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(api_error(false, $validator->errors()->first(),  $validator->errors()));
     }
 }

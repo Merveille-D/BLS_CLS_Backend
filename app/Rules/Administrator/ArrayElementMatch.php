@@ -20,6 +20,6 @@ class ArrayElementMatch implements Rule
 
     public function message()
     {
-        return 'La valeur sélectionnée est invalide.';
+        return 'La valeur sélectionnée pour :attribute est invalide.';
     }
 }

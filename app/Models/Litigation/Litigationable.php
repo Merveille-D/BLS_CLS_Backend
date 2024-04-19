@@ -5,18 +5,23 @@ namespace App\Models\Litigation;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
-class LitigationParty extends Model
+class Litigationable extends Model
 {
     use HasFactory, HasUuids;
 
     protected $fillable = [
-        'name', 'category', 'type', 'phone', 'email'
+        'litigation_id',
+        'litigationable_id',
+        'litigationable_type',
+        'category',
+        'type',
+        'party_id'
     ];
 
-    public function litigations() : MorphToMany
+    public function litigationable()
     {
-        return $this->morphToMany(Litigation::class, 'litigationable');
+        return $this->morphTo();
     }
+
 }
