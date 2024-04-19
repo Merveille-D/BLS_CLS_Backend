@@ -27,12 +27,6 @@ class ManagementCommittee extends Model
         'attendance_list_file_date',
     ];
 
-    const SESSION_MEETING_TYPES = [
-        'ordinary',
-        'extraordinary',
-        'mixte',
-    ];
-
     const SESSION_MEETING_STATUS = [
         'pending',
         'post_cd',
@@ -66,7 +60,7 @@ class ManagementCommittee extends Model
         'pv' => 'Procès verbal',
         'agenda' => 'Ordre du jour',
         'convocation' => 'Convocation',
-        'attendance_list' => 'Liste de présence des actionnaires',
+        'attendance_list' => 'Liste de présence des directeurs',
     ];
 
     const DATE_FILE_FIELD = [

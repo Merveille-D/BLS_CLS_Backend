@@ -18,8 +18,6 @@ return new class extends Migration
             $table->string('reference');
             $table->datetime('session_date');
 
-            $table->enum('type', ManagementCommittee::SESSION_MEETING_TYPES );
-
             $table->string('pv_file')->nullable();
             $table->string('pv_file_date')->nullable();
 
