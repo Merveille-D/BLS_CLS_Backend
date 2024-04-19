@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Litigation\AddLitigationRequest;
 use App\Http\Requests\Litigation\AssignUserRequest;
 use App\Http\Requests\Litigation\UpdateAmountRequest;
+use App\Http\Requests\Litigation\UpdateLitigationRequest;
 use App\Http\Resources\Litigation\LitigationResource;
 use App\Models\Litigation\Litigation;
 use App\Repositories\Litigation\LitigationRepository;
@@ -63,7 +64,7 @@ class LitigationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function updateLitigation(Request $request, $litigation)
+    public function updateLitigation(UpdateLitigationRequest $request, $litigation)
     {
         try {
             DB::beginTransaction();

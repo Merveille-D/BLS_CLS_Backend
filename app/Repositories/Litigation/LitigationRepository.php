@@ -83,18 +83,26 @@ class LitigationRepository {
     }
 
     public function edit($id, $request) : JsonResource {
-        $litigation = $this->findById($id);
+        $litigation = $this->litigation_model->findOrFail($id);
 
         $litigation->update([
             'name' => $request->name,
             'reference' => $request->reference,
             'nature_id' => $request->nature_id,
-            'party_id' => $request->party_id,
             'jurisdiction_id' => $request->jurisdiction_id,
             'jurisdiction_location' => $request->jurisdiction_location,
             'email' => $request->email,
             'phone' => $request->phone,
         ]);
+
+        foreach ($request->parties as $key => $party) {
+            $party = LitigationParty::findOrFail($party['party_id']);
+            $party->litigations()->sync($litigation, ['category' => $party['category'], 'type' => $party['type']]);
+        }
+
+        if ($request->documents && count($request->documents) > 0) {
+            $this->saveDocuments($request->documents, $litigation);
+        }
 
         return new LitigationResource($litigation);
     }
