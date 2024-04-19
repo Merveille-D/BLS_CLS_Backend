@@ -20,9 +20,10 @@ return new class extends Migration
             $table->json('added_amount')->nullable();
             $table->double('remaining_amount')->nullable();
             $table->boolean('is_archived')->default(0);
-            $table->uuid('jurisdiction_id')->index()->nullable();
+            $table->uuid('jurisdiction_id')->index();
             $table->foreign('jurisdiction_id')->references('id')->on('litigation_settings');
-            $table->uuid('nature_id')->index()->nullable();
+            $table->string('jurisdiction_location');
+            $table->uuid('nature_id')->index();
             $table->foreign('nature_id')->references('id')->on('litigation_settings');
             $table->uuid('lawyer_id')->nullable();
             // $table->foreign('lawyer_id')->references('id')->on('litigation_lawyers');

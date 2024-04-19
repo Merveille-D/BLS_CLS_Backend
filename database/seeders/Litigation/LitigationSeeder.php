@@ -33,6 +33,10 @@ class LitigationSeeder extends Seeder
             'nature_id' => LitigationSetting::whereType('nature')->first()->id,
             'party_id' => LitigationParty::first()->id,
             'jurisdiction_id' => LitigationSetting::whereType('jurisdiction')->first()->id,
+            'jurisdiction_location' => 'Lagos',
         ]);
+        $litigation = Litigation::first();
+        $party = LitigationParty::first();
+        $party->litigations()->attach($litigation, ['category' => 'intervenant', 'type' => 'client']);
     }
 }

@@ -7,6 +7,7 @@ use App\Models\Litigation\LitigationParty;
 use App\Models\Litigation\LitigationSetting;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class LitigationResourceSeeder extends Seeder
@@ -32,13 +33,24 @@ class LitigationResourceSeeder extends Seeder
             }
         }
 
-        LitigationParty::create( [
-            'name' => 'Test init. litigation party',
-            'category' => 'intervenant',
-            'type' => 'client',
+        // create default litigation for test
+        DB::table('litigation_parties')->insert([
+            'id' => '9bce26d8-32c0-4b96-afcd-300d051cf9f8',
+            'name' => 'John Doe',
+            'type' => 'individual',
+            'address' => '123, Test Street, Lagos City',
             'phone' => '123456789',
             'email' => 'test@test.com'
-        ] );
+        ]);
+
+        DB::table('litigation_parties')->insert([
+            'id' => '7ace26d8-32c0-4b96-afcd-300d051cf9f8',
+            'name' => 'Societe de cimant',
+            'type' => 'legal',
+            'address' => '123, Test Street, Lagos City',
+            'phone' => '+23121452125',
+            'email' => 'testste@test.com'
+        ]);
     }
 
     /**

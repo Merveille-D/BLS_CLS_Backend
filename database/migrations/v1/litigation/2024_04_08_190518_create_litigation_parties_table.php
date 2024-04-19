@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('litigation_parties', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->string('category');
             $table->string('type');
+            $table->string('address')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->timestamps();

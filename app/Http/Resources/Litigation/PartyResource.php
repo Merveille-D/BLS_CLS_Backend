@@ -17,8 +17,9 @@ class PartyResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'type' => $this->type,
-            'category' => $this->category,
+            'party_type' => $this->type,
+            'type' => $this->pivot->type ?? null,
+            'category' => $this->pivot->category ?? null,
             'phone' => $this->phone,
             'email' => $this->email,
             'created_at' => $this->created_at,

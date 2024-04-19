@@ -13,4 +13,9 @@ class LitigationLawyer extends Model
     protected $fillable = [
         'name', 'phone', 'email'
     ];
+
+    public function litigation()
+    {
+        return $this->morphOne(Litigationable::class, 'litigationable');
+    }
 }

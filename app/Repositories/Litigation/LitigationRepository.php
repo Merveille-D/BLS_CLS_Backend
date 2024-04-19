@@ -6,6 +6,7 @@ use App\Http\Resources\Litigation\LitigationResource;
 use App\Http\Resources\Litigation\LitigationSettingResource;
 use App\Models\Litigation\Litigation;
 use App\Models\Litigation\LitigationDocument;
+use App\Models\Litigation\LitigationParty;
 use App\Models\Litigation\LitigationSetting;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -63,11 +64,16 @@ class LitigationRepository {
             'name' => $request->name,
             'reference' => $request->reference,
             'nature_id' => $request->nature_id,
-            'party_id' => $request->party_id,
             'jurisdiction_id' => $request->jurisdiction_id,
+            'jurisdiction_location' => $request->jurisdiction_location,
             'email' => $request->email,
             'phone' => $request->phone,
         ]);
+
+        foreach ($request->parties as $key => $party) {
+            $party = LitigationParty::find($party['party_id']);
+            $party->litigations()->attach($litigation, ['category' => $party['category'], 'type' => $party['type']]);
+        }
 
         $this->saveDocuments($files, $litigation);
 
@@ -83,6 +89,7 @@ class LitigationRepository {
             'nature_id' => $request->nature_id,
             'party_id' => $request->party_id,
             'jurisdiction_id' => $request->jurisdiction_id,
+            'jurisdiction_location' => $request->jurisdiction_location,
             'email' => $request->email,
             'phone' => $request->phone,
         ]);

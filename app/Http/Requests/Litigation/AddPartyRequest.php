@@ -26,8 +26,9 @@ class AddPartyRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'category' => ['required', new ArrayElementMatch(PartyCategory::CATEGORIES)],
-            'type' => ['required', new ArrayElementMatch(PartyType::TYPES)],
+            // 'category' => ['required', new ArrayElementMatch(PartyCategory::CATEGORIES)],
+            'type' => ['required', new ArrayElementMatch(['legal', 'individual'])],
+            'address' => 'required',
             'phone' => 'required|numeric',
             'email' => 'required|email',
         ];
