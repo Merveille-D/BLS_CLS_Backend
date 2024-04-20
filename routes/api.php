@@ -4,6 +4,9 @@ use App\Http\Controllers\API\V1\Bank\BankController;
 use App\Http\Controllers\API\V1\Contract\ContractController;
 use App\Http\Controllers\API\V1\Contract\PartController;
 use App\Http\Controllers\API\V1\Contract\TaskController;
+use App\Http\Controllers\API\V1\Evaluation\CollaboratorController;
+use App\Http\Controllers\API\V1\Evaluation\NotationController;
+use App\Http\Controllers\API\V1\Evaluation\PerformanceIndicatorController;
 use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Administrators\AdministratorController;
 use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions\SessionAdministratorController;
 use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions\TaskSessionAdministratorController;
@@ -89,6 +92,15 @@ Route::post('cd_attachements', [ManagementCommitteeController::class, 'attachmen
 Route::resource('task_management_committees', TaskManagementCommitteeController::class);
 Route::delete('delete_array_task_management_committees', [TaskManagementCommitteeController::class, 'deleteArrayTaskManagementCommittee'] );
 Route::put('update_status_task_management_committees', [TaskManagementCommitteeController::class, 'updateStatusTaskManagementCommittee'] );
+
+// EVALUATION
+
+Route::resource('notations', NotationController::class);
+Route::resource('performance_indicators', PerformanceIndicatorController::class);
+Route::resource('collaborators', CollaboratorController::class);
+
+
+
 
 
 

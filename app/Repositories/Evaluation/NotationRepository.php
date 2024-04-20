@@ -1,47 +1,63 @@
 <?php
-namespace App\Repositories\Bank;
+namespace App\Repositories\Evaluation;
 
 use App\Models\Bank\Bank;
+use App\Models\Evaluation\Notation;
 use App\Models\Gourvernance\GourvernanceDocument;
 use DateTime;
 
-class BankRepository
+class NotationRepository
 {
-    public function __construct(private Bank $bank) {
+    public function __construct(private Notation $notation) {
 
     }
 
     /**
      * @param Request $request
      *
-     * @return Bank
+     * @return Notation
      */
     public function store($request) {
 
-        if($request['type'] == 'file') {
-            $request['file_name'] = getFileName($request['file']);
-            $request['file_url'] = uploadFile($request['file'], 'bank_documents');
+        $check_collaborator_notation = $this->notation->where('collaborator_id', $request['collaborator_id'])->first();
+
+        if($check_collaborator_notation) {
+            $check_collaborator_notation->update($request->all());
+
+            $notes = $request['notes'];
+
+            foreach ($notes as $note) {
+                $check_collaborator_notation->performances()->update([
+                    'performance_indicator_id' => $note['performance_indicator_id'],
+                    'note' => $note['note']
+                ]);
+            }
+
+            return $check_collaborator_notation;
+        }else {
+            $notation = $this->notation->create($request->all());
+
+            $notes = $request['notes'];
+
+            foreach ($notes as $note) {
+                $notation->performances()->create([
+                    'performance_indicator_id' => $note['performance_indicator_id'],
+                    'note' => $note['note']
+                ]);
+            }
+
+            return $notation;
         }
-        $bank = $this->bank->create($request->all());
-        return $bank;
     }
 
     /**
      * @param Request $request
      *
-     * @return Bank
+     * @return Notation
      */
-    public function update(Bank $bank, $request) {
+    public function update(Notation $notation, $request) {
 
-        if (isset($request['type'])) {
-            if($request['type'] == 'file') {
-                $request['file_name'] = getFileName($request['file']);
-                $request['file_url'] = uploadFile($request['file'], 'bank_documents');
-            }
-        }
-
-        $bank->update($request);
-        return $bank;
+       //
     }
 
 

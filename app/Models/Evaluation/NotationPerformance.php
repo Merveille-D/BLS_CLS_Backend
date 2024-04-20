@@ -2,16 +2,18 @@
 
 namespace App\Models\Evaluation;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class NotationPerformance extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     protected $fillable = [
         'notation_id',
-        'collaborator_id',
+        'performance_indicator_id',
+        'note'
     ];
 
     public function notation()
@@ -19,8 +21,8 @@ class NotationPerformance extends Model
         return $this->belongsTo(Notation::class);
     }
 
-    public function collaborator()
+    public function performanceIndicator()
     {
-        return $this->belongsTo(Collaborator::class);
+        return $this->belongsTo(PerformanceIndicator::class);
     }
 }

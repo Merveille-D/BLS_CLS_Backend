@@ -13,10 +13,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('notations', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
 
-            $table->string('note');
-            $table->enum('status', Notation::TYPES);
+            $table->string('note')->nullable();
+            $table->enum('status', Notation::STATUS)->default('evaluated');
             $table->string('observation')->nullable();
 
             $table->uuid('collaborator_id');

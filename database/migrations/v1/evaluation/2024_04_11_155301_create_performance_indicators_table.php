@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('performance_indicators', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('title');
-            $table->string('position_name');
+            $table->enum('position', PerformanceIndicator::POSITIONS);
             $table->enum('type', PerformanceIndicator::TYPES);
             $table->string('note');
             $table->string('description');

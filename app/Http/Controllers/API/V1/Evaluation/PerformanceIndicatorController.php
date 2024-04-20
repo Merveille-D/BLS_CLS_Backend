@@ -3,25 +3,25 @@
 namespace App\Http\Controllers\API\V1\Evaluation;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PerformanceIndicator\ListPerformanceIndicatorRequest;
 use App\Models\Evaluation\PerformanceIndicator;
+use App\Repositories\Evaluation\PerformanceIndicatorRepository;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class PerformanceIndicatorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    public function __construct(private PerformanceIndicatorRepository $performanceIndicator) {
+
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the resource.
      */
-    public function create()
+    public function index(ListPerformanceIndicatorRequest $request)
     {
-        //
+        $performance_indicators = PerformanceIndicator::where('position', request('position'))->get();
+        return api_response(true, "Liste des indicateurs de performance", $performance_indicators, 200);
     }
 
     /**
@@ -29,7 +29,12 @@ class PerformanceIndicatorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $performanceIndicator = $this->performanceIndicator->store($request);
+            return api_response(true, "Succès de l'enregistrement de l'indicateur de performance", $performanceIndicator, 200);
+        }catch (ValidationException $e) {
+                return api_response(false, "Echec de l'enregistrement de l'indicateur de performance", $e->errors(), 422);
+        }
     }
 
     /**
@@ -37,15 +42,11 @@ class PerformanceIndicatorController extends Controller
      */
     public function show(PerformanceIndicator $performanceIndicator)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(PerformanceIndicator $performanceIndicator)
-    {
-        //
+        try {
+            return api_response(true, "Infos de l'indicateur de performance", $performanceIndicator, 200);
+        }catch( ValidationException $e ) {
+            return api_response(false, "Echec de la récupération des infos de l'indicateur de performance", $e->errors(), 422);
+        }
     }
 
     /**
@@ -53,7 +54,13 @@ class PerformanceIndicatorController extends Controller
      */
     public function update(Request $request, PerformanceIndicator $performanceIndicator)
     {
-        //
+        try {
+            $this->performanceIndicator->update($performanceIndicator, $request->all());
+            return api_response(true, "Mis à jour de l'indicateur de performance", $performanceIndicator, 200);
+        } catch (ValidationException $e) {
+
+            return api_response(false, "Echec de la mise à jour", $e->errors(), 422);
+        }
     }
 
     /**
@@ -61,6 +68,11 @@ class PerformanceIndicatorController extends Controller
      */
     public function destroy(PerformanceIndicator $performanceIndicator)
     {
-        //
+        try {
+            $performanceIndicator->delete();
+            return api_response(true, "Succès de la suppression de l'indicateur de performance", null, 200);
+        }catch (ValidationException $e) {
+                return api_response(false, "Echec de la supression de l'indicateur de performance", $e->errors(), 422);
+        }
     }
 }

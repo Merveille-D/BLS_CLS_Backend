@@ -39,6 +39,14 @@ class AppServiceProvider extends ServiceProvider
             database_path('migrations/v1/bank'),
 
             database_path('migrations/v1/incident'),
+
+
+            database_path('migrations/v1/evaluation'),
+
+
+
+
+
         ]);
     }
 

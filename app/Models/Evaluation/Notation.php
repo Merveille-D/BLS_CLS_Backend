@@ -2,12 +2,13 @@
 
 namespace App\Models\Evaluation;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Notation extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     protected $fillable = [
         'note',
@@ -16,7 +17,7 @@ class Notation extends Model
         'collaborator_id',
     ];
 
-    const TYPES =[
+    const STATUS =[
         'evaluated',
         'verified',
         'validated',
@@ -25,5 +26,24 @@ class Notation extends Model
     public function collaborator()
     {
         return $this->belongsTo(Collaborator::class);
+    }
+
+    public function performances()
+    {
+        return $this->hasMany(NotationPerformance::class);
+    }
+
+    public function getIndicatorsAttribute() {
+
+        $indicators = [];
+
+        foreach ($this->performances as $performance) {
+            $indicators[] = [
+                'performance_indicator' => $performance->performanceIndicator,
+                'note' => $performance->note,
+            ];
+
+        }
+        return $indicators;
     }
 }

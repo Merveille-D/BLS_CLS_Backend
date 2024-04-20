@@ -2,19 +2,24 @@
 
 namespace App\Models\Evaluation;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class PerformanceIndicator extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     protected $fillable = [
         'title',
-        'position_name',
+        'position',
         'type',
         'note',
         'description',
+    ];
+
+    const POSITIONS = [
+        'lawyer',
     ];
 
     const TYPES = [
@@ -32,5 +37,5 @@ class PerformanceIndicator extends Model
         return $this->hasMany(Notation::class);
     }
 
-    
+
 }

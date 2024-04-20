@@ -12,13 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('notation_performances', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
 
             $table->uuid('notation_id');
             $table->foreign('notation_id')->references('id')->on('notations')->onDelete('cascade');
 
-            $table->uuid('collaborator_id');
-            $table->foreign('collaborator_id')->references('id')->on('collaborators')->onDelete('cascade');
+            $table->uuid('performance_indicator_id');
+            $table->foreign('performance_indicator_id')->references('id')->on('performance_indicators')->onDelete('cascade');
+
+            $table->string('note');
 
             $table->timestamps();
         });
