@@ -45,7 +45,7 @@ class LitigationResourceSeeder extends Seeder
 
         DB::table('litigation_parties')->insert([
             'id' => '7ace26d8-32c0-4b96-afcd-300d051cf9f8',
-            'name' => 'Societe de cimant',
+            'name' => 'Société de ciment',
             'type' => 'legal',
             'address' => '123, Test Street, Lagos City',
             'phone' => '+23121452125',

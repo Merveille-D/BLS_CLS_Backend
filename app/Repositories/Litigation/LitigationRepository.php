@@ -71,10 +71,9 @@ class LitigationRepository {
             'email' => $request->email,
             'phone' => $request->phone,
         ]);
-
         foreach ($request->parties as $key => $party) {
-            $party = LitigationParty::find($party['party_id']);
-            $party->litigations()->attach($litigation, ['category' => $party['category'], 'type' => $party['type']]);
+            $party_model = LitigationParty::findOrFail($party['party_id']);
+            $party_model->litigations()->attach($litigation, ['category' => $party['category'], 'type' => $party['type']]);
         }
 
         $this->saveDocuments($files, $litigation);
