@@ -19,6 +19,7 @@ class NotationController extends Controller
     public function all() {
         $notations = Notation::get()->map(function ($notation) {
             $notation->indicators = $notation->indicators;
+            $notation->collaborator = $notation->collaborator;
             return $notation;
         });
 
@@ -31,8 +32,9 @@ class NotationController extends Controller
     public function index(ListNotationRequest $request)
     {
         $notations = Notation::where('collaborator_id', request('collaborator_id')
-        )->get()->map(function ($notation) {
+        )->first()->map(function ($notation) {
             $notation->indicators = $notation->indicators;
+            $notation->collaborator = $notation->collaborator;
             return $notation;
         });
 

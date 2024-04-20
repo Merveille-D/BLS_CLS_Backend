@@ -16,6 +16,15 @@ class AuditNotationController extends Controller
 
     }
 
+    public function all() {
+        $notations = AuditNotation::get()->map(function ($audit_notation) {
+            $audit_notation->indicators = $audit_notation->indicators;
+            return $audit_notation;
+        });
+
+        return api_response(true, "Evaluation du collaborateur", $notations, 200);
+    }
+
     /**
      * Display a listing of the resource.
      */

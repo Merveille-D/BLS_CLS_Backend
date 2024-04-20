@@ -106,6 +106,8 @@ Route::get('/get_all_notations', [NotationController::class, 'all'] );
 // AUDIT
 Route::resource('audit_notations', AuditNotationController::class);
 Route::resource('audit_performance_indicators', AuditPerformanceIndicatorController::class);
+Route::get('/get_all_audits', [AuditNotationController::class, 'all'] );
+
 
 
 
