@@ -19,11 +19,17 @@ class AuditNotationRepository
         $check_collaborator_notation = $this->audit_notation->where('module_id', $request['module_id'])
                                                             ->where('module', $request['module'])
                                                             ->first();
+        $notes = $request['notes'];
+        $sum = 0;
+
+        foreach ($notes as $note) {
+            $sum += $note['note'];
+        }
+        $request['note'] = $sum;
 
         if($check_collaborator_notation) {
-            $check_collaborator_notation->update($request->all());
 
-            $notes = $request['notes'];
+            $check_collaborator_notation->update($request->all());
 
             foreach ($notes as $note) {
                 $check_collaborator_notation->performances()->update([
@@ -35,9 +41,7 @@ class AuditNotationRepository
             return $check_collaborator_notation;
         }else {
             $audit_notation = $this->audit_notation->create($request->all());
-
-            $notes = $request['notes'];
-
+            
             foreach ($notes as $note) {
                 $audit_notation->performances()->create([
                     'performance_indicator_id' => $note['audit_performance_indicator_id'],
