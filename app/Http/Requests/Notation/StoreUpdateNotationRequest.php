@@ -30,7 +30,6 @@ class StoreUpdateNotationRequest extends FormRequest
             'notes' => ['required','array' ],
             'notes.*.performance_indicator_id' => ['required','uuid'],
             'notes.*.note' => ['required','numeric'],
-            'note' => ['numeric'],
 
         ];
     }

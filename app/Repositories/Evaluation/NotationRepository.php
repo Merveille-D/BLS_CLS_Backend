@@ -22,9 +22,16 @@ class NotationRepository
         $check_collaborator_notation = $this->notation->where('collaborator_id', $request['collaborator_id'])->first();
 
         if($check_collaborator_notation) {
-            $check_collaborator_notation->update($request->all());
 
             $notes = $request['notes'];
+            $sum = 0;
+
+            foreach ($notes as $note) {
+                $sum += $note['note'];
+            }
+
+            $request['note'] = $sum;
+            $check_collaborator_notation->update($request->all());
 
             foreach ($notes as $note) {
                 $check_collaborator_notation->performances()->update([
@@ -35,9 +42,16 @@ class NotationRepository
 
             return $check_collaborator_notation;
         }else {
-            $notation = $this->notation->create($request->all());
 
             $notes = $request['notes'];
+            $sum = 0;
+
+            foreach ($notes as $note) {
+                $sum += $note['note'];
+            }
+            $request['note'] = $sum;
+
+            $notation = $this->notation->create($request->all());
 
             foreach ($notes as $note) {
                 $notation->performances()->create([

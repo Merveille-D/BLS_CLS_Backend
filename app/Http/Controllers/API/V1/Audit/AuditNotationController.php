@@ -16,22 +16,12 @@ class AuditNotationController extends Controller
 
     }
 
-    public function all() {
-        $notations = AuditNotation::get()->map(function ($audit_notation) {
-            $audit_notation->indicators = $audit_notation->indicators;
-            return $audit_notation;
-        });
-
-        return api_response(true, "Evaluation du collaborateur", $notations, 200);
-    }
-
     /**
      * Display a listing of the resource.
      */
-    public function index(ListAuditNotationRequest $request)
+    public function index()
     {
-        $audit_notations = AuditNotation::where('module_id', request('module_id')
-        )->where('module', request('module'))->get()->map(function ($audit_notation) {
+        $audit_notations = AuditNotation::get()->map(function ($audit_notation) {
             $audit_notation->indicators = $audit_notation->indicators;
             return $audit_notation;
         });
@@ -57,7 +47,11 @@ class AuditNotationController extends Controller
      */
     public function show(AuditNotation $audit_notation)
     {
-        //
+        try {
+            return api_response(true, "Infos de l'évaluation", $audit_notation, 200);
+        }catch( ValidationException $e ) {
+            return api_response(false, "Echec de la récupération des infos de l'évaluation", $e->errors(), 422);
+        }
     }
 
     /**
