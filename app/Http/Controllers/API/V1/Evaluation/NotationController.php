@@ -16,23 +16,12 @@ class NotationController extends Controller
 
     }
 
-    public function all() {
-        $notations = Notation::get()->map(function ($notation) {
-            $notation->indicators = $notation->indicators;
-            $notation->collaborator = $notation->collaborator;
-            return $notation;
-        });
-
-        return api_response(true, "Evaluation du collaborateur", $notations, 200);
-    }
-
     /**
      * Display a listing of the resource.
      */
-    public function index(ListNotationRequest $request)
+    public function index()
     {
-        $notations = Notation::where('collaborator_id', request('collaborator_id')
-        )->first()->map(function ($notation) {
+        $notations = Notation::get()->map(function ($notation) {
             $notation->indicators = $notation->indicators;
             $notation->collaborator = $notation->collaborator;
             return $notation;
@@ -59,7 +48,11 @@ class NotationController extends Controller
      */
     public function show(Notation $notation)
     {
-        //
+        try {
+            return api_response(true, "Infos de l'évaluation", $notation, 200);
+        }catch( ValidationException $e ) {
+            return api_response(false, "Echec de la récupération des infos de l'évaluation", $e->errors(), 422);
+        }
     }
 
     /**

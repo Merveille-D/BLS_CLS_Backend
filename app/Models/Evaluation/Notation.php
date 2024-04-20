@@ -21,6 +21,7 @@ class Notation extends Model
         'evaluated',
         'verified',
         'validated',
+        'archived'
     ];
 
     public function collaborator()
