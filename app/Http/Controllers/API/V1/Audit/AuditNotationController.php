@@ -48,7 +48,11 @@ class AuditNotationController extends Controller
     public function show(AuditNotation $audit_notation)
     {
         try {
-            return api_response(true, "Infos de l'évaluation", $audit_notation, 200);
+            $data = $audit_notation->toArray();
+            $data['indicators'] = $audit_notation->indicators;
+            $data['collaborator'] = $audit_notation->collaborator;
+
+            return api_response(true, "Infos de l'évaluation", $data, 200);
         }catch( ValidationException $e ) {
             return api_response(false, "Echec de la récupération des infos de l'évaluation", $e->errors(), 422);
         }

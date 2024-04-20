@@ -24,6 +24,7 @@ class NotationController extends Controller
         $notations = Notation::get()->map(function ($notation) {
             $notation->indicators = $notation->indicators;
             $notation->collaborator = $notation->collaborator;
+            unset($notation->performances);
             return $notation;
         });
 
@@ -49,7 +50,11 @@ class NotationController extends Controller
     public function show(Notation $notation)
     {
         try {
-            return api_response(true, "Infos de l'évaluation", $notation, 200);
+            $data = $notation->toArray();
+            $data['indicators'] = $notation->indicators;
+            $data['collaborator'] = $notation->collaborator;
+
+            return api_response(true, "Infos de l'évaluation", $data, 200);
         }catch( ValidationException $e ) {
             return api_response(false, "Echec de la récupération des infos de l'évaluation", $e->errors(), 422);
         }
