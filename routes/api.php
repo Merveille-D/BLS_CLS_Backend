@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\API\V1\Audit\AuditNotationController;
+use App\Http\Controllers\API\V1\Audit\AuditPerformanceIndicatorController;
 use App\Http\Controllers\API\V1\Bank\BankController;
 use App\Http\Controllers\API\V1\Contract\ContractController;
 use App\Http\Controllers\API\V1\Contract\PartController;
@@ -94,10 +96,17 @@ Route::delete('delete_array_task_management_committees', [TaskManagementCommitte
 Route::put('update_status_task_management_committees', [TaskManagementCommitteeController::class, 'updateStatusTaskManagementCommittee'] );
 
 // EVALUATION
-
 Route::resource('notations', NotationController::class);
 Route::resource('performance_indicators', PerformanceIndicatorController::class);
 Route::resource('collaborators', CollaboratorController::class);
+Route::get('/get_all_notations', [NotationController::class, 'all'] );
+
+
+
+// AUDIT
+Route::resource('audit_notations', AuditNotationController::class);
+Route::resource('audit_performance_indicators', AuditPerformanceIndicatorController::class);
+
 
 
 

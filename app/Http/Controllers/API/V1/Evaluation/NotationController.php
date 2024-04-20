@@ -16,6 +16,15 @@ class NotationController extends Controller
 
     }
 
+    public function all() {
+        $notations = Notation::get()->map(function ($notation) {
+            $notation->indicators = $notation->indicators;
+            return $notation;
+        });
+
+        return api_response(true, "Evaluation du collaborateur", $notations, 200);
+    }
+
     /**
      * Display a listing of the resource.
      */
