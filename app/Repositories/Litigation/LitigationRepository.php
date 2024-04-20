@@ -95,8 +95,8 @@ class LitigationRepository {
         ]);
 
         foreach ($request->parties as $key => $party) {
-            $party = LitigationParty::findOrFail($party['party_id']);
-            $party->litigations()->sync($litigation, ['category' => $party['category'], 'type' => $party['type']]);
+            $party_model = LitigationParty::findOrFail($party['party_id']);
+            $party_model->litigations()->sync($litigation, ['category' => $party['category'], 'type' => $party['type']]);
         }
 
         if ($request->documents && count($request->documents) > 0) {
