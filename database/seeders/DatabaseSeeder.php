@@ -10,6 +10,7 @@ use Database\Seeders\Litigation\LawyerSeeder;
 use Database\Seeders\Litigation\LitigationResourceSeeder;
 use Database\Seeders\Litigation\LitigationSeeder;
 use Database\Seeders\Contract\PartSeeder;
+use Database\Seeders\Recovery\RecoveryResourceSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -26,5 +27,7 @@ class DatabaseSeeder extends Seeder
         $this->call(LawyerSeeder::class); //for test
         $this->call(PartSeeder::class); //for test
         $this->call(AuthorSeeder::class); //for test
+
+        $this->call(RecoveryResourceSeeder::class);
     }
 }
