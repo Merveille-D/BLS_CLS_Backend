@@ -60,9 +60,9 @@ class RecoveryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Recovery $recovery)
+    public function show(string $id)
     {
-        //
+        return api_response(true, 'Recouvrement recuperée', $data = $this->recoveryRepo->findById($id));
     }
 
     /**
@@ -114,6 +114,19 @@ class RecoveryController extends Controller
             $data = $this->recoveryRepo->completeTask($recovery, $task);
             DB::commit();
             return api_response($success = true, 'Tache terminée avec succès', $data);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Log::error($th->getMessage());
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
+        }
+    }
+
+    public function deleteTask(Request $request, $recovery, $task) {
+        try {
+            DB::beginTransaction();
+            $data = $this->recoveryRepo->deleteTask($recovery, $task);
+            DB::commit();
+            return api_response($success = true, 'Tache supprimée avec succès', $data);
         } catch (\Throwable $th) {
             DB::rollBack();
             Log::error($th->getMessage());

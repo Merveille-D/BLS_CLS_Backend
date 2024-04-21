@@ -71,21 +71,29 @@ class RecoveryRepository
         $task = ($recovery->steps)->where('id', $taskId)->first();
         $task->name = $request->name;
         $task->save();
-        $recovery->steps()->syncWithoutDetaching($task, [
+        $recovery->steps()->updateExistingPivot($taskId, [
             'type' => 'task',
             'deadline' => $request->deadline,
         ]);
+        $task = $recovery->steps()->where('recovery_steps.id', $taskId)->first();
         return new RecoveryStepResource($task);
     }
 
     public function completeTask($recoveryId, $taskId) : JsonResource {
         $recovery = $this->recovery_model->findOrFail($recoveryId);
         $task = ($recovery->steps)->where('id', $taskId)->first();
-        $recovery->steps()->syncWithoutDetaching($task->id, [
+        $recovery->steps()->updateExistingPivot($task->id, [
             'type' => 'task',
             'status' => true,
         ]);
+        $task = $recovery->steps()->where('recovery_steps.id', $taskId)->first();
         return new RecoveryStepResource($task);
+    }
+
+    public function deleteTask($recoveryId, $taskId) {
+        $recovery = $this->recovery_model->findOrFail($recoveryId);
+        $recovery->steps()->detach($taskId);
+        return true;
     }
 
     public function getOneStep($recovery_id, $step_id) {
@@ -107,14 +115,19 @@ class RecoveryRepository
             'reference' => generateReference('REC'),
             'name' => $request->name,
             'has_guarantee' => $request->has_guarantee ?? 0,
+            'guarantee_id' => $request->guarantee_id ?? null
             // 'contract_file' =>  $file_path,
             // 'contract_id' =>  $request->contract_id,
         );
 
         $recovery = $this->recovery_model->create($data);
+
         $all_steps = RecoveryStep::orderBy('rank')
             ->when($recovery->has_guarantee == false, function ($query) use ($recovery){
-                return $query->whereType($recovery->type);
+                return $query->whereType($recovery->type)
+                            ->when($recovery->type == 'forced', function($query) {
+                                $query->where('rank', '<=', '3');
+                            });
             }, function($query) {
                 return $query->whereType('unknown');
             })
@@ -124,6 +137,17 @@ class RecoveryRepository
         $this->updatePivotState($recovery);
 
         return new RecoveryResource($recovery);
+    }
+
+    public function continueForcedProcess($recovery) {
+        if ($recovery->payement_status) {
+            $end_steps = RecoveryStep::orderBy('rank')
+                    ->whereType('forced')
+                    ->where('rank', '>', 3)
+                    ->get();
+
+            $recovery->steps()->syncWithoutDetaching($end_steps);
+        }
     }
 
     public function updatePivotState($recovery) {
@@ -136,6 +160,8 @@ class RecoveryRepository
             ];
             $recovery->steps()->syncWithoutDetaching($pivotValues);
         }
+
+        $this->continueForcedProcess($recovery);
     }
 
     public function updateProcess($request, $recovery) {
@@ -197,14 +223,9 @@ class RecoveryRepository
 
     function debtPayement($request, $recovery) : array {
         $status = RecoveryStepEnum::DEBT_PAYEMENT;
-        $data = array(
+        return $data = array(
             'status' => $status,
-        );
-
-        return $this->stepCommonSavingSettings(
-            $files = $request->documents,
-            $recovery = $recovery,
-            $data = $data
+            'payement_status' => $request->payement_status
         );
     }
 

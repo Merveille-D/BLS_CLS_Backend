@@ -27,8 +27,8 @@ class InitRecoveryRequest extends FormRequest
         return [
             'name' => 'required|string',
             'type' => ['required', new ArrayElementMatch(['friendly', 'forced'])],
-            // 'has_guarantee' => 'nullable|boolean',
             'has_guarantee' => 'required_if:type,forced|boolean',
+            'guarantee_id' => 'required_if:has_guarantee,true|string',
         ];
     }
 
