@@ -15,7 +15,7 @@ class RecoveryResource extends JsonResource
     public function toArray(Request $request): array
     {
         $id = $request->route('recovery');
-        // dd($id);
+
         return [
             'id' => $this->id,
             'status' => $this->status,
@@ -24,7 +24,9 @@ class RecoveryResource extends JsonResource
             'type' => $this->type,
             'guarantee_id' => $this->guarantee_id,
             'has_guarantee' => $this->has_guarantee ? true : false,
-
+            'payement_status' => $this->payement_status ? true : false,
+            'is_seized' => $this->is_seized ? true : false,
+            'is_entrusted' => $this->is_entrusted ? true : false,
             'created_at' => $this->created_at,
             'next_step' => $this->when($id, new RecoveryStepResource($this->next_step)),
             'current_step' => $this->when($id, new RecoveryStepResource($this->current_step)),
