@@ -21,8 +21,8 @@ class NotationController extends Controller
      */
     public function index()
     {
-        $notations = Notation::without('performances')->get()->map(function ($notation) {
-            // $notation->indicators = $notation->indicators;
+        $notations = Notation::get()->map(function ($notation) {
+            $notation->indicators = $notation->indicators;
             $notation->collaborator = $notation->collaborator;
 
             return $notation;
