@@ -17,6 +17,7 @@ class Recovery extends Model
         'status',
         'type',
         'has_guarantee',
+        'guarantee_id',
         'payement_status',
         'is_seized',
         'is_entrusted'

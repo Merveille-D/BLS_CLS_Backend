@@ -114,6 +114,7 @@ class RecoveryRepository
             'reference' => generateReference('REC'),
             'name' => $request->name,
             'has_guarantee' => $request->has_guarantee ?? 0,
+            'guarantee_id' => $request->guarantee_id ?? null
             // 'contract_file' =>  $file_path,
             // 'contract_id' =>  $request->contract_id,
         );

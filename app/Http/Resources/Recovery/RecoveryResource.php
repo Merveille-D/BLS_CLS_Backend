@@ -22,6 +22,7 @@ class RecoveryResource extends JsonResource
             'reference' => $this->reference,
             'name' => $this->name,
             'type' => $this->type,
+            'guarantee_id' => $this->guarantee_id,
             'has_guarantee' => $this->has_guarantee ? true : false,
 
             'created_at' => $this->created_at,
