@@ -24,6 +24,7 @@ class CollaboratorController extends Controller
     public function index(ListCollaboratorRequest $request)
     {
         $collaborators = Collaborator::all();
+        
         return api_response(true, "Liste des indicateurs de performance", $collaborators, 200);
     }
 
