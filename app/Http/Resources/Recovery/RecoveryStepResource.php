@@ -21,6 +21,7 @@ class RecoveryStepResource extends JsonResource
             'status' => $this->status ? true : false,
             'type' => $this->type,
             'deadline' => $this->deadline,
+            'recovery_id' => $this->pivot->recovery_id,
             'form' => $this->when($this->form, $this->form),
             // 'steps' => ConvHypothecStepResource::collection($this->whenLoaded('steps')),
         ];
