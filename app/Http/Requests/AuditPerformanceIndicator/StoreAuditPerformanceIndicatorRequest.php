@@ -29,7 +29,7 @@ class StoreAuditPerformanceIndicatorRequest extends FormRequest
             'title' => ['required', 'string'],
             'module' => ['required',  Rule::in(AuditPerformanceIndicator::MODULES) ],
             'type' => ['required',  Rule::in(AuditPerformanceIndicator::TYPES) ],
-            'note' => ['required', 'string'],
+            'note' => ['required', 'numeric'],
             'description' => ['required', 'string'],
         ];
     }

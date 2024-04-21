@@ -29,7 +29,7 @@ class UpdatePerformanceIndicatorRequest extends FormRequest
             'title' => ['string'],
             'position' => [Rule::in(PerformanceIndicator::POSITIONS) ],
             'type' => [Rule::in(PerformanceIndicator::TYPES) ],
-            'note' => ['string'],
+            'note' => ['numeric'],
             'description' => ['string'],
 
         ];

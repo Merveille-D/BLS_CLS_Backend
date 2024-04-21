@@ -29,7 +29,7 @@ class UpdateAuditPerformanceIndicatorRequest extends FormRequest
             'title' => ['string'],
             'module' => [Rule::in(AuditPerformanceIndicator::MODULES) ],
             'type' => [Rule::in(AuditPerformanceIndicator::TYPES) ],
-            'note' => ['string'],
+            'note' => ['numeric'],
             'description' => ['string'],
 
         ];
