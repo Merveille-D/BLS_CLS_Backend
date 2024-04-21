@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Evaluation;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PerformanceIndicator\ListPerformanceIndicatorRequest;
+use App\Models\Evaluation\Collaborator;
 use App\Models\Evaluation\PerformanceIndicator;
 use App\Repositories\Evaluation\PerformanceIndicatorRepository;
 use Illuminate\Http\Request;
@@ -20,7 +21,15 @@ class PerformanceIndicatorController extends Controller
      */
     public function index(ListPerformanceIndicatorRequest $request)
     {
-        $performance_indicators = PerformanceIndicator::where('position', request('position'))->get();
+        if ($request->has('collaborator_id')) {
+            $collaborator = Collaborator::find(request('collaborator_id'));
+            $position = $collaborator->position;
+        } else {
+            $position = request('position');
+        }
+
+        $performance_indicators = PerformanceIndicator::where('position', $position)->get();
+
         return api_response(true, "Liste des indicateurs de performance", $performance_indicators, 200);
     }
 
