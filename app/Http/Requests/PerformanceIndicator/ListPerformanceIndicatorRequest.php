@@ -26,7 +26,7 @@ class ListPerformanceIndicatorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'position' => ['required',Rule::in(PerformanceIndicator::POSITIONS) ],
+            'position' => [Rule::in(PerformanceIndicator::POSITIONS) ],
 
         ];
     }
