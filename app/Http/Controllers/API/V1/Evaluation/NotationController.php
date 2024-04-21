@@ -37,8 +37,8 @@ class NotationController extends Controller
     public function store(StoreUpdateNotationRequest $request)
     {
         try {
-            $this->notation->store($request);
-            return api_response(true, "Succès de l'enregistrement de l'evaluation", null, 200);
+            $notation = $this->notation->store($request);
+            return api_response(true, "Succès de l'enregistrement de l'evaluation", $notation, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement de l'evaluation", $e->errors(), 422);
         }
