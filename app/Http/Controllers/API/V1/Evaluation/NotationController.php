@@ -21,10 +21,10 @@ class NotationController extends Controller
      */
     public function index()
     {
-        $notations = Notation::get()->map(function ($notation) {
+        $notations = Notation::select('id', 'note', 'status', 'observation')
+        ->get()->map(function ($notation) {
             $notation->indicators = $notation->indicators;
             $notation->collaborator = $notation->collaborator;
-            unset($notation->performances);
             return $notation;
         });
 
