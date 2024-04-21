@@ -13,6 +13,7 @@ Route::get('/recovery/tasks/{id}',  [RecoveryController::class, 'showSteps']);
 Route::post('/recovery/tasks/{id}',  [RecoveryController::class, 'addTask']);
 Route::put('/recovery/tasks/{id}/{step_id}',  [RecoveryController::class, 'updateTask']);
 Route::put('/recovery/tasks/complete/{id}/{step_id}',  [RecoveryController::class, 'completeTask']);
+Route::delete('/recovery/tasks/delete/{id}/{step_id}',  [RecoveryController::class, 'deleteTask']);
 Route::get('/recovery/tasks/{id}/{step_id}',  [RecoveryController::class, 'showOneStep']);
 // Route::post('/recovery/tasks/{id}/{step_id}',  [RecoveryController::class, 'updateProcess']);
 Route::post('/recovery/update/{recovery}', array(RecoveryController::class, 'updateProcess'));

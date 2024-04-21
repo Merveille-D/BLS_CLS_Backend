@@ -70,21 +70,29 @@ class RecoveryRepository
         $task = ($recovery->steps)->where('id', $taskId)->first();
         $task->name = $request->name;
         $task->save();
-        $recovery->steps()->syncWithoutDetaching($task, [
+        $recovery->steps()->updateExistingPivot($taskId, [
             'type' => 'task',
             'deadline' => $request->deadline,
         ]);
+        $task = $recovery->steps()->where('recovery_steps.id', $taskId)->first();
         return new RecoveryStepResource($task);
     }
 
     public function completeTask($recoveryId, $taskId) : JsonResource {
         $recovery = $this->recovery_model->findOrFail($recoveryId);
         $task = ($recovery->steps)->where('id', $taskId)->first();
-        $recovery->steps()->syncWithoutDetaching($task->id, [
+        $recovery->steps()->updateExistingPivot($task->id, [
             'type' => 'task',
             'status' => true,
         ]);
+        $task = $recovery->steps()->where('recovery_steps.id', $taskId)->first();
         return new RecoveryStepResource($task);
+    }
+
+    public function deleteTask($recoveryId, $taskId) {
+        $recovery = $this->recovery_model->findOrFail($recoveryId);
+        $recovery->steps()->detach($taskId);
+        return true;
     }
 
     public function getOneStep($recovery_id, $step_id) {

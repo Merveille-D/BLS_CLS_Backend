@@ -14,7 +14,8 @@ class RecoveryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // $id = $request->route('id');
+        $id = $request->route('recovery');
+        // dd($id);
         return [
             'id' => $this->id,
             'status' => $this->status,
@@ -24,8 +25,8 @@ class RecoveryResource extends JsonResource
             'has_guarantee' => $this->has_guarantee ? true : false,
 
             'created_at' => $this->created_at,
-            // 'next_step' => $this->when($id, new ConvHypothecStepResource($this->next_step)),
-            // 'current_step' => $this->when($id, new ConvHypothecStepResource($this->current_step)),
+            'next_step' => $this->when($id, new RecoveryStepResource($this->next_step)),
+            'current_step' => $this->when($id, new RecoveryStepResource($this->current_step)),
             'documents' => DocumentResource::collection($this->whenLoaded('documents')),
         ];
     }

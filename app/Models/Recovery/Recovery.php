@@ -32,12 +32,14 @@ class Recovery extends Model
     }
 
     function getCurrentStepAttribute() {
-        return $this->steps()->orderBy('rank', 'desc')->where('status', true)->first();
+        return $this->steps()->where('recovery_task.type', 'step')
+                    ->orderBy('rank', 'desc')->where('status', true)->first();
     }
 
     public function getNextStepAttribute()
     {
-        return $this->steps()->orderBy('rank')->where('status', false)->first();
+        return $this->steps()->where('recovery_task.type', 'step'
+                    )->orderBy('rank')->where('status', false)->first();
     }
 
     public function documents() : MorphMany
