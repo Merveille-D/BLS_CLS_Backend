@@ -19,6 +19,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Notification as FacadesNotification;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class ConvHypothecRepository
 {
@@ -467,8 +468,11 @@ class ConvHypothecRepository
     function storeFile($file) {
         if($file) {
             $sanitized_file_name = date('Y-m-d_His-').Str::random(6).auth()->id().'-'.sanitize_file_name($file->getClientOriginalName());
-            $path = $file->storeAs('guarantee/conventionnal_hypothec', $sanitized_file_name);
-            return $path;
+
+            $file->storeAs('guarantee/conventionnal_hypothec', $sanitized_file_name, 'public');
+            $url = Storage::disk('public')->url('public/guarantee/conventionnal_hypothec/' . $sanitized_file_name);
+
+            return $url;
         }
     }
 }

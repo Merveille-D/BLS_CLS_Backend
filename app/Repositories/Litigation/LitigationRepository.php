@@ -12,6 +12,7 @@ use App\Models\Litigation\LitigationSetting;
 use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\Storage;
 
 class LitigationRepository {
     /**
@@ -217,8 +218,11 @@ class LitigationRepository {
     function storeFile($file) {
         if($file) {
             $sanitized_file_name = date('Y-m-d_His-').Str::random(6).auth()->id().'-'.sanitize_file_name($file->getClientOriginalName());
-            $path = $file->storeAs('litigation', $sanitized_file_name);
-            return $path;
+
+            $file->storeAs('litigation', $sanitized_file_name, 'public');
+            $url = Storage::disk('public')->url('public/litigation/' . $sanitized_file_name);
+
+            return $url;
         }
     }
 }

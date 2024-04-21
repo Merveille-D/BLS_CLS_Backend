@@ -45,10 +45,9 @@ if (!function_exists('generateReference')) {
 if(!function_exists('uploadFile')) {
     function uploadFile($file, $path) {
 
-        $name_file = str_replace(' ', '-', $file->getClientOriginalName());
+        $name_file = date('Y-m-d_His-').Str::random(6).auth()->id().'-'.sanitize_file_name($file->getClientOriginalName());
         $file->storeAs($path, $name_file, 'public');
 
-        // $url = Storage::disk('public')->url($path . '/' . $name_file);
         $url = Storage::disk('public')->url('public/' . $path . '/' . $name_file);
 
         return $url;
