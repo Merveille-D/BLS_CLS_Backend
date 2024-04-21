@@ -27,6 +27,7 @@ class ListPerformanceIndicatorRequest extends FormRequest
     {
         return [
             'position' => [Rule::in(PerformanceIndicator::POSITIONS) ],
+            'collaborator_id' => ['uuid'],
 
         ];
     }

@@ -35,8 +35,10 @@ class AuditNotationController extends Controller
     public function store(StoreUpdateAuditNotationRequest $request)
     {
         try {
-            $this->audit_notation->store($request);
-            return api_response(true, "Succès de l'enregistrement de l'evaluation", null, 200);
+            $audit_notation = $this->audit_notation->store($request);
+            $data = $audit_notation->toArray();
+            $data['indicators'] = $audit_notation->indicators;
+            return api_response(true, "Succès de l'enregistrement de l'evaluation", $data, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement de l'evaluation", $e->errors(), 422);
         }
@@ -50,7 +52,6 @@ class AuditNotationController extends Controller
         try {
             $data = $audit_notation->toArray();
             $data['indicators'] = $audit_notation->indicators;
-            $data['collaborator'] = $audit_notation->collaborator;
 
             return api_response(true, "Infos de l'évaluation", $data, 200);
         }catch( ValidationException $e ) {
