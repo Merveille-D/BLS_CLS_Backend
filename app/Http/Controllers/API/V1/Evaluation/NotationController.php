@@ -38,6 +38,10 @@ class NotationController extends Controller
     {
         try {
             $notation = $this->notation->store($request);
+            
+            $data = $notation->toArray();
+            $data['indicators'] = $notation->indicators;
+            $data['collaborator'] = $notation->collaborator;
             return api_response(true, "Succès de l'enregistrement de l'evaluation", $notation, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement de l'evaluation", $e->errors(), 422);
