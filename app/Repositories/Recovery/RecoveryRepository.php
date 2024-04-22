@@ -63,6 +63,8 @@ class RecoveryRepository
             'type' => 'task',
             'deadline' => $request->deadline,
         ]);
+
+        $task = $recovery->steps()->where('recovery_steps.id', $task->id)->first();
         return new RecoveryStepResource($task);
     }
 

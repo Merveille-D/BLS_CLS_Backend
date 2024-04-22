@@ -64,7 +64,7 @@ class RecoveryResourceSeeder extends Seeder
     function getSteps() : array {
         return [
             [
-                'name' => 'Initialisation du recouvrement',
+                'name' => 'Initialisation du recouvrement amical',
                 'code' => RecoveryStepEnum::CREATED,
                 'type' => 'friendly',
                 'rank' => 1,
@@ -75,9 +75,10 @@ class RecoveryResourceSeeder extends Seeder
                 'type' => 'friendly',
                 'rank' => 2,
             ],
+
             //forced with guarantee
             [
-                'name' => 'Initialisation du recouvrement',
+                'name' => 'Initialisation du recouvrement forcé',
                 'code' => RecoveryStepEnum::CREATED,
                 'type' => 'forced',
                 'rank' => 1,
