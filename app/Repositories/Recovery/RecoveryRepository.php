@@ -70,6 +70,9 @@ class RecoveryRepository
     public function updateTask($request, $recoveryId, $taskId) {
         $recovery = $this->recovery_model->findOrFail($recoveryId);
         $task = ($recovery->steps)->where('id', $taskId)->first();
+        if (!$task) {
+            return false;
+        }
         $task->name = $request->name;
         $task->save();
         $recovery->steps()->updateExistingPivot($taskId, [
@@ -325,5 +328,14 @@ class RecoveryRepository
 
             return $url;
         }
+    }
+
+    public function archive($id) : JsonResource {
+        $recovery = $this->findById($id);
+        $recovery->update([
+            'is_archived' => !$recovery->is_archived,
+        ]);
+
+        return new RecoveryResource($recovery);
     }
 }

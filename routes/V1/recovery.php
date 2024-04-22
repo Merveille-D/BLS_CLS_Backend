@@ -17,5 +17,6 @@ Route::delete('/recovery/tasks/delete/{id}/{step_id}',  [RecoveryController::cla
 Route::get('/recovery/tasks/{id}/{step_id}',  [RecoveryController::class, 'showOneStep']);
 // Route::post('/recovery/tasks/{id}/{step_id}',  [RecoveryController::class, 'updateProcess']);
 Route::post('/recovery/update/{recovery}', array(RecoveryController::class, 'updateProcess'));
+Route::put('/recovery/archive/{recovery}', array(RecoveryController::class, 'archive'));
 Route::post('/recovery/realization/{id}', array(RecoveryController::class, 'realization'));
 Route::resource('/recovery', RecoveryController::class);

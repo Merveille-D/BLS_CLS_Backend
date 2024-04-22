@@ -28,7 +28,7 @@ class ConvHypothecSeeder extends Seeder
             'step' => 'formalization',
             'reference' => 'HC-1234',
             'name' => 'Test init. convention d\'hypothèque',
-            'contract_file' => '/storage/guarantee/conventionnal_hypothec/2024-04-14_131932-tpa33X-sun_tzu_art_de_la_guerre_.pdf',
+            'contract_file' => 'guarantee/conventionnal_hypothec/2024-04-14_131932-tpa33X-sun_tzu_art_de_la_guerre_.pdf',
         ]);
 
         $convHypo = ConvHypothec::find('9bce26d8-32c0-4b96-afcd-300d051cf9f0');

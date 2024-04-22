@@ -149,4 +149,14 @@ class RecoveryController extends Controller
     {
         //
     }
+
+    public function archive(Request $request, $recovery_id)
+    {
+        try {
+            $data = $this->recoveryRepo->archive($recovery_id);
+            return api_response($success = true, 'Archivage effectué avec succès', $data);
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
+        }
+    }
 }

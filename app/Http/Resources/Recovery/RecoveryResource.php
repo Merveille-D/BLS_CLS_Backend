@@ -27,6 +27,7 @@ class RecoveryResource extends JsonResource
             'payement_status' => $this->payement_status ? true : false,
             'is_seized' => $this->is_seized ? true : false,
             'is_entrusted' => $this->is_entrusted ? true : false,
+            'is_archived' => $this->is_archived ? true : false,
             'created_at' => $this->created_at,
             'next_step' => $this->when($id, new RecoveryStepResource($this->next_step)),
             'current_step' => $this->when($id, new RecoveryStepResource($this->current_step)),

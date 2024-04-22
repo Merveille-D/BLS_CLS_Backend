@@ -219,10 +219,9 @@ class LitigationRepository {
         if($file) {
             $sanitized_file_name = date('Y-m-d_His-').Str::random(6).auth()->id().'-'.sanitize_file_name($file->getClientOriginalName());
 
-            $file->storeAs('litigation', $sanitized_file_name, 'public');
-            $url = Storage::disk('public')->url('public/litigation/' . $sanitized_file_name);
+            $path = $file->storeAs('litigation', $sanitized_file_name);
 
-            return $url;
+            return $path;
         }
     }
 }
