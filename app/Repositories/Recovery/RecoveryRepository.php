@@ -258,11 +258,7 @@ class RecoveryRepository
             'is_seized' => $request->is_seized == "yes" ? true : false
         );
 
-        return $this->stepCommonSavingSettings(
-            $files = $request->documents,
-            $recovery = $recovery,
-            $data = $data
-        );
+        return $data;
     }
 
     function executory($request, $recovery) : array {
@@ -285,11 +281,7 @@ class RecoveryRepository
             $request->is_entrusted == "yes" ? true : false
         );
 
-        return $this->stepCommonSavingSettings(
-            $files = $request->documents,
-            $recovery = $recovery,
-            $data = $data
-        );
+        return $data;
     }
 
     function stepCommonSavingSettings($files,Model $recovery, array $data) : array {
