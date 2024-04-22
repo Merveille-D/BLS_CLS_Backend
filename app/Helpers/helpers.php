@@ -79,14 +79,6 @@ if(!function_exists('searchElementIndice')) {
     }
 }
 
-if (!function_exists('format_file_path')) {
-    function format_file_path($path) {
-        $url = env('APP_URL').'/storage/'.$path;
-
-        return $url;
-    }
-}
-
 
 
 

@@ -298,7 +298,7 @@ class RecoveryRepository
 
         foreach ($files as $key => $file_elt) {
 
-            $file_path = $this->storeFile($file_elt['file']);
+            $file_path = storeFile($file_elt['file'], 'recovery');
 
             $doc = new RecoveryDocument();
             $doc->status = $data['status'];
@@ -316,18 +316,6 @@ class RecoveryRepository
             return [];
         }
 
-    }
-
-
-    function storeFile($file) {
-        if($file) {
-            $sanitized_file_name = date('Y-m-d_His-').Str::random(6).auth()->id().'-'.sanitize_file_name($file->getClientOriginalName());
-
-            $file->storeAs('guarantee/conventionnal_hypothec', $sanitized_file_name, 'public');
-            $url = Storage::disk('public')->url('public/guarantee/conventionnal_hypothec/' . $sanitized_file_name);
-
-            return $url;
-        }
     }
 
     public function archive($id) : JsonResource {
