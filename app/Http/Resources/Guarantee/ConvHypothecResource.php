@@ -23,7 +23,7 @@ class ConvHypothecResource extends JsonResource
             'name' => $this->name,
             'type' => $this->step,
             'contract_id' => $this->contract_id,
-            'contract_file' => $this->contract_file ? '/storage/'.$this->contract_file : null,
+            'contract_file' => format_file_path($this->contract_file),
             'is_approved' => $this->is_approved ? true : false,
             'is_subscribed' => $this->is_subscribed,
             'registering_date' => $this->registering_date,
@@ -32,7 +32,6 @@ class ConvHypothecResource extends JsonResource
             'date_deposit_specification' => $this->date_deposit_specification,
             'sell_price_estate' => $this->sell_price_estate,
             'created_at' => $this->created_at,
-            // 'documents' => new DocumentCollection(new DocumentResource($this->documents))
             'next_step' => $this->when($id, new ConvHypothecStepResource($this->next_step)),
             'current_step' => $this->when($id, new ConvHypothecStepResource($this->current_step)),
             'documents' => DocumentResource::collection($this->whenLoaded('documents')),

@@ -8,7 +8,6 @@ use App\Http\Resources\Recovery\RecoveryStepResource;
 use App\Models\Recovery\Recovery;
 use App\Models\Recovery\RecoveryDocument;
 use App\Models\Recovery\RecoveryStep;
-use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -63,12 +62,17 @@ class RecoveryRepository
             'type' => 'task',
             'deadline' => $request->deadline,
         ]);
+
+        $task = $recovery->steps()->where('recovery_steps.id', $task->id)->first();
         return new RecoveryStepResource($task);
     }
 
     public function updateTask($request, $recoveryId, $taskId) {
         $recovery = $this->recovery_model->findOrFail($recoveryId);
         $task = ($recovery->steps)->where('id', $taskId)->first();
+        if (!$task) {
+            return false;
+        }
         $task->name = $request->name;
         $task->save();
         $recovery->steps()->updateExistingPivot($taskId, [
@@ -122,6 +126,14 @@ class RecoveryRepository
 
         $recovery = $this->recovery_model->create($data);
 
+        $this->generateSteps($recovery);
+
+        $this->updatePivotState($recovery);
+
+        return new RecoveryResource($recovery);
+    }
+
+    public function generateSteps($recovery) {
         $all_steps = RecoveryStep::orderBy('rank')
             ->when($recovery->has_guarantee == false, function ($query) use ($recovery){
                 return $query->whereType($recovery->type)
@@ -133,10 +145,7 @@ class RecoveryRepository
             })
             ->get();
 
-        $recovery->steps()->syncWithoutDetaching($all_steps);
-        $this->updatePivotState($recovery);
-
-        return new RecoveryResource($recovery);
+        return $recovery->steps()->syncWithoutDetaching($all_steps);
     }
 
     public function continueForcedProcess($recovery) {
@@ -225,7 +234,7 @@ class RecoveryRepository
         $status = RecoveryStepEnum::DEBT_PAYEMENT;
         return $data = array(
             'status' => $status,
-            'payement_status' => $request->payement_status
+            'payement_status' => $request->payement_status == "yes" ? true : false
         );
     }
 
@@ -246,6 +255,7 @@ class RecoveryRepository
         $status = RecoveryStepEnum::SEIZURE;
         $data = array(
             'status' => $status,
+            'is_seized' => $request->is_seized == "yes" ? true : false
         );
 
         return $this->stepCommonSavingSettings(
@@ -272,6 +282,7 @@ class RecoveryRepository
         $status = RecoveryStepEnum::ENTRUST_LAWYER;
         $data = array(
             'status' => $status,
+            $request->is_entrusted == "yes" ? true : false
         );
 
         return $this->stepCommonSavingSettings(
@@ -287,7 +298,7 @@ class RecoveryRepository
 
         foreach ($files as $key => $file_elt) {
 
-            $file_path = $this->storeFile($file_elt['file']);
+            $file_path = storeFile($file_elt['file'], 'recovery');
 
             $doc = new RecoveryDocument();
             $doc->status = $data['status'];
@@ -307,15 +318,12 @@ class RecoveryRepository
 
     }
 
+    public function archive($id) : JsonResource {
+        $recovery = $this->findById($id);
+        $recovery->update([
+            'is_archived' => !$recovery->is_archived,
+        ]);
 
-    function storeFile($file) {
-        if($file) {
-            $sanitized_file_name = date('Y-m-d_His-').Str::random(6).auth()->id().'-'.sanitize_file_name($file->getClientOriginalName());
-
-            $file->storeAs('guarantee/conventionnal_hypothec', $sanitized_file_name, 'public');
-            $url = Storage::disk('public')->url('public/guarantee/conventionnal_hypothec/' . $sanitized_file_name);
-
-            return $url;
-        }
+        return new RecoveryResource($recovery);
     }
 }

@@ -20,7 +20,8 @@ class Recovery extends Model
         'guarantee_id',
         'payement_status',
         'is_seized',
-        'is_entrusted'
+        'is_entrusted',
+        'is_archived'
     ];
 
     public function steps()

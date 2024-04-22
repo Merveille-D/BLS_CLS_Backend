@@ -21,6 +21,7 @@ return new class extends Migration
             $table->uuid('guarantee_id')->nullable();
             $table->boolean('is_entrusted')->default(0);
             $table->boolean('is_seized')->default(0);
+            $table->boolean('is_archived')->default(0);
             $table->boolean('payement_status')->default(0);
             $table->softDeletes();
             $table->timestamps();

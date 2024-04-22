@@ -196,7 +196,7 @@ class LitigationRepository {
 
         foreach ($files as $key => $file) {
 
-            $file_path = $this->storeFile($file['file']);
+            $file_path = storeFile($file['file'], 'litigation');
 
             $doc = new LitigationDocument();
             // $doc->state = $litigation->state;
@@ -212,17 +212,6 @@ class LitigationRepository {
             return true;
         } else {
             return false;
-        }
-    }
-
-    function storeFile($file) {
-        if($file) {
-            $sanitized_file_name = date('Y-m-d_His-').Str::random(6).auth()->id().'-'.sanitize_file_name($file->getClientOriginalName());
-
-            $file->storeAs('litigation', $sanitized_file_name, 'public');
-            $url = Storage::disk('public')->url('public/litigation/' . $sanitized_file_name);
-
-            return $url;
         }
     }
 }

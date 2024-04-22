@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Recovery;
 
 use App\Enums\Recovery\RecoveryStepEnum;
+use App\Rules\Administrator\ArrayElementMatch;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -51,18 +52,25 @@ class UpdateProcessRequest extends FormRequest
             case RecoveryStepEnum::FORMALIZATION:
                 $data = $data;
             case RecoveryStepEnum::FORMAL_NOTICE:
-                $data = ['payement_status' => 'required|boolean'];
+                $data = [
+                    'payement_status' => ['required', new ArrayElementMatch(array('yes', 'no'))],
+                ];
+
             case RecoveryStepEnum::DEBT_PAYEMENT:
                 $data = $data;
                 break;
             case RecoveryStepEnum::JURISDICTION:
-                $data = ['is_seized' => 'required|boolean'];
+                $data = [
+                    'is_seized' => ['required', new ArrayElementMatch(array('yes', 'no'))],
+                ];
                 break;
             case RecoveryStepEnum::SEIZURE:
                 $data = $data;
                 break;
             case RecoveryStepEnum::EXECUTORY:
-                $data = ['is_entrusted' => 'required|boolean'];
+                $data = [
+                    'is_entrusted' => ['required', new ArrayElementMatch(array('yes', 'no'))],
+                ];
                 break;
             case RecoveryStepEnum::ENTRUST_LAWYER:
                 $data = $data;

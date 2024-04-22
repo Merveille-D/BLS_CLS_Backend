@@ -75,7 +75,7 @@ class ConvHypothecRepository
 
     function initFormalizationProcess($request) {
 
-        $file_path = $this->storeFile($request->contract_file);
+        $file_path = storeFile($request->contract_file, 'guarantee/conv_hypothec');
         $data = array(
             'state' => 'created',
             'step' => 'formalization',
@@ -368,7 +368,7 @@ class ConvHypothecRepository
             return false;
         foreach ($files as $key => $file_elt) {
 
-            $file_path = $this->storeFile($file_elt['file']);
+            $file_path = storeFile($file_elt['file'], 'guarantee/conv_hypothec');
 
             $doc = new GuaranteeDocument();
             $doc->state = $data['state'];
@@ -446,7 +446,7 @@ class ConvHypothecRepository
     public function saveMultipleFiles($files, $convHypo, $state) {
         foreach ($files as $key => $file) {
 
-            $file_path = $this->storeFile($file['file']);
+            $file_path = storeFile($file['file'], 'guarantee/conv_hypothec');
 
             $doc = new GuaranteeDocument();
             $doc->state = $state;
@@ -462,17 +462,6 @@ class ConvHypothecRepository
             return true;
         } else {
             return false;
-        }
-    }
-
-    function storeFile($file) {
-        if($file) {
-            $sanitized_file_name = date('Y-m-d_His-').Str::random(6).auth()->id().'-'.sanitize_file_name($file->getClientOriginalName());
-
-            $file->storeAs('guarantee/conventionnal_hypothec', $sanitized_file_name, 'public');
-            $url = Storage::disk('public')->url('public/guarantee/conventionnal_hypothec/' . $sanitized_file_name);
-
-            return $url;
         }
     }
 }
