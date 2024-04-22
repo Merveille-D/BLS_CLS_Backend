@@ -18,7 +18,7 @@ class BankRepository
      */
     public function store($request) {
 
-        if($request['type'] == 'file') {
+        if(($request['type'] == 'file') || ($request['type'] == 'other')) {
             $request['file_name'] = getFileName($request['file']);
             $request['file_url'] = uploadFile($request['file'], 'bank_documents');
         }
@@ -34,7 +34,7 @@ class BankRepository
     public function update(Bank $bank, $request) {
 
         if (isset($request['type'])) {
-            if($request['type'] == 'file') {
+            if(($request['type'] == 'file') || ($request['type'] == 'other')) {
                 $request['file_name'] = getFileName($request['file']);
                 $request['file_url'] = uploadFile($request['file'], 'bank_documents');
             }

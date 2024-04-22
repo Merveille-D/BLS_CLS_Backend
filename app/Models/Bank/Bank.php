@@ -21,5 +21,6 @@ class Bank extends Model
     const TYPES = [
         'link',
         'file',
+        'other',
     ];
 }

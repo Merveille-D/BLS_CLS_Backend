@@ -262,23 +262,6 @@ class TaskIncident extends Model
             ],
             false => [
 
-                'atd_5' => [
-                    'title' => 'Joindre l\'acte de conversion',
-                    'rules' => [
-                        'conversion_certificate' => ['required', 'in:yes,no'],
-                    ],
-                    "delay" => 0,
-                    "form" => [
-                        'fields' => [
-                            [
-                                'type' => 'radio',
-                                'name' => 'conversion_certificate',
-                                'label' => 'Avez vous recu l\'acte de conversion ?',
-                            ],
-                        ],
-                        'form_title' => 'Preuve de l\'acte de conversion'
-                    ],
-                ],
                 'atd_6' => [
                         'title' => 'Rediger un courrier à l\'adresse de l\'ADM Fiscale à signer par la DG de la banque',
                         'rules' => [
@@ -448,7 +431,7 @@ class TaskIncident extends Model
                                         'rules' => [
                                             'documents' => ['required', 'array'],
                                             'documents.*.name' => ['required', 'string'],
-                            'documents.*.file' => ['required', 'file']
+                                            'documents.*.file' => ['required', 'file']
                                         ],
                                         "delay" => 0,
                                         "form" => [
@@ -467,7 +450,7 @@ class TaskIncident extends Model
                                         'rules' => [
                                             'documents' => ['required', 'array'],
                                             'documents.*.name' => ['required', 'string'],
-                            'documents.*.file' => ['required', 'file']
+                                            'documents.*.file' => ['required', 'file']
                                         ],
                                         "delay" => 0,
                                         "form" => [
@@ -507,9 +490,9 @@ class TaskIncident extends Model
                                     'title' => 'Joindre l\'acte de conversion',
                                     'rules' => [
                                         'conversion_certificate' => ['required', 'in:yes,no'],
-                                        'documents' => ['required', 'array'],
-                                        'documents.*.name' => ['required', 'string'],
-                                        'documents.*.file' => ['required', 'file'],
+                                        // 'documents' => ['required', 'array'],
+                                        // 'documents.*.name' => ['required', 'string'],
+                                        // 'documents.*.file' => ['required', 'file'],
                                     ],
                                     "delay" => 0,
                                     "form" => [
@@ -519,16 +502,16 @@ class TaskIncident extends Model
                                                 'name' => 'conversion_certificate',
                                                 'label' => 'Avez vous recu l\'acte de conversion ?',
                                             ],
-                                            [
-                                                'type' => 'documents',
-                                                'name' => 'documents',
-                                                'label' => 'Joindre le courrier d\'information du client',
-                                            ]
+                                            // [
+                                            //     'type' => 'documents',
+                                            //     'name' => 'documents',
+                                            //     'label' => 'Joindre le courrier d\'information du client',
+                                            // ]
                                         ],
-                                        'form_title' => 'Preuve de l\'acte de conversion'
+                                        'form_title' => 'Réception de l\'acte de conversion'
                                     ],
                                     "next" => [
-                                        true => [
+                                        false => [
                                             'sc_4_4_1' => [
                                                     'title' => 'Caducite de la saisie en l\'absence de la presentation d\'un titre executoire',
                                                     'rules' => [
@@ -569,7 +552,7 @@ class TaskIncident extends Model
                                                     "next" => false,
                                                 ],
                                         ],
-                                        false => [
+                                        true => [
                                             'sc_4_4_3' => [
                                                     'title' => 'Presentation d\'un titre executoire, d\'un acte de conversion de saisie conservatoire en saisie attribution et d\'une preuve d\'absence d\'opposition',
                                                     'rules' => [
