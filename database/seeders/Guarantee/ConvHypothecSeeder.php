@@ -63,7 +63,7 @@ class ConvHypothecSeeder extends Seeder
     function getSteps() : array {
         return [
             [
-                'name' => 'Initialisation de l\'hypothèque',
+                'name' => 'Initiation de l\'hypothèque',
                 'code' => ConvHypothecState::CREATED,
                 'type' => 'formalization',
                 'rank' => 1,
@@ -121,7 +121,7 @@ class ConvHypothecSeeder extends Seeder
                 'max_delay' => 90,
             ],
             [
-                'name' => 'Saisie immobilière après visa du régisseur visa de payement',
+                'name' => 'Saisie immobilière après visa du régisseur sur le commendement de payer',
                 'code' => ConvHypothecState::ORDER_PAYMENT_VISA,
                 'type' => 'realization',
                 'rank' => 3,

@@ -8,12 +8,14 @@ use App\Models\Guarantee\ConvHypothec;
 use App\Models\Guarantee\ConvHypothecStep;
 use App\Models\Recovery\Recovery;
 use App\Models\Recovery\RecoveryStep;
+use App\Repositories\Recovery\RecoveryRepository;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class RecoveryResourceSeeder extends Seeder
 {
+    public function __construct(private RecoveryRepository $recoveryRepository) {}
     /**
      * Run the database seeds.
      */
@@ -36,35 +38,16 @@ class RecoveryResourceSeeder extends Seeder
         ]);
 
         $recovery = Recovery::find('aaa726d8-32c0-4b96-afcd-300d051cf9f0');
-        $all_steps = RecoveryStep::orderBy('rank')
-            ->when($recovery->has_guarantee == false, function ($query) use ($recovery){
-                return $query->whereType($recovery->type);
-            }, function($query) {
-                return $query->whereType('unknown');
-            })
-            ->get();
-        $recovery->steps()->syncWithoutDetaching($all_steps);
-        $this->updatePivotState($recovery);
+
+        $this->recoveryRepository->generateSteps($recovery);
+
+        $this->recoveryRepository->updatePivotState($recovery);
     }
-
-    public function updatePivotState($recovery) {
-        $currentStep = $recovery->next_step; //because the current step is not  updated yet
-        if ($currentStep) {
-            $pivotValues = [
-                $currentStep->id => [
-                    'status' => true,
-                ]
-            ];
-            $recovery->steps()->syncWithoutDetaching($pivotValues);
-        }
-    }
-
-
 
     function getSteps() : array {
         return [
             [
-                'name' => 'Initialisation du recouvrement amical',
+                'name' => 'Initiation du recouvrement amical',
                 'code' => RecoveryStepEnum::CREATED,
                 'type' => 'friendly',
                 'rank' => 1,

@@ -8,7 +8,6 @@ use App\Http\Resources\Recovery\RecoveryStepResource;
 use App\Models\Recovery\Recovery;
 use App\Models\Recovery\RecoveryDocument;
 use App\Models\Recovery\RecoveryStep;
-use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -124,6 +123,14 @@ class RecoveryRepository
 
         $recovery = $this->recovery_model->create($data);
 
+        $this->generateSteps($recovery);
+
+        $this->updatePivotState($recovery);
+
+        return new RecoveryResource($recovery);
+    }
+
+    public function generateSteps($recovery) {
         $all_steps = RecoveryStep::orderBy('rank')
             ->when($recovery->has_guarantee == false, function ($query) use ($recovery){
                 return $query->whereType($recovery->type)
@@ -135,10 +142,7 @@ class RecoveryRepository
             })
             ->get();
 
-        $recovery->steps()->syncWithoutDetaching($all_steps);
-        $this->updatePivotState($recovery);
-
-        return new RecoveryResource($recovery);
+        return $recovery->steps()->syncWithoutDetaching($all_steps);
     }
 
     public function continueForcedProcess($recovery) {
@@ -227,7 +231,7 @@ class RecoveryRepository
         $status = RecoveryStepEnum::DEBT_PAYEMENT;
         return $data = array(
             'status' => $status,
-            'payement_status' => $request->payement_status
+            'payement_status' => $request->payement_status == "yes" ? true : false
         );
     }
 
@@ -248,6 +252,7 @@ class RecoveryRepository
         $status = RecoveryStepEnum::SEIZURE;
         $data = array(
             'status' => $status,
+            'is_seized' => $request->is_seized == "yes" ? true : false
         );
 
         return $this->stepCommonSavingSettings(
@@ -274,6 +279,7 @@ class RecoveryRepository
         $status = RecoveryStepEnum::ENTRUST_LAWYER;
         $data = array(
             'status' => $status,
+            $request->is_entrusted == "yes" ? true : false
         );
 
         return $this->stepCommonSavingSettings(
