@@ -5,6 +5,7 @@ namespace App\Models\Audit;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Http;
 
 class AuditNotation extends Model
 {
@@ -40,5 +41,11 @@ class AuditNotation extends Model
             ];
         }
         return $indicators;
+    }
+
+    public function getTitleAttribute() {
+        $response = Http::get(env('APP_URL'). '/' . $this->module . '/' . $this->module_id );
+        $title = $response['title'];
+        return $title;
     }
 }

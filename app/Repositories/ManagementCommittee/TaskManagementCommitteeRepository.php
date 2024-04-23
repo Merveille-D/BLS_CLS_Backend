@@ -67,6 +67,13 @@ class TaskManagementCommitteeRepository
             $taskManagementCommittee = $this->task->findOrFail($data['id']);
             $taskManagementCommittee->update(['status' => $data['status']]);
             $updatedTasks[] = $taskManagementCommittee;
+
+            if($taskManagementCommittee->type === 'pre_cd') {
+                $management_committee = $taskManagementCommittee->management_committee();
+                if($taskManagementCommittee->deadline === $management_committee->session_date) {
+                    $management_committee->update(['status' => 'post_cd']);
+                }
+            }
         }
 
         return $taskManagementCommittee;

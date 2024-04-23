@@ -23,6 +23,7 @@ class AuditNotationController extends Controller
     {
         $audit_notations = AuditNotation::get()->map(function ($audit_notation) {
             $audit_notation->indicators = $audit_notation->indicators;
+            $audit_notation->title = $audit_notation->title;
             return $audit_notation;
         });
 
@@ -38,6 +39,7 @@ class AuditNotationController extends Controller
             $audit_notation = $this->audit_notation->store($request);
             $data = $audit_notation->toArray();
             $data['indicators'] = $audit_notation->indicators;
+            $data['title'] = $audit_notation->title;
             return api_response(true, "Succès de l'enregistrement de l'evaluation", $data, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement de l'evaluation", $e->errors(), 422);
@@ -52,6 +54,7 @@ class AuditNotationController extends Controller
         try {
             $data = $audit_notation->toArray();
             $data['indicators'] = $audit_notation->indicators;
+            $data['title'] = $audit_notation->title;
 
             return api_response(true, "Infos de l'évaluation", $data, 200);
         }catch( ValidationException $e ) {

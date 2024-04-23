@@ -2,6 +2,7 @@
 
 namespace App\Models\Gourvernance\ExecutiveManagement\Directors;
 
+use App\Models\Gourvernance\Mandate;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -25,5 +26,10 @@ class Director extends Model
         'nationality',
         'address',
     ];
+
+    public function mandates()
+    {
+        return $this->morphMany(Mandate::class, 'mandatable');
+    }
 
 }
