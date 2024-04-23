@@ -8,14 +8,14 @@ enum PartyType : string
     const EMPLOYEE = 'employee';
     const PROVIDER = 'provider';
     const PARTNER = 'partner';
-    const ARBITRATION_TRIBUNAL = 'arbitration_tribunal';
+    // const ARBITRATION_TRIBUNAL = 'arbitration_tribunal';
 
     const TYPES = [
         PartyType::CLIENT,
         PartyType::EMPLOYEE,
         PartyType::PROVIDER,
         PartyType::PARTNER,
-        PartyType::ARBITRATION_TRIBUNAL,
+        // PartyType::ARBITRATION_TRIBUNAL,
     ];
 
     const TYPES_VALUES = [
@@ -23,6 +23,6 @@ enum PartyType : string
         PartyType::EMPLOYEE => 'Employé',
         PartyType::PROVIDER => 'Fournisseur',
         PartyType::PARTNER => 'Partenaire',
-        PartyType::ARBITRATION_TRIBUNAL => 'Tribunal arbitral',
+        // PartyType::ARBITRATION_TRIBUNAL => 'Tribunal arbitral',
     ];
 }

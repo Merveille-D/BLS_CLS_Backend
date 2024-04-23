@@ -18,8 +18,8 @@ class LawyerSeeder extends Seeder
                 'phone' => +1234567890,
             ],
             [
-                'name' => 'John Smith',
-                'email' => 'john@test.com',
+                'name' => 'Paul Smith',
+                'email' => 'pail@test.com',
                 'phone' => +1234567890,
             ],
         ];
