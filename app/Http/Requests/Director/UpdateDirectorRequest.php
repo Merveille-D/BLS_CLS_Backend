@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Notation;
+namespace App\Http\Requests\Director;
 
-use App\Models\Bank\Bank;
-use App\Models\Evaluation\Notation;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
-class StoreUpdateNotationRequest extends FormRequest
+class UpdateDirectorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,11 +24,14 @@ class StoreUpdateNotationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'collaborator_id' => ['required','uuid'],
-            'notes' => ['required','array' ],
-            'notes.*.performance_indicator_id' => ['required','uuid'],
-            'notes.*.note' => ['required','numeric'],
-            'status' => [Rule::in(Notation::STATUS)],
+            'name' => 'string|max:255',
+            'birthdate' => 'date',
+            'birthplace' => 'string|max:255',
+            'nationality' => 'string|max:255',
+            'address' => 'string|max:255',
+            'appointment_date' => 'date',
+            'renewal_date' => 'date',
+            'expiry_date' => 'date',
         ];
     }
 

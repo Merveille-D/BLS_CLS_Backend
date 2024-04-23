@@ -68,7 +68,17 @@ class TaskGeneralMeetingRepository
             $taskGeneralMeeting = $this->task->findOrFail($data['id']);
             $taskGeneralMeeting->update(['status' => $data['status']]);
             $updatedTasks[] = $taskGeneralMeeting;
+
+
+            if($taskGeneralMeeting->type === 'pre_ag') {
+                $general_meeting = $taskGeneralMeeting->general_meeting();
+                if($taskGeneralMeeting->deadline === $general_meeting->meeting_date) {
+                    $general_meeting->update(['status' => 'post_ag']);
+                }
+            }
+
         }
+
 
         return $taskGeneralMeeting;
     }

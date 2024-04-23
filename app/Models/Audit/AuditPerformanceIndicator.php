@@ -20,8 +20,8 @@ class AuditPerformanceIndicator extends Model
 
     const MODULES = [
         'contracts',
-        'guarantees',
-        'litigations',
+        'conventionnal_hypothec',
+        'litigation',
     ];
 
     const TYPES = [

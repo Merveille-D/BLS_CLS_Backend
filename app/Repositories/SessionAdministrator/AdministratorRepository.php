@@ -5,6 +5,7 @@ use App\Enums\AdminFunction;
 use App\Enums\AdminType;
 use App\Enums\Quality;
 use App\Models\Gourvernance\BoardDirectors\Administrators\CaAdministrator;
+use App\Models\Gourvernance\Mandate;
 
 class AdministratorRepository
 {
@@ -35,6 +36,28 @@ class AdministratorRepository
             $corporate = $this->admin->create(array_merge(['permanent_representative_id' => $representant->id], $company_info));
             return $corporate;
         }
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return CaAdministrator
+     */
+    public function update(CaAdministrator $ca_administrator, $request) {
+
+        $first_mandat = $ca_administrator->mandates()->first();
+
+        if($first_mandat->expiry_date < now()) {
+            $mandat = new Mandate();
+
+            $mandat->appointment_date = $request['appointment_date'] ?? null;
+            $mandat->renewal_date = $request['renewal_date'] ?? null;
+            $mandat->expiry_date = $request['expiry_date'] ?? null;
+
+            $ca_administrator->mandates()->save($mandat);
+        }
+
+        return $ca_administrator;
     }
 
     public function settings() : array {

@@ -36,6 +36,8 @@ class GeneralMeetingRepository
      */
     public function update(GeneralMeeting $general_meeting, $request) {
 
+        $general_meeting->update($request);
+
         $current_date = new DateTime($request["meeting_date"]);
         $old_date = new DateTime($general_meeting->meeting_date);
 
@@ -44,8 +46,6 @@ class GeneralMeetingRepository
         if($date_diff->format('%R%a') != 0) {
             $this->createTasks($general_meeting);
         }
-
-        $general_meeting->update($request);
 
         return $general_meeting;
     }

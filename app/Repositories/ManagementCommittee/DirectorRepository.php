@@ -2,6 +2,7 @@
 namespace App\Repositories\ManagementCommittee;
 
 use App\Models\Gourvernance\ExecutiveManagement\Directors\Director;
+use App\Models\Gourvernance\Mandate;
 
 class DirectorRepository
 {
@@ -27,7 +28,20 @@ class DirectorRepository
      */
     public function update(Director $director, $request) {
 
+        $first_mandat = $director->mandates()->first();
+
+        if($first_mandat->expiry_date < now()) {
+            $mandat = new Mandate();
+
+            $mandat->appointment_date = $request['appointment_date'] ?? null;
+            $mandat->renewal_date = $request['renewal_date'] ?? null;
+            $mandat->expiry_date = $request['expiry_date'] ?? null;
+
+            $director->mandates()->save($mandat);
+        }
+
         $director->update($request);
+
         return $director;
     }
 

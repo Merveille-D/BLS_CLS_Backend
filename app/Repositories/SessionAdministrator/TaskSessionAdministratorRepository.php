@@ -67,6 +67,13 @@ class TaskSessionAdministratorRepository
             $taskSessionAdministrator = $this->task->findOrFail($data['id']);
             $taskSessionAdministrator->update(['status' => $data['status']]);
             $updatedTasks[] = $taskSessionAdministrator;
+
+            if($taskSessionAdministrator->type === 'pre_ca') {
+                $session_administrator = $taskSessionAdministrator->session_administrator();
+                if($taskSessionAdministrator->deadline === $session_administrator->session_date) {
+                    $session_administrator->update(['status' => 'post_ca']);
+                }
+            }
         }
 
         return $taskSessionAdministrator;

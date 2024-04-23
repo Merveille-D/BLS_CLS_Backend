@@ -2,6 +2,7 @@
 
 namespace App\Models\Gourvernance\BoardDirectors\Administrators;
 
+use App\Models\Gourvernance\Mandate;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -40,6 +41,11 @@ class CaAdministrator extends Model
 
     public function representing() {
         return $this->hasOne(CaAdministrator::class, 'id', 'permanent_representative_id');
+    }
+
+    public function mandates()
+    {
+        return $this->morphMany(Mandate::class, 'mandatable');
     }
 
 }

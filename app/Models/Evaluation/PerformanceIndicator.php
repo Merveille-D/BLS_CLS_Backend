@@ -20,6 +20,9 @@ class PerformanceIndicator extends Model
 
     const POSITIONS = [
         'lawyer',
+        'notary',
+        'hussier',
+        'real estate expert',
     ];
 
     const TYPES = [
