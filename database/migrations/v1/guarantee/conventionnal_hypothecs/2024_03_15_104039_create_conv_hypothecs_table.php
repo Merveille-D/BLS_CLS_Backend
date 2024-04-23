@@ -37,6 +37,8 @@ return new class extends Migration
             $table->boolean('is_publied')->default(0);
             $table->double('sell_price_estate')->nullable();
             $table->boolean('is_archived')->default(0);
+            $table->boolean('has_recovery')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

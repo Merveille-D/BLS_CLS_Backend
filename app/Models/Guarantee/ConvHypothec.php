@@ -47,6 +47,7 @@ class ConvHypothec extends Model
         'sell_price_estate',
         'summation_date',
         'is_archived',
+        'has_recovery',
     );
 
     /**
