@@ -34,13 +34,17 @@ class ConvHypothecStep extends Model
 
     public function getCompletedMaxDateAttribute() {
         if ($this->status) {
-            $hypo = $this->conv_hypothecs->first();
-            return $this->getDatebyStatus($this->code, $hypo);
+            return $this->getDatebyStatus($this->code);
         }
         return $this->max_deadline;
     }
 
-    public function getDatebyStatus($state, $hypo) {
+    public function getDatebyStatus($state) {
+        $hypo = $this->conv_hypothecs()
+                ->whereHypothecId($this->pivot->hypothec_id)
+                ->whereStepId($this->pivot->step_id)
+                ->first();
+
         $date = null;
         switch ($state) {
             case ConvHypothecState::REGISTER_REQUESTED:
