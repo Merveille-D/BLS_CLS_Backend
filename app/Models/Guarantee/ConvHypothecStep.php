@@ -2,6 +2,7 @@
 
 namespace App\Models\Guarantee;
 
+use App\Enums\ConvHypothecState;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,19 +20,60 @@ class ConvHypothecStep extends Model
         return $this->hasMany(ConvHypothecStep::class, 'stepable_id');
     }
 
-
-    public function getDeadlineAttribute() {
-        // dd($this);
-        if ($this->status)
-            return $this->created_at;
-        elseif ($this->max_deadline && $this->min_deadline)
-            return 'Du '.$this->min_deadline. ' au ' . $this->max_deadline;
-        elseif ($this->max_deadline)
-            return $this->max_deadline;
-        elseif ($this->min_deadline)
-            return $this->min_deadline;
-
-        return null;
+    public function conv_hypothecs() {
+        return $this->belongsToMany(ConvHypothec::class,  'hypothec_step', 'step_id', 'hypothec_id');
     }
 
+
+    public function getCompletedMinDateAttribute() {
+        if ($this->status) {
+            return null;
+        }
+        return $this->min_deadline;
+    }
+
+    public function getCompletedMaxDateAttribute() {
+        if ($this->status) {
+            $hypo = $this->conv_hypothecs->first();
+            return $this->getDatebyStatus($this->code, $hypo);
+        }
+        return $this->max_deadline;
+    }
+
+    public function getDatebyStatus($state, $hypo) {
+        $date = null;
+        switch ($state) {
+            case ConvHypothecState::REGISTER_REQUESTED:
+                $date = $hypo->registering_date;
+            break;
+            case ConvHypothecState::REGISTER:
+                $date = $hypo->registration_date;
+            break;
+            case ConvHypothecState::NONREGISTER:
+                $date = $hypo->registration_date;
+            break;
+            case ConvHypothecState::SIGNIFICATION_REGISTERED:
+                $date = $hypo->date_signification;
+            break;
+            case ConvHypothecState::ORDER_PAYMENT_VISA:
+                $date = $hypo->visa_date;
+            break;
+            case ConvHypothecState::EXPROPRIATION_SPECIFICATION:
+                $date = $hypo->date_deposit_specification;
+            break;
+            case ConvHypothecState::EXPROPRIATION_SUMMATION:
+                $date = $hypo->summation_date;
+            break;
+            case ConvHypothecState::ADVERTISEMENT:
+                $date = $hypo->advertisement_date;
+            break;
+            // case ConvHypothecState::STATUS_COMPLETED_MIN:
+            //     return $this->completed_min_date;
+            default:
+                $date = null;
+            break;
+        }
+
+        return $date;
+    }
 }

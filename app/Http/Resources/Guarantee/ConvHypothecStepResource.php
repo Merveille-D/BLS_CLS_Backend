@@ -19,12 +19,11 @@ class ConvHypothecStepResource extends JsonResource
             'code' => $this->code,
             'name' => $this->name,
             'status' => $this->status ? true : false,
-            'min_deadline' => $this->min_deadline,
-            'max_deadline' => $this->max_deadline,
+            'min_deadline' => $this->completed_min_date, //$this->min_deadline,
+            'max_deadline' => $this->completed_max_date, //$this->max_deadline,
             'type' => $this->type,
             // 'deadline' => $this->deadline,
             'form' => $this->when($this->form, $this->form),
-            // 'steps' => ConvHypothecStepResource::collection($this->whenLoaded('steps')),
         ];
     }
 }

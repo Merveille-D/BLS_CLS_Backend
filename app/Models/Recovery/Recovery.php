@@ -2,6 +2,7 @@
 
 namespace App\Models\Recovery;
 
+use App\Models\Guarantee\ConvHypothec;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -34,12 +35,18 @@ class Recovery extends Model
     }
 
     function getCurrentStepAttribute() {
+        if ($this->has_guarantee) {
+            return $this->guarantee->current_step;
+        }
         return $this->steps()->where('recovery_task.type', 'step')
                     ->orderBy('rank', 'desc')->where('status', true)->first();
     }
 
     public function getNextStepAttribute()
     {
+        if ($this->has_guarantee) {
+            return $this->guarantee->next_step;
+        }
         return $this->steps()->where('recovery_task.type', 'step')
                     ->orderBy('rank')->where('status', false)->first();
     }
@@ -47,5 +54,15 @@ class Recovery extends Model
     public function documents() : MorphMany
     {
         return $this->morphMany(RecoveryDocument::class, 'documentable');
+    }
+
+    /**
+     * important to note that this section is provisional before microservices
+     *
+     * Get the guarantee that owns the Recovery
+     */
+    public function guarantee()
+    {
+        return $this->belongsTo(ConvHypothec::class, 'guarantee_id');
     }
 }

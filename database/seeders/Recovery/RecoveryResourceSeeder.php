@@ -33,8 +33,9 @@ class RecoveryResourceSeeder extends Seeder
             'name' => 'Test Recouvrement',
             'type' => 'forced',
             'reference' => 'REC-1234',
-            'status' => ConvHypothecState::CREATED,
-            'has_guarantee' => false,
+            'status' => RecoveryStepEnum::CREATED,
+            'has_guarantee' => true,
+            'guarantee_id' => '9bce26d8-32c0-4b96-afcd-300d051cf9f0',
         ]);
 
         $recovery = Recovery::find('aaa726d8-32c0-4b96-afcd-300d051cf9f0');

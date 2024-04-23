@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\Recovery;
 
+use App\Http\Resources\Guarantee\ConvHypothecResource;
+use App\Models\Guarantee\ConvHypothec;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -15,7 +17,6 @@ class RecoveryResource extends JsonResource
     public function toArray(Request $request): array
     {
         $id = $request->route('recovery');
-
         return [
             'id' => $this->id,
             'status' => $this->status,
@@ -23,6 +24,7 @@ class RecoveryResource extends JsonResource
             'name' => $this->name,
             'type' => $this->type,
             'guarantee_id' => $this->guarantee_id,
+            // 'guarantee' => new ConvHypothecResource($this->guarantee),
             'has_guarantee' => $this->has_guarantee ? true : false,
             'payement_status' => $this->payement_status ? true : false,
             'is_seized' => $this->is_seized ? true : false,

@@ -43,7 +43,7 @@ trait HypothecFormFieldTrait
             case ConvHypothecState::REGISTER:
                 $customFields = $this->commonProperties(ConvHypothecState::STATES_VALUES[ConvHypothecState::REGISTER],
                     ['radio', 'is_approved', 'L\'inscription est elle approuvée'],
-                    ['date', 'registration_date', 'Insérer preuve'],
+                    ['date', 'registration_date', 'Date de l\'inscription'],
                     ['file', 'documents', 'Inserer la preuve de l\'inscription'],
 
                 );
@@ -93,7 +93,7 @@ trait HypothecFormFieldTrait
 
             case ConvHypothecState::ADVERTISEMENT:
                 $customFields = $this->commonProperties(ConvHypothecState::STATES_VALUES[ConvHypothecState::ADVERTISEMENT],
-                    ['date', 'advertisement_date', 'Date du visa'],
+                    ['date', 'advertisement_date', 'Date de la publication'],
                     ['file', 'documents', 'Insérer copie de la publicité'],
 
                 );

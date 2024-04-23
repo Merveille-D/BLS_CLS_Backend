@@ -16,15 +16,13 @@ use Illuminate\Support\Facades\Log;
 class ConvHypothecController extends Controller
 {
     use ApiResponse;
-    public function __construct(private ConvHypothecRepository $hypothecRepo) {
-
-    }
+    public function __construct(private ConvHypothecRepository $hypothecRepo) {}
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return api_response(true, 'Liste de tous les hypotheques conventionnelles', $data = $this->hypothecRepo->getConvHypothecs());
+        return api_response(true, 'Liste de tous les hypotheques conventionnelles', $data = $this->hypothecRepo->getConvHypothecs(request()));
     }
 
     /**

@@ -30,8 +30,17 @@ class ConvHypothecRepository
     }
 
 
-    public function getConvHypothecs() : ResourceCollection {
-        return ConvHypothecResource::collection($this->conv_model->paginate());
+    public function getConvHypothecs($request) : ResourceCollection {
+        $search = $request->search;
+        $type = $request->type;
+        return ConvHypothecResource::collection($this->conv_model
+                    ->when(!blank($type) && $type == 'realizable', function($qry) {
+                        $qry->whereState(ConvHypothecState::REGISTER)->whereIsApproved(true);
+                    })
+                    ->when(!blank($search), function($qry) use($search) {
+                        $qry->where('name', 'like', '%'.$search.'%');
+                    })
+                    ->paginate());
     }
 
     public function getConvHypothecById($id) : JsonResource {
@@ -70,7 +79,7 @@ class ConvHypothecRepository
         if ($form) {
             $step->form = $form;
         }
-        return $step;
+        return new ConvHypothecStepResource($step);
     }
 
     function initFormalizationProcess($request) {
@@ -107,7 +116,7 @@ class ConvHypothecRepository
             $convHypo->save();
             return ConvHypothecStepResource::collection($convHypo->steps);
         } else {
-            return false;
+            return [];
         }
     }
 
@@ -260,7 +269,7 @@ class ConvHypothecRepository
 
     function saveSignification($request, $convHypo) : array {
         if ($convHypo->is_approved == false) {
-            return false;
+            return [];
         }
 
         $data = array(
@@ -285,9 +294,9 @@ class ConvHypothecRepository
         return $data;
     }
 
-    function saveOrderPayement($request, $convHypo) : array {
+    function saveOrderPayement($request, $convHypo) : array|bool {
         if ($convHypo->is_verified == false) {
-            return false;
+            return [];
         }
         $data = array(
             'visa_date' => $request->visa_date,
@@ -363,9 +372,10 @@ class ConvHypothecRepository
         );
     }
 
-    function stepCommonSavingSettings($files,Model $convHypo, array $data) : array {
+    function stepCommonSavingSettings($files,Model $convHypo, array $data) : array|bool {
         if (count($files)<=0)
-            return false;
+            return [];
+
         foreach ($files as $key => $file_elt) {
 
             $file_path = storeFile($file_elt['file'], 'guarantee/conv_hypothec');
