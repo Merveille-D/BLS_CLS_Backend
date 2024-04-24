@@ -30,7 +30,7 @@ enum ConvHypothecState {
         ConvHypothecState::REGISTER_REQUESTED => 'Demande d\'inscription',
         ConvHypothecState::REGISTER => 'Réponse de l\'inscription',
         ConvHypothecState::SIGNIFICATION_REGISTERED => 'Signification commendement de payer',
-        ConvHypothecState::ORDER_PAYMENT_VERIFIED => 'Ordre de payement',
+        ConvHypothecState::ORDER_PAYMENT_VERIFIED => 'Demande d\'inscription et publication du commendement de payer',
         ConvHypothecState::ORDER_PAYMENT_VISA => 'Visa de payement',
         ConvHypothecState::EXPROPRIATION_SPECIFICATION => 'Expropriation : Dépôt de cahier de charges',
         // ConvHypothecState::EXPROPRIATION_SALE => 'Expropriation : Fixation de la date de vente',

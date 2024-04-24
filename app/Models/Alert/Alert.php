@@ -14,5 +14,5 @@ class Alert extends Model
 {
     use HasFactory, Notifiable, HasUuids;
 
-    protected $fillable = ['state', 'sent_by', 'sent_to', 'title', 'message', 'type', 'trigger_at'];
+    protected $fillable = ['state', 'sent_by', 'sent_to', 'title', 'message', 'type', 'trigger_at', 'priority'];
 }

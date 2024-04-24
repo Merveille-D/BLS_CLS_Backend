@@ -2,15 +2,19 @@
 
 namespace App\Models\Recovery;
 
+use App\Concerns\Traits\Alert\Alertable;
 use App\Models\Guarantee\ConvHypothec;
+use App\Observers\Recovery\RecoveryObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
+#[ObservedBy([RecoveryObserver::class])]
 class Recovery extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory, HasUuids, Alertable;
 
     protected $fillable = [
         'name',
