@@ -83,12 +83,10 @@ if(!function_exists('searchElementIndice')) {
 }
 
 function checkDealine($deadline) {
-    $now = new DateTime(now());
-    $deadline = new DateTime($deadline);
+    $now = Carbon::now();
+    $deadline = Carbon::parse($deadline);
 
-    $date_diff = $now->diff($deadline);
-
-    return ($date_diff->format('%R%a') != 0) ? false : true;
+    return ($now->diffInDays($deadline) != 0) ? false : true;
 }
 
 function triggerAlert($subject, $message) {
