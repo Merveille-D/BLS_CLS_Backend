@@ -5,6 +5,7 @@ use App\Concerns\Traits\Recovery\RecoveryFormFieldTrait;
 use App\Enums\Recovery\RecoveryStepEnum;
 use App\Http\Resources\Recovery\RecoveryResource;
 use App\Http\Resources\Recovery\RecoveryStepResource;
+use App\Models\Guarantee\ConvHypothec;
 use App\Models\Recovery\Recovery;
 use App\Models\Recovery\RecoveryDocument;
 use App\Models\Recovery\RecoveryStep;
@@ -125,6 +126,10 @@ class RecoveryRepository
         );
 
         $recovery = $this->recovery_model->create($data);
+
+        if ($recovery->guarantee_id) {
+            $this->updateHypothecStatus($recovery);
+        }
 
         $this->generateSteps($recovery);
 
@@ -317,5 +322,15 @@ class RecoveryRepository
         ]);
 
         return new RecoveryResource($recovery);
+    }
+
+    public function updateHypothecStatus($recovery) {
+        $guarantee = ConvHypothec::find($recovery->guarantee_id);
+
+        if ($guarantee) {
+            $guarantee->update([
+                'has_recovery' => true,
+            ]);
+        }
     }
 }

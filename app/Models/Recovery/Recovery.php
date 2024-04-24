@@ -36,7 +36,7 @@ class Recovery extends Model
 
     function getCurrentStepAttribute() {
         if ($this->has_guarantee) {
-            return $this->guarantee->current_step;
+            return $this->guarantee->current_step ?? null;
         }
         return $this->steps()->where('recovery_task.type', 'step')
                     ->orderBy('rank', 'desc')->where('status', true)->first();
@@ -45,7 +45,7 @@ class Recovery extends Model
     public function getNextStepAttribute()
     {
         if ($this->has_guarantee) {
-            return $this->guarantee->next_step;
+            return $this->guarantee->next_step ?? null;
         }
         return $this->steps()->where('recovery_task.type', 'step')
                     ->orderBy('rank')->where('status', false)->first();

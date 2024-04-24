@@ -159,8 +159,13 @@ class ConvHypothecRepository
         if ($convHypo) {
             $data = $this->updateProcessByState($request, $convHypo);
 
-            $this->updatePivotState($convHypo);
-            return new ConvHypothecResource($data);
+            if (!blank($data)) {
+                $convHypo->update($data);
+                $convHypo->refresh();
+                $this->updatePivotState($convHypo);
+                return new ConvHypothecResource($convHypo);
+            } else
+                return [];
         }
     }
 
@@ -214,8 +219,7 @@ class ConvHypothecRepository
                 # code...
                 break;
         }
-        $convHypo->update($data);
-        return $convHypo->refresh();
+        return $data;
     }
 
     function verifyProperty($request, $convHypo) : array {
@@ -268,7 +272,7 @@ class ConvHypothecRepository
     }
 
     function saveSignification($request, $convHypo) : array {
-        if ($convHypo->is_approved == false) {
+        if ($convHypo->is_approved == false || $convHypo->step != 'realization') {
             return [];
         }
 

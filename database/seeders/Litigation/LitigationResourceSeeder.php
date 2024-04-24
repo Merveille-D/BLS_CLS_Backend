@@ -75,12 +75,13 @@ class LitigationResourceSeeder extends Seeder
      */
     public function litigation_jurisdictions() : array {
         return [
-            'Tribunal de Première Instance',
-            'Tribunal de Commerce',
-            'Tribunal Administratif',
             'Cour d\'Appel',
-            'Cour Suprême ',
             'Cour Constitutionnelle',
+            'Cour Suprême ',
+            'Tribunal Administratif',
+            'Tribunal arbitral',
+            'Tribunal de Commerce',
+            'Tribunal de Première Instance',
         ];
     }
 }

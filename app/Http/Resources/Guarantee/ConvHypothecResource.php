@@ -35,6 +35,8 @@ class ConvHypothecResource extends JsonResource
             'next_step' => $this->when($id, new ConvHypothecStepResource($this->next_step)),
             'current_step' => $this->when($id, new ConvHypothecStepResource($this->current_step)),
             'documents' => DocumentResource::collection($this->whenLoaded('documents')),
+            'is_archived' => $this->is_archived ? true : false,
+            'has_recovery' => $this->has_recovery ? true : false,
             // 'steps' => $this->when($id, $this->steps)
             // 'steps' => $this->when($id, ConvHypothecStepResource::collection($this->steps))
         ];

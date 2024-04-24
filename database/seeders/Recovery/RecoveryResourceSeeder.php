@@ -40,9 +40,9 @@ class RecoveryResourceSeeder extends Seeder
 
         $recovery = Recovery::find('aaa726d8-32c0-4b96-afcd-300d051cf9f0');
 
-        $this->recoveryRepository->generateSteps($recovery);
+        // $this->recoveryRepository->generateSteps($recovery);
 
-        $this->recoveryRepository->updatePivotState($recovery);
+        // $this->recoveryRepository->updatePivotState($recovery);
     }
 
     function getSteps() : array {
