@@ -28,7 +28,8 @@ class ConvHypothecObserver implements ShouldHandleEventsAfterCommit
         $alert->title = $data['subject'];
         $alert->type = 'hypothec';
         $alert->message = $data['message'];
-        $alert->trigger_at = Carbon::now()->addDays(3);
+        // $alert->trigger_at = Carbon::now()->addDays(3);
+        $alert->trigger_at = Carbon::now()->addMinutes(5);
         $convHypo->alerts()->save($alert);
     }
 
@@ -50,7 +51,7 @@ class ConvHypothecObserver implements ShouldHandleEventsAfterCommit
     /**
      * Handle the ConventionnalHypothec "deleted" event.
      */
-    public function deleted(ConventionnalHypothec $conventionnalHypothec): void
+    public function deleted(ConvHypothec $conventionnalHypothec): void
     {
         //
     }
@@ -58,7 +59,7 @@ class ConvHypothecObserver implements ShouldHandleEventsAfterCommit
     /**
      * Handle the ConventionnalHypothec "restored" event.
      */
-    public function restored(ConventionnalHypothec $conventionnalHypothec): void
+    public function restored(ConvHypothec $conventionnalHypothec): void
     {
         //
     }
@@ -66,7 +67,7 @@ class ConvHypothecObserver implements ShouldHandleEventsAfterCommit
     /**
      * Handle the ConventionnalHypothec "force deleted" event.
      */
-    public function forceDeleted(ConventionnalHypothec $conventionnalHypothec): void
+    public function forceDeleted(ConvHypothec $conventionnalHypothec): void
     {
         //
     }
