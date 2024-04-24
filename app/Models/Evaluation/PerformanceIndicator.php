@@ -22,7 +22,7 @@ class PerformanceIndicator extends Model
         'lawyer',
         'notary',
         'hussier',
-        'real estate expert',
+        'real_estate_expert',
     ];
 
     const TYPES = [

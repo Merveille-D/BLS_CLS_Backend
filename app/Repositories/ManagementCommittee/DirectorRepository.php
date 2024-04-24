@@ -30,14 +30,19 @@ class DirectorRepository
 
         $first_mandat = $director->mandates()->first();
 
-        if($first_mandat->expiry_date < now()) {
-            $mandat = new Mandate();
+        if (!isset($first_mandat) || $first_mandat->expiry_date < now()) {
 
-            $mandat->appointment_date = $request['appointment_date'] ?? null;
-            $mandat->renewal_date = $request['renewal_date'] ?? null;
-            $mandat->expiry_date = $request['expiry_date'] ?? null;
-
-            $director->mandates()->save($mandat);
+            $director->mandates()->create([
+                'appointment_date' => $request['appointment_date'] ?? null,
+                'renewal_date' => $request['renewal_date'] ?? null,
+                'expiry_date' => $request['expiry_date'] ?? null,
+            ]);
+        }else {
+            $director->mandates()->update([
+                'appointment_date' => $request['appointment_date'] ?? null,
+                'renewal_date' => $request['renewal_date'] ?? null,
+                'expiry_date' => $request['expiry_date'] ?? null,
+            ]);
         }
 
         $director->update($request);

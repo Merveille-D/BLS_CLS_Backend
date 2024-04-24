@@ -15,9 +15,4 @@ class Mandate extends Model
         'renewal_date',
         'expiry_date',
     ];
-
-    const TYPES = [
-        'director',
-        'administrator',
-    ];
 }

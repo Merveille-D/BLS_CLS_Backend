@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('mandates', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->date('appointment date')->nullable();
-            $table->date('renewal date')->nullable();
-            $table->date('expiry date')->nullable();
+            $table->date('appointment_date')->nullable();
+            $table->date('renewal_date')->nullable();
+            $table->date('expiry_date')->nullable();
             $table->uuidMorphs('mandatable');
             $table->timestamps();
         });
