@@ -108,10 +108,6 @@ class GeneralMeetingRepository
                 }
 
                 $new_task = TaskGeneralMeeting::create($task);
-
-                if(checkDealine($new_task->deadline)) {
-                    $new_task->alerts()->save(triggerAlert("RAPPEL | ASSEMBLEE GENERALE", $new_task->libelle));
-                }
             }
         }
 

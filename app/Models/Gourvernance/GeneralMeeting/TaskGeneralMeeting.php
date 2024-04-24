@@ -3,10 +3,12 @@
 namespace App\Models\Gourvernance\GeneralMeeting;
 
 use App\Concerns\Traits\Alert\Alertable;
+use App\Observers\TaskGeneralMeetingObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+#[ObservedBy([TaskGeneralMeetingObserver::class])]
 class TaskGeneralMeeting extends Model
 {
     use HasFactory, HasUuids, Alertable;

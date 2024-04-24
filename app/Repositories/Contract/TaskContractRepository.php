@@ -29,11 +29,6 @@ class TaskContractRepository
     public function store($request) {
 
         $task = $this->task->create($request->all());
-
-        if(checkDealine($task->deadline)) {
-            $task->alerts()->save(triggerAlert("RAPPEL | CONTRAT", $task->libelle));
-        }
-
         return $task;
     }
 

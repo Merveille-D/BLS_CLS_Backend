@@ -52,12 +52,10 @@ class TaskIncidentRepository
         }
 
         $request['status'] = true;
-        $taskIncident->update($request);
 
         $this->createNextTasks($taskIncident);
 
-        $next_task = $taskIncident->where('incident_id', $taskIncident->incident_id)->where('status', false)->first();
-        $next_task->alerts()->save(triggerAlert("RAPPEL | INCIDENT", $next_task->title));
+        $taskIncident->update($request);
 
         return $taskIncident;
     }

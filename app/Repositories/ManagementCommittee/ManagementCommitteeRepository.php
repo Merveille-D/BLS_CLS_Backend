@@ -107,9 +107,6 @@ class ManagementCommitteeRepository
                 }
                 $new_task = TaskManagementCommittee::create($task);
 
-                if(checkDealine($new_task->deadline)) {
-                    $new_task->alerts()->save(triggerAlert("RAPPEL | DIRECTION GENERALE", $new_task->libelle));
-                }
             }
         }
 

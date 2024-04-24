@@ -46,10 +46,6 @@ class TaskGeneralMeetingRepository
 
         $task_general_meeting = $this->task->create($request->all());
 
-        if(checkDealine($task_general_meeting->deadline)) {
-            $task_general_meeting->alerts()->save(triggerAlert("RAPPEL | ASSEMBLEE GENERALE",  $task_general_meeting->libelle));
-        }
-
         return $task_general_meeting;
     }
 

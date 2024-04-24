@@ -3,10 +3,12 @@
 namespace App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee;
 
 use App\Concerns\Traits\Alert\Alertable;
+use App\Observers\TaskManagementCommitteeObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+#[ObservedBy([TaskManagementCommitteeObserver::class])]
 class TaskManagementCommittee extends Model
 {
     use HasFactory, HasUuids, Alertable;
