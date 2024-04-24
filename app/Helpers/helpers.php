@@ -88,7 +88,7 @@ function checkDealine($deadline) {
 
     $date_diff = $now->diff($deadline);
 
-    return ($date_diff->format('%R%a') != 0) ? true : false;
+    return ($date_diff->format('%R%a') != 0) ? false : true;
 }
 
 function triggerAlert($subject, $message) {
