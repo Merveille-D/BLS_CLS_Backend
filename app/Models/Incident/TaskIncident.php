@@ -2,6 +2,7 @@
 
 namespace App\Models\Incident;
 
+use App\Concerns\Traits\Alert\Alertable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -9,7 +10,7 @@ use Illuminate\Validation\Rule;
 
 class TaskIncident extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory, HasUuids, Alertable;
 
     /**
      * Les attributs qui doivent être castés vers des types natifs.

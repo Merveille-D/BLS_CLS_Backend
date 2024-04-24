@@ -2,14 +2,14 @@
 
 namespace App\Models\Gourvernance\GeneralMeeting;
 
-use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
+use App\Concerns\Traits\Alert\Alertable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class TaskGeneralMeeting extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory, HasUuids, Alertable;
 
     /**
      * Les attributs qui doivent être castés vers des types natifs.

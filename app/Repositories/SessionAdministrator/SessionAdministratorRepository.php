@@ -108,7 +108,11 @@ class SessionAdministratorRepository
                     $deadline = $session_date->modify($sign * abs($task['days']) . ' days');
                     $task['deadline'] = $deadline;
                 }
-                TaskSessionAdministrator::create($task);
+                $new_task = TaskSessionAdministrator::create($task);
+
+                if(checkDealine($new_task->deadline)) {
+                    $new_task->alerts()->save(triggerAlert("RAPPEL | SESSION ADMINISTRATEUR", $new_task->libelle));
+                }
             }
         }
 

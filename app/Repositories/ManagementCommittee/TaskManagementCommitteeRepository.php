@@ -43,6 +43,11 @@ class TaskManagementCommitteeRepository
         }
 
         $task_management_committee = $this->task->create($request->all());
+
+        if(checkDealine($task_management_committee->deadline)) {
+            $task_management_committee->alerts()->save(triggerAlert("RAPPEL | DIRECTION GENERALE",  $task_management_committee->libelle));
+        }
+
         return $task_management_committee;
     }
 

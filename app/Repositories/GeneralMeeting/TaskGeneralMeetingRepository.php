@@ -4,6 +4,7 @@ namespace App\Repositories\GeneralMeeting;
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
 use Carbon\Carbon;
+use DateTime;
 
 class TaskGeneralMeetingRepository
 {
@@ -44,6 +45,11 @@ class TaskGeneralMeetingRepository
         }
 
         $task_general_meeting = $this->task->create($request->all());
+
+        if(checkDealine($task_general_meeting->deadline)) {
+            $task_general_meeting->alerts()->save(triggerAlert("RAPPEL | ASSEMBLEE GENERALE",  $task_general_meeting->libelle));
+        }
+
         return $task_general_meeting;
     }
 
@@ -78,7 +84,6 @@ class TaskGeneralMeetingRepository
             }
 
         }
-
 
         return $taskGeneralMeeting;
     }

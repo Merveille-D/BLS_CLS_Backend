@@ -43,6 +43,11 @@ class TaskSessionAdministratorRepository
         }
 
         $task_session_administrator = $this->task->create($request->all());
+
+        if(checkDealine($task_session_administrator->deadline)) {
+            $task_session_administrator->alerts()->save(triggerAlert("RAPPEL | SESSION ADMINISTRATEUR",  $task_session_administrator->libelle));
+        }
+
         return $task_session_administrator;
     }
 

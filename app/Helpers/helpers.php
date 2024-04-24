@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
+use App\Models\Alert\Alert;
+use Carbon\Carbon;
+
 if (!function_exists('sanitize_file_name')) {
     function sanitize_file_name($filename) : string {
         // Remove invalid characters (except alphanumeric, ., -, and _)
@@ -77,6 +80,25 @@ if(!function_exists('searchElementIndice')) {
         }
         return null;
     }
+}
+
+function checkDealine($deadline) {
+    $now = new DateTime(now());
+    $deadline = new DateTime($deadline);
+
+    $date_diff = $now->diff($deadline);
+
+    return ($date_diff->format('%R%a') != 0) ? true : false;
+}
+
+function triggerAlert($subject, $message) {
+        $alert = new Alert();
+        $alert->title = $subject;
+        $alert->type = 'info';
+        $alert->message = $message;
+        $alert->trigger_at = Carbon::now()->addMinutes(1);
+
+        return $alert;
 }
 
 

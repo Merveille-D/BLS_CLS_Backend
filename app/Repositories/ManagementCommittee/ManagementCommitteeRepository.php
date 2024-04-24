@@ -105,7 +105,11 @@ class ManagementCommitteeRepository
                     $deadline = $session_date->modify($sign * abs($task['days']) . ' days');
                     $task['deadline'] = $deadline;
                 }
-                TaskManagementCommittee::create($task);
+                $new_task = TaskManagementCommittee::create($task);
+
+                if(checkDealine($new_task->deadline)) {
+                    $new_task->alerts()->save(triggerAlert("RAPPEL | DIRECTION GENERALE", $new_task->libelle));
+                }
             }
         }
 
