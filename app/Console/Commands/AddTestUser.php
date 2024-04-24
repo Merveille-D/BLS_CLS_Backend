@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Hash;
 
 class AddTestUser extends Command
 {
@@ -11,7 +12,7 @@ class AddTestUser extends Command
      *
      * @var string
      */
-    protected $signature = 'add-user';
+    protected $signature = 'add-user {email}';
 
     /**
      * The console command description.
@@ -25,6 +26,12 @@ class AddTestUser extends Command
      */
     public function handle()
     {
+        $user = new \App\Models\User();
+        $user->name = 'AfrikSkills';
+        $user->email = $this->argument('email');
+        $user->password = Hash::make('password');
+        $user->save();
 
+        $this->info('User created successfully');
     }
 }
