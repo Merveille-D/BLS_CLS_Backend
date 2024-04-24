@@ -14,12 +14,12 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $existingUser = User::where('email', 'test@example.com')->first();
+        $existingUser = User::where('email', 'raoulmassigbe@gmail.com')->first();
 
         if (!$existingUser) {
             $user = User::create([
                 'name' => 'Test Utilisateur',
-                'email' => 'raoulgbadou@gmail.com',
+                'email' => 'raoulmassigbe@gmail.com',
                 'password' => Hash::make('password')
             ]);
         }
