@@ -10,5 +10,9 @@ class Notification extends Model
 {
     use HasFactory, HasUuids;
 
-    protected $fillable = ['state', 'sent_by', 'type', 'sent_to', 'data', 'alert_id', 'read_at'];
+    protected $fillable = ['state', 'sent_by', 'type', 'sent_to', 'data', 'alert_id', 'read_at', 'priority'];
+
+    protected $casts = [
+        'data' => 'array',
+    ];
 }

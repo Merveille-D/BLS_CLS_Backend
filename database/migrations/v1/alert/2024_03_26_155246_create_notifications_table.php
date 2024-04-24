@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('sent_by')->default('system');
+            $table->string('priority')->default('normal');
             $table->string('sent_to')->nullable();
             $table->string('type')->default('alert');
             $table->text('data');
