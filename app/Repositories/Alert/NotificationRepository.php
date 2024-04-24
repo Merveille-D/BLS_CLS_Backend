@@ -16,10 +16,17 @@ class NotificationRepository
 
     public function getList($request) : ResourceCollection {
         $search = $request->search;
+        $is_read = $request->is_read;
         $user_id = $request->user_id ?? User::first()->id;
         $query = $this->notification
                 ->when(!blank($search), function($qry) use($search) {
                     $qry->where('title', 'like', '%'.$search.'%');
+                })
+                ->when($is_read == 'true', function($qry) {
+                    $qry->whereNotNull('read_at');
+                })
+                ->when($is_read == 'false', function($qry) {
+                    $qry->whereNull('read_at');
                 })
                 ->wherenotifiableId($user_id)
                 ->paginate();
@@ -28,7 +35,9 @@ class NotificationRepository
     }
 
     public function findById($id) : JsonResource {
-        return new NotificationResource($this->notification->findOrfail($id));
+        $notif = $this->notification->findOrfail($id);
+        $notif->update(['read_at' => now()]);
+        return new NotificationResource($notif);
     }
 
     public function markAsRead($id) : JsonResource {

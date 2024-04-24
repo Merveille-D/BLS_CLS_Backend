@@ -2,6 +2,7 @@
 namespace App\Concerns\Traits\Guarantee;
 
 use App\Enums\ConvHypothecState;
+use App\Models\Guarantee\ConvHypothec;
 
 trait ConvHypothecNotificationTrait
 {
@@ -35,6 +36,33 @@ trait ConvHypothecNotificationTrait
                 $data['subject'] = 'RAPPEL : Étape de '.ConvHypothecState::STATES_VALUES[ConvHypothecState::ORDER_PAYMENT_VERIFIED];
                 $data['message'] = 'Procéder à la vérification de l\'ordre de paiement ';
                 break;
+
+            case ConvHypothecState::ORDER_PAYMENT_VERIFIED:
+                $data['subject'] = 'RAPPEL : Étape de '.ConvHypothecState::STATES_VALUES[ConvHypothecState::ORDER_PAYMENT_VISA];
+                $data['message'] = 'Procéder à la demande d\'inscription et publication du commendement de payer';
+                break;
+
+            case ConvHypothecState::ORDER_PAYMENT_VISA:
+                $data['subject'] = 'RAPPEL : Étape de '.ConvHypothecState::STATES_VALUES[ConvHypothecState::EXPROPRIATION_SPECIFICATION];
+                $data['message'] = 'Procéder à l\'expropriation en attachant le cahier de charges';
+                break;
+
+            case ConvHypothecState::EXPROPRIATION_SPECIFICATION:
+                $data['subject'] = 'RAPPEL : Étape de '.ConvHypothecState::STATES_VALUES[ConvHypothecState::EXPROPRIATION_SUMMATION];
+                $data['message'] = 'Procéder à l\'expropriation en adressant la sommation à prendre connaissance du cahier de charges';
+                break;
+
+            case ConvHypothecState::EXPROPRIATION_SUMMATION:
+                $data['subject'] = 'RAPPEL : Étape de '.ConvHypothecState::STATES_VALUES[ConvHypothecState::ADVERTISEMENT];
+                $data['message'] = 'Procéder à la publicité de vente';
+                break;
+
+            case ConvHypothecState::ADVERTISEMENT:
+                $data['subject'] = 'RAPPEL : Étape de '.ConvHypothecState::STATES_VALUES[ConvHypothecState::PROPERTY_SALE];
+                $data['message'] = 'Procéder à la vente de la propriété';
+                break;
+
+
 
             // case ConvHypothecState::ORDER_PAYMENT_VERIFIED:
             //     $data['subject'] = 'RAPPEL : Document de la reponse d\inscription';

@@ -36,6 +36,7 @@ class AlertNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable)
     {
         return (new MailMessage)
+                    ->greeting('Bonjour!')
                     ->subject($this->alert->title)
                     ->line($this->alert->message)
                     // ->action('Notification Action', url('/'))
@@ -57,6 +58,6 @@ class AlertNotification extends Notification implements ShouldQueue
 
     public function databaseType(object $notifiable): string
     {
-        return 'alert';
+        return $this->alert->type ?? 'alert';
     }
 }

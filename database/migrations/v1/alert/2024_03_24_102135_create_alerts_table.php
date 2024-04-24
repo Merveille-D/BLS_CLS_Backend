@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('alerts', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('state')->default('created');
+            $table->string('priority')->default('normal');
             $table->string('type')->nullable();
             $table->string('title')->nullable();
             $table->text('message')->nullable();
