@@ -25,7 +25,7 @@ class ConvHypothecObserver implements ShouldHandleEventsAfterCommit
         $data = $this->nextStepBasedOnState($convHypo->state);
 
         $alert = new Alert();
-        $alert->title = $data['subject'];
+        $alert->title = 'RAPPEL | Hypothèque conventionnelle'; //$data['subject'];
         $alert->type = 'hypothec';
         $alert->message = $data['message'];
         // $alert->trigger_at = Carbon::now()->addDays(3);
@@ -41,10 +41,10 @@ class ConvHypothecObserver implements ShouldHandleEventsAfterCommit
         $data = $this->nextStepBasedOnState($convHypo->state);
 
         $alert = new Alert();
-        $alert->title = $data['subject'];
+        $alert->title = 'RAPPEL | Hypothèque conventionnelle'; //$data['subject'];
         $alert->type = 'hypothec';
         $alert->message = $data['message'];
-        $alert->trigger_at = Carbon::now()->addDays(3);
+        $alert->trigger_at = Carbon::now()->addMinutes(5);
         $convHypo->alerts()->save($alert);
     }
 

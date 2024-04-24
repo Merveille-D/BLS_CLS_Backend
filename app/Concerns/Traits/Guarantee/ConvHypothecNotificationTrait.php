@@ -36,6 +36,11 @@ trait ConvHypothecNotificationTrait
                 $data['message'] = 'Procéder à la vérification de l\'ordre de paiement ';
                 break;
 
+            case ConvHypothecState::ORDER_PAYMENT_VERIFIED:
+                $data['subject'] = 'RAPPEL : Étape de '.ConvHypothecState::STATES_VALUES[ConvHypothecState::ORDER_PAYMENT_VISA];
+                $data['message'] = 'Procéder à la vérification de l\'ordre de paiement ';
+                break;
+
             // case ConvHypothecState::ORDER_PAYMENT_VERIFIED:
             //     $data['subject'] = 'RAPPEL : Document de la reponse d\inscription';
             //     $data['message'] = 'Attacher à l\'hypothèque conventionnelle la reponse de l\inscription';
