@@ -29,7 +29,7 @@ class StoreContractRequest extends FormRequest
         $rules = [
             'title' => ['required', 'string'],
             'category' => ['required',  Rule::in(Contract::CATEGORIES) ],
-            'type_category' => [ Rule::in(Contract::TYPE_CATEGORIES[$request->input('category')]) ],
+            // 'type_category' => [ Rule::in(Contract::TYPE_CATEGORIES[$request->input('category')]) ],
             'contract_file' => ['required', 'file'],
 
             // 'first_part' => ['required', 'array'],
@@ -56,7 +56,7 @@ class StoreContractRequest extends FormRequest
             ],
             'first_part.*.description' => ['required', 'string'],
 
-            
+
             'second_part' => ['required', 'array'],
             'second_part.*.part_id' => [
                 'required',
