@@ -23,6 +23,7 @@ class LitigationResource extends JsonResource
             'nature' => $this->nature ?? null,
             'parties' => PartyResource::collection($this->parties),
             'jurisdiction' => $this->jurisdiction ?? null,
+            'jurisdiction_location' => $this->jurisdiction_location ?? null,
             'estimated_amount' => $this->estimated_amount,
             'added_amount' => collect($this->added_amount)->sum('amount'),
             'added_amount_detail' => $this->added_amount,

@@ -1,23 +1,34 @@
 <?php
-namespace Database\Seeders\Litigation;
+
+namespace App\Console\Commands;
 
 use App\Models\Litigation\Litigation;
 use App\Models\Litigation\LitigationParty;
 use App\Models\Litigation\LitigationSetting;
-use Illuminate\Database\Seeder;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
-class LitigationSeeder extends Seeder
+class FillTestData extends Command
 {
     /**
-     * Run the database seeds.
+     * The name and signature of the console command.
      *
-     * @return void
+     * @var string
      */
-    public function run()
-    {
-        // Create a new litigation
+    protected $signature = 'data:test';
 
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Command description';
+
+    /**
+     * Execute the console command.
+     */
+    public function handle()
+    {
         $litigation = DB::table('litigations')->insert([
             'id' => '9bce26d8-32c0-4b96-afcd-300d051cf9f0', // '9bce26d8-32c0-4b96-afcd-300d051cf9f0' is a UUID
             'name' => 'Test init. litigation',

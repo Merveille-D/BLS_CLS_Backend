@@ -27,6 +27,24 @@ class PartSeeder extends Seeder
                 'number_id' => '238467',
                 'zip_code' => '476',
             ],
+            [
+                'name' => 'MC Bank',
+                'email' => 'mcbank@mcb.com',
+                'type' => 'corporate',
+                'telephone' => '98456798',
+                'residence' => 'Benin',
+                'number_id' => '238467',
+                'zip_code' => '476',
+            ],
+            [
+                'name' => 'Benin International Bank',
+                'email' => 'benininter@bib.com',
+                'type' => 'corporate',
+                'telephone' => '98456798',
+                'residence' => 'Benin',
+                'number_id' => '238467',
+                'zip_code' => '476',
+            ],
         ];
 
         foreach ($parts as $part) {
