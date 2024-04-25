@@ -36,7 +36,7 @@ class NotificationRepository
 
     public function findById($id) : JsonResource {
         $notif = $this->notification->findOrfail($id);
-        $notif->update(['read_at' => now()]);
+        // $notif->update(['read_at' => now()]);
         return new NotificationResource($notif);
     }
 
