@@ -374,7 +374,7 @@ class TaskIncident extends Model
                         ],
                     ],
                 'sc_2' => [
-                        'title' => 'Remplir une fiche de prélèvement signée par le responsable juridique a adresser a la direction des operations',
+                        'title' => 'Remplir une fiche de prélèvement signée par le responsable juridique à adresser à la direction des operations',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -648,7 +648,7 @@ class TaskIncident extends Model
                         ],
                     ],
                 'sa_2' => [
-                        'title' => 'Remplir une fiche de prelement signé par le responsable juridique a adresser a la direction des operations',
+                        'title' => 'Remplir une fiche de prelement signé par le responsable juridique à adresser à la direction des operations',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
