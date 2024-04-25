@@ -53,9 +53,9 @@ class TaskIncidentRepository
 
         $request['status'] = true;
 
-        $this->createNextTasks($taskIncident);
-
         $taskIncident->update($request);
+
+        $this->createNextTasks($taskIncident);
 
         return $taskIncident;
     }
