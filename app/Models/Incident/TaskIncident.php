@@ -374,7 +374,7 @@ class TaskIncident extends Model
                         ],
                     ],
                 'sc_2' => [
-                        'title' => 'Remplir une fiche de prelement signe par le responsable juridique a adresser a la direction des operations',
+                        'title' => 'Remplir une fiche de prélèvement signée par le responsable juridique a adresser a la direction des operations',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -648,7 +648,7 @@ class TaskIncident extends Model
                         ],
                     ],
                 'sa_2' => [
-                        'title' => 'Remplir une fiche de prelement signe par le responsable juridique a adresser a la direction des operations',
+                        'title' => 'Remplir une fiche de prelement signé par le responsable juridique a adresser a la direction des operations',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -667,7 +667,7 @@ class TaskIncident extends Model
                         ],
                     ],
                 'sa_3' => [
-                        'title' => 'Infomer le client concerne par telecall ou courrier',
+                        'title' => 'Informer le client concerné par téléphone ou courrier',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -764,7 +764,7 @@ class TaskIncident extends Model
                             ],
                             false => [
                                 'sa_4_4' => [
-                                    'title' => 'Presentation par le creancier d\'un certificat du greffe portant comandement de payer (dans un delai 1 mois)',
+                                    'title' => 'Presentation par le créancier d\'un certificat du greffe portant commendement de payer (dans un delai 1 mois)',
                                     'rules' => [
                                         'documents' => ['required', 'array'],
                                         'documents.*.name' => ['required', 'string'],
