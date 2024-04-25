@@ -58,7 +58,7 @@ class TaskIncident extends Model
                                 [
                                     'type' => 'select',
                                     'name' => 'info_channel',
-                                    'label' => 'Cannal d\'information',
+                                    'label' => 'Canal d\'information',
                                 ],
                                 [
                                     'type' => 'text',
@@ -94,7 +94,7 @@ class TaskIncident extends Model
                         ],
                     ],
                 'atd_3' => [
-                        'title' => 'Transmission d\'une lettre signee par la DG de la banque et de l\'accuse de reception signe',
+                        'title' => 'Transmission d\'une lettre signée par la DG de la banque et de l\'accusé de reception signé',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -113,7 +113,7 @@ class TaskIncident extends Model
                         ],
                     ],
                 'atd_4' => [
-                        'title' => 'Avez vous recu de Main levee ?',
+                        'title' => 'Avez vous reçu de Main levée ?',
                         'rules' => [
                             'raised_hand' => ['required', 'in:yes,no'],
                         ],
@@ -123,7 +123,7 @@ class TaskIncident extends Model
                                 [
                                     'type' => 'radio',
                                     'name' => 'raised_hand',
-                                    'label' => 'Avez vous recu de Main levee ?',
+                                    'label' => 'Avez vous reçu de Main levée ?',
                                 ]
                             ],
                             'form_title' => 'Réception de la main levée'
@@ -131,7 +131,7 @@ class TaskIncident extends Model
                         "next" => [
                             true => [
                                 'atd_4_1' => [
-                                        'title' => 'Attacher le document de la main levee',
+                                        'title' => 'Attacher le document de la main levée',
                                         'rules' => [
                                             'documents' => ['required', 'array'],
                                             'documents.*.name' => ['required', 'string'],
@@ -150,7 +150,7 @@ class TaskIncident extends Model
                                         ],
                                     ],
                                 'atd_4_2' => [
-                                        'title' => 'Levee des mesures conservatoires et restitution des fonds bloques sur le compte du client',
+                                        'title' => 'Levée des mesures conservatoires et restitution des fonds bloques sur le compte du client',
                                         'rules' => [
                                             'date' => ['required', 'date'],
                                             'info_channel' => ['required', 'in:email,call'],
@@ -162,7 +162,7 @@ class TaskIncident extends Model
                                                 [
                                                     'type' => 'select',
                                                     'name' => 'info_channel',
-                                                    'label' => 'Cannal d\'information',
+                                                    'label' => 'Canal d\'information',
                                                 ],
                                                 [
                                                     'type' => 'text',
@@ -175,7 +175,7 @@ class TaskIncident extends Model
                                                     'label' => 'Date de blocage',
                                                 ],
                                             ],
-                                            'form_title' => 'Preuves de la levee des mesures conservatoires'
+                                            'form_title' => 'Preuves de la levée des mesures conservatoires'
                                         ],
                                     ],
                                 'atd_4_3' => [
@@ -281,7 +281,7 @@ class TaskIncident extends Model
                                     'label' => 'Joindre le courrier à l\'adresse de l\'ADM Fiscale',
                                 ]
                             ],
-                            'form_title' => 'Preuve de la transmission du courrier à l\'ADM Fiscale'
+                            'form_title' => 'Preuve de la transmission du courrier'
                         ],
                         "next" => false,
                     ],
@@ -309,7 +309,7 @@ class TaskIncident extends Model
                         ],
                     ],
                 'req_2' => [
-                        'title' => 'Attacher le courrier de transmission signee par la DG de la banque',
+                        'title' => 'Attacher le courrier de transmission signé par la DG de la banque',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -321,7 +321,7 @@ class TaskIncident extends Model
                                 [
                                     'type' => 'documents',
                                     'name' => 'documents',
-                                    'label' => 'Joindre le courrier de transmission signee',
+                                    'label' => 'Joindre le courrier de transmission signé',
                                 ]
                             ],
                             'form_title' => 'Preuve de la transmission du courrier à l\'ADM Fiscale'
@@ -374,7 +374,7 @@ class TaskIncident extends Model
                         ],
                     ],
                 'sc_2' => [
-                        'title' => 'Remplir une fiche de prelement signe par le responsable juridique a adresser a la direction des operations',
+                        'title' => 'Remplir une fiche de prélèvement signée par le responsable juridique à adresser à la direction des operations',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -412,7 +412,7 @@ class TaskIncident extends Model
                         ],
                     ],
                 'sc_4' => [
-                        'title' => 'Avez vous recu de Main levee ?',
+                        'title' => 'Avez vous reçu de Main levée ?',
                         'rules' => [
                             'raised_hand' => ['required', 'in:yes,no'],
                         ],
@@ -422,7 +422,7 @@ class TaskIncident extends Model
                                 [
                                     'type' => 'radio',
                                     'name' => 'raised_hand',
-                                    'label' => 'Avez vous recu de Main levee ?',
+                                    'label' => 'Avez vous reçu de Main levée ?',
                                 ]
                             ],
                             'form_title' => 'Réception de la main levée'
@@ -430,7 +430,7 @@ class TaskIncident extends Model
                         "next" => [
                             true => [
                                 'sc_4_1' => [
-                                        'title' => 'Attacher le document de la main levee',
+                                        'title' => 'Attacher le document de la main levée',
                                         'rules' => [
                                             'documents' => ['required', 'array'],
                                             'documents.*.name' => ['required', 'string'],
@@ -442,14 +442,14 @@ class TaskIncident extends Model
                                                 [
                                                     'type' => 'documents',
                                                     'name' => 'documents',
-                                                    'label' => 'Joindre le document de la main levee',
+                                                    'label' => 'Joindre le document de la main levée',
                                                 ]
                                             ],
                                             'form_title' => 'Preuve de réception de la main levée'
                                         ],
                                     ],
                                 'sc_4_2' => [
-                                        'title' => 'Levee des restriction du compte client',
+                                        'title' => 'Levée des restriction du compte client',
                                         'rules' => [
                                             'documents' => ['required', 'array'],
                                             'documents.*.name' => ['required', 'string'],
@@ -461,10 +461,10 @@ class TaskIncident extends Model
                                                 [
                                                     'type' => 'documents',
                                                     'name' => 'documents',
-                                                    'label' => 'Joindre la preuve de la levee des restrictions',
+                                                    'label' => 'Joindre la preuve de la levée des restrictions',
                                                 ]
                                             ],
-                                            'form_title' => 'Preuve de la levee des restrictions'
+                                            'form_title' => 'Preuve de la levée des restrictions'
                                         ],
                                     ],
                                 'sc_4_3' => [
@@ -503,7 +503,7 @@ class TaskIncident extends Model
                                             [
                                                 'type' => 'radio',
                                                 'name' => 'conversion_certificate',
-                                                'label' => 'Avez vous recu l\'acte de conversion ?',
+                                                'label' => 'Avez vous reçu l\'acte de conversion ?',
                                             ],
                                             // [
                                             //     'type' => 'documents',
@@ -604,7 +604,7 @@ class TaskIncident extends Model
             ],
             false => [
                 'sc_5' => [
-                        'title' => 'Declaration signee de l\'agent sur l\'acte d\'huissier',
+                        'title' => 'Déclaration signée de l\'agent sur l\'acte d\'huissier',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -648,7 +648,7 @@ class TaskIncident extends Model
                         ],
                     ],
                 'sa_2' => [
-                        'title' => 'Remplir une fiche de prelement signe par le responsable juridique a adresser a la direction des operations',
+                        'title' => 'Remplir une fiche de prelement signé par le responsable juridique à adresser à la direction des operations',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -667,7 +667,7 @@ class TaskIncident extends Model
                         ],
                     ],
                 'sa_3' => [
-                        'title' => 'Infomer le client concerne par telecall ou courrier',
+                        'title' => 'Informer le client concerné par téléphone ou courrier',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -686,7 +686,7 @@ class TaskIncident extends Model
                         ],
                     ],
                 'sa_4' => [
-                        'title' => 'Avez vous recu de Main levee ?',
+                        'title' => 'Avez vous reçu de Main levée ?',
                         'rules' => [
                             'raised_hand' => ['required', 'in:yes,no'],
                         ],
@@ -696,7 +696,7 @@ class TaskIncident extends Model
                                 [
                                     'type' => 'radio',
                                     'name' => 'raised_hand',
-                                    'label' => 'Avez vous recu de Main levee ?',
+                                    'label' => 'Avez vous reçu de Main levée ?',
                                 ]
                             ],
                             'form_title' => 'Réception de la main levée'
@@ -704,7 +704,7 @@ class TaskIncident extends Model
                         "next" => [
                             true => [
                                 'sa_4_1' => [
-                                        'title' => 'Attacher le document de la main levee',
+                                        'title' => 'Attacher le document de la main levée',
                                         'rules' => [
                                             'documents' => ['required', 'array'],
                                             'documents.*.name' => ['required', 'string'],
@@ -716,14 +716,14 @@ class TaskIncident extends Model
                                                 [
                                                     'type' => 'documents',
                                                     'name' => 'documents',
-                                                    'label' => 'Joindre le document de la main levee',
+                                                    'label' => 'Joindre le document de la main levée',
                                                 ]
                                             ],
                                             'form_title' => 'Preuve de réception de la main levée'
                                         ],
                                     ],
                                 'sa_4_2' => [
-                                        'title' => 'Levee des restriction du compte client',
+                                        'title' => 'Levée des restriction du compte client',
                                         'rules' => [
                                             'documents' => ['required', 'array'],
                                             'documents.*.name' => ['required', 'string'],
@@ -735,10 +735,10 @@ class TaskIncident extends Model
                                                 [
                                                     'type' => 'documents',
                                                     'name' => 'documents',
-                                                    'label' => 'Joindre la preuve de la levee des restrictions',
+                                                    'label' => 'Joindre la preuve de la levée des restrictions',
                                                 ]
                                             ],
-                                            'form_title' => 'Preuve de la levee des restrictions'
+                                            'form_title' => 'Preuve de la levée des restrictions'
                                         ],
                                     ],
                                 'sa_4_3' => [
@@ -764,7 +764,7 @@ class TaskIncident extends Model
                             ],
                             false => [
                                 'sa_4_4' => [
-                                    'title' => 'Presentation par le creancier d\'un certificat du greffe portant comandement de payer (dans un delai 1 mois)',
+                                    'title' => 'Presentation par le créancier d\'un certificat du greffe portant commendement de payer (dans un delai 1 mois)',
                                     'rules' => [
                                         'documents' => ['required', 'array'],
                                         'documents.*.name' => ['required', 'string'],
