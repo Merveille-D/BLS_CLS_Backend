@@ -87,7 +87,7 @@ class TaskGeneralMeeting extends Model
                 'days' => 0
             ],
             [
-                'libelle' => "Rédaction du Procèsverbal de l'AG et signature",
+                'libelle' => "Rédaction du PV de l'AG et signature",
                 'days' => 15
             ],
             [
