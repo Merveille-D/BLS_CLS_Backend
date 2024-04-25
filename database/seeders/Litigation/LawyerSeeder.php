@@ -8,19 +8,19 @@ class LawyerSeeder extends Seeder
     {
         $lawyers = [
             [
-                'name' => 'John Doe',
-                'email' => 'avocat@test.com',
-                'phone' => +1234568890,
+                'name' => 'Cabinet d\'avocat de Maitre Lionel Samou',
+                'email' => 'lionel1980sam@yahoo.com',
+                'phone' => +22967868890,
             ],
             [
-                'name' => 'Jane Smith',
-                'email' => 'test@gmail.com',
-                'phone' => +1234567890,
+                'name' => 'Cabinet d\'avocat de Maitre Josué SALANON',
+                'email' => 'jsalanon@gmail.com',
+                'phone' => +22982567890,
             ],
             [
-                'name' => 'Paul Smith',
-                'email' => 'pail@test.com',
-                'phone' => +1234567890,
+                'name' => 'Cabinet d\'avocat de Maitre Christine ADIVI',
+                'email' => 'christineadivi75@gmail.com',
+                'phone' => +310144567890,
             ],
         ];
 

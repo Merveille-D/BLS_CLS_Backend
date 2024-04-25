@@ -39,16 +39,49 @@ class LitigationResourceSeeder extends Seeder
             'name' => 'John Cakpo',
             'type' => 'individual',
             'address' => '123, Test Street, Lagos City',
+            'phone' => '+22845869535',
+            'email' => 'johncakpo@gmail.com'
+        ]);
+        /* DB::table('litigation_parties')->insert([
+            'id' => '9bce26d8-3290-4b96-afcd-300d051cf458',
+            'name' => 'John Cakpo',
+            'type' => 'individual',
+            'address' => '123, Test Street, Lagos City',
             'phone' => '123456789',
             'email' => 'johncakpo@afrikskills.com'
+        ]); */
+
+        DB::table('litigation_parties')->insert([
+            'id' => '9bce26d8-32c0-4b96-afcd-300d0jk9f9f8',
+            'name' => 'Jonathan Agbo',
+            'type' => 'individual',
+            'address' => '123, Test Street, Lagos City',
+            'phone' => '+2296600252510',
+            'email' => 'jagbo@hotmail.com'
         ]);
 
         DB::table('litigation_parties')->insert([
-            'id' => '7ace26d8-32c0-4b96-afcd-300d051cf9f8',
-            'name' => 'Société de ciment',
+            'id' => 'jko526d8-32c0-4b96-afcd-300d051cf9f8',
+            'name' => 'Société Afrikskills SAS',
+            'type' => 'legal',
+            'address' => '123, Test Street, Lagos City',
+            'phone' => '+22945253654',
+            'email' => 'societe@afrikskills.com'
+        ]);
+        DB::table('litigation_parties')->insert([
+            'id' => '7ace26d8-85kj-4b96-afcd-300d051cf9f8',
+            'name' => 'Société Bamoui SA',
             'type' => 'legal',
             'address' => '123, Test Street, Lagos City',
             'phone' => '+23121452125',
+            'email' => 'societe@bamoui.com'
+        ]);
+        DB::table('litigation_parties')->insert([
+            'id' => '7ace26d8-32c0-kiol-afcd-300d051cf9f8',
+            'name' => 'Société Adjibi & fils SARL',
+            'type' => 'legal',
+            'address' => '123, Test Street, Lagos City',
+            'phone' => '+22921145865',
             'email' => 'societe@afrikskills.com'
         ]);
     }
