@@ -17,15 +17,7 @@ class LitigationSeeder extends Seeder
     public function run()
     {
         // Create a new litigation
-        /*
-        'name' => $request->name,
-            'reference' => $request->reference,
-            'nature_id' => $request->nature_id,
-            'party_id' => $request->party_id,
-            'jurisdiction_id' => $request->jurisdiction_id,
-            'email' => $request->email,
-            'phone' => $request->phone,
-        */
+
         $litigation = DB::table('litigations')->insert([
             'id' => '9bce26d8-32c0-4b96-afcd-300d051cf9f0', // '9bce26d8-32c0-4b96-afcd-300d051cf9f0' is a UUID
             'name' => 'Test init. litigation',

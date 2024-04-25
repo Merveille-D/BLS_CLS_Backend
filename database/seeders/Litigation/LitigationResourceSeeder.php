@@ -36,11 +36,11 @@ class LitigationResourceSeeder extends Seeder
         // create default litigation for test
         DB::table('litigation_parties')->insert([
             'id' => '9bce26d8-32c0-4b96-afcd-300d051cf9f8',
-            'name' => 'John Doe',
+            'name' => 'John Cakpo',
             'type' => 'individual',
             'address' => '123, Test Street, Lagos City',
             'phone' => '123456789',
-            'email' => 'test@test.com'
+            'email' => 'johncakpo@afrikskills.com'
         ]);
 
         DB::table('litigation_parties')->insert([
@@ -49,7 +49,7 @@ class LitigationResourceSeeder extends Seeder
             'type' => 'legal',
             'address' => '123, Test Street, Lagos City',
             'phone' => '+23121452125',
-            'email' => 'testste@test.com'
+            'email' => 'societe@afrikskills.com'
         ]);
     }
 
@@ -79,7 +79,7 @@ class LitigationResourceSeeder extends Seeder
             'Cour Constitutionnelle',
             'Cour Suprême ',
             'Tribunal Administratif',
-            'Tribunal arbitral',
+            'Tribunal Arbitral',
             'Tribunal de Commerce',
             'Tribunal de Première Instance',
         ];

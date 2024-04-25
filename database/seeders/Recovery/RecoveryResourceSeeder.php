@@ -28,17 +28,17 @@ class RecoveryResourceSeeder extends Seeder
         }
 
         //for test
-        $recovery = DB::table('recoveries')->insert([
-            'id' => 'aaa726d8-32c0-4b96-afcd-300d051cf9f0', // '9bce26d8-32c0-4b96-afcd-300d051cf9f0' is a UUID
-            'name' => 'Test Recouvrement',
-            'type' => 'forced',
-            'reference' => 'REC-1234',
-            'status' => RecoveryStepEnum::CREATED,
-            'has_guarantee' => true,
-            'guarantee_id' => '9bce26d8-32c0-4b96-afcd-300d051cf9f0',
-        ]);
+        // $recovery = DB::table('recoveries')->insert([
+        //     'id' => 'aaa726d8-32c0-4b96-afcd-300d051cf9f0', // '9bce26d8-32c0-4b96-afcd-300d051cf9f0' is a UUID
+        //     'name' => 'Test Recouvrement',
+        //     'type' => 'forced',
+        //     'reference' => 'REC-1234',
+        //     'status' => RecoveryStepEnum::CREATED,
+        //     'has_guarantee' => true,
+        //     'guarantee_id' => '9bce26d8-32c0-4b96-afcd-300d051cf9f0',
+        // ]);
 
-        $recovery = Recovery::find('aaa726d8-32c0-4b96-afcd-300d051cf9f0');
+        // $recovery = Recovery::find('aaa726d8-32c0-4b96-afcd-300d051cf9f0');
 
         // $this->recoveryRepository->generateSteps($recovery);
 
