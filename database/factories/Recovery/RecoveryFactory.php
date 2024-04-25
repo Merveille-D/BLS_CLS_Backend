@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Recovery;
 
 use App\Models\Recovery\Recovery;
 use Illuminate\Database\Eloquent\Factories\Factory;

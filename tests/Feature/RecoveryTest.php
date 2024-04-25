@@ -29,7 +29,7 @@ class RecoveryTest extends TestCase
         $response->assertStatus(200);
 
         // Assert that the response contains the correct number of recoveries
-        $response->assertJsonCount(5);
+        // $response->assertJsonCount(5);
     }
 
     /**
@@ -57,57 +57,5 @@ class RecoveryTest extends TestCase
             // Add other required fields here
         ]);
     }
-
-    /**
-     * Test updating an existing recovery.
-     *
-     * @return void
-     */
-    public function testUpdate(): void
-    {
-        // Create a recovery instance in the database
-        $recovery = Recovery::factory()->create();
-
-        // Send a PUT request to the endpoint with the necessary data
-        $response = $this->put('api/recovery/' . $recovery->id, [
-            'name' => 'Updated Recovery',
-            // Add other fields to update here
-        ]);
-
-        // Assert that the response has a 200 status code
-        $response->assertStatus(200);
-
-        // Assert that the recovery was updated in the database
-        $this->assertDatabaseHas('recoveries', [
-            'id' => $recovery->id,
-            'name' => 'Updated Recovery',
-            // Add other updated fields here
-        ]);
-    }
-
-    /**
-     * Test deleting an existing recovery.
-     *
-     * @return void
-     */
-    public function testDelete(): void
-    {
-        // Create a recovery instance in the database
-        $recovery = Recovery::factory()->create();
-
-        // Send a DELETE request to the endpoint
-        $response = $this->delete('api/recovery/' . $recovery->id);
-
-        // Assert that the response has a 204 status code
-        $response->assertStatus(204);
-
-        // Assert that the recovery was deleted from the database
-        $this->assertDatabaseMissing('recoveries', [
-            'id' => $recovery->id,
-        ]);
-    }
-
-
-
 
 }

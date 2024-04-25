@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Litigation\Litigation;
 use App\Models\Litigation\LitigationParty;
 use App\Models\Litigation\LitigationSetting;
+use App\Models\Recovery\Recovery;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
