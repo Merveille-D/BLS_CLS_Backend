@@ -44,6 +44,11 @@ class TaskGeneralMeeting extends Model
         return $this->belongsTo(GeneralMeeting::class);
     }
 
+    public function scopeOrderByDeadline($query)
+    {
+        return $query->orderBy('deadline');
+    }
+
     CONST TASKS = [
         'pre_ag' => [
             [
