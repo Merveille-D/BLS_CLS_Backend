@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Gourvernance\ExecutiveManagement\Directors
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Director\AddDirectorRequest;
+use App\Http\Requests\Director\UpdateDirectorRequest;
 use App\Models\Gourvernance\ExecutiveManagement\Directors\Director;
 use App\Repositories\ManagementCommittee\DirectorRepository;
 use Illuminate\Http\Request;
@@ -19,8 +20,6 @@ class DirectorController extends Controller
      */
     public function index()
     {
-        $directors = Director::all();
-
         $directors = Director::get()->map(function ($director) {
             $director->mandates = $director->mandates;
             return $director;
@@ -60,7 +59,7 @@ class DirectorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Director $director)
+    public function update(UpdateDirectorRequest $request, Director $director)
     {
         try {
             $this->director->update($director, $request->all());

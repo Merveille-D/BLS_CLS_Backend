@@ -21,9 +21,8 @@ class AdministratorRepository
      */
     public function add($request) {
         if ($request->type == AdminType::INDIVIDUAL) {
-            $admin = $this->admin->create($request->all());
+            $administrator = $this->admin->create($request->all());
 
-            return $admin;
         } else if ($request->type == AdminType::CORPORATE) {
             $company_info = [
                 'name' => $request->denomination,
@@ -33,9 +32,30 @@ class AdministratorRepository
             ];
             $representant = $this->admin->create($request->except('denomination', 'company_head_office', 'company_nationality', 'type'));
 
-            $corporate = $this->admin->create(array_merge(['permanent_representative_id' => $representant->id], $company_info));
-            return $corporate;
+            $administrator = $this->admin->create(array_merge(['permanent_representative_id' => $representant->id], $company_info));
+
         }
+
+
+        $first_mandat = $administrator->mandates()->first();
+
+        if (!isset($first_mandat) || $first_mandat->expiry_date < now()) {
+
+            $administrator->mandates()->create([
+                'appointment_date' => $request['appointment_date'] ?? null,
+                'renewal_date' => $request['renewal_date'] ?? null,
+                'expiry_date' => $request['expiry_date'] ?? null,
+            ]);
+        }else {
+            $administrator->mandates()->update([
+                'appointment_date' => $request['appointment_date'] ?? null,
+                'renewal_date' => $request['renewal_date'] ?? null,
+                'expiry_date' => $request['expiry_date'] ?? null,
+            ]);
+        }
+
+        return $administrator;
+
     }
 
     /**
@@ -43,26 +63,26 @@ class AdministratorRepository
      *
      * @return CaAdministrator
      */
-    public function update(CaAdministrator $ca_administrator, $request) {
+    public function update(CaAdministrator $administrator, $request) {
 
-        $first_mandat = $ca_administrator->mandates()->first();
+        $first_mandat = $administrator->mandates()->first();
 
         if (!isset($first_mandat) || $first_mandat->expiry_date < now()) {
 
-            $ca_administrator->mandates()->create([
+            $administrator->mandates()->create([
                 'appointment_date' => $request['appointment_date'] ?? null,
                 'renewal_date' => $request['renewal_date'] ?? null,
                 'expiry_date' => $request['expiry_date'] ?? null,
             ]);
         }else {
-            $ca_administrator->mandates()->update([
+            $administrator->mandates()->update([
                 'appointment_date' => $request['appointment_date'] ?? null,
                 'renewal_date' => $request['renewal_date'] ?? null,
                 'expiry_date' => $request['expiry_date'] ?? null,
             ]);
         }
 
-        return $ca_administrator;
+        return $administrator;
     }
 
     public function settings() : array {

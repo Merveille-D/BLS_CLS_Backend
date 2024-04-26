@@ -98,50 +98,17 @@ class TaskGeneralMeetingRepository
         return true;
     }
 
-    public function updateAlertTask($task) {
-
-        // $task = TaskGeneralMeeting::where('status', false)
-        //                             ->orderByDeadline()
-        //                             ->firstOrFail();
-
-        $alertsExist = $task->alerts()->exists();
-
-        if ($alertsExist) {
-            $alertsToDelete = $task->alerts()->whereNotIn('deadline', [$task->deadline])->get();
-
-            if ($alertsToDelete->isEmpty()) {
-
-                $alertsToDelete->each->delete();
-
-                $days = $this->diffInDays($task->deadline, ($this->nextTask()->deadline ?? $task->deadline->addDays(10) ));
-                $this->createAlert($task, $days);
-            }
-        } else {
-            $days = $this->diffInDays($task->deadline, $this->nextTask()->deadline);
-            $this->createAlert($task, $days);
-        }
-
-        return $task;
+    private function triggertAlert() {
+        $response = $this->currentTask() ? updateAlertTask($this->currentTask(), $this->nextTask()) : false;
+        return $response;
     }
 
-    private function createAlert($task, $days) {
-        $deadlines = [
-            $task->deadline->addDays(0.20 * $days),
-            $task->deadline->addDays(0.60 * $days),
-            $task->deadline->addDays(0.95 * $days),
-        ];
 
-        $types = ['info', 'warning', 'urgent'];
-
-        foreach ($deadlines as $index => $deadline) {
-            $task->alerts()->create([
-                'title' => $task->title,
-                'deadline' => $task->deadline,
-                'message' => $task->libelle,
-                'type' => $types[$index],
-                'trigger_at' => $deadline,
-            ]);
-        }
+    private function currentTask() {
+        $currentTask = TaskGeneralMeeting::where('status', false)
+                                        ->orderByDeadline()
+                                        ->firstOrFail();
+        return $currentTask;
     }
 
     private function nextTask() {
@@ -151,14 +118,5 @@ class TaskGeneralMeetingRepository
                                         ->firstOrFail();
         return $nextTask ?? null;
     }
-
-    private function diffInDays($date1, $date2) {
-        $deadline = Carbon::parse($date1);
-        $nextDeadline = Carbon::parse($date2);
-        $days = $deadline->diffInDays($nextDeadline);
-
-        return $days;
-    }
-
 
 }

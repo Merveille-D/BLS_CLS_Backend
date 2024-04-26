@@ -29,6 +29,7 @@ class UpdateDirectorRequest extends FormRequest
             'birthplace' => 'string|max:255',
             'nationality' => 'string|max:255',
             'address' => 'string|max:255',
+            
             'appointment_date' => 'date',
             'renewal_date' => 'date',
             'expiry_date' => 'date',

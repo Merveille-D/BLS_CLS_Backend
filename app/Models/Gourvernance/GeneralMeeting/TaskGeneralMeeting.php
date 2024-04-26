@@ -49,6 +49,10 @@ class TaskGeneralMeeting extends Model
         return $query->orderBy('deadline');
     }
 
+    public function getAlertFormAttribute() {
+        
+    }
+
     CONST TASKS = [
         'pre_ag' => [
             [
