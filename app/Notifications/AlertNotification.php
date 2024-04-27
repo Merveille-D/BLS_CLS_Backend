@@ -17,7 +17,7 @@ class AlertNotification extends Notification implements ShouldQueue
      */
     public function __construct(public Alert $alert)
     {
-        //
+
     }
 
     /**
@@ -36,6 +36,7 @@ class AlertNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable)
     {
         return (new MailMessage)
+                    ->from('afrikskills@gmail.com', 'BLS')
                     ->greeting('Bonjour!')
                     ->subject($this->alert->title)
                     ->line($this->alert->message)
@@ -53,6 +54,7 @@ class AlertNotification extends Notification implements ShouldQueue
         return [
             'title' => $this->alert->title,
             'message' => $this->alert->message,
+            'alert_id'=> $this->alert->id,
         ];
     }
 

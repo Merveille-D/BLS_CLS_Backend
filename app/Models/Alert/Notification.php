@@ -5,8 +5,9 @@ namespace App\Models\Alert;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\DatabaseNotification;
 
-class Notification extends Model
+class Notification extends DatabaseNotification
 {
     use HasFactory, HasUuids;
 
@@ -15,6 +16,8 @@ class Notification extends Model
     protected $casts = [
         'data' => 'array',
     ];
+
+    protected $keyAlertId = 'string';
 
     public function alert()
     {

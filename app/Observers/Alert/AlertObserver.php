@@ -15,7 +15,6 @@ class AlertObserver
     public function created(Alert $alert): void
     {
         $users = User::all();
-
         foreach ($users as $key => $user) {
             $user->notify((new AlertNotification($alert))->delay($alert->trigger_at));
         }

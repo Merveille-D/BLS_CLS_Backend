@@ -18,4 +18,16 @@ class AlertController extends Controller
 
         return api_response(true, "Liste des alertes", $alerts, 200);
     }
+
+    public function show() {
+        $alert = Alert::find(request('id'));
+
+        if (!$alert) {
+            return api_response(false, "Alerte non trouvée", null, 404);
+        }
+
+        $alert->task = $alert->alertable->alert_form;
+
+        return api_response(true, "Alerte trouvée", $alert, 200);
+    }
 }

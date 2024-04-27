@@ -15,9 +15,9 @@ return new class extends Migration
         Schema::create('alerts', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('state')->default('created');
-            $table->datetime('deadline');
+            $table->datetime('deadline')->nullable();
             $table->enum('priority', Alert::STATUS );
-            $table->enum('type', Alert::MODULES );
+            $table->string('type');
             $table->string('title')->nullable();
             $table->text('message')->nullable();
             $table->timestamp('trigger_at');

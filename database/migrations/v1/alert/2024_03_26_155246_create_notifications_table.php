@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('sent_by')->default('system');
             $table->string('sent_to')->nullable();
             $table->enum('priority', Alert::STATUS );
-            $table->enum('type', Alert::MODULES );
+            $table->string('type');
             $table->text('data');
             $table->uuidMorphs('notifiable');
             $table->timestamp('read_at')->nullable();

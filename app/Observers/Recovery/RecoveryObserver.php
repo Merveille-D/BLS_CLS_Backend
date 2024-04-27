@@ -20,7 +20,7 @@ class RecoveryObserver
             $alert = new Alert();
             $alert->title = 'RAPPEL | Recouvrement'; //$data['subject'];
             $alert->type = 'recovery';
-            $alert->priority = 'high';
+            $alert->priority = 'warning';
             $alert->message = $data['message'];
             // $alert->trigger_at = Carbon::now()->addDays(3);
             $alert->trigger_at = Carbon::now()->addMinutes(5);
@@ -38,7 +38,7 @@ class RecoveryObserver
             $alert = new Alert();
             $alert->title = 'RAPPEL | Recouvrement'; //$data['subject'];
             $alert->type = 'recovery';
-            $alert->priority = 'high';
+            $alert->priority = 'warning';
             $alert->message = $data['message'];
             // $alert->trigger_at = Carbon::now()->addDays(3);
             $alert->trigger_at = Carbon::now()->addMinutes(5);
