@@ -98,4 +98,33 @@ class TaskGeneralMeetingRepository
         return true;
     }
 
+    public function triggertAlert() {
+        $response = $this->currentTask() ? updateAlertTask($this->currentTask(), $this->nextTask()) : false;
+        return $response;
+    }
+
+
+    private function currentTask() {
+        $currentTask = TaskGeneralMeeting::where('status', false)
+                                        ->where('deadline', '>', now())
+                                        ->whereNotIn('type', ['checklist', 'procedure'])
+                                        ->orderByDeadline()
+                                        ->firstOrFail();
+
+        $currentTask->title = "RAPPEL | ASSEMBLEE GENERALE";
+        $currentTask->type = "general_meeting";
+
+        return $currentTask;
+    }
+
+    private function nextTask() {
+        $nextTask = TaskGeneralMeeting::where('status', false)
+                                        ->where('deadline', '>', now())
+                                        ->whereNotIn('type', ['checklist', 'procedure'])
+                                        ->orderByDeadline()
+                                        ->skip(1)
+                                        ->firstOrFail();
+        return $nextTask ?? null;
+    }
+
 }

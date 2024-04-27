@@ -2,6 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Enums\ConvHypothecState;
+use App\Models\Guarantee\ConvHypothec;
+use App\Models\Guarantee\ConvHypothecStep;
 use App\Models\Litigation\Litigation;
 use App\Models\Litigation\LitigationParty;
 use App\Models\Litigation\LitigationSetting;
@@ -42,5 +45,43 @@ class FillTestData extends Command
         $litigation = Litigation::first();
         $party = LitigationParty::first();
         $party->litigations()->attach($litigation, ['category' => 'intervenant', 'type' => 'client']);
+
+
+        $hypothec = DB::table('conv_hypothecs')->insert([
+            'id' => '9bce26d8-32c0-4b96-afcd-300d051cf9f0',
+            'state' => 'created',
+            'step' => 'formalization',
+            'reference' => 'HC-1234',
+            'name' => 'Test init. convention d\'hypothèque',
+            'contract_file' => 'guarantee/conventionnal_hypothec/2024-04-14_131932-tpa33X-sun_tzu_art_de_la_guerre_.pdf',
+        ]);
+
+        $convHypo = ConvHypothec::find('9bce26d8-32c0-4b96-afcd-300d051cf9f0');
+
+        $all_steps = ConvHypothecStep::orderBy('rank')->whereType('formalization')->get();
+
+        $convHypo->steps()->syncWithoutDetaching($all_steps);
+
+        $this->updatePivotState($convHypo);
+    }
+
+    public function updatePivotState($convHypo) {
+        if ($convHypo->state == ConvHypothecState::REGISTER && $convHypo->is_approved == true) {
+            $all_steps = ConvHypothecStep::orderBy('rank')->whereType('realization')->get();
+
+            $convHypo->steps()->syncWithoutDetaching($all_steps);
+        }
+        $currentStep = $this->currentStep($convHypo->state);
+
+        if ($currentStep) {
+            $pivotValues = [
+                $currentStep->id => ['status' => true]
+            ];
+            $convHypo->steps()->syncWithoutDetaching($pivotValues);
+        }
+    }
+
+    public function currentStep($state) {
+        return ConvHypothecStep::whereCode($state)->first();
     }
 }

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-#[ObservedBy([TaskGeneralMeetingObserver::class])]
+// #[ObservedBy([TaskGeneralMeetingObserver::class])]
 class TaskGeneralMeeting extends Model
 {
     use HasFactory, HasUuids, Alertable;
@@ -42,6 +42,29 @@ class TaskGeneralMeeting extends Model
     public function general_meeting()
     {
         return $this->belongsTo(GeneralMeeting::class);
+    }
+
+    public function scopeOrderByDeadline($query)
+    {
+        return $query->orderBy('deadline');
+    }
+
+    public function getAlertFormAttribute() {
+
+        return [
+            'method' => 'PUT',
+            'action' => env('APP_URL'). '/api/task_general_meetings/' . $this->id,
+            // 'form' => [
+            //     'fields' => [
+            //         [
+            //             'type' => 'completed',
+            //             'name' => 'status',
+            //             'label' => 'Aviez-vous déjà terminé cette tache ?',
+            //         ]
+            //     ],
+            //     'form_title' => 'Complétion de la tache',
+            // ],
+        ];
     }
 
     CONST TASKS = [

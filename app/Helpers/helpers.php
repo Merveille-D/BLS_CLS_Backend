@@ -82,21 +82,76 @@ if(!function_exists('searchElementIndice')) {
     }
 }
 
-function checkDealine($deadline) {
-    $now = Carbon::now();
-    $deadline = Carbon::parse($deadline);
+// function checkDealine($deadline) {
+//     $now = Carbon::now();
+//     $deadline = Carbon::parse($deadline);
 
-    return ($now->diffInDays($deadline) != 0) ? false : true;
+//     return ($now->diffInDays($deadline) != 0) ? false : true;
+// }
+
+// function triggerAlert($subject, $message) {
+//         $alert = new Alert();
+//         $alert->title = $subject;
+//         $alert->type = 'info';
+//         $alert->message = $message;
+//         $alert->trigger_at = Carbon::now()->addMinutes(1);
+
+//         return $alert;
+// }
+
+
+
+function updateAlertTask($current_task, $next_task) {
+
+    $alertsExist = $current_task->alerts()->exists();
+
+    if ($alertsExist) {
+        $alertsToDelete = $current_task->alerts()->whereNotIn('deadline', [$current_task->deadline])->get();
+
+        if ($alertsToDelete->isEmpty()) {
+
+            $alertsToDelete->each->delete();
+
+            $days = diffInDays($current_task->deadline, ($next_task->deadline ?? $current_task->deadline->addDays(10) ));
+            createAlert($current_task, $days);
+        }
+    } else {
+        $days = diffInDays($current_task->deadline,  ($next_task->deadline ?? $current_task->deadline->addDays(10) ));
+        createAlert($current_task, $days);
+    }
+
+    return $current_task;
 }
 
-function triggerAlert($subject, $message) {
-        $alert = new Alert();
-        $alert->title = $subject;
-        $alert->type = 'info';
-        $alert->message = $message;
-        $alert->trigger_at = Carbon::now()->addMinutes(1);
+function createAlert($current_task, $days) {
+    $deadline = $deadline = Carbon::parse($current_task->deadline);
+    $deadlines = [
+        $deadline->addDays(0.20 * $days),
+        $deadline->addDays(0.60 * $days),
+        $deadline->addDays(0.95 * $days),
+    ];
 
-        return $alert;
+    $priorities = ['info', 'warning', 'urgent'];
+
+    foreach ($deadlines as $index => $deadline) {
+        $current_task->alerts()->create([
+            'title' => $current_task->title,
+            'deadline' => $current_task->deadline,
+            'message' => $current_task->libelle,
+            'priority' => $priorities[$index],
+            'type' =>  $current_task->type,
+            // 'trigger_at' => $deadline,
+            'trigger_at' => Carbon::now(),
+        ]);
+    }
+}
+
+function diffInDays($date1, $date2) {
+    $deadline = Carbon::parse($date1);
+    $nextDeadline = Carbon::parse($date2);
+    $days = $deadline->diffInDays($nextDeadline);
+
+    return $days;
 }
 
 

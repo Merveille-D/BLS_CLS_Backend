@@ -14,5 +14,13 @@ class Mandate extends Model
         'appointment_date',
         'renewal_date',
         'expiry_date',
+        'status',
     ];
+
+    const STATUS = [
+        'active',
+        'expired',
+    ];
+
+    
 }

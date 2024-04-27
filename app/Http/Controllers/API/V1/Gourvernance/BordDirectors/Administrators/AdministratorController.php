@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Administrators;
 use App\Enums\AdminType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Administrator\AddAdministratorRequest;
+use App\Http\Requests\Administrator\UpdateAdministratorRequest;
 use App\Http\Resources\Administrator\AdministratorCollection;
 use App\Models\Gourvernance\BoardDirectors\Administrators\CaAdministrator;
 use App\Repositories\SessionAdministrator\AdministratorRepository;
@@ -21,7 +22,12 @@ class AdministratorController extends Controller
      */
     public function index()
     {
-        return new AdministratorCollection(CaAdministrator::administrator()->paginate());
+        $administrators = CaAdministrator::get()->map(function ($administrator) {
+            $administrator->mandates = $administrator->mandates;
+            return $administrator;
+        });
+
+        return api_response(true, 'Liste des Administrateurs', $administrators, 201);
     }
 
     /**
@@ -55,7 +61,7 @@ class AdministratorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CaAdministrator $ca_administrator, Request $request)
+    public function update(CaAdministrator $ca_administrator, UpdateAdministratorRequest $request)
     {
         try {
             $this->adminRepo->update($ca_administrator, $request->all());

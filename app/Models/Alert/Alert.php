@@ -14,5 +14,21 @@ class Alert extends Model
 {
     use HasFactory, Notifiable, HasUuids;
 
-    protected $fillable = ['state', 'sent_by', 'sent_to', 'title', 'message', 'type', 'trigger_at', 'priority'];
+    protected $fillable = ['state', 'sent_by', 'sent_to', 'deadline', 'title', 'message', 'type', 'trigger_at', 'priority'];
+
+    const STATUS = [
+        'info',
+        'warning',
+        'urgent',
+    ];
+
+    const MODULES = [
+        'contract',
+        'general_meeting',
+    ];
+
+    public function alertable()
+    {
+        return $this->morphTo();
+    }
 }

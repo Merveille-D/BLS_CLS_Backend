@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-#[ObservedBy([TaskContractObserver::class])]
+// #[ObservedBy([TaskContractObserver::class])]
 class Task extends Model
 {
     use HasFactory, HasUuids, Alertable;
