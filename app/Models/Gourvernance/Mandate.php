@@ -21,4 +21,6 @@ class Mandate extends Model
         'active',
         'expired',
     ];
+
+    
 }

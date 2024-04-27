@@ -26,4 +26,9 @@ class Alert extends Model
         'contract',
         'general_meeting',
     ];
+
+    public function alertable()
+    {
+        return $this->morphTo();
+    }
 }

@@ -22,4 +22,6 @@ class GourvernanceDocument extends Model
         'post_ag',
         'closed',
     ];
+
+    
 }

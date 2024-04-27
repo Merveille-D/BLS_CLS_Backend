@@ -124,20 +124,22 @@ function updateAlertTask($current_task, $next_task) {
 }
 
 function createAlert($current_task, $days) {
+    $deadline = $deadline = Carbon::parse($current_task->deadline);
     $deadlines = [
-        $current_task->deadline->addDays(0.20 * $days),
-        $current_task->deadline->addDays(0.60 * $days),
-        $current_task->deadline->addDays(0.95 * $days),
+        $deadline->addDays(0.20 * $days),
+        $deadline->addDays(0.60 * $days),
+        $deadline->addDays(0.95 * $days),
     ];
 
-    $types = ['info', 'warning', 'urgent'];
+    $priorities = ['info', 'warning', 'urgent'];
 
     foreach ($deadlines as $index => $deadline) {
         $current_task->alerts()->create([
             'title' => $current_task->title,
             'deadline' => $current_task->deadline,
             'message' => $current_task->libelle,
-            'type' => $types[$index],
+            'priority' => $priorities[$index],
+            'type' =>  $current_task->type,
             'trigger_at' => $deadline,
         ]);
     }
