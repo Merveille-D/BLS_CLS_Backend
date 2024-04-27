@@ -112,7 +112,7 @@ class LitigationRepository {
         // save assigned users
         foreach ($request->users as $key => $user_id) {
             $user = User::find($user_id);
-            $user->litigations()->attach($litigation);
+            $user->litigations()->sync($litigation);
         }
         // save assigned lawyers
         if ($request->lawyers && count($request->lawyers) > 0 ){
