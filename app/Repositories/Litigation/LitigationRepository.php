@@ -117,7 +117,7 @@ class LitigationRepository {
         // save assigned lawyers
         if ($request->lawyers && count($request->lawyers) > 0 ){
             foreach ($request->lawyers as $key => $lawyer_id) {
-                LitigationLawyer::find($lawyer_id)->litigations()->attach($litigation) ;
+                LitigationLawyer::find($lawyer_id)->litigations()->sync($litigation);
             }
         }
 

@@ -393,7 +393,7 @@ class TaskIncident extends Model
                         ],
                     ],
                 'sc_3' => [
-                        'title' => 'Infomer le client concerne par telecall ou courrier',
+                        'title' => 'Informer le client concerné par téléphone ou courrier',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
