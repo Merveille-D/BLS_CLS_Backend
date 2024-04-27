@@ -18,6 +18,13 @@ class DirectorRepository
     public function add($request) {
 
         $director = $this->director->create($request->all());
+
+        $director->mandates()->create([
+            'appointment_date' => $request['appointment_date'] ?? null,
+            'renewal_date' => $request['renewal_date'] ?? null,
+            'expiry_date' => $request['expiry_date'] ?? null,
+        ]);
+
         return $director;
     }
 
@@ -28,9 +35,9 @@ class DirectorRepository
      */
     public function update(Director $director, $request) {
 
-        $first_mandat = $director->mandates()->first();
+        $mandates = $director->mandates()->where('status', 'active')->exists();
 
-        if (!isset($first_mandat) || $first_mandat->expiry_date < now()) {
+        if (!$mandates) {
 
             $director->mandates()->create([
                 'appointment_date' => $request['appointment_date'] ?? null,
@@ -38,10 +45,12 @@ class DirectorRepository
                 'expiry_date' => $request['expiry_date'] ?? null,
             ]);
         }else {
+            $last_mandate = $director->mandates()->where('status', 'active')->latest()->first();
             $director->mandates()->update([
                 'appointment_date' => $request['appointment_date'] ?? null,
                 'renewal_date' => $request['renewal_date'] ?? null,
                 'expiry_date' => $request['expiry_date'] ?? null,
+                'status' => ($last_mandate->expiry_date < now()) ? 'expired' : 'active',
             ]);
         }
 
