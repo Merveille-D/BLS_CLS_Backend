@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
-#[ObservedBy([TaskIncidentObserver::class])]
+// #[ObservedBy([TaskIncidentObserver::class])]
 class TaskIncident extends Model
 {
     use HasFactory, HasUuids, Alertable;

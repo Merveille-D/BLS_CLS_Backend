@@ -140,7 +140,8 @@ function createAlert($current_task, $days) {
             'message' => $current_task->libelle,
             'priority' => $priorities[$index],
             'type' =>  $current_task->type,
-            'trigger_at' => $deadline,
+            // 'trigger_at' => $deadline,
+            'trigger_at' => Carbon::now(),
         ]);
     }
 }

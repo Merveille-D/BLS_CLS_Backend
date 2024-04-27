@@ -106,6 +106,7 @@ class TaskGeneralMeetingRepository
 
     private function currentTask() {
         $currentTask = TaskGeneralMeeting::where('status', false)
+                                        ->where('deadline', '>', now())
                                         ->whereNotIn('type', ['checklist', 'procedure'])
                                         ->orderByDeadline()
                                         ->firstOrFail();
@@ -118,6 +119,7 @@ class TaskGeneralMeetingRepository
 
     private function nextTask() {
         $nextTask = TaskGeneralMeeting::where('status', false)
+                                        ->where('deadline', '>', now())
                                         ->whereNotIn('type', ['checklist', 'procedure'])
                                         ->orderByDeadline()
                                         ->skip(1)

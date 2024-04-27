@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Alert\Alert;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,14 +15,17 @@ return new class extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('sent_by')->default('system');
-            $table->string('priority')->default('normal');
             $table->string('sent_to')->nullable();
-            $table->string('type')->default('alert');
+            $table->enum('priority', Alert::STATUS );
+            $table->enum('type', Alert::MODULES );
             $table->text('data');
-            // $table->foreignId('alert_id')->constrained()->onDelete('cascade');
             $table->uuidMorphs('notifiable');
             $table->timestamp('read_at')->nullable();
             // $table->timestamp('trigger_at')->nullable();
+
+            $table->uuid('alert_id')->nullable();
+            $table->foreign('alert_id')->references('id')->on('alerts')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
