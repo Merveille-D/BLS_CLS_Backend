@@ -870,5 +870,14 @@ class TaskIncident extends Model
         return $form;
     }
 
+    public function getValidationAttribute() {
+
+        return [
+            'method' => 'PUT',
+            'action' => env('APP_URL'). '/api/tasks/' . $this->id,
+            'form' => $this->form,
+        ];
+    }
+
 }
 

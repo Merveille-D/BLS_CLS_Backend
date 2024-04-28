@@ -33,7 +33,7 @@ class Alert extends Model
         'contract',
         'incident',
         'conventionnal_hypothec',
-        'legal_watche',
+        'legal_watch',
         'litigation',
         'recovery',
     ];

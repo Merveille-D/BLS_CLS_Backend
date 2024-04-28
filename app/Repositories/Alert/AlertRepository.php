@@ -31,14 +31,10 @@ class AlertRepository
                     $task->type = $alertModule['type'];
                     $this->updateAlertTask($task, $this->oldTask($alertModule['model']));
                 }
-                $response = true;
-
-            }else {
-                $response = false;
             }
         }
 
-        return $response;
+        return true;
     }
 
     private function updateAlertTask($current_task, $old_task) {
