@@ -873,8 +873,8 @@ class TaskIncident extends Model
     public function getValidationAttribute() {
 
         return [
-            'method' => 'PUT',
-            'action' => env('APP_URL'). '/api/tasks/' . $this->id,
+            'method' => 'POST',
+            'action' => env('APP_URL') . '/api/complete_task_incidents?type=' . $this->type . '&task_incident_id=' . $this->task_incident_id,
             'form' => $this->form,
         ];
     }
