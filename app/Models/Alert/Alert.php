@@ -23,8 +23,15 @@ class Alert extends Model
     ];
 
     const MODULES = [
-        'contract',
         'general_meeting',
+        'session_administrator',
+        'management_committee',
+        'contract',
+        'incident',
+        'conventionnal_hypothec',
+        'legal-watche',
+        'litigation',
+        'recovery',
     ];
 
     public function alertable()

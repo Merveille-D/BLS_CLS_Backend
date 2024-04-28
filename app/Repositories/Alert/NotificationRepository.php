@@ -19,6 +19,9 @@ class NotificationRepository
         $is_read = $request->is_read;
         $user_id = $request->user_id ?? User::first()->id;
         $query = $this->notification
+                ->when(request('type') !== null, function($query) {
+                    $query->where('type', request('type'));
+                })
                 ->when(!blank($search), function($qry) use($search) {
                     $qry->where('title', 'like', '%'.$search.'%');
                 })

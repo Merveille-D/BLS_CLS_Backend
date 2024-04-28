@@ -49,21 +49,11 @@ class TaskGeneralMeeting extends Model
         return $query->orderBy('deadline');
     }
 
-    public function getAlertFormAttribute() {
+    public function getValidationAttribute() {
 
         return [
             'method' => 'PUT',
             'action' => env('APP_URL'). '/api/task_general_meetings/' . $this->id,
-            // 'form' => [
-            //     'fields' => [
-            //         [
-            //             'type' => 'completed',
-            //             'name' => 'status',
-            //             'label' => 'Aviez-vous déjà terminé cette tache ?',
-            //         ]
-            //     ],
-            //     'form_title' => 'Complétion de la tache',
-            // ],
         ];
     }
 
