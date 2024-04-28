@@ -874,7 +874,7 @@ class TaskIncident extends Model
 
         return [
             'method' => 'POST',
-            'action' => env('APP_URL') . '/api/complete_task_incidents?type=' . $this->type . '&task_incident_id=' . $this->incident_id,
+            'action' => env('APP_URL') . '/api/complete_task_incidents?type=' . $this->code . '&task_incident_id=' . $this->incident_id,
             'form' => $this->form,
         ];
     }
