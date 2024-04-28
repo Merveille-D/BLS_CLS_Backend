@@ -56,9 +56,9 @@ class TaskIncidentController extends Controller
         }
     }
 
-    public function completeTaskIncident(UpdateTaskIncidentRequest $request)
+    public function completeTaskIncident(UpdateTaskIncidentRequest $request, )
     {
-        $taskIncident = TaskIncident::find($request->task_incident_id);
+        $taskIncident = TaskIncident::find($request->input('task_incident_id'));
 
         $current_task_incident = TaskIncident::where('incident_id', $taskIncident->incident_id)->where('status', false)->first();
         if($current_task_incident->id != $taskIncident->id) {
