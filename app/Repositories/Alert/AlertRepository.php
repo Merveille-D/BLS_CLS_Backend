@@ -27,6 +27,7 @@ class AlertRepository
 
             if(!$currentTasks->isEmpty()) {
                 foreach($currentTasks as $task) {
+                    $task->libelle = ($task->title) ? $task->title : $task->libelle;
                     $task->title = $alertModule['title'];
                     $task->type = $alertModule['type'];
                     $this->updateAlertTask($task, $this->oldTask($alertModule['model']));
@@ -72,7 +73,7 @@ class AlertRepository
             $current_task->alerts()->create([
                 'title' => $current_task->title,
                 'deadline' => $current_task->deadline,
-                'message' => $current_task->libelle ?? $current_task->title,
+                'message' => $current_task->libelle,
                 'priority' => $priorities[$index],
                 'type' =>  $current_task->type,
                 // 'trigger_at' => $deadline,
