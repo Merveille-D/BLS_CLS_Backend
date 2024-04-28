@@ -98,21 +98,4 @@ class TaskGeneralMeetingRepository
         return true;
     }
 
-    public function triggertAlert() {
-        $currentTasks = currentTask(TaskGeneralMeeting::class);
-
-        if(!$currentTasks->isEmpty()) {
-            foreach($currentTasks as $task) {
-                $task->title = 'RAPEL | ASSEMBLEE GENERALE';
-                $task->type = 'general_meeting';
-                updateAlertTask($task, oldTask(TaskGeneralMeeting::class));
-            }
-            $response = true;
-
-        }else {
-            $response = false;
-        }
-        return $response;
-    }
-
 }

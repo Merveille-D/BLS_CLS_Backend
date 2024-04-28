@@ -97,17 +97,4 @@ class TaskGeneralMeetingController extends Controller
             return api_response(false, "Echec de la mise à jour des taches", $e->errors(), 422);
         }
     }
-
-    public function triggerAlert()
-    {
-        try {
-            $this->task->triggertAlert();
-            return api_response(true, "Succès de l'envoi des alertes", null, 200);
-        } catch (ValidationException $e) {
-            return api_response(false, "Echec de l'envoi des alertes", $e->errors(), 422);
-        }
-    }
-
-
-
 }

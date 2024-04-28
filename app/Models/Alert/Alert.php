@@ -2,6 +2,9 @@
 
 namespace App\Models\Alert;
 
+use App\Models\Contract\Task;
+use App\Models\Gourvernance\BoardDirectors\Sessions\TaskSessionAdministrator;
+use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
 use App\Observers\Alert\AlertObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -32,6 +35,29 @@ class Alert extends Model
         'legal-watche',
         'litigation',
         'recovery',
+    ];
+
+    const ALERT_MODULES = [
+        [
+            'model' => TaskGeneralMeeting::class,
+            'type' => 'general_meeting',
+            'title' => 'RAPEL | ASSEMBLEE GENERALE',
+        ],
+        [
+            'model' => TaskSessionAdministrator::class,
+            'type' => 'session_administrator',
+            'title' => 'RAPEL | CONSEIL D\'ADMINISTRATION',
+        ],
+        [
+            'model' => TaskSessionAdministrator::class,
+            'type' => 'management_committee',
+            'title' => 'RAPEL | CONSEIL DE DIRECTION',
+        ],
+        [
+            'model' => Task::class,
+            'type' => 'contract',
+            'title' => 'RAPEL | CONTRAT',
+        ],
     ];
 
     public function alertable()
