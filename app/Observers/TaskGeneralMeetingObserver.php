@@ -11,9 +11,7 @@ class TaskGeneralMeetingObserver
      */
     public function created(TaskGeneralMeeting $taskGeneralMeeting): void
     {
-        if(checkDealine($taskGeneralMeeting->deadline)) {
-            $taskGeneralMeeting->alerts()->save(triggerAlert("RAPPEL | ASSEMBLEE GENERALE", $taskGeneralMeeting->libelle));
-        }
+        
     }
 
     /**
@@ -21,7 +19,10 @@ class TaskGeneralMeetingObserver
      */
     public function updated(TaskGeneralMeeting $taskGeneralMeeting): void
     {
-        //
+        if($taskGeneralMeeting->status) {
+            $alertsExist = $taskGeneralMeeting->alerts()->exists();
+            $alertsExist->each->delete();
+        }
     }
 
     /**

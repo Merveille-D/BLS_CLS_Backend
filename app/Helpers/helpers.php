@@ -2,8 +2,7 @@
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-
-use App\Models\Alert\Alert;
+use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
 if (!function_exists('sanitize_file_name')) {
@@ -101,22 +100,21 @@ if(!function_exists('searchElementIndice')) {
 
 
 
-function updateAlertTask($current_task, $next_task) {
+function updateAlertTask($current_task, $old_task) {
 
     $alertsExist = $current_task->alerts()->exists();
 
     if ($alertsExist) {
-        $alertsToDelete = $current_task->alerts()->whereNotIn('deadline', [$current_task->deadline])->get();
+        $alertsToDelete = $current_task->alerts()->where('deadline', $current_task->deadline)->get();
 
         if ($alertsToDelete->isEmpty()) {
-
             $alertsToDelete->each->delete();
 
-            $days = diffInDays($current_task->deadline, ($next_task->deadline ?? $current_task->deadline->addDays(10) ));
+            $days = diffInDays($current_task->deadline, ($old_task->deadline ?? $current_task->created_at ));
             createAlert($current_task, $days);
         }
     } else {
-        $days = diffInDays($current_task->deadline,  ($next_task->deadline ?? $current_task->deadline->addDays(10) ));
+        $days = diffInDays($current_task->deadline,  ($old_task->deadline ?? $current_task->created_at ));
         createAlert($current_task, $days);
     }
 
@@ -152,6 +150,36 @@ function diffInDays($date1, $date2) {
     $days = $deadline->diffInDays($nextDeadline);
 
     return $days;
+}
+
+function currentTask($modelClass) {
+
+    $currentTasks = $modelClass::where('status', false)
+                                    ->where('deadline', '>', now())
+                                    ->whereNotIn('type', ['checklist', 'procedure'])
+                                    ->orderBy('deadline')
+                                    ->get();
+    if(!$currentTasks->isEmpty()) {
+        $firstTask = $currentTasks->first();
+
+        $firstDeadline = Carbon::parse($firstTask->deadline);
+
+        $tasksWithSameDeadline = $currentTasks->filter(function ($task) use ($firstDeadline) {
+            $taskDeadline = Carbon::parse($task->deadline);
+            return $taskDeadline->equalTo($firstDeadline);
+        });
+    }
+
+    return ($currentTasks->isEmpty()) ? $currentTasks : $tasksWithSameDeadline;
+}
+
+function oldTask($modelClass) {
+    $oldTask = $modelClass::where('deadline', '<', now())
+                        ->whereNotIn('type', ['checklist', 'procedure'])
+                        ->orderBy('deadline', 'desc')
+                        ->first();
+
+    return $oldTask ?? null;
 }
 
 

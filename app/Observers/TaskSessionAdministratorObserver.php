@@ -11,9 +11,7 @@ class TaskSessionAdministratorObserver
      */
     public function created(TaskSessionAdministrator $taskSessionAdministrator): void
     {
-        if(checkDealine($taskSessionAdministrator->deadline)) {
-            $taskSessionAdministrator->alerts()->save(triggerAlert("RAPPEL | SESSION ADMINISTRATEUR", $taskSessionAdministrator->libelle));
-        }
+        
     }
 
     /**
@@ -21,7 +19,10 @@ class TaskSessionAdministratorObserver
      */
     public function updated(TaskSessionAdministrator $taskSessionAdministrator): void
     {
-        //
+        if($taskSessionAdministrator->status) {
+            $alertsExist = $taskSessionAdministrator->alerts()->exists();
+            $alertsExist->each->delete();
+        }
     }
 
     /**

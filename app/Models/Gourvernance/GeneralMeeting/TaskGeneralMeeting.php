@@ -3,12 +3,13 @@
 namespace App\Models\Gourvernance\GeneralMeeting;
 
 use App\Concerns\Traits\Alert\Alertable;
+use App\Models\Alert\Alert;
 use App\Observers\TaskGeneralMeetingObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-// #[ObservedBy([TaskGeneralMeetingObserver::class])]
+#[ObservedBy([TaskGeneralMeetingObserver::class])]
 class TaskGeneralMeeting extends Model
 {
     use HasFactory, HasUuids, Alertable;
@@ -42,11 +43,6 @@ class TaskGeneralMeeting extends Model
     public function general_meeting()
     {
         return $this->belongsTo(GeneralMeeting::class);
-    }
-
-    public function scopeOrderByDeadline($query)
-    {
-        return $query->orderBy('deadline');
     }
 
     public function getValidationAttribute() {

@@ -45,6 +45,14 @@ class TaskSessionAdministrator extends Model
         return $this->belongsTo(SessionAdministrator::class);
     }
 
+    public function getValidationAttribute() {
+
+        return [
+            'method' => 'PUT',
+            'action' => env('APP_URL'). '/api/task_session_administrators/' . $this->id,
+        ];
+    }
+
     CONST TASKS = [
         'pre_ca' => [
             [

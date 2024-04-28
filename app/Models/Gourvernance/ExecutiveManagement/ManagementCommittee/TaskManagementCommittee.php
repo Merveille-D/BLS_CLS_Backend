@@ -44,6 +44,14 @@ class TaskManagementCommittee extends Model
         return $this->belongsTo(ManagementCommittee::class);
     }
 
+    public function getValidationAttribute() {
+
+        return [
+            'method' => 'PUT',
+            'action' => env('APP_URL'). '/api/task_management_committees/' . $this->id,
+        ];
+    }
+
     CONST TASKS = [
         'pre_cd' => [
             [

@@ -38,4 +38,12 @@ class Task extends Model
     {
         return $this->morphMany(File::class, 'uploadable');
     }
+
+    public function getValidationAttribute() {
+
+        return [
+            'method' => 'PUT',
+            'action' => env('APP_URL'). '/api/tasks/' . $this->id,
+        ];
+    }
 }

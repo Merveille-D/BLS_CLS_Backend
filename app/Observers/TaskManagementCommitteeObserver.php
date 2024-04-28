@@ -11,9 +11,7 @@ class TaskManagementCommitteeObserver
      */
     public function created(TaskManagementCommittee $taskManagementCommittee): void
     {
-        if(checkDealine($taskManagementCommittee->deadline)) {
-            $taskManagementCommittee->alerts()->save(triggerAlert("RAPPEL | SESSION ADMINISTRATEUR", $taskManagementCommittee->libelle));
-        }
+        
     }
 
     /**
@@ -21,7 +19,10 @@ class TaskManagementCommitteeObserver
      */
     public function updated(TaskManagementCommittee $taskManagementCommittee): void
     {
-        //
+        if($taskManagementCommittee->status) {
+            $alertsExist = $taskManagementCommittee->alerts()->exists();
+            $alertsExist->each->delete();
+        }
     }
 
     /**
