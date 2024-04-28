@@ -11,7 +11,7 @@ class TaskManagementCommitteeObserver
      */
     public function created(TaskManagementCommittee $taskManagementCommittee): void
     {
-        
+
     }
 
     /**
@@ -20,8 +20,7 @@ class TaskManagementCommitteeObserver
     public function updated(TaskManagementCommittee $taskManagementCommittee): void
     {
         if($taskManagementCommittee->status) {
-            $alertsExist = $taskManagementCommittee->alerts()->exists();
-            $alertsExist->each->delete();
+            $alertsExist = $taskManagementCommittee->alerts()->delete();
         }
     }
 

@@ -24,6 +24,8 @@ return new class extends Migration
             $table->boolean('raised_hand')->nullable();
             $table->boolean('conversion_certificate')->nullable();
 
+            $table->datetime('deadline')->nullable();
+
 
             $table->uuid('incident_id')->nullable();
             $table->foreign('incident_id')->references('id')->on('incidents')->onDelete('cascade');

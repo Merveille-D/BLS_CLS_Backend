@@ -11,7 +11,7 @@ class TaskSessionAdministratorObserver
      */
     public function created(TaskSessionAdministrator $taskSessionAdministrator): void
     {
-        
+
     }
 
     /**
@@ -20,8 +20,7 @@ class TaskSessionAdministratorObserver
     public function updated(TaskSessionAdministrator $taskSessionAdministrator): void
     {
         if($taskSessionAdministrator->status) {
-            $alertsExist = $taskSessionAdministrator->alerts()->exists();
-            $alertsExist->each->delete();
+            $alertsExist = $taskSessionAdministrator->alerts()->delete();
         }
     }
 

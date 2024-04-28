@@ -11,7 +11,7 @@ class TaskGeneralMeetingObserver
      */
     public function created(TaskGeneralMeeting $taskGeneralMeeting): void
     {
-        
+
     }
 
     /**
@@ -20,8 +20,7 @@ class TaskGeneralMeetingObserver
     public function updated(TaskGeneralMeeting $taskGeneralMeeting): void
     {
         if($taskGeneralMeeting->status) {
-            $alertsExist = $taskGeneralMeeting->alerts()->exists();
-            $alertsExist->each->delete();
+            $alertsExist = $taskGeneralMeeting->alerts()->delete();
         }
     }
 

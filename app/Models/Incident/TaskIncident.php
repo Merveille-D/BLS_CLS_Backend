@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
-// #[ObservedBy([TaskIncidentObserver::class])]
+#[ObservedBy([TaskIncidentObserver::class])]
 class TaskIncident extends Model
 {
     use HasFactory, HasUuids, Alertable;
@@ -35,6 +35,7 @@ class TaskIncident extends Model
         'status',
         'code',
         'conversion_certificate',
+        'deadline',
     ];
 
     const CHANNELS = [
@@ -52,7 +53,7 @@ class TaskIncident extends Model
                             'info_channel' => ['required', 'in:email,call'],
                             'info_channel_value' => ['required', 'string'],
                         ],
-                        "delay" => 0,
+                        "delay" => 10,
                         "form" => [
                             'fields' => [
                                 [
@@ -81,7 +82,7 @@ class TaskIncident extends Model
                             'documents.*.name' => ['required', 'string'],
                             'documents.*.file' => ['required', 'file']
                         ],
-                        "delay" => 0,
+                        "delay" => 10,
                         "form" => [
                             'fields' => [
                                 [
@@ -100,7 +101,7 @@ class TaskIncident extends Model
                             'documents.*.name' => ['required', 'string'],
                             'documents.*.file' => ['required', 'file']
                         ],
-                        "delay" => 0,
+                        "delay" => 10,
                         "form" => [
                             'fields' => [
                                 [
@@ -117,7 +118,7 @@ class TaskIncident extends Model
                         'rules' => [
                             'raised_hand' => ['required', 'in:yes,no'],
                         ],
-                        "delay" => 0,
+                        "delay" => 10,
                         "form" => [
                             'fields' => [
                                 [
@@ -137,7 +138,7 @@ class TaskIncident extends Model
                                             'documents.*.name' => ['required', 'string'],
                                             'documents.*.file' => ['required', 'file']
                                         ],
-                                        "delay" => 0,
+                                        "delay" => 10,
                                         "form" => [
                                             'fields' => [
                                                 [
@@ -156,7 +157,7 @@ class TaskIncident extends Model
                                             'info_channel' => ['required', 'in:email,call'],
                                             'info_channel_value' => ['required', 'string'],
                                         ],
-                                        "delay" => 0,
+                                        "delay" => 10,
                                         "form" => [
                                             'fields' => [
                                                 [
@@ -185,7 +186,7 @@ class TaskIncident extends Model
                                             'documents.*.name' => ['required', 'string'],
                                             'documents.*.file' => ['required', 'file']
                                         ],
-                                        "delay" => 0,
+                                        "delay" => 10,
                                         "form" => [
                                             'fields' => [
                                                 [
@@ -207,7 +208,7 @@ class TaskIncident extends Model
                                             'documents.*.name' => ['required', 'string'],
                                             'documents.*.file' => ['required', 'file']
                                         ],
-                                        "delay" => 0,
+                                        "delay" => 10,
                                         "form" => [
                                             'fields' => [
                                                 [
@@ -226,7 +227,7 @@ class TaskIncident extends Model
                                             'documents.*.name' => ['required', 'string'],
                                             'documents.*.file' => ['required', 'file']
                                         ],
-                                        "delay" => 0,
+                                        "delay" => 10,
                                         "form" => [
                                             'fields' => [
                                                 [
@@ -245,7 +246,7 @@ class TaskIncident extends Model
                                             'documents.*.name' => ['required', 'string'],
                                             'documents.*.file' => ['required', 'file']
                                         ],
-                                        "delay" => 0,
+                                        "delay" => 10,
                                         "form" => [
                                             'fields' => [
                                                 [
@@ -272,7 +273,7 @@ class TaskIncident extends Model
                             'documents.*.name' => ['required', 'string'],
                             'documents.*.file' => ['required', 'file']
                         ],
-                        "delay" => 0,
+                        "delay" => 10,
                         "form" => [
                             'fields' => [
                                 [
@@ -296,7 +297,7 @@ class TaskIncident extends Model
                             'documents.*.name' => ['required', 'string'],
                             'documents.*.file' => ['required', 'file']
                         ],
-                        "delay" => 0,
+                        "delay" => 10,
                         "form" => [
                             'fields' => [
                                 [
@@ -315,7 +316,7 @@ class TaskIncident extends Model
                             'documents.*.name' => ['required', 'string'],
                             'documents.*.file' => ['required', 'file']
                         ],
-                        "delay" => 0,
+                        "delay" => 10,
                         "form" => [
                             'fields' => [
                                 [
@@ -337,7 +338,7 @@ class TaskIncident extends Model
                             'documents.*.name' => ['required', 'string'],
                             'documents.*.file' => ['required', 'file']
                         ],
-                        "delay" => 0,
+                        "delay" => 10,
                         "form" => [
                             'fields' => [
                                 [
@@ -361,7 +362,7 @@ class TaskIncident extends Model
                             'documents.*.name' => ['required', 'string'],
                             'documents.*.file' => ['required', 'file']
                         ],
-                        "delay" => 0,
+                        "delay" => 10,
                         "form" => [
                             'fields' => [
                                 [
@@ -380,7 +381,7 @@ class TaskIncident extends Model
                             'documents.*.name' => ['required', 'string'],
                             'documents.*.file' => ['required', 'file']
                         ],
-                        "delay" => 0,
+                        "delay" => 10,
                         "form" => [
                             'fields' => [
                                 [
@@ -399,7 +400,7 @@ class TaskIncident extends Model
                             'documents.*.name' => ['required', 'string'],
                             'documents.*.file' => ['required', 'file']
                         ],
-                        "delay" => 0,
+                        "delay" => 10,
                         "form" => [
                             'fields' => [
                                 [
@@ -416,7 +417,7 @@ class TaskIncident extends Model
                         'rules' => [
                             'raised_hand' => ['required', 'in:yes,no'],
                         ],
-                        "delay" => 0,
+                        "delay" => 10,
                         "form" => [
                             'fields' => [
                                 [
@@ -436,7 +437,7 @@ class TaskIncident extends Model
                                             'documents.*.name' => ['required', 'string'],
                                             'documents.*.file' => ['required', 'file']
                                         ],
-                                        "delay" => 0,
+                                        "delay" => 10,
                                         "form" => [
                                             'fields' => [
                                                 [
@@ -455,7 +456,7 @@ class TaskIncident extends Model
                                             'documents.*.name' => ['required', 'string'],
                                             'documents.*.file' => ['required', 'file']
                                         ],
-                                        "delay" => 0,
+                                        "delay" => 10,
                                         "form" => [
                                             'fields' => [
                                                 [
@@ -474,7 +475,7 @@ class TaskIncident extends Model
                                             'documents.*.name' => ['required', 'string'],
                                             'documents.*.file' => ['required', 'file']
                                         ],
-                                        "delay" => 0,
+                                        "delay" => 10,
                                         "form" => [
                                             'fields' => [
                                                 [
@@ -497,7 +498,7 @@ class TaskIncident extends Model
                                         // 'documents.*.name' => ['required', 'string'],
                                         // 'documents.*.file' => ['required', 'file'],
                                     ],
-                                    "delay" => 0,
+                                    "delay" => 10,
                                     "form" => [
                                         'fields' => [
                                             [
@@ -522,7 +523,7 @@ class TaskIncident extends Model
                                                         'documents.*.name' => ['required', 'string'],
                                                         'documents.*.file' => ['required', 'file']
                                                     ],
-                                                    "delay" => 0,
+                                                    "delay" => 10,
                                                     "form" => [
                                                         'fields' => [
                                                             [
@@ -541,7 +542,7 @@ class TaskIncident extends Model
                                                         'documents.*.name' => ['required', 'string'],
                                                         'documents.*.file' => ['required', 'file']
                                                     ],
-                                                    "delay" => 0,
+                                                    "delay" => 10,
                                                     "form" => [
                                                         'fields' => [
                                                             [
@@ -563,7 +564,7 @@ class TaskIncident extends Model
                                                         'documents.*.name' => ['required', 'string'],
                                                         'documents.*.file' => ['required', 'file']
                                                     ],
-                                                    "delay" => 0,
+                                                    "delay" => 10,
                                                     "form" => [
                                                         'fields' => [
                                                             [
@@ -582,7 +583,7 @@ class TaskIncident extends Model
                                                         'documents.*.name' => ['required', 'string'],
                                                         'documents.*.file' => ['required', 'file']
                                                     ],
-                                                    "delay" => 0,
+                                                    "delay" => 10,
                                                     "form" => [
                                                         'fields' => [
                                                             [
@@ -610,7 +611,7 @@ class TaskIncident extends Model
                             'documents.*.name' => ['required', 'string'],
                             'documents.*.file' => ['required', 'file']
                         ],
-                        "delay" => 0,
+                        "delay" => 10,
                         "form" => [
                             'fields' => [
                                 [
@@ -635,7 +636,7 @@ class TaskIncident extends Model
                             'documents.*.name' => ['required', 'string'],
                             'documents.*.file' => ['required', 'file']
                         ],
-                        "delay" => 0,
+                        "delay" => 10,
                         "form" => [
                             'fields' => [
                                 [
@@ -654,7 +655,7 @@ class TaskIncident extends Model
                             'documents.*.name' => ['required', 'string'],
                             'documents.*.file' => ['required', 'file']
                         ],
-                        "delay" => 0,
+                        "delay" => 10,
                         "form" => [
                             'fields' => [
                                 [
@@ -673,7 +674,7 @@ class TaskIncident extends Model
                             'documents.*.name' => ['required', 'string'],
                             'documents.*.file' => ['required', 'file']
                         ],
-                        "delay" => 0,
+                        "delay" => 10,
                         "form" => [
                             'fields' => [
                                 [
@@ -690,7 +691,7 @@ class TaskIncident extends Model
                         'rules' => [
                             'raised_hand' => ['required', 'in:yes,no'],
                         ],
-                        "delay" => 0,
+                        "delay" => 10,
                         "form" => [
                             'fields' => [
                                 [
@@ -710,7 +711,7 @@ class TaskIncident extends Model
                                             'documents.*.name' => ['required', 'string'],
                                             'documents.*.file' => ['required', 'file']
                                         ],
-                                        "delay" => 0,
+                                        "delay" => 10,
                                         "form" => [
                                             'fields' => [
                                                 [
@@ -729,7 +730,7 @@ class TaskIncident extends Model
                                             'documents.*.name' => ['required', 'string'],
                                             'documents.*.file' => ['required', 'file']
                                         ],
-                                        "delay" => 0,
+                                        "delay" => 10,
                                         "form" => [
                                             'fields' => [
                                                 [
@@ -748,7 +749,7 @@ class TaskIncident extends Model
                                             'documents.*.name' => ['required', 'string'],
                                             'documents.*.file' => ['required', 'file']
                                         ],
-                                        "delay" => 0,
+                                        "delay" => 10,
                                         "form" => [
                                             'fields' => [
                                                 [
@@ -770,7 +771,7 @@ class TaskIncident extends Model
                                         'documents.*.name' => ['required', 'string'],
                                         'documents.*.file' => ['required', 'file']
                                     ],
-                                    "delay" => 0,
+                                    "delay" => 10,
                                     "form" => [
                                         'fields' => [
                                             [
@@ -789,7 +790,7 @@ class TaskIncident extends Model
                                         'documents.*.name' => ['required', 'string'],
                                         'documents.*.file' => ['required', 'file']
                                     ],
-                                    "delay" => 0,
+                                    "delay" => 10,
                                     "form" => [
                                         'fields' => [
                                             [
@@ -808,7 +809,7 @@ class TaskIncident extends Model
                                             'documents.*.name' => ['required', 'string'],
                                             'documents.*.file' => ['required', 'file']
                                         ],
-                                        "delay" => 0,
+                                        "delay" => 10,
                                         "form" => [
                                             'fields' => [
                                                 [
@@ -834,7 +835,7 @@ class TaskIncident extends Model
                             'documents.*.name' => ['required', 'string'],
                             'documents.*.file' => ['required', 'file']
                         ],
-                        "delay" => 0,
+                        "delay" => 10,
                         "form" => [
                             'fields' => [
                                 [

@@ -5,6 +5,7 @@ namespace App\Models\Alert;
 use App\Models\Contract\Task;
 use App\Models\Gourvernance\BoardDirectors\Sessions\TaskSessionAdministrator;
 use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
+use App\Models\Incident\TaskIncident;
 use App\Observers\Alert\AlertObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -32,7 +33,7 @@ class Alert extends Model
         'contract',
         'incident',
         'conventionnal_hypothec',
-        'legal-watche',
+        'legal_watche',
         'litigation',
         'recovery',
     ];
@@ -41,22 +42,27 @@ class Alert extends Model
         [
             'model' => TaskGeneralMeeting::class,
             'type' => 'general_meeting',
-            'title' => 'RAPEL | ASSEMBLEE GENERALE',
+            'title' => 'RAPPEL | ASSEMBLEE GENERALE',
         ],
         [
             'model' => TaskSessionAdministrator::class,
             'type' => 'session_administrator',
-            'title' => 'RAPEL | CONSEIL D\'ADMINISTRATION',
+            'title' => 'RAPPEL | CONSEIL D\'ADMINISTRATION',
         ],
         [
             'model' => TaskSessionAdministrator::class,
             'type' => 'management_committee',
-            'title' => 'RAPEL | CONSEIL DE DIRECTION',
+            'title' => 'RAPPEL | CONSEIL DE DIRECTION',
         ],
         [
             'model' => Task::class,
             'type' => 'contract',
-            'title' => 'RAPEL | CONTRAT',
+            'title' => 'RAPPEL | CONTRAT',
+        ],
+        [
+            'model' => TaskIncident::class,
+            'type' => 'incident',
+            'title' => 'RAPPEL | INCIDENT',
         ],
     ];
 

@@ -41,12 +41,19 @@ class IncidentRepository
 
         $tasks = TaskIncident::TASKS[$type][$client];
 
+        $previousDeadline = null;
+
         foreach ($tasks as $key => $task) {
+            $deadline = $previousDeadline ? $previousDeadline->addDays($task['delay']) : $incident->created_at->addDays($task['delay']);
+
             TaskIncident::create([
                 'title' => $task['title'],
                 'code' => $key,
                 'incident_id' => $incident->id,
+                'deadline' => $deadline,
             ]);
+
+            $previousDeadline = $deadline;
         }
 
         return true;

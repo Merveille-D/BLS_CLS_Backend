@@ -89,13 +89,22 @@ class TaskIncidentRepository
                 return true;
             }else {
                 $response = $taskIncident->raised_hand ?? $taskIncident->conversion_certificate;
+
+                $previousDeadline =  $taskIncident->deadline;
+
                 foreach ($next_task['next'][$response] as $key => $task) {
+                    $deadline = $previousDeadline->addDays($task['delay']);
+
                     TaskIncident::create([
                         'title' => $task['title'],
                         'code' => $key,
                         'incident_id' => $taskIncident->incident_id,
+                        'deadline' => $deadline,
                     ]);
+
+                    $previousDeadline = $deadline;
                 }
+
             }
 
         }

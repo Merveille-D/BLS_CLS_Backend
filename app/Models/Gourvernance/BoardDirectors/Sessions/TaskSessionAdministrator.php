@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-// #[ObservedBy([TaskSessionAdministratorObserver::class])]
+#[ObservedBy([TaskSessionAdministratorObserver::class])]
 class TaskSessionAdministrator extends Model
 {
     use HasFactory, HasUuids, Alertable;

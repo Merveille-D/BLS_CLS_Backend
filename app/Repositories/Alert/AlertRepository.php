@@ -76,7 +76,7 @@ class AlertRepository
             $current_task->alerts()->create([
                 'title' => $current_task->title,
                 'deadline' => $current_task->deadline,
-                'message' => $current_task->libelle,
+                'message' => $current_task->libelle ?? $current_task->title,
                 'priority' => $priorities[$index],
                 'type' =>  $current_task->type,
                 // 'trigger_at' => $deadline,

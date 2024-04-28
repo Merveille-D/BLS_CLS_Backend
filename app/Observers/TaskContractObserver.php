@@ -11,7 +11,7 @@ class TaskContractObserver
      */
     public function created(Task $task): void
     {
-        
+
     }
 
     /**
@@ -20,8 +20,7 @@ class TaskContractObserver
     public function updated(Task $task): void
     {
         if($task->status) {
-            $alertsExist = $task->alerts()->exists();
-            $alertsExist->each->delete();
+            $alertsExist = $task->alerts()->delete();
         }
     }
 
