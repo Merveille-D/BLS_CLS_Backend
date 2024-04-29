@@ -48,4 +48,17 @@ class NotificationRepository
         $notification->update(['read_at' => now()]);
         return new NotificationResource($notification);
     }
+
+    public function remindMeLater($id, $request) {
+        $notification = $this->notification->findOrfail($id);
+        $alert = $notification->alert;
+
+        $new_alert = $alert->replicate()->fill([
+            'trigger_at' => now()->addDays($request->days ? $request->days : 3),
+        ]);
+        $new_alert->save();
+        $notification->markAsRead();
+
+        return new NotificationResource($notification);
+    }
 }
