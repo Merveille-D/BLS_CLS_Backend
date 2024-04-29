@@ -4,6 +4,7 @@ namespace App\Models\Alert;
 
 use App\Models\Contract\Task;
 use App\Models\Gourvernance\BoardDirectors\Sessions\TaskSessionAdministrator;
+use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\TaskManagementCommittee;
 use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
 use App\Models\Incident\TaskIncident;
 use App\Observers\Alert\AlertObserver;
@@ -50,7 +51,7 @@ class Alert extends Model
             'title' => 'RAPPEL | CONSEIL D\'ADMINISTRATION',
         ],
         [
-            'model' => TaskSessionAdministrator::class,
+            'model' => TaskManagementCommittee::class,
             'type' => 'management_committee',
             'title' => 'RAPPEL | CONSEIL DE DIRECTION',
         ],
