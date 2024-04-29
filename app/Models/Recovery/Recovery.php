@@ -3,6 +3,7 @@
 namespace App\Models\Recovery;
 
 use App\Concerns\Traits\Alert\Alertable;
+use App\Concerns\Traits\Recovery\RecoveryFormFieldTrait;
 use App\Models\Guarantee\ConvHypothec;
 use App\Observers\Recovery\RecoveryObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 #[ObservedBy([RecoveryObserver::class])]
 class Recovery extends Model
 {
-    use HasFactory, HasUuids, Alertable;
+    use HasFactory, HasUuids, Alertable, RecoveryFormFieldTrait;
 
     protected $fillable = [
         'name',
@@ -68,5 +69,18 @@ class Recovery extends Model
     public function guarantee()
     {
         return $this->belongsTo(ConvHypothec::class, 'guarantee_id');
+    }
+
+    public function getValidationAttribute()
+    {
+        $step = $this->next_step;
+
+        $form = $this->getCustomFormFields($step->code);
+
+        return [
+            'method' => 'POST',
+            'action' => env('APP_URL') . '/api/recovery/update/' . $this->id,
+            'form' => $form,
+        ];
     }
 }

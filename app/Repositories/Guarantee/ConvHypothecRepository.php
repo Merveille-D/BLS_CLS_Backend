@@ -12,14 +12,10 @@ use App\Models\Guarantee\ConvHypothec;
 use App\Models\Guarantee\ConvHypothecStep;
 use App\Models\Guarantee\GuaranteeDocument;
 use App\Models\User;
-use App\Notifications\Guarantee\ConvHypothecNextStep;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Support\Facades\Notification as FacadesNotification;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
 
 class ConvHypothecRepository
 {
