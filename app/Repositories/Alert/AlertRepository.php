@@ -27,9 +27,11 @@ class AlertRepository
 
             if(!$currentTasks->isEmpty()) {
                 foreach($currentTasks as $task) {
+
                     $task->libelle = ($task->title) ? $task->title : $task->libelle;
                     $task->title = $alertModule['title'];
                     $task->type = $alertModule['type'];
+
                     $this->updateAlertTask($task, $this->oldTask($alertModule['model']));
                 }
             }
@@ -43,6 +45,7 @@ class AlertRepository
         $alertsExist = $current_task->alerts()->exists();
 
         if ($alertsExist) {
+
             $alertsToDelete = $current_task->alerts()->where('deadline', $current_task->deadline)->get();
 
             if ($alertsToDelete->isEmpty()) {
@@ -60,7 +63,8 @@ class AlertRepository
     }
 
     private function createAlert($current_task, $days) {
-        $deadline = $deadline = Carbon::parse($current_task->deadline);
+
+        $deadline = Carbon::parse($current_task->deadline);
         $deadlines = [
             $deadline->addDays(0.20 * $days),
             $deadline->addDays(0.60 * $days),
