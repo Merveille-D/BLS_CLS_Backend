@@ -3,6 +3,7 @@
 namespace App\Models\Guarantee;
 
 use App\Concerns\Traits\Alert\Alertable;
+use App\Concerns\Traits\Guarantee\HypothecFormFieldTrait;
 use App\Models\Alert\Alert;
 use App\Observers\ConvHypothecObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
@@ -16,7 +17,7 @@ use Illuminate\Notifications\Notifiable;
 #[ObservedBy([ConvHypothecObserver::class])]
 class ConvHypothec extends Model
 {
-    use HasFactory, Alertable, HasUuids;
+    use HasFactory, Alertable, HasUuids, HypothecFormFieldTrait;
 
     /**
      * @property int $id
@@ -75,6 +76,19 @@ class ConvHypothec extends Model
     public function getNextStepAttribute()
     {
         return $this->steps()->orderBy('rank')->where('status', false)->first();
+    }
+
+    public function getValidationAttribute()
+    {
+        $step = $this->next_step;
+
+        $form = $this->getCustomFormFields($step->code);
+
+        return [
+            'method' => 'POST',
+            'action' => env('APP_URL') . '/api/conventionnal_hypothec/update/' . $this->id,
+            'form' => $form,
+        ];
     }
 
 }

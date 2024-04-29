@@ -2,6 +2,7 @@
 
 namespace App\Observers\Recovery;
 
+use App\Concerns\Traits\Alert\AddAlertTrait;
 use App\Concerns\Traits\Recovery\RecoveryNotificationTrait;
 use App\Models\Alert\Alert;
 use App\Models\Recovery\Recovery;
@@ -9,7 +10,7 @@ use Carbon\Carbon;
 
 class RecoveryObserver
 {
-    use RecoveryNotificationTrait;
+    use RecoveryNotificationTrait, AddAlertTrait;
     /**
      * Handle the Recovery "created" event.
      */
@@ -17,14 +18,8 @@ class RecoveryObserver
     {
         if (!$recovery->has_guarantee) {
             $data = $this->nextStepBasedOnState($recovery);
-            $alert = new Alert();
-            $alert->title = 'RAPPEL | Recouvrement'; //$data['subject'];
-            $alert->type = 'recovery';
-            $alert->priority = 'warning';
-            $alert->message = $data['message'];
-            // $alert->trigger_at = Carbon::now()->addDays(3);
-            $alert->trigger_at = Carbon::now()->addMinutes(5);
-            $recovery->alerts()->save($alert);
+
+            $this->new_alert($recovery, 'RAPPEL | Recouvrement', $data['message'], 'recovery', Carbon::now()->addDays(3), 'warning');
         }
     }
 
@@ -35,14 +30,8 @@ class RecoveryObserver
     {
         if (!$recovery->has_guarantee) {
             $data = $this->nextStepBasedOnState($recovery);
-            $alert = new Alert();
-            $alert->title = 'RAPPEL | Recouvrement'; //$data['subject'];
-            $alert->type = 'recovery';
-            $alert->priority = 'warning';
-            $alert->message = $data['message'];
-            // $alert->trigger_at = Carbon::now()->addDays(3);
-            $alert->trigger_at = Carbon::now()->addMinutes(5);
-            $recovery->alerts()->save($alert);
+
+            $this->new_alert($recovery, 'RAPPEL | Recouvrement', $data['message'], 'recovery', Carbon::now()->addDays(3), 'warning');
         }
     }
 

@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
 
-class NotificationAlertId
+class NotificationSentListener
 {
     /**
      * Create the event listener.
@@ -25,6 +25,7 @@ class NotificationAlertId
     {
         $notif = Notification::find($event->notification->id);
         $notif->alert_id = $notif->data['alert_id'] ?? null;
+        // $notif->priority = $notif->data['priority'] ?? null;
         $notif->save();
     }
 }
