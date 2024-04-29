@@ -18,7 +18,7 @@ class AlertController extends Controller
     public function triggerModuleAlert() {
 
         $response = $this->alert->triggerModuleAlert();
-        Http::get(env('APP_URL'). '/api/start-queue-worker');
+        Http::get(env('APP_URL'). '/api/start_queue_worker');
 
         return api_response( $response, "Resultat de l'envoi des alertes", null, 200);
     }
@@ -28,7 +28,7 @@ class AlertController extends Controller
         $process = new Process(['php', 'artisan', 'queue:work']);
         $process->start();
 
-        return api_response( true, "Lancement de la file d'attente ", null, 200);
+        return true;
     }
 
 }
