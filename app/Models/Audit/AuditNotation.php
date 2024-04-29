@@ -45,6 +45,7 @@ class AuditNotation extends Model
 
     public function getTitleAttribute() {
         $response = Http::get(env('APP_URL'). '/api/' . $this->module . '/' . $this->module_id );
+        dd($response->json());
         $title = $response['title'];
         return $title;
     }
