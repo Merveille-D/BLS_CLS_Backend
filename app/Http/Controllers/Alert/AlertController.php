@@ -24,10 +24,10 @@ class AlertController extends Controller
         return api_response( $response, "Resultat de l'envoi des alertes", null, 200);
     }
 
-    public function startQueueWorker(Request $request)
-    {
-        Artisan::call('queue:work');
-        return true;
-    }
+    // public function startQueueWorker(Request $request)
+    // {
+    //     Artisan::call('queue:work');
+    //     return true;
+    // }
 
 }
