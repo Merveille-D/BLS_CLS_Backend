@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Symfony\Component\Process\Process;
 use App\Repositories\Alert\AlertRepository;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\ValidationException;
 
@@ -25,8 +26,10 @@ class AlertController extends Controller
 
     public function startQueueWorker(Request $request)
     {
-        $process = new Process(['php', 'artisan', 'queue:work']);
-        $process->start();
+        // $process = new Process(['php', 'artisan', 'queue:work']);
+        // $process->start();
+
+        Artisan::call('queue:work');
 
         return true;
     }
