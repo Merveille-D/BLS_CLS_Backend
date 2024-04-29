@@ -19,15 +19,9 @@ class AlertController extends Controller
     public function triggerModuleAlert() {
 
         $response = $this->alert->triggerModuleAlert();
-        // Http::get(env('APP_URL'). '/api/start_queue_worker');
+        Artisan::call('queue:work');
 
         return api_response( $response, "Resultat de l'envoi des alertes", null, 200);
     }
-
-    // public function startQueueWorker(Request $request)
-    // {
-    //     Artisan::call('queue:work');
-    //     return true;
-    // }
 
 }
