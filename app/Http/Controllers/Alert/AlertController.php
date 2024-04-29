@@ -19,7 +19,6 @@ class AlertController extends Controller
     public function triggerModuleAlert() {
 
         $response = $this->alert->triggerModuleAlert();
-        exec('nohup php artisan queue:work > /dev/null 2>&1 &');
         return api_response( $response, "Resultat de l'envoi des alertes", null, 200);
     }
 
