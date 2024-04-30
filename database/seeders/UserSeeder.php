@@ -18,7 +18,8 @@ class UserSeeder extends Seeder
 
         if (!$existingUser) {
             $user = User::create([
-                'name' => 'Julien Adimi',
+                'firstname' => 'Julien',
+                'lastname' => 'Adimi',
                 'email' => 'afrikskills@yopmail.com',
                 'password' => Hash::make('password')
             ]);

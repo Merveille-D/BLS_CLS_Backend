@@ -33,9 +33,10 @@ class UserRepository
 
     public function add($request) {
         $user = User::create([
-            'name' => $request['name'],
+            'firstname' => $request['firstname'],
+            'lastname' => $request['lastname'],
             'email' => $request['email'],
-            'password' => Hash::make('12345678'),
+            'password' => Hash::make('password'),
         ]);
 
         return $user;
