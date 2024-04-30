@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->enum('type', Shareholder::TYPES);
-            $table->enum('corporate_type', Shareholder::CORPORATE_TYPES);
+            $table->enum('corporate_type', Shareholder::CORPORATE_TYPES)->nullable();
             $table->integer('actions_number');
             $table->integer('actions_encumbered');
             $table->integer('actions_no_encumbered');
