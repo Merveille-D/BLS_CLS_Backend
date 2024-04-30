@@ -29,7 +29,6 @@ class UpdateShareholderRequest extends FormRequest
             'name' => ['string'],
             'type' => [ Rule::in(Shareholder::TYPES) ],
             'corporate_type' => [Rule::in(Shareholder::CORPORATE_TYPES) ],
-            'actions_number' => ['numeric'],
             'actions_encumbered' => ['numeric'],
             'actions_no_encumbered' => ['numeric'],
             'pourcentage' => ['numeric'],
