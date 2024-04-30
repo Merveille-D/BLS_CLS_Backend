@@ -17,6 +17,7 @@ use App\Http\Controllers\API\V1\Gourvernance\ExecutiveManagement\ManagementCommi
 use App\Http\Controllers\API\V1\Gourvernance\ExecutiveManagement\ManagementCommittee\TaskManagementCommitteeController;
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\GeneralMeetingController;
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\TaskGeneralMeetingController;
+use App\Http\Controllers\API\V1\Gourvernance\Shareholder\ShareholderController;
 use App\Http\Controllers\API\V1\Incident\AuthorIncidentController;
 use App\Http\Controllers\API\V1\Incident\IncidentController;
 use App\Http\Controllers\API\V1\Incident\TaskIncidentController;
@@ -57,6 +58,8 @@ Route::post('ca_attachements', [SessionAdministratorController::class, 'attachme
 Route::resource('task_session_administrators', TaskSessionAdministratorController::class);
 Route::delete('delete_array_task_session_administrators', [TaskSessionAdministratorController::class, 'deleteArrayTaskSessionAdministrator'] );
 Route::put('update_status_task_session_administrators', [TaskSessionAdministratorController::class, 'updateStatusTaskSessionAdministrator'] );
+
+Route::resource('shareholders', ShareholderController::class);
 
 
 // Banque de textes

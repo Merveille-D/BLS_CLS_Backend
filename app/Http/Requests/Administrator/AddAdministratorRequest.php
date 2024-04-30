@@ -33,18 +33,18 @@ class AddAdministratorRequest extends FormRequest
             'birthplace' => 'required|string|max:255',
             'nationality' => 'required|string|max:255',
             'address' => 'required|string|max:255',
-            'shares' => 'required|integer',
+            'shares' => 'required_if:quality,shareholder|integer',
             'quality' => ['required', new ArrayElementMatch(Quality::QUALITIES)],
             'function' => ['required', new ArrayElementMatch(AdminFunction::ADMIN_FUNCTIONS)],
-            'share_percentage' => 'required|numeric|between:0,100',
+            'share_percentage' => 'required_if:quality,shareholder|numeric|between:0,100',
             'type' => ['required', new ArrayElementMatch(AdminType::TYPES)],
             'denomination' => 'required_if:type,corporate',
             'company_head_office' => 'required_if:type,corporate',
             'company_nationality' => 'required_if:type,corporate',
-            
-            'appointment_date' => 'required|date',
-            'renewal_date' => 'required|date',
-            'expiry_date' => 'required|date',
+
+            'appointment_date' => 'date',
+            'renewal_date' => 'date',
+            'expiry_date' => 'date',
         ];
     }
 

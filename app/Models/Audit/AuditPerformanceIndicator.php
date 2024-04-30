@@ -22,6 +22,8 @@ class AuditPerformanceIndicator extends Model
         'contracts',
         'conventionnal_hypothec',
         'litigation',
+        'incidents',
+        'recovery',
     ];
 
     const TYPES = [
