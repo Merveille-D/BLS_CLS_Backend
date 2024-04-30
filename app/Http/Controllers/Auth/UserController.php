@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Http\Resources\User\UserResource;
 use App\Models\User;
 use App\Repositories\Authentication\UserRepository;
 use Illuminate\Http\Request;
@@ -19,6 +20,11 @@ class UserController extends Controller
 
     public function index() {
         return api_response(true, 'Liste des utlisateurs', $data = $this->userRepo->getList(request()));
+    }
+
+    public function current()
+    {
+        return api_response(true, 'Utilisateur connecté', new UserResource(auth()->user()));
     }
 
 
