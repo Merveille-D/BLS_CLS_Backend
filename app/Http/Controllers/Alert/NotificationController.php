@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Alert;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Alert\DelayedNotifRequest;
 use App\Repositories\Alert\NotificationRepository;
 use Illuminate\Http\Request;
 
@@ -47,6 +48,16 @@ class NotificationController extends Controller
             $data = $this->notificationRepo->markAsRead($id);
 
             return api_response($success = true, 'Marquée comme lue avec succès', $data);
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
+        }
+    }
+
+    public function remindLater(DelayedNotifRequest $request, string $id) {
+        try {
+            $data = $this->notificationRepo->remindMeLater($id, $request);
+
+            return api_response($success = true, 'Notification repoussée avec succès', $data);
         } catch (\Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
