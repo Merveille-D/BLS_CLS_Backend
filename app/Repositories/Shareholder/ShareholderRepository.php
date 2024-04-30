@@ -29,10 +29,8 @@ class ShareholderRepository
      */
     public function update(Shareholder $shareholder, $request) {
 
-        if($request->has('actions_encumbered') || $request->has('actions_no_encumbered')) {
-            $request['actions_number'] = $request['actions_encumbered'] + $request['actions_no_encumbered'];
-        }
-        
+        $request['actions_number'] = $request['actions_encumbered'] + $request['actions_no_encumbered'];
+
         $shareholder->update($request);
         return $shareholder;
     }
