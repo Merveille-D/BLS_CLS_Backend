@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API\V1\Transfer;
 
-use App\Models\Recovery\RecoveryFollow;
+use App\Http\Controllers\Controller;
+use App\Models\Transfer\Transfer;
 use Illuminate\Http\Request;
 
-class RecoveryFollowController extends Controller
+class TransferController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -26,7 +27,7 @@ class RecoveryFollowController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(RecoveryFollow $recoveryFollow)
+    public function show(Transfer $transfer)
     {
         //
     }
@@ -34,7 +35,7 @@ class RecoveryFollowController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, RecoveryFollow $recoveryFollow)
+    public function update(Request $request, Transfer $transfer)
     {
         //
     }
@@ -42,7 +43,7 @@ class RecoveryFollowController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(RecoveryFollow $recoveryFollow)
+    public function destroy(Transfer $transfer)
     {
         //
     }

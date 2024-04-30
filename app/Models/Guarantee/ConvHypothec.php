@@ -4,6 +4,7 @@ namespace App\Models\Guarantee;
 
 use App\Concerns\Traits\Alert\Alertable;
 use App\Concerns\Traits\Guarantee\HypothecFormFieldTrait;
+use App\Concerns\Traits\Transfer\Transferable;
 use App\Models\Alert\Alert;
 use App\Observers\ConvHypothecObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
@@ -17,7 +18,7 @@ use Illuminate\Notifications\Notifiable;
 #[ObservedBy([ConvHypothecObserver::class])]
 class ConvHypothec extends Model
 {
-    use HasFactory, Alertable, HasUuids, HypothecFormFieldTrait;
+    use HasFactory, Alertable, HasUuids, HypothecFormFieldTrait, Transferable;
 
     /**
      * @property int $id
