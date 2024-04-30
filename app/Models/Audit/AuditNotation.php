@@ -23,6 +23,7 @@ class AuditNotation extends Model
         'evaluated',
         'verified',
         'validated',
+        'archived',
     ];
 
     public function performances()
@@ -45,7 +46,7 @@ class AuditNotation extends Model
 
     public function getTitleAttribute() {
         $response = Http::get(env('APP_URL'). '/api/' . $this->module . '/' . $this->module_id );
-        $title = $response->json()['data']['title'];
+        $title = $response->json()['data']['title'] ?? $response->json()['data']['name'];
         return $title;
     }
 }
