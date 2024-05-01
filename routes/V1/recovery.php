@@ -8,6 +8,9 @@ use App\Http\Controllers\API\V1\Recovery\RecoveryController;
 |--------------------------------------------------------------------------
 */
 
+Route::group(['middleware' => 'auth:sanctum'], function () {
+
+
 
 Route::get('/recovery/tasks/{id}',  [RecoveryController::class, 'showSteps']);
 Route::post('/recovery/tasks/{id}',  [RecoveryController::class, 'addTask']);
@@ -20,3 +23,5 @@ Route::post('/recovery/update/{recovery}', array(RecoveryController::class, 'upd
 Route::put('/recovery/archive/{recovery}', array(RecoveryController::class, 'archive'));
 Route::post('/recovery/realization/{id}', array(RecoveryController::class, 'realization'));
 Route::resource('/recovery', RecoveryController::class);
+
+});

@@ -10,4 +10,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 //Veille juridique
-Route::resource('/legal-watches', LegalWatchController::class);
+Route::resource('/legal-watches', LegalWatchController::class)->middleware('auth:sanctum');
