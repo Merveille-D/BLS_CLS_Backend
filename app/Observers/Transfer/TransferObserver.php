@@ -3,6 +3,7 @@
 namespace App\Observers\Transfer;
 
 use App\Concerns\Traits\Alert\AddAlertTrait;
+use App\Models\Alert\Alert;
 use App\Models\Transfer\Transfer;
 use Illuminate\Contracts\Events\ShouldHandleEventsAfterCommit;
 
@@ -15,8 +16,8 @@ class TransferObserver implements ShouldHandleEventsAfterCommit
     public function created(Transfer $transfer): void
     {
         $dates = $this->getMilestoneDates($transfer->deadline);
-        foreach ($dates as $date) {
-            $this->new_alert($transfer, $transfer->title, $transfer->description, 'transfer', $date, 'warning');
+        foreach ($dates as $key => $date) {
+            $this->new_alert($transfer, $transfer->title, $transfer->description, 'transfer', $date, Alert::STATUS[$key]);
         }
 
         // $this->new_alert($transfer, $transfer->title, $transfer->description, 'transfer', $transfer->deadline, 'warning');
