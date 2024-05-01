@@ -14,8 +14,6 @@ class AlertObserver
      */
     public function created(Alert $alert): void
     {
-        // dd($alert->id);
-
         if ($alert->type == 'transfer') {
             $collaborators = $alert->alertable->with('collaborators')->first()->collaborators;
 
