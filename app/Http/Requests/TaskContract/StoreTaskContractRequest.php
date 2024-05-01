@@ -26,7 +26,7 @@ class StoreTaskContractRequest extends FormRequest
         $rules = [
             'libelle' => ['required', 'string'],
             'contract_id' => ['required', 'uuid'],
-            'deadline' => ['date'],
+            'deadline' => ['required','date'],
         ];
 
         return $rules;
