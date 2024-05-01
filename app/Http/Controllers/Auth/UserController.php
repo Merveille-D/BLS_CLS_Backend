@@ -16,7 +16,7 @@ class UserController extends Controller
 {
     public function __construct(private UserRepository $userRepo)
     {
-        $this->middleware('auth:sanctum')->only('current', 'logout');
+        $this->middleware('auth:sanctum')->only('current', 'logout', 'index');
     }
 
     public function index() {
