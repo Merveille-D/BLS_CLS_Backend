@@ -47,7 +47,13 @@ class TaskController extends Controller
     public function show(Task $task)
     {
         try {
-            return api_response(true, "Information de la tache", $task, 200);
+            $data = $task->toArray();
+            $data['transfers'] = $task->transfers->map(function ($transfer) {
+                $transfer->sender = $transfer->sender;
+                $transfer->collaborators = $transfer->collaborators;
+                return $transfer;
+            });
+            return api_response(true, "Information de la tache", $data, 200);
         }catch( ValidationException $e ) {
             return api_response(false, "Echec de la récupération des infos de la tache", $e->errors(), 422);
         }
@@ -60,7 +66,17 @@ class TaskController extends Controller
     {
         try {
             $this->task->update($task, $request->all());
-            return api_response(true, "Succès de la mise à jour de la tache", $task, 200);
+
+            $data = $task->toArray();
+            $data['transfers'] = $task->transfers->map(function ($transfer) {
+                $transfer->sender = $transfer->sender;
+                $transfer->collaborators = $transfer->collaborators;
+                return $transfer;
+            });
+    ;
+
+            //
+            return api_response(true, "Succès de la mise à jour de la tache", $data, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de la mise à jour de la tache", $e->errors(), 422);
         }
