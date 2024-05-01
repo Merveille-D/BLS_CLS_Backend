@@ -19,7 +19,7 @@ return new class extends Migration
             $table->uuidMorphs('transferable');
             $table->text('description')->nullable();
             $table->uuid('completed_user_id')->nullable();
-            $table->foreign('completed_user_id')->references('id')->on('users');
+            $table->foreign('sender_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

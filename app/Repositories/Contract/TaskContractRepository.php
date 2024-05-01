@@ -44,11 +44,11 @@ class TaskContractRepository
 
         $task->update($request);
 
-        // $transferExist = $task->transfers()->exists();
+        $transferExist = $task->transfers()->exists();
 
-        // if (!$transferExist) {
-        //     $this->add_transfer($task, $request['title'], $request['deadline_transfert'], $request['description'], $request['collaborators']);
-        // }
+        if (!$transferExist) {
+            $this->add_transfer($task, $request['title'], $request['deadline_transfert'], $request['description'], $request['collaborators']);
+        }
 
         return $task;
     }
