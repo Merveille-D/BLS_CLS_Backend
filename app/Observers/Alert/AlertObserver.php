@@ -14,7 +14,13 @@ class AlertObserver
      */
     public function created(Alert $alert): void
     {
-        // dd($alert->alertable);
+        if ($alert->type == 'transfer') {
+            $alert->alertable->collaborators->each(function ($collaborator) use ($alert) {
+                $collaborator->notify((new AlertNotification($alert))->delay($alert->trigger_at));
+            });
+            return;
+        }
+
         $users = User::all();
         foreach ($users as $key => $user) {
             $user->notify((new AlertNotification($alert))->delay($alert->trigger_at));

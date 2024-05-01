@@ -13,7 +13,12 @@ class TransferObserver
      */
     public function created(Transfer $transfer): void
     {
-        $this->new_alert($transfer, $transfer->title, $transfer->description, 'transfer', $transfer->deadline, 'warning');
+        $dates = $this->getMilestoneDates($transfer->deadline);
+        foreach ($dates as $date) {
+            $this->new_alert($transfer, $transfer->title, $transfer->description, 'transfer', $date, 'warning');
+        }
+
+        // $this->new_alert($transfer, $transfer->title, $transfer->description, 'transfer', $transfer->deadline, 'warning');
     }
 
     /**
@@ -21,7 +26,7 @@ class TransferObserver
      */
     public function updated(Transfer $transfer): void
     {
-        //
+        dd('updated ');
     }
 
     /**

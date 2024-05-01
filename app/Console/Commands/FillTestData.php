@@ -63,6 +63,8 @@ class FillTestData extends Command
         $convHypo->steps()->syncWithoutDetaching($all_steps);
 
         $this->updatePivotState($convHypo);
+
+        $this->info('Test data has been filled successfully');
     }
 
     public function updatePivotState($convHypo) {

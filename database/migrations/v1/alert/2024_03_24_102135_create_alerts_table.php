@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('message')->nullable();
             $table->timestamp('trigger_at');
             $table->uuidMorphs('alertable');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
