@@ -3,6 +3,7 @@
 namespace App\Concerns\Traits\Transfer;
 
 use App\Models\Transfer\Transfer;
+use Carbon\Carbon;
 use DateInterval;
 use DateTime;
 use DateTimeImmutable;
@@ -26,8 +27,9 @@ trait AddTransferTrait
         $transfer = new Transfer();
         $transfer->title = $title;
         $transfer->description = $description ?? null;
-        $transfer->deadline = $deadline;
+        $transfer->deadline = Carbon::parse($deadline);
         $model->transfers()->save($transfer);
+
         $transfer->collaborators()->sync($collaborators);
     }
 

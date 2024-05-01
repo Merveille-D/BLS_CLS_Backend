@@ -7,6 +7,8 @@ use Carbon\Carbon;
 
 class TaskContractRepository
 {
+    use AddTransferTrait;
+
     public function __construct(private Task $task) {
 
     }
@@ -45,11 +47,10 @@ class TaskContractRepository
 
         $transferExist = $task->transfers()->exists();
 
-        if ($transferExist) {
-
-            $this->add_transfer($task, $request['title'], $request['deadline'], $request['description'], $request['collaborators']);
+        if (!$transferExist) {
+            $this->add_transfer($task, $request['title'], $request['deadline_transfert'], $request['description'], $request['collaborators']);
         }
-
+        
         return $task;
     }
 
