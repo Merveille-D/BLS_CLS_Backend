@@ -3,6 +3,8 @@ namespace App\Concerns\Traits\Alert;
 
 use App\Models\Alert\Alert;
 use Carbon\Carbon;
+use DateInterval;
+use DateTimeImmutable;
 use Illuminate\Database\Eloquent\Model;
 
 trait AddAlertTrait
@@ -17,5 +19,22 @@ trait AddAlertTrait
         $alert->message = $message;
         $alert->trigger_at = env('EMAIL_SENDING_MODE') == 'test' ? Carbon::now()->addMinute() :  $trigger_at;
         $model->alerts()->save($alert);
+    }
+
+    function getMilestoneDates(\DateTimeInterface $deadline): array
+    {
+        $today = new DateTimeImmutable();
+        $interval = $deadline->diff($today);
+        $totalDays = $interval->days;
+
+        $percentages = [0.2, 0.6, 0.9];
+        $milestoneIntervals = array_map(
+            fn ($percentage) => new DateInterval("P" . round($totalDays * $percentage) . "D"),
+            $percentages
+        );
+
+        $milestoneDates = array_map(fn ($interval) => $today->add($interval), $milestoneIntervals);
+
+        return $milestoneDates;
     }
 }
