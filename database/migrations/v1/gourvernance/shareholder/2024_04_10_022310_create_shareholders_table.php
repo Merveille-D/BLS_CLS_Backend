@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('actions_number');
             $table->integer('actions_encumbered');
             $table->integer('actions_no_encumbered');
-            $table->integer('percentage');
+            $table->integer('percentage')->nullable();
             $table->timestamps();
         });
     }
