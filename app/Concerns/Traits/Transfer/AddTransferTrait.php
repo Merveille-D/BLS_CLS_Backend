@@ -2,6 +2,7 @@
 namespace App\Concerns\Traits\Transfer;
 
 use App\Models\Transfer\Transfer;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 trait AddTransferTrait
@@ -18,11 +19,13 @@ trait AddTransferTrait
      * @return void
      */
     public function add_transfer(Model $model, string $title, $deadline, $description = null, $collaborators) : void {
+
         $transfer = new Transfer();
         $transfer->title = $title;
         $transfer->description = $description ?? null;
-        $transfer->deadline = $deadline;
+        $transfer->deadline = Carbon::parse($deadline);
         $model->transfers()->save($transfer);
+
         $transfer->collaborators()->sync($collaborators);
     }
 }
