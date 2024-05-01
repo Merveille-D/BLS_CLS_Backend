@@ -17,7 +17,7 @@ trait AddAlertTrait
         $alert->priority =  $priority;
         $alert->deadline = now()->addDays(10);
         $alert->message = $message;
-        $alert->trigger_at = env('EMAIL_SENDING_MODE') == 'test' ? Carbon::now() :  $trigger_at;
+        $alert->trigger_at = env('EMAIL_SENDING_MODE') == 'test' ? Carbon::now()->addMinute() :  $trigger_at;
         $model->alerts()->save($alert);
     }
 

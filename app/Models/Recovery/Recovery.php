@@ -75,12 +75,15 @@ class Recovery extends Model
     {
         $step = $this->next_step;
 
-        $form = $this->getCustomFormFields($step->code);
+        if ($step) {
+            $form = $this->getCustomFormFields($step->code);
 
-        return [
-            'method' => 'POST',
-            'action' => env('APP_URL') . '/api/recovery/update/' . $this->id,
-            'form' => $form,
-        ];
+            return [
+                'method' => 'POST',
+                'action' => env('APP_URL') . '/api/recovery/update/' . $this->id,
+                'form' => $form,
+            ];
+        }
+        return null;
     }
 }
