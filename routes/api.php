@@ -37,78 +37,78 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::group(['middleware' => 'auth:sanctum'], function() {
+Route::group(['middleware' => 'auth:sanctum'], function () {
 
-Route::resource('general_meetings', GeneralMeetingController::class);
-Route::post('ag_attachements', [GeneralMeetingController::class, 'attachment']);
+    Route::resource('general_meetings', GeneralMeetingController::class);
+    Route::post('ag_attachements', [GeneralMeetingController::class, 'attachment']);
 
-Route::resource('task_general_meetings', TaskGeneralMeetingController::class);
-Route::delete('delete_array_task_general_meetings', [TaskGeneralMeetingController::class, 'deleteArrayTaskGeneralMeeting'] );
-Route::put('update_status_task_general_meetings', [TaskGeneralMeetingController::class, 'updateStatusTaskGeneralMeeting'] );
+    Route::resource('task_general_meetings', TaskGeneralMeetingController::class);
+    Route::delete('delete_array_task_general_meetings', [TaskGeneralMeetingController::class, 'deleteArrayTaskGeneralMeeting'] );
+    Route::put('update_status_task_general_meetings', [TaskGeneralMeetingController::class, 'updateStatusTaskGeneralMeeting'] );
 
-// Route::resource('attendance_list_general_meetings', AttendanceListGeneralMeetingController::class);
+    // Route::resource('attendance_list_general_meetings', AttendanceListGeneralMeetingController::class);
 
-Route::get('/ca_administrators/settings', [AdministratorController::class, 'settings']);
-Route::resource('/ca_administrators', AdministratorController::class);
+    Route::get('/ca_administrators/settings', [AdministratorController::class, 'settings']);
+    Route::resource('/ca_administrators', AdministratorController::class);
 
-Route::resource('session_administrators', SessionAdministratorController::class);
-Route::post('ca_attachements', [SessionAdministratorController::class, 'attachment']);
+    Route::resource('session_administrators', SessionAdministratorController::class);
+    Route::post('ca_attachements', [SessionAdministratorController::class, 'attachment']);
 
-Route::resource('task_session_administrators', TaskSessionAdministratorController::class);
-Route::delete('delete_array_task_session_administrators', [TaskSessionAdministratorController::class, 'deleteArrayTaskSessionAdministrator'] );
-Route::put('update_status_task_session_administrators', [TaskSessionAdministratorController::class, 'updateStatusTaskSessionAdministrator'] );
+    Route::resource('task_session_administrators', TaskSessionAdministratorController::class);
+    Route::delete('delete_array_task_session_administrators', [TaskSessionAdministratorController::class, 'deleteArrayTaskSessionAdministrator'] );
+    Route::put('update_status_task_session_administrators', [TaskSessionAdministratorController::class, 'updateStatusTaskSessionAdministrator'] );
 
-Route::resource('shareholders', ShareholderController::class);
-
-
-// Banque de textes
-Route::resource('banks', BankController::class);
-
-// Contrats
-Route::resource('contracts', ContractController::class);
-Route::get('get_contract_categories', [ContractController::class, 'getCategories']);
-Route::get('get_contract_type_categories', [ContractController::class, 'getTypeCategories']);
-
-Route::resource('parts', PartController::class);
-
-Route::resource('tasks', TaskController::class);
-Route::delete('delete_array_task_contracts', [TaskController::class, 'deleteArrayTaskContract'] );
-Route::put('update_status_task_contracts', [TaskController::class, 'updateStatusTaskContract'] );
+    Route::resource('shareholders', ShareholderController::class);
 
 
-// Incidents
+    // Banque de textes
+    Route::resource('banks', BankController::class);
 
-Route::resource('incidents', IncidentController::class);
-Route::resource('author_incidents', AuthorIncidentController::class);
-Route::resource('task_incidents', TaskIncidentController::class);
-Route::get('get_current_task_incidents', [TaskIncidentController::class, 'getCurrentTaskIncident'] );
-Route::post('complete_task_incidents', [TaskIncidentController::class, 'completeTaskIncident'] );
+    // Contrats
+    Route::resource('contracts', ContractController::class);
+    Route::get('get_contract_categories', [ContractController::class, 'getCategories']);
+    Route::get('get_contract_type_categories', [ContractController::class, 'getTypeCategories']);
+
+    Route::resource('parts', PartController::class);
+
+    Route::resource('tasks', TaskController::class);
+    Route::delete('delete_array_task_contracts', [TaskController::class, 'deleteArrayTaskContract'] );
+    Route::put('update_status_task_contracts', [TaskController::class, 'updateStatusTaskContract'] );
 
 
+    // Incidents
 
-// DIRECTION GENERALE
-
-Route::resource('directors', DirectorController::class);
-
-Route::resource('management_committees', ManagementCommitteeController::class);
-Route::post('cd_attachements', [ManagementCommitteeController::class, 'attachment']);
-
-Route::resource('task_management_committees', TaskManagementCommitteeController::class);
-Route::delete('delete_array_task_management_committees', [TaskManagementCommitteeController::class, 'deleteArrayTaskManagementCommittee'] );
-Route::put('update_status_task_management_committees', [TaskManagementCommitteeController::class, 'updateStatusTaskManagementCommittee'] );
-
-// EVALUATION
-Route::resource('notations', NotationController::class);
-Route::resource('performance_indicators', PerformanceIndicatorController::class);
-Route::resource('collaborators', CollaboratorController::class);
-Route::get('/get_all_notations', [NotationController::class, 'all'] );
+    Route::resource('incidents', IncidentController::class);
+    Route::resource('author_incidents', AuthorIncidentController::class);
+    Route::resource('task_incidents', TaskIncidentController::class);
+    Route::get('get_current_task_incidents', [TaskIncidentController::class, 'getCurrentTaskIncident'] );
+    Route::post('complete_task_incidents', [TaskIncidentController::class, 'completeTaskIncident'] );
 
 
 
-// AUDIT
-Route::resource('audit_notations', AuditNotationController::class);
-Route::resource('audit_performance_indicators', AuditPerformanceIndicatorController::class);
-Route::get('/get_all_audits', [AuditNotationController::class, 'all'] );
+    // DIRECTION GENERALE
+
+    Route::resource('directors', DirectorController::class);
+
+    Route::resource('management_committees', ManagementCommitteeController::class);
+    Route::post('cd_attachements', [ManagementCommitteeController::class, 'attachment']);
+
+    Route::resource('task_management_committees', TaskManagementCommitteeController::class);
+    Route::delete('delete_array_task_management_committees', [TaskManagementCommitteeController::class, 'deleteArrayTaskManagementCommittee'] );
+    Route::put('update_status_task_management_committees', [TaskManagementCommitteeController::class, 'updateStatusTaskManagementCommittee'] );
+
+    // EVALUATION
+    Route::resource('notations', NotationController::class);
+    Route::resource('performance_indicators', PerformanceIndicatorController::class);
+    Route::resource('collaborators', CollaboratorController::class);
+    Route::get('/get_all_notations', [NotationController::class, 'all'] );
+
+
+
+    // AUDIT
+    Route::resource('audit_notations', AuditNotationController::class);
+    Route::resource('audit_performance_indicators', AuditPerformanceIndicatorController::class);
+    Route::get('/get_all_audits', [AuditNotationController::class, 'all'] );
 
 });
 
