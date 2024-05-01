@@ -28,6 +28,7 @@ trait AddTransferTrait
         $transfer->title = $title;
         $transfer->description = $description ?? null;
         $transfer->deadline = Carbon::parse($deadline);
+        $transfer->sender_id = auth()->id();
         $model->transfers()->save($transfer);
 
         $transfer->collaborators()->sync($collaborators);

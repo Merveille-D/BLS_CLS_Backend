@@ -19,14 +19,14 @@ class Transfer extends Model
         'status',
         'title',
         'description',
-        'completed_user_id',
+        'sender_id',
         'deadline',
         'created_at',
     ];
 
-    function completed_user()
+    function sender()
     {
-        return $this->belongsTo(User::class, 'id', 'completed_user_id');
+        return $this->belongsTo(User::class, 'id', 'sender_id');
     }
 
     public function collaborators()
