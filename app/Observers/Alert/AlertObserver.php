@@ -20,6 +20,7 @@ class AlertObserver
         //         $collaborator->notify((new AlertNotification($alert))->delay($alert->trigger_at));
         //     });
         // } else {
+            
             $users = User::all();
             foreach ($users as $key => $user) {
                 $user->notify((new AlertNotification($alert))->delay($alert->trigger_at));

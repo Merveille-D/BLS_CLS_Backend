@@ -37,6 +37,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+Route::group(['middleware' => 'auth:sanctum'], function() {
+
 Route::resource('general_meetings', GeneralMeetingController::class);
 Route::post('ag_attachements', [GeneralMeetingController::class, 'attachment']);
 
@@ -107,6 +109,8 @@ Route::get('/get_all_notations', [NotationController::class, 'all'] );
 Route::resource('audit_notations', AuditNotationController::class);
 Route::resource('audit_performance_indicators', AuditPerformanceIndicatorController::class);
 Route::get('/get_all_audits', [AuditNotationController::class, 'all'] );
+
+});
 
 
 

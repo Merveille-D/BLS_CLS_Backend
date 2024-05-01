@@ -20,7 +20,7 @@ class TaskContractObserver
     public function updated(Task $task): void
     {
         if($task->status) {
-            $alertsExist = $task->alerts()->delete();
+            $task->alerts()->delete();
         }
     }
 
