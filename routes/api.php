@@ -39,8 +39,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth:sanctum'], function() {
 
-
-
 Route::resource('general_meetings', GeneralMeetingController::class);
 Route::post('ag_attachements', [GeneralMeetingController::class, 'attachment']);
 
