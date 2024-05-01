@@ -17,7 +17,7 @@ class Shareholder extends Model
         'actions_number',
         'actions_encumbered',
         'actions_no_encumbered',
-        'pourcentage'
+        'percentage'
     ];
 
     const TYPES = [
