@@ -16,16 +16,14 @@ class AlertObserver
     {
         if ($alert->type == 'transfer') {
             $collaborators = $alert->alertable->with('collaborators')->first()->collaborators;
-
             $collaborators->each(function ($collaborator) use ($alert) {
                 $collaborator->notify((new AlertNotification($alert))->delay($alert->trigger_at));
             });
-            return;
-        }
-
-        $users = User::all();
-        foreach ($users as $key => $user) {
-            $user->notify((new AlertNotification($alert))->delay($alert->trigger_at));
+        } else {
+            $users = User::all();
+            foreach ($users as $key => $user) {
+                $user->notify((new AlertNotification($alert))->delay($alert->trigger_at));
+            }
         }
     }
 
