@@ -2,6 +2,7 @@
 namespace App\Repositories\Contract;
 
 use App\Models\Contract\Task;
+use App\Concerns\Traits\Transfer\AddTransferTrait;
 use Carbon\Carbon;
 
 class TaskContractRepository
@@ -40,6 +41,15 @@ class TaskContractRepository
     public function update(Task $task, $request) {
 
         $task->update($request);
+
+
+        $transferExist = $task->transfers()->exists();
+
+        if ($transferExist) {
+
+            $this->add_transfer($task, $request['title'], $request['deadline'], $request['description'], $request['collaborators']);
+        }
+
         return $task;
     }
 

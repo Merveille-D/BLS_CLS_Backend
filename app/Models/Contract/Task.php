@@ -3,6 +3,7 @@
 namespace App\Models\Contract;
 
 use App\Concerns\Traits\Alert\Alertable;
+use App\Concerns\Traits\Transfer\Transferable;
 use App\Observers\TaskContractObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 #[ObservedBy([TaskContractObserver::class])]
 class Task extends Model
 {
-    use HasFactory, HasUuids, Alertable;
+    use HasFactory, HasUuids, Alertable, Transferable;
     /**
      * Les attributs qui doivent être castés vers des types natifs.
      *

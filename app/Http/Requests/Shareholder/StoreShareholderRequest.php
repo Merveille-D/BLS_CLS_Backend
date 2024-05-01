@@ -31,7 +31,6 @@ class StoreShareholderRequest extends FormRequest
             'corporate_type' => ['required_if:type,corporate', Rule::in(Shareholder::CORPORATE_TYPES) ],
             'actions_encumbered' => ['required', 'numeric'],
             'actions_no_encumbered' => ['required', 'numeric'],
-            'pourcentage' => ['required', 'numeric'],
         ];
     }
 
