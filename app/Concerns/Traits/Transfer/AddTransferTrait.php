@@ -23,8 +23,6 @@ trait AddTransferTrait
      */
     public function add_transfer(Model $model, string $title, $deadline, $description = null, $collaborators): void
     {
-        $dates = $this->getMilestoneDates($deadline);
-
         $transfer = new Transfer();
         $transfer->title = $title;
         $transfer->description = $description ?? null;
@@ -34,10 +32,8 @@ trait AddTransferTrait
     }
 
     public function update_transfer(Model $model, $collaborators) {
-        $transfer = $model->transfers;
-        dd($transfer);
+        $transfer = $model->transfers->first();
 
         $transfer->collaborators()->sync($collaborators);
-
     }
 }

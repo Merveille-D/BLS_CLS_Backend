@@ -4,8 +4,9 @@ namespace App\Observers\Transfer;
 
 use App\Concerns\Traits\Alert\AddAlertTrait;
 use App\Models\Transfer\Transfer;
+use Illuminate\Contracts\Events\ShouldHandleEventsAfterCommit;
 
-class TransferObserver
+class TransferObserver implements ShouldHandleEventsAfterCommit
 {
     use AddAlertTrait;
     /**

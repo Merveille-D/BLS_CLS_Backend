@@ -150,6 +150,7 @@ class ConvHypothecRepository
     }
 
     public function updateProcess($request, $convHypo) {
+        dd($convHypo->transfers->first()->collaborators);
         $data = array();
 
         if ($convHypo) {
