@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -13,7 +14,8 @@ class AuthTest extends TestCase
      * test retrieve all users
      */
     public function test_retrieve_all_users() : void {
-        $response = $this->getJson('/api/users');
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)->getJson('/api/users');
 
         $response->assertStatus(200);
     }
@@ -22,6 +24,7 @@ class AuthTest extends TestCase
      * test retrieve current logged in user
      */
     public function test_retrieve_current_user() : void {
+
         $this->postJson('/api/register', [
             'firstname' => 'Julien',
             'lastname' => 'Adimi',
