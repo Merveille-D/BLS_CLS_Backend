@@ -23,7 +23,15 @@ class TaskController extends Controller
      */
     public function index(ListTaskContractRequest $request)
     {
-        $task_contracts = $this->task->all($request);
+        $task_contracts = $this->task->all($request)->map(function ($task) {
+            
+            $task->transfers = $task->transfers->map(function ($transfer) {
+                $transfer->sender = $transfer->sender;
+                $transfer->collaborators = $transfer->collaborators;
+                return $transfer;
+            });
+            return $task;
+        });;
         return api_response(true, "Liste des taches du contrat", $task_contracts, 200);
     }
 

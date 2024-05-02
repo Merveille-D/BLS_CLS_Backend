@@ -27,6 +27,8 @@ class AppServiceProvider extends ServiceProvider
             database_path('migrations/v1/gourvernance/general_meeting'),
 
             database_path('migrations/v1/gourvernance/shareholder'),
+            
+            database_path('migrations/v1/gourvernance/bank_infos'),
 
             database_path('migrations/v1/gourvernance'),
 
