@@ -45,7 +45,7 @@ class TaskContractRepository
     public function update(Task $task, $request) {
 
         $task->update($request);
-        $this->add_transfer($task, $request['forward_title'], $request['deadline_transfert'], $request['description'], $request['collaborators']);
+        $this->add_transfer($task, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
 
         return $task;
     }

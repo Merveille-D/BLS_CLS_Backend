@@ -27,6 +27,9 @@ class UpdateTaskContractRequest extends FormRequest
         $rules = [
             'libelle' => ['string'],
             'deadline' => ['date'],
+            'forward_title' => ['string'],
+            'deadline_transfer' => ['date'],
+            'description' => ['string'],
         ];
         return $rules;
     }
