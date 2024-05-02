@@ -14,15 +14,32 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $existingUser = User::where('email', 'raoulmassigbe@gmail.com')->first();
+        foreach ($this->users_list() as $user) {
+            User::create($user);
+        }
+    }
 
-        if (!$existingUser) {
-            $user = User::create([
-                'firstname' => 'Julien',
-                'lastname' => 'Adimi',
+    public function users_list() {
+        return array(
+            array(
+                'firstname' => 'AfrikSkills',
+                'lastname' => '',
                 'email' => 'afrikskills@yopmail.com',
                 'password' => Hash::make('password')
-            ]);
-        }
+            ),
+            array(
+                'firstname' => 'Estelle',
+                'lastname' => 'Adjaho',
+                'email' => 'estelleadjaho@gmail.com',
+                'password' => Hash::make('password')
+            ),
+            array(
+                'firstname' => 'Darlène',
+                'lastname' => 'Gbaguidi',
+                'email' => 'darlenegbaguidi@gmail.com',
+                'password' => Hash::make('password')
+            ),
+        );
+
     }
 }
