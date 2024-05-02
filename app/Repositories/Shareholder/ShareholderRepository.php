@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories\Shareholder;
 
+use App\Models\Shareholder\Capital;
 use App\Models\Shareholder\Shareholder;
 
 class ShareholderRepository
@@ -18,6 +19,11 @@ class ShareholderRepository
 
         $request['actions_number'] = $request['actions_encumbered'] + $request['actions_no_encumbered'];
 
+        $total_actions = Capital::get()->last()->amount / Capital::get()->last()->par_value ;
+        $percentage = ($request['actions_number'] / $total_actions) * 100;
+
+        $request['percentage'] = $percentage;
+
         $Shareholder = $this->shareholder->create($request->all());
         return $Shareholder;
     }
@@ -30,6 +36,7 @@ class ShareholderRepository
     public function update(Shareholder $shareholder, $request) {
 
         $request['actions_number'] = $request['actions_encumbered'] + $request['actions_no_encumbered'];
+
 
         $shareholder->update($request);
         return $shareholder;
