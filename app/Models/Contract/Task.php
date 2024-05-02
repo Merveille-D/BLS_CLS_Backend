@@ -28,6 +28,7 @@ class Task extends Model
         'deadline',
         'status',
         'contract_id',
+        'created_by'
     ];
 
     public function contract()

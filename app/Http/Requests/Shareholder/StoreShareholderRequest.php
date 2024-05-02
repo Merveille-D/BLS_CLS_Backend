@@ -28,6 +28,8 @@ class StoreShareholderRequest extends FormRequest
         return [
             'name' => ['required', 'string'],
             'type' => ['required',  Rule::in(Shareholder::TYPES) ],
+            'nationality' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
             'corporate_type' => ['required_if:type,corporate', Rule::in(Shareholder::CORPORATE_TYPES) ],
             'actions_encumbered' => ['required', 'numeric'],
             'actions_no_encumbered' => ['required', 'numeric'],

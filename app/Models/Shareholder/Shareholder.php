@@ -13,6 +13,8 @@ class Shareholder extends Model
     protected $fillable = [
         'name',
         'type',
+        'nationality',
+        'address',
         'corporate_type',
         'actions_number',
         'actions_encumbered',
