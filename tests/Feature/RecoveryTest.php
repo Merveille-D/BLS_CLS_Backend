@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Recovery\Recovery;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -18,12 +19,11 @@ class RecoveryTest extends TestCase
      */
     public function testRetrieveList(): void
     {
-        // Create some recovery instances in the database
+        $user = User::factory()->create();
+
         Recovery::factory()->count(5)->create();
 
-        // dd(Recovery::all());
-        // Send a GET request to the endpoint
-        $response = $this->get('api/recovery');
+        $response = $this->actingAs($user)->get('api/recovery');
 
         // Assert that the response has a 200 status code
         $response->assertStatus(200);
@@ -39,8 +39,9 @@ class RecoveryTest extends TestCase
      */
     public function testCreate(): void
     {
+        $user = User::factory()->create();
         // Send a POST request to the endpoint with the necessary data
-        $response = $this->post('api/recovery', [
+        $response = $this->actingAs($user)->post('api/recovery', [
             'name' => 'Test Recovery',
             'reference' => 'ABC123',
             'type'=> 'friendly'

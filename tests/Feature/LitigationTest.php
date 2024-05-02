@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Litigation\LitigationParty;
 use App\Models\Litigation\LitigationSetting;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
@@ -18,8 +19,8 @@ class LitigationTest extends TestCase
      */
     public function test_retrieve_list()
     {
-
-        $response = $this->get('api/litigation');
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)->get('api/litigation');
 
         // Assert that the response has a 200 status code
         $response->assertStatus(200);
@@ -30,11 +31,12 @@ class LitigationTest extends TestCase
 
     public function test_save_litigation()
     {
+        $user = User::factory()->create();
         $file = UploadedFile::fake()->create(
             'document.pdf', 2048, 'application/pdf'
         );
 
-        $response = $this->post('api/litigation', [
+        $response = $this->actingAs($user)->post('api/litigation', [
             'name' => 'Test Litigation',
             'reference' => 'LT-1234',
             'nature_id' => LitigationSetting::whereType('nature')->first()->id,

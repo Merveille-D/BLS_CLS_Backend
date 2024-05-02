@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -18,7 +19,8 @@ class HypothecTest extends TestCase
         // Hypothec::factory()->count(5)->create();
 
         // Send a GET request to the endpoint
-        $response = $this->get('api/conventionnal_hypothec');
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)->get('api/conventionnal_hypothec');
 
         // Assert that the response has a 200 status code
         $response->assertStatus(200);
@@ -28,8 +30,8 @@ class HypothecTest extends TestCase
     }
 
     public function test_save_new_hypothec() {
-
-        $response = $this->post('api/conventionnal_hypothec', [
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)->post('api/conventionnal_hypothec', [
             'name' => 'Test Hypothec',
             'reference' => 'ABC123',
             'contract_id'=> 'sdlkfaz-sdfas-1234-sdfas',
