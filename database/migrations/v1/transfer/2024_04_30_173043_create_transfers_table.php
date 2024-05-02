@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreign('sender_id')->references('id')->on('users');
             $table->timestamps();
         });
+        
     }
 
     /**
