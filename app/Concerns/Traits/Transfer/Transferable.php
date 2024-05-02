@@ -12,6 +12,6 @@ trait Transferable
      */
     public function transfers()
     {
-        return $this->morphMany(Transfer::class, 'transferable');
+        return $this->morphMany(Transfer::class, 'transferable')->orderBy('created_at', 'desc');
     }
 }
