@@ -27,7 +27,6 @@ class UpdateBankInfoRequest extends FormRequest
             'logo' => ['file'],
             'denomination' => ['string'],
             'siege_social' => ['string'],
-            'par_value' => ['numeric'],
         ];
     }
 

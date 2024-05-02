@@ -15,8 +15,8 @@ return new class extends Migration
         Schema::create('capitals', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->date('date');
-            $table->decimal('amount', 10, 2);
-            $table->decimal('price_action_unity', 10, 2);
+            $table->integer('amount');
+            $table->integer('par_value');
             $table->timestamps();
         });
     }

@@ -28,7 +28,6 @@ class StoreBankInfoRequest extends FormRequest
             'logo' => ['required', 'file'],
             'denomination' => ['required', 'string'],
             'siege_social' => ['required', 'string'],
-            'par_value' => ['required', 'numeric'],
         ];
     }
 

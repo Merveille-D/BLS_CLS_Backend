@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\V1\Shareholder;
+namespace App\Http\Controllers\API\V1\Gourvernance\Shareholder;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ActionTransfer\StoreActionTransferRequest;

@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Requests\PartContract;
+namespace App\Http\Requests\ContractModel;
 
-use App\Models\Contract\Part;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
-class StorePartRequest extends FormRequest
+class StoreContractModelRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,18 +26,7 @@ class StorePartRequest extends FormRequest
 
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'telephone' => 'required|numeric',
-            'residence' => 'required|string|max:255',
-            'zip_code' => 'required|numeric',
-
-            'type' => ['required', Rule::in(Part::TYPES_PART)],
-
-            'denomination' => 'required_if:type,corporate',
-            'number_rccm' => 'required_if:type,corporate|numeric',
-            'number_ifu' => 'required_if:type,corporate|numeric',
-            'id_card' => 'required|numeric',
-            'capital' => 'required_if:type,corporate|numeric',
+            'file' => 'required|file',
         ];
     }
 
