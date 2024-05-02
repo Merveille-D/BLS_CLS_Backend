@@ -17,11 +17,11 @@ class BankInfoRepository
     public function store($request) {
 
         $path = uploadFile($request['logo'], 'bank_infos');
-        
+
         $requestData = $request->except('logo');
         $requestData['logo'] = $path;
 
-        $bank_info = $this->bank_info->create($request->all());
+        $bank_info = $this->bank_info->create($requestData);
         return $bank_info;
     }
 
