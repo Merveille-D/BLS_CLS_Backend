@@ -21,7 +21,13 @@ class BankInfoRepository
         $requestData = $request->except('logo');
         $requestData['logo'] = $path;
 
-        $bank_info = $this->bank_info->create($requestData);
+        if(BankInfo::exists()) {
+            $bank_info = BankInfo::get()->first();
+            $bank_info->update($requestData);
+        }else {
+            $bank_info = BankInfo::create($requestData);
+        }
+
         return $bank_info;
     }
 
