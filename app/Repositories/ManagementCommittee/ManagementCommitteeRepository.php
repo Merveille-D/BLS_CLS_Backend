@@ -37,12 +37,14 @@ class ManagementCommitteeRepository
      */
     public function update(ManagementCommittee $management_committee, $request) {
 
-        $management_committee->update($request);
 
         $current_date = new DateTime($request["session_date"]);
         $old_date = new DateTime($management_committee->session_date);
 
         $date_diff = $current_date->diff($old_date);
+
+        $management_committee->update($request);
+        
         if($date_diff->format('%R%a') != 0) {
             $this->createTasks($management_committee);
         }

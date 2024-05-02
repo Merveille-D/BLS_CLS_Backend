@@ -18,11 +18,10 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('telephone')->nullable();
             $table->string('residence')->nullable();
-            $table->string('number_id')->nullable();
             $table->integer('zip_code')->nullable();
             $table->string('number_rccm')->nullable();
             $table->string('number_ifu')->nullable();
-            $table->string('id_card')->nullable();
+            $table->string('id_card');
             $table->string('capital')->nullable();
             $table->enum('type', Part::TYPES_PART)->nullable();
             $table->uuid('permanent_representative_id')->nullable();

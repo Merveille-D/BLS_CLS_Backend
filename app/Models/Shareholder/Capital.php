@@ -13,7 +13,7 @@ class Capital extends Model
     protected $fillable = [
         'date',
         'amount',
-        'price_action_unity',
+        'par_value',
     ];
 
 }

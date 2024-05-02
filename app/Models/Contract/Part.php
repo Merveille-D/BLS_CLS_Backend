@@ -15,7 +15,6 @@ class Part extends Model
         'email',
         'telephone',
         'residence',
-        'number_id',
         'zip_code',
         'number_rccm',
         'number_ifu',

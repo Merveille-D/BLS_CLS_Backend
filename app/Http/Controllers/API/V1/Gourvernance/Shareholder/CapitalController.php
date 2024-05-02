@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\API\V1\Shareholder;
+namespace App\Http\Controllers\API\V1\Gourvernance\Shareholder;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Capital\StoreCapitalRequest;
 use App\Http\Requests\Capital\UpdateCapitalRequest;
 use App\Models\Shareholder\Capital;
-use App\Repositories\Capital\CapitalRepository;
+use App\Repositories\Shareholder\CapitalRepository;
 use Illuminate\Validation\ValidationException;
 
 class CapitalController extends Controller
