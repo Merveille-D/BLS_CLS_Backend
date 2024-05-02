@@ -104,8 +104,11 @@ class ConvHypothec extends Model
 
     public function getValidationAttribute()
     {
-        $step = $this->next_step;
+        $step = $this->next_task;
 
+        if (!$step) {
+            return [];
+        }
         $form = $this->getCustomFormFields($step->code);
 
         return [
