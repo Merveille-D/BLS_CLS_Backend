@@ -26,7 +26,7 @@ class Transfer extends Model
 
     function sender()
     {
-        return $this->belongsTo(User::class, 'id', 'sender_id');
+        return $this->belongsTo(User::class, 'sender_id');
     }
 
     public function collaborators()
