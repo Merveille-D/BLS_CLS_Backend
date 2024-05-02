@@ -36,6 +36,7 @@ class ConvHypothec extends Model
         'step',
         'reference',
         'contract_id',
+        'forwarded_date',
         'registration_date',
         'registering_date',
         'is_subscribed',
@@ -51,6 +52,28 @@ class ConvHypothec extends Model
         'is_archived',
         'has_recovery',
     );
+
+    protected $casts = [
+        'is_verified' => 'boolean',
+        'is_approved' => 'boolean',
+        'is_subscribed' => 'boolean',
+        'is_significated' => 'boolean',
+        'is_publied' => 'boolean',
+        'is_archived' => 'boolean',
+        'has_recovery' => 'boolean',
+    ];
+
+    public function tasks() {
+        return $this->hasMany(HypothecTask::class, 'hypothec_id');
+    }
+
+    public function getNextTaskAttribute() {
+        return $this->tasks()->where('status', false)->orderBy('rank')->first();
+    }
+
+    public function getCurrentTaskAttribute() {
+        return $this->tasks()->where('status', true)->orderBy('rank', 'desc')->first();
+    }
 
     /**
      * documents

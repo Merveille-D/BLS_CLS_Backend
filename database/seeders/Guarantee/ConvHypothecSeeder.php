@@ -36,7 +36,7 @@ class ConvHypothecSeeder extends Seeder
                 'max_delay' => null,
             ],
             [
-                'name' => 'Vérification propriété de l\'immeuble',
+                'name' => 'Vérifier la propriété de l\'immeuble',
                 'code' => ConvHypothecState::PROPERTY_VERIFIED,
                 'type' => 'formalization',
                 'rank' => 2,
@@ -44,7 +44,7 @@ class ConvHypothecSeeder extends Seeder
                 'max_delay' => null,
             ],
             [
-                'name' => 'Rédiger Convention d\'hypothèque',
+                'name' => 'Rédiger la convention d\'hypothèque',
                 'code' => ConvHypothecState::AGREEMENT_SIGNED,
                 'type' => 'formalization',
                 'rank' => 3,
@@ -52,20 +52,28 @@ class ConvHypothecSeeder extends Seeder
                 'max_delay' => null,
             ],
             [
-                'name' => 'Demande d\'inscription',
-                'code' => ConvHypothecState::REGISTER_REQUESTED,
+                'name' => 'Transmettre une demande d\'inscription au notaire',
+                'code' => ConvHypothecState::REGISTER_REQUEST_FORWARDED,
                 'type' => 'formalization',
                 'rank' => 4,
                 'min_delay' => null,
                 'max_delay' => null,
             ],
             [
-                'name' => 'Inscription',
-                'code' => ConvHypothecState::REGISTER,
+                'name' => 'Envoi de la demande d\'inscription par le notaire au régisseur',
+                'code' => ConvHypothecState::REGISTER_REQUESTED,
                 'type' => 'formalization',
                 'rank' => 5,
                 'min_delay' => null,
-                'max_delay' => 8,
+                'max_delay' => null,
+            ],
+            [
+                'name' => 'Recevoir la preuve d\'inscription de l\'hypothèque chez le notaire',
+                'code' => ConvHypothecState::REGISTER,
+                'type' => 'formalization',
+                'rank' => 6,
+                'min_delay' => null,
+                'max_delay' => null,
             ],
 
             //realizations steps

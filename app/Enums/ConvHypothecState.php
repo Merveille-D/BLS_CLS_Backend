@@ -5,6 +5,7 @@ enum ConvHypothecState {
     const CREATED = 'created';
     const PROPERTY_VERIFIED = 'property_verified';
     const AGREEMENT_SIGNED = 'agreement_signed';
+    const REGISTER_REQUEST_FORWARDED = 'register_request_forwarded';
     const REGISTER_REQUESTED = 'register_requested';
     const REGISTER = 'registered';
     const NONREGISTER = 'non_registered';
@@ -27,8 +28,10 @@ enum ConvHypothecState {
         ConvHypothecState::CREATED => 'Création nouvelle hypothèque',
         ConvHypothecState::PROPERTY_VERIFIED => 'Vérification propriété de l\'hypothèque',
         ConvHypothecState::AGREEMENT_SIGNED => 'Convention signée',
-        ConvHypothecState::REGISTER_REQUESTED => 'Demande d\'inscription',
-        ConvHypothecState::REGISTER => 'Réponse de l\'inscription',
+        // ConvHypothecState::REGISTER_REQUESTED => 'Envoie de la demande d\'inscription',
+        ConvHypothecState::REGISTER_REQUEST_FORWARDED => 'Transmission de la demande d\'inscription au notaire',
+        ConvHypothecState::REGISTER_REQUESTED => 'Envoi de la demande d\'inscription au régisseur',
+        ConvHypothecState::REGISTER => 'Réponse de l\'inscription de l\'hypothèque',
         ConvHypothecState::SIGNIFICATION_REGISTERED => 'Signification commendement de payer',
         ConvHypothecState::ORDER_PAYMENT_VERIFIED => 'Demande d\'inscription et publication du commendement de payer',
         ConvHypothecState::ORDER_PAYMENT_VISA => 'Visa de payement',

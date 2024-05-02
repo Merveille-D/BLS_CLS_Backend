@@ -32,6 +32,13 @@ trait HypothecFormFieldTrait
                     );
 
                 break;
+            case ConvHypothecState::REGISTER_REQUEST_FORWARDED:
+                $customFields = $this->commonProperties(ConvHypothecState::STATES_VALUES[ConvHypothecState::REGISTER_REQUEST_FORWARDED],
+                    ['date', 'forwarded_date', 'Date de transmission de la demande'],
+                    ['file', 'documents', 'Inserer les documents appropriés'],
+                );
+
+                break;
             case ConvHypothecState::REGISTER_REQUESTED:
                 $customFields = $this->commonProperties(ConvHypothecState::STATES_VALUES[ConvHypothecState::REGISTER_REQUESTED],
                     ['date', 'registering_date', 'Date d\'envoi de la demande'],
