@@ -4,6 +4,7 @@ namespace App\Repositories\Contract;
 use App\Models\Contract\Task;
 use App\Concerns\Traits\Transfer\AddTransferTrait;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class TaskContractRepository
 {
@@ -31,6 +32,7 @@ class TaskContractRepository
      */
     public function store($request) {
 
+        $request['created_by'] = Auth::user()->id;
         $task = $this->task->create($request->all());
         return $task;
     }
@@ -43,7 +45,7 @@ class TaskContractRepository
     public function update(Task $task, $request) {
 
         $task->update($request);
-        $this->add_transfer($task, $request['forward_title'], $request['deadline_transfert'], $request['description'], $request['collaborators']);
+        $this->add_transfer($task, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
 
         return $task;
     }

@@ -28,6 +28,8 @@ class UpdateShareholderRequest extends FormRequest
         return [
             'name' => ['string'],
             'type' => [ Rule::in(Shareholder::TYPES) ],
+            'nationality' => 'string|max:255',
+            'address' => 'string|max:255',
             'corporate_type' => [Rule::in(Shareholder::CORPORATE_TYPES) ],
             'actions_encumbered' => ['numeric'],
             'actions_no_encumbered' => ['numeric'],
