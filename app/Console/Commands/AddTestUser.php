@@ -12,7 +12,7 @@ class AddTestUser extends Command
      *
      * @var string
      */
-    protected $signature = 'add-user {email}';
+    protected $signature = 'add-user {firstname} {lastname} {email}';
 
     /**
      * The console command description.
@@ -27,7 +27,8 @@ class AddTestUser extends Command
     public function handle()
     {
         $user = new \App\Models\User();
-        $user->name = 'AfrikSkills';
+        $user->firstname = $this->argument('firstname');
+        $user->lastname = $this->argument('lastname');
         $user->email = $this->argument('email');
         $user->password = Hash::make('password');
         $user->save();
