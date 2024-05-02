@@ -9,6 +9,7 @@ use App\Http\Controllers\API\V1\Contract\TaskController;
 use App\Http\Controllers\API\V1\Evaluation\CollaboratorController;
 use App\Http\Controllers\API\V1\Evaluation\NotationController;
 use App\Http\Controllers\API\V1\Evaluation\PerformanceIndicatorController;
+use App\Http\Controllers\API\V1\Gourvernance\BankInfo\BankInfoController;
 use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Administrators\AdministratorController;
 use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions\SessionAdministratorController;
 use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions\TaskSessionAdministratorController;
@@ -59,6 +60,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::put('update_status_task_session_administrators', [TaskSessionAdministratorController::class, 'updateStatusTaskSessionAdministrator'] );
 
     Route::resource('shareholders', ShareholderController::class);
+
+    Route::resource('bank_infos', BankInfoController::class);
 
 
     // Banque de textes
