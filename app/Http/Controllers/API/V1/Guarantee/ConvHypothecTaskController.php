@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Guarantee;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Hypothec\AddTaskRequest;
+use App\Http\Requests\Hypothec\EditTaskRequest;
 use App\Http\Requests\Hypothec\UpdateTaskRequest;
 use App\Http\Resources\Guarantee\ConvHypothecStepResource;
 use App\Models\Guarantee\HypothecTask;
@@ -51,12 +52,25 @@ class ConvHypothecTaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTaskRequest $request, HypothecTask $task)
+    public function update(EditTaskRequest $request, HypothecTask $task)
     {
         try {
             $task = $this->taskRepo->edit($task, $request);
 
             return api_response(true, 'Tache modifiée avec succès', new ConvHypothecStepResource($task));
+        } catch (\Throwable $th) {
+            return api_error(false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
+        }
+    }
+    /**
+     * Update the specified resource in storage.
+     */
+    public function transfer(UpdateTaskRequest $request, $task)
+    {
+        try {
+            $task = $this->taskRepo->transfer($task, $request);
+
+            return api_response(true, 'Transfert éffectué avec succès', new ConvHypothecStepResource($task));
         } catch (\Throwable $th) {
             return api_error(false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }

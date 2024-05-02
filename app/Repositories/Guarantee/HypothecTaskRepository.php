@@ -28,10 +28,17 @@ class HypothecTaskRepository
     }
 
     public function edit($task, $request) {
-        // $task->update([
-        //     'name' => $request->name,
-        //     'max_deadline' => $request->deadline,
-        // ]);
+        $task->update([
+            'name' => $request->name,
+            'max_deadline' => $request->deadline,
+        ]);
+        // $this->add_transfer($task, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
+        return new ConvHypothecStepResource($task);
+    }
+
+    public function transfer($task, $request) {
+        $task = $this->task_model->findOrFail($task);
+
         $this->add_transfer($task, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
         return new ConvHypothecStepResource($task);
     }
