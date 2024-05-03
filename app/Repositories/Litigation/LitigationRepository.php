@@ -9,6 +9,7 @@ use App\Models\Litigation\LitigationDocument;
 use App\Models\Litigation\LitigationLawyer;
 use App\Models\Litigation\LitigationParty;
 use App\Models\Litigation\LitigationSetting;
+use App\Models\Litigation\LitigationTask;
 use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -79,7 +80,20 @@ class LitigationRepository {
 
         $this->saveDocuments($files, $litigation);
 
+        // $this->saveTasks($litigation); //TODO :
+
         return new LitigationResource($litigation);
+    }
+
+    public function saveTasks($litigation) {
+        $tasks = LitigationTask::DEFAULT_TASKS;
+
+        foreach ($tasks as $key => $task) {
+            $task = new LitigationTask($task);
+            dd($task);
+            $litigation->tasks()->create($task);
+        }
+
     }
 
     public function edit($id, $request) : JsonResource {

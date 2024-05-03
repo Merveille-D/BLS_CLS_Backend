@@ -87,4 +87,9 @@ class Litigation extends Model
         return $this->morphedByMany(User::class, 'litigationable');
     }
 
+    public function tasks() : MorphMany
+    {
+        return $this->morphMany(LitigationTask::class, 'taskable');
+    }
+
 }
