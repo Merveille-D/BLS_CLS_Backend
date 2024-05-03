@@ -45,6 +45,10 @@ class TaskSessionAdministrator extends Model
         return $this->belongsTo(SessionAdministrator::class);
     }
 
+    public function getFolderAttribute() {
+        return $this->session_administrator->libelle;
+    }
+
     public function getValidationAttribute() {
 
         return [
