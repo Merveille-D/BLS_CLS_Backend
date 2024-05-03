@@ -67,7 +67,7 @@ class AlertRepository
         $deadline = Carbon::parse($current_task->deadline);
         $deadlines = [
             $deadline->addDays(0.20 * $days),
-            $deadline->addDays(0.60 * $days),
+            // $deadline->addDays(0.60 * $days),
             $deadline->addDays(0.95 * $days),
         ];
 
