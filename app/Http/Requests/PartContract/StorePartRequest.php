@@ -36,7 +36,7 @@ class StorePartRequest extends FormRequest
             'type' => ['required', Rule::in(Part::TYPES_PART)],
 
             'denomination' => 'required_if:type,corporate',
-            'number_rccm' => 'required_if:type,corporate|numeric',
+            'number_rccm' => 'required_if:type,corporate',
             'number_ifu' => 'required_if:type,corporate|numeric',
             'id_card' => 'required|numeric',
             'capital' => 'required_if:type,corporate|numeric',
