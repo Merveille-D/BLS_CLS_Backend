@@ -27,6 +27,7 @@ class BankInfoController extends Controller
 
         if($bank_info) {
             $bank_info['majority_shareholder'] = Shareholder::orderBy('actions_number', 'desc')->first();
+            $bank_info['capital'] = Capital::get()->last();
         }
 
         return api_response(true, "Infos de la banque", $bank_info, 200);
