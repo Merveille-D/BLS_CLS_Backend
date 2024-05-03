@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories\Shareholder;
 
+use App\Models\Gourvernance\BankInfo\BankInfo;
 use App\Models\Shareholder\Capital;
 use App\Models\Shareholder\Shareholder;
 
@@ -29,6 +30,12 @@ class ShareholderRepository
         $request['percentage'] = $percentage ?? null;
 
         $Shareholder = $this->shareholder->create($request->all());
+
+        $bank_info = BankInfo::get()->first();
+        $bank_info->update([
+            'total_shareholders' => Shareholder::count()
+        ]);
+        
         return $Shareholder;
     }
 
