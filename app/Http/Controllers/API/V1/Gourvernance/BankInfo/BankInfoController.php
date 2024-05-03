@@ -25,6 +25,10 @@ class BankInfoController extends Controller
     {
         $bank_info = BankInfo::get()->first();
 
+        if(!$bank_info) {
+            $bank_info['total_shareholders'] = Shareholder::count();
+        }
+
         $bank_info['majority_shareholder'] = Shareholder::orderBy('actions_number', 'desc')->first();
         $bank_info['capital'] = Capital::get()->last();
 
