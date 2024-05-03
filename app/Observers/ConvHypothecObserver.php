@@ -26,9 +26,9 @@ class ConvHypothecObserver implements ShouldHandleEventsAfterCommit
     {
         $data = $this->nextStepBasedOnState($convHypo->state);
 
-        $this->new_alert($convHypo, 'RAPPEL | Hypothèque conventionnelle', $data['message'], 'conventionnal_hypothec', Carbon::now()->addDays(3), 'warning');
+        $this->new_alert($convHypo, 'RAPPEL | '.$convHypo->name ?? 'Hypothèque conventionnelle', $data['message'], 'conventionnal_hypothec', Carbon::now()->addDays(3), Alert::STATUS[2] ?? 'urgent');
 
-        $this->add_transfer($convHypo, 'RAPPEL | Hypothèque conventionnelle', Carbon::now()->addDays(3), $data['message'], User::all()->pluck('id')->toArray());
+        // $this->add_transfer($convHypo, 'RAPPEL | Hypothèque conventionnelle', Carbon::now()->addDays(3), $data['message'], User::all()->pluck('id')->toArray());
     }
 
     /**
@@ -38,7 +38,7 @@ class ConvHypothecObserver implements ShouldHandleEventsAfterCommit
     {
         $data = $this->nextStepBasedOnState($convHypo->state);
 
-        $this->new_alert($convHypo, 'RAPPEL | Hypothèque conventionnelle', $data['message'], 'conventionnal_hypothec', Carbon::now()->addDays(3), 'warning');
+        $this->new_alert($convHypo, 'RAPPEL | '.$convHypo->name ?? 'Hypothèque conventionnelle', $data['message'], 'conventionnal_hypothec', Carbon::now()->addDays(3), Alert::STATUS[2] ?? 'urgent');
 
         // $this->update_transfer($convHypo, User::all()->pluck('id')->toArray());
 
