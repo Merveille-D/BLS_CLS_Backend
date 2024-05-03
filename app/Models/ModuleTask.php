@@ -1,14 +1,16 @@
 <?php
 
-namespace App\Models\Litigation;
+namespace App\Models;
 
 use App\Concerns\Traits\Transfer\Transferable;
-use App\Models\User;
+use App\Models\Guarantee\ConvHypothec;
+use App\Models\Litigation\Litigation;
+use App\Models\Recovery\Recovery;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class LitigationTask extends Model
+class ModuleTask extends Model
 {
     use HasFactory, HasUuids, Transferable;
 
@@ -16,9 +18,10 @@ class LitigationTask extends Model
         'status',
         'code',
         'rank',
-        'name',
+        'title',
         'type',
-        'litigation_id',
+        'taskable_id',
+        'taskable_type',
         'created_by',
         'min_deadline',
         'max_deadline',
@@ -30,9 +33,9 @@ class LitigationTask extends Model
         // 'max_deadline' => 'date',
     ];
 
-    public function litigation()
+    public function taskable()
     {
-        return $this->belongsTo(Litigation::class);
+        return $this->morphTo();
     }
 
     public function createdBy()
@@ -40,20 +43,20 @@ class LitigationTask extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    // public function litigationTaskHistories()
-    // {
-    //     return $this->hasMany(LitigationTaskHistory::class);
-    // }
+    const MODULES = [
+        'conv_hypothec' => ConvHypothec::class,
+        'litigation' => Litigation::class,
+        'recovery' => Recovery::class
+    ];
 
     const DEFAULT_TASKS = [
         [
             'status' => true,
             'code' => 'LIT-001',
             'rank' => 1,
-            'name' => 'Task 1',
+            'title' => 'Task 1',
             'type' => 'type 1',
             'litigation_id' => '1',
-            'created_by' => '1',
             'min_deadline' => '2024-05-02',
             'max_deadline' => '2024-05-02',
         ],
@@ -61,10 +64,9 @@ class LitigationTask extends Model
             'status' => true,
             'code' => 'LIT-002',
             'rank' => 2,
-            'name' => 'Task 2',
+            'title' => 'Task 2',
             'type' => 'type 2',
             'litigation_id' => '1',
-            'created_by' => '1',
             'min_deadline' => '2024-05-02',
             'max_deadline' => '2024-05-02',
         ],
@@ -72,10 +74,9 @@ class LitigationTask extends Model
             'status' => true,
             'code' => 'LIT-003',
             'rank' => 3,
-            'name' => 'Task 3',
+            'title' => 'Task 3',
             'type' => 'type 3',
             'litigation_id' => '1',
-            'created_by' => '1',
             'min_deadline' => '2024-05-02',
             'max_deadline' => '2024-05-02',
         ],
