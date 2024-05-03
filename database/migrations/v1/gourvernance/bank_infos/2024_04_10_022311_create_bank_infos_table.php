@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('bank_infos', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('logo');
+            $table->string('logo')->nullable();
             $table->string('denomination');
             $table->string('siege_social');
             $table->integer('total_shareholders')->nullable();
