@@ -32,10 +32,12 @@ class ShareholderRepository
         $Shareholder = $this->shareholder->create($request->all());
 
         $bank_info = BankInfo::get()->first();
-        $bank_info->update([
-            'total_shareholders' => Shareholder::count()
-        ]);
-        
+        if($bank_info) {
+            $bank_info->update([
+                'total_shareholders' => Shareholder::count()
+            ]);
+        }
+
         return $Shareholder;
     }
 
