@@ -45,6 +45,10 @@ class TaskGeneralMeeting extends Model
         return $this->belongsTo(GeneralMeeting::class);
     }
 
+    public function getFolderAttribute() {
+        return $this->general_meeting->libelle;
+    }
+
     public function getValidationAttribute() {
 
         return [

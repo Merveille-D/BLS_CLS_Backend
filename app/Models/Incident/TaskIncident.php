@@ -900,6 +900,10 @@ class TaskIncident extends Model
         return $this->belongsTo(Incident::class);
     }
 
+    public function getFolderAttribute() {
+        return $this->incident->title;
+    }
+
     public function getFormAttribute() {
 
         $next_task = searchElementIndice(TaskIncident::TASKS, $this->code);
