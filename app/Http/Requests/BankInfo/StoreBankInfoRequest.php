@@ -25,7 +25,7 @@ class StoreBankInfoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'logo' => ['required', 'file'],
+            'logo' => ['file'],
             'denomination' => ['required', 'string'],
             'siege_social' => ['required', 'string'],
         ];
