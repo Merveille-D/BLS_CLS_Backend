@@ -19,7 +19,7 @@ class NotificationResource extends JsonResource
             'type' => $this->type,
             'read_at' => $this->read_at,
             'data' => $this->data,
-            'deadline' => $this->alert->deadline,
+            'deadline' => $this->alert->deadline ?? null,
             'task' => $this->when($this->alert, /* new AlertResource */($this->alert->alertable->validation ?? $this->alert->alertable->transferable->validation)),
         ];
     }
