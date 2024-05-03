@@ -60,7 +60,7 @@ class AuditNotation extends Model
     public function getTitleAttribute() {
 
         $model = self::MODELS_MODULES[$this->module];
-        $response = $model->find($this->module_id);
+        $response = $model::find($this->module_id);
         return $response->title;
     }
 }
