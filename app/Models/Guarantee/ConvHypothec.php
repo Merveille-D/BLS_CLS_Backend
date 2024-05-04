@@ -6,6 +6,7 @@ use App\Concerns\Traits\Alert\Alertable;
 use App\Concerns\Traits\Guarantee\HypothecFormFieldTrait;
 use App\Concerns\Traits\Transfer\Transferable;
 use App\Models\Alert\Alert;
+use App\Models\ModuleTask;
 use App\Observers\ConvHypothecObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -64,7 +65,7 @@ class ConvHypothec extends Model
     ];
 
     public function tasks() {
-        return $this->hasMany(HypothecTask::class, 'hypothec_id');
+        return $this->morphMany(ModuleTask::class, 'taskable');
     }
 
     public function getNextTaskAttribute() {

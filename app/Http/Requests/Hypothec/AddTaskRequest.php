@@ -8,6 +8,13 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 class AddTaskRequest extends FormRequest
 {
+    protected function prepareForValidation()
+    {
+        // Add the 'modele' attribute to the request input
+        $this->merge([
+            'modele' => 'conv_hypothec',
+        ]);
+    }
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -24,8 +31,8 @@ class AddTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'hypothec_id' => 'required|exists:conv_hypothecs,id',
+            'title' => 'required|string|max:255',
+            'model_id' => 'required|exists:conv_hypothecs,id',
             'deadline' => 'required|date|date_format:Y-m-d',
         ];
     }

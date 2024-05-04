@@ -15,7 +15,11 @@ class TaskRepository
     ) {}
 
     public function getList($request) {
+        // dd(app($this->task_model::MODULES[$request->modele]),$request->id);
         $modele = app($this->task_model::MODULES[$request->modele])?->find($request->id);
+        if(!$modele) {
+            return array();
+        }
 
         return TaskResource::collection($modele?->tasks);
     }
@@ -34,7 +38,7 @@ class TaskRepository
             'created_by' => auth()->id(),
         ]);
 
-        $task->taskable()->associate($this->getModeleByType($request->modele, $request->id));
+        $task->taskable()->associate($this->getModeleByType($request->modele, $request->model_id));
         $task->save();
 
         return new TaskResource($task);

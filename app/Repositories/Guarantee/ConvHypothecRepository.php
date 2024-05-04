@@ -12,6 +12,7 @@ use App\Models\Guarantee\ConvHypothec;
 use App\Models\Guarantee\ConvHypothecStep;
 use App\Models\Guarantee\GuaranteeDocument;
 use App\Models\Guarantee\HypothecTask;
+use App\Models\ModuleTask;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -85,7 +86,7 @@ class ConvHypothecRepository
         $data = array(
             'state' => 'created',
             'step' => 'formalization',
-            'reference' => generateReference('HC'),
+            'reference' => generateReference('HC', $this->conv_model),
             'name' => $request->name,
             'contract_file' =>  $file_path,
             'contract_id' =>  $request->contract_id,
@@ -105,15 +106,17 @@ class ConvHypothecRepository
 
     public function saveTasks($steps, $convHypo) {
         foreach ($steps as $key => $step) {
-            $task = new HypothecTask();
+            $task = new ModuleTask();
             $task->code = $step->code;
-            $task->name = $step->name;
+            $task->title = $step->name;
             $task->rank = $step->rank;
             $task->type = $step->type;
+
             // $task->min_deadline = $step->min_delay ?? null;
             // $task->max_deadline = $step->max_delay ?? null;
 
-            $convHypo->tasks()->save($task);
+            $task->taskable()->associate($convHypo);
+            $task->save();
             // HypothecTask::create($step->toArray());
         }
     }

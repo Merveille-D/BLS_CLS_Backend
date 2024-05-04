@@ -7,24 +7,26 @@ use App\Http\Requests\Hypothec\AddTaskRequest;
 use App\Http\Requests\Hypothec\EditTaskRequest;
 use App\Http\Requests\Hypothec\UpdateTaskRequest;
 use App\Http\Resources\Guarantee\ConvHypothecStepResource;
+use App\Http\Resources\Task\TaskResource;
 use App\Models\Guarantee\HypothecTask;
 use App\Repositories\Guarantee\HypothecTaskRepository;
+use App\Repositories\Task\TaskRepository;
 use Illuminate\Http\Request;
 
 class ConvHypothecTaskController extends Controller
 {
 
     public function __construct(
-        private HypothecTaskRepository $taskRepo,
+        private TaskRepository $taskRepo,
     ) {}
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $hypothec_id = request('hypothec_id');
+        request()->merge(['modele' => 'conv_hypothec']);
 
-        return ConvHypothecStepResource::collection(HypothecTask::where('hypothec_id', $hypothec_id)->get());
+        return api_response(true, 'Liste des taches recuperée', $this->taskRepo->getList(request()));
     }
 
     /**
@@ -35,7 +37,7 @@ class ConvHypothecTaskController extends Controller
         try {
             $task = $this->taskRepo->add($request);
 
-            return api_response(true, 'Tache ajoutée avec succès', new ConvHypothecStepResource($task));
+            return api_response(true, 'Tache ajoutée avec succès', $task);
         } catch (\Throwable $th) {
             return api_error(false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
@@ -44,20 +46,20 @@ class ConvHypothecTaskController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(HypothecTask $task)
+    public function show(string $task_id)
     {
-        return api_response(true, 'Tache recuperée', new ConvHypothecStepResource($task));
+        return api_response(true, 'Tache recuperée', $this->taskRepo->getOne($task_id));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(EditTaskRequest $request, HypothecTask $task)
+    public function update(EditTaskRequest $request, $task_id)
     {
         try {
-            $task = $this->taskRepo->edit($task, $request);
+            $task = $this->taskRepo->edit($request, $task_id);
 
-            return api_response(true, 'Tache modifiée avec succès', new ConvHypothecStepResource($task));
+            return api_response(true, 'Tache modifiée avec succès', $task);
         } catch (\Throwable $th) {
             return api_error(false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
@@ -70,7 +72,7 @@ class ConvHypothecTaskController extends Controller
         try {
             $task = $this->taskRepo->transfer($task, $request);
 
-            return api_response(true, 'Transfert éffectué avec succès', new ConvHypothecStepResource($task));
+            return api_response(true, 'Transfert éffectué avec succès', $task);
         } catch (\Throwable $th) {
             return api_error(false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
@@ -79,8 +81,10 @@ class ConvHypothecTaskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(HypothecTask $convHypothecStep)
+    public function destroy(string $task_id)
     {
-        //
+        $this->taskRepo->delete($task_id);
+
+        return api_response(true, 'Tache supprimée avec succès');
     }
 }

@@ -24,7 +24,7 @@ class EditTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             // 'hypothec_id' => 'required|exists:conv_hypothecs,id',
             'deadline' => 'required|date|date_format:Y-m-d',
         ];
