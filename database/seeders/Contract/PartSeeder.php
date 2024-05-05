@@ -15,7 +15,7 @@ class PartSeeder extends Seeder
                 'type' => 'individual',
                 'telephone' => '98456798',
                 'residence' => 'Fidjrossè',
-                'number_id' => '238467',
+                'id_card' => '238467',
                 'zip_code' => '476',
             ],
             [
@@ -24,7 +24,7 @@ class PartSeeder extends Seeder
                 'type' => 'individual',
                 'telephone' => '98456798',
                 'residence' => 'Fidjrossè',
-                'number_id' => '238467',
+                'id_card' => '238467',
                 'zip_code' => '476',
             ],
             [
@@ -33,7 +33,7 @@ class PartSeeder extends Seeder
                 'type' => 'corporate',
                 'telephone' => '98456798',
                 'residence' => 'Benin',
-                'number_id' => '238467',
+                'id_card' => '238467',
                 'zip_code' => '476',
             ],
             [
@@ -42,7 +42,7 @@ class PartSeeder extends Seeder
                 'type' => 'corporate',
                 'telephone' => '98456798',
                 'residence' => 'Benin',
-                'number_id' => '238467',
+                'id_card' => '238467',
                 'zip_code' => '476',
             ],
         ];

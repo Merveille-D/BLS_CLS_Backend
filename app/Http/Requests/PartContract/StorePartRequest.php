@@ -31,15 +31,14 @@ class StorePartRequest extends FormRequest
             'email' => 'required|email',
             'telephone' => 'required|numeric',
             'residence' => 'required|string|max:255',
-            'number_id' => 'required|numeric',
             'zip_code' => 'required|numeric',
 
             'type' => ['required', Rule::in(Part::TYPES_PART)],
 
             'denomination' => 'required_if:type,corporate',
-            'number_rccm' => 'required_if:type,corporate|numeric',
+            'number_rccm' => 'required_if:type,corporate',
             'number_ifu' => 'required_if:type,corporate|numeric',
-            'id_card' => 'required_if:type,corporate|numeric',
+            'id_card' => 'required|numeric',
             'capital' => 'required_if:type,corporate|numeric',
         ];
     }

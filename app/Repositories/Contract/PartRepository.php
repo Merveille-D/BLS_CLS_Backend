@@ -32,7 +32,7 @@ class PartRepository
             ];
 
             $request->merge(['type' => 'individual']);
-            $representant = $this->part->create($request->except('denomination', 'number_rccm', 'number_ifu', 'id_card', 'capital'));
+            $representant = $this->part->create($request->except('denomination', 'number_rccm', 'number_ifu', 'capital'));
 
             $corporate = $this->part->create(array_merge(['permanent_representative_id' => $representant->id], $company_info));
             return $corporate;

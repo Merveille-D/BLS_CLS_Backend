@@ -19,7 +19,7 @@ class RecoveryObserver
         if (!$recovery->has_guarantee) {
             $data = $this->nextStepBasedOnState($recovery);
 
-            $this->new_alert($recovery, 'RAPPEL | Recouvrement', $data['message'], 'recovery', Carbon::now()->addDays(3), 'warning');
+            $this->new_alert($recovery, 'RAPPEL | '.$recovery->name ?? 'Recouvrement', $data['message'], 'recovery', Carbon::now()->addDays(3), Alert::STATUS[2] ?? 'urgent');
         }
     }
 
@@ -31,7 +31,7 @@ class RecoveryObserver
         if (!$recovery->has_guarantee) {
             $data = $this->nextStepBasedOnState($recovery);
 
-            $this->new_alert($recovery, 'RAPPEL | Recouvrement', $data['message'], 'recovery', Carbon::now()->addDays(3), 'warning');
+            $this->new_alert($recovery, 'RAPPEL | '.$recovery->name ?? 'Recouvrement', $data['message'], 'recovery', Carbon::now()->addDays(3), Alert::STATUS[2] ?? 'urgent');
         }
     }
 

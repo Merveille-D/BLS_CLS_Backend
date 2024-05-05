@@ -44,6 +44,10 @@ class TaskManagementCommittee extends Model
         return $this->belongsTo(ManagementCommittee::class);
     }
 
+    public function getFolderAttribute() {
+        return $this->management_committee->libelle;
+    }
+
     public function getValidationAttribute() {
 
         return [

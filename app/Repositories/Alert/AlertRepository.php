@@ -29,7 +29,7 @@ class AlertRepository
                 foreach($currentTasks as $task) {
 
                     $task->libelle = ($task->title) ? $task->title : $task->libelle;
-                    $task->title = $alertModule['title'];
+                    $task->title = $task->folder;
                     $task->type = $alertModule['type'];
 
                     $this->updateAlertTask($task, $this->oldTask($alertModule['model']));
@@ -67,11 +67,12 @@ class AlertRepository
         $deadline = Carbon::parse($current_task->deadline);
         $deadlines = [
             $deadline->addDays(0.20 * $days),
-            $deadline->addDays(0.60 * $days),
+            // $deadline->addDays(0.60 * $days),
             $deadline->addDays(0.95 * $days),
         ];
 
-        $priorities = ['info', 'warning', 'urgent'];
+        // $priorities = ['info', 'warning', 'urgent'];
+        $priorities = ['info', 'urgent'];
 
         foreach ($deadlines as $index => $deadline) {
             $current_task->alerts()->create([

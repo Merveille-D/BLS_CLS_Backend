@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Requests\BankInfo;
+namespace App\Http\Requests\ContractModel;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
-class StoreBankInfoRequest extends FormRequest
+class StoreContractModelRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +23,10 @@ class StoreBankInfoRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
-            'logo' => ['file'],
-            'denomination' => ['required', 'string'],
-            'siege_social' => ['required', 'string'],
+            'name' => 'required|string|max:255',
+            'file' => 'required|file',
         ];
     }
 

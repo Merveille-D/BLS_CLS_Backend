@@ -44,27 +44,22 @@ class Alert extends Model
         [
             'model' => TaskGeneralMeeting::class,
             'type' => 'general_meeting',
-            'title' => 'RAPPEL | ASSEMBLEE GENERALE',
         ],
         [
             'model' => TaskSessionAdministrator::class,
             'type' => 'session_administrator',
-            'title' => 'RAPPEL | CONSEIL D\'ADMINISTRATION',
         ],
         [
             'model' => TaskManagementCommittee::class,
             'type' => 'management_committee',
-            'title' => 'RAPPEL | CONSEIL DE DIRECTION',
         ],
         [
             'model' => Task::class,
             'type' => 'contract',
-            'title' => 'RAPPEL | CONTRAT',
         ],
         [
             'model' => TaskIncident::class,
             'type' => 'incident',
-            'title' => 'RAPPEL | INCIDENT',
         ],
     ];
 

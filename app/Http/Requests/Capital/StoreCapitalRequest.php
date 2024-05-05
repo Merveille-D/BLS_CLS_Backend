@@ -26,7 +26,7 @@ class StoreCapitalRequest extends FormRequest
         return [
             'date' => ['required', 'date'],
             'amount' => ['required', 'numeric'],
-            'price_action_unity' => ['required', 'numeric'],
+            'par_value' => ['required', 'numeric'],
         ];
     }
 

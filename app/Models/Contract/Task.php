@@ -36,6 +36,10 @@ class Task extends Model
         return $this->belongsTo(Contract::class);
     }
 
+    public function getFolderAttribute() {
+        return $this->contract->title;
+    }
+
     public function fileUploads()
     {
         return $this->morphMany(File::class, 'uploadable');

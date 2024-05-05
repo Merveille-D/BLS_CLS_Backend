@@ -1,6 +1,7 @@
 <?php
 
-use App\Models\Bank\Bank;
+use App\Models\Contract\Contract;
+use App\Models\Gourvernance\GourvernanceDocument;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,11 +13,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('capitals', function (Blueprint $table) {
+        Schema::create('contract_models', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->date('date');
-            $table->integer('amount');
-            $table->integer('par_value');
+            $table->string('name');
+            $table->string('file');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('capitals');
+        Schema::dropIfExists('contract_models');
     }
 };

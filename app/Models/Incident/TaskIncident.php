@@ -94,6 +94,44 @@ class TaskIncident extends Model
                             'form_title' => 'Preuve d\'information du client par courrier'
                         ],
                     ],
+                // 'atd_3' => [
+                //         'title' => 'Adresser un courrier d\'information au client',
+                //         'rules' => [
+                //             'documents' => ['required', 'array'],
+                //             'documents.*.name' => ['required', 'string'],
+                //             'documents.*.file' => ['required', 'file']
+                //         ],
+                //         "delay" => 10,
+                //         "form" => [
+                //             'fields' => [
+                //                 [
+                //                     'type' => 'documents',
+                //                     'name' => 'documents',
+                //                     'label' => 'Joindre la rédaction',
+                //                 ]
+                //             ],
+                //             'form_title' => 'Preuve d\'information du client par courrier'
+                //         ],
+                //     ],
+                // 'atd_4' => [
+                //         'title' => 'Adresser un courrier d\'information au client',
+                //         'rules' => [
+                //             'documents' => ['required', 'array'],
+                //             'documents.*.name' => ['required', 'string'],
+                //             'documents.*.file' => ['required', 'file']
+                //         ],
+                //         "delay" => 10,
+                //         "form" => [
+                //             'fields' => [
+                //                 [
+                //                     'type' => 'documents',
+                //                     'name' => 'documents',
+                //                     'label' => 'Joindre le courrier d\'information au client',
+                //                 ]
+                //             ],
+                //             'form_title' => 'Preuve d\'information du client par courrier'
+                //         ],
+                //     ],
                 'atd_3' => [
                         'title' => 'Transmission d\'une lettre signée par la DG de la banque et de l\'accusé de reception signé',
                         'rules' => [
@@ -860,6 +898,10 @@ class TaskIncident extends Model
     public function incident()
     {
         return $this->belongsTo(Incident::class);
+    }
+
+    public function getFolderAttribute() {
+        return $this->incident->title;
     }
 
     public function getFormAttribute() {

@@ -1,5 +1,5 @@
 <?php
-namespace App\Repositories\Capital;
+namespace App\Repositories\Shareholder;
 
 use App\Models\Shareholder\Capital;
 
@@ -27,7 +27,7 @@ class CapitalRepository
      */
     public function update(Capital $capital, $request) {
 
-        $capital = $this->capital->create($request->all());
+        $capital = $this->capital->update($request);
         return $capital;
     }
 

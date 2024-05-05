@@ -4,6 +4,7 @@ use App\Http\Controllers\API\V1\Audit\AuditNotationController;
 use App\Http\Controllers\API\V1\Audit\AuditPerformanceIndicatorController;
 use App\Http\Controllers\API\V1\Bank\BankController;
 use App\Http\Controllers\API\V1\Contract\ContractController;
+use App\Http\Controllers\API\V1\Contract\ContractModelController;
 use App\Http\Controllers\API\V1\Contract\PartController;
 use App\Http\Controllers\API\V1\Contract\TaskController;
 use App\Http\Controllers\API\V1\Evaluation\CollaboratorController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\API\V1\Gourvernance\Shareholder\ShareholderController;
 use App\Http\Controllers\API\V1\Incident\AuthorIncidentController;
 use App\Http\Controllers\API\V1\Incident\IncidentController;
 use App\Http\Controllers\API\V1\Incident\TaskIncidentController;
+use App\Http\Controllers\API\V1\Gourvernance\Shareholder\CapitalController;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Route;
@@ -62,6 +64,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('shareholders', ShareholderController::class);
 
     Route::resource('bank_infos', BankInfoController::class);
+    Route::resource('capitals', CapitalController::class);
 
 
     // Banque de textes
@@ -73,6 +76,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('get_contract_type_categories', [ContractController::class, 'getTypeCategories']);
 
     Route::resource('parts', PartController::class);
+
+    Route::resource('contract_models', ContractModelController::class);
+
 
     Route::resource('tasks', TaskController::class);
     Route::delete('delete_array_task_contracts', [TaskController::class, 'deleteArrayTaskContract'] );

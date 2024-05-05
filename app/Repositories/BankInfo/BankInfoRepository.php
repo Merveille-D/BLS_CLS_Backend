@@ -2,6 +2,7 @@
 namespace App\Repositories\BankInfo;
 
 use App\Models\Gourvernance\BankInfo\BankInfo;
+use App\Models\Shareholder\Shareholder;
 
 class BankInfoRepository
 {
@@ -20,6 +21,7 @@ class BankInfoRepository
 
         $requestData = $request->except('logo');
         $requestData['logo'] = $path;
+        $requestData['total_shareholders'] = Shareholder::count();
 
         if(BankInfo::exists()) {
             $bank_info = BankInfo::get()->first();

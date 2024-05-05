@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\BankInfo\StoreBankInfoRequest;
 use App\Http\Requests\BankInfo\UpdateBankInfoRequest;
 use App\Models\Gourvernance\BankInfo\BankInfo;
+use App\Models\Shareholder\Capital;
+use App\Models\Shareholder\Shareholder;
 use App\Repositories\BankInfo\BankInfoRepository;
 use Illuminate\Validation\ValidationException;
 
@@ -21,8 +23,16 @@ class BankInfoController extends Controller
      */
     public function index()
     {
-        $bank_infos = BankInfo::get()->first();
-        return api_response(true, "Infos de la banque", $bank_infos, 200);
+        $bank_info = BankInfo::get()->first();
+
+        if(!$bank_info) {
+            $bank_info['total_shareholders'] = Shareholder::count();
+        }
+
+        $bank_info['majority_shareholder'] = Shareholder::orderBy('actions_number', 'desc')->first();
+        $bank_info['capital'] = Capital::get()->last();
+
+        return api_response(true, "Infos de la banque", $bank_info, 200);
     }
 
     /**
