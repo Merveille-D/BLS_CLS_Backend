@@ -26,6 +26,7 @@ class TaskResource extends JsonResource
             'taskable' => $this->when($this->taskable, $this->taskable),
             // 'deadline' => $this->deadline,
             'form' => $this->when($this->form, $this->form),
+            'created_by' => $this->created_by,
             'transfers' => $this->when($this->transfers, TransferResource::collection($this->transfers)),
         ];
     }
