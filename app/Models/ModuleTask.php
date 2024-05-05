@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Concerns\Traits\Guarantee\HypothecFormFieldTrait;
 use App\Concerns\Traits\Transfer\Transferable;
 use App\Models\Guarantee\ConvHypothec;
 use App\Models\Litigation\Litigation;
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ModuleTask extends Model
 {
-    use HasFactory, HasUuids, Transferable;
+    use HasFactory, HasUuids, Transferable, HypothecFormFieldTrait;
 
     protected $fillable = [
         'status',
@@ -48,6 +49,12 @@ class ModuleTask extends Model
         'litigation' => Litigation::class,
         'recovery' => Recovery::class
     ];
+
+    public function getFormAttribute() {
+        $form = $this->getCustomFormFields($this->code);
+
+        return $form;
+    }
 
     const DEFAULT_TASKS = [
         [
