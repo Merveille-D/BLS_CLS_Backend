@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\Auth;
 
 class ConvHypothecRepository
 {
@@ -111,6 +112,7 @@ class ConvHypothecRepository
             $task->title = $step->name;
             $task->rank = $step->rank;
             $task->type = $step->type;
+            $task->created_by = Auth::id();
 
             // $task->min_deadline = $step->min_delay ?? null;
             // $task->max_deadline = $step->max_delay ?? null;

@@ -25,8 +25,10 @@ class TaskResource extends JsonResource
             'type' => $this->type,
             'taskable' => $this->when($this->taskable, $this->taskable),
             // 'deadline' => $this->deadline,
-            'form' => $this->when($this->form, $this->form),
             'created_by' => $this->created_by,
+            // 'next_step' => $this->taskable?->next_task,
+            // 'current_step' => $this->taskable?->current_task,
+            'form' => $this->when($this->form, $this->form),
             'transfers' => $this->when($this->transfers, TransferResource::collection($this->transfers)),
         ];
     }
