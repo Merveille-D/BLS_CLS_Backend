@@ -69,11 +69,13 @@ class ConvHypothec extends Model
     }
 
     public function getNextTaskAttribute() {
-        return $this->tasks()->where('status', false)->orderBy('rank')->first();
+        return $this->tasks()->where('type', '!=', 'task')
+                ->where('status', false)->orderBy('rank')->first();
     }
 
     public function getCurrentTaskAttribute() {
-        return $this->tasks()->where('status', true)->orderBy('rank', 'desc')->first();
+        return $this->tasks()->where('type', '!=', 'task')
+                    ->where('status', true)->orderBy('rank', 'desc')->first();
     }
 
     /**
