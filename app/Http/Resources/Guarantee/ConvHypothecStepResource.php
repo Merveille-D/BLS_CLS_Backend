@@ -23,6 +23,7 @@ class ConvHypothecStepResource extends JsonResource
             'min_deadline' => $this->completed_min_date, //$this->min_deadline,
             'max_deadline' => $this->completed_max_date, //$this->max_deadline,
             'type' => $this->type,
+            'created_by' => $this->created_by,
             'hypothec' => $this->when($this->hypothec, new ConvHypothecResource($this->hypothec)),
             // 'deadline' => $this->deadline,
             'form' => $this->when($this->form, $this->form),

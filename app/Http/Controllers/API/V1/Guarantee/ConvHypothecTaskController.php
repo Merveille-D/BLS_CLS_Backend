@@ -12,6 +12,7 @@ use App\Models\Guarantee\HypothecTask;
 use App\Repositories\Guarantee\HypothecTaskRepository;
 use App\Repositories\Task\TaskRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ConvHypothecTaskController extends Controller
 {
@@ -70,10 +71,12 @@ class ConvHypothecTaskController extends Controller
     public function transfer(UpdateTaskRequest $request, $task)
     {
         try {
+            DB::beginTransaction();
             $task = $this->taskRepo->transfer($task, $request);
-
+            DB::commit();
             return api_response(true, 'Transfert éffectué avec succès', $task);
         } catch (\Throwable $th) {
+            DB::rollBack();
             return api_error(false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
