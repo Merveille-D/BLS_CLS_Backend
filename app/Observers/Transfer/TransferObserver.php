@@ -15,10 +15,11 @@ class TransferObserver implements ShouldHandleEventsAfterCommit
      */
     public function created(Transfer $transfer): void
     {
-        // $dates = $this->getMilestoneDates($transfer->deadline);
-        // foreach ($dates as $key => $date) {
-        //     $this->new_alert($transfer, $transfer->title, $transfer->description, 'transfer', $date, Alert::STATUS[$key]);
-        // }
+        $dates = $this->getMilestoneDates($transfer->deadline);
+
+        foreach ($dates as $key => $date) {
+            $this->new_alert($transfer, $transfer->title, $transfer->description, 'transfer', $date, Alert::STATUS[$key]);
+        }
 
     }
 
