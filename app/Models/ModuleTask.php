@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Concerns\Traits\Guarantee\HypothecFormFieldTrait;
 use App\Concerns\Traits\Transfer\Transferable;
+use App\Enums\ConvHypothecState;
 use App\Models\Guarantee\ConvHypothec;
 use App\Models\Litigation\Litigation;
 use App\Models\Recovery\Recovery;
@@ -55,6 +56,63 @@ class ModuleTask extends Model
 
         return $form;
     }
+
+    public function getCompletedMinDateAttribute() {
+        if ($this->status) {
+            return null;
+        }
+        return $this->min_deadline;
+    }
+
+    public function getCompletedMaxDateAttribute() {
+        if ($this->status) {
+            return $this->getDatebyStatus($this->code);
+        }
+        return $this->max_deadline;
+    }
+
+    public function getDatebyStatus($state) {
+        $hypo = $this->taskable;
+
+        $date = null;
+        switch ($state) {
+            case ConvHypothecState::REGISTER_REQUEST_FORWARDED:
+                $date = $hypo->forwarded_date;
+            break;
+            case ConvHypothecState::REGISTER_REQUESTED:
+                $date = $hypo->registering_date;
+            break;
+            case ConvHypothecState::REGISTER:
+                $date = $hypo->registration_date;
+            break;
+            case ConvHypothecState::NONREGISTER:
+                $date = $hypo->registration_date;
+            break;
+            case ConvHypothecState::SIGNIFICATION_REGISTERED:
+                $date = $hypo->date_signification;
+            break;
+            case ConvHypothecState::ORDER_PAYMENT_VISA:
+                $date = $hypo->visa_date;
+            break;
+            case ConvHypothecState::EXPROPRIATION_SPECIFICATION:
+                $date = $hypo->date_deposit_specification;
+            break;
+            case ConvHypothecState::EXPROPRIATION_SUMMATION:
+                $date = $hypo->summation_date;
+            break;
+            case ConvHypothecState::ADVERTISEMENT:
+                $date = $hypo->advertisement_date;
+            break;
+            // case ConvHypothecState::STATUS_COMPLETED_MIN:
+            //     return $this->completed_min_date;
+            default:
+                $date = null;
+            break;
+        }
+
+        return $date;
+    }
+
 
     const DEFAULT_TASKS = [
         [

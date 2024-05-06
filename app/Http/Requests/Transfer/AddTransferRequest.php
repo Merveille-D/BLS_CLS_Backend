@@ -23,7 +23,7 @@ class AddTransferRequest extends FormRequest
     {
         return [
             'forward_title' => 'required|string|max:255',
-            'deadline_transfert' => 'required|date|date_format:Y-m-d',
+            'deadline_transfer' => 'required|date|date_format:Y-m-d',
             'collaborators' => 'required|array',
             'collaborators.*' => 'required|exists:users,id',
             'description' => 'nullable',
