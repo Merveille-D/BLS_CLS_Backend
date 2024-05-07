@@ -210,6 +210,124 @@ class HypothecTest extends TestCase
      * @return void
      */
     public function test_initiate_realization_process() : void {
+        $user = User::factory()->create();
 
+        $response = $this->actingAs($user)->post('api/conventionnal_hypothec', [
+            'name' => 'Test Hypothec Conventionnelle',
+            'contract_id'=> 'sdlkfaz-sdfas-1234-sdfas',
+        ]);
+        $response->assertStatus(200);
+
+        $documents = [
+            [
+                'name' => 'Test Document',
+                'file' => UploadedFile::fake()->create(
+                    'document.pdf', 2048, 'application/pdf'
+                )
+            ],
+        ];
+
+        $hypothec_id = $response->json('data.id');
+        $verifyProperty = $this->actingAs($user)->post('api/conventionnal_hypothec/update/'.$hypothec_id, [
+            'documents' => $documents
+        ]);
+
+        $agreement = $this->actingAs($user)->post('api/conventionnal_hypothec/update/'.$hypothec_id, [
+            'documents' => $documents
+        ]);
+
+        $forwarded = $this->actingAs($user)->post('api/conventionnal_hypothec/update/'.$hypothec_id, [
+            'documents' => $documents,
+            'forwarded_date' => date('Y-m-d')
+        ]);
+
+        $register_requested = $this->actingAs($user)->post('api/conventionnal_hypothec/update/'.$hypothec_id, [
+            'documents' => $documents,
+            'registering_date' => date('Y-m-d')
+        ]);
+
+        $registered = $this->actingAs($user)->post('api/conventionnal_hypothec/update/'.$hypothec_id, [
+            'documents' => $documents,
+            'is_approved' => 'yes',
+            'registration_date' => date('Y-m-d')
+        ]);
+
+        $realization = $this->actingAs($user)->post('api/conventionnal_hypothec/realization/'.$hypothec_id);
+
+        $realization->assertStatus(200);
+
+        $this->assertDatabaseHas('conv_hypothecs', [
+            'step' => 'realization',
+            'name' => 'Test Hypothec Conventionnelle',
+            'contract_id'=> 'sdlkfaz-sdfas-1234-sdfas',
+        ]);
+
+        $this->assertDatabaseHas('module_tasks', [
+            'code' => ConvHypothecState::SIGNIFICATION_REGISTERED,
+            'status' => false,
+            'taskable_id' => $hypothec_id,
+        ]);
+
+    }
+
+    /**
+     * test_full_realization_process
+     *
+     * @return void
+     */
+    public function test_full_realization_process() : void {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->post('api/conventionnal_hypothec', [
+            'name' => 'Test Hypothec Conventionnelle',
+            'contract_id'=> 'sdlkfaz-sdfas-1234-sdfas',
+        ]);
+        $response->assertStatus(200);
+
+        $documents = [
+            [
+                'name' => 'Test Document',
+                'file' => UploadedFile::fake()->create(
+                    'document.pdf', 2048, 'application/pdf'
+                )
+            ],
+        ];
+
+        $hypothec_id = $response->json('data.id');
+        $verifyProperty = $this->actingAs($user)->post('api/conventionnal_hypothec/update/'.$hypothec_id, [
+            'documents' => $documents
+        ]);
+
+        $agreement = $this->actingAs($user)->post('api/conventionnal_hypothec/update/'.$hypothec_id, [
+            'documents' => $documents
+        ]);
+
+        $forwarded = $this->actingAs($user)->post('api/conventionnal_hypothec/update/'.$hypothec_id, [
+            'documents' => $documents,
+            'forwarded_date' => date('Y-m-d')
+        ]);
+
+        $register_requested = $this->actingAs($user)->post('api/conventionnal_hypothec/update/'.$hypothec_id, [
+            'documents' => $documents,
+            'registering_date' => date('Y-m-d')
+        ]);
+
+        $registered = $this->actingAs($user)->post('api/conventionnal_hypothec/update/'.$hypothec_id, [
+            'documents' => $documents,
+            'is_approved' => 'yes',
+            'registration_date' => date('Y-m-d')
+        ]);
+
+        $realization = $this->actingAs($user)->post('api/conventionnal_hypothec/realization/'.$hypothec_id);
+
+        $realization->assertStatus(200);
+
+        // $this->assertDatabaseHas('conv_hypothecs', [
+        //     'step' => 'realization',
+        //     'name' => 'Test Hypothec Conventionnelle',
+        //     'contract_id'=> 'sdlkfaz-sdfas-1234-sdfas',
+        // ]);
+
+        // $realization = $this
     }
 }
