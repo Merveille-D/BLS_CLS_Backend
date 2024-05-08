@@ -25,6 +25,8 @@ return new class extends Migration
             $table->foreign('created_by')->references('id')->on('users');
             $table->date('min_deadline')->nullable();
             $table->date('max_deadline')->nullable();
+            $table->date('completed_at')->nullable();
+            $table->date('completed_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

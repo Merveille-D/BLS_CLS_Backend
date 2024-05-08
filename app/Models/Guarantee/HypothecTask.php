@@ -47,6 +47,7 @@ class HypothecTask extends Model
 
     const MODULES = [
         'conv_hypothec' => ConvHypothec::class,
+        'guarantee' => Guarantee::class,
         // 'litigation' => Litigation::class,
         // 'recovery' => Recovery::class
     ];

@@ -8,7 +8,7 @@ use App\Http\Resources\Transfer\TransferResource;
 use App\Models\Guarantee\ConvHypothecStep;
 use App\Models\Guarantee\HypothecTask;
 
-class HypothecTaskRepository
+class GuaranteeTaskRepository
 {
     use AddTransferTrait;
     public function __construct(
