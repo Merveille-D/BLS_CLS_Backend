@@ -460,6 +460,7 @@ class ConvHypothecRepository
         $data = array();
         //date by hypothec state
         $operationDate = $this->getOperationDateByState($convHypo);
+
         if ($operationDate == null)
             return $data;
         $formatted_date = Carbon::createFromFormat('Y-m-d', $operationDate);
@@ -501,7 +502,7 @@ class ConvHypothecRepository
                 $date = $convHypo->advertisement_date;
                 break;
             default:
-                # code...
+                $date = date('Y-m-d');
                 break;
         }
         return $date;

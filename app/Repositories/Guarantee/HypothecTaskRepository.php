@@ -7,12 +7,14 @@ use App\Http\Resources\Guarantee\HypothecTaskResource;
 use App\Http\Resources\Transfer\TransferResource;
 use App\Models\Guarantee\ConvHypothecStep;
 use App\Models\Guarantee\HypothecTask;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class HypothecTaskRepository
 {
     use AddTransferTrait;
     public function __construct(
         private HypothecTask $task_model,
+        private ConvHypothecRepository $convRepo,
     ) {}
 
     public function getList($request) {
@@ -34,6 +36,7 @@ class HypothecTaskRepository
         $task = new $this->task_model([
             'code' => 'task-'.rand(1000, 9999),
             'title' => $request->title,
+            'status' => false,
             'max_deadline' => $request->deadline,
             'type' => 'task',
             'created_by' => auth()->id(),
@@ -75,6 +78,24 @@ class HypothecTaskRepository
     public function delete($task_id) {
         $task = $this->task_model->findOrFail($task_id);
         $task->delete();
+    }
+
+    public function complete($task, $request) : JsonResource {
+        $convHypo = $task->taskable;
+
+        if ($task->type == 'task') {
+            $task->update([
+                'status' => true,
+                'completed_at' => now(),
+                'completed_by' => auth()->id(),
+            ]);
+        } else {
+            $this->convRepo->updateProcess($request, $convHypo);
+        }
+
+
+
+        return new HypothecTaskResource($task->refresh());
     }
 
 }

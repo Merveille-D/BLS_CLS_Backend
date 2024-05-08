@@ -4,7 +4,9 @@ namespace App\Http\Controllers\API\V1\Guarantee;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Hypothec\AddTaskRequest;
+use App\Http\Requests\Hypothec\CompleteTaskRequest;
 use App\Http\Requests\Hypothec\EditTaskRequest;
+use App\Http\Requests\Hypothec\UpdateProcessRequest;
 use App\Http\Requests\Hypothec\UpdateTaskRequest;
 use App\Http\Resources\Guarantee\ConvHypothecStepResource;
 use App\Http\Resources\Task\TaskResource;
@@ -65,6 +67,19 @@ class ConvHypothecTaskController extends Controller
             return api_error(false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
+
+    public function complete(CompleteTaskRequest $request, HypothecTask $task) {
+        try {
+            DB::beginTransaction();
+            $task = $this->taskRepo->complete($task, $request);
+            DB::commit();
+            return api_response(true, 'Transfert éffectué avec succès', $task);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return api_error(false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
+        }
+    }
+
     /**
      * Update the specified resource in storage.
      */

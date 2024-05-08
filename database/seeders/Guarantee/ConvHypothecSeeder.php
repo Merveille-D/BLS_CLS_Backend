@@ -33,7 +33,7 @@ class ConvHypothecSeeder extends Seeder
                 'type' => 'formalization',
                 'rank' => 1,
                 'min_delay' => null,
-                'max_delay' => null,
+                'max_delay' => 10,
             ],
             [
                 'name' => 'Vérifier la propriété de l\'immeuble',
@@ -41,7 +41,7 @@ class ConvHypothecSeeder extends Seeder
                 'type' => 'formalization',
                 'rank' => 2,
                 'min_delay' => null,
-                'max_delay' => null,
+                'max_delay' => 10,
             ],
             [
                 'name' => 'Rédiger la convention d\'hypothèque',
@@ -49,7 +49,7 @@ class ConvHypothecSeeder extends Seeder
                 'type' => 'formalization',
                 'rank' => 3,
                 'min_delay' => null,
-                'max_delay' => null,
+                'max_delay' => 10,
             ],
             [
                 'name' => 'Transmettre une demande d\'inscription au notaire',
@@ -57,7 +57,7 @@ class ConvHypothecSeeder extends Seeder
                 'type' => 'formalization',
                 'rank' => 4,
                 'min_delay' => null,
-                'max_delay' => null,
+                'max_delay' => 10,
             ],
             [
                 'name' => 'Envoi de la demande d\'inscription par le notaire au régisseur',
@@ -65,7 +65,7 @@ class ConvHypothecSeeder extends Seeder
                 'type' => 'formalization',
                 'rank' => 5,
                 'min_delay' => null,
-                'max_delay' => null,
+                'max_delay' => 10,
             ],
             [
                 'name' => 'Recevoir la preuve d\'inscription de l\'hypothèque chez le notaire',
@@ -73,7 +73,7 @@ class ConvHypothecSeeder extends Seeder
                 'type' => 'formalization',
                 'rank' => 6,
                 'min_delay' => null,
-                'max_delay' => null,
+                'max_delay' => 10,
             ],
 
             //realizations steps
@@ -83,7 +83,7 @@ class ConvHypothecSeeder extends Seeder
                 'type' => 'realization',
                 'rank' => 1,
                 'min_delay' => null,
-                'max_delay' => null,
+                'max_delay' => 10,
             ],
             [
                 'name' => 'Demande D\'inscription et publication du commendement de payer dans  les registres de la propriété foncière',
@@ -99,7 +99,7 @@ class ConvHypothecSeeder extends Seeder
                 'type' => 'realization',
                 'rank' => 3,
                 'min_delay' => null,
-                'max_delay' => null,
+                'max_delay' => 10,
             ],
             [
                 'name' => 'Poursuivre l\'expropriation : DEPOSER CAHIER DE CHARGES',
@@ -139,7 +139,7 @@ class ConvHypothecSeeder extends Seeder
                 'type' => 'realization',
                 'rank' => 7,
                 'min_delay' => null,
-                'max_delay' => null,
+                'max_delay' => 10,
             ],
         ];
     }
