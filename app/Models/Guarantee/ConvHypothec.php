@@ -5,16 +5,12 @@ namespace App\Models\Guarantee;
 use App\Concerns\Traits\Alert\Alertable;
 use App\Concerns\Traits\Guarantee\HypothecFormFieldTrait;
 use App\Concerns\Traits\Transfer\Transferable;
-use App\Models\Alert\Alert;
-use App\Models\ModuleTask;
 use App\Observers\ConvHypothecObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Illuminate\Notifications\Notifiable;
 
 #[ObservedBy([ConvHypothecObserver::class])]
 class ConvHypothec extends Model
@@ -65,7 +61,7 @@ class ConvHypothec extends Model
     ];
 
     public function tasks() {
-        return $this->morphMany(ModuleTask::class, 'taskable');
+        return $this->morphMany(HypothecTask::class, 'taskable');
     }
 
     public function getNextTaskAttribute() {

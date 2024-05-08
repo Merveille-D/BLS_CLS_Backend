@@ -2,23 +2,29 @@
 
 namespace App\Models\Guarantee;
 
+use App\Concerns\Traits\Guarantee\HypothecFormFieldTrait;
 use App\Concerns\Traits\Transfer\Transferable;
 use App\Enums\ConvHypothecState;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class HypothecTask extends Model
 {
-    use HasFactory, HasUuids, Transferable;
+    use HasFactory, HasUuids, Transferable, HypothecFormFieldTrait;
+
+    protected $table = 'module_tasks';
 
     protected $fillable = [
         'status',
         'code',
         'rank',
-        'name',
+        'title',
         'type',
-        'hypothec_id',
+        'taskable_id',
+        'taskable_type',
+        'created_by',
         'min_deadline',
         'max_deadline',
     ];
@@ -29,9 +35,26 @@ class HypothecTask extends Model
         // 'max_deadline' => 'date',
     ];
 
-    public function hypothec()
+    public function taskable()
     {
-        return $this->belongsTo(ConvHypothec::class, 'hypothec_id');
+        return $this->morphTo();
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    const MODULES = [
+        'conv_hypothec' => ConvHypothec::class,
+        // 'litigation' => Litigation::class,
+        // 'recovery' => Recovery::class
+    ];
+
+    public function getFormAttribute() {
+        $form = $this->getCustomFormFields($this->code);
+
+        return $form;
     }
 
     public function getCompletedMinDateAttribute() {
@@ -48,11 +71,30 @@ class HypothecTask extends Model
         return $this->max_deadline;
     }
 
+    public function getValidationAttribute()
+    {
+        $step = $this->taskable->next_task;
+
+        if (!$step) {
+            return [];
+        }
+        $form = $this->getCustomFormFields($step->code);
+
+        return [
+            'method' => 'POST',
+            'action' => env('APP_URL') . '/api/conventionnal_hypothec/update/' . $this->taskable->id,
+            'form' => $form,
+        ];
+    }
+
     public function getDatebyStatus($state) {
-        $hypo = $this->hypothec;
+        $hypo = $this->taskable;
 
         $date = null;
         switch ($state) {
+            case ConvHypothecState::REGISTER_REQUEST_FORWARDED:
+                $date = $hypo->forwarded_date;
+            break;
             case ConvHypothecState::REGISTER_REQUESTED:
                 $date = $hypo->registering_date;
             break;

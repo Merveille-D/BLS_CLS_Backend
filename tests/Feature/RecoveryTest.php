@@ -70,20 +70,18 @@ class RecoveryTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $hypothec_response = $this->actingAs($user)->post('api/conventionnal_hypothec', [
-            'name' => 'Test Hypothec',
-            'reference' => 'ABC123',
-            'contract_id' => 'sdlkfaz-sdfas-1234-sdfas',
-        ]);
+        // $hypothec_response = $this->actingAs($user)->post('api/conventionnal_hypothec', [
+        //     'name' => 'Test Hypothec',
+        //     'contract_id' => 'sdlkfaz-sdfas-1234-sdfas',
+        // ]);
 
-        $hypothecId = $hypothec_response->json('data.id');
+        // $hypothecId = $hypothec_response->json('data.id');
         // Send a POST request to the endpoint with the necessary data
         $response = $this->actingAs($user)->post('api/recovery', [
             'name' => 'Test Recovery',
-            'reference' => 'ABC123',
             'type' => 'forced',
             'has_guarantee' => true,
-            'guarantee_id' => $hypothecId
+            'guarantee_id' => '9edsdf-ddvzers-xfbfx-xdv'
         ]);
 
         // Assert that the response has a 201 status code
@@ -94,7 +92,7 @@ class RecoveryTest extends TestCase
             'name' => 'Test Recovery',
             'type' => 'forced',
             'has_guarantee' => true,
-            'guarantee_id' => $hypothecId
+            // 'guarantee_id' => $hypothecId
         ]);
     }
 

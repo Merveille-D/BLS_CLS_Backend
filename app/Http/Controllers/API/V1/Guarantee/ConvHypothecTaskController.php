@@ -18,7 +18,7 @@ class ConvHypothecTaskController extends Controller
 {
 
     public function __construct(
-        private TaskRepository $taskRepo,
+        private HypothecTaskRepository $taskRepo,
     ) {}
     /**
      * Display a listing of the resource.

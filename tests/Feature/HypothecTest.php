@@ -37,7 +37,6 @@ class HypothecTest extends TestCase
         $user = User::factory()->create();
         $response = $this->actingAs($user)->post('api/conventionnal_hypothec', [
             'name' => 'Test Hypothec',
-            'reference' => 'ABC123',
             'contract_id'=> 'sdlkfaz-sdfas-1234-sdfas',
         ]);
 
@@ -56,7 +55,6 @@ class HypothecTest extends TestCase
 
         $hypothec = $this->actingAs($user)->post('api/conventionnal_hypothec', [
             'name' => 'Test Hypothec',
-            'reference' => 'ABC123',
             'contract_id'=> 'sdlkfaz-sdfas-1234-sdfas',
         ]);
         $hypothec_id = $hypothec->json('data.id');
@@ -95,7 +93,6 @@ class HypothecTest extends TestCase
         $user = User::factory()->create();
         $response = $this->actingAs($user)->post('api/conventionnal_hypothec', [
             'name' => 'Test Hypothec',
-            'reference' => 'ABC123',
             'contract_id'=> 'sdlkfaz-sdfas-1234-sdfas',
         ]);
 
@@ -134,7 +131,6 @@ class HypothecTest extends TestCase
 
         $response = $this->actingAs($user)->post('api/conventionnal_hypothec', [
             'name' => 'Test Hypothec Conventionnelle',
-            'reference' => 'ABC123',
             'contract_id'=> 'sdlkfaz-sdfas-1234-sdfas',
         ]);
         $response->assertStatus(200);
@@ -204,6 +200,26 @@ class HypothecTest extends TestCase
 
     }
 
+    /**
+     * test trnasfer task to user
+     */
+    /* public function test_transfer_task_to_user() : void {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->post('api/conventionnal_hypothec', [
+            'name' => 'Test Hypothec Conventionnelle',
+            'contract_id'=> 'sdlkfaz-sdfas-1234-sdfas',
+        ]);
+
+        $hypothec_id = $response->json('data.id');
+        $tasks = $this->actingAs($user)->get('api/conventionnal_hypothec/tasks', [
+            'id' => $hypothec_id,
+        ]);
+
+        $task = $tasks->json('data');
+
+        dd($task);
+    } */
     /**
      * test_initiate_realization_process
      *
