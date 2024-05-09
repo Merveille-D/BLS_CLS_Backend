@@ -23,6 +23,7 @@ class HypothecTaskResource extends JsonResource
             'min_deadline' => $this->completed_min_date, //$this->min_deadline,
             'max_deadline' => $this->completed_max_date, //$this->max_deadline,
             'type' => $this->type,
+            'hypothec_id' => $this->when($this->taskable, $this->taskable?->id),
             // 'taskable' => $this->when($this->taskable, $this->taskable),
             // 'deadline' => $this->deadline,
             'created_by' => $this->created_by,
