@@ -71,7 +71,7 @@ class UserController extends Controller
         }
     }
 
-    public function delete(string $id) {
+    public function destroy(string $id) {
         try {
             $this->userRepo->delete($id);
 
