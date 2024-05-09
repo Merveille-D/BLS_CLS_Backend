@@ -25,7 +25,7 @@ class HypothecTaskRepository
             return array();
         }
 
-        return HypothecTaskResource::collection($modele?->tasks);
+        return HypothecTaskResource::collection($modele?->tasks()->orderBy('max_deadline')/* ->orderBy('rank') */->get());
     }
 
     public function getOne($id) {
