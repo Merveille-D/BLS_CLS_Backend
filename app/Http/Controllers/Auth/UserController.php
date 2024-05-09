@@ -70,4 +70,16 @@ class UserController extends Controller
             return api_error(false, $th->getMessage(), ['serveur' => $th->getMessage() ]);
         }
     }
+
+    public function delete(string $id) {
+        try {
+            $this->userRepo->delete($id);
+
+            return api_response(true, 'Utilisateur supprimé avec succès');
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+
+            return api_error(false, $th->getMessage(), ['serveur' => $th->getMessage() ]);
+        }
+    }
 }

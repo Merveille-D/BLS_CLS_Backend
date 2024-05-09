@@ -54,4 +54,9 @@ class UserRepository
     public function logout() {
         auth()->user()->tokens()->delete();
     }
+
+    function delete($user_id) {
+        $user = $this->user_model->findOrFail($user_id);
+        $user->delete();
+    }
 }
