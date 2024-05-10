@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests\Hypothec;
 
+use App\Models\Guarantee\ConvHypothec;
+use Carbon\Carbon;
+use Closure;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -33,7 +36,16 @@ class AddTaskRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'model_id' => 'required|exists:conv_hypothecs,id',
-            'deadline' => 'required|date|date_format:Y-m-d',
+            'deadline' => [
+                'required',
+                'date', 'date_format:Y-m-d',
+                function (string $attribute, mixed $value, Closure $fail) {
+                    $hypothec = ConvHypothec::find(request('model_id'));
+                    if ( Carbon::parse($value) <= Carbon::parse($hypothec->current_task->max_deadline)) {
+                        $fail("The {$attribute} is invalid.");
+                    }
+                },
+            ]
         ];
     }
 

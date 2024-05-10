@@ -38,6 +38,7 @@ class ConvHypothecTaskController extends Controller
     public function store(AddTaskRequest $request)
     {
         try {
+            dd($request->all());
             $task = $this->taskRepo->add($request);
 
             return api_response(true, 'Tache ajoutée avec succès', $task);
