@@ -18,14 +18,18 @@ class HypothecTaskRepository
     ) {}
 
     public function getList($request) {
-        // dd(app($this->task_model::MODULES[$request->modele]),$request->id);
         $modele = app($this->task_model::MODULES[$request->modele])?->find($request->id);
 
         if(!$modele) {
             return array();
         }
+        $tasks =  $modele?->tasks()
+            ->orderByRaw('IF(max_deadline IS NOT NULL, 0, 1)')
+            ->orderBy('max_deadline')
+            ->orderBy('rank')
+            ->get();
 
-        return HypothecTaskResource::collection($modele?->tasks()->orderBy('max_deadline')/* ->orderBy('rank') */->get());
+        return HypothecTaskResource::collection($tasks);
     }
 
     public function getOne($id) {

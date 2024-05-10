@@ -107,6 +107,7 @@ class ConvHypothecRepository
             $task->title = $step->name;
             $task->rank = $step->rank;
             $task->type = $step->type;
+            $task->max_deadline = $step->code == ConvHypothecState::CREATED ? now() : null;
             $task->created_by = Auth::id();
 
             // $task->min_deadline = $step->min_delay ?? null;
@@ -120,6 +121,7 @@ class ConvHypothecRepository
 
     public function updateTaskState($convHypo) {
         $currentTask = $convHypo->next_task;
+
         if ($currentTask) {
             $currentTask->status = true;
             $currentTask->save();

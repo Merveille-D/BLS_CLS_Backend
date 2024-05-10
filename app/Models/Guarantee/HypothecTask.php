@@ -123,7 +123,7 @@ class HypothecTask extends Model
             // case ConvHypothecState::STATUS_COMPLETED_MIN:
             //     return $this->completed_min_date;
             default:
-                $date = null;
+                $date = $this->max_deadline;
             break;
         }
 
