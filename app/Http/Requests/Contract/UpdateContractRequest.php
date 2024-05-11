@@ -30,7 +30,10 @@ class UpdateContractRequest extends FormRequest
             'title' => ['string'],
             'category' => [Rule::in(Contract::CATEGORIES)],
             'type_category' => ['string'],
-            'contract_file' => ['file'],
+
+            'contract_documents' => ['array'],
+            'contract_documents.*.name' => ['string'],
+            'contract_documents.*.file' => ['file'],
 
             'first_part' => ['array'],
             'first_part.*.part_id' => [

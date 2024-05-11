@@ -17,11 +17,11 @@ return new class extends Migration
             $table->string('title');
             $table->enum('category', Contract::CATEGORIES);
             $table->string('type_category')->nullable();
-            $table->string('contract_file');
             $table->date('date_signature')->nullable();
             $table->date('date_effective')->nullable();
             $table->date('date_expiration')->nullable();
             $table->date('date_renewal')->nullable();
+            $table->enum('status', Contract::STATUS)->default('initiated');
             $table->timestamps();
         });
     }

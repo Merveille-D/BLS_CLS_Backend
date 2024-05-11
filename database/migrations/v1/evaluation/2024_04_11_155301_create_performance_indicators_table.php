@@ -18,7 +18,7 @@ return new class extends Migration
             $table->enum('position', PerformanceIndicator::POSITIONS);
             $table->enum('type', PerformanceIndicator::TYPES);
             $table->string('note');
-            $table->string('description');
+            $table->text('description');
             $table->timestamps();
         });
     }

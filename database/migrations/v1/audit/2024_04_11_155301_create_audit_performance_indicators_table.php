@@ -18,7 +18,7 @@ return new class extends Migration
             $table->enum('module', AuditPerformanceIndicator::MODULES);
             $table->enum('type', AuditPerformanceIndicator::TYPES);
             $table->string('note');
-            $table->string('description');
+            $table->text('description');
             $table->timestamps();
         });
     }

@@ -3,6 +3,7 @@ namespace App\Repositories\Contract;
 
 use App\Models\Contract\Task;
 use App\Concerns\Traits\Transfer\AddTransferTrait;
+use App\Models\Contract\ContractDocument;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,6 +35,7 @@ class TaskContractRepository
 
         $request['created_by'] = Auth::user()->id;
         $task = $this->task->create($request->all());
+
         return $task;
     }
 
@@ -45,8 +47,27 @@ class TaskContractRepository
     public function update(Task $task, $request) {
 
         $task->update($request);
-        $this->add_transfer($task, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
 
+        if(isset($request['documents'])) {
+            foreach($request['documents'] as $item) {
+
+                $fileUpload = new ContractDocument();
+
+                $fileUpload->name = $item['name'];
+                $fileUpload->file = uploadFile($item['file'], 'contract_documents');
+
+                $task->fileUploads()->save($fileUpload);
+            }
+        }
+
+        if ($request['status'] === true && $task->milestone_value !== null) {
+            $task->contract->status = $task->milestone_value;
+            $task->contract->save();
+        }
+
+        if(isset($request['forward_title'])) {
+            $this->add_transfer($task, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
+        }
         return $task;
     }
 
