@@ -28,7 +28,37 @@ class Task extends Model
         'deadline',
         'status',
         'contract_id',
-        'created_by'
+        'created_by',
+        'date',
+        'type',
+        'milestone_value',
+    ];
+
+    const TYPES = ['task', 'milestone'];
+
+    const MILESTONES = [
+        [
+            'libelle' => 'Réviser le contrat',
+            'type'=> 'milestone',
+            'milestone_value' => 'revised',
+            'days' => '10',
+        ],
+        [
+            'libelle' => 'Finaliser le contrat',
+            'type'=> 'milestone',
+            'milestone_value' => 'finalized',
+            'days' => '20',
+        ],
+        [
+            'libelle' => 'Classer le contrat',
+            'type'=> 'milestone',
+            'milestone_value' => 'classified',
+            'days' => '30',
+        ],
+
+        'deadline',
+        'contract_id',
+        'created_by',
     ];
 
     public function contract()
@@ -36,13 +66,13 @@ class Task extends Model
         return $this->belongsTo(Contract::class);
     }
 
-    public function getFolderAttribute() {
-        return $this->contract->title;
-    }
-
     public function fileUploads()
     {
-        return $this->morphMany(File::class, 'uploadable');
+        return $this->morphMany(ContractDocument::class, 'uploadable');
+    }
+
+    public function getFolderAttribute() {
+        return $this->contract->title;
     }
 
     public function getValidationAttribute() {

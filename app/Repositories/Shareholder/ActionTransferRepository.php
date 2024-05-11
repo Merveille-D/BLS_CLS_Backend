@@ -1,5 +1,5 @@
 <?php
-namespace App\Repositories\ActionTransfer;
+namespace App\Repositories\Shareholder;
 
 use App\Models\Gourvernance\GourvernanceDocument;
 use App\Models\Shareholder\ActionTransfer;
@@ -24,12 +24,10 @@ class ActionTransferRepository
             $fileUpload = new GourvernanceDocument([
                 'name' => getFileName($request['ask_agrement']),
                 'file' => uploadFile($request['ask_agrement'], 'action_transfer_documents'),
-                'status' => $action_transfer->status
+                'status' => 'pending'
             ]);
 
             $action_transfer->fileUploads()->save($fileUpload);
-        } else {
-            $request['status'] = 'accepted';
         }
 
         $action_transfer->update($request->all());

@@ -14,11 +14,11 @@ class Contract extends Model
         'title',
         'category',
         'type_category',
-        'contract_file',
         'date_signature',
         'date_effective',
         'date_expiration',
         'date_renewal',
+        'status',
     ];
 
     const CATEGORIES = [
@@ -27,6 +27,13 @@ class Contract extends Model
         'jobs',
         'warranties',
         'services',
+    ];
+
+    const STATUS = [
+        'initiated',
+        'revised',
+        'finalized',
+        'classified',
     ];
 
     const TYPE_CATEGORIES = [
@@ -95,6 +102,11 @@ class Contract extends Model
             'service_provider' => 'Prestataire',
         ],
     ];
+
+    public function fileUploads()
+    {
+        return $this->morphMany(ContractDocument::class, 'uploadable');
+    }
 
     public function contractParts()
     {
