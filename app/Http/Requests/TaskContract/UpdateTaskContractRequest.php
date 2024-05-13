@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\TaskContract;
 
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -27,10 +28,20 @@ class UpdateTaskContractRequest extends FormRequest
         $rules = [
             'libelle' => ['string'],
             'deadline' => ['date'],
-            'forward_title' => ['string'],
-            'deadline_transfer' => ['date'],
-            'description' => ['string'],
+
+            // For Transfer
+            'forward_title' => ['string', 'required_with_all:deadline_transfer,description'],
+            'deadline_transfer' => ['date', 'required_with_all:forward_title,description'],
+            'description' => ['string', 'required_with_all:forward_title,deadline_transfer'],
         ];
+
+        if (request()->input('status') === true && request()->input('type') === 'milestone') {
+            $rules['date'] = ['required', 'date'];
+            $rules['documents'] = ['required', 'array'];
+            $rules['documents.*.name'] = ['required', 'string'];
+            $rules['documents.*.file'] = ['required', 'file'];
+        }
+
         return $rules;
     }
 

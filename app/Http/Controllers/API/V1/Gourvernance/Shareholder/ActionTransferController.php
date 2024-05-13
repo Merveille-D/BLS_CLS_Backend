@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ActionTransfer\StoreActionTransferRequest;
 use App\Http\Requests\ActionTransfer\UpdateActionTransferRequest;
 use App\Models\Shareholder\ActionTransfer;
-use App\Repositories\ActionTransfer\ActionTransferRepository;
+use App\Repositories\Shareholder\ActionTransferRepository;
 use Illuminate\Validation\ValidationException;
 
 class ActionTransferController extends Controller

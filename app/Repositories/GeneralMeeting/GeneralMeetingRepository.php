@@ -36,8 +36,6 @@ class GeneralMeetingRepository
      */
     public function update(GeneralMeeting $general_meeting, $request) {
 
-       
-
         $current_date = new DateTime($request["meeting_date"]);
         $old_date = new DateTime($general_meeting->meeting_date);
 

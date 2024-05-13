@@ -2,8 +2,12 @@
 namespace App\Repositories\Contract;
 
 use App\Models\Contract\Contract;
+use App\Models\Contract\ContractDocument;
+use App\Models\Contract\Task;
 use App\Models\Gourvernance\GourvernanceDocument;
+use Carbon\Carbon;
 use DateTime;
+use Illuminate\Support\Facades\Auth;
 
 class ContractRepository
 {
@@ -18,11 +22,7 @@ class ContractRepository
      */
     public function store($request) {
 
-        $path = uploadFile($request['contract_file'], 'contract_documents');
-        $requestData = $request->except('contract_file');
-        $requestData['contract_file'] = $path;
-
-        $contract = $this->contract->create($requestData);
+        $contract = $this->contract->create($request->all());
 
         $first_part = $request['first_part'];
         $second_part = $request['second_part'];
@@ -45,6 +45,18 @@ class ContractRepository
 
         $contract->contractParts()->createMany(array_merge($first_part, $second_part));
 
+        foreach($request['contract_documents'] as $item) {
+
+            $fileUpload = new ContractDocument();
+
+            $fileUpload->name = $item['name'];
+            $fileUpload->file = uploadFile($item['file'], 'contract_documents');
+
+            $contract->fileUploads()->save($fileUpload);
+        }
+
+        $this->createTasks($contract);
+
         return $contract;
     }
 
@@ -55,17 +67,25 @@ class ContractRepository
      */
     public function update(Contract $contract, $request) {
 
-        if (isset($request['contract_file'])) {
-            $path = uploadFile($request['contract_file'], 'contract_documents');
-            $requestData = $request->except('contract_file');
-            $requestData['contract_file'] = $path;
-        } else {
-            $requestData = $request;
+        if (isset($request['contract_documents'])) {
+
+            $contract->fileUploads()->delete();
+
+            foreach($request['contract_documents'] as $item) {
+
+                $fileUpload = new ContractDocument();
+
+                $fileUpload->name = $item['name'];
+                $fileUpload->file = uploadFile($item['file'], 'contract_documents');
+
+                $contract->fileUploads()->save($fileUpload);
+            }
         }
 
         if(isset($request['first_part']) && isset($request['second_part'])) {
 
             $contract->contractParts()->delete();
+
             $first_part = $request['first_part'];
             $second_part = $request['second_part'];
 
@@ -88,11 +108,29 @@ class ContractRepository
             $contract->contractParts()->createMany(array_merge($first_part, $second_part));
         }
 
-
-
-        $contract->update($requestData);
+        $contract->update($request);
 
         return $contract;
     }
 
+
+    public function createTasks($contract) {
+
+        $tasks = Task::MILESTONES;
+
+        foreach($tasks as $task) {
+
+            $task = array_merge($task, [
+                'contract_id' => $contract->id,
+                'created_by' => Auth::user()->id,
+                'deadline' => Carbon::now()->addDays($task['days']),
+            ]);
+
+            // dd($task);
+
+            Task::create($task);
+        }
+
+        return $task;
+    }
 }

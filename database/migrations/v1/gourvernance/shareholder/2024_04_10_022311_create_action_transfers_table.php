@@ -28,7 +28,7 @@ return new class extends Migration
 
             $table->date('ask_date')->nullable();
 
-            $table->enum('status', ActionTransfer::STATUS )->default(ActionTransfer::STATUS[0]);
+            $table->enum('status', ActionTransfer::STATUS )->default(ActionTransfer::STATUS[1]);
 
             $table->timestamps();
         });

@@ -19,6 +19,7 @@ use App\Http\Controllers\API\V1\Gourvernance\ExecutiveManagement\ManagementCommi
 use App\Http\Controllers\API\V1\Gourvernance\ExecutiveManagement\ManagementCommittee\TaskManagementCommitteeController;
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\GeneralMeetingController;
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\TaskGeneralMeetingController;
+use App\Http\Controllers\API\V1\Gourvernance\Shareholder\ActionTransferController;
 use App\Http\Controllers\API\V1\Gourvernance\Shareholder\ShareholderController;
 use App\Http\Controllers\API\V1\Incident\AuthorIncidentController;
 use App\Http\Controllers\API\V1\Incident\IncidentController;
@@ -62,6 +63,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::put('update_status_task_session_administrators', [TaskSessionAdministratorController::class, 'updateStatusTaskSessionAdministrator'] );
 
     Route::resource('shareholders', ShareholderController::class);
+    Route::resource('action_transfers', ActionTransferController::class);
 
     Route::resource('bank_infos', BankInfoController::class);
     Route::resource('capitals', CapitalController::class);
