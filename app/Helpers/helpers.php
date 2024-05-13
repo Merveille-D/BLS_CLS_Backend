@@ -34,13 +34,28 @@ if (!function_exists('api_error')) {
 }
 
 if (!function_exists('generateReference')) {
-    function generateReference($prefix, $length = 6)
+    function generateReference($prefix, Model $model)
     {
-        $currentYear = date('Ymd');
-        $randomPart = strtoupper(Str::random($length));
-        $reference = $prefix . '-' . $currentYear .'-' . $randomPart;
+        $currentDate = date('Ymd');
+        $number = $model->count() + 1;
+        $reference = $prefix . '-'. completeWithZeros($number) . '-' . $currentDate;
 
         return $reference;
+    }
+}
+
+if (!function_exists('completeWithZeros')) {
+    function completeWithZeros($number, $length = 4) {
+        $numberStr = (string) $number;
+
+        if (strlen($numberStr) < $length) {
+            $nbZeros = $length - strlen($numberStr);
+
+            // Ajouter les zéros à gauche
+            $numberStr = str_repeat('0', $nbZeros) . $numberStr;
+        }
+
+        return $numberStr;
     }
 }
 

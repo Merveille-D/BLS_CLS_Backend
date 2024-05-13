@@ -5,15 +5,12 @@ namespace App\Models\Guarantee;
 use App\Concerns\Traits\Alert\Alertable;
 use App\Concerns\Traits\Guarantee\HypothecFormFieldTrait;
 use App\Concerns\Traits\Transfer\Transferable;
-use App\Models\Alert\Alert;
 use App\Observers\ConvHypothecObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Illuminate\Notifications\Notifiable;
 
 #[ObservedBy([ConvHypothecObserver::class])]
 class ConvHypothec extends Model
@@ -36,6 +33,7 @@ class ConvHypothec extends Model
         'step',
         'reference',
         'contract_id',
+        'forwarded_date',
         'registration_date',
         'registering_date',
         'is_subscribed',
@@ -51,6 +49,37 @@ class ConvHypothec extends Model
         'is_archived',
         'has_recovery',
     );
+
+    protected $casts = [
+        'is_verified' => 'boolean',
+        'is_approved' => 'boolean',
+        'is_subscribed' => 'boolean',
+        'is_significated' => 'boolean',
+        'is_publied' => 'boolean',
+        'is_archived' => 'boolean',
+        'has_recovery' => 'boolean',
+    ];
+
+    public function tasks() {
+        return $this->morphMany(HypothecTask::class, 'taskable');
+    }
+
+    public function getNextTaskAttribute() {
+        return $this->tasks()
+                ->orderByRaw('IF(max_deadline IS NOT NULL, 0, 1)')
+                ->orderBy('max_deadline')
+                ->orderBy('rank')
+                ->where('status', false)->first();
+    }
+
+    public function getCurrentTaskAttribute() {
+        return $this->tasks()
+                    ->orderByRaw('IF(max_deadline IS NOT NULL, 0, 1)')
+                    ->orderByDesc('max_deadline')
+                    ->orderByDesc('rank')
+                    ->where('status', true)
+                    ->first();
+    }
 
     /**
      * documents
@@ -81,8 +110,11 @@ class ConvHypothec extends Model
 
     public function getValidationAttribute()
     {
-        $step = $this->next_step;
+        $step = $this->next_task;
 
+        if (!$step) {
+            return [];
+        }
         $form = $this->getCustomFormFields($step->code);
 
         return [

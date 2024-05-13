@@ -2,6 +2,7 @@
 
 namespace App\Models\Litigation;
 
+use App\Models\ModuleTask;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -85,6 +86,11 @@ class Litigation extends Model
     public function users() : MorphToMany
     {
         return $this->morphedByMany(User::class, 'litigationable');
+    }
+
+    public function tasks() : MorphMany
+    {
+        return $this->morphMany(ModuleTask::class, 'taskable', 'taskable_type', 'taskable_id');
     }
 
 }

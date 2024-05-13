@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\API\V1\Guarantee;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\Guarantee\ConvHypothecStep;
+use App\Models\Guarantee\GuaranteeStep;
 use Illuminate\Http\Request;
 
-class ConvHypothecStepController extends Controller
+class GuaranteeStepController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return ConvHypothecStep::all();
+        //
     }
 
     /**
@@ -27,7 +26,7 @@ class ConvHypothecStepController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(ConvHypothecStep $convHypothecStep)
+    public function show(GuaranteeStep $guaranteeStep)
     {
         //
     }
@@ -35,7 +34,7 @@ class ConvHypothecStepController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ConvHypothecStep $convHypothecStep)
+    public function update(Request $request, GuaranteeStep $guaranteeStep)
     {
         //
     }
@@ -43,7 +42,7 @@ class ConvHypothecStepController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ConvHypothecStep $convHypothecStep)
+    public function destroy(GuaranteeStep $guaranteeStep)
     {
         //
     }

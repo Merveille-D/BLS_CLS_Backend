@@ -5,6 +5,7 @@ namespace App\Observers\Transfer;
 use App\Concerns\Traits\Alert\AddAlertTrait;
 use App\Models\Alert\Alert;
 use App\Models\Transfer\Transfer;
+use Carbon\Carbon;
 use Illuminate\Contracts\Events\ShouldHandleEventsAfterCommit;
 
 class TransferObserver implements ShouldHandleEventsAfterCommit
@@ -15,10 +16,11 @@ class TransferObserver implements ShouldHandleEventsAfterCommit
      */
     public function created(Transfer $transfer): void
     {
-        // $dates = $this->getMilestoneDates($transfer->deadline);
-        // foreach ($dates as $key => $date) {
-        //     $this->new_alert($transfer, $transfer->title, $transfer->description, 'transfer', $date, Alert::STATUS[$key]);
-        // }
+        $dates = $this->getMilestoneDates($transfer->deadline);
+
+        foreach ($dates as $key => $date) {
+            $this->new_alert($transfer, $transfer->title, $transfer->description, 'transfer', Carbon::parse($date), Alert::STATUS[$key]);
+        }
 
     }
 
@@ -27,7 +29,7 @@ class TransferObserver implements ShouldHandleEventsAfterCommit
      */
     public function updated(Transfer $transfer): void
     {
-        dd('updated ');
+        // dd('updated ');
     }
 
     /**
