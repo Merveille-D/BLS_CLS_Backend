@@ -19,18 +19,30 @@ class Guarantee extends Model
         'contract_id'
     ];
 
+    //documents relationship
+    public function documents() {
+        return $this->morphMany(GuaranteeDocument::class, 'documentable');
+    }
+
     public function tasks() {
-        return $this->morphMany(HypothecTask::class, 'taskable');
+        return $this->morphMany(GuaranteeTask::class, 'taskable');
     }
 
     public function getNextTaskAttribute() {
-        return $this->tasks()->where('type', '!=', 'task')
-                ->where('status', false)->orderBy('rank')->first();
+        return $this->tasks()
+                ->orderByRaw('IF(max_deadline IS NOT NULL, 0, 1)')
+                ->orderBy('max_deadline')
+                ->orderBy('rank')
+                ->where('status', false)->first();
     }
 
     public function getCurrentTaskAttribute() {
-        return $this->tasks()->where('type', '!=', 'task')
-                    ->where('status', true)->orderBy('rank', 'desc')->first();
+        return $this->tasks()
+                    ->orderByRaw('IF(max_deadline IS NOT NULL, 0, 1)')
+                    ->orderByDesc('max_deadline')
+                    ->orderByDesc('rank')
+                    ->where('status', true)
+                    ->first();
     }
 
 

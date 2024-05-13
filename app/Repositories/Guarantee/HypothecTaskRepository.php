@@ -58,11 +58,12 @@ class HypothecTaskRepository
 
     public function edit($request, $task_id) {
         $task = $this->task_model->findOrFail($task_id);
-        $task->update([
-            'title' => $request->title,
-            'max_deadline' => $request->deadline,
-        ]);
-        // $this->add_transfer($task, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
+        if ($task->type == 'task')
+            $task->title = $request->title;
+
+        $task->max_deadline = $request->deadline;
+        $task->save();
+
         return new HypothecTaskResource($task);
     }
 
@@ -81,7 +82,9 @@ class HypothecTaskRepository
 
     public function delete($task_id) {
         $task = $this->task_model->findOrFail($task_id);
-        $task->delete();
+        if ($task->type == 'task') {
+            $task->delete();
+        }
     }
 
     public function complete($task, $request) : JsonResource {
@@ -96,8 +99,6 @@ class HypothecTaskRepository
         } else {
             $this->convRepo->updateProcess($request, $convHypo);
         }
-
-
 
         return new HypothecTaskResource($task->refresh());
     }

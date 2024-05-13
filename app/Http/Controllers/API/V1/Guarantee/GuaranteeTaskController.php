@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Guarantee;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Guarantee\AddGuaranteeTaskRequest;
+use App\Http\Requests\Guarantee\CompleteTaskRequest;
 use App\Http\Requests\Hypothec\AddTaskRequest;
 use App\Http\Requests\Hypothec\EditTaskRequest;
 use App\Http\Requests\Hypothec\UpdateTaskRequest;
@@ -70,6 +71,25 @@ class GuaranteeTaskController extends Controller
         try {
             DB::beginTransaction();
             $task = $this->taskRepo->transfer($task, $request);
+            DB::commit();
+            return api_response(true, 'Transfert éffectué avec succès', $task);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return api_error(false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
+        }
+    }
+
+    /**
+     * complete task
+     *
+     * @param  array $request
+     * @param  mixed $task
+     * @return void
+     */
+    public function complete(CompleteTaskRequest $request, GuaranteeTask $task) {
+        try {
+            DB::beginTransaction();
+            $task = $this->taskRepo->complete($task, $request);
             DB::commit();
             return api_response(true, 'Transfert éffectué avec succès', $task);
         } catch (\Throwable $th) {

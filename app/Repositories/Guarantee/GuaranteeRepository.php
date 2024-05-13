@@ -7,6 +7,7 @@ use App\Models\Guarantee\Guarantee;
 use App\Models\Guarantee\GuaranteeStep;
 use App\Models\Guarantee\GuaranteeTask;
 use App\Models\Guarantee\HypothecTask;
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
@@ -32,6 +33,7 @@ class GuaranteeRepository
         $steps = GuaranteeStep::orderBy('rank')->whereGuaranteeType($guarantee->type)->whereStepType('formalization')->get();
 
         $this->saveTasks($steps, $guarantee);
+        $this->updateTaskState($guarantee);
 
         return new GuaranteeResource($guarantee);
     }
@@ -55,21 +57,69 @@ class GuaranteeRepository
         return $guarantee->delete();
     }
 
-    public function saveTasks($steps, $convHypo) {
+    public function saveTasks($steps, $guarantee) {
         foreach ($steps as $key => $step) {
             $task = new GuaranteeTask();
             $task->code = $step->code;
             $task->title = $step->title;
             $task->rank = $step->rank;
             $task->type = $step->step_type;
+            $task->max_deadline = $step->code == 'created' ? now() : null;
             $task->created_by = auth()->id();
 
-            // $task->min_deadline = $step->min_delay ?? null;
-            // $task->max_deadline = $step->max_delay ?? null;
-
-            $task->taskable()->associate($convHypo);
+            $task->taskable()->associate($guarantee);
             $task->save();
-            // HypothecTask::create($step->toArray());
         }
+    }
+
+    public function updateTaskState($guarantee) {
+        $currentTask = $guarantee->next_task;
+        if ($currentTask) {
+            $currentTask->status = true;
+            if ($currentTask->completed_at == null)
+                $currentTask->completed_at = now();
+            $currentTask->save();
+        }
+
+        $nextTask = $guarantee->next_task;
+
+        if ($nextTask) {
+            $data = $this->setDeadline($guarantee);
+
+            if ($data == [])
+                return false;
+
+            $nextTask->update($data);
+        }
+    }
+
+    function setDeadline($guarantee) {
+        $nextTask = $guarantee->next_task;
+        $defaultTask = GuaranteeStep::where('code', $nextTask->code)->first();
+
+        $minDelay = $defaultTask->min_delay;
+        $maxDelay = $defaultTask->max_delay;
+        // dd($minDelay, $maxDelay);
+        $data = array();
+        //date by hypothec state
+        // $operationDate = $this->getOperationDateByState($guarantee);
+        $operationDate = $guarantee->current_task->completed_at ?? null;
+
+        if ($operationDate == null)
+            return $data;
+        $formatted_date = Carbon::createFromFormat('Y-m-d', $operationDate);
+
+        if ($minDelay && $maxDelay) {
+            $data['min_deadline'] = $formatted_date->copy()->addDays($minDelay);
+            $data['max_deadline'] = $formatted_date->copy()->addDays($maxDelay);
+            return $data;
+        }elseif ($minDelay) {
+            $data['min_deadline'] = $formatted_date->addDays($minDelay);
+            return $data;
+        }elseif ($maxDelay) {
+            $data['max_deadline'] = $formatted_date->addDays($maxDelay);
+            return $data;
+        }
+        return $data;
     }
 }

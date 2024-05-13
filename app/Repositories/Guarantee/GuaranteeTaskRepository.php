@@ -3,10 +3,13 @@ namespace App\Repositories\Guarantee;
 
 use App\Concerns\Traits\Transfer\AddTransferTrait;
 use App\Http\Resources\Guarantee\ConvHypothecStepResource;
-use App\Http\Resources\Guarantee\HypothecTaskResource;
+use App\Http\Resources\Guarantee\GuaranteeTaskResource;
 use App\Http\Resources\Transfer\TransferResource;
 use App\Models\Guarantee\ConvHypothecStep;
+use App\Models\Guarantee\GuaranteeDocument;
 use App\Models\Guarantee\HypothecTask;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class GuaranteeTaskRepository
 {
@@ -23,11 +26,17 @@ class GuaranteeTaskRepository
             return array();
         }
 
-        return HypothecTaskResource::collection($modele?->tasks);
+        return GuaranteeTaskResource::collection(
+            $modele?->tasks()
+            ->orderByRaw('IF(max_deadline IS NOT NULL, 0, 1)')
+            ->orderBy('max_deadline')
+            ->orderBy('rank')
+            ->get()
+        );
     }
 
     public function getOne($id) {
-        return new HypothecTaskResource($this->task_model->findOrFail($id));
+        return new GuaranteeTaskResource($this->task_model->findOrFail($id));
     }
 
     public function add($request) {
@@ -42,7 +51,7 @@ class GuaranteeTaskRepository
         $task->taskable()->associate($this->getModeleByType($request->modele, $request->model_id));
         $task->save();
 
-        return new HypothecTaskResource($task);
+        return new GuaranteeTaskResource($task);
     }
 
     public function getModeleByType($type, $model_id) {
@@ -51,19 +60,20 @@ class GuaranteeTaskRepository
 
     public function edit($request, $task_id) {
         $task = $this->task_model->findOrFail($task_id);
-        $task->update([
-            'title' => $request->title,
-            'max_deadline' => $request->deadline,
-        ]);
-        // $this->add_transfer($task, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
-        return new HypothecTaskResource($task);
+        if ($task->type == 'task')
+            $task->title = $request->title;
+
+        $task->max_deadline = $request->deadline;
+        $task->save();
+
+        return new GuaranteeTaskResource($task);
     }
 
     public function transfer($task, $request) {
         $task = $this->task_model->findOrFail($task);
 
         $this->add_transfer($task, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
-        return new HypothecTaskResource($task);
+        return new GuaranteeTaskResource($task);
     }
 
     public function getTransferHistory($task_id, $request) {
@@ -74,7 +84,56 @@ class GuaranteeTaskRepository
 
     public function delete($task_id) {
         $task = $this->task_model->findOrFail($task_id);
-        $task->delete();
+        if ($task->type == 'task') {
+            $task->delete();
+        }
+    }
+
+    public function complete($task, $request) : JsonResource {
+
+        if ($task->type == 'task') {
+            $task->update([
+                'status' => true,
+                'completed_at' => now(),
+                'completed_by' => auth()->id(),
+            ]);
+        } else {
+            $guarantee = $task->taskable;
+
+            if ($request->documents)
+                $this->saveFiles($request->documents, $guarantee, $task->code);
+
+            if ($request->completed_at)
+                $task->completed_at = $request->completed_at;
+
+            $task->status = true;
+            $guarantee->status = $task->code;
+            $task->save();
+
+            // $this->guarantee->updateProcess($request, $guarantee);
+        }
+
+        return new GuaranteeTaskResource($task->refresh());
+    }
+
+    public function saveFiles($files,Model $guarantee, string $state) : array|bool {
+        if (count($files)<=0)
+            return [];
+
+        foreach ($files as $key => $file_elt) {
+
+            $file_path = storeFile($file_elt['file'], 'guarantee/'.$guarantee->type);
+
+            $doc = new GuaranteeDocument();
+            $doc->state = $state;
+            $doc->file_name = $file_elt['name'];
+            $doc->file_path = $file_path;
+
+            $guarantee->documents()->save($doc);
+        }
+
+        return true;
+
     }
 
 }

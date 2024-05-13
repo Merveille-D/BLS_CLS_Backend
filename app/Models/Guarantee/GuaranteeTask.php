@@ -2,6 +2,7 @@
 
 namespace App\Models\Guarantee;
 
+use App\Concerns\Traits\Guarantee\GuaranteeFormFieldTrait;
 use App\Concerns\Traits\Transfer\Transferable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -51,7 +52,7 @@ class GuaranteeTask extends Model
     ];
 
     public function getFormAttribute() {
-        $form = $this->getCustomFormFields($this->code);
+        $form = $this->loadFormAttributeBasedOnType($this->taskable);
 
         return $form;
     }

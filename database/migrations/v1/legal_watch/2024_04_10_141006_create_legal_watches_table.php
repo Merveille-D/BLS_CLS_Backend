@@ -28,7 +28,7 @@ return new class extends Migration
 
             $table->string('recipient_type')->nullable();
             $table->string('mail_object')->nullable();
-            $table->string('mail_content')->nullable();
+            $table->text('mail_content')->nullable();
             $table->json('mail_addresses')->nullable();
             $table->boolean('is_sent')->default(false);
             $table->timestamps();

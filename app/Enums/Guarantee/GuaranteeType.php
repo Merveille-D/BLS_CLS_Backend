@@ -2,14 +2,14 @@
 namespace App\Enums\Guarantee;
 
 enum GuaranteeType : string {
-    const GUARANTEE_BOND = 'guarantee_bond'; //cautionnement
-    const AUTONOMOUS_GUARANTEE = 'autonomous_guarantee';
-    const AUTONOMOUS_COUNTER_GUARANTEE = 'autonomous_counter-guarantee';
+    const BONDING = 'bonding'; //cautionnement
+    const AUTONOMOUS = 'autonomous'; //garantie autonome
+    const AUTONOMOUS_COUNTER = 'autonomous_counter'; //contre garantie autonome
 
 
     const TYPES = [
-        GuaranteeType::AUTONOMOUS_GUARANTEE,
-        GuaranteeType::GUARANTEE_BOND,
-        GuaranteeType::AUTONOMOUS_COUNTER_GUARANTEE,
+        GuaranteeType::AUTONOMOUS,
+        GuaranteeType::BONDING,
+        GuaranteeType::AUTONOMOUS_COUNTER,
     ];
 }

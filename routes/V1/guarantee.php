@@ -26,6 +26,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('/conventionnal_hypothec', ConvHypothecController::class);
 
     Route::put('/guarantee/tasks/transfer/{task_id}', [GuaranteeTaskController::class, 'transfer']);
+    Route::post('/guarantee/tasks/complete/{task}', [GuaranteeTaskController::class, 'complete']);
     Route::resource('/guarantee/tasks', GuaranteeTaskController::class);
     Route::resource('/guarantee', GuaranteeController::class);
 });
