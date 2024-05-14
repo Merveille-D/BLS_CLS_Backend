@@ -34,7 +34,7 @@ class ContractRepository
                 'part_id' => $part['part_id'],
             ];
         }, $first_part);
-
+git 
         $second_part = array_map(function ($part) {
             return [
                 'description' => $part['description'],
@@ -55,7 +55,7 @@ class ContractRepository
             $contract->fileUploads()->save($fileUpload);
         }
 
-        $this->createTasks($contract);
+        // $this->createTasks($contract);
 
         return $contract;
     }
