@@ -34,7 +34,7 @@ class ContractRepository
                 'part_id' => $part['part_id'],
             ];
         }, $first_part);
-git 
+        
         $second_part = array_map(function ($part) {
             return [
                 'description' => $part['description'],
