@@ -108,6 +108,20 @@ class Contract extends Model
         return $this->morphMany(ContractDocument::class, 'uploadable');
     }
 
+    public function getFilesAttribute()
+    {
+        $files = [];
+
+        foreach ($this->fileUploads as $fileUpload) {
+            $files[] = [
+                'filename' => $fileUpload->name ?? null,
+                'file_url' => $fileUpload->file,
+                'type' => 'other',
+            ];
+        }
+        return $files;
+    }
+
     public function contractParts()
     {
         return $this->hasMany(ContractPart::class);
