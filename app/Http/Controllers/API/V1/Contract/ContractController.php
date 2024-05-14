@@ -65,6 +65,7 @@ class ContractController extends Controller
             $data['second_part'] = $contract->second_part;
             $data['type_category'] = $contract->info_type_category;
             $data['category'] = $contract->info_category;
+            $data['files'] = $contract->files;
 
             return api_response(true, "Information du contrat", $data, 200);
         }catch( ValidationException $e ) {
