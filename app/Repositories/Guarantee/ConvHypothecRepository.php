@@ -456,8 +456,8 @@ class ConvHypothecRepository
         $nextTask = $convHypo->next_task;
         $defaultTask = ConvHypothecStep::where('code', $nextTask->code)->first();
 
-        $minDelay = $defaultTask->min_delay;
-        $maxDelay = $defaultTask->max_delay;
+        $minDelay = $defaultTask?->min_delay;
+        $maxDelay = $defaultTask?->max_delay;
         // dd($minDelay, $maxDelay);
         $data = array();
         //date by hypothec state
