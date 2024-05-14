@@ -63,7 +63,7 @@ class CompleteTaskRequest extends FormRequest
                     $data[$field['name']] = 'required|date|date_format:Y-m-d';
                 }
 
-                if ($field['type'] == 'text') {
+                if ($field['type'] == 'select') {
                     $data[$field['name']] = 'required|string';
                 }
 

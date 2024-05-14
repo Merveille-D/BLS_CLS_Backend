@@ -42,7 +42,7 @@ class AddGuaranteeTaskRequest extends FormRequest
                 'date', 'date_format:Y-m-d',
                 function (string $attribute, mixed $value, Closure $fail) {
                     $guarantee = Guarantee::find(request('model_id'));
-                    if ( Carbon::parse($value) <= Carbon::parse($guarantee->current_task->max_deadline)) {
+                    if ( Carbon::parse($value) < Carbon::parse($guarantee->current_task->max_deadline)) {
                         $fail("The {$attribute} is invalid.");
                     }
                 },

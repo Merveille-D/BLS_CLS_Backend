@@ -33,7 +33,7 @@ class GuaranteeController extends Controller
             DB::beginTransaction();
             $data = $this->guaranteeRepo->add($request);
             DB::commit();
-            return api_response($success = true, 'Garantie initié avec succès', $data);
+            return api_response($success = true, 'Garantie initié avec succès', $data, 201);
         } catch (\Throwable $th) {
             DB::rollBack();
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
@@ -60,6 +60,15 @@ class GuaranteeController extends Controller
             return api_response($success = true, 'Garantie modifié avec succès', $data);
         } catch (\Throwable $th) {
             DB::rollBack();
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
+        }
+    }
+
+    public function realization(Guarantee $guarantee) {
+        try {
+            $data = $this->guaranteeRepo->realization($guarantee);
+            return api_response($success = true, 'Procédure de réalisation  éffectuée avec succès', $data);
+        } catch (\Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }

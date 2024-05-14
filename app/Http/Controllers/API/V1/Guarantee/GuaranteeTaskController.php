@@ -91,7 +91,7 @@ class GuaranteeTaskController extends Controller
             DB::beginTransaction();
             $task = $this->taskRepo->complete($task, $request);
             DB::commit();
-            return api_response(true, 'Transfert éffectué avec succès', $task);
+            return api_response(true, 'Tâche complétée avec succès', $task);
         } catch (\Throwable $th) {
             DB::rollBack();
             return api_error(false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);

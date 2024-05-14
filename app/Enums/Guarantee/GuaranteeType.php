@@ -12,4 +12,10 @@ enum GuaranteeType : string {
         GuaranteeType::BONDING,
         GuaranteeType::AUTONOMOUS_COUNTER,
     ];
+
+    const CODES = [
+        GuaranteeType::AUTONOMOUS => 'GA',
+        GuaranteeType::BONDING => 'CT',
+        GuaranteeType::AUTONOMOUS_COUNTER => 'CG',
+    ];
 }

@@ -44,40 +44,46 @@ trait GuaranteeFormFieldTrait
             case BondState::CREATED:
 
             break;
-            case BondState::VERIFICATION:
-                $formFields = $this->commonProperties(BondState::STATES_VALUES[BondState::VERIFICATION],
-                        ['file', 'documents', 'Documents de la convention signée'],
-                        // ['date', 'date', 'Date signature convention'],
+            case BondState::REDACTION:
+                $formFields = $this->commonProperties(BondState::STATES_VALUES[BondState::REDACTION],
+                        ['file', 'documents', 'Documents du contrat de cautionnement'],
+                        ['date', 'completed_at', 'Date du contrat'],
                     );
+            break;
+            case BondState::VERIFICATION:
+
             break;
             case BondState::COMMUNICATION:
                 $formFields = $this->commonProperties(BondState::STATES_VALUES[BondState::COMMUNICATION],
-                        ['file', 'documents', 'Documents de la convention signée'],
-                        // ['date', 'registering_date', 'Date signature convention'],
+                        ['file', 'documents', 'Documents de la communication'],
+                        ['date', 'completed_at', 'Date de la communication'],
                     );
             break;
             case BondState::DEBTOR_FORMAL_NOTICE:
                 $formFields = $this->commonProperties(BondState::STATES_VALUES[BondState::DEBTOR_FORMAL_NOTICE],
-                        ['file', 'documents', 'Documents de la convention signée'],
-                        // ['date', 'registering_date', 'Date signature convention'],
+                        ['file', 'documents', 'Documents de la mise en demeure'],
+                        ['date', 'completed_at', 'Date de la mise en demeure'],
+                    );
+            break;
+            case BondState::EXECUTION:
+                $formFields = $this->commonProperties(BondState::STATES_VALUES[BondState::EXECUTION],
+                        ['radio', 'is_executed', 'Exécution par le debiteur'],
+                        // ['date', 'completed_at', 'Date de l\'exécution'],
                     );
             break;
             case BondState::INFORM_GUARANTOR:
-                $formFields = $this->commonProperties(BondState::STATES_VALUES[BondState::INFORM_GUARANTOR],
-                        ['file', 'documents', 'Documents de la convention signée'],
-                        // ['date', 'registering_date', 'Date signature convention'],
-                    );
+
             break;
             case BondState::GUARANTOR_FORMAL_NOTICE:
                 $formFields = $this->commonProperties(BondState::STATES_VALUES[BondState::GUARANTOR_FORMAL_NOTICE],
-                        ['file', 'documents', 'Documents de la convention signée'],
-                        // ['date', 'registering_date', 'Date signature convention'],
+                        ['file', 'documents', 'Documents de la mise en demeure'],
+                        ['date', 'completed_at', 'Date de la mise en demeure'],
                     );
             break;
             case BondState::GUARANTOR_PAYMENT:
                 $formFields = $this->commonProperties(BondState::STATES_VALUES[BondState::GUARANTOR_PAYMENT],
-                        ['file', 'documents', 'Documents de la convention signée'],
-                        // ['date', 'registering_date', 'Date signature convention'],
+                        ['radio', 'is_paid', 'Paiement par la caution'],
+                        ['date', 'completed_at', 'Date du paiement'],
                     );
             break;
 
@@ -99,35 +105,32 @@ trait GuaranteeFormFieldTrait
         $form_fields = [];
 
         switch ($state) {
-            case AutonomousState::CREATED:
-                $form_fields = $this->commonProperties(AutonomousState::STATES_VALUES[AutonomousState::CREATED],
-                    ['file', 'documents', 'Documents de la convention signée'],
-                    // ['date', 'registering_date', 'Date signature convention'],
+
+            case AutonomousState::REDACTION:
+                $form_fields = $this->commonProperties(AutonomousState::STATES_VALUES[AutonomousState::REDACTION],
+                    ['file', 'documents', 'Documents du contrat'],
+                    ['date', 'completed_at', 'Date redaction du contrat'],
                 );
             break;
             case AutonomousState::VERIFICATION:
-                $form_fields = $this->commonProperties(AutonomousState::STATES_VALUES[AutonomousState::VERIFICATION],
-                    ['file', 'documents', 'Documents de la convention signée'],
-                    // ['date', 'registering_date', 'Date signature convention'],
-                );
+
             break;
             case AutonomousState::SIGNATURE:
                 $form_fields = $this->commonProperties(AutonomousState::STATES_VALUES[AutonomousState::SIGNATURE],
-                    ['file', 'documents', 'Documents de la convention signée'],
-                    // ['date', 'registering_date', 'Date signature convention'],
+                    ['select', 'contract_type', 'Choisir la durée du contrat'],
                 );
             break;
 
             case AutonomousState::PAYEMENT_REQUEST:
                 $form_fields = $this->commonProperties(AutonomousState::STATES_VALUES[AutonomousState::PAYEMENT_REQUEST],
-                    ['file', 'documents', 'Documents de la convention signée'],
-                    // ['date', 'registering_date', 'Date signature convention'],
+                    ['file', 'documents', 'Documents de la demande de paiement'],
+                    ['date', 'completed_at', 'Date de la demande'],
                 );
             break;
             case AutonomousState::REQUEST_VERIFICATION:
                 $form_fields = $this->commonProperties(AutonomousState::STATES_VALUES[AutonomousState::REQUEST_VERIFICATION],
-                    ['file', 'documents', 'Documents de la convention signée'],
-                    // ['date', 'registering_date', 'Date signature convention'],
+                    ['radio', 'is_paid', 'Paiement par le garant'],
+                    ['date', 'completed_at', 'Date de la vérification'],
                 );
             break;
 
@@ -150,44 +153,40 @@ trait GuaranteeFormFieldTrait
         $form_fields = [];
 
         switch ($state) {
-            case AutonomousCounterState::CREATED:
-                $form_fields = $this->commonProperties(AutonomousCounterState::STATES_VALUES[AutonomousCounterState::CREATED],
-                    ['file', 'documents', 'Documents de la convention signée'],
-                    // ['date', 'registering_date', 'Date signature convention'],
+            case AutonomousState::REDACTION:
+                $form_fields = $this->commonProperties(AutonomousState::STATES_VALUES[AutonomousState::REDACTION],
+                    ['file', 'documents', 'Documents du contrat'],
+                    ['date', 'completed_at', 'Date redaction du contrat'],
                 );
-                break;
+            break;
 
             case AutonomousCounterState::VERIFICATION:
-                $form_fields = $this->commonProperties(AutonomousCounterState::STATES_VALUES[AutonomousCounterState::VERIFICATION],
-                    ['file', 'documents', 'Documents de la convention signée'],
-                    // ['date', 'registering_date', 'Date signature convention'],
-                );
-                break;
+
+            break;
 
             case AutonomousCounterState::SIGNATURE:
-                $form_fields = $this->commonProperties(AutonomousCounterState::STATES_VALUES[AutonomousCounterState::SIGNATURE],
-                    ['file', 'documents', 'Documents de la convention signée'],
-                    // ['date', 'registering_date', 'Date signature convention'],
+                $form_fields = $this->commonProperties(AutonomousState::STATES_VALUES[AutonomousState::SIGNATURE],
+                    ['select', 'contract_type', 'Choisir la durée du contrat'],
                 );
                 break;
 
             case AutonomousCounterState::GUARANTOR_PAYEMENT_REQUEST:
                 $form_fields = $this->commonProperties(AutonomousCounterState::STATES_VALUES[AutonomousCounterState::GUARANTOR_PAYEMENT_REQUEST],
-                    ['file', 'documents', 'Documents de la convention signée'],
-                    // ['date', 'registering_date', 'Date signature convention'],
+                    ['file', 'documents', 'Documents de la demande de paiement'],
+                    ['date', 'completed_at', 'Date de la demande'],
                 );
                 break;
             case AutonomousCounterState::COUNTER_GUARD_REQUEST:
                 $form_fields = $this->commonProperties(AutonomousCounterState::STATES_VALUES[AutonomousCounterState::COUNTER_GUARD_REQUEST],
-                    ['file', 'documents', 'Documents de la convention signée'],
-                    // ['date', 'registering_date', 'Date signature convention'],
+                    ['file', 'documents', 'Documents de la demande de paiement'],
+                    ['date', 'completed_at', 'Date de la demande'],
                 );
                 break;
 
             case AutonomousCounterState::REQUEST_VERIFICATION:
-                $form_fields = $this->commonProperties(AutonomousCounterState::STATES_VALUES[AutonomousCounterState::REQUEST_VERIFICATION],
-                    ['file', 'documents', 'Documents de la convention signée'],
-                    // ['date', 'registering_date', 'Date signature convention'],
+                $form_fields = $this->commonProperties(AutonomousState::STATES_VALUES[AutonomousState::REQUEST_VERIFICATION],
+                    ['radio', 'is_paid', 'Paiement par le contre garant'],
+                    ['date', 'completed_at', 'Date de la vérification'],
                 );
                 break;
 

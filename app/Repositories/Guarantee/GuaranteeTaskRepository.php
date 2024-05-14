@@ -90,8 +90,7 @@ class GuaranteeTaskRepository
     }
 
     public function complete($task, $request) : JsonResource {
-
-        if ($task->type == 'task') {
+        if (/* $task->type == 'task' ||  */blank($task->form)) {
             $task->update([
                 'status' => true,
                 'completed_at' => now(),
@@ -106,11 +105,17 @@ class GuaranteeTaskRepository
             if ($request->completed_at)
                 $task->completed_at = $request->completed_at;
 
+            $task->completed_by = auth()->id();
             $task->status = true;
             $guarantee->status = $task->code;
-            $task->save();
 
-            // $this->guarantee->updateProcess($request, $guarantee);
+            if ($request->is_paid)
+                $guarantee->is_paid = $request->is_paid;
+            if ($request->contract_type)
+                $guarantee->contract_type = $request->contract_type;
+
+            $guarantee->save();
+            $task->save();
         }
 
         return new GuaranteeTaskResource($task->refresh());
@@ -126,6 +131,7 @@ class GuaranteeTaskRepository
 
             $doc = new GuaranteeDocument();
             $doc->state = $state;
+            $doc->type = $guarantee->type;
             $doc->file_name = $file_elt['name'];
             $doc->file_path = $file_path;
 

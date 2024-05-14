@@ -40,27 +40,49 @@ class GuaranteeSeeder extends Seeder
                 'min_delay' => null,
                 'max_delay' => 10,
             ],
+            //attacher date et un contrat de cautionnement
             [
-                'title' => 'VERIFICATION DE LA VALIDITE DU CONTRAT DE CAUTIONNEMENT (ECRIT ET MENTIONS OBLIGATOIRES)',
+                'title' => 'Rédaction du contrat de cautionnement',
                 'guarantee_type' => GuaranteeType::BONDING,
-                'code' => BondState::VERIFICATION,
+                'code' => BondState::REDACTION,
                 'step_type' => 'formalization',
                 'rank' => 2,
                 'min_delay' => null,
                 'max_delay' => 10,
             ],
+            // completer
+            [
+                'title' => 'VERIFICATION DE LA VALIDITE DU CONTRAT DE CAUTIONNEMENT (ECRIT ET MENTIONS OBLIGATOIRES)',
+                'guarantee_type' => GuaranteeType::BONDING,
+                'code' => BondState::VERIFICATION,
+                'step_type' => 'formalization',
+                'rank' => 3,
+                'min_delay' => null,
+                'max_delay' => 10,
+            ],
+            // A completer
+            [
+                'title' => 'VERIFICATION DE LA SOLVABILITE DE LA CAUTION',
+                'guarantee_type' => GuaranteeType::BONDING,
+                'code' => BondState::VERIFICATION,
+                'step_type' => 'formalization',
+                'rank' => 4,
+                'min_delay' => null,
+                'max_delay' => 10,
+            ],
+
+            //inserer date et doc de communication
             [
                 'title' => 'COMMUNICATION DE L\'ETAT DES DETTES DU DEBITEUR A FAIRE A LA CAUTION AU PLUS TARD TOUS LES 7 MOIS',
                 'guarantee_type' => GuaranteeType::BONDING,
                 'code' => BondState::COMMUNICATION,
                 'step_type' => 'formalization',
-                'rank' => 3,
+                'rank' => 5,
                 'min_delay' => null,
-                'max_delay' => 210,
+                'max_delay' => 180,
             ],
 
-            //realization
-
+            //realization doc, date
             [
                 'title' => 'Mise en demeure adressée au débiteur principal',
                 'guarantee_type' => GuaranteeType::BONDING,
@@ -71,20 +93,30 @@ class GuaranteeSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => 'INFORMER LA CAUTION DANS LE MOIS DE LA MISE EN DEMEURE DU DEBITEUR RESTER SANS EFFET',
+                'title' => 'EXECUTION PAR LE DEBITEUR',
                 'guarantee_type' => GuaranteeType::BONDING,
-                'code' => BondState::INFORM_GUARANTOR,
+                'code' => BondState::EXECUTION,
                 'step_type' => 'realization',
                 'rank' => 2,
                 'min_delay' => null,
                 'max_delay' => 10,
             ],
             [
+                'title' => 'INFORMER LA CAUTION DANS LE MOIS DE LA MISE EN DEMEURE DU DEBITEUR RESTER SANS EFFET',
+                'guarantee_type' => GuaranteeType::BONDING,
+                'code' => BondState::INFORM_GUARANTOR,
+                'step_type' => 'realization',
+                'rank' => 3,
+                'min_delay' => null,
+                'max_delay' => 30, // ajouter a date de mise ne demeure
+            ],
+            // documenjt et  date
+            [
                 'title' => 'MISE EN DEMEURE DE LA CAUTION',
                 'guarantee_type' => GuaranteeType::BONDING,
                 'code' => BondState::GUARANTOR_FORMAL_NOTICE,
                 'step_type' => 'realization',
-                'rank' => 3,
+                'rank' => 4,
                 'min_delay' => null,
                 'max_delay' => 10,
             ],
@@ -93,7 +125,7 @@ class GuaranteeSeeder extends Seeder
                 'guarantee_type' => GuaranteeType::BONDING,
                 'code' => BondState::GUARANTOR_PAYMENT,
                 'step_type' => 'realization',
-                'rank' => 4,
+                'rank' => 5,
                 'min_delay' => null,
                 'max_delay' => 10,
             ],
@@ -112,24 +144,38 @@ class GuaranteeSeeder extends Seeder
                 'min_delay' => null,
                 'max_delay' => 10,
             ],
+            //attacher date et un contrat de cautionnement
             [
-                'title' => 'Vérification de la validité du contrat',
+                'title' => 'Rédaction du contrat de la garantie autonome',
                 'guarantee_type' => GuaranteeType::AUTONOMOUS,
-                'code' => AutonomousState::VERIFICATION,
+                'code' => AutonomousState::REDACTION,
                 'step_type' => 'formalization',
                 'rank' => 2,
                 'min_delay' => null,
                 'max_delay' => 10,
             ],
             [
-                'title' => 'SIGNATURE DU CONTRAT DE GARANTIE AUTONOME',
+                'title' => 'Vérification de la validité du contrat',
                 'guarantee_type' => GuaranteeType::AUTONOMOUS,
-                'code' => AutonomousState::SIGNATURE,
+                'code' => AutonomousState::VERIFICATION,
                 'step_type' => 'formalization',
                 'rank' => 3,
                 'min_delay' => null,
                 'max_delay' => 10,
             ],
+            //CHOISIR LA duree du contrat : gdd ou gdi [revocable/non revokable]
+            [
+                'title' => 'SIGNATURE DU CONTRAT DE GARANTIE AUTONOME',
+                'guarantee_type' => GuaranteeType::AUTONOMOUS,
+                'code' => AutonomousState::SIGNATURE,
+                'step_type' => 'formalization',
+                'rank' => 4,
+                'min_delay' => null,
+                'max_delay' => 10,
+            ],
+
+            //realization
+            //doc et date
             [
                 'title' => 'DEMANDE DE PAIEMENT ADRESSE AU GARANT',
                 'guarantee_type' => GuaranteeType::AUTONOMOUS,
@@ -139,6 +185,7 @@ class GuaranteeSeeder extends Seeder
                 'min_delay' => null,
                 'max_delay' => 10,
             ],
+            //radio payement, date de paiement
             [
                 'title' => 'VERIFICATION DE LA DEMANDE PAR LE GARANT',
                 'guarantee_type' => GuaranteeType::AUTONOMOUS,
@@ -146,7 +193,7 @@ class GuaranteeSeeder extends Seeder
                 'step_type' => 'realization',
                 'rank' => 2,
                 'min_delay' => null,
-                'max_delay' => 10,
+                'max_delay' => 5,
             ],
         ];
     }
@@ -163,11 +210,20 @@ class GuaranteeSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
+                'title' => 'Rédaction du contrat de la contre garantie',
+                'guarantee_type' => GuaranteeType::AUTONOMOUS_COUNTER,
+                'code' => AutonomousCounterState::REDACTION,
+                'step_type' => 'formalization',
+                'rank' => 2,
+                'min_delay' => null,
+                'max_delay' => 10,
+            ],
+            [
                 'title' => 'Vérification de la validité du contrat',
                 'guarantee_type' => GuaranteeType::AUTONOMOUS_COUNTER,
                 'code' => AutonomousCounterState::VERIFICATION,
                 'step_type' => 'formalization',
-                'rank' => 2,
+                'rank' => 3,
                 'min_delay' => null,
                 'max_delay' => 10,
             ],
@@ -176,10 +232,12 @@ class GuaranteeSeeder extends Seeder
                 'guarantee_type' => GuaranteeType::AUTONOMOUS_COUNTER,
                 'code' => AutonomousCounterState::SIGNATURE,
                 'step_type' => 'formalization',
-                'rank' => 3,
+                'rank' => 4,
                 'min_delay' => null,
                 'max_delay' => 10,
             ],
+
+            //realization
             [
                 'title' => 'DEMANDE DE PAIEMENT ADRESSE AU GARANT',
                 'guarantee_type' => GuaranteeType::AUTONOMOUS_COUNTER,

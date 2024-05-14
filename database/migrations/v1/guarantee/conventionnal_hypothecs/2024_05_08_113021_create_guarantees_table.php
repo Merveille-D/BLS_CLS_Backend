@@ -17,7 +17,12 @@ return new class extends Migration
             $table->string('status')->default('created') ;
             $table->string('reference')->unique();
             $table->string('type');
+            $table->string('phase');
             $table->uuid('contract_id')->nullable();
+            $table->string('contract_type')->nullable();
+            $table->boolean('is_paid')->default(false);
+            $table->boolean('is_executed')->default(false);
+            $table->boolean('has_recovery')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

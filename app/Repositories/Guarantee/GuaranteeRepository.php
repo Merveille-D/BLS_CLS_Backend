@@ -2,7 +2,9 @@
 
 namespace App\Repositories\Guarantee;
 
+use App\Enums\Guarantee\GuaranteeType;
 use App\Http\Resources\Guarantee\GuaranteeResource;
+use App\Http\Resources\Guarantee\GuaranteeTaskResource;
 use App\Models\Guarantee\Guarantee;
 use App\Models\Guarantee\GuaranteeStep;
 use App\Models\Guarantee\GuaranteeTask;
@@ -25,7 +27,8 @@ class GuaranteeRepository
     {
         $data = array(
             'type' => $request->type,
-            'reference' => generateReference('GA', $this->guarantee_model),
+            'phase' => 'formalization',
+            'reference' => generateReference(GuaranteeType::CODES[$request->type] , $this->guarantee_model),
             'name' => $request->name,
             'contract_id' =>  $request->contract_id,
         );
@@ -74,15 +77,15 @@ class GuaranteeRepository
 
     public function updateTaskState($guarantee) {
         $currentTask = $guarantee->next_task;
+
         if ($currentTask) {
             $currentTask->status = true;
             if ($currentTask->completed_at == null)
-                $currentTask->completed_at = now();
+                $currentTask->completed_at = Carbon::now();
             $currentTask->save();
         }
 
         $nextTask = $guarantee->next_task;
-
         if ($nextTask) {
             $data = $this->setDeadline($guarantee);
 
@@ -104,9 +107,10 @@ class GuaranteeRepository
         //date by hypothec state
         // $operationDate = $this->getOperationDateByState($guarantee);
         $operationDate = $guarantee->current_task->completed_at ?? null;
-
         if ($operationDate == null)
             return $data;
+
+        $operationDate = substr($operationDate, 0, 10);
         $formatted_date = Carbon::createFromFormat('Y-m-d', $operationDate);
 
         if ($minDelay && $maxDelay) {
@@ -121,5 +125,17 @@ class GuaranteeRepository
             return $data;
         }
         return $data;
+    }
+
+    public function realization($guarantee) {
+
+        $steps = GuaranteeStep::orderBy('rank')->whereGuaranteeType($guarantee->type)->whereStepType('realization')->get();
+
+        $this->saveTasks($steps, $guarantee);
+
+            $guarantee->phase = 'realization';
+            $guarantee->save();
+
+        return GuaranteeTaskResource::collection($guarantee->tasks);
     }
 }

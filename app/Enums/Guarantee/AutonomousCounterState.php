@@ -3,6 +3,7 @@ namespace App\Enums\Guarantee;
 
 enum AutonomousCounterState: string{
     const CREATED = 'created';
+    const REDACTION = 'redaction';
     const VERIFICATION = 'verification';
     const SIGNATURE = 'signature';
 
@@ -12,6 +13,7 @@ enum AutonomousCounterState: string{
 
     const STATES_VALUES = [
         AutonomousCounterState::CREATED => 'Initiation de la contre garantie',
+        AutonomousCounterState::REDACTION => 'Rédaction du contrat de contre garantie autonome',
         AutonomousCounterState::VERIFICATION => 'Vérification de la validité du contrat',
         AutonomousCounterState::SIGNATURE => 'SIGNATURE DU CONTRAT DE GARANTIE AUTONOME',
         AutonomousCounterState::GUARANTOR_PAYEMENT_REQUEST => 'DEMANDE DE PAIEMENT ADRESSE AU GARANT',
