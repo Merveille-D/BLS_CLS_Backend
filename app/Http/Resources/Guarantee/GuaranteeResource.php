@@ -21,6 +21,7 @@ class GuaranteeResource extends JsonResource
             'reference' => $this->reference,
             'name' => $this->name,
             'type' => $this->type,
+            'phase' => $this->phase,
             'contract_id' => $this->contract_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

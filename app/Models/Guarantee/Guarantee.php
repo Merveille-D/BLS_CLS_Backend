@@ -55,6 +55,4 @@ class Guarantee extends Model
                     ->where('status', true)
                     ->first();
     }
-
-
 }
