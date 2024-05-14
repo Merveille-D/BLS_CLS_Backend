@@ -21,7 +21,7 @@ class ShareholderRepository
         $request['actions_number'] = $request['actions_encumbered'] + $request['actions_no_encumbered'];
 
         $capital = Capital::get()->last();
-        
+
         if($capital) {
             $total_actions = $capital->amount / $capital->par_value ;
             $percentage = ($request['actions_number'] / $total_actions) * 100;
@@ -50,6 +50,14 @@ class ShareholderRepository
 
         $request['actions_number'] = $request['actions_encumbered'] + $request['actions_no_encumbered'];
 
+        $capital = Capital::get()->last();
+
+        if($capital) {
+            $total_actions = $capital->amount / $capital->par_value ;
+            $percentage = ($request['actions_number'] / $total_actions) * 100;
+        }
+
+        $request['percentage'] = $percentage ?? null;
 
         $shareholder->update($request);
         return $shareholder;
