@@ -2,10 +2,12 @@
 
 namespace App\Models\Shareholder;
 
+use App\Observers\ShareholderObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+#[ObservedBy([ShareholderObserver::class])]
 class Shareholder extends Model
 {
     use HasFactory, HasUuids;
