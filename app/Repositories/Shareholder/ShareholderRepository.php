@@ -21,7 +21,7 @@ class ShareholderRepository
         $request['actions_number'] = $request['actions_encumbered'] + $request['actions_no_encumbered'];
 
         $capital = Capital::get()->last();
-        
+
         if($capital) {
             $total_actions = $capital->amount / $capital->par_value ;
             $percentage = ($request['actions_number'] / $total_actions) * 100;
@@ -48,8 +48,22 @@ class ShareholderRepository
      */
     public function update(Shareholder $shareholder, $request) {
 
+        $client = HttpClient::create();
+$response = $client->request('GET', "http://sig-unstim.sc1cjlx6136.universe.wf/api/get_all_employees", []);
+$content = $response->getContent();
+dd($content);
+
+
         $request['actions_number'] = $request['actions_encumbered'] + $request['actions_no_encumbered'];
 
+        $capital = Capital::get()->last();
+
+        if($capital) {
+            $total_actions = $capital->amount / $capital->par_value ;
+            $percentage = ($request['actions_number'] / $total_actions) * 100;
+        }
+
+        $request['percentage'] = $percentage ?? null;
 
         $shareholder->update($request);
         return $shareholder;
