@@ -57,10 +57,10 @@ class Alert extends Model
             'model' => Task::class,
             'type' => 'contract',
         ],
-        // [
-        //     'model' => TaskIncident::class,
-        //     'type' => 'incident',
-        // ],
+        [
+            'model' => TaskIncident::class,
+            'type' => 'incident',
+        ],
     ];
 
     public function alertable()
