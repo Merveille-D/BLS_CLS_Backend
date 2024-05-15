@@ -5,6 +5,7 @@ namespace App\Models\Recovery;
 use App\Concerns\Traits\Alert\Alertable;
 use App\Concerns\Traits\Recovery\RecoveryFormFieldTrait;
 use App\Models\Guarantee\ConvHypothec;
+use App\Models\ModuleTask;
 use App\Observers\Recovery\RecoveryObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -29,6 +30,18 @@ class Recovery extends Model
         'is_entrusted',
         'is_archived'
     ];
+
+    protected $casts = [
+        'has_guarantee' => 'boolean',
+        'is_seized' => 'boolean',
+        'is_entrusted' => 'boolean',
+        'is_archived' => 'boolean',
+    ];
+
+    public function tasks()
+    {
+        return $this->morphMany(ModuleTask::class, 'taskable');
+    }
 
     public function steps()
     {

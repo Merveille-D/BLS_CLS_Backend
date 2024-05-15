@@ -22,6 +22,11 @@ trait StepsValidationRuleTrait
                 break;
             case ConvHypothecState::AGREEMENT_SIGNED:
                 $data = array_merge($data, [
+                    'forwarded_date' => 'required|date|date_format:Y-m-d',
+                ]);
+                break;
+            case ConvHypothecState::REGISTER_REQUEST_FORWARDED:
+                $data = array_merge($data, [
                     'registering_date' => 'required|date|date_format:Y-m-d',
                 ]);
                 break;

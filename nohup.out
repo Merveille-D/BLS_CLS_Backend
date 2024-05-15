@@ -1,0 +1,6 @@
+  2024-05-04 11:43:05 App\Notifications\AlertNotification ............ RUNNING
+  2024-05-04 11:43:06 App\Notifications\AlertNotification ...... 404.47ms FAIL
+  2024-05-04 11:43:07 App\Notifications\AlertNotification ............ RUNNING
+  2024-05-04 11:43:07 App\Notifications\AlertNotification ...... 157.01ms DONE
+  2024-05-04 11:43:07 App\Notifications\AlertNotification ............ RUNNING
+  2024-05-04 11:43:07 App\Notifications\AlertNotification ...... 118.33ms FAIL

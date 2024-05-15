@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('contract_file')->nullable();
             //end file
             $table->date('registering_date')->nullable();
+            $table->date('forwarded_date')->nullable();
             $table->date('registration_date')->nullable();
             $table->boolean('is_verified')->default(0);
             $table->boolean('is_subscribed')->default(0);

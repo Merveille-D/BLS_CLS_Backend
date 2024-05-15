@@ -20,8 +20,9 @@ class TransferResource extends JsonResource
             'deadline' => $this->deadline,
             'description' => $this->description,
             'status' => $this->status,
+            'sender_id' => $this->sender_id,
             'collaborators' => $this->collaborators,
-            'completed_user' => $this->completed_user,
+            'sender' => $this->sender,
         ];
     }
 }
