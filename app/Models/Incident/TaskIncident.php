@@ -94,45 +94,45 @@ class TaskIncident extends Model
                             'form_title' => 'Preuve d\'information du client par courrier'
                         ],
                     ],
-                // 'atd_3' => [
-                //         'title' => 'Adresser un courrier d\'information au client',
-                //         'rules' => [
-                //             'documents' => ['required', 'array'],
-                //             'documents.*.name' => ['required', 'string'],
-                //             'documents.*.file' => ['required', 'file']
-                //         ],
-                //         "delay" => 10,
-                //         "form" => [
-                //             'fields' => [
-                //                 [
-                //                     'type' => 'documents',
-                //                     'name' => 'documents',
-                //                     'label' => 'Joindre la rédaction',
-                //                 ]
-                //             ],
-                //             'form_title' => 'Preuve d\'information du client par courrier'
-                //         ],
-                //     ],
-                // 'atd_4' => [
-                //         'title' => 'Adresser un courrier d\'information au client',
-                //         'rules' => [
-                //             'documents' => ['required', 'array'],
-                //             'documents.*.name' => ['required', 'string'],
-                //             'documents.*.file' => ['required', 'file']
-                //         ],
-                //         "delay" => 10,
-                //         "form" => [
-                //             'fields' => [
-                //                 [
-                //                     'type' => 'documents',
-                //                     'name' => 'documents',
-                //                     'label' => 'Joindre le courrier d\'information au client',
-                //                 ]
-                //             ],
-                //             'form_title' => 'Preuve d\'information du client par courrier'
-                //         ],
-                //     ],
                 'atd_3' => [
+                        'title' => 'Rédaction du courrier à addreser à l\'administration fiscale',
+                        'rules' => [
+                            'documents' => ['required', 'array'],
+                            'documents.*.name' => ['required', 'string'],
+                            'documents.*.file' => ['required', 'file']
+                        ],
+                        "delay" => 10,
+                        "form" => [
+                            'fields' => [
+                                [
+                                    'type' => 'documents',
+                                    'name' => 'documents',
+                                    'label' => 'Joindre la rédaction',
+                                ]
+                            ],
+                            'form_title' => 'Preuve de la rédaction du courrier'
+                        ],
+                    ],
+                'atd_4' => [
+                        'title' => 'Validation du courrier par le responsable de service juridique',
+                        'rules' => [
+                            'documents' => ['required', 'array'],
+                            'documents.*.name' => ['required', 'string'],
+                            'documents.*.file' => ['required', 'file']
+                        ],
+                        "delay" => 10,
+                        "form" => [
+                            'fields' => [
+                                [
+                                    'type' => 'documents',
+                                    'name' => 'documents',
+                                    'label' => 'Joindre le courrier validé',
+                                ]
+                            ],
+                            'form_title' => 'Preuve de la validation du courrier'
+                        ],
+                    ],
+                'atd_5' => [
                         'title' => 'Transmission d\'une lettre signée par la DG de la banque et de l\'accusé de reception signé',
                         'rules' => [
                             'documents' => ['required', 'array'],
@@ -151,7 +151,7 @@ class TaskIncident extends Model
                             'form_title' => 'Preuve de la transmission de la lettre'
                         ],
                     ],
-                'atd_4' => [
+                'atd_6' => [
                         'title' => 'Avez vous reçu de Main levée ?',
                         'rules' => [
                             'raised_hand' => ['required', 'in:yes,no'],
@@ -169,7 +169,7 @@ class TaskIncident extends Model
                         ],
                         "next" => [
                             true => [
-                                'atd_4_1' => [
+                                'atd_6_1' => [
                                         'title' => 'Attacher le document de la main levée',
                                         'rules' => [
                                             'documents' => ['required', 'array'],
@@ -188,7 +188,7 @@ class TaskIncident extends Model
                                             'form_title' => 'Preuve de réception de la main levée'
                                         ],
                                     ],
-                                'atd_4_2' => [
+                                'atd_6_2' => [
                                         'title' => 'Levée des mesures conservatoires et restitution des fonds bloques sur le compte du client',
                                         'rules' => [
                                             'date' => ['required', 'date'],
@@ -217,7 +217,7 @@ class TaskIncident extends Model
                                             'form_title' => 'Preuves de la levée des mesures conservatoires'
                                         ],
                                     ],
-                                'atd_4_3' => [
+                                'atd_6_3' => [
                                         'title' => 'Informer le client par un courrier',
                                         'rules' => [
                                             'documents' => ['required', 'array'],
@@ -304,7 +304,7 @@ class TaskIncident extends Model
             ],
             false => [
 
-                'atd_6' => [
+                'atd_7' => [
                         'title' => 'Rediger un courrier à l\'adresse de l\'ADM Fiscale à signer par la DG de la banque',
                         'rules' => [
                             'documents' => ['required', 'array'],
@@ -348,6 +348,44 @@ class TaskIncident extends Model
                         ],
                     ],
                 'req_2' => [
+                        'title' => 'Rédaction du courrier à addreser à l\'administration fiscale',
+                        'rules' => [
+                            'documents' => ['required', 'array'],
+                            'documents.*.name' => ['required', 'string'],
+                            'documents.*.file' => ['required', 'file']
+                        ],
+                        "delay" => 10,
+                        "form" => [
+                            'fields' => [
+                                [
+                                    'type' => 'documents',
+                                    'name' => 'documents',
+                                    'label' => 'Joindre la rédaction',
+                                ]
+                            ],
+                            'form_title' => 'Preuve de la rédaction du courrier'
+                        ],
+                    ],
+                'req_3' => [
+                        'title' => 'Validation du courrier par le responsable de service juridique',
+                        'rules' => [
+                            'documents' => ['required', 'array'],
+                            'documents.*.name' => ['required', 'string'],
+                            'documents.*.file' => ['required', 'file']
+                        ],
+                        "delay" => 10,
+                        "form" => [
+                            'fields' => [
+                                [
+                                    'type' => 'documents',
+                                    'name' => 'documents',
+                                    'label' => 'Joindre le courrier validé',
+                                ]
+                            ],
+                            'form_title' => 'Preuve de la validation du courrier'
+                        ],
+                    ],
+                'req_4' => [
                         'title' => 'Attacher le courrier de transmission signé par la DG de la banque',
                         'rules' => [
                             'documents' => ['required', 'array'],
@@ -369,7 +407,7 @@ class TaskIncident extends Model
                     ],
             ],
             false => [
-                'req_3' => [
+                'req_5' => [
                         'title' => 'Rediger un courrier à l\'adresse de l\'autorité concernée à signer par la DG de la banque',
                         'rules' => [
                             'documents' => ['required', 'array'],
