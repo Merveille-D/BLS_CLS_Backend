@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('guarantees', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->string('status')->default('created') ;
+            $table->string('status')->default('created');
             $table->string('reference')->unique();
             $table->string('type');
             $table->string('phase');

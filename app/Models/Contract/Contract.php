@@ -2,13 +2,16 @@
 
 namespace App\Models\Contract;
 
+use App\Concerns\Traits\Alert\Alertable;
+use App\Concerns\Traits\Transfer\Transferable;
+use App\Models\Transfer\TransferDocument;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Contract extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory, HasUuids, Alertable, Transferable;
 
     protected $fillable = [
         'title',
@@ -108,18 +111,39 @@ class Contract extends Model
         return $this->morphMany(ContractDocument::class, 'uploadable');
     }
 
-    public function getFilesAttribute()
+    public function getTranfersAttribute()
     {
-        $files = [];
+        $transfers = [];
 
-        foreach ($this->fileUploads as $fileUpload) {
-            $files[] = [
-                'filename' => $fileUpload->name ?? null,
-                'file_url' => $fileUpload->file,
-                'type' => 'other',
+        $transfers[] = [
+            'step_name' => "Initiation",
+            'files' => array_map(function ($fileUpload) {
+                return [
+                    'filename' => $fileUpload->name ?? null,
+                    'file_url' => $fileUpload->file,
+                    'type' => 'other',
+                ];
+            }, $this->fileUploads),
+        ];
+
+        $other_transfers = [];
+
+        foreach ($this->transfers as $transfer) {
+            $other_transfers[] = [
+                'step_name' => $transfer->step_name,
+                'files' => array_map(function ($fileTransfer) {
+                    return [
+                        'filename' => $fileTransfer->name ?? null,
+                        'file_url' => $fileTransfer->file,
+                        'type' => 'other',
+                    ];
+                }, $transfer->fileTransfers),
             ];
         }
-        return $files;
+
+        $total_transfers = array_merge($transfers, $other_transfers);
+
+        return $total_transfers;
     }
 
     public function contractParts()

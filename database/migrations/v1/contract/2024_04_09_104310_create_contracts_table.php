@@ -21,7 +21,11 @@ return new class extends Migration
             $table->date('date_effective')->nullable();
             $table->date('date_expiration')->nullable();
             $table->date('date_renewal')->nullable();
-            $table->enum('status', Contract::STATUS)->default('initiated');
+            $table->string('status')->default('Initié');
+
+            $table->uuid('created_by')->nullable();
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+            
             $table->timestamps();
         });
     }

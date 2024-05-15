@@ -30,36 +30,8 @@ class Task extends Model
         'contract_id',
         'created_by',
         'date',
-        'type',
-        'milestone_value',
     ];
 
-    const TYPES = ['task', 'milestone'];
-
-    const MILESTONES = [
-        [
-            'libelle' => 'Réviser le contrat',
-            'type'=> 'milestone',
-            'milestone_value' => 'revised',
-            'days' => '10',
-        ],
-        [
-            'libelle' => 'Finaliser le contrat',
-            'type'=> 'milestone',
-            'milestone_value' => 'finalized',
-            'days' => '20',
-        ],
-        [
-            'libelle' => 'Classer le contrat',
-            'type'=> 'milestone',
-            'milestone_value' => 'classified',
-            'days' => '30',
-        ],
-
-        'deadline',
-        'contract_id',
-        'created_by',
-    ];
 
     public function contract()
     {

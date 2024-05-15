@@ -16,11 +16,11 @@ class TransferObserver implements ShouldHandleEventsAfterCommit
      */
     public function created(Transfer $transfer): void
     {
-        $dates = $this->getMilestoneDates($transfer->deadline);
+        // $dates = $this->getMilestoneDates($transfer->deadline);
 
-        foreach ($dates as $key => $date) {
-            $this->new_alert($transfer, $transfer->title, $transfer->description, 'transfer', Carbon::parse($date), Alert::STATUS[$key]);
-        }
+        // foreach ($dates as $key => $date) {
+        //     $this->new_alert($transfer, $transfer->title, $transfer->description, 'transfer', Carbon::parse($date), Alert::STATUS[$key]);
+        // }
 
     }
 
@@ -29,7 +29,6 @@ class TransferObserver implements ShouldHandleEventsAfterCommit
      */
     public function updated(Transfer $transfer): void
     {
-        // dd('updated ');
     }
 
     /**
