@@ -117,7 +117,7 @@ class RecoveryRepository
         $data = array(
             'status' => 'created',
             'type' => $request->type,
-            'reference' => generateReference('REC'),
+            'reference' => generateReference('REC', $this->recovery_model),
             'name' => $request->name,
             'has_guarantee' => $request->has_guarantee ?? 0,
             'guarantee_id' => $request->guarantee_id ?? null

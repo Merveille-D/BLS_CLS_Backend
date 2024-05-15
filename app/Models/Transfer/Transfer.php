@@ -24,6 +24,11 @@ class Transfer extends Model
         'created_at',
     ];
 
+    protected $casts = [
+        'status' => 'boolean',
+        // 'deadline' => 'date',
+    ];
+
     function sender()
     {
         return $this->belongsTo(User::class, 'sender_id');

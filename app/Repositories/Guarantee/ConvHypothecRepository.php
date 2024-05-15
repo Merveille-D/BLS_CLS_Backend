@@ -3,19 +3,17 @@ namespace App\Repositories\Guarantee;
 
 use App\Concerns\Traits\Guarantee\HypothecFormFieldTrait;
 use App\Enums\ConvHypothecState;
-use App\Http\Resources\Guarantee\ConvHypothecCollection;
 use App\Http\Resources\Guarantee\ConvHypothecResource;
 use App\Http\Resources\Guarantee\ConvHypothecStepResource;
-use App\Jobs\SendNotification;
-use App\Models\Alert\Notification;
 use App\Models\Guarantee\ConvHypothec;
 use App\Models\Guarantee\ConvHypothecStep;
 use App\Models\Guarantee\GuaranteeDocument;
-use App\Models\User;
+use App\Models\Guarantee\HypothecTask;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\Auth;
 
 class ConvHypothecRepository
 {
@@ -49,7 +47,7 @@ class ConvHypothecRepository
         if ($hypothec == null)
             return array();
 
-        $steps = ($hypothec->steps);
+        $steps = ($hypothec->tasks);
         $type = $request->type;
 
         $steps->transform(function ($step) {
@@ -84,22 +82,65 @@ class ConvHypothecRepository
         $data = array(
             'state' => 'created',
             'step' => 'formalization',
-            'reference' => generateReference('HC'),
+            'reference' => generateReference('HC', $this->conv_model),
             'name' => $request->name,
             'contract_file' =>  $file_path,
             'contract_id' =>  $request->contract_id,
         );
 
         $convHypo = $this->conv_model->create($data);
-
         $all_steps = ConvHypothecStep::orderBy('rank')->whereType('formalization')->get();
 
-        $convHypo->steps()->syncWithoutDetaching($all_steps);
-        $this->updatePivotState($convHypo);
+        $this->saveTasks($all_steps, $convHypo);
+        $this->updateTaskState($convHypo);
+        // $convHypo->steps()->syncWithoutDetaching($all_steps);
+        // $this->updatePivotState($convHypo);
 
 
-        // $user->notify((new ConvHypothecNextStep($convHypo))/* ->delay(Carbon::now()->addMinutes(1)) */);
         return new ConvHypothecResource($convHypo);
+    }
+
+    public function saveTasks($steps, $convHypo) {
+        foreach ($steps as $key => $step) {
+            $task = new HypothecTask();
+            $task->code = $step->code;
+            $task->title = $step->name;
+            $task->rank = $step->rank;
+            $task->type = $step->type;
+            $task->max_deadline = $step->code == ConvHypothecState::CREATED ? now() : null;
+            $task->created_by = Auth::id();
+
+            // $task->min_deadline = $step->min_delay ?? null;
+            // $task->max_deadline = $step->max_delay ?? null;
+
+            $task->taskable()->associate($convHypo);
+            $task->save();
+            // HypothecTask::create($step->toArray());
+        }
+    }
+
+    public function updateTaskState($convHypo) {
+        $currentTask = $convHypo->next_task;
+
+        if ($currentTask) {
+            $currentTask->status = true;
+            $currentTask->save();
+        }
+
+        $nextTask = $convHypo->next_task;
+
+        if ($nextTask) {
+            $data = $this->setDeadline($convHypo);
+
+            if ($data == [])
+                return false;
+
+            $nextTask->update($data);
+            // $pivotValues = [
+            //     $nextStep->id => $data
+            // ];
+            // $convHypo->steps()->syncWithoutDetaching($pivotValues);
+        }
     }
 
     public function realization($convHypoId) {
@@ -107,10 +148,13 @@ class ConvHypothecRepository
         if ($convHypo->is_approved && $convHypo->state == ConvHypothecState::REGISTER) {
             $real_steps = ConvHypothecStep::orderBy('rank')->whereType('realization')->get();
 
-            $convHypo->steps()->syncWithoutDetaching($real_steps);
+            $this->saveTasks($real_steps, $convHypo);
+
+            // $convHypo->steps()->syncWithoutDetaching($real_steps);
             $convHypo->step = 'realization';
             $convHypo->save();
-            return ConvHypothecStepResource::collection($convHypo->steps);
+
+            return ConvHypothecStepResource::collection($convHypo->tasks);
         } else {
             return [];
         }
@@ -127,13 +171,6 @@ class ConvHypothecRepository
             ];
             $convHypo->steps()->syncWithoutDetaching($pivotValues);
         }
-
-        ////TODO: will be removed when realized route will be available
-        // if ($convHypo->state == ConvHypothecState::REGISTER && $convHypo->is_approved == true) {
-        //     $all_steps = ConvHypothecStep::orderBy('rank')->whereType('realization')->get();
-
-        //     $convHypo->steps()->syncWithoutDetaching($all_steps);
-        // }
 
         $nextStep = $convHypo->next_step;
         if ($nextStep) {
@@ -158,7 +195,8 @@ class ConvHypothecRepository
             if (!blank($data)) {
                 $convHypo->update($data);
                 $convHypo->refresh();
-                $this->updatePivotState($convHypo);
+                // $this->updatePivotState($convHypo);
+                $this->updateTaskState($convHypo);
                 return new ConvHypothecResource($convHypo);
             } else
                 return [];
@@ -176,6 +214,9 @@ class ConvHypothecRepository
                 $data = $this->insertAgreement($request, $convHypo);
                 break;
             case ConvHypothecState::AGREEMENT_SIGNED:
+                $data = $this->insertForwardedRequest($request, $convHypo);
+                break;
+            case ConvHypothecState::REGISTER_REQUEST_FORWARDED:
                 $data = $this->insertRegisterRequestDischarge($request, $convHypo);
                 break;
             case ConvHypothecState::REGISTER_REQUESTED:
@@ -231,6 +272,19 @@ class ConvHypothecRepository
         $state = ConvHypothecState::AGREEMENT_SIGNED;
         $data = array(
             'state' => $state,
+        );
+
+        return $this->stepCommonSavingSettings(
+            $files = $request->documents,
+            $convHypo = $convHypo,
+            $data = $data
+        );
+    }
+
+    function insertForwardedRequest($request, $convHypo) : array {
+        $data = array(
+            'forwarded_date' => $request->forwarded_date,
+            'state' => ConvHypothecState::REGISTER_REQUEST_FORWARDED,
         );
 
         return $this->stepCommonSavingSettings(
@@ -399,13 +453,16 @@ class ConvHypothecRepository
     }
 
     function setDeadline($convHypo) {
-        $nextStep = $convHypo->next_step;
+        $nextTask = $convHypo->next_task;
+        $defaultTask = ConvHypothecStep::where('code', $nextTask->code)->first();
 
-        $minDelay = $nextStep->min_delay;
-        $maxDelay = $nextStep->max_delay;
+        $minDelay = $defaultTask?->min_delay;
+        $maxDelay = $defaultTask?->max_delay;
+        // dd($minDelay, $maxDelay);
         $data = array();
         //date by hypothec state
         $operationDate = $this->getOperationDateByState($convHypo);
+
         if ($operationDate == null)
             return $data;
         $formatted_date = Carbon::createFromFormat('Y-m-d', $operationDate);
@@ -447,7 +504,7 @@ class ConvHypothecRepository
                 $date = $convHypo->advertisement_date;
                 break;
             default:
-                # code...
+                $date = date('Y-m-d');
                 break;
         }
         return $date;

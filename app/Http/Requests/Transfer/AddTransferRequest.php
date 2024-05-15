@@ -22,13 +22,11 @@ class AddTransferRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string',
-            'deadline' => 'required|date',
-            'description' => 'nullable|string',
-            // 'status' => 'required|string',
-            'collaborators' => 'required|required',
-            'collaborators.*' => 'required|uuid|exists:users,id',
-            // 'completed_user' => 'required|string',
+            'forward_title' => 'required|string|max:255',
+            'deadline_transfer' => 'required|date|date_format:Y-m-d',
+            'collaborators' => 'required|array',
+            'collaborators.*' => 'required|exists:users,id',
+            'description' => 'nullable',
         ];
     }
 }
