@@ -62,6 +62,6 @@ class ContractModelController extends Controller
      */
     public function destroy(ContractModel $contractModel)
     {
-        //
+
     }
 }
