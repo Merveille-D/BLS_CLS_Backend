@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use DateInterval;
 use DateTimeImmutable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 trait AddAlertTrait
 {
@@ -17,11 +18,12 @@ trait AddAlertTrait
         $alert->priority =  $priority;
         $alert->deadline = now()->addDays(10);
         $alert->message = $message;
-        $alert->trigger_at = env('EMAIL_SENDING_MODE') == 'test' ? Carbon::now() :  $trigger_at;
+        $alert->trigger_at = env('EMAIL_SENDING_MODE') == 'test' ? Carbon::now()->addMinute() :  $trigger_at;
+        // Log::info('Alert created', ['alert' => $alert]);
         $model->alerts()->save($alert);
     }
 
-    function getMilestoneDates(\DateTimeInterface $deadline): array
+    public function getMilestoneDates(\DateTimeInterface $deadline): array
     {
         $today = new DateTimeImmutable();
         $interval = $deadline->diff($today);

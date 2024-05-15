@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\Auth;
 
 class NotificationRepository
 {
@@ -17,7 +18,7 @@ class NotificationRepository
     public function getList($request) : ResourceCollection {
         $search = $request->search;
         $is_read = $request->is_read;
-        $user_id = $request->user_id ?? User::first()->id;
+        $user_id = Auth::id();
         $query = $this->notification
                 ->when(request('type') !== null, function($query) {
                     $query->where('type', request('type'));

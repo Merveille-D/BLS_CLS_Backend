@@ -6,14 +6,30 @@
 
 - http://bank-legal-soft.terreorigine-immo.com
 
-## litigation action routes
+## MANAGE SUPERVISOR
 
-- get all litigations with search parameters
-- get one litigation
-- liste natures
-- liste jurisdictions
-- ajouter jurisdictions
-- liste parties
-- ajouter parti
-- 
-- 
+-  sudo apt update 
+- sudo apt install supervisor
+- sudo systemctl status supervisor
+- cd /etc/supervisor/conf.d/
+- sudo nano laravel-queue.conf
+
+ `
+[program:laravel-queue]
+process_name=%(program_name)s_%(process_num)02d
+command=php /var/www/html/bls/artisan queue:work database --sleep=3 --tries=3 --max-time=3600
+autostart=true
+autorestart=true
+stopasgroup=true
+killasgroup=true
+user=raoul
+numprocs=2
+redirect_stderr=true
+stdout_logfile=/var/log/jobs.out.log
+stopwaitsecs=3600
+startsecs=0
+ `
+- sudo supervisorctl reread
+- sudo supervisorctl update
+- sudo supervisorctl start laravel-queue:*
+
