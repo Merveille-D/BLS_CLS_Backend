@@ -60,14 +60,10 @@ class TaskContractRepository
             }
         }
 
-        if ($request['status'] === true && $task->milestone_value !== null) {
-            $task->contract->status = $task->milestone_value;
-            $task->contract->save();
-        }
-
         if(isset($request['forward_title'])) {
             $this->add_transfer($task, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
         }
+
         return $task;
     }
 

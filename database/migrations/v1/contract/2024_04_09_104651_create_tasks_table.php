@@ -28,8 +28,6 @@ return new class extends Migration
             $table->boolean('status')->default(false);
 
             $table->datetime('date')->nullable();
-            $table->enum('type', Task::TYPES)->default('task');
-            $table->enum('milestone_value', Contract::STATUS)->nullable();
 
             $table->timestamps();
         });

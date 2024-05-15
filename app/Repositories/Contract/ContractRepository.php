@@ -2,15 +2,14 @@
 namespace App\Repositories\Contract;
 
 use App\Models\Contract\Contract;
+use App\Concerns\Traits\Transfer\AddTransferTrait;
 use App\Models\Contract\ContractDocument;
-use App\Models\Contract\Task;
-use App\Models\Gourvernance\GourvernanceDocument;
-use Carbon\Carbon;
-use DateTime;
 use Illuminate\Support\Facades\Auth;
 
 class ContractRepository
 {
+    use AddTransferTrait;
+
     public function __construct(private Contract $contract) {
 
     }
@@ -22,6 +21,7 @@ class ContractRepository
      */
     public function store($request) {
 
+        $request['created_by'] = Auth::user()->id;
         $contract = $this->contract->create($request->all());
 
         $first_part = $request['first_part'];
@@ -34,7 +34,7 @@ class ContractRepository
                 'part_id' => $part['part_id'],
             ];
         }, $first_part);
-        
+
         $second_part = array_map(function ($part) {
             return [
                 'description' => $part['description'],
@@ -55,7 +55,6 @@ class ContractRepository
             $contract->fileUploads()->save($fileUpload);
         }
 
-        // $this->createTasks($contract);
 
         return $contract;
     }
@@ -113,24 +112,11 @@ class ContractRepository
         return $contract;
     }
 
+    public function createTransfer(Contract $contract, $request) {
 
-    public function createTasks($contract) {
+        $this->add_transfer($contract, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
 
-        $tasks = Task::MILESTONES;
-
-        foreach($tasks as $task) {
-
-            $task = array_merge($task, [
-                'contract_id' => $contract->id,
-                'created_by' => Auth::user()->id,
-                'deadline' => Carbon::now()->addDays($task['days']),
-            ]);
-
-            // dd($task);
-
-            Task::create($task);
-        }
-
-        return $task;
+        return $contract;
     }
+
 }

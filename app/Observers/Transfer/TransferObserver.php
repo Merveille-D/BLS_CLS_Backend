@@ -27,7 +27,6 @@ class TransferObserver implements ShouldHandleEventsAfterCommit
      */
     public function updated(Transfer $transfer): void
     {
-        dd('updated ');
     }
 
     /**
