@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
 
             $table->string('note')->nullable();
-            $table->enum('status', AuditNotation::STATUS)->default('evaluated');
+            $table->string('status')->default('evaluated');
             $table->string('observation')->nullable();
 
             $table->uuid('module_id');

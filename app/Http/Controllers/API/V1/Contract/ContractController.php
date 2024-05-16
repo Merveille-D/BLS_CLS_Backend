@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Contract\StoreContractRequest;
 use App\Http\Requests\Contract\StoreTransferContractRequest;
 use App\Http\Requests\Contract\UpdateContractRequest;
+use App\Http\Requests\Transfer\AddTransferRequest;
 use App\Models\Contract\Contract;
 use App\Repositories\Contract\ContractRepository;
 use Illuminate\Validation\ValidationException;
@@ -96,7 +97,7 @@ class ContractController extends Controller
         }
     }
 
-    public function createTransfer(StoreTransferContractRequest $request, Contract $contract)
+    public function createTransfer(AddTransferRequest $request, Contract $contract)
     {
         try {
             $this->contract->createTransfer($contract, $request->all());

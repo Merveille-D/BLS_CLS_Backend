@@ -3,11 +3,18 @@
 namespace App\Http\Controllers\API\V1\Transfer;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Transfer\CompleteTransferRequest;
 use App\Models\Transfer\Transfer;
+use App\Repositories\Transfer\TransferRepository;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class TransferController extends Controller
 {
+    public function __construct(private TransferRepository $contract) {
+
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -46,5 +53,17 @@ class TransferController extends Controller
     public function destroy(Transfer $transfer)
     {
         //
+    }
+
+    public function completeTransfer(CompleteTransferRequest $request, Transfer $transfer)
+    {
+        try {
+            $this->contract->completeTransfer($transfer, $request->all());
+
+            return api_response(true, "Mis à jour du transfert avec succès", $transfer, 200);
+        } catch (ValidationException $e) {
+
+            return api_response(false, "Echec de la mise à jour du transfer", $e->errors(), 422);
+        }
     }
 }
