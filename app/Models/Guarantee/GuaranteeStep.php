@@ -11,6 +11,7 @@ class GuaranteeStep extends Model
     use HasFactory, HasUuids;
 
     protected $fillable =  [
-        'guarantee_type', 'code', 'name', 'rank', 'parent_id', 'step_type', 'min_delay', 'max_delay'
+        'guarantee_type', 'code', 'name', 'rank', 'parent_id', 'step_type', 'min_delay', 'max_delay',
+        'formalization_type', 'parent_code', 'parent_response'
     ];
 }

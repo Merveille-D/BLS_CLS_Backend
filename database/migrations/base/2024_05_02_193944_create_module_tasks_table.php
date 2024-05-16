@@ -23,10 +23,11 @@ return new class extends Migration
             // $table->foreign('litigation_id')->references('id')->on('litigations');
             $table->uuid('created_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users');
-            $table->date('min_deadline')->nullable();
-            $table->date('max_deadline')->nullable();
+            $table->datetime('min_deadline')->nullable();
+            $table->datetime('max_deadline')->nullable();
             $table->datetime('completed_at')->nullable();
             $table->uuid('completed_by')->nullable();
+            $table->json('extra')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

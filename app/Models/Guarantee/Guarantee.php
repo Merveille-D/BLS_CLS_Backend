@@ -15,6 +15,7 @@ class Guarantee extends Model
         'name',
         'status',
         'reference',
+        'security',
         'type',
         'phase',
         'contract_id',
@@ -22,12 +23,14 @@ class Guarantee extends Model
         'is_paid',
         'is_executed',
         'has_recovery',
+        'extra',
     ];
 
     protected $casts = [
         'is_paid' => 'boolean',
         'is_executed' => 'boolean',
         'has_recovery' => 'boolean',
+        'extra' => 'array',
     ];
 
     //documents relationship

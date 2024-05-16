@@ -21,6 +21,10 @@ return new class extends Migration
             $table->string('step_type')->nullable();
             $table->integer('min_delay')->nullable();
             $table->integer('max_delay')->nullable();
+            $table->string('formalization_type')->nullable();
+            $table->string('parent_code')->nullable();
+            $table->string('parent_response')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
