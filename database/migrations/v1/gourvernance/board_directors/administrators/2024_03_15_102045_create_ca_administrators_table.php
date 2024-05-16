@@ -15,7 +15,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ca_administrators', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('name');
             $table->string('email')->nullable();
             $table->date('birthdate')->nullable();
@@ -28,7 +28,7 @@ return new class extends Migration
             $table->double('shares')->nullable();
             $table->enum('type', AdminType::TYPES)->nullable();
             $table->double('share_percentage')->nullable();
-            $table->unsignedBigInteger('permanent_representative_id')->nullable();
+            $table->uuid('permanent_representative_id')->nullable();
             $table->timestamps();
         });
     }

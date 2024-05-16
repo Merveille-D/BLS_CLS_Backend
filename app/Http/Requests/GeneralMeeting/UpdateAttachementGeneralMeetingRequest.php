@@ -26,7 +26,7 @@ class UpdateAttachementGeneralMeetingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'general_meeting_id' => ['required', 'numeric'],
+            'general_meeting_id' => ['required', 'uuid'],
             'files' => ['required', 'array'],
             'files.*' => ['required', 'array'],
             'files.*.type' => ['required',  Rule::in(GeneralMeeting::TYPE_FILE_FIELD) ],

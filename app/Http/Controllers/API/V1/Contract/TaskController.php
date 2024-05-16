@@ -9,7 +9,7 @@ use App\Http\Requests\TaskContract\StoreTaskContractRequest;
 use App\Http\Requests\TaskContract\UpdateStatusTaskContractRequest;
 use App\Http\Requests\TaskContract\UpdateTaskContractRequest;
 use App\Models\Contract\Task;
-use App\Repositories\TaskContractRepository;
+use App\Repositories\Contract\TaskContractRepository;
 use Illuminate\Validation\ValidationException;
 
 class TaskController extends Controller
@@ -23,7 +23,15 @@ class TaskController extends Controller
      */
     public function index(ListTaskContractRequest $request)
     {
-        $task_contracts = $this->task->all($request);
+        $task_contracts = $this->task->all($request)->map(function ($task) {
+            
+            $task->transfers = $task->transfers->map(function ($transfer) {
+                $transfer->sender = $transfer->sender;
+                $transfer->collaborators = $transfer->collaborators;
+                return $transfer;
+            });
+            return $task;
+        });;
         return api_response(true, "Liste des taches du contrat", $task_contracts, 200);
     }
 
@@ -47,7 +55,13 @@ class TaskController extends Controller
     public function show(Task $task)
     {
         try {
-            return api_response(true, "Information de la tache", $task, 200);
+            $data = $task->toArray();
+            $data['transfers'] = $task->transfers->map(function ($transfer) {
+                $transfer->sender = $transfer->sender;
+                $transfer->collaborators = $transfer->collaborators;
+                return $transfer;
+            });
+            return api_response(true, "Information de la tache", $data, 200);
         }catch( ValidationException $e ) {
             return api_response(false, "Echec de la récupération des infos de la tache", $e->errors(), 422);
         }
@@ -60,7 +74,17 @@ class TaskController extends Controller
     {
         try {
             $this->task->update($task, $request->all());
-            return api_response(true, "Succès de la mise à jour de la tache", $task, 200);
+
+            $data = $task->toArray();
+            $data['transfers'] = $task->transfers->map(function ($transfer) {
+                $transfer->sender = $transfer->sender;
+                $transfer->collaborators = $transfer->collaborators;
+                return $transfer;
+            });
+    ;
+
+            //
+            return api_response(true, "Succès de la mise à jour de la tache", $data, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de la mise à jour de la tache", $e->errors(), 422);
         }
@@ -71,7 +95,12 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        try {
+            $task->delete();
+            return api_response(true, "Succès de la suppression de la tache", null, 200);
+        }catch (ValidationException $e) {
+                return api_response(false, "Echec de la supression de la tache", $e->errors(), 422);
+        }
     }
 
     public function deleteArrayTaskContract(DeleteTaskContractRequest $request)

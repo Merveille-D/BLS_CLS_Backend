@@ -14,7 +14,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('task_session_administrators', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
 
             $table->string('libelle');
             $table->datetime('deadline')->nullable();
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('responsible')->nullable();
             $table->string('supervisor')->nullable();
 
-            $table->unsignedBigInteger('session_administrator_id')->nullable();
+            $table->uuid('session_administrator_id')->nullable();
             $table->foreign('session_administrator_id')->references('id')->on('session_administrators')->onDelete('cascade');
 
             $table->timestamps();

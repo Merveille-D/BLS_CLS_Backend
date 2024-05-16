@@ -26,7 +26,7 @@ class UpdateStatusTaskGeneralMeetingRequest extends FormRequest
         return [
             'tasks' => 'required|array',
             'tasks.*' => 'required|array',
-            'tasks.*.id' => 'required|integer',
+            'tasks.*.id' => 'required|uuid',
             'tasks.*.status' => 'required|boolean',
         ];
     }

@@ -3,12 +3,13 @@
 namespace App\Models\Gourvernance\BoardDirectors\Sessions;
 
 use App\Models\Gourvernance\GourvernanceDocument;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class SessionAdministrator extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     protected $fillable =  [
         'libelle',
@@ -27,9 +28,10 @@ class SessionAdministrator extends Model
     ];
 
     const SESSION_MEETING_TYPES = [
-        'ordinary',
-        'extraordinary',
-        'mixte',
+        'first_quarter',
+        'second_quarter',
+        'third_quarter',
+        'fourth_quarter',
     ];
 
     const SESSION_MEETING_STATUS = [

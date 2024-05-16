@@ -2,13 +2,17 @@
 
 namespace App\Models\Gourvernance\BoardDirectors\Sessions;
 
+use App\Concerns\Traits\Alert\Alertable;
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
+use App\Observers\TaskSessionAdministratorObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+#[ObservedBy([TaskSessionAdministratorObserver::class])]
 class TaskSessionAdministrator extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids, Alertable;
 
     /**
      * Les attributs qui doivent être castés vers des types natifs.
@@ -39,6 +43,18 @@ class TaskSessionAdministrator extends Model
     public function session_administrator()
     {
         return $this->belongsTo(SessionAdministrator::class);
+    }
+
+    public function getFolderAttribute() {
+        return $this->session_administrator->libelle;
+    }
+
+    public function getValidationAttribute() {
+
+        return [
+            'method' => 'PUT',
+            'action' => env('APP_URL'). '/api/task_session_administrators/' . $this->id,
+        ];
     }
 
     CONST TASKS = [

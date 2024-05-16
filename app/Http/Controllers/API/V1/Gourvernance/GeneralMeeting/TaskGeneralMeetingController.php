@@ -9,8 +9,7 @@ use App\Http\Requests\TaskGeneralMeeting\StoreTaskGeneralMeetingRequest;
 use App\Http\Requests\TaskGeneralMeeting\UpdateStatusTaskGeneralMeetingRequest;
 use App\Http\Requests\TaskGeneralMeeting\UpdateTaskGeneralMeetingRequest;
 use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
-use App\Repositories\TaskGeneralMeetingRepository;
-use Illuminate\Support\Facades\Request;
+use App\Repositories\GeneralMeeting\TaskGeneralMeetingRepository;
 use Illuminate\Validation\ValidationException;
 
 class TaskGeneralMeetingController extends Controller
@@ -98,7 +97,4 @@ class TaskGeneralMeetingController extends Controller
             return api_response(false, "Echec de la mise à jour des taches", $e->errors(), 422);
         }
     }
-
-
-
 }

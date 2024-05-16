@@ -6,6 +6,8 @@ use App\Models\Contract\Contract;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class StoreContractRequest extends FormRequest
 {
@@ -22,14 +24,53 @@ class StoreContractRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules(Request $request): array
     {
-        return [
+        $rules = [
             'title' => ['required', 'string'],
-            'category' => ['required', 'string'],
-            'type_category' => ['required', 'string'],
-            'contract_file' => ['required', 'file'],
+            'category' => ['required',  Rule::in(Contract::CATEGORIES) ],
+            // 'type_category' => [ Rule::in(Contract::TYPE_CATEGORIES[$request->input('category')]) ],
+            'contract_documents' => ['required', 'array'],
+            'contract_documents.*.name' => ['required', 'string'],
+            'contract_documents.*.file' => ['required', 'file'],
+
+            'first_part' => ['required', 'array'],
+            'first_part.*.part_id' => [
+                'required',
+                'uuid',
+                'exists:parts,id',
+                function ($attribute, $value, $fail) {
+                    $secondPartData = request()->input('second_part');
+
+                    foreach ($secondPartData as $item) {
+                        if ($item['part_id'] === $value) {
+                            $fail('Le part_id ne peut pas être présent à la fois dans first_part et second_part');
+                        }
+                    }
+                },
+            ],
+            'first_part.*.description' => ['required', 'string'],
+
+            'second_part' => ['required', 'array'],
+            'second_part.*.part_id' => [
+                'required',
+                'uuid',
+                'exists:parts,id',
+                function ($attribute, $value, $fail) {
+                    $firstPartData = request()->input('first_part');
+
+                    foreach ($firstPartData as $item) {
+                        if ($item['part_id'] === $value) {
+                            $fail('Le part_id ne peut pas être présent à la fois dans first_part et second_part');
+                        }
+                    }
+                },
+            ],
+            'second_part.*.description' => ['required', 'string'],
+
         ];
+
+        return $rules;
     }
 
     public function failedValidation(Validator $validator)

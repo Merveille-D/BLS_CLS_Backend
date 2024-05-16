@@ -24,8 +24,8 @@ class StoreAttendanceListGeneralMeetingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'general_meeting_id' => ['required', 'numeric'],
-            'shareholder_id' => ['numeric'],
+            'general_meeting_id' => ['required', 'uuid'],
+            'shareholder_id' => ['uuid'],
             'grade' => ['string'],
             'lastname' => ['string'],
             'firstname' => ['string'],

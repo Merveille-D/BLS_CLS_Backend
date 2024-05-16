@@ -2,13 +2,17 @@
 
 namespace App\Models\Gourvernance\GeneralMeeting;
 
-use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
+use App\Concerns\Traits\Alert\Alertable;
+use App\Models\Alert\Alert;
+use App\Observers\TaskGeneralMeetingObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+#[ObservedBy([TaskGeneralMeetingObserver::class])]
 class TaskGeneralMeeting extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids, Alertable;
 
     /**
      * Les attributs qui doivent être castés vers des types natifs.
@@ -39,6 +43,18 @@ class TaskGeneralMeeting extends Model
     public function general_meeting()
     {
         return $this->belongsTo(GeneralMeeting::class);
+    }
+
+    public function getFolderAttribute() {
+        return $this->general_meeting->libelle;
+    }
+
+    public function getValidationAttribute() {
+
+        return [
+            'method' => 'PUT',
+            'action' => env('APP_URL'). '/api/task_general_meetings/' . $this->id,
+        ];
     }
 
     CONST TASKS = [
@@ -84,7 +100,7 @@ class TaskGeneralMeeting extends Model
                 'days' => 0
             ],
             [
-                'libelle' => "Rédaction du Procèsverbal de l'AG et signature",
+                'libelle' => "Rédaction du PV de l'AG et signature",
                 'days' => 15
             ],
             [
@@ -92,7 +108,7 @@ class TaskGeneralMeeting extends Model
                 'days' => 20
             ],
             [
-                'libelle' => "Réception PV enrégistré et classement",
+                'libelle' => "Réception du PV enrégistré et classement",
                 'days' => 30
             ],
         ],
@@ -107,7 +123,7 @@ class TaskGeneralMeeting extends Model
         'checklist' => [
             ['libelle' => "Vérifier salle et sonorisation"],
             ['libelle' => "Enregistrer actionnaires à l'arrivée dans le système IT"],
-            ['libelle' => "Installer PCA, Administrateurs, CC et invités"],
+            ['libelle' => "Installer PCA, Administrateurs, CAC et invités"],
             ['libelle' => "Imprimer Liste de présence"],
             ['libelle' => "Vérifier Quorum"],
             ['libelle' => "Remettre Liste de présence au PCA"],

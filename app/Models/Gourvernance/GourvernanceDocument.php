@@ -2,13 +2,14 @@
 
 namespace App\Models\Gourvernance;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 class GourvernanceDocument extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     protected $fillable = [
         'name',
@@ -21,4 +22,6 @@ class GourvernanceDocument extends Model
         'post_ag',
         'closed',
     ];
+
+    
 }

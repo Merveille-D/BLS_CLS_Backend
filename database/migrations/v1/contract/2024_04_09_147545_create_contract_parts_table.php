@@ -13,16 +13,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('contract_parts', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
 
             $table->string('description');
 
             $table->enum('type', ContractPart::TYPE );
 
-            $table->unsignedBigInteger('contract_id')->nullable();
+            $table->uuid('contract_id')->nullable();
             $table->foreign('contract_id')->references('id')->on('contracts')->onDelete('cascade');
 
-            $table->unsignedBigInteger('part_id')->nullable();
+            $table->uuid('part_id')->nullable();
             $table->foreign('part_id')->references('id')->on('parts')->onDelete('cascade');
 
             $table->timestamps();

@@ -5,7 +5,7 @@ enum AdminFunction : string {
     const CA_PRESIDENT = "ca_president";
     const EXECUTIVE_ADMIN= "ca_executive_admin";
     const NON_EXECUTIVE_ADMIN= "ca_non_executive_admin";
-    const INDEPENDANT_ADMIN = "ca_independant_admin";
+    const INDEPENDANT_ADMIN = "ca_independent_admin";
 
 
     const ADMIN_FUNCTIONS = [

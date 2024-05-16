@@ -24,7 +24,7 @@ class ListTaskGeneralMeetingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'general_meeting_id' => ['required', 'numeric'],
+            'general_meeting_id' => ['required', 'uuid'],
         ];
     }
 

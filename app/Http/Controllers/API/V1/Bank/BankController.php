@@ -7,7 +7,7 @@ use App\Http\Requests\Bank\ListBankRequest;
 use App\Http\Requests\Bank\StoreBankRequest;
 use App\Http\Requests\Bank\UpdateBankRequest;
 use App\Models\Bank\Bank;
-use App\Repositories\BankRepository;
+use App\Repositories\Bank\BankRepository;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 

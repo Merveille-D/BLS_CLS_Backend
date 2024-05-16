@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('guarantee_documents', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('state')->nullable();
             $table->string('type')->nullable();
             $table->string('file_name')->nullable();
             $table->string('file_path');
             $table->string('file_size')->nullable();
             $table->string('file_mime')->nullable();
-            $table->morphs('documentable');
+            $table->uuidMorphs('documentable');
             // $table->string('description')->nullable();
             $table->timestamps();
         });
