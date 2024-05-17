@@ -2,6 +2,7 @@
 
 namespace Database\Seeders\Guarantee;
 
+use App\Concerns\Traits\Guarantee\DefaultGuaranteeTaskTrait;
 use App\Enums\ConvHypothecState;
 use App\Enums\Guarantee\AutonomousCounterState;
 use App\Enums\Guarantee\AutonomousState;
@@ -13,6 +14,7 @@ use Illuminate\Database\Seeder;
 
 class GuaranteeSeeder extends Seeder
 {
+    use DefaultGuaranteeTaskTrait;
     /**
      * Run the database seeds.
      */
@@ -21,6 +23,30 @@ class GuaranteeSeeder extends Seeder
         $steps = $this->getBondSteps();
 
         foreach ($steps as $step) {
+            $exist = GuaranteeStep::where('code', $step['code'])->whereGuaranteeType($step['guarantee_type'])->first();
+            if (!$exist)
+                GuaranteeStep::create($step);
+        }
+
+        $steps2 = $this->getAutonomousSteps();
+
+        foreach ($steps2 as $step) {
+            $exist = GuaranteeStep::where('code', $step['code'])->whereGuaranteeType($step['guarantee_type'])->first();
+            if (!$exist)
+                GuaranteeStep::create($step);
+        }
+
+        $steps3 = $this->getCounterAutonomousStep();
+
+        foreach ($steps3 as $step) {
+            $exist = GuaranteeStep::where('code', $step['code'])->whereGuaranteeType($step['guarantee_type'])->first();
+            if (!$exist)
+                GuaranteeStep::create($step);
+        }
+
+        $stock_steps = $this->getStockSteps();
+
+        foreach ($stock_steps as $step) {
             $exist = GuaranteeStep::where('code', $step['code'])->whereGuaranteeType($step['guarantee_type'])->first();
             if (!$exist)
                 GuaranteeStep::create($step);

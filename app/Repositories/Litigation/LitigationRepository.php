@@ -9,9 +9,11 @@ use App\Models\Litigation\LitigationDocument;
 use App\Models\Litigation\LitigationLawyer;
 use App\Models\Litigation\LitigationParty;
 use App\Models\Litigation\LitigationSetting;
+use App\Models\Litigation\LitigationStep;
 use App\Models\Litigation\LitigationTask;
 use App\Models\ModuleTask;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Storage;
@@ -81,16 +83,23 @@ class LitigationRepository {
 
         $this->saveDocuments($files, $litigation);
 
-        $this->saveTasks($litigation); //TODO :
+        $this->saveTasks($litigation);
+        $this->updateTaskState($litigation);
 
         return new LitigationResource($litigation);
     }
 
     public function saveTasks($litigation) {
-        $tasks = ModuleTask::DEFAULT_TASKS;
+        $steps = LitigationStep::all();
 
-        foreach ($tasks as $key => $task) {
-            $task = new ModuleTask($task);
+        foreach ($steps as $key => $step) {
+            $task = new LitigationTask();
+            $task->code = $step->code;
+            $task->title = $step->title;
+            $task->rank = $step->rank;
+            $task->type = $step->type;
+            $task->max_deadline = $step->code == 'created' ? now() : null;
+            $task->created_by = auth()->id();
 
             $task->taskable()->associate($litigation);
             $task->save();
@@ -204,6 +213,58 @@ class LitigationRepository {
         ]);
 
         return new LitigationSettingResource($resource);
+    }
+
+    public function updateTaskState($litigation) {
+        $currentTask = $litigation->next_task;
+
+        if ($currentTask) {
+            $currentTask->status = true;
+            if ($currentTask->completed_at == null)
+                $currentTask->completed_at = Carbon::now();
+            $currentTask->save();
+        }
+
+        $nextTask = $litigation->next_task;
+        if ($nextTask) {
+            $data = $this->setDeadline($litigation);
+
+            if ($data == [])
+                return false;
+
+            $nextTask->update($data);
+        }
+    }
+
+    public function setDeadline($guarantee) {
+        $nextTask = $guarantee->next_task;
+        $defaultTask = LitigationStep::where('code', $nextTask->code)->first();
+
+        $minDelay = $defaultTask->min_delay;
+        $maxDelay = $defaultTask->max_delay;
+        // dd($minDelay, $maxDelay);
+        $data = array();
+        //date by hypothec state
+        // $operationDate = $this->getOperationDateByState($guarantee);
+        $operationDate = $guarantee->current_task->completed_at ?? null;
+        if ($operationDate == null)
+            return $data;
+
+        $operationDate = substr($operationDate, 0, 10);
+        $formatted_date = Carbon::createFromFormat('Y-m-d', $operationDate);
+
+        if ($minDelay && $maxDelay) {
+            $data['min_deadline'] = $formatted_date->copy()->addDays($minDelay);
+            $data['max_deadline'] = $formatted_date->copy()->addDays($maxDelay);
+            return $data;
+        }elseif ($minDelay) {
+            $data['min_deadline'] = $formatted_date->addDays($minDelay);
+            return $data;
+        }elseif ($maxDelay) {
+            $data['max_deadline'] = $formatted_date->addDays($maxDelay);
+            return $data;
+        }
+        return $data;
     }
 
     public function saveDocuments($files, $litigation) {

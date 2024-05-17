@@ -55,7 +55,6 @@ class ContractRepository
             $contract->fileUploads()->save($fileUpload);
         }
 
-
         return $contract;
     }
 

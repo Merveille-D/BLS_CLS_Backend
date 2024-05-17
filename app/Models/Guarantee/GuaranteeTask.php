@@ -27,12 +27,12 @@ class GuaranteeTask extends Model
         'max_deadline',
         'completed_at',
         'completed_by',
+        'extra',
     ];
 
     protected $casts = [
         'status' => 'boolean',
-        // 'min_deadline' => 'date',
-        // 'max_deadline' => 'date',
+        'extra' => 'array',
     ];
 
     public function taskable()

@@ -20,7 +20,23 @@ class GuaranteeRepository
     ) {
     }
     public function getList($request) : ResourceCollection {
-        return GuaranteeResource::collection(Guarantee::all());
+        $guarantees = $this->guarantee_model->with('tasks')
+            ->when($request->security == 'personal', function ($query) {
+                return $query->whereSecurity('personal');
+            })
+            ->when($request->security == 'movable', function ($query) {
+                return $query->whereIn('security', ['pledge', 'collateral']);
+            })
+            ->when($request->phase, function ($query, $phase) {
+                return $query->where('phase', $phase);
+            })
+            ->when($request->search, function ($query, $search) {
+                return $query->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('reference', 'like', '%' . $search . '%');
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate(DEFAULT_DATA_LIMIT);
+        return GuaranteeResource::collection($guarantees);
     }
 
     public function add($request): JsonResource
@@ -31,14 +47,17 @@ class GuaranteeRepository
             'reference' => generateReference(GuaranteeType::CODES[$request->type] , $this->guarantee_model),
             'name' => $request->name,
             'contract_id' =>  $request->contract_id,
+            'created_by' => auth()->id(),
         );
+        if ($request->security)
+            $data['security'] = $request->security;
         $guarantee = $this->guarantee_model->create($data);
         $steps = GuaranteeStep::orderBy('rank')->whereGuaranteeType($guarantee->type)->whereStepType('formalization')->get();
 
         $this->saveTasks($steps, $guarantee);
         $this->updateTaskState($guarantee);
 
-        return new GuaranteeResource($guarantee);
+        return new GuaranteeResource($guarantee->refresh());
     }
 
     public function getOne($guarantee): ?JsonResource

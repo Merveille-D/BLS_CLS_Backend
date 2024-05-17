@@ -29,7 +29,8 @@
         },
         "files": [
             "app/Helpers/helpers.php",
-            "app/Helpers/media.php"
+            "app/Helpers/media.php",
+            "app/Constants/Constants.php"
         ]
     },
     "autoload-dev": {

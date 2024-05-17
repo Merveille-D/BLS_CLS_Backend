@@ -14,6 +14,8 @@ class LitigationResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $id = $request->route('litigation');
+
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -28,6 +30,9 @@ class LitigationResource extends JsonResource
             'added_amount' => collect($this->added_amount)->sum('amount'),
             'added_amount_detail' => $this->added_amount,
             'remaining_amount' => $this->remaining_amount,
+
+            'next_step' => $this->when($id, new LitigationTaskResource($this->next_task)),
+            'current_step' => $this->when($id, new LitigationTaskResource($this->current_task)),
             'lawyers' => $this->lawyers ?? null,
             'users' => $this->users ?? null,
             'created_at' => $this->created_at,

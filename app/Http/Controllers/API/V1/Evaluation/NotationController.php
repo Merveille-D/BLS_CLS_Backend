@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1\Evaluation;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Notation\ListNotationRequest;
 use App\Http\Requests\Notation\StoreUpdateNotationRequest;
+use App\Http\Requests\Transfer\AddTransferRequest;
 use App\Models\Evaluation\Notation;
 use App\Repositories\Evaluation\NotationRepository;
 use Illuminate\Http\Request;
@@ -78,5 +79,16 @@ class NotationController extends Controller
     public function destroy(Notation $notation)
     {
         //
+    }
+
+    public function createTransfer(AddTransferRequest $request, Notation $notation)
+    {
+        try {
+            $this->notation->createTransfer($notation, $request->all());
+
+            return api_response(true, "Transfert de la tache avec succès", $notation, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de la création du transfert", $e->errors(), 422);
+        }
     }
 }
