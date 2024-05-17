@@ -112,7 +112,7 @@ trait DefaultGuaranteeTaskTrait
                 'max_delay' => 10,
                 'formalization_type' => 'legal'
             ],
-            [
+            /* [
                 'title' => 'Obtention de la décision autorisant la garantie',
                 'code' => null,
                 'guarantee_type' => GuaranteeType::STOCK,
@@ -161,7 +161,7 @@ trait DefaultGuaranteeTaskTrait
                 'min_delay' => null,
                 'max_delay' => null,
                 'formalization_type' => 'legal'
-            ],
+            ], */
 
             //
 
