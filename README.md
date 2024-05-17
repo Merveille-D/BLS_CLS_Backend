@@ -33,3 +33,6 @@ startsecs=0
 - sudo supervisorctl update
 - sudo supervisorctl start laravel-queue:*
 
+## to do 
+
+complete a field that take step status in guarantee

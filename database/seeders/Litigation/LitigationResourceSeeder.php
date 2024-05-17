@@ -2,9 +2,11 @@
 
 namespace Database\Seeders\Litigation;
 
+use App\Enums\Litigation\LitigationTaskState;
 use App\Enums\Litigation\LitigationType;
 use App\Models\Litigation\LitigationParty;
 use App\Models\Litigation\LitigationSetting;
+use App\Models\Litigation\LitigationStep;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -31,6 +33,12 @@ class LitigationResourceSeeder extends Seeder
             if (!$exist) {
                 LitigationSetting::create(['name' => $jurisdiction, 'type' => LitigationType::JURISDICTION] );
             }
+        }
+
+        $steps = $this->defaultSteps();
+
+        foreach ($steps as $step) {
+            LitigationStep::create($step);
         }
 
         // create default litigation for test
@@ -115,6 +123,62 @@ class LitigationResourceSeeder extends Seeder
             'Tribunal Arbitral',
             'Tribunal de Commerce',
             'Tribunal de Première Instance',
+        ];
+    }
+
+
+    public function defaultSteps() : array {
+        return [
+
+            [
+                'title' => 'Enregistrement du dossier',
+                'code' => LitigationTaskState::CREATED,
+                'rank' => 1,
+                'type' => 'step',
+                'min_delay' => null,
+                'type' => 'step',
+                'max_delay' => 10,
+            ],
+            [
+                'title' => 'Transférer le dossier à l\'avocat',
+                'code' => LitigationTaskState::TRANSFER,
+                'rank' => 2,
+                'min_delay' => null,
+                'type' => 'step',
+                'max_delay' => 10,
+            ],
+            [
+                'title' => 'Saisine de la juridiction compétente',
+                'code' => LitigationTaskState::REFERRAL,
+                'rank' => 3,
+                'min_delay' => null,
+                'type' => 'step',
+                'max_delay' => 5,
+            ],
+            [
+                'title' => 'Date première Audience',
+                'code' => LitigationTaskState::HEARING,
+                'rank' => 4,
+                'min_delay' => null,
+                'type' => 'step',
+                'max_delay' => 10,
+            ],
+            [
+                'title' => 'Rapport de l\'audience',
+                'code' => LitigationTaskState::REPORT,
+                'rank' => 5,
+                'min_delay' => null,
+                'type' => 'step',
+                'max_delay' => 10,
+            ],
+            [
+                'title' => 'DÉCISION',
+                'code' => LitigationTaskState::DECISION,
+                'rank' => 6,
+                'min_delay' => null,
+                'type' => 'step',
+                'max_delay' => 10,
+            ],
         ];
     }
 }
