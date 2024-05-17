@@ -1,13 +1,13 @@
 <?php
 namespace App\Repositories\Evaluation;
 
-use App\Models\Bank\Bank;
+use App\Concerns\Traits\Transfer\AddTransferTrait;
 use App\Models\Evaluation\Notation;
-use App\Models\Gourvernance\GourvernanceDocument;
-use DateTime;
 
 class NotationRepository
 {
+    use AddTransferTrait;
+
     public function __construct(private Notation $notation) {
 
     }
@@ -64,6 +64,13 @@ class NotationRepository
     public function update(Notation $notation, $request) {
 
        //
+    }
+
+    public function createTransfer(Notation $notation, $request) {
+
+        $this->add_transfer($notation, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
+
+        return $notation;
     }
 
 

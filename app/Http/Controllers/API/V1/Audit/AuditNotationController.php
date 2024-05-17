@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1\Audit;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuditNotation\ListAuditNotationRequest;
 use App\Http\Requests\AuditNotation\StoreUpdateAuditNotationRequest;
+use App\Http\Requests\Transfer\AddTransferRequest;
 use App\Models\Audit\AuditNotation;
 use App\Repositories\Audit\AuditNotationRepository;
 use Illuminate\Http\Request;
@@ -76,5 +77,16 @@ class AuditNotationController extends Controller
     public function destroy(AuditNotation $audit_notation)
     {
         //
+    }
+
+    public function createTransfer(AddTransferRequest $request, AuditNotation $audit_notation)
+    {
+        try {
+            $this->audit_notation->createTransfer($audit_notation, $request->all());
+
+            return api_response(true, "Transfert de la tache avec succès", $audit_notation, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de la création du transfert", $e->errors(), 422);
+        }
     }
 }

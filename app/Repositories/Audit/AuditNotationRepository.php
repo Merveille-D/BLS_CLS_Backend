@@ -1,10 +1,13 @@
 <?php
 namespace App\Repositories\Audit;
 
+use App\Concerns\Traits\Transfer\AddTransferTrait;
 use App\Models\Audit\AuditNotation;
 
 class AuditNotationRepository
 {
+    use AddTransferTrait;
+
     public function __construct(private AuditNotation $audit_notation) {
 
     }
@@ -41,7 +44,7 @@ class AuditNotationRepository
             return $check_collaborator_notation;
         }else {
             $audit_notation = $this->audit_notation->create($request->all());
-            
+
             foreach ($notes as $note) {
                 $audit_notation->performances()->create([
                     'performance_indicator_id' => $note['audit_performance_indicator_id'],
@@ -51,6 +54,13 @@ class AuditNotationRepository
 
             return $audit_notation;
         }
+    }
+
+    public function createTransfer(AuditNotation $audit_notation, $request) {
+
+        $this->add_transfer($audit_notation, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
+
+        return $audit_notation;
     }
 
 }
