@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Models\Auth\Country;
+use App\Models\Auth\Subsidiary;
 use App\Models\Litigation\Litigation;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -29,7 +30,7 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
-        'country_id',
+        'subsidiary_id',
     ];
 
     /**
@@ -53,11 +54,11 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the country that owns the user.
+     * Get the Subsidiary that owns the user.
      */
-    public function country()
+    public function subsidiary()
     {
-        return $this->belongsTo(Country::class);
+        return $this->belongsTo(Subsidiary::class);
     }
 
     public function litigations() : MorphToMany

@@ -16,10 +16,10 @@ class CountryScope implements Scope
     {
 
         if (Auth::check()) {
-            $countryId = Auth::user()->country_id;
+            $countryId = Auth::user()->subsidiary_id;
             $currentTable = $model->getTable();
             $builder->join('users', 'users.id', '=', $currentTable.'.created_by')
-                    ->where('country_id', $countryId)
+                    ->where('subsidiary_id', $countryId)
                     ->select($currentTable . '.*');
         }
     }

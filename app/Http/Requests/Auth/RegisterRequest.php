@@ -27,7 +27,7 @@ class RegisterRequest extends FormRequest
             'email'=>'required|string|email|unique:users',
             'role_id' => 'required|uuid|exists:roles,id',
             'username' => 'required|string|unique:users',
-            'country_id' => 'required|uuid|exists:countries,id',
+            'subsidiary_id' => 'required|uuid|exists:subsidiaries,id',
         ];
     }
 }
