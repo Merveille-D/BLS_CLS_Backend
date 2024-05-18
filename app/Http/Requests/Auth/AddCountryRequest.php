@@ -26,6 +26,8 @@ class AddCountryRequest extends FormRequest
     {
         return [
             // 'name' => 'required|string|unique:countries,name',
+            'address' => 'required|string',
+            'country' => 'required|string',
             'name' => [
                 'required',
                 'string', 'unique:subsidiaries,name',
