@@ -42,6 +42,39 @@ class GuaranteeTest extends TestCase
     }
 
     /**
+     * test add new stock guarantee
+     *
+     * @return void
+     */
+
+    public function test_add_new_stock_guarantee()
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->post('/api/guarantees', [
+            'name' => 'Test Guarantee stock',
+            'security' => 'pledge',
+            'type' => 'stock',
+            'contract_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47',
+            'formalization_type' => 'conventionnal'
+        ]);
+
+        $response->assertStatus(201);
+
+        $this->assertDatabaseHas('guarantees', [
+            'name' => 'Test Guarantee stock',
+            'security' => 'pledge',
+            'type' => 'stock',
+            'contract_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47'
+        ]);
+
+        $this->assertDatabaseHas('module_tasks', [
+            'taskable_id' => $response->json('data.id'),
+            'taskable_type' => 'App\Models\Guarantee\Guarantee'
+        ]);
+    }
+
+    /**
      * test get all guarantees
      *
      * @return void

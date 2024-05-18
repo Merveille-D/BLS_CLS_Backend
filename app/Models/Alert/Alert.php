@@ -38,6 +38,7 @@ class Alert extends Model
         'legal_watch',
         'litigation',
         'recovery',
+        'guarantee',
     ];
 
     const ALERT_MODULES = [

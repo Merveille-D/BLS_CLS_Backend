@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('status')->default('created');
             $table->string('reference')->unique();
+            $table->string('security')->default('personal');
             $table->string('type');
             $table->string('phase');
             $table->uuid('contract_id')->nullable();
@@ -23,6 +24,8 @@ return new class extends Migration
             $table->boolean('is_paid')->default(false);
             $table->boolean('is_executed')->default(false);
             $table->boolean('has_recovery')->default(0);
+            $table->uuid('created_by')->nullable();
+            $table->json('extra')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -33,12 +33,12 @@ class UserSeeder extends Seeder
                 'email' => 'estelleadjaho@gmail.com',
                 'password' => Hash::make('password')
             ),
-            array(
-                'firstname' => 'Darlène',
-                'lastname' => 'Gbaguidi',
-                'email' => 'darlenegbaguidi@gmail.com',
-                'password' => Hash::make('password')
-            ),
+            // array(
+            //     'firstname' => 'Darlène',
+            //     'lastname' => 'Gbaguidi',
+            //     'email' => 'darlenegbaguidi@gmail.com',
+            //     'password' => Hash::make('password')
+            // ),
         );
 
     }

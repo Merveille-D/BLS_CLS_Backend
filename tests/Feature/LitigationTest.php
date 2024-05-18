@@ -66,5 +66,14 @@ class LitigationTest extends TestCase
             'name' => 'Test Litigation',
             'reference' => 'LT-1234',
         ]);
+
+        // Assert that the litigation has tasks saved
+        $this->assertDatabaseHas('module_tasks', [
+            'status' => 1,
+            'title' => 'Enregistrement du dossier',
+            'taskable_type' => 'App\Models\Litigation\Litigation',
+            'created_by' => $user->id,
+            'taskable_id' => $response->json('data.id'),
+        ]);
     }
 }

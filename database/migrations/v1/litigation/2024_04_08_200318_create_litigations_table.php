@@ -29,8 +29,10 @@ return new class extends Migration
             // $table->foreign('lawyer_id')->references('id')->on('litigation_lawyers');
             // $table->uuid('party_id')->nullable();
             // $table->foreign('party_id')->references('id')->on('litigation_parties');
-            // $table->uuid('user_id')->nullable();
-            // $table->foreign('user_id')->references('id')->on('users'); //TODO: uncomment after auth implementation
+            $table->uuid('created_by')->nullable();
+            $table->foreign('created_by')->references('id')->on('users'); //TODO: uncomment after auth implementation
+            $table->json('extra')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

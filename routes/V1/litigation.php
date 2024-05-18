@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('/litigation/jurisdiction', JurisdictionController::class);
     Route::get('/litigation/tasks/transfer/{task_id}', [LitigationTaskController::class, 'transferHistory']);
     Route::put('/litigation/tasks/transfer/{task_id}', [LitigationTaskController::class, 'transfer']);
+    Route::post('/litigation/tasks/complete/{task}', [LitigationTaskController::class, 'complete']);
     Route::resource('/litigation/tasks', LitigationTaskController::class);
     Route::post('/litigation/modify/{id}',  [LitigationController::class, 'updateLitigation']);
     Route::put('/litigation/assign-user/{id}',  [LitigationController::class, 'assignUser']);
