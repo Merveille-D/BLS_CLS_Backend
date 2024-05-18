@@ -3,6 +3,6 @@ $defaultEncryptedLimit = 'eyJpdiI6Im9YRUZleXNvaXpZOUlJNGFibVcwY0E9PSIsInZhbHVlIj
 
 return [
     'countries' => [
-        'limit' => env('COUNTRY_LIMIT') ? encrypt(env('COUNTRY_LIMIT')) : $defaultEncryptedLimit,
+        'limit' => env('COUNTRY_LIMIT', 5),
     ],
 ];
