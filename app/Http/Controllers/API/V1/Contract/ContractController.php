@@ -28,7 +28,6 @@ class ContractController extends Controller
             $contract->second_part = $contract->second_part;
             $contract->type_category = $contract->info_type_category;
             $contract->category = $contract->info_category;
-            $contract->documents = $contract->documents;
             return $contract;
         });
 
