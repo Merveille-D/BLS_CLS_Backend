@@ -9,6 +9,7 @@ use App\Http\Resources\User\UserResource;
 use App\Models\User;
 use App\Repositories\Authentication\UserRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
@@ -40,6 +41,19 @@ class UserController extends Controller
         }
     }
 
+    public function store(RegisterRequest $request) {
+        try {
+            DB::beginTransaction();
+            $user = $this->userRepo->add($request);
+            DB::commit();
+            return api_response(true, 'Utilisateur crée avec succès', $user, 201);
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            DB::rollBack();
+            return api_error(false, $th->getMessage(), ['server' => $th->getMessage() ]);
+        }
+    }
+
     public function login(LoginRequest $request)
     {
         try {
@@ -67,7 +81,7 @@ class UserController extends Controller
         } catch (\Throwable $th) {
             Log::error($th->getMessage());
 
-            return api_error(false, $th->getMessage(), ['serveur' => $th->getMessage() ]);
+            return api_error(false, $th->getMessage(), ['server' => $th->getMessage() ]);
         }
     }
 

@@ -2,11 +2,15 @@
 
 namespace App\Models\Guarantee;
 
+use App\Models\Scopes\CountryScope;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Testing\Fluent\Concerns\Has;
 
+#[ScopedBy([CountryScope::class])]
 class Guarantee extends Model
 {
     use HasFactory, HasUuids;
@@ -32,6 +36,11 @@ class Guarantee extends Model
         'has_recovery' => 'boolean',
         'extra' => 'array',
     ];
+
+    //creator relationship
+    public function creator() {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 
     //documents relationship
     public function documents() {
