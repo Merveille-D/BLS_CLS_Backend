@@ -26,6 +26,7 @@ class GuaranteeResource extends JsonResource
             'contract_id' => $this->contract_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'created_by' => $this->created_by,
 
             'next_step' => $this->when($id, new GuaranteeTaskResource($this->next_task)),
             'current_step' => $this->when($id, new GuaranteeTaskResource($this->current_task)),
