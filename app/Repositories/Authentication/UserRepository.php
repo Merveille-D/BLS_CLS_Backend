@@ -39,7 +39,7 @@ class UserRepository
             'email' => $request['email'],
             'username' => $request['username'],
             'password' => Hash::make('password'),
-            'country_id' => $request['country_id'],
+            'subsidiary_id' => $request['subsidiary_id'],
         ]);
 
         //assign role
