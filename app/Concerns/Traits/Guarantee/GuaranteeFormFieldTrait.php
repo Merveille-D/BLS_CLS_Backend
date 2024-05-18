@@ -6,6 +6,7 @@ use App\Enums\Guarantee\AutonomousCounterState;
 use App\Enums\Guarantee\AutonomousState;
 use App\Enums\Guarantee\BondState;
 use App\Enums\Guarantee\GuaranteeType;
+use App\Enums\Guarantee\StockState;
 
 trait GuaranteeFormFieldTrait
 {
@@ -23,6 +24,10 @@ trait GuaranteeFormFieldTrait
             case GuaranteeType::AUTONOMOUS_COUNTER:
                 return $this->counterAutonomousFormFields($this->code);
                 break;
+
+            case GuaranteeType::STOCK:
+                return $this->stockFormFields($this->code);
+            break;
 
             default:
                 # code...
@@ -192,6 +197,80 @@ trait GuaranteeFormFieldTrait
 
             default:
                 # code...
+                break;
+        }
+
+        return $form_fields;
+    }
+
+    /**
+     * Provide form fields for each stock guarantee state
+     *
+     * @param  string $state
+     * @return array
+     */
+
+    public function stockFormFields(string $state) : array {
+        $form_fields = [];
+
+        switch ($state) {
+            case StockState::REDACTION:
+                $form_fields = $this->commonProperties(StockState::STATES_VALUES[StockState::REDACTION],
+                    ['file', 'documents', 'Documents du contrat'],
+                    ['date', 'completed_at', 'Date redaction du contrat'],
+                );
+            break;
+            case StockState::NOTARY_DEPOSIT:
+                $form_fields = $this->commonProperties(StockState::STATES_VALUES[StockState::NOTARY_DEPOSIT],
+                    ['file', 'documents', 'Documents du contrat'],
+                    ['date', 'completed_at', 'Date redaction du contrat'],
+                );
+            break;
+            case StockState::NOTARY_TRANSMISSION:
+                $form_fields = $this->commonProperties(StockState::STATES_VALUES[StockState::NOTARY_TRANSMISSION],
+                    ['file', 'documents', 'Documents du contrat'],
+                    ['date', 'completed_at', 'Date redaction du contrat'],
+                );
+            break;
+            case StockState::CONVENTION_OBTENTION:
+                $form_fields = $this->commonProperties(StockState::STATES_VALUES[StockState::CONVENTION_OBTENTION],
+                    ['file', 'documents', 'Documents du contrat'],
+                    ['date', 'completed_at', 'Date redaction du contrat'],
+                );
+            break;
+            case StockState::RCCM_REGISTRATION:
+                $form_fields = $this->commonProperties(StockState::STATES_VALUES[StockState::RCCM_REGISTRATION],
+                    ['file', 'documents', 'Documents du contrat'],
+                    ['date', 'completed_at', 'Date redaction du contrat'],
+                );
+            break;
+            case StockState::RCCM_PROOF:
+                $form_fields = $this->commonProperties(StockState::STATES_VALUES[StockState::RCCM_PROOF],
+                    ['file', 'documents', 'Documents du contrat'],
+                    ['date', 'completed_at', 'Date redaction du contrat'],
+                );
+            break;
+            case StockState::GUARANTEE_OBTENTION:
+                $form_fields = $this->commonProperties(StockState::STATES_VALUES[StockState::GUARANTEE_OBTENTION],
+                    ['file', 'documents', 'Documents du contrat'],
+                    ['date', 'completed_at', 'Date redaction du contrat'],
+                );
+            break;
+            case StockState::HUISSIER_NOTIFICATION:
+                $form_fields = $this->commonProperties(StockState::STATES_VALUES[StockState::HUISSIER_NOTIFICATION],
+                    ['file', 'documents', 'Documents du contrat'],
+                    ['date', 'completed_at', 'Date redaction du contrat'],
+                );
+            break;
+            case StockState::DOMICILIATION_OBTENTION:
+                $form_fields = $this->commonProperties(StockState::STATES_VALUES[StockState::DOMICILIATION_OBTENTION],
+                    ['file', 'documents', 'Documents du contrat'],
+                    ['date', 'completed_at', 'Date redaction du contrat'],
+                );
+            break;
+
+            default:
+                // do not display any form fields
                 break;
         }
 
