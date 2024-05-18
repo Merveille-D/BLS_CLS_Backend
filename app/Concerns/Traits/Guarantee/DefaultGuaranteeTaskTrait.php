@@ -10,11 +10,21 @@ trait DefaultGuaranteeTaskTrait
     {
         $steps =  [
             [
+                'title' => 'Initiation de la garantie',
+                'code' => 'created',
+                'guarantee_type' => GuaranteeType::STOCK,
+                'step_type' => 'initiation',
+                'rank' => 1,
+                'min_delay' => null,
+                'max_delay' => 10,
+                'formalization_type' => null
+            ],
+            [
                 'title' => 'Rédaction de la convention de garantie',
                 'code' => 'redaction',
                 'guarantee_type' => GuaranteeType::STOCK,
                 'step_type' => 'formalization',
-                'rank' => 1,
+                'rank' => 2,
                 'min_delay' => null,
                 'max_delay' => 10,
                 'formalization_type' => 'conventionnal'
@@ -24,7 +34,7 @@ trait DefaultGuaranteeTaskTrait
                 'code' => 'notary_deposit',
                 'guarantee_type' => GuaranteeType::STOCK,
                 'step_type' => 'formalization',
-                'rank' => 2,
+                'rank' => 3,
                 'min_delay' => null,
                 'max_delay' => 10,
                 'formalization_type' => 'conventionnal'
@@ -34,7 +44,7 @@ trait DefaultGuaranteeTaskTrait
                 'code' => 'notary_transmission',
                 'guarantee_type' => GuaranteeType::STOCK,
                 'step_type' => 'formalization',
-                'rank' => 3,
+                'rank' => 4,
                 'min_delay' => null,
                 'max_delay' => 10,
                 'formalization_type' => 'conventionnal'
@@ -44,7 +54,7 @@ trait DefaultGuaranteeTaskTrait
                 'code' => 'convention_obtention',
                 'guarantee_type' => GuaranteeType::STOCK,
                 'step_type' => 'formalization',
-                'rank' => 4,
+                'rank' => 5,
                 'min_delay' => null,
                 'max_delay' => 10,
                 'formalization_type' => 'conventionnal'
@@ -54,7 +64,7 @@ trait DefaultGuaranteeTaskTrait
                 'code' => 'rccm_registration',
                 'guarantee_type' => GuaranteeType::STOCK,
                 'step_type' => 'formalization',
-                'rank' => 5,
+                'rank' => 6,
                 'min_delay' => null,
                 'max_delay' => 10,
                 'formalization_type' => 'conventionnal'
@@ -64,7 +74,7 @@ trait DefaultGuaranteeTaskTrait
                 'code' => 'rccm_proof',
                 'guarantee_type' => GuaranteeType::STOCK,
                 'step_type' => 'formalization',
-                'rank' => 6,
+                'rank' => 7,
                 'min_delay' => null,
                 'max_delay' => 10,
                 'formalization_type' => 'conventionnal'
@@ -75,7 +85,7 @@ trait DefaultGuaranteeTaskTrait
                 'code' => 'huissier_notification',
                 'guarantee_type' => GuaranteeType::STOCK,
                 'step_type' => 'formalization',
-                'rank' => 7,
+                'rank' => 8,
                 'min_delay' => null,
                 'max_delay' => 10,
                 'formalization_type' => 'conventionnal'
@@ -85,7 +95,7 @@ trait DefaultGuaranteeTaskTrait
                 'code' => 'domiciliation_obtention',
                 'guarantee_type' => GuaranteeType::STOCK,
                 'step_type' => 'formalization',
-                'rank' => 8,
+                'rank' => 9,
                 'min_delay' => null,
                 'max_delay' => 10,
                 'formalization_type' => 'conventionnal'
@@ -95,7 +105,7 @@ trait DefaultGuaranteeTaskTrait
                 'code' => 'stock_pledge_obtention',
                 'guarantee_type' => GuaranteeType::STOCK,
                 'step_type' => 'formalization',
-                'rank' => 9,
+                'rank' => 10,
                 'min_delay' => null,
                 'max_delay' => 10,
                 'formalization_type' => 'conventionnal'

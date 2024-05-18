@@ -24,7 +24,9 @@ class Litigation extends Model
     ];
 
     protected $casts = [
-        'added_amount' => 'array'
+        'added_amount' => 'array',
+        'extra' => 'array',
+        'is_archived' => 'boolean',
     ];
 
 
