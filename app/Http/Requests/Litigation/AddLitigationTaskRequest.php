@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Requests\Guarantee;
+namespace App\Http\Requests\Litigation;
 
 use App\Models\Guarantee\Guarantee;
+use App\Models\Litigation\Litigation;
 use Carbon\Carbon;
 use Closure;
 use Illuminate\Contracts\Validation\Validator;
@@ -41,8 +42,8 @@ class AddLitigationTaskRequest extends FormRequest
                 'required',
                 'date', 'date_format:Y-m-d',
                 function (string $attribute, mixed $value, Closure $fail) {
-                    $guarantee = Guarantee::find(request('model_id'));
-                    if ( Carbon::parse($value) < Carbon::parse($guarantee->current_task->max_deadline)) {
+                    $litigation = Litigation::find(request('model_id'));
+                    if ( Carbon::parse($value) < Carbon::parse($litigation->current_task->max_deadline)) {
                         $fail("The {$attribute} is invalid.");
                     }
                 },
