@@ -67,6 +67,13 @@ class UpdateContractRequest extends FormRequest
                 },
             ],
             'second_part.*.description' => ['string'],
+
+            // For Transfer
+            'forward_title' => ['string', 'required_with_all:deadline_transfer,description,collaborators'],
+            'deadline_transfer' => ['date', 'required_with_all:forward_title,description,collaborators'],
+            'description' => ['string', 'required_with_all:forward_title,deadline_transfer,collaborators'],
+            'collaborators' => ['required_with_all:forward_title,deadline_transfer,description','array'],
+            'collaborators.*' => ['required_with_all:forward_title,deadline_transfer,description','uuid'],
         ];
     }
 

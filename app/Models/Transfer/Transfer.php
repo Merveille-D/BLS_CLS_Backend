@@ -44,7 +44,7 @@ class Transfer extends Model
         return $this->morphTo();
     }
 
-    public function fileTranfers()
+    public function fileTransfers()
     {
         return $this->morphMany(TransferDocument::class, 'uploadable');
     }

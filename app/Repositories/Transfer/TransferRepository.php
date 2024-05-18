@@ -61,14 +61,8 @@ class TransferRepository
     }
 
     public function completeTransfer($request, $transfer) {
-        $transfer->update([
-            'status' => true,
-        ]);
 
         $model = $transfer->transferable;
-        $model->update([
-            'status' => $transfer->title,
-        ]);
 
         if($request['type'] === 'audit') {
             $this->audit->store($request);
@@ -85,9 +79,17 @@ class TransferRepository
                 $fileUpload->name = $item['name'];
                 $fileUpload->file = uploadFile($item['file'], 'transfert_documents');
 
-                $model->fileUploads()->save($fileUpload);
+                $transfer->fileTransfers()->save($fileUpload);
             }
         }
+
+        $model->update([
+            'status' => $transfer->title,
+        ]);
+
+        $transfer->update([
+            'status' => true,
+        ]);
 
         return new TransferResource($transfer);
     }

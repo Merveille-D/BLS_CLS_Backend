@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\V1\Transfer\TransferController;
 use Illuminate\Support\Facades\Route;
 
 // Route::post('register',[UserController::class,'register']);
@@ -7,3 +8,8 @@ use Illuminate\Support\Facades\Route;
 // Route::post('logout',[UserController::class,'logout'])->middleware('auth:sanctum');
 // Route::middleware('auth:sanctum')->get('/current-user', [UserController::class, 'current']);
 // Route::resource('users', UserController::class);
+
+Route::post('complete_transfers',[TransferController::class,'completeTransfer']);
+
+
+
