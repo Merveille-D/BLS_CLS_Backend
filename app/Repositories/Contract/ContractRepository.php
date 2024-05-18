@@ -108,14 +108,10 @@ class ContractRepository
 
         $contract->update($request);
 
-        return $contract;
-    }
-
-    public function createTransfer(Contract $contract, $request) {
-
-        $this->add_transfer($contract, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
+        if(isset($request['forward_title'])) {
+            $this->add_transfer($contract, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
+        }
 
         return $contract;
     }
-
 }

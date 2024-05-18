@@ -111,33 +111,32 @@ class Contract extends Model
         return $this->morphMany(ContractDocument::class, 'uploadable');
     }
 
-    public function getTranfersAttribute()
+    public function getDocumentsAttribute()
     {
         $transfers = [];
 
         $transfers[] = [
             'step_name' => "Initiation",
-            'files' => array_map(function ($fileUpload) {
+            'files' => $this->fileUploads->map(function ($fileUpload) {
                 return [
                     'filename' => $fileUpload->name ?? null,
                     'file_url' => $fileUpload->file,
                     'type' => 'other',
                 ];
-            }, $this->fileUploads),
+            }),
         ];
-
         $other_transfers = [];
 
         foreach ($this->transfers as $transfer) {
             $other_transfers[] = [
-                'step_name' => $transfer->step_name,
-                'files' => array_map(function ($fileTransfer) {
+                'step_name' => $transfer->title,
+                'files' => $transfer->fileTransfers->map(function ($fileTransfer) {
                     return [
                         'filename' => $fileTransfer->name ?? null,
                         'file_url' => $fileTransfer->file,
                         'type' => 'other',
                     ];
-                }, $transfer->fileTransfers),
+                }),
             ];
         }
 

@@ -31,8 +31,10 @@ class CompleteTransferRequest extends FormRequest
 
             'type' => ['required', Rule::in(['contract', 'audit', 'evaluation'])],
 
+            'model_id' => ['required', 'uuid'],
+
             // For contract
-            'date' => ['required_if:type,contract', 'date'],
+            // 'date' => ['required_if:type,contract', 'date'],
             'contract_documents' => ['required_if:type,contract', 'array'],
             'contract_documents.*.name' => ['required_if:type,contract', 'string'],
             'contract_documents.*.file' => ['required_if:type,contract', 'file'],
