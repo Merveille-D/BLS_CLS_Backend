@@ -15,12 +15,16 @@ class CountryScope implements Scope
     public function apply(Builder $builder, Model $model): void
     {
 
-        // if (Auth::check()) {
-        //     $countryId = Auth::user()->subsidiary_id;
-        //     $currentTable = $model->getTable();
-        //     $builder->join('users', 'users.id', '=', $currentTable.'.created_by')
-        //             ->where('subsidiary_id', $countryId)
-        //             ->select($currentTable . '.*');
-        // }
+        if (Auth::check()) {
+            $subsidiaryId = Auth::user()->subsidiary_id;
+            // $currentTable = $model->getTable();
+            // $builder->join('users', 'users.id', '=', $currentTable.'.created_by')
+            //         ->where('subsidiary_id', $countryId)
+            //         ->select($currentTable . '.*');
+
+            $builder->whereHas('creator', function (Builder $query) use ($subsidiaryId) {
+                $query->where('subsidiary_id', $subsidiaryId);
+            });
+        }
     }
 }
