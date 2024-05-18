@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Auth\Country;
 use App\Models\Auth\Role;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -23,13 +24,16 @@ class UserSeeder extends Seeder
     }
 
     public function users_list() {
+        $country = Country::create(['name' => 'Togo', 'code' => 'togo']);
+
         return array(
             array(
                 'firstname' => 'AfrikSkills',
                 'lastname' => '',
                 'username' => 'afrikskills',
                 'email' => 'afrikskills@yopmail.com',
-                'password' => Hash::make('password')
+                'password' => Hash::make('password'),
+                'country_id' => $country->id,
             ),
             // array(
             //     'firstname' => 'Estelle',

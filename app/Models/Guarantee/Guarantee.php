@@ -28,6 +28,7 @@ class Guarantee extends Model
         'is_executed',
         'has_recovery',
         'extra',
+        'created_by',
     ];
 
     protected $casts = [

@@ -14,12 +14,13 @@ class CountryScope implements Scope
      */
     public function apply(Builder $builder, Model $model): void
     {
-        dd(Auth::user());
+
         if (Auth::check()) {
             $countryId = Auth::user()->country_id;
-            $builder->whereHas('creator', function (Builder $query) use ($countryId) {
-                $query->where('country_id', $countryId);
-            });
+            $currentTable = $model->getTable();
+            $builder->join('users', 'users.id', '=', $currentTable.'.created_by')
+                    ->where('country_id', $countryId)
+                    ->select($currentTable . '.*');
         }
     }
 }

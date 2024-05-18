@@ -51,6 +51,7 @@ class GuaranteeRepository
         );
         if ($request->security)
             $data['security'] = $request->security;
+
         $guarantee = $this->guarantee_model->create($data);
         $steps = GuaranteeStep::orderBy('rank')->whereGuaranteeType($guarantee->type)->whereStepType('formalization')->get();
 
