@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API\V1\Litigation;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Guarantee\AddLitigationTaskRequest;
+use App\Http\Requests\Litigation\AddLitigationTaskRequest;
 use App\Http\Requests\Litigation\CompleteTaskRequest;
 use App\Http\Requests\Transfer\AddTransferRequest;
 use App\Http\Resources\Task\TaskResource;

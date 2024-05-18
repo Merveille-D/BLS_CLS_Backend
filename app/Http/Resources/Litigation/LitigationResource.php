@@ -36,6 +36,7 @@ class LitigationResource extends JsonResource
             'lawyers' => $this->lawyers ?? null,
             'users' => $this->users ?? null,
             'created_at' => $this->created_at,
+            'extra' => $this->extra,
             'documents' => DocumentResource::collection($this->whenLoaded('documents')),
         ];
     }
