@@ -28,6 +28,7 @@ class CountryController extends Controller
                 'name' => $request->name,
                 'address' => $request->address,
                 'country' => $request->country,
+                'created_by' => auth()->id(),
                 // 'code' => strtolower(str_replace(' ', '_', $request->name)),
             ]);
             return api_response(true, 'Filiales crée avec succès', $country, 201);

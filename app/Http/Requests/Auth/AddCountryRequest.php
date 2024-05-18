@@ -34,7 +34,7 @@ class AddCountryRequest extends FormRequest
                 function (string $attribute, mixed $value, Closure $fail) {
                     $subsidiaries = Subsidiary::count();
 
-                    if ($subsidiaries >= decrypt(config('bls.countries.limit'))) {
+                    if ($subsidiaries >= (config('bls.countries.limit'))) {
                         $fail("The subsidiaries limit is reached.");
                     }
                     // if ( Carbon::parse($value) < Carbon::parse($guarantee->current_task->max_deadline)) {

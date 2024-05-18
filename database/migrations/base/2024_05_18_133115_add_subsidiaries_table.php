@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('country');
             $table->string('address');
+            $table->uuid('created_by')->nullable();
             $table->timestamps();
         });
     }

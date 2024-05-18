@@ -19,6 +19,7 @@ class Subsidiary extends Model
         'name',
         'address',
         'country',
+        'created_by',
         'code',
     ];
 
