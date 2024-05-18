@@ -15,4 +15,6 @@ class TransferDocument extends Model
         'file',
     ];
 
+    public $timestamps = false;
+
 }

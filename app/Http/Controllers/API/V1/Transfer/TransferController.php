@@ -55,10 +55,12 @@ class TransferController extends Controller
         //
     }
 
-    public function completeTransfer(CompleteTransferRequest $request, Transfer $transfer)
+    public function completeTransfer(CompleteTransferRequest $request)
     {
         try {
-            $this->contract->completeTransfer($transfer, $request->all());
+            $transfer = Transfer::find($request->model_id);
+
+            $this->contract->completeTransfer($request->all(), $transfer);
 
             return api_response(true, "Mis à jour du transfert avec succès", $transfer, 200);
         } catch (ValidationException $e) {

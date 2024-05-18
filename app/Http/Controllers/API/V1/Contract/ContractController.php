@@ -23,11 +23,12 @@ class ContractController extends Controller
     public function index()
     {
         $contracts = Contract::get()->map(function ($contract) {
+
             $contract->first_part = $contract->first_part;
             $contract->second_part = $contract->second_part;
             $contract->type_category = $contract->info_type_category;
             $contract->category = $contract->info_category;
-            $contract->transfers = $contract->transfers;
+            $contract->documents = $contract->documents;
             return $contract;
         });
 
@@ -47,7 +48,7 @@ class ContractController extends Controller
             $data['second_part'] = $contract->second_part;
             $data['type_category'] = $contract->info_type_category;
             $data['category'] = $contract->info_category;
-            $data['transfers'] = $contract->transfers;
+            $data['documents'] = $contract->documents;
 
             return api_response(true, "Succès de l'enregistrement du contrat", $data, 200);
         }catch (ValidationException $e) {
@@ -67,7 +68,7 @@ class ContractController extends Controller
             $data['second_part'] = $contract->second_part;
             $data['type_category'] = $contract->info_type_category;
             $data['category'] = $contract->info_category;
-            $data['transfers'] = $contract->transfers;
+            $data['documents'] = $contract->documents;
 
             return api_response(true, "Information du contrat", $data, 200);
         }catch( ValidationException $e ) {
@@ -88,23 +89,12 @@ class ContractController extends Controller
             $data['second_part'] = $contract->second_part;
             $data['type_category'] = $contract->info_type_category;
             $data['category'] = $contract->info_category;
-            $data['transfers'] = $contract->transfers;
+            $data['documents'] = $contract->documents;
 
             return api_response(true, "Mis à jour du contrat avec succès", $data, 200);
         } catch (ValidationException $e) {
 
             return api_response(false, "Echec de la mise à jour du contrat", $e->errors(), 422);
-        }
-    }
-
-    public function createTransfer(AddTransferRequest $request, Contract $contract)
-    {
-        try {
-            $this->contract->createTransfer($contract, $request->all());
-
-            return api_response(true, "Transfert de la tache avec succès", $contract, 200);
-        } catch (ValidationException $e) {
-            return api_response(false, "Echec de la création du transfert", $e->errors(), 422);
         }
     }
 

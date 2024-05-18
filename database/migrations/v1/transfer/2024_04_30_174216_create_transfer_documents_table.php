@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('file');
             $table->uuidMorphs('uploadable');
+            // $table->timestamps();
         });
     }
 
