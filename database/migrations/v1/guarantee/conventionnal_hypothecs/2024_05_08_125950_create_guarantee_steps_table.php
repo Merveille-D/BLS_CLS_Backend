@@ -16,14 +16,15 @@ return new class extends Migration
             $table->string('guarantee_type');
             $table->string('code');
             $table->string('title');
-            $table->integer('rank');
-            $table->integer('parent_id')->nullable();
+            $table->integer('rank')->nullable();
+            // $table->integer('parent_id')->nullable();
             $table->string('step_type')->nullable();
             $table->integer('min_delay')->nullable();
             $table->integer('max_delay')->nullable();
             $table->string('formalization_type')->nullable();
-            $table->string('parent_code')->nullable();
+            $table->uuid('parent_id')->nullable();
             $table->string('parent_response')->nullable();
+            $table->json('extra')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
