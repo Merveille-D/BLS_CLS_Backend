@@ -22,7 +22,7 @@ class ContractRepository
     public function store($request) {
 
         $request['created_by'] = Auth::user()->id;
-        $contract = $this->contract->create($request->all());
+        $contract = $this->contract->create($request);
 
         $first_part = $request['first_part'];
         $second_part = $request['second_part'];
@@ -104,7 +104,7 @@ class ContractRepository
             }, $second_part);
 
             $contract->contractParts()->createMany(array_merge($first_part, $second_part));
-        }
+        }pcontr
 
         $contract->update($request);
 
