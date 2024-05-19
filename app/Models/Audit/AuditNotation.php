@@ -2,6 +2,8 @@
 
 namespace App\Models\Audit;
 
+use App\Concerns\Traits\Alert\Alertable;
+use App\Concerns\Traits\Transfer\Transferable;
 use App\Models\Contract\Contract;
 use App\Models\Guarantee\ConvHypothec;
 use App\Models\Incident\Incident;
@@ -14,7 +16,7 @@ use Illuminate\Support\Facades\Http;
 
 class AuditNotation extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory, HasUuids, Alertable, Transferable;
 
     protected $fillable = [
         'note',
@@ -34,7 +36,7 @@ class AuditNotation extends Model
     const MODELS_MODULES = [
         'contracts'=> Contract::class,
         'conventionnal_hypothec'=> ConvHypothec::class,
-        'litigation' => Litigation::class,  
+        'litigation' => Litigation::class,
         'incidents' => Incident::class,
         'recovery' => Recovery::class,
     ];
