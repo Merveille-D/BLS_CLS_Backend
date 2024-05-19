@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Auth\Country>
  */
-class CountryFactory extends Factory
+class SubsidiaryFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,7 +18,8 @@ class CountryFactory extends Factory
     {
         return [
             'name' => $this->faker->country,
-            'code' => $this->faker->countryCode,
+            'address' => $this->faker->address,
+            'country' => $this->faker->country,
         ];
     }
 }

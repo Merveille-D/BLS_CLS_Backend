@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Auth\Country;
 use App\Models\Auth\Role;
+use App\Models\Auth\Subsidiary;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -24,7 +25,7 @@ class UserSeeder extends Seeder
     }
 
     public function users_list() {
-        $country = Country::create(['name' => 'Togo', 'code' => 'togo']);
+        $country = Subsidiary::create(['name' => 'Ecobank du Togo', 'country' => 'Togo', 'address' => 'Lomé']);
 
         return array(
             array(
@@ -33,7 +34,7 @@ class UserSeeder extends Seeder
                 'username' => 'afrikskills',
                 'email' => 'afrikskills@yopmail.com',
                 'password' => Hash::make('password'),
-                'country_id' => $country->id,
+                'subsidiary_id' => $country->id,
             ),
             // array(
             //     'firstname' => 'Estelle',

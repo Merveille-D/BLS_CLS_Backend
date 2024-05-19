@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Auth;
 
 use App\Models\Auth\Country;
+use App\Models\Auth\Subsidiary;
 use Closure;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -25,14 +26,16 @@ class AddCountryRequest extends FormRequest
     {
         return [
             // 'name' => 'required|string|unique:countries,name',
+            'address' => 'required|string',
+            'country' => 'required|string',
             'name' => [
                 'required',
-                'string', 'unique:countries,name',
+                'string', 'unique:subsidiaries,name',
                 function (string $attribute, mixed $value, Closure $fail) {
-                    $guarantees = Country::count();
+                    $subsidiaries = Subsidiary::count();
 
-                    if ($guarantees >= decrypt(config('bls.countries.limit'))) {
-                        $fail("The countries limit is reached.");
+                    if ($subsidiaries >= (config('bls.countries.limit'))) {
+                        $fail("The subsidiaries limit is reached.");
                     }
                     // if ( Carbon::parse($value) < Carbon::parse($guarantee->current_task->max_deadline)) {
                     //     $fail("The {$attribute} is invalid.");

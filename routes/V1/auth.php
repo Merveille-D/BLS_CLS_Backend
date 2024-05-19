@@ -16,5 +16,5 @@ Route::resource('users', UserController::class);
 Route::resource('roles', RoleController::class);
 
 //countries resource
-Route::resource('countries', CountryController::class);
+Route::resource('subsidiaries', CountryController::class)->middleware('auth:sanctum');
 

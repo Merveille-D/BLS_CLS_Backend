@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\AddCountryRequest;
 use App\Models\Auth\Country;
+use App\Models\Auth\Subsidiary;
 use Illuminate\Http\Request;
 
 class CountryController extends Controller
@@ -14,7 +15,7 @@ class CountryController extends Controller
      */
     public function index()
     {
-        return api_response(true, 'Liste des filiales', $data = Country::all());
+        return api_response(true, 'Liste des filiales', $data = Subsidiary::all());
     }
 
     /**
@@ -23,9 +24,12 @@ class CountryController extends Controller
     public function store(AddCountryRequest $request)
     {
         try {
-            $country = Country::create([
+            $country = Subsidiary::create([
                 'name' => $request->name,
-                'code' => strtolower(str_replace(' ', '_', $request->name)),
+                'address' => $request->address,
+                'country' => $request->country,
+                'created_by' => auth()->id(),
+                // 'code' => strtolower(str_replace(' ', '_', $request->name)),
             ]);
             return api_response(true, 'Filiales crée avec succès', $country, 201);
         } catch (\Throwable $th) {
@@ -38,7 +42,7 @@ class CountryController extends Controller
      */
     public function show(string $id)
     {
-        return api_response(true, 'Filiale', $data = Country::findOrFail($id));
+        return api_response(true, 'Filiale', $data = Subsidiary::findOrFail($id));
     }
 
     /**
@@ -47,7 +51,7 @@ class CountryController extends Controller
     public function update(Request $request, string $id)
     {
         try {
-            $country = Country::findOrFail($id);
+            $country = Subsidiary::findOrFail($id);
             $country->update($request->all());
             return api_response(true, 'Filiale modifié avec succès', $country, 200);
         } catch (\Throwable $th) {
@@ -61,7 +65,7 @@ class CountryController extends Controller
     public function destroy(string $id)
     {
         try {
-            $country = Country::findOrFail($id);
+            $country = Subsidiary::findOrFail($id);
             $country->delete();
             return api_response(true, 'Filiale supprimé avec succès', $country, 200);
         } catch (\Throwable $th) {

@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('countries', function (Blueprint $table) {
+        Schema::create('subsidiaries', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->string('code');
+            $table->string('country');
+            $table->string('address');
+            $table->uuid('created_by')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('countries');
+        Schema::dropIfExists('subsidiaries');
     }
 };

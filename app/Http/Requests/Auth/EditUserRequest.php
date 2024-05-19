@@ -29,7 +29,7 @@ class EditUserRequest extends FormRequest
             'email'=>'required|string|email|unique:users,email,'.$user->id,
             'role_id' => 'required|uuid|exists:roles,id',
             'username' => 'required|string|unique:users,username,'.$user->id,
-            'country_id' => 'required|uuid|exists:countries,id',
+            'subsidiary_id' => 'required|uuid|exists:countries,id',
         ];
     }
 }
