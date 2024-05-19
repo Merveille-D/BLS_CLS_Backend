@@ -29,7 +29,7 @@ class AuditNotationController extends Controller
             return $audit_notation;
         });
 
-        return api_response(true, "Evaluation du collaborateur", $audit_notations, 200);
+        return api_response(true, "Audit du dossier", $audit_notations, 200);
     }
 
     /**

@@ -13,6 +13,10 @@ class AuditNotationRepository
 
     }
 
+    public function all() {
+        return $this->audit_notation->all();
+    }
+
     /**
      * @param Request $request
      *
@@ -20,12 +24,13 @@ class AuditNotationRepository
      */
     public function store($request) {
 
+        $request = $request->all();
+
         $check_module_notation = $this->audit_notation->where('module_id', $request['module_id'])
                                                             ->where('module', $request['module'])
                                                             ->first();
         $notes = $request['notes'];
         $sum = 0;
-
         foreach ($notes as $note) {
             $sum += $note['note'];
         }
@@ -39,27 +44,29 @@ class AuditNotationRepository
 
                 $this->updateAudit($check_module_notation, $request, $notes);
             }else {
-                $created_by_last_transfer = $transfers->last()->collaborators->first()->user_id;
+
+                $created_by_last_transfer = $transfers->last()->collaborators->first()->id;
 
                 if($created_by_last_transfer == Auth::user()->id) {
 
                     $request['created_by'] = Auth::user()->id;
                     $request['parent_id'] = $check_module_notation->id;
+                    $request['status'] = $transfers->last()->title;
 
                     $this->createAudit($request, $notes);
                 }
             }
-
         }else {
 
             $request['created_by'] = Auth::user()->id;
-            $this->createAudit($request, $notes);
+            $check_module_notation = $this->createAudit($request, $notes);
         }
 
         return $check_module_notation;
     }
 
     public function createAudit($request, $notes) {
+
 
         $audit_notation = $this->audit_notation->create($request);
 

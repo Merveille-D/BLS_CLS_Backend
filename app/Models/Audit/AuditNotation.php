@@ -24,6 +24,8 @@ class AuditNotation extends Model
         'observation',
         'module_id',
         'module',
+        'created_by',
+        'parent_id',
     ];
 
     const STATUS =[
