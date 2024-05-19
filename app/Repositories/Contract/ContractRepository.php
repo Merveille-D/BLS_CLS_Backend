@@ -104,7 +104,7 @@ class ContractRepository
             }, $second_part);
 
             $contract->contractParts()->createMany(array_merge($first_part, $second_part));
-        }pcontr
+        }
 
         $contract->update($request);
 
