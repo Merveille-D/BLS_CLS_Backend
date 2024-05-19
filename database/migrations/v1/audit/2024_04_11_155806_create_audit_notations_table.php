@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
 
             $table->string('note')->nullable();
-            $table->string('status')->default('evaluated');
+            $table->string('status')->default('Evalué');
             $table->string('observations')->nullable();
 
             $table->uuid('parent_id')->nullable();

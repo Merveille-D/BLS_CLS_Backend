@@ -49,11 +49,20 @@ class AuditNotationRepository
 
                 if($created_by_last_transfer == Auth::user()->id) {
 
-                    $request['created_by'] = Auth::user()->id;
-                    $request['parent_id'] = $check_module_notation->id;
-                    $request['status'] = $transfers->last()->title;
+                    if($transfers->last()->status == true) {
+                        $request['created_by'] = Auth::user()->id;
+                        $request['parent_id'] = $check_module_notation->id;
+                        $request['status'] = $transfers->last()->title;
 
-                    $this->createAudit($request, $notes);
+                        $this->createAudit($request, $notes);
+                    }else {
+                        $module_notation = $check_module_notation->where('created_by', Auth::user()->id)->first();
+
+                        if($module_notation) {
+                            $this->updateAudit($module_notation, $request, $notes);
+                        }
+
+                    }
                 }
             }
         }else {

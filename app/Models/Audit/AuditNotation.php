@@ -28,6 +28,8 @@ class AuditNotation extends Model
         'parent_id',
     ];
 
+    protected $appends = ['indicators', 'steps'];
+
     const STATUS =[
         'evaluated',
         'verified',
@@ -46,6 +48,11 @@ class AuditNotation extends Model
     public function performances()
     {
         return $this->hasMany(AuditNotationPerformance::class);
+    }
+
+    public function getStepsAttribute() {
+
+        return self::where('parent_id', $this->id)->get()->makeHidden('performances','steps');
     }
 
     public function getIndicatorsAttribute() {

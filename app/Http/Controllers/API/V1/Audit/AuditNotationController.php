@@ -23,9 +23,15 @@ class AuditNotationController extends Controller
      */
     public function index()
     {
-        $audit_notations = AuditNotation::get()->map(function ($audit_notation) {
+        $audit_notations = AuditNotation::whereNull('parent_id')->get()->makeHidden('performances')->map(function ($audit_notation) {
             $audit_notation->indicators = $audit_notation->indicators;
             $audit_notation->title = $audit_notation->title;
+
+            $audit_notation->steps = $audit_notation->steps->map(function ($step) {
+                $step->indicators = $step->indicators;
+                return $step;
+            });
+
             return $audit_notation;
         });
 
