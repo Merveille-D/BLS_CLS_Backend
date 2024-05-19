@@ -62,6 +62,11 @@ class ContractModelController extends Controller
      */
     public function destroy(ContractModel $contractModel)
     {
-
+        try {
+            $contractModel->delete();
+            return api_response(true, "Succès de la suppression du modèle", null, 200);
+        }catch (ValidationException $e) {
+                return api_response(false, "Echec de la supression du modèle", $e->errors(), 422);
+        }
     }
 }

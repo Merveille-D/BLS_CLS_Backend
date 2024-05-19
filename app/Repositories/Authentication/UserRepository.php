@@ -2,6 +2,7 @@
 namespace App\Repositories\Authentication;
 
 use App\Http\Resources\User\UserResource;
+use App\Models\Auth\Role;
 use App\Models\User;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Hash;
@@ -36,8 +37,14 @@ class UserRepository
             'firstname' => $request['firstname'],
             'lastname' => $request['lastname'],
             'email' => $request['email'],
+            'username' => $request['username'],
             'password' => Hash::make('password'),
+            'subsidiary_id' => $request['subsidiary_id'],
         ]);
+
+        //assign role
+        $role = Role::find($request['role_id']);
+        $user->assignRole($role);
 
         return $user;
     }

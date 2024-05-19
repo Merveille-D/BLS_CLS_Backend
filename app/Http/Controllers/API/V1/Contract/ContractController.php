@@ -28,7 +28,6 @@ class ContractController extends Controller
             $contract->second_part = $contract->second_part;
             $contract->type_category = $contract->info_type_category;
             $contract->category = $contract->info_category;
-            $contract->documents = $contract->documents;
             return $contract;
         });
 
@@ -69,6 +68,7 @@ class ContractController extends Controller
             $data['type_category'] = $contract->info_type_category;
             $data['category'] = $contract->info_category;
             $data['documents'] = $contract->documents;
+            $data['transfers'] = $contract->transfers;
 
             return api_response(true, "Information du contrat", $data, 200);
         }catch( ValidationException $e ) {

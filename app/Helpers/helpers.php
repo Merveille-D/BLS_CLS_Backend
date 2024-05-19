@@ -37,7 +37,7 @@ if (!function_exists('generateReference')) {
     function generateReference($prefix, Model $model)
     {
         $currentDate = date('Ymd');
-        $number = $model->count() + 1;
+        $number = $model->withoutGlobalScopes()->count() + 1;
         $reference = $prefix . '-'. completeWithZeros($number) . '-' . $currentDate;
 
         return $reference;
