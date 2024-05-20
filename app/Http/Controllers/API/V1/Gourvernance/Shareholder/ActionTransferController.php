@@ -21,7 +21,12 @@ class ActionTransferController extends Controller
      */
     public function index()
     {
-        $action_transfers = ActionTransfer::all();
+        $action_transfers = ActionTransfer::get()->map(function ($action_transfer) {
+
+            $action_transfer->owner = $action_transfer->owner;
+            $action_transfer->buyer = $action_transfer->buyer;
+            return $action_transfer;
+        });
         return api_response(true, "Historique des transfert", $action_transfers, 200);
     }
 
