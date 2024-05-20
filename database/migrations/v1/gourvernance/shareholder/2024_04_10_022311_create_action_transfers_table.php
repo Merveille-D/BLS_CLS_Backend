@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('lastname')->nullable();
             $table->string('firstname')->nullable();
 
+            $table->date('transfer_date');
             $table->date('ask_date')->nullable();
 
             $table->enum('status', ActionTransfer::STATUS )->default(ActionTransfer::STATUS[1]);

@@ -25,8 +25,8 @@ class StoreCapitalRequest extends FormRequest
     {
         return [
             'date' => ['required', 'date'],
-            'amount' => ['required', 'numeric'],
-            'par_value' => ['required', 'numeric'],
+            'amount' => ['required', 'numeric', 'min:1'],
+            'par_value' => ['required', 'numeric', 'min:1'],
         ];
     }
 

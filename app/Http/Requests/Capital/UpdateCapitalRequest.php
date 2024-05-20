@@ -27,8 +27,8 @@ class UpdateCapitalRequest extends FormRequest
     {
         return [
             'date' => ['date'],
-            'amount' => ['numeric'],
-            'par_value' => ['numeric'],
+            'amount' => ['numeric', 'min:1'],
+            'par_value' => ['numeric', 'min:1'],
 
 
         ];

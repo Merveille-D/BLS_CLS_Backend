@@ -18,6 +18,7 @@ class ActionTransfer extends Model
         'lastname',
         'firstname',
         'status',
+        'transfer_date',
         'ask_date',
         'ask_agrement',
     ];

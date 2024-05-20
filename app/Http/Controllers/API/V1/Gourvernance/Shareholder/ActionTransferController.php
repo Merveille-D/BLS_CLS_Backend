@@ -55,12 +55,12 @@ class ActionTransferController extends Controller
      */
     public function update(UpdateActionTransferRequest $request, ActionTransfer $action_transfer)
     {
-        try {
-            $this->action_transfer->update($action_transfer, $request->all());
-            return api_response(true, "Mis à jour du du transfert", $action_transfer, 200);
-        } catch (ValidationException $e) {
+        // try {
+        //     $this->action_transfer->update($action_transfer, $request->all());
+        //     return api_response(true, "Mis à jour du du transfert", $action_transfer, 200);
+        // } catch (ValidationException $e) {
 
-            return api_response(false, "Echec de la mise à jour", $e->errors(), 422);
-        }
+        //     return api_response(false, "Echec de la mise à jour", $e->errors(), 422);
+        // }
     }
 }

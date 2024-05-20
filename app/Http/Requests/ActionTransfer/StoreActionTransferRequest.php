@@ -29,6 +29,7 @@ class StoreActionTransferRequest extends FormRequest
             'count_actions' => 'required|numeric',
             'lastname' => 'string',
             'firstname' => 'string',
+            'transfer_date' => ['required', 'date'],
             'ask_date' => ['required_if:buyer_id,null', 'date'],
             'ask_agrement' => ['required_if:buyer_id,null', 'file']
         ];
