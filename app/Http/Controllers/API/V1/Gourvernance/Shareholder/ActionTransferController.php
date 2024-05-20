@@ -21,7 +21,7 @@ class ActionTransferController extends Controller
      */
     public function index()
     {
-        $action_transfers = ActionTransfer::get()->map(function ($action_transfer) {
+        $action_transfers = ActionTransfer::orderBy('created_at', 'desc')->get()->map(function ($action_transfer) {
 
             $action_transfer->owner = $action_transfer->owner;
             $action_transfer->buyer = $action_transfer->buyer;
