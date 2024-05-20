@@ -68,7 +68,11 @@ class ContractController extends Controller
             $data['type_category'] = $contract->info_type_category;
             $data['category'] = $contract->info_category;
             $data['documents'] = $contract->documents;
-            $data['transfers'] = $contract->transfers;
+            $data['transfers'] = $contract->transfers->map(function ($transfer) {
+                $transfer->sender = $transfer->sender;
+                $transfer->collaborators = $transfer->collaborators;
+                return $transfer;
+            });
 
             return api_response(true, "Information du contrat", $data, 200);
         }catch( ValidationException $e ) {

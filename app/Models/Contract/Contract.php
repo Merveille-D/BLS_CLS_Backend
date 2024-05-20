@@ -141,7 +141,7 @@ class Contract extends Model
             ];
         }
 
-        $total_transfers = array_merge($transfers, $other_transfers);
+        $total_transfers = array_merge($other_transfers, $transfers);
 
         return $total_transfers;
     }

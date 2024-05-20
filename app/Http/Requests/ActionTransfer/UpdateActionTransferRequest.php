@@ -29,6 +29,7 @@ class UpdateActionTransferRequest extends FormRequest
             'count_actions' => 'integer',
             'lastname' => 'string',
             'firstname' => 'string',
+            'transfer_date' => 'date',
 
             'response_agrement' => 'boolean',
             'file_agrement_ca' => ['required_if:buyer_id,true', 'file'],

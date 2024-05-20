@@ -18,6 +18,7 @@ class ActionTransfer extends Model
         'lastname',
         'firstname',
         'status',
+        'transfer_date',
         'ask_date',
         'ask_agrement',
     ];
@@ -27,6 +28,16 @@ class ActionTransfer extends Model
     public function fileUploads()
     {
         return $this->morphMany(GourvernanceDocument::class, 'uploadable');
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo(Shareholder::class, 'owner_id');
+    }
+
+    public function buyer()
+    {
+        return $this->belongsTo(Shareholder::class, 'buyer_id');
     }
 
 

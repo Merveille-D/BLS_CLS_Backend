@@ -58,7 +58,7 @@ class TransferController extends Controller
     public function completeTransfer(CompleteTransferRequest $request)
     {
         try {
-            $transfer = Transfer::find($request->model_id);
+            $transfer = Transfer::find($request->transfer_id);
 
             $this->transfer->completeTransfer($request->all(), $transfer);
 

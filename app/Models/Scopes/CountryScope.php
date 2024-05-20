@@ -16,12 +16,17 @@ class CountryScope implements Scope
     {
 
         if (Auth::check()) {
-            $subsidiaryId = Auth::user()->subsidiary_id;
             // $currentTable = $model->getTable();
             // $builder->join('users', 'users.id', '=', $currentTable.'.created_by')
             //         ->where('subsidiary_id', $countryId)
             //         ->select($currentTable . '.*');
+            $user = Auth::user();
+            //if user super admin, he can see all data
+            if ($user->hasRole('super_admin')) {
+                return;
+            }
 
+            $subsidiaryId = $user->subsidiary_id;
             $builder->whereHas('creator', function (Builder $query) use ($subsidiaryId) {
                 $query->where('subsidiary_id', $subsidiaryId);
             });

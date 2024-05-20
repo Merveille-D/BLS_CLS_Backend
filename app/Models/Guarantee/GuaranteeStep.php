@@ -12,6 +12,10 @@ class GuaranteeStep extends Model
 
     protected $fillable =  [
         'guarantee_type', 'code', 'name', 'rank', 'parent_id', 'step_type', 'min_delay', 'max_delay',
-        'formalization_type', 'parent_code', 'parent_response'
+        'formalization_type', 'parent_id', 'parent_response', 'title', 'extra'
+    ];
+
+    protected $casts = [
+        'extra' => 'array'
     ];
 }
