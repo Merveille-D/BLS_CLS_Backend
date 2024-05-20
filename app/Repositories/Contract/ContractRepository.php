@@ -22,8 +22,8 @@ class ContractRepository
     public function store($request) {
 
         $request = $request->all();
-
         $request['created_by'] = Auth::user()->id;
+
         $contract = $this->contract->create($request);
 
         $first_part = $request['first_part'];

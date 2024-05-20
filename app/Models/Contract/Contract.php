@@ -22,6 +22,7 @@ class Contract extends Model
         'date_expiration',
         'date_renewal',
         'status',
+        'created_by',
     ];
 
     const CATEGORIES = [
