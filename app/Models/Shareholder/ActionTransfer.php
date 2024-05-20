@@ -30,6 +30,16 @@ class ActionTransfer extends Model
         return $this->morphMany(GourvernanceDocument::class, 'uploadable');
     }
 
+    public function owner()
+    {
+        return $this->belongsTo(Shareholder::class, 'owner_id');
+    }
+
+    public function buyer()
+    {
+        return $this->belongsTo(Shareholder::class, 'buyer_id');
+    }
+
 
 
 }
