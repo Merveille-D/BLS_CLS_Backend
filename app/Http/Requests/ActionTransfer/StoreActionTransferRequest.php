@@ -33,7 +33,7 @@ class StoreActionTransferRequest extends FormRequest
                 'required',
                 'numeric',
                 function($attribute, $value, $fail) use ($actions_no_encumbered_owner) {
-                    if ($value < $actions_no_encumbered_owner) {
+                    if ($value > $actions_no_encumbered_owner) {
                         $fail('Le nombre d\'actions doit etre inférieur ou égal au nombre d\'actions non grevée du propriétaire.');
                     }
                 },
