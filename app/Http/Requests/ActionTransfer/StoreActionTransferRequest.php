@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\ActionTransfer;
 
+use App\Models\Shareholder\Shareholder;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -23,10 +24,20 @@ class StoreActionTransferRequest extends FormRequest
      */
     public function rules(): array
     {
+        $actions_no_encumbered_owner = Shareholder::find(request()->input('owner_id'))->actions_no_encumbered;
+
         return [
             'owner_id' => 'required|uuid',
             'buyer_id' => 'uuid',
-            'count_actions' => 'required|numeric',
+            'count_actions' => [
+                'required',
+                'numeric',
+                function($attribute, $value, $fail) use ($actions_no_encumbered_owner) {
+                    if ($value < $actions_no_encumbered_owner) {
+                        $fail('Le nombre d\'actions doit etre inférieur ou égal au nombre d\'actions non grevée du propriétaire.');
+                    }
+                },
+            ],
             'lastname' => 'string',
             'firstname' => 'string',
             'transfer_date' => ['required', 'date'],
