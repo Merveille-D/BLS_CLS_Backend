@@ -22,12 +22,14 @@ class ActionTransferRepository
 
         $owner = Shareholder::find($request['owner_id']);
         $owner->update([
-            'actions_no_encumbered' => $owner->actions_no_encumbered - $request['count_actions']
+            'actions_no_encumbered' => $owner->actions_no_encumbered - $request['count_actions'],
+            'actions_number' => $owner->actions_number - $request['count_actions'],
         ]);
 
         $buyer = Shareholder::find($request['buyer_id']);
         $buyer->update([
-            'actions_no_encumbered' => $buyer->actions_no_encumbered + $request['count_actions']
+            'actions_no_encumbered' => $buyer->actions_no_encumbered + $request['count_actions'],
+            'actions_number' => $buyer->actions_number + $request['count_actions'],
         ]);
 
         if (is_null($request['buyer_id'])) {
