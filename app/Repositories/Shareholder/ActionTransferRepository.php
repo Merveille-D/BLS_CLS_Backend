@@ -3,6 +3,7 @@ namespace App\Repositories\Shareholder;
 
 use App\Models\Gourvernance\GourvernanceDocument;
 use App\Models\Shareholder\ActionTransfer;
+use App\Models\Shareholder\Shareholder;
 
 class ActionTransferRepository
 {
@@ -18,6 +19,16 @@ class ActionTransferRepository
     public function store($request) {
 
         $action_transfer = $this->action_transfer->create($request->all());
+
+        $owner = Shareholder::find($request['owner_id']);
+        $owner->update([
+            'actions_no_encumbered' => $owner->actions_no_encumbered - $request['count_actions']
+        ]);
+
+        $buyer = Shareholder::find($request['buyer_id']);
+        $buyer->update([
+            'actions_no_encumbered' => $buyer->actions_no_encumbered + $request['count_actions']
+        ]);
 
         if (is_null($request['buyer_id'])) {
 
