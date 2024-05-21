@@ -3,6 +3,7 @@ namespace App\Repositories\Incident;
 
 use App\Models\Incident\IncidentDocument;
 use App\Models\Incident\TaskIncident;
+use Carbon\Carbon;
 
 class TaskIncidentRepository
 {
@@ -94,6 +95,8 @@ class TaskIncidentRepository
                 $previousDeadline =  $taskIncident->deadline;
 
                 foreach ($next_task['next'][$response] as $key => $task) {
+
+                    $previousDeadline = Carbon::parse($previousDeadline);
                     $deadline = $previousDeadline->addDays($task['delay']);
 
                     TaskIncident::create([
