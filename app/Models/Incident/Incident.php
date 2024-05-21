@@ -45,17 +45,9 @@ class Incident extends Model
     ];
 
     public function taskIncident()
-{
-    $taskIncidents = $this->hasMany(TaskIncident::class)->get();
-
-    $taskIncidents = $taskIncidents->map(function ($taskIncident) {
-        $taskIncident->deadline = $taskIncident->date ?? $taskIncident->deadline;
-        return $taskIncident;
-    });
-
-    return $taskIncidents;
-}
-
+    {
+        return $this->hasMany(TaskIncident::class);
+    }
 
     public function authorIncident()
     {
