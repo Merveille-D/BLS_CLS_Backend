@@ -22,6 +22,7 @@ class AuditNotation extends Model
         'observation',
         'module_id',
         'module',
+        'audit_period_id',
     ];
 
     const STATUS =[
@@ -34,7 +35,7 @@ class AuditNotation extends Model
     const MODELS_MODULES = [
         'contracts'=> Contract::class,
         'conventionnal_hypothec'=> ConvHypothec::class,
-        'litigation' => Litigation::class,  
+        'litigation' => Litigation::class,
         'incidents' => Incident::class,
         'recovery' => Recovery::class,
     ];
@@ -42,6 +43,11 @@ class AuditNotation extends Model
     public function performances()
     {
         return $this->hasMany(AuditNotationPerformance::class);
+    }
+
+    public function auditPeriod()
+    {
+        return $this->belongsTo(AuditPeriod::class);
     }
 
     public function getIndicatorsAttribute() {

@@ -20,6 +20,9 @@ return new class extends Migration
             $table->string('status')->default('evaluated');
             $table->string('observation')->nullable();
 
+            $table->uuid('audit_period_id');
+            $table->foreign('audit_period_id')->references('id')->on('audit_periods')->onDelete('cascade');
+
             $table->uuid('module_id');
             $table->enum('module', AuditPerformanceIndicator::MODULES);
 

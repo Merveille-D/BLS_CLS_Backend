@@ -15,6 +15,7 @@ class Notation extends Model
         'status',
         'observation',
         'collaborator_id',
+        'evaluation_period_id',
     ];
 
     const STATUS =[
@@ -32,6 +33,11 @@ class Notation extends Model
     public function performances()
     {
         return $this->hasMany(NotationPerformance::class);
+    }
+
+    public function evaluationPeriod()
+    {
+        return $this->belongsTo(EvaluationPeriod::class);
     }
 
     public function getIndicatorsAttribute() {
