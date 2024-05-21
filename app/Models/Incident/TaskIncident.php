@@ -239,7 +239,7 @@ class TaskIncident extends Model
                                     ],
                             ],
                             false => [
-                                'atd_4_4' => [
+                                'atd_6_4' => [
                                         'title' => 'Reception d\'un avis d\'execution de l\'administration fiscale par Labanque',
                                         'rules' => [
                                             'documents' => ['required', 'array'],
@@ -258,7 +258,7 @@ class TaskIncident extends Model
                                             'form_title' => 'Preuve de la réception de l\'avis'
                                         ],
                                     ],
-                                'atd_4_4' => [
+                                'atd_6_5' => [
                                         'title' => 'Etablissement d\'un cheque à l\'ordre de \'adm fiscale à concurrence du montant saisi',
                                         'rules' => [
                                             'documents' => ['required', 'array'],
@@ -277,7 +277,7 @@ class TaskIncident extends Model
                                             'form_title' => 'Preuve de l\'établissement du chèque'
                                         ],
                                     ],
-                                'atd_5_5' => [
+                                'atd_6_6' => [
                                         'title' => 'Informer le client par un courrier',
                                         'rules' => [
                                             'documents' => ['required', 'array'],
