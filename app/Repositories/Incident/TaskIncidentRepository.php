@@ -19,6 +19,8 @@ class TaskIncidentRepository
 
         $task_incidents = $this->taskIncident->where('incident_id', $request->incident_id)->get()->map(function ($taskIncident) {
             $taskIncident->form = $taskIncident->form;
+            $taskIncident->deadline = $taskIncident->date ?? $taskIncident->deadline;
+
             return $taskIncident;
         });
         return $task_incidents;
