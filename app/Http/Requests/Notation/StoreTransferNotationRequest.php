@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Requests\AuditNotation;
+namespace App\Http\Requests\Notation;
 
-use App\Models\Audit\AuditPerformanceIndicator;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 
-class StoreTransferAuditNotationRequest extends FormRequest
+class StoreTransferNotationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +25,8 @@ class StoreTransferAuditNotationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'module_id' => ['required','uuid'],
-            'module' => ['required',Rule::in(AuditPerformanceIndicator::MODULES) ],
+            'notation_id' => ['required','uuid'],
+
             'forward_title' => ['string', 'required'],
             'deadline_transfer' => ['date', 'required'],
             'description' => ['string', 'required'],

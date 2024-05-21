@@ -2,19 +2,23 @@
 
 namespace App\Models\Evaluation;
 
+use App\Concerns\Traits\Alert\Alertable;
+use App\Concerns\Traits\Transfer\Transferable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Notation extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory, HasUuids, Alertable, Transferable;
 
     protected $fillable = [
         'note',
         'status',
         'observation',
         'collaborator_id',
+        'created_by',
+        'parent_id',
     ];
 
     const STATUS =[
@@ -32,6 +36,11 @@ class Notation extends Model
     public function performances()
     {
         return $this->hasMany(NotationPerformance::class);
+    }
+
+    public function getStepsAttribute() {
+
+        return self::where('parent_id', $this->id)->get()->makeHidden('performances','steps');
     }
 
     public function getIndicatorsAttribute() {

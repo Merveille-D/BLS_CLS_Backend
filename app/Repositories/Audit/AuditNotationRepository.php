@@ -14,7 +14,17 @@ class AuditNotationRepository
     }
 
     public function all() {
-        return $this->audit_notation->all();
+        return $this->audit_notation->whereNull('parent_id')->get()->makeHidden('performances')->map(function ($audit_notation) {
+            $audit_notation->indicators = $audit_notation->indicators;
+            $audit_notation->title = $audit_notation->title;
+
+            $audit_notation->steps = $audit_notation->steps->map(function ($step) {
+                $step->indicators = $step->indicators;
+                return $step;
+            });
+
+            return $audit_notation;
+        });
     }
 
     /**
