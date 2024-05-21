@@ -24,6 +24,7 @@ class AuditNotation extends Model
         'observation',
         'module_id',
         'module',
+        'audit_period_id',
         'created_by',
         'parent_id',
     ];
@@ -48,6 +49,11 @@ class AuditNotation extends Model
     public function performances()
     {
         return $this->hasMany(AuditNotationPerformance::class);
+    }
+
+    public function auditPeriod()
+    {
+        return $this->belongsTo(AuditPeriod::class);
     }
 
     public function getStepsAttribute() {

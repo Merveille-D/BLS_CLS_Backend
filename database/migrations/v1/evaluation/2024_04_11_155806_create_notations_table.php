@@ -19,6 +19,9 @@ return new class extends Migration
             $table->string('status')->default('Evalué');
             $table->string('observation')->nullable();
 
+            $table->uuid('evaluation_period_id');
+            $table->foreign('evaluation_period_id')->references('id')->on('evaluation_periods')->onDelete('cascade');
+            
             $table->uuid('parent_id')->nullable();
 
             $table->uuid('collaborator_id');

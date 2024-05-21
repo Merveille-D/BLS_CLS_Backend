@@ -17,6 +17,7 @@ class Notation extends Model
         'status',
         'observation',
         'collaborator_id',
+        'evaluation_period_id',
         'created_by',
         'parent_id',
     ];
@@ -38,7 +39,12 @@ class Notation extends Model
         return $this->hasMany(NotationPerformance::class);
     }
 
-    public function getStepsAttribute() {
+    public function evaluationPeriod()
+    {
+        return $this->belongsTo(EvaluationPeriod::class);
+    }
+
+     public function getStepsAttribute() {
 
         return self::where('parent_id', $this->id)->get()->makeHidden('performances','steps');
     }

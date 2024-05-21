@@ -22,6 +22,9 @@ return new class extends Migration
 
             $table->uuid('parent_id')->nullable();
 
+            $table->uuid('audit_period_id');
+            $table->foreign('audit_period_id')->references('id')->on('audit_periods')->onDelete('cascade');
+
             $table->uuid('module_id');
             $table->enum('module', AuditPerformanceIndicator::MODULES);
 
