@@ -118,6 +118,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('audit_performance_indicators', AuditPerformanceIndicatorController::class);
     Route::resource('audit_periods', AuditPeriodController::class);
     Route::get('/get_all_audits', [AuditNotationController::class, 'all'] );
+    Route::post('/audit_create_transfers', [AuditNotationController::class, 'createTransfer'] );
+
+    Route::resource('audit_performance_indicators', AuditPerformanceIndicatorController::class);
+
 
 });
 

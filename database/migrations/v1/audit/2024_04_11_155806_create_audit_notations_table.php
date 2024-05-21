@@ -17,14 +17,19 @@ return new class extends Migration
             $table->uuid('id')->primary();
 
             $table->string('note')->nullable();
-            $table->string('status')->default('evaluated');
-            $table->string('observation')->nullable();
+            $table->string('status')->default('Evalué');
+            $table->string('observations')->nullable();
+
+            $table->uuid('parent_id')->nullable();
 
             $table->uuid('audit_period_id');
             $table->foreign('audit_period_id')->references('id')->on('audit_periods')->onDelete('cascade');
 
             $table->uuid('module_id');
             $table->enum('module', AuditPerformanceIndicator::MODULES);
+
+            $table->uuid('created_by')->nullable();
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
 
             $table->timestamps();
         });
