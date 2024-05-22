@@ -7,6 +7,7 @@ use App\Http\Controllers\API\V1\Litigation\LitigationLawyerController;
 use App\Http\Controllers\API\V1\Litigation\LitigationPartyController;
 use App\Http\Controllers\API\V1\Litigation\LitigationTaskController;
 use App\Http\Controllers\API\V1\Litigation\NatureController;
+use App\Models\Auth\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,5 +33,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::put('/litigation/archive/{id}',  [LitigationController::class, 'archive']);
     // Route::put('/litigation/update-added-amount/{id}',  [LitigationController::class, 'updateAddedAmount']);
     // Route::put('/litigation/update-remaining-amount/{id}',  [LitigationController::class, 'updateRemainingAmount']);
+    Route::get('/litigation/provisions/stats',  [LitigationController::class, 'provisionStats']);
     Route::resource('/litigation', LitigationController::class);
 });

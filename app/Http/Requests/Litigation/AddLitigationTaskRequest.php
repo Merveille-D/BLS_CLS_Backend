@@ -43,7 +43,8 @@ class AddLitigationTaskRequest extends FormRequest
                 'date', 'date_format:Y-m-d',
                 function (string $attribute, mixed $value, Closure $fail) {
                     $litigation = Litigation::find(request('model_id'));
-                    if ( Carbon::parse($value) < Carbon::parse($litigation->current_task->max_deadline)) {
+                    // dd($litigation->current_task->completed_at, Carbon::parse($value));
+                    if ( Carbon::parse($value) < Carbon::parse($litigation->current_task->completed_at)) {
                         $fail("The {$attribute} is invalid.");
                     }
                 },
