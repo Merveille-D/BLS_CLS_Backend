@@ -58,10 +58,39 @@ class LitigationRepository {
                     $archive = $is_archived == 'yes' ? true : false;
                     $qry->where('is_archived', $archive);
                 })
+                ->when($request->type == 'provisioned', function($qry) {
+                    $qry->whereNull('added_amount');
+                })
+                ->when($request->provision == 'not_provisioned', function($qry) {
+                    $qry->whereNotNull('added_amount');
+                })
+                ->orderByDesc('created_at')
                 ->paginate();
 
 
         return LitigationResource::collection($query);
+    }
+
+    /**
+     * provisions stats
+     */
+    public function provisionStats() {
+        $total = $this->litigation_model->count();
+        $provisioned = $this->litigation_model->whereNotNull('added_amount')->count();
+        $not_provisioned = $this->litigation_model->whereNull('added_amount')->count();
+        //sum amounts
+        $sum_estimated_amount = $this->litigation_model->sum('estimated_amount');
+        $sum_added_amount = $this->litigation_model->sum('added_amount->amount');
+        $sum_remaining_amount = $this->litigation_model->sum('remaining_amount');
+
+        return [
+            'total' => $total,
+            'provisioned' => $provisioned,
+            'not_provisioned' => $not_provisioned,
+            'sum_estimated_amount' => $sum_estimated_amount,
+            'sum_added_amount' => $sum_added_amount,
+            'sum_remaining_amount' => $sum_remaining_amount,
+        ];
     }
 
     public function add($request) : JsonResource {
@@ -69,7 +98,8 @@ class LitigationRepository {
 
         $litigation = $this->litigation_model->create([
             'name' => $request->name,
-            'reference' => $request->reference,
+            'reference' => generateReference('CT', $this->litigation_model),
+            'case_number' => $request->case_number,
             'nature_id' => $request->nature_id,
             'jurisdiction_id' => $request->jurisdiction_id,
             'jurisdiction_location' => $request->jurisdiction_location,

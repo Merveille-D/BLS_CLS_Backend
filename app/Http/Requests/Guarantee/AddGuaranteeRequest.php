@@ -26,7 +26,9 @@ class AddGuaranteeRequest extends FormRequest
         return [
             'name' => 'required|string',
             'type' => ['required', new ArrayElementMatch(GuaranteeType::TYPES)],
-            'contract_id' => 'required|uuid'
+            'contract_id' => 'required|uuid',
+            'security' => 'nullable|string',
+            'formalization_type' => 'nullable|string',
         ];
     }
 }

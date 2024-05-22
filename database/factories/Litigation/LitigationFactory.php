@@ -17,7 +17,15 @@ class LitigationFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->name,
+            'status' => 'created',
+            'reference' => $this->faker->word,
+            'security' => $this->faker->word,
+            'type' => $this->faker->randomElement(['stock', 'vehicle']),
+            'phase' => $this->faker->word,
+            'contract_id' => $this->faker->uuid(),
+            'extra' => $this->faker->text,
+            'created_by' => $this->faker->uuid(),
         ];
     }
 }

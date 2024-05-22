@@ -15,7 +15,8 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->string('state')->default('created');
-            $table->string('reference')->nullable();
+            $table->string('reference'); //system generated reference
+            $table->string('case_number'); //provided reference
             $table->double('estimated_amount')->nullable();
             $table->json('added_amount')->nullable();
             $table->double('remaining_amount')->nullable();
@@ -30,6 +31,7 @@ return new class extends Migration
             // $table->uuid('party_id')->nullable();
             // $table->foreign('party_id')->references('id')->on('litigation_parties');
             $table->uuid('created_by')->nullable();
+            // $table->uuid('deleted_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users'); //TODO: uncomment after auth implementation
             $table->json('extra')->nullable();
             $table->softDeletes();
