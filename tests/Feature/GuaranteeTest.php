@@ -56,7 +56,7 @@ class GuaranteeTest extends TestCase
             'security' => 'pledge',
             'type' => 'stock',
             'contract_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47',
-            'formalization_type' => 'conventionnal'
+            'formalization_type' => 'legal'
         ]);
 
         $response->assertStatus(201);

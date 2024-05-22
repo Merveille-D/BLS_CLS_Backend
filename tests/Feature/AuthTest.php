@@ -101,11 +101,13 @@ class AuthTest extends TestCase
         $user = User::factory()->create();
         $country = Subsidiary::factory()->create();
 
-        $response = $this->actingAs($user)->postJson('/api/roles', [
-            'name' => 'admin'
+        $role_res = $this->actingAs($user)->postJson('/api/roles', [
+            'name' => 'admin',
         ]);
 
-        $role_id = $response->json('data.id');
+        $role_res->assertStatus(201);
+
+        $role_id = $role_res->json('data.id');
         // create user and assign role
         $response = $this->actingAs($user)->postJson('/api/users', [
             'firstname' => 'Julien',

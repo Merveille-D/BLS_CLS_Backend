@@ -29,6 +29,7 @@ class Guarantee extends Model
         'has_recovery',
         'extra',
         'created_by',
+        'formalization_type',
     ];
 
     protected $casts = [
@@ -54,18 +55,14 @@ class Guarantee extends Model
 
     public function getNextTaskAttribute() {
         return $this->tasks()
-                ->orderByRaw('IF(max_deadline IS NOT NULL, 0, 1)')
-                ->orderBy('max_deadline')
-                ->orderBy('rank')
+                ->defaultOrder()
                 ->where('status', false)->first();
     }
 
     public function getCurrentTaskAttribute() {
         return $this->tasks()
-                    ->orderByRaw('IF(max_deadline IS NOT NULL, 0, 1)')
-                    ->orderByDesc('max_deadline')
-                    ->orderByDesc('rank')
+                    ->defaultOrder()
                     ->where('status', true)
-                    ->first();
+                    ->get()->last();
     }
 }

@@ -16,10 +16,6 @@ class CountryScope implements Scope
     {
 
         if (Auth::check()) {
-            // $currentTable = $model->getTable();
-            // $builder->join('users', 'users.id', '=', $currentTable.'.created_by')
-            //         ->where('subsidiary_id', $countryId)
-            //         ->select($currentTable . '.*');
             $user = Auth::user();
             //if user super admin, he can see all data
             if ($user->hasRole('super_admin')) {

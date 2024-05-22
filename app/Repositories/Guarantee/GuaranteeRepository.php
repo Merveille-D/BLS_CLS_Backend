@@ -41,6 +41,7 @@ class GuaranteeRepository
 
     public function add($request): JsonResource
     {
+        // dd($request->all());
         $data = array(
             'type' => $request->type,
             'phase' => 'formalization',
@@ -51,9 +52,19 @@ class GuaranteeRepository
         );
         if ($request->security)
             $data['security'] = $request->security;
+        if ($request->formalization_type)
+            $data['extra'] = ['formalization_type' => $request->formalization_type];
 
         $guarantee = $this->guarantee_model->create($data);
-        $steps = GuaranteeStep::orderBy('rank')->whereGuaranteeType($guarantee->type)->whereStepType('formalization')->get();
+
+        $steps = GuaranteeStep::/* orderBy('rank') */
+                    whereGuaranteeType($request->formalization_type ? 'stock' : $guarantee->type) //TODO : change to $guarantee->type
+                    ->whereStepType('formalization')
+                    ->whereNull('parent_id')
+                    ->when($guarantee->type == 'stock' || $guarantee->security == 'collateral' , function ($query) use ($request) {
+                        return $query->whereFormalizationType($request->formalization_type);
+                    })
+                    ->get();
 
         $this->saveTasks($steps, $guarantee);
         $this->updateTaskState($guarantee);
@@ -97,7 +108,7 @@ class GuaranteeRepository
 
     public function updateTaskState($guarantee) {
         $currentTask = $guarantee->next_task;
-
+        // dd($currentTask);
         if ($currentTask) {
             $currentTask->status = true;
             if ($currentTask->completed_at == null)
