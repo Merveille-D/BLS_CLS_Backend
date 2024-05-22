@@ -70,9 +70,14 @@ class AuditNotation extends Model
 
         $model = self::MODELS_MODULES[$this->module];
 
-        $securtiy = $this->module == 'guarantees_security_movable' ? 'movable' : 'personal';
+        $security = $this->module == 'guarantees_security_movable' ? 'movable' : 'personal';
 
-        $response = $model::find($this->module_id)->where('security', $securtiy)->first();
+        $response = $model::query()
+                      ->when($security, function($query, $security) {
+                          return $query->where('security', $security);
+                      })
+                      ->where('id', $this->module_id)
+                      ->get();
 
         return $response->libelle ?? $response->name ?? $response->title;
     }
