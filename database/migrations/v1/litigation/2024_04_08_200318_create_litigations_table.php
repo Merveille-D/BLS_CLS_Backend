@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('state')->default('created');
             $table->string('reference'); //system generated reference
-            $table->string('number'); //provided reference
+            $table->string('case_number'); //provided reference
             $table->double('estimated_amount')->nullable();
             $table->json('added_amount')->nullable();
             $table->double('remaining_amount')->nullable();

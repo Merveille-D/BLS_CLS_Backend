@@ -99,7 +99,7 @@ class LitigationRepository {
         $litigation = $this->litigation_model->create([
             'name' => $request->name,
             'reference' => generateReference('CT', $this->litigation_model),
-            'number' => $request->reference,
+            'case_number' => $request->case_number,
             'nature_id' => $request->nature_id,
             'jurisdiction_id' => $request->jurisdiction_id,
             'jurisdiction_location' => $request->jurisdiction_location,
