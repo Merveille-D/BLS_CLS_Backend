@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Concerns\Traits\Guarantee\DefaultGuaranteeTaskTrait;
 use App\Models\Guarantee\GuaranteeStep;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class TestNewFormat extends Command
 {
@@ -28,6 +29,7 @@ class TestNewFormat extends Command
      */
     public function handle()
     {
+        DB::table('guarantee_steps')->truncate();
         $phases = $this->defaultStockSteps();
 
         foreach ($phases as $key => $phase) {
@@ -39,7 +41,7 @@ class TestNewFormat extends Command
                     foreach ($steps as $key3 => $step) {
                         $step['formalization_type'] = $formalization_type;
                         $step['guarantee_type'] = 'stock';
-                        $step['type'] = $key;
+                        $step['step_type'] = $key;
                         $this->createStep($step);
                     }
                 }
@@ -55,10 +57,16 @@ class TestNewFormat extends Command
 
         if (isset($data['options'])) {
             foreach ($data['options'] as $option => $subSteps) {
+                $parent_response = null;
+                if (in_array($option, ['yes', 'no'])) {
+                    $parent_response = $option;
+                }
                 foreach ($subSteps as $subStep) {
                     $subStep['formalization_type'] = $step->formalization_type;
                     $subStep['guarantee_type'] = $step->guarantee_type;
-                    $subStep['type'] = $step->type;
+                    $subStep['step_type'] = $step->step_type;
+                    $subStep['parent_response'] = $parent_response;
+                    // dd($subStep);
                     $this->createStep($subStep, $step->id);
                 }
             }

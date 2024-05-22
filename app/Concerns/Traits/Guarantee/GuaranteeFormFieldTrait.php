@@ -11,6 +11,25 @@ use App\Enums\Guarantee\StockState;
 trait GuaranteeFormFieldTrait
 {
 
+    public function loadFormAttributeBasedTask($task) {
+        $form = $task?->step?->extra['form'] ?? [];
+        if (empty($form))
+            return [];
+
+        $form_fields = [];
+
+        foreach ($form['fields'] as $key => $field) {
+            $form_fields[] = [
+                $field['type'],
+                $field['name'],
+                $field['label'],
+            ];
+        }
+        $form_fields = $this->commonProperties($form['title'], ...$form_fields);
+
+        return $form;
+    }
+
     public function loadFormAttributeBasedOnType($guarantee) {
 
         switch ($guarantee->type) {

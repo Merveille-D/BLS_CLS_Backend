@@ -64,7 +64,7 @@ class LitigationTest extends TestCase
         // Assert that the litigation was created in the database
         $this->assertDatabaseHas('litigations', [
             'name' => 'Test Litigation',
-            'reference' => 'LT-1234',
+            'number' => 'LT-1234',
         ]);
 
         // Assert that the litigation has tasks saved
@@ -76,4 +76,9 @@ class LitigationTest extends TestCase
             'taskable_id' => $response->json('data.id'),
         ]);
     }
+
+    /**
+     * test add new task to a litigation
+     */
+
 }
