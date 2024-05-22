@@ -24,6 +24,11 @@ class AuditPerformanceIndicator extends Model
         'litigation',
         'incidents',
         'recovery',
+        'guarantees_security_personal',
+        'guarantees_security_movable',
+        'general_meeting',
+        'session_administrators',
+        'management_committees',
     ];
 
     const TYPES = [

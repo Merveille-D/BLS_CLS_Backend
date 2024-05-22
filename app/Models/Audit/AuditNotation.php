@@ -3,7 +3,11 @@
 namespace App\Models\Audit;
 
 use App\Models\Contract\Contract;
+use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
+use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\ManagementCommittee;
+use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use App\Models\Guarantee\ConvHypothec;
+use App\Models\Guarantee\Guarantee;
 use App\Models\Incident\Incident;
 use App\Models\Litigation\Litigation;
 use App\Models\Recovery\Recovery;
@@ -34,9 +38,14 @@ class AuditNotation extends Model
     const MODELS_MODULES = [
         'contracts'=> Contract::class,
         'conventionnal_hypothec'=> ConvHypothec::class,
-        'litigation' => Litigation::class,  
+        'litigation' => Litigation::class,
         'incidents' => Incident::class,
         'recovery' => Recovery::class,
+        'general_meeting' => GeneralMeeting::class,
+        'session_administrators' => SessionAdministrator::class,
+        'management_committees' => ManagementCommittee::class,
+        'guarantees_security_movable' => Guarantee::class,
+        'guarantees_security_personal' => Guarantee::class,
     ];
 
     public function performances()
@@ -60,7 +69,11 @@ class AuditNotation extends Model
     public function getTitleAttribute() {
 
         $model = self::MODELS_MODULES[$this->module];
-        $response = $model::find($this->module_id);
-        return $response->title;
+
+        $securtiy = $this->module == 'guarantees_security_movable' ? 'movable' : 'personal';
+
+        $response = $model::find($this->module_id)->where('security', $securtiy)->first();
+
+        return $response->libelle ?? $response->name ?? $response->title;
     }
 }
