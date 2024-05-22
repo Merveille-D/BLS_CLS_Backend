@@ -59,10 +59,10 @@ class LitigationRepository {
                     $qry->where('is_archived', $archive);
                 })
                 ->when($request->type == 'provisioned', function($qry) {
-                    $qry->whereNull('added_amount');
+                    $qry->whereNotNull('added_amount');
                 })
                 ->when($request->provision == 'not_provisioned', function($qry) {
-                    $qry->whereNotNull('added_amount');
+                    $qry->whereNull('added_amount');
                 })
                 ->orderByDesc('created_at')
                 ->paginate();
