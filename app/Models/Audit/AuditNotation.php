@@ -100,8 +100,6 @@ class AuditNotation extends Model
                       })
                       ->where('id', $this->module_id)
                       ->first();
-        dd($response->libelle ?? $response->name ?? $response->title);
-        
         return $response->libelle ?? $response->name ?? $response->title;
     }
 }
