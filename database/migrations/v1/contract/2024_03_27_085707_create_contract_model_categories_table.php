@@ -13,15 +13,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contract_models', function (Blueprint $table) {
+        Schema::create('contract_model_categories', function (Blueprint $table) {
             $table->uuid('id')->primary();
-
             $table->string('name');
-            $table->string('file');
-
-            $table->uuid('contract_model_category_id')->nullable();
-            $table->foreign('contract_model_category_id')->references('id')->on('contract_model_categories')->onDelete('cascade');
-
             $table->timestamps();
         });
     }
@@ -31,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contract_models');
+        Schema::dropIfExists('contract_model_categories');
     }
 };
