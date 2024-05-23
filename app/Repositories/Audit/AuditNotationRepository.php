@@ -18,8 +18,8 @@ class AuditNotationRepository
             ->makeHidden(['performances', 'indicators'])
             ->map(function ($audit_notation) {
 
-                $audit_notation->title;
-                $audit_notation->steps;
+                $audit_notation->title = $audit_notation->title;
+                // $audit_notation->steps;
 
                 $hiddenAttributes = [
                     'indicators', 'status', 'note', 'observation', 'date',
