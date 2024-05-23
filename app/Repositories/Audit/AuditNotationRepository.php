@@ -53,14 +53,13 @@ class AuditNotationRepository
             $transfers = $check_module_notation->transfers;
 
             if($transfers->count() < 1) {
-                dd(1);
 
                 $this->updateAudit($check_module_notation, $request, $notes);
             }else {
 
                 $created_by_last_transfer = $transfers->last()->collaborators->first()->id;
 
-                dd($created_by_last_transfer, Auth::id());
+                dd(Auth::user(), Auth::id());
 
                 if($created_by_last_transfer === Auth::id()) {
 
