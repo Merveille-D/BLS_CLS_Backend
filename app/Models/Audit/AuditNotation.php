@@ -91,6 +91,7 @@ class AuditNotation extends Model
     public function getTitleAttribute() {
 
         $model = self::MODELS_MODULES[$this->module];
+        dd($model);
 
         $response = $model::query()
                       ->when($this->module == 'guarantees_security_movable', function($query) {
