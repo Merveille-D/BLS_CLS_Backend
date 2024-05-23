@@ -22,12 +22,12 @@ class AuditNotationRepository
 
                 $hiddenAttributes = [
                     'indicators', 'id', 'status', 'note', 'observation', 'date',
-                    'created_by', 'parent_id', 'observations', 'created_at', 'updated_at'
+                    'created_by', 'parent_id', 'created_at', 'updated_at'
                 ];
                 $audit_notation->makeHidden($hiddenAttributes);
 
                 return $audit_notation;
-            });
+        });
     }
 
 
@@ -40,6 +40,7 @@ class AuditNotationRepository
 
         $check_module_notation = $this->audit_notation->where('module_id', $request['module_id'])
                                                             ->where('module', $request['module'])
+                                                            ->where('date', $request['date'])
                                                             ->first();
         $notes = $request['notes'];
         $sum = 0;
@@ -59,11 +60,10 @@ class AuditNotationRepository
 
                 $created_by_last_transfer = $transfers->last()->collaborators->first()->id;
 
-
                 if($created_by_last_transfer === Auth::id()) {
 
                     if($transfers->last()->status == false) {
-                        $request['created_by'] = Auth::user()->id;
+                        $request['created_by'] = Auth::id();
                         $request['parent_id'] = $check_module_notation->id;
                         $request['status'] = $transfers->last()->title;
 
@@ -88,7 +88,6 @@ class AuditNotationRepository
     }
 
     public function createAudit($request, $notes) {
-
 
         $audit_notation = $this->audit_notation->create($request);
 

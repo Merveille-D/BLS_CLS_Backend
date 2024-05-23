@@ -60,11 +60,6 @@ class AuditNotation extends Model
         return $this->hasMany(AuditNotationPerformance::class);
     }
 
-    public function auditPeriod()
-    {
-        return $this->belongsTo(AuditPeriod::class);
-    }
-
     public function getStepsAttribute() {
 
         $childrens = self::where('parent_id', $this->id)->get()->makeHidden(['performances', 'steps']);

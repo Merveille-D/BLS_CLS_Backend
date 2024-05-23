@@ -22,6 +22,8 @@ class Notation extends Model
         'parent_id',
     ];
 
+    protected $appends = ['indicators', 'steps'];
+
     const STATUS =[
         'evaluated',
         'verified',
@@ -39,20 +41,19 @@ class Notation extends Model
         return $this->hasMany(NotationPerformance::class);
     }
 
-    public function evaluationPeriod()
-    {
-        return $this->belongsTo(EvaluationPeriod::class);
-    }
-
      public function getStepsAttribute() {
 
-        return self::where('parent_id', $this->id)->get()->makeHidden('performances','steps');
+        $childrens = self::where('parent_id', $this->id)->get()->makeHidden(['performances', 'steps']);
+        $parent = collect([self::find($this->id)->makeHidden(['performances', 'steps'])]);
+
+        $steps = $parent->merge($childrens);
+
+        return $steps;
     }
 
     public function getIndicatorsAttribute() {
 
         $indicators = [];
-
         foreach ($this->performances as $performance) {
             $indicators[] = [
                 'performance_indicator' => $performance->performanceIndicator,
