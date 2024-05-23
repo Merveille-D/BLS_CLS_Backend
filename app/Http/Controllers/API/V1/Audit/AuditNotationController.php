@@ -33,7 +33,7 @@ class AuditNotationController extends Controller
     public function store(StoreUpdateAuditNotationRequest $request)
     {
         try {
-            $audit_notation = $this->audit_notation->store($request);
+            $audit_notation = $this->audit_notation->store($request->all());
 
             return api_response(true, "Succès de l'enregistrement de l'evaluation", $audit_notation, 200);
         }catch (ValidationException $e) {
@@ -49,19 +49,12 @@ class AuditNotationController extends Controller
         try {
 
             $hiddenAttributes = [
-                'indicators', 'status', 'note', 'observation', 'date',
+                'indicators', 'id', 'status', 'note', 'observation', 'date',
                 'created_by', 'parent_id', 'observations', 'created_at', 'updated_at'
             ];
             $audit_notation->makeHidden($hiddenAttributes);
-
             $data = $audit_notation->toArray();
             $data['title'] = $audit_notation->title;
-
-            // $data['steps'] = $audit_notation->steps;
-            // $data['steps'] = $audit_notation->steps->map(function ($step) {
-            //     $step->indicators = $step->indicators;
-            //     return $step;
-            // });
 
             return api_response(true, "Infos de l'évaluation", $data, 200);
         }catch( ValidationException $e ) {
