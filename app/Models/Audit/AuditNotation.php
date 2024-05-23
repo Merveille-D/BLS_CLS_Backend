@@ -64,10 +64,15 @@ class AuditNotation extends Model
     {
         return $this->belongsTo(AuditPeriod::class);
     }
- 
+
     public function getStepsAttribute() {
 
-        return self::where('parent_id', $this->id)->get()->makeHidden('performances','steps');
+        $childrens = self::where('parent_id', $this->id)->get()->makeHidden('performances','steps');
+        $parent = self::find($this->id)->makeHidden('performances','steps');
+
+        $steps = array_merge($parent, $childrens);
+
+        return $steps;
     }
 
     public function getIndicatorsAttribute() {
