@@ -15,7 +15,8 @@ class AuditNotationRepository
 
     public function all() {
         return $this->audit_notation->whereNull('parent_id')->get()->makeHidden('performances')->map(function ($audit_notation) {
-            $audit_notation->title = $audit_notation->title;
+
+            // $audit_notation->title = $audit_notation->title;
 
             unset(
                 $audit_notation->status,
