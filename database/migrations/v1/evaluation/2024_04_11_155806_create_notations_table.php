@@ -16,11 +16,18 @@ return new class extends Migration
             $table->uuid('id')->primary();
 
             $table->string('note')->nullable();
-            $table->string('status')->default('evaluated');
+            $table->string('status')->default('Evalué');
             $table->string('observation')->nullable();
+
+            $table->date('date');
+
+            $table->uuid('parent_id')->nullable();
 
             $table->uuid('collaborator_id');
             $table->foreign('collaborator_id')->references('id')->on('collaborators')->onDelete('cascade');
+
+            $table->uuid('created_by')->nullable();
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
 
             $table->timestamps();
         });

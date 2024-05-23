@@ -65,4 +65,6 @@ class User extends Authenticatable
     {
         return $this->morphToMany(Litigation::class, 'litigationable');
     }
+
+    // Relation for transfer
 }

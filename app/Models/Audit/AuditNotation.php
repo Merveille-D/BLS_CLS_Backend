@@ -2,6 +2,8 @@
 
 namespace App\Models\Audit;
 
+use App\Concerns\Traits\Alert\Alertable;
+use App\Concerns\Traits\Transfer\Transferable;
 use App\Models\Contract\Contract;
 use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
 use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\ManagementCommittee;
@@ -18,7 +20,7 @@ use Illuminate\Support\Facades\Http;
 
 class AuditNotation extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory, HasUuids, Alertable, Transferable;
 
     protected $fillable = [
         'note',
@@ -26,7 +28,12 @@ class AuditNotation extends Model
         'observation',
         'module_id',
         'module',
+        'date',
+        'created_by',
+        'parent_id',
     ];
+
+    protected $appends = ['indicators', 'steps'];
 
     const STATUS =[
         'evaluated',
@@ -51,6 +58,16 @@ class AuditNotation extends Model
     public function performances()
     {
         return $this->hasMany(AuditNotationPerformance::class);
+    }
+
+    public function auditPeriod()
+    {
+        return $this->belongsTo(AuditPeriod::class);
+    }
+ 
+    public function getStepsAttribute() {
+
+        return self::where('parent_id', $this->id)->get()->makeHidden('performances','steps');
     }
 
     public function getIndicatorsAttribute() {

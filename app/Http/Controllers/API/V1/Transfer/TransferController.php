@@ -11,7 +11,7 @@ use Illuminate\Validation\ValidationException;
 
 class TransferController extends Controller
 {
-    public function __construct(private TransferRepository $contract) {
+    public function __construct(private TransferRepository $transfer) {
 
     }
 
@@ -60,7 +60,7 @@ class TransferController extends Controller
         try {
             $transfer = Transfer::find($request->transfer_id);
 
-            $this->contract->completeTransfer($request->all(), $transfer);
+            $this->transfer->completeTransfer($request->all(), $transfer);
 
             return api_response(true, "Mis à jour du transfert avec succès", $transfer, 200);
         } catch (ValidationException $e) {

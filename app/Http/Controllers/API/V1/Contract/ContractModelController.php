@@ -21,7 +21,10 @@ class ContractModelController extends Controller
     public function index()
     {
         try {
-            $contract_models = ContractModel::all();
+            $contract_models = ContractModel::when(request('category_id') !== null, function($query) {
+                $query->where('contract_model_category_id', request('category_id'));
+            })->get();
+
             return api_response(true, 'Liste des modèles de contrat', $contract_models);
         }catch (\Exception $e) {
             return api_response(false, "Echec de la récupération", $e->getMessage(), 500);

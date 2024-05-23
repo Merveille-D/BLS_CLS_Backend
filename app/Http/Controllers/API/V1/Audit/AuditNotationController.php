@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Audit;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuditNotation\ListAuditNotationRequest;
+use App\Http\Requests\AuditNotation\StoreTransferAuditNotationRequest;
 use App\Http\Requests\AuditNotation\StoreUpdateAuditNotationRequest;
 use App\Http\Requests\Transfer\AddTransferRequest;
 use App\Models\Audit\AuditNotation;
@@ -22,13 +23,8 @@ class AuditNotationController extends Controller
      */
     public function index()
     {
-        $audit_notations = AuditNotation::get()->map(function ($audit_notation) {
-            $audit_notation->indicators = $audit_notation->indicators;
-            $audit_notation->title = $audit_notation->title;
-            return $audit_notation;
-        });
-
-        return api_response(true, "Evaluation du collaborateur", $audit_notations, 200);
+        $audit_notations = $this->audit_notation->all();
+        return api_response(true, "Audit du dossier", $audit_notations, 200);
     }
 
     /**
@@ -79,10 +75,10 @@ class AuditNotationController extends Controller
         //
     }
 
-    public function createTransfer(AddTransferRequest $request, AuditNotation $audit_notation)
+    public function createTransfer(StoreTransferAuditNotationRequest $request)
     {
         try {
-            $this->audit_notation->createTransfer($audit_notation, $request->all());
+            $audit_notation = $this->audit_notation->createTransfer($request->all());
 
             return api_response(true, "Transfert de la tache avec succès", $audit_notation, 200);
         } catch (ValidationException $e) {
