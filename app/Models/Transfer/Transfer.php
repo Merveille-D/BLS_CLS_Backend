@@ -26,7 +26,6 @@ class Transfer extends Model
 
     protected $casts = [
         'status' => 'boolean',
-        // 'deadline' => 'date',
     ];
 
     function sender()
