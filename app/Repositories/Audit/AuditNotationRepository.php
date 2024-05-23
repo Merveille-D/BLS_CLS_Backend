@@ -29,13 +29,10 @@ class AuditNotationRepository
                 $audit_notation->parent_id,
             );
 
-            $audit_notation->steps = $audit_notation->steps->map(function ($step) {
-                unset(
-                    $step->title,
-                );
-                $step->indicators = $step->indicators;
-                return $step;
-            });
+            // $audit_notation->steps = $audit_notation->steps->map(function ($step) {
+            //     $step->indicators = $step->indicators;
+            //     return $step;
+            // });
 
             return $audit_notation;
         });
