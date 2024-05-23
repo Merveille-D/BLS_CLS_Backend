@@ -28,7 +28,7 @@ class StoreUpdateNotationRequest extends FormRequest
     {
         return [
             'collaborator_id' => ['required','uuid'],
-            'evaluation_period_id' => ['required','uuid'],
+            'date' => ['required','date'],
             'notes' => ['required','array' ],
             'notes.*.performance_indicator_id' => ['required','uuid'],
             'notes.*.note' => ['required','numeric'],

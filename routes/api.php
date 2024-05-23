@@ -5,6 +5,7 @@ use App\Http\Controllers\API\V1\Audit\AuditPerformanceIndicatorController;
 use App\Http\Controllers\API\V1\Audit\AuditPeriodController;
 use App\Http\Controllers\API\V1\Bank\BankController;
 use App\Http\Controllers\API\V1\Contract\ContractController;
+use App\Http\Controllers\API\V1\Contract\ContractModelCategoryController;
 use App\Http\Controllers\API\V1\Contract\ContractModelController;
 use App\Http\Controllers\API\V1\Contract\PartController;
 use App\Http\Controllers\API\V1\Contract\TaskController;
@@ -81,6 +82,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('parts', PartController::class);
 
     Route::resource('contract_models', ContractModelController::class);
+    Route::resource('contract_model_categories', ContractModelCategoryController::class);
 
     Route::resource('tasks', TaskController::class);
     Route::delete('delete_array_task_contracts', [TaskController::class, 'deleteArrayTaskContract'] );

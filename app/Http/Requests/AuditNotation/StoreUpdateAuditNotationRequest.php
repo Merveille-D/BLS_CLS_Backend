@@ -28,7 +28,7 @@ class StoreUpdateAuditNotationRequest extends FormRequest
         return [
             'module_id' => ['required','uuid'],
             'module' => ['required',Rule::in(AuditPerformanceIndicator::MODULES) ],
-            'audit_period_id' => ['required','uuid'],
+            'date' => ['required','date'],
             'notes' => ['required','array' ],
             'notes.*.audit_performance_indicator_id' => ['required','uuid'],
             'notes.*.note' => ['required','numeric'],

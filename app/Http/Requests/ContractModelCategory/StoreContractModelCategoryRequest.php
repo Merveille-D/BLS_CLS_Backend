@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\ContractModel;
+namespace App\Http\Requests\ContractModelCategory;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class StoreContractModelRequest extends FormRequest
+class StoreContractModelCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +23,8 @@ class StoreContractModelRequest extends FormRequest
      */
     public function rules(): array
     {
-
         return [
-            'name' => 'required|string|max:255',
-            'file' => 'required|file',
-            'contract_model_category_id',
+            'name' => ['required', 'string'],
         ];
     }
 
