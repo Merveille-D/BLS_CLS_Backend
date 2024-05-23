@@ -21,7 +21,7 @@ class AuditNotationRepository
                 $audit_notation->title = $audit_notation->title;
 
                 $hiddenAttributes = [
-                    'indicators', 'status', 'note', 'observation', 'date',
+                    'indicators', 'id', 'status', 'note', 'observation', 'date',
                     'created_by', 'parent_id', 'observations', 'created_at', 'updated_at'
                 ];
                 $audit_notation->makeHidden($hiddenAttributes);
@@ -37,8 +37,6 @@ class AuditNotationRepository
      * @return AuditNotation
      */
     public function store($request) {
-
-        $request = $request->all();
 
         $check_module_notation = $this->audit_notation->where('module_id', $request['module_id'])
                                                             ->where('module', $request['module'])
