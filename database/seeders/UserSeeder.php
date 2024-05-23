@@ -36,12 +36,14 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'subsidiary_id' => $country->id,
             ),
-            // array(
-            //     'firstname' => 'Estelle',
-            //     'lastname' => 'Adjaho',
-            //     'email' => 'estelleadjaho@gmail.com',
-            //     'password' => Hash::make('password')
-            // ),
+            array(
+                'firstname' => 'Estelle',
+                'lastname' => 'Adjaho',
+                'username' => 'estelleadjaho',
+                'email' => 'estelleadjaho@gmail.com',
+                'password' => Hash::make('password'),
+                'subsidiary_id' => $country->id,
+            ),
             // array(
             //     'firstname' => 'Darlène',
             //     'lastname' => 'Gbaguidi',

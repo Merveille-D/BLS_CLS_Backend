@@ -2,12 +2,14 @@
 
 use App\Http\Controllers\API\V1\Audit\AuditNotationController;
 use App\Http\Controllers\API\V1\Audit\AuditPerformanceIndicatorController;
+use App\Http\Controllers\API\V1\Audit\AuditPeriodController;
 use App\Http\Controllers\API\V1\Bank\BankController;
 use App\Http\Controllers\API\V1\Contract\ContractController;
 use App\Http\Controllers\API\V1\Contract\ContractModelController;
 use App\Http\Controllers\API\V1\Contract\PartController;
 use App\Http\Controllers\API\V1\Contract\TaskController;
 use App\Http\Controllers\API\V1\Evaluation\CollaboratorController;
+use App\Http\Controllers\API\V1\Evaluation\EvaluationPeriodController;
 use App\Http\Controllers\API\V1\Evaluation\NotationController;
 use App\Http\Controllers\API\V1\Evaluation\PerformanceIndicatorController;
 use App\Http\Controllers\API\V1\Gourvernance\BankInfo\BankInfoController;
@@ -68,7 +70,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('bank_infos', BankInfoController::class);
     Route::resource('capitals', CapitalController::class);
 
-
     // Banque de textes
     Route::resource('banks', BankController::class);
 
@@ -81,11 +82,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::resource('contract_models', ContractModelController::class);
 
-
     Route::resource('tasks', TaskController::class);
     Route::delete('delete_array_task_contracts', [TaskController::class, 'deleteArrayTaskContract'] );
     Route::put('update_status_task_contracts', [TaskController::class, 'updateStatusTaskContract'] );
-
 
     // Incidents
 
@@ -94,8 +93,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('task_incidents', TaskIncidentController::class);
     Route::get('get_current_task_incidents', [TaskIncidentController::class, 'getCurrentTaskIncident'] );
     Route::post('complete_task_incidents', [TaskIncidentController::class, 'completeTaskIncident'] );
-
-
 
     // DIRECTION GENERALE
 
@@ -112,14 +109,19 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('notations', NotationController::class);
     Route::resource('performance_indicators', PerformanceIndicatorController::class);
     Route::resource('collaborators', CollaboratorController::class);
+    Route::resource('evaluation_periods', EvaluationPeriodController::class);
     Route::get('/get_all_notations', [NotationController::class, 'all'] );
-
 
 
     // AUDIT
     Route::resource('audit_notations', AuditNotationController::class);
     Route::resource('audit_performance_indicators', AuditPerformanceIndicatorController::class);
+    Route::resource('audit_periods', AuditPeriodController::class);
     Route::get('/get_all_audits', [AuditNotationController::class, 'all'] );
+    Route::post('/audit_create_transfers', [AuditNotationController::class, 'createTransfer'] );
+
+    Route::resource('audit_performance_indicators', AuditPerformanceIndicatorController::class);
+
 
 });
 

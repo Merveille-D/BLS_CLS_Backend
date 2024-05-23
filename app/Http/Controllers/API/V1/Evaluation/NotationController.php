@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Evaluation;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Notation\ListNotationRequest;
+use App\Http\Requests\Notation\StoreTransferNotationRequest;
 use App\Http\Requests\Notation\StoreUpdateNotationRequest;
 use App\Http\Requests\Transfer\AddTransferRequest;
 use App\Models\Evaluation\Notation;
@@ -22,12 +23,7 @@ class NotationController extends Controller
      */
     public function index()
     {
-        $notations = Notation::get()->map(function ($notation) {
-            $notation->indicators = $notation->indicators;
-            $notation->collaborator = $notation->collaborator;
-
-            return $notation;
-        });
+        $notations = $this->notation->all();
 
         return api_response(true, "Evaluation du collaborateur", $notations, 200);
     }
@@ -81,10 +77,10 @@ class NotationController extends Controller
         //
     }
 
-    public function createTransfer(AddTransferRequest $request, Notation $notation)
+    public function createTransfer(StoreTransferNotationRequest $request)
     {
         try {
-            $this->notation->createTransfer($notation, $request->all());
+            $notation = $this->notation->createTransfer($request->all());
 
             return api_response(true, "Transfert de la tache avec succès", $notation, 200);
         } catch (ValidationException $e) {
