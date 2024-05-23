@@ -62,8 +62,6 @@ class AuditNotationRepository
 
                 if($created_by_last_transfer === Auth::id()) {
 
-                    dd($transfers->last()->status);
-
                     if($transfers->last()->status == false) {
                         $request['created_by'] = Auth::user()->id;
                         $request['parent_id'] = $check_module_notation->id;
@@ -71,6 +69,7 @@ class AuditNotationRepository
 
                         $this->createAudit($request, $notes);
                     }else {
+                        dd(1);
                         $module_notation = $check_module_notation->where('created_by', Auth::user()->id)->first();
 
                         if($module_notation) {
