@@ -70,8 +70,7 @@ class AuditNotation extends Model
         $childrens = self::where('parent_id', $this->id)->get()->makeHidden('performances','steps');
         $parent = self::find($this->id)->makeHidden('performances','steps');
 
-        $steps = array_merge($parent, $childrens);
-
+        $steps = $parent->merge($childrens);
         return $steps;
     }
 

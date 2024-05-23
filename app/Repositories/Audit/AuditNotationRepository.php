@@ -19,6 +19,7 @@ class AuditNotationRepository
 
             unset(
                 $audit_notation->status,
+                $audit_notation->note,
                 $audit_notation->observation,
                 $audit_notation->module_id,
                 $audit_notation->module,
