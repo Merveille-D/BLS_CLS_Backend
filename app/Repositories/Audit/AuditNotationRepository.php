@@ -30,6 +30,9 @@ class AuditNotationRepository
             );
 
             $audit_notation->steps = $audit_notation->steps->map(function ($step) {
+                unset(
+                    $step->title,
+                );
                 $step->indicators = $step->indicators;
                 return $step;
             });
