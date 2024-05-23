@@ -26,13 +26,14 @@ class AuditNotationRepository
             unset(
                 $audit_notation->indicators,
                 $audit_notation->status,
-            //     $audit_notation->note,
-            //     $audit_notation->observation,
-            //     $audit_notation->module_id,
-            //     $audit_notation->module,
-            //     $audit_notation->date,
-            //     $audit_notation->created_by,
-            //     $audit_notation->parent_id,
+                $audit_notation->note,
+                $audit_notation->observation,
+                $audit_notation->date,
+                $audit_notation->created_by,
+                $audit_notation->parent_id,
+                $audit_notation->observations,
+                $audit_notation->created_at,
+                $audit_notation->updated_at,
             );
 
             return $audit_notation;
