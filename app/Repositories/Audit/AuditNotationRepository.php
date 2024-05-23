@@ -51,6 +51,7 @@ class AuditNotationRepository
         if($check_module_notation) {
 
             $transfers = $check_module_notation->transfers;
+            dd($transfers->count());
 
             if($transfers->count() == 0) {
 
