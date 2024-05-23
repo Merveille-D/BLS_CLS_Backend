@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories\Litigation;
 
+use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use Illuminate\Support\Str;
 use App\Http\Resources\Litigation\LitigationResource;
 use App\Http\Resources\Litigation\LitigationSettingResource;
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class LitigationRepository {
+    use GeneratePdfTrait;
     /**
      * __construct
      *
@@ -332,5 +334,13 @@ class LitigationRepository {
         } else {
             return false;
         }
+    }
+
+    public function generatePdf($id) {
+        $litigation = $this->findById($id);
+        $pdf =  $this->generateFromView( 'pdf.litigation.litigation',  ['litigation' => $litigation]);
+
+        return $pdf;
+
     }
 }

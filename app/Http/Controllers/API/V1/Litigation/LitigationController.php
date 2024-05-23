@@ -155,6 +155,19 @@ class LitigationController extends Controller
     }
 
     /**
+     * Generate pdf
+     */
+    public function generatePdf($litigation)
+    {
+        try {
+            $data = $this->litigationRepo->generatePdf($litigation);
+            return $data;
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
+        }
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(Litigation $litigation)
