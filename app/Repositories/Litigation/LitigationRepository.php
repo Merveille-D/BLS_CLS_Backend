@@ -16,6 +16,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class LitigationRepository {
@@ -75,21 +76,32 @@ class LitigationRepository {
      * provisions stats
      */
     public function provisionStats() {
-        $total = $this->litigation_model->count();
-        $provisioned = $this->litigation_model->whereNotNull('added_amount')->count();
-        $not_provisioned = $this->litigation_model->whereNull('added_amount')->count();
+        // $total = $this->litigation_model->count();
+        // $provisioned = $this->litigation_model->whereNotNull('added_amount')->count();
+        // $not_provisioned = $this->litigation_model->whereNull('added_amount')->count();
         //sum amounts
-        $sum_estimated_amount = $this->litigation_model->sum('estimated_amount');
-        $sum_added_amount = $this->litigation_model->sum('added_amount->amount');
-        $sum_remaining_amount = $this->litigation_model->sum('remaining_amount');
+        $query =DB::select("
+            SELECT
+                SUM(estimated_amount) AS sum_estimated_amount,
+                (SELECT SUM(t.amount)
+                FROM litigations l2,
+                JSON_TABLE(l2.added_amount, '$[*]'
+                    COLUMNS (
+                        amount DECIMAL(10,2) PATH '$.amount'
+                    )
+                ) AS t
+                ) AS sum_added_amount,
+                SUM(remaining_amount) AS sum_remaining_amount
+            FROM litigations l1;
+        ");
 
         return [
-            'total' => $total,
-            'provisioned' => $provisioned,
-            'not_provisioned' => $not_provisioned,
-            'sum_estimated_amount' => $sum_estimated_amount,
-            'sum_added_amount' => $sum_added_amount,
-            'sum_remaining_amount' => $sum_remaining_amount,
+            // 'total' => $total,
+            // 'provisioned' => $provisioned,
+            // 'not_provisioned' => $not_provisioned,
+            'sum_estimated_amount' => $query[0]->sum_estimated_amount,
+            'sum_added_amount' => (double) $query[0]->sum_added_amount,
+            'sum_remaining_amount' => $query[0]->sum_remaining_amount,
         ];
     }
 
