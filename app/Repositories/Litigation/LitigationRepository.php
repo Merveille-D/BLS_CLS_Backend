@@ -99,9 +99,9 @@ class LitigationRepository {
             // 'total' => $total,
             // 'provisioned' => $provisioned,
             // 'not_provisioned' => $not_provisioned,
-            'sum_estimated_amount' => $query[0]->sum_estimated_amount,
+            'sum_estimated_amount' => (double) $query[0]->sum_estimated_amount,
             'sum_added_amount' => (double) $query[0]->sum_added_amount,
-            'sum_remaining_amount' => $query[0]->sum_remaining_amount,
+            'sum_remaining_amount' => (double) $query[0]->sum_remaining_amount,
         ];
     }
 
