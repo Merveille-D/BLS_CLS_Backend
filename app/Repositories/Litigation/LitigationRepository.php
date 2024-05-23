@@ -350,6 +350,7 @@ class LitigationRepository {
 
     public function getDetails($litigation) {
         $details = [
+            'N° de dossier' => $litigation->case_number ?? null,
             'Intitulé' => $litigation->name ?? null,
             'Matière' => $litigation->nature?->name,
             'Juridiction' => $litigation->jurisdiction?->name,

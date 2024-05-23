@@ -6,7 +6,7 @@
             <h1>Fiche de suivi</h1>
             <p class="subtitle bold">{{ $litigation->name }}</p>
             <p class="subtitle italic underline">{{ $litigation->reference }}</p>
-            <p class="subtitle">{{ formatDateTime($litigation->created_at) }}</p>
+            <p class="subtitle gray">{{ date('d-m-Y H:i') }}</p>
         </div>
         <div class="right">
             <img src="{{ $base64Image }}" alt="Logo">

@@ -28,7 +28,7 @@
         }
 
         .gray {
-            background-color: #f2f2f2;
+            color: #6d6d6d;
         }
         .bold {
             font-weight: bold;
