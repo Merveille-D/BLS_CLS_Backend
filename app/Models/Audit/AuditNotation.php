@@ -28,7 +28,7 @@ class AuditNotation extends Model
         'observation',
         'module_id',
         'module',
-        'audit_period_id',
+        'date',
         'created_by',
         'parent_id',
     ];
@@ -64,7 +64,7 @@ class AuditNotation extends Model
     {
         return $this->belongsTo(AuditPeriod::class);
     }
-
+ 
     public function getStepsAttribute() {
 
         return self::where('parent_id', $this->id)->get()->makeHidden('performances','steps');

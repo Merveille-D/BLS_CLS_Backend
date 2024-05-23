@@ -17,7 +17,7 @@ class Notation extends Model
         'status',
         'observation',
         'collaborator_id',
-        'evaluation_period_id',
+        'date',
         'created_by',
         'parent_id',
     ];
