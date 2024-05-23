@@ -78,7 +78,6 @@ class AuditNotation extends Model
     public function getIndicatorsAttribute() {
 
         $indicators = [];
-
         foreach ($this->performances as $audit_performance) {
             $indicators[] = [
                 'audit_performance_indicator' => $audit_performance->auditPerformanceIndicator,
@@ -91,8 +90,6 @@ class AuditNotation extends Model
     public function getTitleAttribute() {
 
         $model = self::MODELS_MODULES[$this->module];
-        dd($model);
-
         $response = $model::query()
                       ->when($this->module == 'guarantees_security_movable', function($query) {
                           return $query->where('security', 'movable');
