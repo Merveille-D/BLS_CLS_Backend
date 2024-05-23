@@ -67,10 +67,11 @@ class AuditNotation extends Model
 
     public function getStepsAttribute() {
 
-        $childrens = self::where('parent_id', $this->id)->get()->makeHidden('performances','steps');
-        $parent = self::find($this->id)->makeHidden('performances','steps');
+        $childrens = self::where('parent_id', $this->id)->get()->makeHidden(['performances', 'steps']);
+        $parent = collect([self::find($this->id)->makeHidden(['performances', 'steps'])]);
 
         $steps = $parent->merge($childrens);
+
         return $steps;
     }
 
