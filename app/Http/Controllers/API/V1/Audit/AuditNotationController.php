@@ -47,6 +47,7 @@ class AuditNotationController extends Controller
     public function show(AuditNotation $audit_notation)
     {
         try {
+
             $hiddenAttributes = [
                 'indicators', 'status', 'note', 'observation', 'date',
                 'created_by', 'parent_id', 'observations', 'created_at', 'updated_at'
@@ -55,7 +56,12 @@ class AuditNotationController extends Controller
 
             $data = $audit_notation->toArray();
             $data['title'] = $audit_notation->title;
-            $data['steps'] = $audit_notation->steps;
+
+            // $data['steps'] = $audit_notation->steps;
+            // $data['steps'] = $audit_notation->steps->map(function ($step) {
+            //     $step->indicators = $step->indicators;
+            //     return $step;
+            // });
 
             return api_response(true, "Infos de l'évaluation", $data, 200);
         }catch( ValidationException $e ) {

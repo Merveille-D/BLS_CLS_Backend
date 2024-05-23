@@ -19,7 +19,6 @@ class AuditNotationRepository
             ->map(function ($audit_notation) {
 
                 $audit_notation->title = $audit_notation->title;
-                // $audit_notation->steps;
 
                 $hiddenAttributes = [
                     'indicators', 'status', 'note', 'observation', 'date',
