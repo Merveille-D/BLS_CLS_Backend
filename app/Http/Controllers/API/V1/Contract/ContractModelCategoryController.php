@@ -46,7 +46,7 @@ class ContractModelCategoryController extends Controller
         try {
             $data = $contract_model_category;
             $data['models'] = $contract_model_category->models;
-            return api_response(true, "Infos de la catégorie", $contract_model_category, 200);
+            return api_response(true, "Infos de la catégorie", $data, 200);
 
         }catch( ValidationException $e ) {
             return api_response(false, "Echec de la récupération de la catégorie", $e->errors(), 422);
