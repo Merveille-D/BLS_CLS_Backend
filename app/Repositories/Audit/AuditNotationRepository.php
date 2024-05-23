@@ -57,7 +57,8 @@ class AuditNotationRepository
                 $this->updateAudit($check_module_notation, $request, $notes);
             }else {
 
-                $created_by_last_transfer = $transfers->last()->collaborators->first()->id;
+                // $created_by_last_transfer = $transfers->last()->collaborators->first()->id;
+                dd( $transfers->last()->collaborators->first());
 
                 if($created_by_last_transfer == Auth::user()->id) {
 
