@@ -14,7 +14,7 @@ use App\Models\Auth\Role;
 | Litigation API Routes
 |--------------------------------------------------------------------------
 */
-
+Route::get('/litigation/generate-pdf/{litigation}', [LitigationController::class, 'generatePdf']);
 //contentieux
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
@@ -34,5 +34,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // Route::put('/litigation/update-added-amount/{id}',  [LitigationController::class, 'updateAddedAmount']);
     // Route::put('/litigation/update-remaining-amount/{id}',  [LitigationController::class, 'updateRemainingAmount']);
     Route::get('/litigation/provisions/stats',  [LitigationController::class, 'provisionStats']);
+
     Route::resource('/litigation', LitigationController::class);
 });

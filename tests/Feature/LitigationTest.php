@@ -38,7 +38,7 @@ class LitigationTest extends TestCase
 
         $response = $this->actingAs($user)->post('api/litigation', [
             'name' => 'Test Litigation',
-            'reference' => 'LT-1234',
+            'case_number' => 'LT-1234',
             'nature_id' => LitigationSetting::whereType('nature')->first()->id,
             // 'party_id' => LitigationParty::first()->id,
             'jurisdiction_id' => LitigationSetting::whereType('jurisdiction')->first()->id,
@@ -64,7 +64,7 @@ class LitigationTest extends TestCase
         // Assert that the litigation was created in the database
         $this->assertDatabaseHas('litigations', [
             'name' => 'Test Litigation',
-            'number' => 'LT-1234',
+            'case_number' => 'LT-1234',
         ]);
 
         // Assert that the litigation has tasks saved

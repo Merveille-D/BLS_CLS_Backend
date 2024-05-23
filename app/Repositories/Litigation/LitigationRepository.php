@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories\Litigation;
 
+use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use Illuminate\Support\Str;
 use App\Http\Resources\Litigation\LitigationResource;
 use App\Http\Resources\Litigation\LitigationSettingResource;
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class LitigationRepository {
+    use GeneratePdfTrait;
     /**
      * __construct
      *
@@ -83,25 +85,23 @@ class LitigationRepository {
         $query =DB::select("
             SELECT
                 SUM(estimated_amount) AS sum_estimated_amount,
-                (SELECT SUM(t.amount)
-                FROM litigations l2,
-                JSON_TABLE(l2.added_amount, '$[*]'
-                    COLUMNS (
-                        amount DECIMAL(10,2) PATH '$.amount'
-                    )
-                ) AS t
+                (
+                    SELECT SUM(CAST(JSON_UNQUOTE(JSON_EXTRACT(added_amount, CONCAT('$[', numbers.n, '].amount'))) AS DECIMAL(10,2)))
+                    FROM litigations,
+                    (SELECT 0 AS n UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) numbers
+                    WHERE JSON_UNQUOTE(JSON_EXTRACT(added_amount, CONCAT('$[', numbers.n, ']'))) IS NOT NULL
                 ) AS sum_added_amount,
                 SUM(remaining_amount) AS sum_remaining_amount
-            FROM litigations l1;
+            FROM litigations;
         ");
 
         return [
             // 'total' => $total,
             // 'provisioned' => $provisioned,
             // 'not_provisioned' => $not_provisioned,
-            'sum_estimated_amount' => $query[0]->sum_estimated_amount,
+            'sum_estimated_amount' => (double) $query[0]->sum_estimated_amount,
             'sum_added_amount' => (double) $query[0]->sum_added_amount,
-            'sum_remaining_amount' => $query[0]->sum_remaining_amount,
+            'sum_remaining_amount' => (double) $query[0]->sum_remaining_amount,
         ];
     }
 
@@ -332,5 +332,13 @@ class LitigationRepository {
         } else {
             return false;
         }
+    }
+
+    public function generatePdf($id) {
+        $litigation = $this->findById($id);
+        $pdf =  $this->generateFromView( 'pdf.litigation.litigation',  ['litigation' => $litigation]);
+
+        return $pdf;
+
     }
 }
