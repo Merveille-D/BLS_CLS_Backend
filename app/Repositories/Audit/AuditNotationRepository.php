@@ -13,32 +13,50 @@ class AuditNotationRepository
 
     }
 
+    // public function all() {
+    //     return $this->audit_notation->whereNull('parent_id')->get()->makeHidden('performances','indicators')->map(function ($audit_notation) {
+
+    //         $audit_notation->title = $audit_notation->title;
+
+    //         $audit_notation->steps = $audit_notation->steps->map(function ($step) {
+    //             $step->indicators = $step->indicators;
+    //             return $step;
+    //         });
+
+    //         unset(
+    //             $audit_notation->indicators,
+    //             $audit_notation->status,
+    //             $audit_notation->note,
+    //             $audit_notation->observation,
+    //             $audit_notation->date,
+    //             $audit_notation->created_by,
+    //             $audit_notation->parent_id,
+    //             $audit_notation->observations,
+    //             $audit_notation->created_at,
+    //             $audit_notation->updated_at,
+    //         );
+
+    //         return $audit_notation;
+    //     });
+    // }
+
     public function all() {
-        return $this->audit_notation->whereNull('parent_id')->get()->makeHidden('performances','indicators')->map(function ($audit_notation) {
+        return $this->audit_notation->whereNull('parent_id')->get()
+            ->makeHidden(['performances', 'indicators'])
+            ->map(function ($audit_notation) {
 
-            $audit_notation->title = $audit_notation->title;
+                $audit_notation->steps;
 
-            $audit_notation->steps = $audit_notation->steps->map(function ($step) {
-                $step->indicators = $step->indicators;
-                return $step;
+                $hiddenAttributes = [
+                    'indicators', 'status', 'note', 'observation', 'date',
+                    'created_by', 'parent_id', 'observations', 'created_at', 'updated_at'
+                ];
+                $audit_notation->makeHidden($hiddenAttributes);
+
+                return $audit_notation;
             });
-
-            unset(
-                $audit_notation->indicators,
-                $audit_notation->status,
-                $audit_notation->note,
-                $audit_notation->observation,
-                $audit_notation->date,
-                $audit_notation->created_by,
-                $audit_notation->parent_id,
-                $audit_notation->observations,
-                $audit_notation->created_at,
-                $audit_notation->updated_at,
-            );
-
-            return $audit_notation;
-        });
     }
+
 
     /**
      * @param Request $request
