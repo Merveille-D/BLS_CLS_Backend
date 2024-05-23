@@ -59,8 +59,8 @@ class AuditNotationRepository
 
                 $created_by_last_transfer = $transfers->last()->collaborators->first()->id;
 
-                dd(($created_by_last_transfer === Auth::user()->id));
-                
+                dd(Auth::user()->id);
+
                 if($created_by_last_transfer === Auth::user()->id) {
 
                     if($transfers->last()->status == true) {
