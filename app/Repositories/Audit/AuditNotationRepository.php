@@ -69,7 +69,6 @@ class AuditNotationRepository
 
                         $this->createAudit($request, $notes);
                     }else {
-                        dd(1);
                         $module_notation = $check_module_notation->where('created_by', Auth::user()->id)->first();
 
                         if($module_notation) {
