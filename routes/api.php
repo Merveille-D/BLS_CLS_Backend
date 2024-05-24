@@ -20,6 +20,7 @@ use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions\TaskSessionA
 use App\Http\Controllers\API\V1\Gourvernance\ExecutiveManagement\Directors\DirectorController;
 use App\Http\Controllers\API\V1\Gourvernance\ExecutiveManagement\ManagementCommittee\ManagementCommitteeController;
 use App\Http\Controllers\API\V1\Gourvernance\ExecutiveManagement\ManagementCommittee\TaskManagementCommitteeController;
+use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\AttendanceListGeneralMeetingController;
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\GeneralMeetingController;
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\TaskGeneralMeetingController;
 use App\Http\Controllers\API\V1\Gourvernance\Shareholder\ActionTransferController;
@@ -53,7 +54,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::delete('delete_array_task_general_meetings', [TaskGeneralMeetingController::class, 'deleteArrayTaskGeneralMeeting'] );
     Route::put('update_status_task_general_meetings', [TaskGeneralMeetingController::class, 'updateStatusTaskGeneralMeeting'] );
 
-    // Route::resource('attendance_list_general_meetings', AttendanceListGeneralMeetingController::class);
+    Route::get('list_attendance_general_meetings', [AttendanceListGeneralMeetingController::class, 'list'] );
+    Route::post('add_attendance_general_meetings', [AttendanceListGeneralMeetingController::class, 'add'] );
+    Route::post('delete_attendance_general_meetings', [AttendanceListGeneralMeetingController::class, 'delete'] );
+    Route::get('generate_pdf_attendance_general_meetings', [AttendanceListGeneralMeetingController::class, 'generatePdf'] );
+
 
     Route::get('/ca_administrators/settings', [AdministratorController::class, 'settings']);
     Route::resource('/ca_administrators', AdministratorController::class);
