@@ -14,4 +14,9 @@ class ContractModelCategory extends Model
         'name',
     ];
 
+    public function models()
+    {
+        return $this->hasMany(ContractModel::class);
+    }
+
 }

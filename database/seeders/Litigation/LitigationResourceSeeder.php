@@ -140,7 +140,7 @@ class LitigationResourceSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => 'Transférer le dossier à l\'avocat',
+                'title' => 'Transférer le dossier à un cabinet d\'avocat',
                 'code' => LitigationTaskState::TRANSFER,
                 'rank' => 2,
                 'min_delay' => null,
@@ -156,7 +156,7 @@ class LitigationResourceSeeder extends Seeder
                 'max_delay' => 5,
             ],
             [
-                'title' => 'Date première Audience',
+                'title' => 'Date de la première audience',
                 'code' => LitigationTaskState::HEARING,
                 'rank' => 4,
                 'min_delay' => null,
@@ -172,7 +172,7 @@ class LitigationResourceSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => 'DÉCISION',
+                'title' => 'Décision',
                 'code' => LitigationTaskState::DECISION,
                 'rank' => 6,
                 'min_delay' => null,

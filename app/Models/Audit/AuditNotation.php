@@ -60,20 +60,19 @@ class AuditNotation extends Model
         return $this->hasMany(AuditNotationPerformance::class);
     }
 
-    public function auditPeriod()
-    {
-        return $this->belongsTo(AuditPeriod::class);
-    }
- 
     public function getStepsAttribute() {
 
-        return self::where('parent_id', $this->id)->get()->makeHidden('performances','steps');
+        $childrens = self::where('parent_id', $this->id)->get()->makeHidden(['performances', 'steps']);
+        $parent = collect([self::find($this->id)->makeHidden(['performances', 'steps'])]);
+
+        $steps = $parent->merge($childrens);
+
+        return $steps;
     }
 
     public function getIndicatorsAttribute() {
 
         $indicators = [];
-
         foreach ($this->performances as $audit_performance) {
             $indicators[] = [
                 'audit_performance_indicator' => $audit_performance->auditPerformanceIndicator,
@@ -96,7 +95,6 @@ class AuditNotation extends Model
                       })
                       ->where('id', $this->module_id)
                       ->first();
-
         return $response->libelle ?? $response->name ?? $response->title;
     }
 }

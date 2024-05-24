@@ -336,9 +336,30 @@ class LitigationRepository {
 
     public function generatePdf($id) {
         $litigation = $this->findById($id);
-        $pdf =  $this->generateFromView( 'pdf.litigation.litigation',  ['litigation' => $litigation]);
+        $filename = Str::slug($litigation->name). '_'.date('YmdHis') . '.pdf';
+
+        $pdf =  $this->generateFromView( 'pdf.litigation.litigation',  [
+            'litigation' => $litigation,
+            'details' => $this->getDetails($litigation)
+        ],
+        $filename);
 
         return $pdf;
 
+    }
+
+    public function getDetails($litigation) {
+        $details = [
+            'N° de dossier' => $litigation->case_number ?? null,
+            'Intitulé' => $litigation->name ?? null,
+            'Matière' => $litigation->nature?->name,
+            'Juridiction' => $litigation->jurisdiction?->name,
+            'Lieu de la juridiction' => $litigation->jurisdiction_location ?? null,
+            'Provisions à constituer' => (double) $litigation->estimated_amount,
+            'Provisions constituées' => collect($litigation->added_amount)->sum('amount'),
+            'Provisions reprises' => (double) $litigation->remaining_amount,
+        ];
+
+        return $details;
     }
 }

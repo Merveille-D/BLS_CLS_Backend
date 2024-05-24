@@ -18,11 +18,11 @@ class ContractModelController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $contract_models = ContractModel::when(request('category_id') !== null, function($query) {
-                $query->where('contract_model_category_id', request('category_id'));
+            $contract_models = ContractModel::when($request->category_id !== null, function($query) use ($request) {
+                $query->where('contract_model_category_id', $request->category_id);
             })->get();
 
             return api_response(true, 'Liste des modèles de contrat', $contract_models);

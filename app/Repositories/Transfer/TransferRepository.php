@@ -81,11 +81,11 @@ class TransferRepository
 
                 $transfer->fileTransfers()->save($fileUpload);
             }
-        }
 
-        $model->update([
-            'status' => $transfer->title,
-        ]);
+            $model->update([
+                'status' => $transfer->title,
+            ]);
+        }
 
         $transfer->update([
             'status' => true,
