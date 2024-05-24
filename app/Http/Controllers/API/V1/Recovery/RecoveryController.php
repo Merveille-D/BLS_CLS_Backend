@@ -159,4 +159,30 @@ class RecoveryController extends Controller
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }
+
+    /**
+     * get realizable guarantees
+     */
+    public function getRealizableGuarantees()
+    {
+        try {
+            $data = $this->recoveryRepo->getRealizableGuarantees(request());
+            return api_response($success = true, 'Garanties realisables recuperées', $data);
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
+        }
+    }
+
+    /**
+     * generate pdf
+     */
+    public function generatePdf($recovery)
+    {
+        try {
+            $data = $this->recoveryRepo->generatePdf($recovery);
+            return $data;
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
+        }
+    }
 }

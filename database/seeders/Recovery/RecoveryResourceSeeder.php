@@ -26,82 +26,83 @@ class RecoveryResourceSeeder extends Seeder
         foreach ($steps as $step) {
             RecoveryStep::create($step);
         }
-
-        //for test
-        // $recovery = DB::table('recoveries')->insert([
-        //     'id' => 'aaa726d8-32c0-4b96-afcd-300d051cf9f0', // '9bce26d8-32c0-4b96-afcd-300d051cf9f0' is a UUID
-        //     'name' => 'Test Recouvrement',
-        //     'type' => 'forced',
-        //     'reference' => 'REC-1234',
-        //     'status' => RecoveryStepEnum::CREATED,
-        //     'has_guarantee' => true,
-        //     'guarantee_id' => '9bce26d8-32c0-4b96-afcd-300d051cf9f0',
-        // ]);
-
-        // $recovery = Recovery::find('aaa726d8-32c0-4b96-afcd-300d051cf9f0');
-
-        // $this->recoveryRepository->generateSteps($recovery);
-
-        // $this->recoveryRepository->updatePivotState($recovery);
     }
 
     function getSteps() : array {
         return [
             [
-                'name' => 'Initiation du recouvrement amical',
+                'title' => 'Initiation du recouvrement amical',
                 'code' => RecoveryStepEnum::CREATED,
                 'type' => 'friendly',
                 'rank' => 1,
+                'min_delay' => null,
+                'max_delay' => 10,
             ],
             [
-                'name' => "Formalisation de l'acte (Dépôt de l'acte au rang des minutes d'un notaire ou homologatuion)",
+                'title' => "Formalisation de l'acte (Dépôt de l'acte au rang des minutes d'un notaire ou homologatuion)",
                 'code' => RecoveryStepEnum::FORMALIZATION,
                 'type' => 'friendly',
                 'rank' => 2,
+                'min_delay' => null,
+                'max_delay' => 10,
             ],
 
             //forced with guarantee
             [
-                'name' => 'Initialisation du recouvrement forcé',
+                'title' => 'Initialisation du recouvrement forcé',
                 'code' => RecoveryStepEnum::CREATED,
                 'type' => 'forced',
                 'rank' => 1,
+                'min_delay' => null,
+                'max_delay' => 10,
             ],
             [
-                'name' => "Mise en demeure de payer adressée au client débiteur",
+                'title' => "Mise en demeure de payer adressée au client débiteur",
                 'code' => RecoveryStepEnum::FORMAL_NOTICE,
                 'type' => 'forced',
                 'rank' => 2,
+                'min_delay' => null,
+                'max_delay' => 10,
             ],
             [
-                'name' => "le débiteur paie sa dette",
+                'title' => "le débiteur paie sa dette",
                 'code' => RecoveryStepEnum::DEBT_PAYEMENT,
                 'type' => 'forced',
-                'rank' => 3
+                'rank' => 3,
+                'min_delay' => null,
+                'max_delay' => 10,
             ],
             [
-                'name' => "Initier une procédure de saisie des biens du débiteur",
+                'title' => "Initier une procédure de saisie des biens du débiteur",
                 'code' => RecoveryStepEnum::SEIZURE,
                 'type' => 'forced',
-                'rank' => 4
+                'rank' => 4,
+                'min_delay' => null,
+                'max_delay' => 10,
             ],
             [
-                'name' => "Obtenir un titre exécutoire",
+                'title' => "Obtenir un titre exécutoire",
                 'code' => RecoveryStepEnum::EXECUTORY,
                 'type' => 'forced',
-                'rank' => 5
+                'rank' => 5,
+                'min_delay' => null,
+                'max_delay' => 10,
             ],
             [
-                'name' => "Saisie de la juridiction compétente",
+                'title' => "Saisie de la juridiction compétente",
                 'code' => RecoveryStepEnum::JURISDICTION,
                 'type' => 'forced',
-                'rank' => 6
+                'rank' => 6,
+                'min_delay' => null,
+                'max_delay' => 10,
             ],
             [
-                'name' => "Confier la procédure à un avocat",
+                'title' => "Confier la procédure à un avocat",
                 'code' => RecoveryStepEnum::ENTRUST_LAWYER,
                 'type' => 'forced',
-                'rank' => 7
+                'rank' => 7,
+                'min_delay' => null,
+                'max_delay' => 10,
             ]
         ];
     }

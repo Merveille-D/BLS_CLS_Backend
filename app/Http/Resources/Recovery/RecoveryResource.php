@@ -24,6 +24,7 @@ class RecoveryResource extends JsonResource
             'name' => $this->name,
             'type' => $this->type,
             'guarantee_id' => $this->guarantee_id,
+            'contract_id' => $this->contract_id,
             // 'guarantee' => new ConvHypothecResource($this->guarantee),
             'has_guarantee' => $this->has_guarantee ? true : false,
             'payement_status' => $this->payement_status ? true : false,
@@ -31,8 +32,8 @@ class RecoveryResource extends JsonResource
             'is_entrusted' => $this->is_entrusted ? true : false,
             'is_archived' => $this->is_archived ? true : false,
             'created_at' => $this->created_at,
-            'next_step' => $this->when($id, new RecoveryStepResource($this->next_step)),
-            'current_step' => $this->when($id, new RecoveryStepResource($this->current_step)),
+            'next_step' => $this->when($id, new RecoveryStepResource($this->next_task)),
+            'current_step' => $this->when($id, new RecoveryStepResource($this->current_task)),
             'documents' => DocumentResource::collection($this->whenLoaded('documents')),
         ];
     }

@@ -41,7 +41,7 @@ if (!function_exists('generateReference')) {
     {
         $currentDate = date('YmdHis');
         $number = $model->withoutGlobalScopes()->count() + 1;
-        $reference = $prefix . '-' . completeWithZeros($number) . '-' . $currentDate;
+        $reference = $prefix . '-' . completeWithZeros($number) . '-' . $currentDate.Str::random(6);
 
         return $reference;
     }
