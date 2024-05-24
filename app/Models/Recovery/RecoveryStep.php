@@ -11,16 +11,13 @@ class RecoveryStep extends Model
     use HasFactory, HasUuids;
 
     protected $fillable = [
-        'name',
+        'title',
         'code',
         'rank',
         'type',
+        'min_delay',
+        'max_delay',
         'deadline'
     ];
-
-    public function steps()
-    {
-        return $this->hasMany(RecoveryStep::class, 'stepable_id');
-    }
 
 }

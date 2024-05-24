@@ -50,7 +50,7 @@ class AuditNotationController extends Controller
 
             $hiddenAttributes = [
                 'indicators', 'id', 'status', 'note', 'observation', 'date',
-                'created_by', 'parent_id', 'observations', 'created_at', 'updated_at'
+                'created_by', 'parent_id', 'created_at', 'updated_at'
             ];
             $audit_notation->makeHidden($hiddenAttributes);
             $data = $audit_notation->toArray();

@@ -7,6 +7,7 @@ use App\Models\Recovery\Recovery;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class RecoveryTest extends TestCase
@@ -34,19 +35,49 @@ class RecoveryTest extends TestCase
     }
 
     /**
+     * Test retrieving a single recovery.
+     *
+     * @return void
+     */
+    public function testRetrieveSingle(): void
+    {
+        $user = User::factory()->create();
+
+        $recovery = Recovery::factory()->create();
+
+        $response = $this->actingAs($user)->get("api/recovery/{$recovery->id}");
+
+        // Assert that the response has a 200 status code
+        $response->assertStatus(200);
+
+        // Assert that the response contains the correct recovery
+        $response->assertJson([
+            'data' => [
+                'id' => $recovery->id,
+                'name' => $recovery->name,
+                'type' => $recovery->type,
+                'has_guarantee' => $recovery->has_guarantee,
+                'guarantee_id' => $recovery->guarantee_id,
+                'contract_id' => $recovery->contract_id,
+            ],
+        ]);
+    }
+
+    /**
      * Test creating a new recovery.
      *
      * @return void
      */
-    public function test_create_friendly_recovery(): void
+    public function test_create_friendly_with_guarante_recovery(): void
     {
         $user = User::factory()->create();
         // Send a POST request to the endpoint with the necessary data
         $response = $this->actingAs($user)->post('api/recovery', [
             'name' => 'Test Recovery',
             'reference' => 'ABC123',
-            'type'=> 'friendly'
-            // Add other required fields here
+            'type'=> 'friendly',
+            'has_guarantee' => true,
+            'guarantee_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47'
         ]);
 
         // Assert that the response has a 201 status code
@@ -55,8 +86,45 @@ class RecoveryTest extends TestCase
         // Assert that the recovery was created in the database
         $this->assertDatabaseHas('recoveries', [
             'name' => 'Test Recovery',
-            'type'=> 'friendly'
-            // Add other required fields here
+            'type'=> 'friendly',
+            'has_guarantee' => true,
+            //valid uuid
+            'guarantee_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47'
+        ]);
+    }
+
+
+    /**
+     * Test creating a new frinedly recovery without guarantee.
+     *
+     * @return void
+     */
+    public function test_create_friendly_without_guarantee_recovery(): void
+    {
+        $user = User::factory()->create();
+        // Send a POST request to the endpoint with the necessary data
+        $response = $this->actingAs($user)->post('api/recovery', [
+            'name' => 'Test Recovery',
+            'type'=> 'friendly',
+            'has_guarantee' => false,
+            'contract_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47',
+        ]);
+
+        // Assert that the response has a 201 status code
+        $response->assertStatus(200);
+
+        // Assert that the recovery was created in the database
+        $this->assertDatabaseHas('recoveries', [
+            'name' => 'Test Recovery',
+            'type'=> 'friendly',
+            'has_guarantee' => false,
+            'contract_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47',
+        ]);
+
+        // assert tasks are generated
+        $this->assertDatabaseHas('module_tasks', [
+            'taskable_id' => $response->json('data.id'),
+            'status' => false,
         ]);
     }
 
@@ -70,18 +138,11 @@ class RecoveryTest extends TestCase
     {
         $user = User::factory()->create();
 
-        // $hypothec_response = $this->actingAs($user)->post('api/conventionnal_hypothec', [
-        //     'name' => 'Test Hypothec',
-        //     'contract_id' => 'sdlkfaz-sdfas-1234-sdfas',
-        // ]);
-
-        // $hypothecId = $hypothec_response->json('data.id');
-        // Send a POST request to the endpoint with the necessary data
         $response = $this->actingAs($user)->post('api/recovery', [
             'name' => 'Test Recovery',
             'type' => 'forced',
             'has_guarantee' => true,
-            'guarantee_id' => '9edsdf-ddvzers-xfbfx-xdv'
+            'guarantee_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47'
         ]);
 
         // Assert that the response has a 201 status code
@@ -92,7 +153,7 @@ class RecoveryTest extends TestCase
             'name' => 'Test Recovery',
             'type' => 'forced',
             'has_guarantee' => true,
-            // 'guarantee_id' => $hypothecId
+            'guarantee_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47',
         ]);
     }
 
@@ -109,6 +170,7 @@ class RecoveryTest extends TestCase
             'name' => 'Test Recovery',
             'type' => 'forced',
             'has_guarantee' => false,
+            'contract_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47',
         ]);
 
         // Assert that the response has a 201 status code
@@ -119,11 +181,98 @@ class RecoveryTest extends TestCase
             'name' => 'Test Recovery',
             'type' => 'forced',
             'has_guarantee' => false,
+            'contract_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47',
         ]);
 
-        $this->assertDatabaseHas('recovery_task', [
-            'recovery_id' => $response->json('data.id'),
+        $this->assertDatabaseHas('module_tasks', [
+            'taskable_id' => $response->json('data.id'),
             'status' => false,
         ]);
     }
+
+    /**
+     * Test retrieve tasks list.
+     *
+     * @return void
+     */
+    public function testRetrieveTasks(): void
+    {
+        $user = User::factory()->create();
+
+        $recovery = Recovery::factory()->create();
+
+        $response = $this->actingAs($user)->get("api/recovery/tasks?id={$recovery->id}");
+
+        // Assert that the response has a 200 status code
+        $response->assertStatus(200);
+
+        // Assert that the response contains the correct recovery
+        $response->assertJson([
+            'data' => [
+
+            ],
+        ]);
+    }
+
+    /**
+     * Test add new task to a recovery.
+     *
+     * @return void
+     */
+    public function testAddTask(): void
+    {
+        $user = User::factory()->create();
+
+        $recovery = Recovery::factory()->create();
+
+        $response = $this->actingAs($user)->post("api/recovery/tasks", [
+            'title' => 'Test Task',
+            'deadline' => date('Y-m-d', strtotime('+5 days')),
+            'model_id' => $recovery->id,
+        ]);
+
+        // Assert that the response has a 201 status code
+        $response->assertStatus(201);
+
+        // Assert that the task was created in the database
+        $this->assertDatabaseHas('module_tasks', [
+            'taskable_id' => $recovery->id,
+            'title' => 'Test Task',
+            'type' => 'task',
+            'max_deadline' => date('Y-m-d', strtotime('+5 days')),
+            'created_by' => $user->id,
+        ]);
+    }
+
+    /**
+     * Test update task status.
+     *
+     * @return void
+     */
+    /* public function testUpdateTaskStatus(): void
+    {
+        $user = User::factory()->create();
+
+        $recovery = Recovery::factory()->create();
+
+        $task = $recovery->tasks()->create([
+            'title' => 'Test Task',
+            'type' => 'task',
+            'max_deadline' => date('Y-m-d', strtotime('+5 days')),
+            'created_by' => $user->id,
+        ]);
+
+        $response = $this->actingAs($user)->put("api/recovery/tasks/{$task->id}", [
+            'title' => 'edited task',
+        ]);
+
+        // Assert that the response has a 200 status code
+        $response->assertStatus(200);
+
+        // Assert that the task status was updated in the database
+        $this->assertDatabaseHas('module_tasks', [
+            'id' => $task->id,
+            'title' => 'edited task',
+        ]);
+    } */
 }

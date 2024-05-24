@@ -19,8 +19,6 @@ return new class extends Migration
             $table->string('title');
             $table->string('type');
             $table->uuidMorphs('taskable');
-            // $table->uuid('litigation_id')->index();
-            // $table->foreign('litigation_id')->references('id')->on('litigations');
             $table->uuid('created_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users');
             $table->datetime('min_deadline')->nullable();

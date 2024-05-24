@@ -29,6 +29,7 @@ class ModuleTask extends Model
         'max_deadline',
         'completed_at',
         'completed_by',
+        'step_id',
         'extra',
     ];
 
@@ -47,5 +48,22 @@ class ModuleTask extends Model
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function scopeDefaultOrder($query)
+    {
+        return $query->orderByRaw('
+            CASE
+            WHEN completed_at IS NOT NULL THEN 0
+            ELSE 1
+            END,
+            completed_at ASC,
+            CASE
+                WHEN max_deadline IS NOT NULL THEN 0
+                ELSE 1
+            END,
+            max_deadline ASC,
+            id ASC
+        ');
     }
 }

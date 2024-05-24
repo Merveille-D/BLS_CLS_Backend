@@ -2,12 +2,11 @@
 
 namespace App\Http\Requests\Recovery;
 
-use App\Rules\Administrator\ArrayElementMatch;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class InitRecoveryRequest extends FormRequest
+class TransferTaskRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,17 +24,16 @@ class InitRecoveryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'type' => ['required', new ArrayElementMatch(['friendly', 'forced'])],
-            'has_guarantee' => 'required|boolean',
-            'guarantee_id' => 'required_if:has_guarantee,true|uuid',
-            'contract_id' => 'required_if:has_guarantee,false|uuid',
+            'forward_title' => 'required|string|max:255',
+            'deadline_transfer' => 'required|date|date_format:Y-m-d',
+            'collaborators' => 'required|array',
+            'collaborators.*' => 'required|exists:users,id',
+            'description' => 'nullable',
         ];
     }
 
-
     public function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response()->json(['success' => false, 'message' => 'Une erreur s\'est produite', 'errors' => $validator->errors()], 422));
+        throw new HttpResponseException(api_error(false, $validator->errors()->first(),  $validator->errors()));
     }
 }

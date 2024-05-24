@@ -14,16 +14,20 @@ class NotationRepository
     }
 
     public function all() {
-        return $this->notation->whereNull('parent_id')->get()->makeHidden('performances')->map(function ($notation) {
-            $notation->indicators = $notation->indicators;
-            $notation->collaborator = $notation->collaborator;
 
-            $notation->steps = $notation->steps->map(function ($step) {
-                $step->indicators = $step->indicators;
-                return $step;
-            });
+        return $this->notation->whereNull('parent_id')->get()
+            ->makeHidden(['performances', 'indicators'])
+            ->map(function ($notation) {
 
-            return $notation;
+                $notation->collaborator = $notation->collaborator;
+
+                $hiddenAttributes = [
+                    'indicators', 'id', 'status', 'note', 'observation', 'date',
+                    'created_by', 'parent_id', 'created_at', 'updated_at'
+                ];
+                $notation->makeHidden($hiddenAttributes);
+
+                return $notation;
         });
     }
 
@@ -34,9 +38,9 @@ class NotationRepository
      */
     public function store($request) {
 
-        $request = $request->all();
-
-        $check_collaborator_notation = $this->notation->where('collaborator_id', $request['collaborator_id'])->first();
+        $check_collaborator_notation = $this->notation->where('collaborator_id', $request['collaborator_id'])
+                                                        ->where('date', $request['date'])
+                                                        ->first();
 
         $notes = $request['notes'];
         $sum = 0;
@@ -49,17 +53,17 @@ class NotationRepository
 
             $transfers = $check_collaborator_notation->transfers;
 
-            if($transfers->count() == 0) {
+            if($transfers->count() < 1) {
 
                 $this->updateEvaluation($check_collaborator_notation, $request, $notes);
             }else {
 
                 $created_by_last_transfer = $transfers->last()->collaborators->first()->id;
 
-                if($created_by_last_transfer == Auth::user()->id) {
+                if($created_by_last_transfer == Auth::id()) {
 
-                    if($transfers->last()->status == true) {
-                        $request['created_by'] = Auth::user()->id;
+                    if($transfers->last()->status == false) {
+                        $request['created_by'] = Auth::id();
                         $request['parent_id'] = $check_collaborator_notation->id;
                         $request['status'] = $transfers->last()->title;
 
@@ -79,14 +83,12 @@ class NotationRepository
 
             $request['created_by'] = Auth::user()->id;
             $check_collaborator_notation = $this->createEvaluation($request, $notes);
-
         }
 
         return $check_collaborator_notation;
     }
 
     public function createEvaluation($request, $notes) {
-
 
         $notation = $this->notation->create($request);
 

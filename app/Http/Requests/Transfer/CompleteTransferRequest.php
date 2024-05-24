@@ -47,6 +47,7 @@ class CompleteTransferRequest extends FormRequest
             // For Evaluation or Audit
             'notes' => ['required_if:type,audit,evaluation','array'],
             'notes.*.note' => ['required_if:type,audit,evaluation','numeric'],
+            'date' => ['required_if:type,audit,evaluation','date'],
 
             // For Evaluation
             'collaborator_id' => ['required_if:type,evaluation','uuid'],

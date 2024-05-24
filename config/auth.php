@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'web', // change to 'web' to use sa
         'passwords' => 'users',
     ],
 

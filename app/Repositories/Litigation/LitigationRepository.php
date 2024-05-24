@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Storage;
 
 class LitigationRepository {
     use GeneratePdfTrait;
+
     /**
      * __construct
      *
