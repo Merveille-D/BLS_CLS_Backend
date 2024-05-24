@@ -32,8 +32,8 @@ class RecoveryResource extends JsonResource
             'is_entrusted' => $this->is_entrusted ? true : false,
             'is_archived' => $this->is_archived ? true : false,
             'created_at' => $this->created_at,
-            'next_step' => $this->when($id, new RecoveryStepResource($this->next_task)),
-            'current_step' => $this->when($id, new RecoveryStepResource($this->current_task)),
+            'next_step' => $this->when($id, new RecoveryTaskResource($this->next_task)),
+            'current_step' => $this->when($id, new RecoveryTaskResource($this->current_task)),
             'documents' => DocumentResource::collection($this->whenLoaded('documents')),
         ];
     }
