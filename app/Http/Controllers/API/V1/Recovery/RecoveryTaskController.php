@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1\Recovery;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Recovery\AddRecoveryTaskRequest;
 use App\Http\Requests\Recovery\CompleteTaskRequest;
+use App\Http\Requests\Recovery\TransferTaskRequest;
 use App\Models\Recovery\RecoveryTask;
 use App\Repositories\Recovery\RecoveryTaskRepository;
 use Illuminate\Http\Request;
@@ -61,7 +62,7 @@ class RecoveryTaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function transfer(CompleteTaskRequest $request, $task)
+    public function transfer(TransferTaskRequest $request, $task)
     {
         try {
             DB::beginTransaction();
