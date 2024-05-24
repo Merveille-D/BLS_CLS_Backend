@@ -25,6 +25,7 @@ return new class extends Migration
             $table->datetime('max_deadline')->nullable();
             $table->datetime('completed_at')->nullable();
             $table->uuid('completed_by')->nullable();
+            $table->uuid('step_id')->index()->nullable();
             $table->json('extra')->nullable();
             $table->softDeletes();
             $table->timestamps();
