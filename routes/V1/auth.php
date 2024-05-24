@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\CountryController;
+use App\Http\Controllers\Auth\PermissionController;
 use App\Http\Controllers\Auth\RoleController;
 use App\Http\Controllers\Auth\UserController;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ Route::post('login',[UserController::class,'login']);
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('subsidiaries', CountryController::class);
     Route::resource('roles', RoleController::class);
+    Route::resource('permissions', PermissionController::class);
     Route::get('/current-user', [UserController::class, 'current']);
     Route::resource('users', UserController::class);
     Route::post('logout',[UserController::class,'logout']);
