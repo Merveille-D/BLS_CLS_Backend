@@ -39,4 +39,7 @@ startsecs=0
 
 ## to do 
 
-complete a field that take step status in guarantee
+
+imprimer
+<!-- union list des garanties -->
+<!-- improve update has_recovery -->

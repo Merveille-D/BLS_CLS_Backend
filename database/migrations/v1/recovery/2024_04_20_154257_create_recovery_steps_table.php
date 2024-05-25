@@ -15,10 +15,12 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('code');
             $table->string('type');
-            $table->string('name');
+            $table->string('title');
             $table->date('deadline')->nullable();
             $table->integer('rank')->nullable();
             $table->integer('parent_id')->nullable();
+            $table->unsignedInteger('min_delay')->nullable();
+            $table->unsignedInteger('max_delay')->nullable();
             $table->timestamps();
         });
     }

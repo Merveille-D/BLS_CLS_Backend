@@ -20,11 +20,12 @@ class RecoveryFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'reference' => $this->faker->unique()->randomNumber,
+            'reference' => generateReference('REC', app($this->model)),
             'status' => $this->faker->randomElement(['created']),
             'type' => $this->faker->randomElement(['friendly', 'forced']),
             'has_guarantee' => $this->faker->boolean(),
             'guarantee_id' => $this->faker->uuid(),
+            'contract_id' => $this->faker->uuid(),
 
         ];
     }

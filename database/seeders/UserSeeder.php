@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Auth\Country;
+use App\Models\Auth\Permission;
 use App\Models\Auth\Role;
 use App\Models\Auth\Subsidiary;
 use App\Models\User;
@@ -17,7 +18,19 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $role = Role::create(['name' => 'super_admin']);
+        //create permissions
+        foreach ($this->defaultPermissions() as $key => $permission) {
+            if (!Permission::where('name', $permission)->exists()) {
+                Permission::create(['name' => $permission]);
+            }
+        }
+        if (!Role::where('name', 'super_admin')->exists()) {
+            $role = Role::create(['name' => 'super_admin']);
+            //attach permission
+            $role->givePermissionTo(Permission::all());
+        }
+
+
         foreach ($this->users_list() as $user) {
             $user = User::create($user);
             $user->assignRole($role);
@@ -52,5 +65,18 @@ class UserSeeder extends Seeder
             // ),
         );
 
+    }
+
+    public function defaultPermissions() : array {
+        return [
+            'manage_user',
+            'manage_local_user',
+            'view_all_subsidiary',
+            'view_local_subsidiary',
+            'manage_subsidiary',
+            'manage_roles',
+            // 'manage_permissions',
+            // 'manage_settings',
+        ];
     }
 }

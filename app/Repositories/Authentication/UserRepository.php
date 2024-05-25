@@ -44,6 +44,7 @@ class UserRepository
 
         //assign role
         $role = Role::find($request['role_id']);
+
         $user->assignRole($role);
 
         return new UserResource($user);
