@@ -35,6 +35,16 @@ class GuaranteeTask extends Model
         'extra' => 'array',
     ];
 
+    //step relationship
+    public function step()
+    {
+        return $this->belongsTo(GuaranteeStep::class, 'code', 'code');
+    }
+
+    // public function children() {
+    //     return $this->hasMany(GuaranteeTask::class, 'parent_id');
+    // }
+
     public function taskable()
     {
         return $this->morphTo();
@@ -47,13 +57,37 @@ class GuaranteeTask extends Model
 
     const MODULES = [
         'conv_hypothec' => ConvHypothec::class,
+        'guarantee' => Guarantee::class,
         // 'litigation' => Litigation::class,
         // 'recovery' => Recovery::class
     ];
 
-    public function getFormAttribute() {
-        $form = $this->loadFormAttributeBasedOnType($this->taskable);
+    public function getFormAttribute()
+    {
+        // dd($this);
+        if ($this->taskable->security == 'personal') {
+            $form = $this->loadFormAttributeBasedOnType($this->taskable);
+        } else {
+            $form = $this->loadFormAttributeBasedTask($this);
+        }
 
         return $form;
+    }
+
+    public function scopeDefaultOrder($query)
+    {
+        return $query->orderByRaw('
+            CASE
+            WHEN completed_at IS NOT NULL THEN 0
+            ELSE 1
+            END,
+            completed_at ASC,
+            CASE
+                WHEN max_deadline IS NOT NULL THEN 0
+                ELSE 1
+            END,
+            max_deadline ASC,
+            id ASC
+        ');
     }
 }

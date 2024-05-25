@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
 if (!function_exists('sanitize_file_name')) {
-    function sanitize_file_name($filename) : string {
+    function sanitize_file_name($filename): string
+    {
         // Remove invalid characters (except alphanumeric, ., -, and _)
         $sanitized = preg_replace('/[^a-zA-Z0-9\.\_-]/', '_', $filename);
 
@@ -22,13 +23,15 @@ if (!function_exists('sanitize_file_name')) {
 }
 
 if (!function_exists('api_response')) {
-    function api_response(bool $success = true, string $message='', $data=[], $code=200) {
+    function api_response(bool $success = true, string $message = '', $data = [], $code = 200)
+    {
         return response()->json(['success' => $success, 'message' => $message, 'data' => $data], $code);
     }
 }
 
 if (!function_exists('api_error')) {
-    function api_error(bool $success = false, string $message='', $data=[], $code=500) {
+    function api_error(bool $success = false, string $message = '', $data = [], $code = 500)
+    {
         return response()->json(['success' => $success, 'message' => $message, 'errors' => $data], $code);
     }
 }
@@ -36,16 +39,17 @@ if (!function_exists('api_error')) {
 if (!function_exists('generateReference')) {
     function generateReference($prefix, Model $model)
     {
-        $currentDate = date('Ymd');
+        $currentDate = date('YmdHis');
         $number = $model->withoutGlobalScopes()->count() + 1;
-        $reference = $prefix . '-'. completeWithZeros($number) . '-' . $currentDate;
+        $reference = $prefix . '-' . completeWithZeros($number) . '-' . $currentDate;
 
         return $reference;
     }
 }
 
 if (!function_exists('completeWithZeros')) {
-    function completeWithZeros($number, $length = 4) {
+    function completeWithZeros($number, $length = 4)
+    {
         $numberStr = (string) $number;
 
         if (strlen($numberStr) < $length) {
@@ -59,10 +63,11 @@ if (!function_exists('completeWithZeros')) {
     }
 }
 
-if(!function_exists('uploadFile')) {
-    function uploadFile($file, $path) {
+if (!function_exists('uploadFile')) {
+    function uploadFile($file, $path)
+    {
 
-        $name_file = date('Y-m-d_His-').Str::random(6).auth()->id().'-'.sanitize_file_name($file->getClientOriginalName());
+        $name_file = date('Y-m-d_His-') . Str::random(6) . auth()->id() . '-' . sanitize_file_name($file->getClientOriginalName());
         $file->storeAs($path, $name_file, 'public');
 
         $url = Storage::disk('public')->url('public/' . $path . '/' . $name_file);
@@ -71,16 +76,18 @@ if(!function_exists('uploadFile')) {
     }
 }
 
-if(!function_exists('getFileName')) {
-    function getFileName($file) {
+if (!function_exists('getFileName')) {
+    function getFileName($file)
+    {
 
         $name_file = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         return $name_file;
     }
 }
 
-if(!function_exists('searchElementIndice')) {
-    function searchElementIndice($tableau, $indiceRecherche) {
+if (!function_exists('searchElementIndice')) {
+    function searchElementIndice($tableau, $indiceRecherche)
+    {
         foreach ($tableau as $indice => $element) {
             if ($indice === $indiceRecherche) {
                 return $element;
@@ -93,6 +100,23 @@ if(!function_exists('searchElementIndice')) {
             }
         }
         return null;
+    }
+}
+
+if (!function_exists("formatDateTime")) {
+    function formatDateTime($dateTime, $locale = null)
+    {
+        if (in_array($dateTime, [NULL, "null"]))
+            return "";
+
+        $locale = $locale ?: config('app.locale');
+
+        $formatMap = [
+            'fr' => 'DD/MM/YYYY à HH:mm', // French format
+            'en' => 'MMMM D, YYYY h:mm A', // English format
+        ];
+
+        return Carbon::parse($dateTime)->locale($locale)->isoFormat($formatMap[$locale]);
     }
 }
 
@@ -112,12 +136,3 @@ if(!function_exists('searchElementIndice')) {
 
 //         return $alert;
 // }
-
-
-
-
-
-
-
-
-

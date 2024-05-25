@@ -15,6 +15,7 @@ class GuaranteeTaskResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        // dd($this->form);
         return [
             'id' => $this->id,
             'code' => $this->code,

@@ -16,9 +16,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('type');
             $table->string('status')->default('created');
-            $table->string('reference')->nullable();
+            $table->string('reference')->unique()->nullable();
             $table->boolean('has_guarantee')->default(0);
             $table->uuid('guarantee_id')->nullable();
+            $table->uuid('contract_id')->nullable();
             $table->boolean('is_entrusted')->default(0);
             $table->boolean('is_seized')->default(0);
             $table->boolean('is_archived')->default(0);

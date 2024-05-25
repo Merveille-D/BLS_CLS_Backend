@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories\Litigation;
 
+use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use Illuminate\Support\Str;
 use App\Http\Resources\Litigation\LitigationResource;
 use App\Http\Resources\Litigation\LitigationSettingResource;
@@ -16,9 +17,12 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class LitigationRepository {
+    use GeneratePdfTrait;
+
     /**
      * __construct
      *
@@ -58,10 +62,48 @@ class LitigationRepository {
                     $archive = $is_archived == 'yes' ? true : false;
                     $qry->where('is_archived', $archive);
                 })
+                ->when($request->type == 'provisioned', function($qry) {
+                    $qry->whereNotNull('added_amount');
+                })
+                ->when($request->provision == 'not_provisioned', function($qry) {
+                    $qry->whereNull('added_amount');
+                })
+                ->orderByDesc('created_at')
                 ->paginate();
 
 
         return LitigationResource::collection($query);
+    }
+
+    /**
+     * provisions stats
+     */
+    public function provisionStats() {
+        // $total = $this->litigation_model->count();
+        // $provisioned = $this->litigation_model->whereNotNull('added_amount')->count();
+        // $not_provisioned = $this->litigation_model->whereNull('added_amount')->count();
+        //sum amounts
+        $query =DB::select("
+            SELECT
+                SUM(estimated_amount) AS sum_estimated_amount,
+                (
+                    SELECT SUM(CAST(JSON_UNQUOTE(JSON_EXTRACT(added_amount, CONCAT('$[', numbers.n, '].amount'))) AS DECIMAL(10,2)))
+                    FROM litigations,
+                    (SELECT 0 AS n UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) numbers
+                    WHERE JSON_UNQUOTE(JSON_EXTRACT(added_amount, CONCAT('$[', numbers.n, ']'))) IS NOT NULL
+                ) AS sum_added_amount,
+                SUM(remaining_amount) AS sum_remaining_amount
+            FROM litigations;
+        ");
+
+        return [
+            // 'total' => $total,
+            // 'provisioned' => $provisioned,
+            // 'not_provisioned' => $not_provisioned,
+            'sum_estimated_amount' => (double) $query[0]->sum_estimated_amount,
+            'sum_added_amount' => (double) $query[0]->sum_added_amount,
+            'sum_remaining_amount' => (double) $query[0]->sum_remaining_amount,
+        ];
     }
 
     public function add($request) : JsonResource {
@@ -69,7 +111,8 @@ class LitigationRepository {
 
         $litigation = $this->litigation_model->create([
             'name' => $request->name,
-            'reference' => $request->reference,
+            'reference' => generateReference('CT', $this->litigation_model),
+            'case_number' => $request->case_number,
             'nature_id' => $request->nature_id,
             'jurisdiction_id' => $request->jurisdiction_id,
             'jurisdiction_location' => $request->jurisdiction_location,
@@ -290,5 +333,34 @@ class LitigationRepository {
         } else {
             return false;
         }
+    }
+
+    public function generatePdf($id) {
+        $litigation = $this->findById($id);
+        $filename = Str::slug($litigation->name). '_'.date('YmdHis') . '.pdf';
+
+        $pdf =  $this->generateFromView( 'pdf.litigation.litigation',  [
+            'litigation' => $litigation,
+            'details' => $this->getDetails($litigation)
+        ],
+        $filename);
+
+        return $pdf;
+
+    }
+
+    public function getDetails($litigation) {
+        $details = [
+            'N° de dossier' => $litigation->case_number ?? null,
+            'Intitulé' => $litigation->name ?? null,
+            'Matière' => $litigation->nature?->name,
+            'Juridiction' => $litigation->jurisdiction?->name,
+            'Lieu de la juridiction' => $litigation->jurisdiction_location ?? null,
+            'Provisions à constituer' => (double) $litigation->estimated_amount,
+            'Provisions constituées' => collect($litigation->added_amount)->sum('amount'),
+            'Provisions reprises' => (double) $litigation->remaining_amount,
+        ];
+
+        return $details;
     }
 }

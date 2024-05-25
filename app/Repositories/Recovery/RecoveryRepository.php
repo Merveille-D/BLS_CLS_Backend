@@ -1,14 +1,18 @@
 <?php
 namespace App\Repositories\Recovery;
 
+use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use App\Concerns\Traits\Recovery\RecoveryFormFieldTrait;
 use App\Enums\Recovery\RecoveryStepEnum;
 use App\Http\Resources\Recovery\RecoveryResource;
 use App\Http\Resources\Recovery\RecoveryStepResource;
 use App\Models\Guarantee\ConvHypothec;
+use App\Models\Guarantee\Guarantee;
 use App\Models\Recovery\Recovery;
 use App\Models\Recovery\RecoveryDocument;
 use App\Models\Recovery\RecoveryStep;
+use App\Models\Recovery\RecoveryTask;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -17,7 +21,8 @@ use Illuminate\Support\Str;
 
 class RecoveryRepository
 {
-    use RecoveryFormFieldTrait;
+    use RecoveryFormFieldTrait, GeneratePdfTrait;
+
     public function __construct(
         private Recovery $recovery_model
     ) {
@@ -120,20 +125,19 @@ class RecoveryRepository
             'reference' => generateReference('REC', $this->recovery_model),
             'name' => $request->name,
             'has_guarantee' => $request->has_guarantee ?? 0,
-            'guarantee_id' => $request->guarantee_id ?? null
-            // 'contract_file' =>  $file_path,
-            // 'contract_id' =>  $request->contract_id,
+            'guarantee_id' => $request->guarantee_id ?? null,
+            'contract_id' =>  $request->contract_id ?? null,
         );
 
         $recovery = $this->recovery_model->create($data);
 
         if ($recovery->guarantee_id) {
-            $this->updateHypothecStatus($recovery);
+            $this->updateHypothecStatus($recovery, $request);
         }
 
         $this->generateSteps($recovery);
 
-        $this->updatePivotState($recovery);
+        $this->updateTaskState($recovery);
 
         return new RecoveryResource($recovery);
     }
@@ -150,7 +154,25 @@ class RecoveryRepository
             })
             ->get();
 
-        return $recovery->steps()->syncWithoutDetaching($all_steps);
+        return $this->saveTasks($all_steps, $recovery);
+
+        // return $recovery->steps()->syncWithoutDetaching($all_steps);
+    }
+
+    public function saveTasks($steps, $recovery) {
+        foreach ($steps as $key => $step) {
+            $task = new RecoveryTask();
+            $task->code = $step->code;
+            $task->title = $step->title;
+            $task->rank = $step->rank;
+            $task->type = 'recovery';
+            $task->step_id = $step->id;
+            $task->max_deadline = $step->code == 'created' ? now() : null;
+            $task->created_by = auth()->id();
+
+            $task->taskable()->associate($recovery);
+            $task->save();
+        }
     }
 
     public function continueForcedProcess($recovery) {
@@ -164,18 +186,25 @@ class RecoveryRepository
         }
     }
 
-    public function updatePivotState($recovery) {
-        $currentStep = $recovery->next_step; //because the current step is not  updated yet
-        if ($currentStep) {
-            $pivotValues = [
-                $currentStep->id => [
-                    'status' => true,
-                ]
-            ];
-            $recovery->steps()->syncWithoutDetaching($pivotValues);
+    public function updateTaskState($recovery) {
+        $currentTask = $recovery->next_task;
+        // dd($currentTask);
+        if ($currentTask) {
+            $currentTask->status = true;
+            if ($currentTask->completed_at == null)
+                $currentTask->completed_at = Carbon::now();
+            $currentTask->save();
         }
 
-        $this->continueForcedProcess($recovery);
+        $nextTask = $recovery->next_task;
+        if ($nextTask) {
+            $data = $this->setDeadline($recovery);
+
+            if ($data == [])
+                return false;
+
+            $nextTask->update($data);
+        }
     }
 
     public function updateProcess($request, $recovery) {
@@ -185,7 +214,7 @@ class RecoveryRepository
         if ($recovery) {
             $data = $this->updateProcessByState($request, $recovery);
 
-            $this->updatePivotState($recovery);
+            $this->updateTaskState($recovery);
             return new RecoveryResource($data);
         }
     }
@@ -324,8 +353,23 @@ class RecoveryRepository
         return new RecoveryResource($recovery);
     }
 
-    public function updateHypothecStatus($recovery) {
-        $guarantee = ConvHypothec::find($recovery->guarantee_id);
+    // union query of guarantee and conv_hypothec
+    public function getRealizableGuarantees() {
+        $hypothecs =  ConvHypothec::where('has_recovery', false)->select('id', 'reference', 'name', 'created_at')
+                        ->selectRaw("'hypothec' as type");
+        $guarantees = Guarantee::where('has_recovery', false)->select('id', 'reference', 'type', 'name', 'created_at');
+
+        $union = $guarantees->union($hypothecs)->orderByDesc('created_at')->get();
+        return $union;
+    }
+
+    public function updateHypothecStatus($recovery, $request) {
+        if ($request->type == 'conv_hypothec') {
+            $guarantee = ConvHypothec::find($recovery->guarantee_id);
+        }
+        else {
+            $guarantee = Guarantee::find($recovery->guarantee_id);
+        }
 
         if ($guarantee) {
             $guarantee->update([
@@ -333,4 +377,60 @@ class RecoveryRepository
             ]);
         }
     }
+
+    public function setDeadline($recovery) {
+        $nextTask = $recovery->next_task;
+        $defaultTask = $nextTask?->step;
+
+        $minDelay = $defaultTask->min_delay;
+        $maxDelay = $defaultTask->max_delay;
+        // dd($minDelay, $maxDelay);
+        $data = array();
+        //date by hypothec state
+        // $operationDate = $this->getOperationDateByState($guarantee);
+        $operationDate = $recovery->current_task->completed_at ?? null;
+        if ($operationDate == null)
+            return $data;
+
+        $operationDate = substr($operationDate, 0, 10);
+        $formatted_date = Carbon::createFromFormat('Y-m-d', $operationDate);
+
+        if ($minDelay && $maxDelay) {
+            $data['min_deadline'] = $formatted_date->copy()->addDays($minDelay);
+            $data['max_deadline'] = $formatted_date->copy()->addDays($maxDelay);
+            return $data;
+        }elseif ($minDelay) {
+            $data['min_deadline'] = $formatted_date->addDays($minDelay);
+            return $data;
+        }elseif ($maxDelay) {
+            $data['max_deadline'] = $formatted_date->addDays($maxDelay);
+            return $data;
+        }
+        return $data;
+    }
+
+    public function generatePdf($id) {
+        $recovery = $this->recovery_model->findOrFail($id);
+        $filename = Str::slug($recovery->name). '_'.date('YmdHis') . '.pdf';
+
+        $pdf =  $this->generateFromView( 'pdf.recovery.recovery',  [
+            'model' => $recovery,
+            'details' => $this->getDetails($recovery)
+        ],
+        $filename);
+
+        return $pdf;
+
+    }
+
+    public function getDetails($recovery) {
+        $details = [
+            'Référence' => $recovery->reference,
+            'type' => $recovery->readable_type,
+            'Intitulé' => $recovery->name ?? null,
+        ];
+
+        return $details;
+    }
+
 }

@@ -38,7 +38,7 @@ class LitigationTest extends TestCase
 
         $response = $this->actingAs($user)->post('api/litigation', [
             'name' => 'Test Litigation',
-            'reference' => 'LT-1234',
+            'case_number' => 'LT-1234',
             'nature_id' => LitigationSetting::whereType('nature')->first()->id,
             // 'party_id' => LitigationParty::first()->id,
             'jurisdiction_id' => LitigationSetting::whereType('jurisdiction')->first()->id,
@@ -64,7 +64,7 @@ class LitigationTest extends TestCase
         // Assert that the litigation was created in the database
         $this->assertDatabaseHas('litigations', [
             'name' => 'Test Litigation',
-            'reference' => 'LT-1234',
+            'case_number' => 'LT-1234',
         ]);
 
         // Assert that the litigation has tasks saved
@@ -76,4 +76,41 @@ class LitigationTest extends TestCase
             'taskable_id' => $response->json('data.id'),
         ]);
     }
+
+    /**
+     * test generate pdf
+     */
+    public function test_generate_litigation_pdf() : void {
+        $user = User::factory()->create();
+        $file = UploadedFile::fake()->create(
+            'document.pdf', 2048, 'application/pdf'
+        );
+
+        $litigation_creating = $this->actingAs($user)->post('api/litigation', [
+            'name' => 'Test Litigation',
+            'case_number' => 'LT-1234',
+            'nature_id' => LitigationSetting::whereType('nature')->first()->id,
+            'jurisdiction_id' => LitigationSetting::whereType('jurisdiction')->first()->id,
+            'jurisdiction_location' => 'Lagos',
+            'parties' => [
+                [
+                    'party_id' =>  LitigationParty::first()->id,
+                    'category' => 'intervenant',
+                    'type' => 'client',
+                ],
+            ],
+            'documents' => [
+                [
+                    'name' => 'Test Document',
+                    'file' => $file,
+                ],
+            ],
+        ]);
+
+        $id = $litigation_creating->json('data.id');
+
+        $response = $this->get('/api/litigation/generate-pdf/'.$id);
+        $response->assertStatus(200);
+    }
+
 }

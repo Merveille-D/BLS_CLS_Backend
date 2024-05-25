@@ -14,18 +14,22 @@ class AuditNotationRepository
     }
 
     public function all() {
-        return $this->audit_notation->whereNull('parent_id')->get()->makeHidden('performances')->map(function ($audit_notation) {
-            $audit_notation->indicators = $audit_notation->indicators;
-            $audit_notation->title = $audit_notation->title;
+        return $this->audit_notation->whereNull('parent_id')->get()
+            ->makeHidden(['performances', 'indicators'])
+            ->map(function ($audit_notation) {
 
-            $audit_notation->steps = $audit_notation->steps->map(function ($step) {
-                $step->indicators = $step->indicators;
-                return $step;
-            });
+                $audit_notation->title = $audit_notation->title;
 
-            return $audit_notation;
+                $hiddenAttributes = [
+                    'indicators', 'id', 'status', 'note', 'observation', 'date',
+                    'created_by', 'parent_id', 'created_at', 'updated_at'
+                ];
+                $audit_notation->makeHidden($hiddenAttributes);
+
+                return $audit_notation;
         });
     }
+
 
     /**
      * @param Request $request
@@ -34,10 +38,9 @@ class AuditNotationRepository
      */
     public function store($request) {
 
-        $request = $request->all();
-
         $check_module_notation = $this->audit_notation->where('module_id', $request['module_id'])
                                                             ->where('module', $request['module'])
+                                                            ->where('date', $request['date'])
                                                             ->first();
         $notes = $request['notes'];
         $sum = 0;
@@ -50,17 +53,17 @@ class AuditNotationRepository
 
             $transfers = $check_module_notation->transfers;
 
-            if($transfers->count() == 0) {
+            if($transfers->count() < 1) {
 
                 $this->updateAudit($check_module_notation, $request, $notes);
             }else {
 
                 $created_by_last_transfer = $transfers->last()->collaborators->first()->id;
 
-                if($created_by_last_transfer == Auth::user()->id) {
+                if($created_by_last_transfer === Auth::id()) {
 
-                    if($transfers->last()->status == true) {
-                        $request['created_by'] = Auth::user()->id;
+                    if($transfers->last()->status == false) {
+                        $request['created_by'] = Auth::id();
                         $request['parent_id'] = $check_module_notation->id;
                         $request['status'] = $transfers->last()->title;
 
@@ -85,7 +88,6 @@ class AuditNotationRepository
     }
 
     public function createAudit($request, $notes) {
-
 
         $audit_notation = $this->audit_notation->create($request);
 

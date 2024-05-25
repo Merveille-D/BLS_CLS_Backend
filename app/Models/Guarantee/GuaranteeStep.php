@@ -18,4 +18,9 @@ class GuaranteeStep extends Model
     protected $casts = [
         'extra' => 'array'
     ];
+
+    //children relationship
+    public function children() {
+        return $this->hasMany(GuaranteeStep::class, 'parent_id');
+    }
 }

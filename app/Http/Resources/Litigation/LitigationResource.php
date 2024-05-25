@@ -20,6 +20,7 @@ class LitigationResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'reference' => $this->reference,
+            'case_number' => $this->case_number,
             'state' => $this->state,
             'is_archived' => $this->is_archived ? true : false,
             'nature' => $this->nature ?? null,

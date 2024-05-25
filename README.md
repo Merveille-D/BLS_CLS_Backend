@@ -33,6 +33,13 @@ startsecs=0
 - sudo supervisorctl update
 - sudo supervisorctl start laravel-queue:*
 
+## Config LDAP
+- sudo apt install php-ldap
+- composer require directorytree/ldaprecord-laravel
+
 ## to do 
 
-complete a field that take step status in guarantee
+
+imprimer
+<!-- union list des garanties -->
+<!-- improve update has_recovery -->

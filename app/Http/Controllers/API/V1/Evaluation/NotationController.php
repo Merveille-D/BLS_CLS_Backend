@@ -24,7 +24,6 @@ class NotationController extends Controller
     public function index()
     {
         $notations = $this->notation->all();
-
         return api_response(true, "Evaluation du collaborateur", $notations, 200);
     }
 
@@ -34,12 +33,9 @@ class NotationController extends Controller
     public function store(StoreUpdateNotationRequest $request)
     {
         try {
-            $notation = $this->notation->store($request);
 
-            $data = $notation->toArray();
-            $data['indicators'] = $notation->indicators;
-            $data['collaborator'] = $notation->collaborator;
-            return api_response(true, "Succès de l'enregistrement de l'evaluation", $data, 200);
+            $notation = $this->notation->store($request->all());
+            return api_response(true, "Succès de l'enregistrement de l'evaluation", $notation, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement de l'evaluation", $e->errors(), 422);
         }
@@ -51,8 +47,12 @@ class NotationController extends Controller
     public function show(Notation $notation)
     {
         try {
+            $hiddenAttributes = [
+                'indicators', 'id', 'status', 'note', 'observation', 'date',
+                'created_by', 'parent_id', 'created_at', 'updated_at'
+            ];
+            $notation->makeHidden($hiddenAttributes);
             $data = $notation->toArray();
-            $data['indicators'] = $notation->indicators;
             $data['collaborator'] = $notation->collaborator;
 
             return api_response(true, "Infos de l'évaluation", $data, 200);

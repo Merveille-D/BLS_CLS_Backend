@@ -16,6 +16,7 @@ use App\Http\Controllers\API\V1\Guarantee\GuaranteeTaskController;
 // Route::resource('/conv-hypothec/steps', ConvHypothecStepController::class);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
+
     Route::get('/conv-hypothec/steps/{id}',  [ConvHypothecController::class, 'showSteps']);
     Route::get('/conv-hypothec/steps/{id}/{step_id}',  [ConvHypothecController::class, 'showOneStep']);
     Route::put('/conventionnal_hypothec/tasks/transfer/{task_id}', [ConvHypothecTaskController::class, 'transfer']);

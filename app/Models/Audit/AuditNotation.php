@@ -5,7 +5,11 @@ namespace App\Models\Audit;
 use App\Concerns\Traits\Alert\Alertable;
 use App\Concerns\Traits\Transfer\Transferable;
 use App\Models\Contract\Contract;
+use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
+use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\ManagementCommittee;
+use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use App\Models\Guarantee\ConvHypothec;
+use App\Models\Guarantee\Guarantee;
 use App\Models\Incident\Incident;
 use App\Models\Litigation\Litigation;
 use App\Models\Recovery\Recovery;
@@ -44,6 +48,11 @@ class AuditNotation extends Model
         'litigation' => Litigation::class,
         'incidents' => Incident::class,
         'recovery' => Recovery::class,
+        'general_meeting' => GeneralMeeting::class,
+        'session_administrators' => SessionAdministrator::class,
+        'management_committees' => ManagementCommittee::class,
+        'guarantees_security_movable' => Guarantee::class,
+        'guarantees_security_personal' => Guarantee::class,
     ];
 
     public function performances()
@@ -51,20 +60,19 @@ class AuditNotation extends Model
         return $this->hasMany(AuditNotationPerformance::class);
     }
 
-    public function auditPeriod()
-    {
-        return $this->belongsTo(AuditPeriod::class);
-    }
- 
     public function getStepsAttribute() {
 
-        return self::where('parent_id', $this->id)->get()->makeHidden('performances','steps');
+        $childrens = self::where('parent_id', $this->id)->get()->makeHidden(['performances', 'steps']);
+        $parent = collect([self::find($this->id)->makeHidden(['performances', 'steps'])]);
+
+        $steps = $parent->merge($childrens);
+
+        return $steps;
     }
 
     public function getIndicatorsAttribute() {
 
         $indicators = [];
-
         foreach ($this->performances as $audit_performance) {
             $indicators[] = [
                 'audit_performance_indicator' => $audit_performance->auditPerformanceIndicator,
@@ -77,7 +85,16 @@ class AuditNotation extends Model
     public function getTitleAttribute() {
 
         $model = self::MODELS_MODULES[$this->module];
-        $response = $model::find($this->module_id);
-        return $response->title;
+
+        $response = $model::query()
+                      ->when($this->module == 'guarantees_security_movable', function($query) {
+                          return $query->where('security', 'movable');
+                      })
+                      ->when($this->module == 'guarantees_security_personal', function($query) {
+                          return $query->where('security', 'personal');
+                      })
+                      ->where('id', $this->module_id)
+                      ->first();
+        return $response->libelle ?? $response->name ?? $response->title;
     }
 }

@@ -9,7 +9,10 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:sanctum')->get('/current-user', [UserController::class, 'current']);
 // Route::resource('users', UserController::class);
 
-Route::post('complete_transfers',[TransferController::class,'completeTransfer']);
+Route::group(['middleware' => 'auth:sanctum'], function () {
+
+    Route::post('complete_transfers',[TransferController::class,'completeTransfer']);
+});
 
 
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\AddRoleRequest;
+use App\Models\Auth\Permission;
 use App\Models\Auth\Role;
 use Illuminate\Http\Request;
 
@@ -19,17 +21,19 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AddRoleRequest $request)
     {
-        //validation request
-        $request->validate([
-            'name' => 'required|string'
-        ]);
+        try {
+            $role = Role::create(['name' => $request->name]);
+            //assign permissions
+            if($request['permissions'])
+                $role->givePermissionTo(Permission::whereIn('id', $request['permissions'])->get());
 
-        //create role
-        $role = Role::create(['name' => $request->name]);
+            return api_response(true, 'Role created successfully', $role, 201);
+        } catch (\Throwable $th) {
+            return api_error(false, $th->getMessage(), ['server' => $th->getMessage() ]);
+        }
 
-        return api_response(true, 'Role created successfully', $role, 201);
     }
 
     /**

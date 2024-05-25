@@ -139,6 +139,34 @@ class LitigationController extends Controller
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }
+
+    /**
+     * cumulation of provisions
+
+    */
+    public function provisionStats()
+    {
+        try {
+            $data = $this->litigationRepo->provisionStats();
+            return api_response($success = true, 'Statistiques des provisions', $data);
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
+        }
+    }
+
+    /**
+     * Generate pdf
+     */
+    public function generatePdf($litigation)
+    {
+        try {
+            $data = $this->litigationRepo->generatePdf($litigation);
+            return $data;
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      */
