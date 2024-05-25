@@ -95,7 +95,7 @@ class NotationRepository
 
         foreach ($notes as $note) {
             $notation->performances()->create([
-                'performance_indicator_id' => $note['audit_performance_indicator_id'],
+                'performance_indicator_id' => $note['performance_indicator_id'],
                 'note' => $note['note']
             ]);
         }
@@ -109,7 +109,7 @@ class NotationRepository
 
         foreach ($notes as $note) {
             $check_collaborator_notation->performances()->update([
-                'performance_indicator_id' => $note['audit_performance_indicator_id'],
+                'performance_indicator_id' => $note['performance_indicator_id'],
                 'note' => $note['note']
             ]);
         }
