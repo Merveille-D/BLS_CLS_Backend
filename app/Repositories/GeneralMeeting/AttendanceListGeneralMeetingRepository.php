@@ -50,7 +50,7 @@ class AttendanceListGeneralMeetingRepository
     public function generatePdf($general_meeting){
 
         $shareholders_id = $general_meeting->attendanceList()->pluck('shareholder_id');
-        $shareholders = Shareholder::whereIn('id', $shareholders_id);
+        $shareholders = Shareholder::whereIn('id', $shareholders_id)->get();
 
         $pdf =  $this->generateFromView( 'pdf.general_meeting.attendance',  ['shareholders' => $shareholders]);
         return $pdf;

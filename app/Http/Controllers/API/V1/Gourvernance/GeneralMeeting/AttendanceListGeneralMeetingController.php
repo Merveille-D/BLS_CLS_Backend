@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AttendanceListGeneralMeeting\AddAttendanceListGeneralMeetingRequest;
 use App\Http\Requests\AttendanceListGeneralMeeting\DeleteAttendanceListGeneralMeetingRequest;
+use App\Http\Requests\AttendanceListGeneralMeeting\ListAttendanceListGeneralMeetingRequest;
 use App\Models\Gourvernance\GeneralMeeting\AttendanceListGeneralMeeting;
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use App\Repositories\GeneralMeeting\AttendanceListGeneralMeetingRepository;
@@ -20,15 +21,15 @@ class AttendanceListGeneralMeetingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function list(Request $request)
+    public function list(ListAttendanceListGeneralMeetingRequest $request)
     {
         $attendance_list_general_meeting = AttendanceListGeneralMeeting::where('general_meeting_id', $request->general_meeting_id)->get();
         return api_response(true, "Liste de présence", $attendance_list_general_meeting , 200);
     }
 
-    public function generatePdf(Request $request) {
+    public function generatePdf(ListAttendanceListGeneralMeetingRequest $request) {
         try {
-
+            
             $general_meeting = GeneralMeeting::find($request['general_meeting_id']);
             $data = $this->attendance->generatePdf($general_meeting);
             return $data;
