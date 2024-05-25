@@ -49,7 +49,7 @@ class AuditNotationController extends Controller
         try {
 
             $hiddenAttributes = [
-                'indicators', 'id', 'status', 'note', 'observation', 'date',
+                'indicators', 'status', 'note', 'observation', 'date',
                 'created_by', 'parent_id', 'created_at', 'updated_at'
             ];
             $audit_notation->makeHidden($hiddenAttributes);

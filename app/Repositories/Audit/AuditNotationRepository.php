@@ -21,7 +21,7 @@ class AuditNotationRepository
                 $audit_notation->title = $audit_notation->title;
 
                 $hiddenAttributes = [
-                    'indicators', 'id', 'status', 'note', 'observation', 'date',
+                    'indicators', 'status', 'note', 'observation', 'date',
                     'created_by', 'parent_id', 'created_at', 'updated_at'
                 ];
                 $audit_notation->makeHidden($hiddenAttributes);
