@@ -131,6 +131,5 @@ class GeneralMeeting extends Model
         $task = $this->tasks()->whereNotNull('deadline')->orderBy('deadline', 'asc')->where('status', false)->first();
         return $task;
     }
-
 }
 
