@@ -25,7 +25,7 @@ class CheckCollaboratorsNotationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'date' => ['required','uuid'],
+            'date' => ['required','date'],
         ];
     }
 
