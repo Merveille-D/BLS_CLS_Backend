@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Gourvernance\BoardDirectors\Sessions;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +14,7 @@ class AttendanceListSessionAdministrator extends Model
         'grade',
         'lastname',
         'firstname',
-        'ca_administrator_id',
-        'session_administrator_id',
+        'administrator_id',
+        'session_id',
     ];
 }

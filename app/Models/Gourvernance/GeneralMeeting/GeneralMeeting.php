@@ -34,6 +34,13 @@ class GeneralMeeting extends Model
         'special',
     ];
 
+    const GENERAL_MEETING_TYPES_VALUE = [
+        'ordinary' => 'Ordinaire',
+        'extraordinary' => 'Extraordinaire',
+        'mixte' => 'Mixte',
+        'special' => 'Spéciale',
+    ];
+
     const GENERAL_MEETING_STATUS = [
         'pending',
         'post_ag',

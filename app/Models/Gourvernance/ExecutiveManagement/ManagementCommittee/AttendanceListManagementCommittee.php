@@ -15,6 +15,6 @@ class AttendanceListManagementCommittee extends Model
         'lastname',
         'firstname',
         'director_id',
-        'management_committee_id',
+        'session_id',
     ];
 }
