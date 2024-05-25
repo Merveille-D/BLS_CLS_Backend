@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('lastname')->nullable();
             $table->string('firstname')->nullable();
 
-            $table->uuid('shareholder_id')->nullable();
+            $table->uuid('shareholder_id');
+            $table->foreign('shareholder_id')->references('id')->on('shareholders')->onDelete('cascade');
 
             $table->uuid('general_meeting_id');
             $table->foreign('general_meeting_id')->references('id')->on('general_meetings')->onDelete('cascade');

@@ -29,7 +29,7 @@ class AttendanceListGeneralMeetingController extends Controller
 
     public function generatePdf(ListAttendanceListGeneralMeetingRequest $request) {
         try {
-            
+
             $general_meeting = GeneralMeeting::find($request['general_meeting_id']);
             $data = $this->attendance->generatePdf($general_meeting);
             return $data;

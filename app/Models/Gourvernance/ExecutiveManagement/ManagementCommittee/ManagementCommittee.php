@@ -15,7 +15,6 @@ class ManagementCommittee extends Model
         'libelle',
         'reference',
         'session_date',
-        'type',
         'status',
         'pv_file',
         'pv_file_date',
@@ -73,6 +72,11 @@ class ManagementCommittee extends Model
     public function fileUploads()
     {
         return $this->morphMany(GourvernanceDocument::class, 'uploadable');
+    }
+
+    public function attendanceList()
+    {
+        return $this->hasMany(AttendanceListManagementCommittee::class, 'session_id');
     }
 
     public function tasks()

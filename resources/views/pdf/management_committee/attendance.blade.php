@@ -4,8 +4,8 @@
     <div class="header">
         <div class="left">
             <h1>Liste de présence</h1>
-            <p class="subtitle bold">{{$session_administrator->libelle}} {{ $session_type }}</p>
-            <p class="subtitle italic underline">{{ $session_administrator->reference }}</p>
+            <p class="subtitle bold">CONSEIL DE DIRECTION</p>
+            <p class="subtitle italic underline">AG-01</p>
             <p class="subtitle gray">{{ date('d-m-Y H:i') }}</p>
         </div>
         <div class="right">
@@ -23,10 +23,10 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($shareholders as $shareholder)
+            @foreach ($directors as $director)
                 <tr>
-                    <td height="50px" >{{ $shareholder->name }}</td>
-                    <td>{{ $shareholder->percentage  }}</td>
+                    <td height="50px" >{{ $director->name }}</td>
+                    <td>{{ $director->percentage  }}</td>
                     <td></td>
                 </tr>
             @endforeach

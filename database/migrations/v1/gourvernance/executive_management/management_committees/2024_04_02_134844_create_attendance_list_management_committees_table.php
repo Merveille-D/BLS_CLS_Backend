@@ -19,11 +19,11 @@ return new class extends Migration
             $table->string('firstname')->nullable();
 
             $table->uuid('director_id');
-            // $table->foreign('director_id')->references('id')->on('directors')->onDelete('cascade');
+            $table->foreign('director_id')->references('id')->on('directors')->onDelete('cascade');
 
 
             $table->uuid('session_id');
-            // $table->foreign('session_id')->references('id')->on('management_committees')->onDelete('cascade');
+            $table->foreign('session_id')->references('id')->on('management_committees')->onDelete('cascade');
 
             $table->timestamps();
         });

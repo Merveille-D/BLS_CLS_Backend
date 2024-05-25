@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Director;
+namespace App\Http\Requests\AttendanceListManagementCommittee;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class AddDirectorRequest extends FormRequest
+class ListAttendanceListManagementCommitteeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,7 @@ class AddDirectorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'birthdate' => 'required|date',
-            'birthplace' => 'required|string|max:255',
-            'nationality' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-
-            // 'appointment_date' => 'required|date',
-            // 'renewal_date' => 'required|date',
-            // 'expiry_date' => 'required|date',
+            'session_id' => ['required', 'uuid'],
         ];
     }
 
