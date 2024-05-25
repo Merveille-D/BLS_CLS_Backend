@@ -77,9 +77,21 @@ class SessionAdministrator extends Model
         'attendance_list_file' => 'attendance_list_file_date',
     ];
 
+    const SESSION_MEETING_TYPES_VALUES = [
+        'first_quarter' => '1er trimestre',
+        'second_quarter' => '2ème trimestre',
+        'third_quarter' => '3ème trimestre',
+        'fourth_quarter' => '4ème trimestre',
+    ];
+
     public function fileUploads()
     {
         return $this->morphMany(GourvernanceDocument::class, 'uploadable');
+    }
+
+    public function attendanceList()
+    {
+        return $this->hasMany(AttendanceListSessionAdministrator::class, 'session_id');
     }
 
     public function tasks()

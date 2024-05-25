@@ -18,16 +18,15 @@ class AppServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom([
             database_path('migrations/base'),
 
+            database_path('migrations/v1/gourvernance/general_meeting/shareholder'),
+            database_path('migrations/v1/gourvernance/general_meeting'),
+
             database_path('migrations/v1/gourvernance/board_directors/administrators'),
             database_path('migrations/v1/gourvernance/board_directors/sessions'),
 
             database_path('migrations/v1/gourvernance/executive_management/directors'),
             database_path('migrations/v1/gourvernance/executive_management/management_committees'),
 
-            database_path('migrations/v1/gourvernance/general_meeting'),
-
-            database_path('migrations/v1/gourvernance/shareholder'),
-            
             database_path('migrations/v1/gourvernance/bank_infos'),
 
             database_path('migrations/v1/gourvernance'),

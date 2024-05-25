@@ -15,11 +15,14 @@ use App\Http\Controllers\API\V1\Evaluation\NotationController;
 use App\Http\Controllers\API\V1\Evaluation\PerformanceIndicatorController;
 use App\Http\Controllers\API\V1\Gourvernance\BankInfo\BankInfoController;
 use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Administrators\AdministratorController;
+use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions\AttendanceListSessionAdministratorController;
 use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions\SessionAdministratorController;
 use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions\TaskSessionAdministratorController;
 use App\Http\Controllers\API\V1\Gourvernance\ExecutiveManagement\Directors\DirectorController;
+use App\Http\Controllers\API\V1\Gourvernance\ExecutiveManagement\ManagementCommittee\AttendanceListManagementCommitteeController;
 use App\Http\Controllers\API\V1\Gourvernance\ExecutiveManagement\ManagementCommittee\ManagementCommitteeController;
 use App\Http\Controllers\API\V1\Gourvernance\ExecutiveManagement\ManagementCommittee\TaskManagementCommitteeController;
+use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\AttendanceListGeneralMeetingController;
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\GeneralMeetingController;
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\TaskGeneralMeetingController;
 use App\Http\Controllers\API\V1\Gourvernance\Shareholder\ActionTransferController;
@@ -53,7 +56,24 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::delete('delete_array_task_general_meetings', [TaskGeneralMeetingController::class, 'deleteArrayTaskGeneralMeeting'] );
     Route::put('update_status_task_general_meetings', [TaskGeneralMeetingController::class, 'updateStatusTaskGeneralMeeting'] );
 
-    // Route::resource('attendance_list_general_meetings', AttendanceListGeneralMeetingController::class);
+    // Liste de présence AG
+    Route::get('list_attendance_general_meetings', [AttendanceListGeneralMeetingController::class, 'list'] );
+    Route::post('add_attendance_general_meetings', [AttendanceListGeneralMeetingController::class, 'add'] );
+    Route::post('delete_attendance_general_meetings', [AttendanceListGeneralMeetingController::class, 'delete'] );
+    Route::get('generate_pdf_attendance_general_meetings', [AttendanceListGeneralMeetingController::class, 'generatePdf'] );
+
+    // Liste de présence CA
+    Route::get('list_attendance_session_administrators', [AttendanceListSessionAdministratorController::class, 'list'] );
+    Route::post('add_attendance_session_administrators', [AttendanceListSessionAdministratorController::class, 'add'] );
+    Route::post('delete_attendance_session_administrators', [AttendanceListSessionAdministratorController::class, 'delete'] );
+    Route::get('generate_pdf_attendance_session_administrators', [AttendanceListSessionAdministratorController::class, 'generatePdf'] );
+
+    // Liste de présence CODIR
+    Route::get('list_attendance_management_committees', [AttendanceListManagementCommitteeController::class, 'list'] );
+    Route::post('add_attendance_management_committees', [AttendanceListManagementCommitteeController::class, 'add'] );
+    Route::post('delete_attendance_management_committees', [AttendanceListManagementCommitteeController::class, 'delete'] );
+    Route::get('generate_pdf_attendance_management_committees', [AttendanceListManagementCommitteeController::class, 'generatePdf'] );
+
 
     Route::get('/ca_administrators/settings', [AdministratorController::class, 'settings']);
     Route::resource('/ca_administrators', AdministratorController::class);
@@ -113,6 +133,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('collaborators', CollaboratorController::class);
     Route::resource('evaluation_periods', EvaluationPeriodController::class);
     Route::get('/get_all_notations', [NotationController::class, 'all'] );
+    Route::post('/evaluation_create_transfers', [NotationController::class, 'createTransfer'] );
+    Route::get('/collaborators_for_notation', [NotationController::class, 'getCollaborationNotation'] );
+
 
 
     // AUDIT

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\AttendanceListGeneralMeeting;
+namespace App\Http\Requests\AttendanceListSessionAdministrator;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateAttendanceListGeneralMeetingRequest extends FormRequest
+class ListAttendanceListSessionAdministratorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,7 @@ class UpdateAttendanceListGeneralMeetingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'general_meeting_id' => ['required', 'uuid'],
-            'shareholder_id' => ['uuid'],
-            'grade' => ['string'],
-            'lastname' => ['string'],
-            'firstname' => ['string'],
+            'session_id' => ['required', 'uuid'],
         ];
     }
 

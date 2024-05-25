@@ -2,6 +2,7 @@
 namespace App\Repositories\Evaluation;
 
 use App\Concerns\Traits\Transfer\AddTransferTrait;
+use App\Models\Evaluation\Collaborator;
 use App\Models\Evaluation\Notation;
 use Illuminate\Support\Facades\Auth;
 
@@ -131,5 +132,13 @@ class NotationRepository
         $this->add_transfer($notation, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
 
         return $notation;
+    }
+
+    public function getCollaborationNotation($request) {
+
+        $collaboratorIdsWithEvaluation = Notation::where('date', $request->date)->pluck('collaborator_id');
+        $collaboratorsWithoutEvaluation = Collaborator::whereNotIn('id', $collaboratorIdsWithEvaluation)->get();
+
+        return $collaboratorsWithoutEvaluation;
     }
 }
