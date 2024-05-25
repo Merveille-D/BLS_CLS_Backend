@@ -136,7 +136,7 @@ class NotationRepository
 
     public function getCollaborationNotation($request) {
 
-        $collaboratorIdsWithEvaluation = Notation::where('date', $request->date)->pluck('collaborator_id');
+        $collaboratorIdsWithEvaluation = Notation::where('date', $request['date'])->pluck('collaborator_id');
         $collaboratorsWithoutEvaluation = Collaborator::whereNotIn('id', $collaboratorIdsWithEvaluation)->get();
 
         return $collaboratorsWithoutEvaluation;

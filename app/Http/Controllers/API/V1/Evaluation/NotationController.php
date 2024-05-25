@@ -95,7 +95,7 @@ class NotationController extends Controller
         try {
             $notation = $this->notation->getCollaborationNotation($request->all());
 
-            return api_response(true, "Collaborateurs de ", $notation, 200);
+            return api_response(true, "Collaborateurs disponible", $notation, 200);
         } catch (ValidationException $e) {
             return api_response(false, "Echec de la création du transfert", $e->errors(), 422);
         }
