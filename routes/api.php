@@ -134,6 +134,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('evaluation_periods', EvaluationPeriodController::class);
     Route::get('/get_all_notations', [NotationController::class, 'all'] );
     Route::post('/evaluation_create_transfers', [NotationController::class, 'createTransfer'] );
+    Route::get('/collaborators_for_notation', [NotationController::class, 'getCollaborationNotation'] );
 
 
 

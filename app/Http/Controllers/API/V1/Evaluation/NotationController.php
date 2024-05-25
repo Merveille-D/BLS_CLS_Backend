@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\Evaluation;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Notation\CheckCollaboratorsNotationRequest;
 use App\Http\Requests\Notation\ListNotationRequest;
 use App\Http\Requests\Notation\StoreTransferNotationRequest;
 use App\Http\Requests\Notation\StoreUpdateNotationRequest;
@@ -83,6 +84,18 @@ class NotationController extends Controller
             $notation = $this->notation->createTransfer($request->all());
 
             return api_response(true, "Transfert de la tache avec succès", $notation, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de la création du transfert", $e->errors(), 422);
+        }
+    }
+
+
+    public function getCollaborationNotation(CheckCollaboratorsNotationRequest $request)
+    {
+        try {
+            $notation = $this->notation->getCollaborationNotation($request->all());
+
+            return api_response(true, "Collaborateurs de ", $notation, 200);
         } catch (ValidationException $e) {
             return api_response(false, "Echec de la création du transfert", $e->errors(), 422);
         }
