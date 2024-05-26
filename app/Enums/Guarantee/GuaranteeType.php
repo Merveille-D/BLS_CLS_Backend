@@ -2,6 +2,8 @@
 namespace App\Enums\Guarantee;
 
 enum GuaranteeType : string {
+    const MORTGAGE = 'mortgage'; //hypothèque
+
     const BONDING = 'bonding'; //cautionnement
     const AUTONOMOUS = 'autonomous'; //garantie autonome
     const AUTONOMOUS_COUNTER = 'autonomous_counter'; //contre garantie autonome
@@ -15,6 +17,8 @@ enum GuaranteeType : string {
 
 
     const TYPES = [
+        GuaranteeType::MORTGAGE,
+
         GuaranteeType::AUTONOMOUS,
         GuaranteeType::BONDING,
         GuaranteeType::AUTONOMOUS_COUNTER,
@@ -28,6 +32,8 @@ enum GuaranteeType : string {
     ];
 
     const CODES = [
+        GuaranteeType::MORTGAGE => 'HC',
+
         GuaranteeType::AUTONOMOUS => 'GP',
         GuaranteeType::BONDING => 'GP',
         GuaranteeType::AUTONOMOUS_COUNTER => 'GP',
