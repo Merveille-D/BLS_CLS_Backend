@@ -4,10 +4,8 @@ namespace App\Http\Controllers\API\V1\Audit;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuditNotation\CheckFoldersAuditNotationRequest;
-use App\Http\Requests\AuditNotation\ListAuditNotationRequest;
+use App\Http\Requests\AuditNotation\StoreAuditNotationRequest;
 use App\Http\Requests\AuditNotation\StoreTransferAuditNotationRequest;
-use App\Http\Requests\AuditNotation\StoreUpdateAuditNotationRequest;
-use App\Http\Requests\Transfer\AddTransferRequest;
 use App\Models\Audit\AuditNotation;
 use App\Repositories\Audit\AuditNotationRepository;
 use Illuminate\Http\Request;
@@ -22,25 +20,29 @@ class AuditNotationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $audit_notations = Notation::all()->map(function ($audit_notation) {
+        $audit_notations = AuditNotation::whereNull('parent_id')
+        ->when($request->module !== null, function($query) use ($request) {
+            $query->where('module', $request->module);
+        })
+        ->get()->map(function ($audit_notation) {
             return $this->audit_notation->auditNotationRessource($audit_notation);
         });
-        return api_response(true, "Liste des evaluations", $audit_notations, 200);
+        return api_response(true, "Liste des audits", $audit_notations, 200);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUpdateAuditNotationRequest $request)
+    public function store(StoreAuditNotationRequest $request)
     {
         try {
             $audit_notation = $this->audit_notation->store($request->all());
             $audit_notation = $this->audit_notation->auditNotationRessource($audit_notation);
-            return api_response(true, "Succès de l'enregistrement de l'evaluation", $audit_notation, 200);
+            return api_response(true, "Succès de l'enregistrement de l'audit", $audit_notation, 200);
         }catch (ValidationException $e) {
-                return api_response(false, "Echec de l'enregistrement de l'evaluation", $e->errors(), 422);
+                return api_response(false, "Echec de l'enregistrement de l'audit", $e->errors(), 422);
         }
     }
 
@@ -51,9 +53,9 @@ class AuditNotationController extends Controller
     {
         try {
             $data = $this->audit_notation->auditNotationRessource($audit_notation);
-            return api_response(true, "Infos de l'évaluation", $data, 200);
+            return api_response(true, "Infos de l'audit", $data, 200);
         }catch( ValidationException $e ) {
-            return api_response(false, "Echec de la récupération des infos de l'évaluation", $e->errors(), 422);
+            return api_response(false, "Echec de la récupération des infos de l'audit", $e->errors(), 422);
         }
     }
 
@@ -66,9 +68,9 @@ class AuditNotationController extends Controller
             $audit_notation = $this->audit_notation->update($audit_notation, $request->all());
             $audit_notation = $this->audit_notation->auditNotationRessource($audit_notation);
 
-            return api_response(true, "Succès de la mise à jour de l'evaluation", $audit_notation, 200);
+            return api_response(true, "Succès de la mise à jour de l'audit", $audit_notation, 200);
         }catch (ValidationException $e) {
-                return api_response(false, "Echec de la mise à jour de l'evaluation", $e->errors(), 422);
+                return api_response(false, "Echec de la mise à jour de l'audit", $e->errors(), 422);
         }
     }
 
@@ -78,8 +80,8 @@ class AuditNotationController extends Controller
     public function destroy(AuditNotation $audit_notation)
     {
         try {
-            // $this->audit_notation->delete($audit_notation);
-            return api_response(true, "Evaluation supprimé avec succès", $audit_notation, 200);
+            $this->audit_notation->delete($audit_notation);
+            return api_response(true, "Audit supprimé avec succès", $audit_notation, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de la suppression", $e->errors(), 422);
         }
@@ -88,20 +90,9 @@ class AuditNotationController extends Controller
     public function createTransfer(StoreTransferAuditNotationRequest $request)
     {
         try {
-            $audit_notation = $this->audit_audit_notation->createTransfer($request->all());
+            $audit_notation = $this->audit_notation->createTransfer($request->all());
 
-            return api_response(true, "Transfert de la tache avec succès", $audit_notation, 200);
-        } catch (ValidationException $e) {
-            return api_response(false, "Echec de la création du transfert", $e->errors(), 422);
-        }
-    }
-
-    public function getFoldersAuditNotation(CheckFoldersAuditNotationRequest $request)
-    {
-        try {
-            $audit_notation = $this->audit_audit_notation->getFoldersAuditNotation($request->all());
-
-            return api_response(true, "Dossiers disponible", $audit_notation, 200);
+            return api_response(true, "Transfert de l'audit avec succès", $audit_notation, 200);
         } catch (ValidationException $e) {
             return api_response(false, "Echec de la création du transfert", $e->errors(), 422);
         }
