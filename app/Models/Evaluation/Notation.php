@@ -4,6 +4,7 @@ namespace App\Models\Evaluation;
 
 use App\Concerns\Traits\Alert\Alertable;
 use App\Concerns\Traits\Transfer\Transferable;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -54,5 +55,10 @@ class Notation extends Model
 
         }
         return $indicators;
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }
