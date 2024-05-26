@@ -89,4 +89,9 @@ class AuditNotation extends Model
                       ->first();
         return $response->libelle ?? $response->name ?? $response->title;
     }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 }
