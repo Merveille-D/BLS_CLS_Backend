@@ -131,4 +131,14 @@ class NotationRepository
 
         return $notation;
     }
+
+    public function delete(Notation $notation) {
+        $transfer_evaluations = Notation::where('parent_id', $notation->id)->get();
+
+        $transfer_evaluations->each(function($evaluation) {
+            $evaluation->delete();
+        });
+
+        $notation->delete();
+    }
 }

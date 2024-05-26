@@ -21,7 +21,7 @@ class NotationController extends Controller
      */
     public function index()
     {
-        $notations = Notation::all()->map(function ($notation) {
+        $notations = Notation::whereNull('parent_id')->get()->map(function ($notation) {
             return $this->notation->notationRessource($notation);
         });
         return api_response(true, "Liste des evaluations", $notations, 200);
@@ -75,7 +75,7 @@ class NotationController extends Controller
     public function destroy(Notation $notation)
     {
         try {
-            // $this->notation->delete($notation);
+            $this->notation->delete($notation);
             return api_response(true, "Evaluation supprimé avec succès", $notation, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de la suppression", $e->errors(), 422);
