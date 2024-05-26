@@ -28,19 +28,11 @@ class AuditNotation extends Model
         'observation',
         'module_id',
         'module',
-        'date',
         'created_by',
         'parent_id',
     ];
 
-    protected $appends = ['indicators', 'steps'];
-
-    const STATUS =[
-        'evaluated',
-        'verified',
-        'validated',
-        'archived',
-    ];
+    protected $appends = ['indicators'];
 
     const MODELS_MODULES = [
         'contracts'=> Contract::class,
@@ -60,14 +52,14 @@ class AuditNotation extends Model
         return $this->hasMany(AuditNotationPerformance::class);
     }
 
-    public function getStepsAttribute() {
+    public function getLastAuditNotationAttribute(){
 
-        $childrens = self::where('parent_id', $this->id)->get()->makeHidden(['performances', 'steps']);
-        $parent = collect([self::find($this->id)->makeHidden(['performances', 'steps'])]);
+        $transfer_notation = self::where('parent_id', $this->id)
+        ->whereNotNull('note')
+        ->orderBy('created_at', 'desc')
+        ->first();
 
-        $steps = $parent->merge($childrens);
-
-        return $steps;
+        return ($transfer_notation) ? $transfer_notation : self::find($this->id);
     }
 
     public function getIndicatorsAttribute() {
