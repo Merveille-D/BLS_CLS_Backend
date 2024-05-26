@@ -26,8 +26,8 @@ class StoreTransferAuditNotationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'module_id' => ['required','uuid'],
-            'module' => ['required',Rule::in(AuditPerformanceIndicator::MODULES) ],
+            'audit_notation_id' => ['required','uuid'],
+
             'forward_title' => ['string', 'required'],
             'deadline_transfer' => ['date', 'required'],
             'description' => ['string', 'required'],

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->uuid('performance_indicator_id');
             $table->foreign('performance_indicator_id')->references('id')->on('audit_performance_indicators')->onDelete('cascade');
 
-            $table->string('note');
+            $table->string('note')->nullable();
 
             $table->timestamps();
         });

@@ -22,8 +22,6 @@ return new class extends Migration
 
             $table->uuid('parent_id')->nullable();
 
-            $table->date('date');
-
             $table->uuid('module_id');
             $table->enum('module', AuditPerformanceIndicator::MODULES);
 

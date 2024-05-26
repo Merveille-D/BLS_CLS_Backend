@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transfer_documents', function (Blueprint $table) {
+        Schema::create('transfer_evaluations', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name')->nullable();
-            $table->string('file');
-            $table->uuidMorphs('uploadable');
+            $table->uuid('evaluation_id');
+            $table->uuid('transfer_id')->nullable();
+            $table->foreign('transfer_id')->references('id')->on('transfers');
             $table->timestamps();
         });
     }

@@ -47,4 +47,14 @@ class Transfer extends Model
     {
         return $this->morphMany(TransferDocument::class, 'uploadable');
     }
+
+    public function audit()
+    {
+        return $this->hasMany(TransferAudit::class);
+    }
+
+    public function evaluation()
+    {
+        return $this->hasMany(TransferEvaluation::class);
+    }
 }

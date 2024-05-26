@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\Audit;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AuditNotation\CheckFoldersAuditNotationRequest;
 use App\Http\Requests\AuditNotation\ListAuditNotationRequest;
 use App\Http\Requests\AuditNotation\StoreTransferAuditNotationRequest;
 use App\Http\Requests\AuditNotation\StoreUpdateAuditNotationRequest;
@@ -84,6 +85,17 @@ class AuditNotationController extends Controller
             $audit_notation = $this->audit_notation->createTransfer($request->all());
 
             return api_response(true, "Transfert de la tache avec succès", $audit_notation, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de la création du transfert", $e->errors(), 422);
+        }
+    }
+
+    public function getFoldersAuditNotation(CheckFoldersAuditNotationRequest $request)
+    {
+        try {
+            $notation = $this->audit_notation->getFoldersAuditNotation($request->all());
+
+            return api_response(true, "Dossiers disponible", $notation, 200);
         } catch (ValidationException $e) {
             return api_response(false, "Echec de la création du transfert", $e->errors(), 422);
         }
