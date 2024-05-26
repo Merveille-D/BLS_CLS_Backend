@@ -18,6 +18,8 @@
         <thead>
             <tr>
                 <th>Nom & Prénoms</th>
+                <th>Qualité</th>
+                <th>Poste</th>
                 <th>Emargement</th>
                 <th>Observation</th>
             </tr>
@@ -26,7 +28,9 @@
             @foreach ($directors as $director)
                 <tr>
                     <td height="50px" >{{ $director->name }}</td>
-                    <td>{{ $director->percentage  }}</td>
+                    <td>{{ $director->quality  }}</td>
+                    <td>{{ $director->poste  }}</td>
+                    <td></td>
                     <td></td>
                 </tr>
             @endforeach

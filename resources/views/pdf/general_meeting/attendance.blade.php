@@ -18,6 +18,8 @@
         <thead>
             <tr>
                 <th>Nom & Prénoms</th>
+                <th>Qualité</th>
+                <th>Nombre de parts</th>
                 <th>Emargement</th>
                 <th>Observation</th>
             </tr>
@@ -26,7 +28,9 @@
             @foreach ($shareholders as $shareholder)
                 <tr>
                     <td height="50px" >{{ $shareholder->name }}</td>
-                    <td>{{ $shareholder->percentage  }}</td>
+                    <td></td>
+                    <td>{{ $shareholder->actions_number  }}</td>
+                    <td></td>
                     <td></td>
                 </tr>
             @endforeach
