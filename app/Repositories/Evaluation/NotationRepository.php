@@ -32,11 +32,16 @@ class NotationRepository
             return $transfer;
         });
 
+        $notation->original_note = $notation->note;
+        $notation->original_indicators = $notation->indicators;
+        $notation->original_status = $notation->status;
+
+        $notation->last_status = $notation->last_notation->status;
         $notation->last_note = $notation->last_notation->note;
         $notation->last_indicators = $notation->last_notation->indicators;
 
         $hiddenAttributes = [
-            'collaborator_id', 'performances', 'indicators', 'status', 'note',
+            'collaborator_id', 'performances',
             'observation', 'parent_id', 'created_at', 'updated_at'
         ];
         $notation->makeHidden($hiddenAttributes);
