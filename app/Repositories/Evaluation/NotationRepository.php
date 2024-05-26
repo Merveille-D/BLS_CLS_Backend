@@ -26,6 +26,9 @@ class NotationRepository
             ];
             $transfer->notation->makeHidden($hiddenAttributes);
 
+            $transfer->sender = $transfer->sender;
+            $transfer->collaborators = $transfer->collaborators;
+
             return $transfer;
         });
 
