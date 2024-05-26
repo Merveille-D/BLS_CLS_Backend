@@ -103,7 +103,7 @@ class NotationRepository
             ]);
         }
 
-        $transfer->evaluations()->create([
+        $transfer->evaluation()->create([
             'evaluation_id' => $new_notation->id,
         ]);
 
