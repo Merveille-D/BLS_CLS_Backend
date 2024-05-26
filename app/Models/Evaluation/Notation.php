@@ -17,16 +17,8 @@ class Notation extends Model
         'status',
         'observation',
         'collaborator_id',
-        'date',
         'created_by',
         'parent_id',
-    ];
-
-    const STATUS =[
-        'evaluated',
-        'verified',
-        'validated',
-        'archived'
     ];
 
     protected $appends = ['indicators'];
@@ -43,20 +35,12 @@ class Notation extends Model
 
     public function getLastNotationAttribute(){
 
-        $transfer_notation = Notation::where('parent_id', $this->id)
+        $transfer_notation = self::where('parent_id', $this->id)
         ->whereNotNull('note')
         ->orderBy('created_at', 'desc')
         ->first();
 
         return ($transfer_notation) ? $transfer_notation : self::find($this->id);
-    }
-
-    public function getTransferEvaluationAttribute()
-    {
-        dd(1);
-        dd($this->transfers);
-        return $this->transfers->evaluations;
-
     }
 
     public function getIndicatorsAttribute() {

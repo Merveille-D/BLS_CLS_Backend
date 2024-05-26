@@ -36,8 +36,8 @@ class NotationRepository
         $notation->last_indicators = $notation->last_notation->indicators;
 
         $hiddenAttributes = [
-            'collaborator_id', 'performances', 'indicators', 'status', 'note', 'observation',
-            'created_by', 'parent_id', 'created_at', 'updated_at'
+            'collaborator_id', 'performances', 'indicators', 'status', 'note',
+            'observation', 'parent_id', 'created_at', 'updated_at'
         ];
         $notation->makeHidden($hiddenAttributes);
 
