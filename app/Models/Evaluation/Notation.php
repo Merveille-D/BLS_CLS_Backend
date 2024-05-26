@@ -22,14 +22,14 @@ class Notation extends Model
         'parent_id',
     ];
 
-    protected $appends = ['indicators', 'steps'];
-
     const STATUS =[
         'evaluated',
         'verified',
         'validated',
         'archived'
     ];
+
+    protected $appends = ['indicators'];
 
     public function collaborator()
     {
@@ -41,14 +41,22 @@ class Notation extends Model
         return $this->hasMany(NotationPerformance::class);
     }
 
-     public function getStepsAttribute() {
+    public function getLastNotationAttribute(){
 
-        $childrens = self::where('parent_id', $this->id)->get()->makeHidden(['performances', 'steps']);
-        $parent = collect([self::find($this->id)->makeHidden(['performances', 'steps'])]);
+        $transfer_notation = Notation::where('parent_id', $this->id)
+        ->whereNotNull('note')
+        ->orderBy('created_at', 'desc')
+        ->first();
 
-        $steps = $parent->merge($childrens);
+        return ($transfer_notation) ? $transfer_notation : self::find($this->id);
+    }
 
-        return $steps;
+    public function getTransferEvaluationAttribute()
+    {
+        dd(1);
+        dd($this->transfers);
+        return $this->transfers->evaluations;
+
     }
 
     public function getIndicatorsAttribute() {

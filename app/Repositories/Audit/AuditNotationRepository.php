@@ -38,10 +38,11 @@ class AuditNotationRepository
      */
     public function store($request) {
 
-        $check_module_notation = $this->audit_notation->where('module_id', $request['module_id'])
-                                                            ->where('module', $request['module'])
-                                                            ->where('date', $request['date'])
-                                                            ->first();
+        $check_module_notation = $this->audit_notation->whereNull('parent_id')
+                                                        ->where('module_id', $request['module_id'])
+                                                        ->where('module', $request['module'])
+                                                        ->where('date', $request['date'])
+                                                        ->first();
         $notes = $request['notes'];
         $sum = 0;
         foreach ($notes as $note) {
@@ -115,14 +116,20 @@ class AuditNotationRepository
 
     public function createTransfer($request) {
 
-        $audit_notation = $this->audit_notation->where('module_id', $request['module_id'])
-                                                            ->where('module', $request['module'])
-                                                            ->first();
-        if($audit_notation) {
-            $this->add_transfer($audit_notation, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
-        }
-
+        $audit_notation = $this->audit_notation->find($request['audit_notation_id']);
+        $this->add_transfer($audit_notation, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
         return $audit_notation;
+    }
+
+    public function getFoldersAuditNotation($request) {
+
+        $folderIdsWithAudit = AuditNotation::whereNull('parent_id')->where('date', $request['date'])->where('module', $request['module'])->pluck('module_id');
+
+        $model = AuditNotation::MODELS_MODULES[$request['module']];
+        $foldersWithoutAudit = $model::query()->whereNotIn('id', $folderIdsWithAudit)->get();
+
+        return $foldersWithoutAudit;
+
     }
 
 }

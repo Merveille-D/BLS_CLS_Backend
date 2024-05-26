@@ -65,11 +65,13 @@ class TransferRepository
         $model = $transfer->transferable;
 
         if($request['type'] === 'audit') {
-            $this->audit->store($request);
+            $request['audit_notation_id'] = $transfer->audit->first()->audit_id;
+            $this->audit->completeTransfer($request);
         }
 
         if($request['type'] === 'evaluation') {
-            $this->evaluation->store($request);
+            $request['notation_id'] = $transfer->evaluation->first()->evaluation_id;
+            $this->evaluation->completeTransfer($request);
         }
 
         if($request['type'] === 'contract') {
@@ -82,7 +84,7 @@ class TransferRepository
                 $transfer->fileTransfers()->save($fileUpload);
             }
 
-            $model->update([
+            $transfer->transferable->update([
                 'status' => $transfer->title,
             ]);
         }
