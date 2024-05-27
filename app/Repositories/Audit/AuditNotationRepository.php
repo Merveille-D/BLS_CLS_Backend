@@ -53,7 +53,7 @@ class AuditNotationRepository
         $audit_notation->original_indicators = $audit_notation->indicators;
         $audit_notation->original_status = $audit_notation->status;
 
-        $audit_notation->last_status = $audit_notation->last_notation->status;
+        $audit_notation->last_status = $audit_notation->last_audit_notation->status;
         $audit_notation->last_note = $audit_notation->last_audit_notation->note;
         $audit_notation->last_indicators = $audit_notation->last_audit_notation->indicators;
 
