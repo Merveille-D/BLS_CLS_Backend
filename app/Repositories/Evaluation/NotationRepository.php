@@ -77,9 +77,9 @@ class NotationRepository
         $request['note'] = array_sum(array_column($request['notes'], 'note'));
         $request['created_by'] = Auth::user()->id;
 
-        $notation->update($request);
+        $notation->last_notation->update($request);
 
-        $this->updateNotes($notation, $request['notes']);
+        $this->updateNotes($notation->last_notation, $request['notes']);
 
         return $notation;
     }
