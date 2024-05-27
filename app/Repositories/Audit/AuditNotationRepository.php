@@ -95,9 +95,9 @@ class AuditNotationRepository
         $request['note'] = array_sum(array_column($request['notes'], 'note'));
         $request['created_by'] = Auth::user()->id;
 
-        $audit_notation->update($request);
+        $audit_notation->last_audit_notation->update($request);
 
-        $this->updateNotes($audit_notation, $request['notes']);
+        $this->updateNotes($audit_notation->last_audit_notation, $request['notes']);
         return $audit_notation;
     }
 
