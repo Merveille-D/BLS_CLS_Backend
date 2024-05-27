@@ -15,7 +15,6 @@ use App\Models\Auth\Role;
 |--------------------------------------------------------------------------
 */
 //contentieux
-Route::get('/litigation/generate-pdf/{litigation}', [LitigationController::class, 'generatePdf']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
@@ -35,6 +34,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // Route::put('/litigation/update-remaining-amount/{id}',  [LitigationController::class, 'updateRemainingAmount']);
     Route::get('/litigation/provisions/stats',  [LitigationController::class, 'provisionStats']);
 
-
+    Route::get('/litigation/generate-pdf/{litigation}', [LitigationController::class, 'generatePdf']);
     Route::resource('/litigation', LitigationController::class);
 });

@@ -1,8 +1,8 @@
 @extends('pdf.layout')
 @section('content')
 <div class="container">
-    <x-pdf-header :data="$litigation" :bankLogo="$bankLogo" :blsLogo="$base64Image" />
-    <h2>Détail du dossier</h2>
+    <x-pdf-header :data="$model" :bankLogo="$bankLogo" :blsLogo="$base64Image" />
+    <h2>Détail du recouvrement</h2>
     <x-pdf-details :details="$details" />
 
     @if (!blank($model->tasks))
