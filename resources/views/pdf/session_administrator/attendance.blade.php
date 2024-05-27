@@ -20,6 +20,7 @@
                 <th>Nom & Prénoms</th>
                 <th>Qualité</th>
                 <th>Nombre de parts</th>
+                <th>Poste</th>
                 <th>Emargement</th>
                 <th>Observation</th>
             </tr>
@@ -30,6 +31,7 @@
                     <td height="50px" >{{ $administrator->name }}</td>
                     <td>{{ $administrator->quality  }}</td>
                     <td>{{ $administrator->shares  }}</td>
+                    <td>{{ $administrator->function  }}</td>
                     <td></td>
                     <td></td>
                 </tr>
