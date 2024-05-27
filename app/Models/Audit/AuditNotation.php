@@ -13,6 +13,7 @@ use App\Models\Guarantee\Guarantee;
 use App\Models\Incident\Incident;
 use App\Models\Litigation\Litigation;
 use App\Models\Recovery\Recovery;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
