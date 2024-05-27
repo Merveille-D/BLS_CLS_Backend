@@ -13,9 +13,8 @@ trait MortgageDefaultStepTrait
 
         foreach ($phases as $key => $steps) {
             foreach ($steps as $key2 => $step) {
-
-                        $this->createStepMortage($step);
-                }
+                $this->createStepMortage($step);
+            }
         }
 
     }
@@ -68,12 +67,6 @@ trait MortgageDefaultStepTrait
                         "form" => [
                             "title" => ConvHypothecState::STATES_VALUES[ConvHypothecState::PROPERTY_VERIFIED],
                             "fields" => [
-                                [
-                                    "name" => "completed_at",
-                                    "type" => "date",
-                                    "label" => "Date de la vérification",
-                                    "required" => true
-                                ],
                                 [
                                     "name" => "documents",
                                     "type" => "file",

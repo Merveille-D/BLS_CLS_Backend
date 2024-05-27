@@ -109,11 +109,13 @@ class GuaranteeTaskRepository
                 }elseif ($field['type'] == 'file') {
                     $this->saveFiles($request->documents, $guarantee, $task->code);
                 } elseif ($field['type'] == 'date') {
-                    $task->completed_at = $request->completed_at;
+                    if ($field['name'] == 'completed_at')
+                        $task->completed_at = $request->completed_at;
+                    else
+                        $data[]  =  [$field['name'] => $request->{$field['name']}];
                 }elseif ($field['type'] == 'radio') {
-                    // dd($task->step->children);
                     $radio_field = $request->{$field['name']};
-                    $data[]  =  [$field['name'] => $request->{$field['name']}];
+                    $data[]  =  [$field['name'] => $request->{$field['name']} == 'yes' ? true : false];
                 }
             }
 

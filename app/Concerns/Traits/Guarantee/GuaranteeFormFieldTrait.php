@@ -14,6 +14,7 @@ trait GuaranteeFormFieldTrait
 
     public function loadFormAttributeBasedTask($task) {
         $form = $task?->step?->extra['form'] ?? [];
+
         if (empty($form))
             return [];
 

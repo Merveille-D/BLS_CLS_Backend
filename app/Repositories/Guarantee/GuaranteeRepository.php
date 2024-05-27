@@ -27,6 +27,10 @@ class GuaranteeRepository
             ->when($request->security == 'movable', function ($query) {
                 return $query->whereIn('security', ['pledge', 'collateral']);
             })
+            //mortgage guarantees
+            ->when($request->security == 'property', function ($query) {
+                return $query->whereSecurity('property');
+            })
             ->when($request->phase, function ($query, $phase) {
                 return $query->where('phase', $phase);
             })
@@ -69,7 +73,7 @@ class GuaranteeRepository
         $this->saveTasks($steps, $guarantee);
         $this->updateTaskState($guarantee);
 
-        return new GuaranteeResource($guarantee->refresh());
+        return new GuaranteeResource($guarantee);
     }
 
     public function getOne($guarantee): ?JsonResource
@@ -96,6 +100,7 @@ class GuaranteeRepository
             $task = new GuaranteeTask();
             $task->code = $step->code;
             $task->title = $step->title;
+            $task->step_id = $step->id;
             $task->rank = $step->rank;
             $task->type = $step->step_type;
             $task->max_deadline = $step->code == 'created' ? now() : null;
