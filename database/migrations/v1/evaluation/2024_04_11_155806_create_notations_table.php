@@ -19,8 +19,6 @@ return new class extends Migration
             $table->string('status')->default('Evalué');
             $table->string('observation')->nullable();
 
-            $table->date('date');
-
             $table->uuid('parent_id')->nullable();
 
             $table->uuid('collaborator_id');

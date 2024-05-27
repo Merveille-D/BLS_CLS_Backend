@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 
-class ListAuditNotationRequest extends FormRequest
+class StoreAuditNotationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,6 +28,9 @@ class ListAuditNotationRequest extends FormRequest
         return [
             'module_id' => ['required','uuid'],
             'module' => ['required',Rule::in(AuditPerformanceIndicator::MODULES) ],
+            'notes' => ['required','array' ],
+            'notes.*.audit_performance_indicator_id' => ['required','uuid'],
+            'notes.*.note' => ['required','numeric'],
         ];
     }
 

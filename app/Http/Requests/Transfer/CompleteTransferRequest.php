@@ -34,23 +34,18 @@ class CompleteTransferRequest extends FormRequest
             'transfer_id' => ['required', 'uuid'],
 
             // For contract
-            // 'date' => ['required_if:type,contract', 'date'],
             'contract_documents' => ['required_if:type,contract', 'array'],
             'contract_documents.*.name' => ['required_if:type,contract', 'string'],
             'contract_documents.*.file' => ['required_if:type,contract', 'file'],
 
             // For Audit
-            'module_id' => ['required_if:type,audit','uuid'],
-            'module' => ['required_if:type,audit',Rule::in(AuditPerformanceIndicator::MODULES) ],
             'notes.*.audit_performance_indicator_id' => ['required_if:type,audit','uuid'],
 
             // For Evaluation or Audit
             'notes' => ['required_if:type,audit,evaluation','array'],
             'notes.*.note' => ['required_if:type,audit,evaluation','numeric'],
-            'date' => ['required_if:type,audit,evaluation','date'],
 
             // For Evaluation
-            'collaborator_id' => ['required_if:type,evaluation','uuid'],
             'notes.*.performance_indicator_id' => ['required_if:type,evaluation','uuid'],
         ];
 

@@ -4,6 +4,7 @@ namespace App\Models\Evaluation;
 
 use App\Concerns\Traits\Alert\Alertable;
 use App\Concerns\Traits\Transfer\Transferable;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,19 +18,11 @@ class Notation extends Model
         'status',
         'observation',
         'collaborator_id',
-        'date',
         'created_by',
         'parent_id',
     ];
 
-    protected $appends = ['indicators', 'steps'];
-
-    const STATUS =[
-        'evaluated',
-        'verified',
-        'validated',
-        'archived'
-    ];
+    protected $appends = ['indicators'];
 
     public function collaborator()
     {
@@ -41,14 +34,14 @@ class Notation extends Model
         return $this->hasMany(NotationPerformance::class);
     }
 
-     public function getStepsAttribute() {
+    public function getLastNotationAttribute(){
 
-        $childrens = self::where('parent_id', $this->id)->get()->makeHidden(['performances', 'steps']);
-        $parent = collect([self::find($this->id)->makeHidden(['performances', 'steps'])]);
+        $transfer_notation = self::where('parent_id', $this->id)
+        ->whereNotNull('note')
+        ->orderBy('created_at', 'desc')
+        ->first();
 
-        $steps = $parent->merge($childrens);
-
-        return $steps;
+        return ($transfer_notation) ? $transfer_notation : self::find($this->id);
     }
 
     public function getIndicatorsAttribute() {
@@ -62,5 +55,10 @@ class Notation extends Model
 
         }
         return $indicators;
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

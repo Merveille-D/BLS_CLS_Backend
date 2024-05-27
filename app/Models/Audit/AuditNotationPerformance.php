@@ -12,7 +12,7 @@ class AuditNotationPerformance extends Model
 
     protected $fillable = [
         'audit_notation_id',
-        'performance_indicator_id',
+        'audit_performance_indicator_id',
         'note'
     ];
 
@@ -23,6 +23,6 @@ class AuditNotationPerformance extends Model
 
     public function auditPerformanceIndicator()
     {
-        return $this->belongsTo(AuditPerformanceIndicator::class,'performance_indicator_id');
+        return $this->belongsTo(AuditPerformanceIndicator::class,'audit_performance_indicator_id');
     }
 }

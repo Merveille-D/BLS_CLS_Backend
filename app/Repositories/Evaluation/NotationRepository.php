@@ -4,6 +4,7 @@ namespace App\Repositories\Evaluation;
 use App\Concerns\Traits\Transfer\AddTransferTrait;
 use App\Models\Evaluation\Collaborator;
 use App\Models\Evaluation\Notation;
+use App\Models\Evaluation\PerformanceIndicator;
 use Illuminate\Support\Facades\Auth;
 
 class NotationRepository
@@ -14,86 +15,49 @@ class NotationRepository
 
     }
 
-    public function all() {
+    public function notationRessource($notation) {
 
-        return $this->notation->whereNull('parent_id')->get()
-            ->makeHidden(['performances', 'indicators'])
-            ->map(function ($notation) {
+        $notation->collaborator = $notation->collaborator;
+        $notation->created = $notation->createdBy;
+        $notation->transfers = $notation->transfers->makeHidden(['evaluation'])->map(function ($transfer) {
 
-                $notation->collaborator = $notation->collaborator;
+            $transfer->notation = Notation::find($transfer->evaluation->first()->evaluation_id);
+            $hiddenAttributes = [
+                'collaborator_id', 'performances', 'parent_id', 'created_at', 'updated_at'
+            ];
+            $transfer->notation->makeHidden($hiddenAttributes);
 
-                $hiddenAttributes = [
-                    'indicators', 'status', 'note', 'observation', 'date',
-                    'created_by', 'parent_id', 'created_at', 'updated_at'
-                ];
-                $notation->makeHidden($hiddenAttributes);
+            $transfer->sender = $transfer->sender;
+            $transfer->collaborators = $transfer->collaborators;
 
-                return $notation;
+            return $transfer;
         });
+
+        $notation->original_note = $notation->note;
+        $notation->original_indicators = $notation->indicators;
+        $notation->original_status = $notation->status;
+
+        $notation->last_status = $notation->last_notation->status;
+        $notation->last_note = $notation->last_notation->note;
+        $notation->last_indicators = $notation->last_notation->indicators;
+
+        $hiddenAttributes = [
+            'collaborator_id', 'performances', 'indicators','note', 'status',
+            'observation', 'parent_id', 'created_at', 'updated_at'
+        ];
+        $notation->makeHidden($hiddenAttributes);
+
+        return $notation;
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return Notation
-     */
     public function store($request) {
 
-        $check_collaborator_notation = $this->notation->where('collaborator_id', $request['collaborator_id'])
-                                                        ->where('date', $request['date'])
-                                                        ->first();
-
-        $notes = $request['notes'];
-        $sum = 0;
-        foreach ($notes as $note) {
-            $sum += $note['note'];
-        }
-        $request['note'] = $sum;
-
-        if($check_collaborator_notation) {
-
-            $transfers = $check_collaborator_notation->transfers;
-
-            if($transfers->count() < 1) {
-
-                $this->updateEvaluation($check_collaborator_notation, $request, $notes);
-            }else {
-
-                $created_by_last_transfer = $transfers->last()->collaborators->first()->id;
-
-                if($created_by_last_transfer == Auth::id()) {
-
-                    if($transfers->last()->status == false) {
-                        $request['created_by'] = Auth::id();
-                        $request['parent_id'] = $check_collaborator_notation->id;
-                        $request['status'] = $transfers->last()->title;
-
-                        $this->createEvaluation($request, $notes);
-                    }else {
-                        $collaborator_notation = $check_collaborator_notation->where('created_by', Auth::user()->id)->first();
-
-                        if($collaborator_notation) {
-                            $this->updateEvaluation($collaborator_notation, $request, $notes);
-                        }
-
-                    }
-                }
-            }
-
-        }else {
-
-            $request['created_by'] = Auth::user()->id;
-            $check_collaborator_notation = $this->createEvaluation($request, $notes);
-        }
-
-        return $check_collaborator_notation;
-    }
-
-    public function createEvaluation($request, $notes) {
+        $request['note'] = array_sum(array_column($request['notes'], 'note'));
+        $request['created_by'] = Auth::user()->id;
 
         $notation = $this->notation->create($request);
 
-        foreach ($notes as $note) {
+        foreach ($request['notes'] as $note) {
             $notation->performances()->create([
                 'performance_indicator_id' => $note['performance_indicator_id'],
                 'note' => $note['note']
@@ -103,18 +67,6 @@ class NotationRepository
         return $notation;
     }
 
-    public function updateEvaluation($check_collaborator_notation, $request, $notes) {
-
-        $check_collaborator_notation->update($request);
-
-        foreach ($notes as $note) {
-            $check_collaborator_notation->performances()->update([
-                'performance_indicator_id' => $note['performance_indicator_id'],
-                'note' => $note['note']
-            ]);
-        }
-    }
-
     /**
      * @param Request $request
      *
@@ -122,23 +74,77 @@ class NotationRepository
      */
     public function update(Notation $notation, $request) {
 
-       //
+        $request['note'] = array_sum(array_column($request['notes'], 'note'));
+        $request['created_by'] = Auth::user()->id;
+
+        $notation->update($request);
+
+        foreach ($request['notes'] as $note) {
+            $notation->performances()->update([
+                'performance_indicator_id' => $note['performance_indicator_id'],
+                'note' => $note['note']
+            ]);
+        }
+
+        return $notation;
     }
 
     public function createTransfer($request) {
 
         $notation = $this->notation->find($request['notation_id']);
+        $transfer = $this->add_transfer($notation, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
 
-        $this->add_transfer($notation, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
+        // Add new notation for transfer
+        $request['collaborator_id'] = $notation->collaborator_id;
+        $request['parent_id'] = $notation->id;
+        $request['created_by'] = Auth::user()->id;
+        $request['status'] = $request['forward_title'];
+
+        $new_notation = $this->notation->create($request);
+
+        $position = $notation->collaborator->position;
+
+        $indicators = PerformanceIndicator::where('position', $position)->pluck('id');
+
+        foreach ($indicators as $indicator) {
+            $new_notation->performances()->create([
+                'performance_indicator_id' => $indicator,
+            ]);
+        }
+
+        $transfer->evaluation()->create([
+            'evaluation_id' => $new_notation->id,
+        ]);
 
         return $notation;
     }
 
-    public function getCollaborationNotation($request) {
+    public function completeTransfer($request) {
 
-        $collaboratorIdsWithEvaluation = Notation::where('date', $request['date'])->pluck('collaborator_id');
-        $collaboratorsWithoutEvaluation = Collaborator::whereNotIn('id', $collaboratorIdsWithEvaluation)->get();
+        $notation = $this->notation->find($request['notation_id']);
 
-        return $collaboratorsWithoutEvaluation;
+        $request['note'] = array_sum(array_column($request['notes'], 'note'));
+        $request['created_by'] = Auth::user()->id;
+
+        $notation->update($request);
+
+        foreach ($request['notes'] as $note) {
+            $notation->performances()->update([
+                'performance_indicator_id' => $note['performance_indicator_id'],
+                'note' => $note['note']
+            ]);
+        }
+
+        return $notation;
+    }
+
+    public function delete(Notation $notation) {
+        $transfer_evaluations = Notation::where('parent_id', $notation->id)->get();
+
+        $transfer_evaluations->each(function($evaluation) {
+            $evaluation->delete();
+        });
+
+        $notation->delete();
     }
 }

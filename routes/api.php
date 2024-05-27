@@ -131,22 +131,13 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('notations', NotationController::class);
     Route::resource('performance_indicators', PerformanceIndicatorController::class);
     Route::resource('collaborators', CollaboratorController::class);
-    Route::resource('evaluation_periods', EvaluationPeriodController::class);
-    Route::get('/get_all_notations', [NotationController::class, 'all'] );
-    Route::post('/evaluation_create_transfers', [NotationController::class, 'createTransfer'] );
-    Route::get('/collaborators_for_notation', [NotationController::class, 'getCollaborationNotation'] );
-
-
+    Route::post('evaluation_create_transfers', [NotationController::class, 'createTransfer'] );
 
     // AUDIT
     Route::resource('audit_notations', AuditNotationController::class);
     Route::resource('audit_performance_indicators', AuditPerformanceIndicatorController::class);
-    Route::resource('audit_periods', AuditPeriodController::class);
-    Route::get('/get_all_audits', [AuditNotationController::class, 'all'] );
-    Route::post('/audit_create_transfers', [AuditNotationController::class, 'createTransfer'] );
-
     Route::resource('audit_performance_indicators', AuditPerformanceIndicatorController::class);
-
+    Route::post('audit_create_transfers', [AuditNotationController::class, 'createTransfer'] );
 
 });
 
