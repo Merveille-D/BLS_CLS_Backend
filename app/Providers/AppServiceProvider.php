@@ -16,9 +16,9 @@ class AppServiceProvider extends ServiceProvider
         Sanctum::ignoreMigrations(); //ignaore default personnal access token migrations
 
         $this->loadMigrationsFrom([
-            // database_path('migrations/base'),
+            database_path('migrations/base'),
 
-            // database_path('migrations/v1/gourvernance/shareholder'),
+            database_path('migrations/v1/gourvernance/shareholder'),
 
 
             database_path('migrations/v1/gourvernance/board_directors/administrators'),
