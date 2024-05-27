@@ -97,13 +97,7 @@ class AuditNotationRepository
 
         $audit_notation->update($request);
 
-        foreach ($request['notes'] as $note) {
-            $audit_notation->performances()->update([
-                'audit_performance_indicator_id' => $note['audit_performance_indicator_id'],
-                'note' => $note['note']
-            ]);
-        }
-
+        $this->updateNotes($audit_notation, $request['notes']);
         return $audit_notation;
     }
 
@@ -145,16 +139,7 @@ class AuditNotationRepository
 
         $audit_notation->update($request);
 
-        foreach ($request['notes'] as $note) {
-            $performance = $audit_notation->performances()->where('audit_performance_indicator_id', $note['audit_performance_indicator_id'])->first();
-
-            if ($performance) {
-                $performance->update([
-                    'note' => $note['note']
-                ]);
-            }
-        }
-
+        $this->updateNotes($audit_notation, $request['notes']);
 
         return $audit_notation;
     }
@@ -169,5 +154,17 @@ class AuditNotationRepository
         $audit_notation->delete();
     }
 
+
+    public function updateNotes($audit_notation, $notes) {
+        foreach ($notes as $note) {
+            $performance = $audit_notation->performances()->where('audit_performance_indicator_id', $note['audit_performance_indicator_id'])->first();
+
+            if ($performance) {
+                $performance->update([
+                    'note' => $note['note']
+                ]);
+            }
+        }
+    }
 
 }

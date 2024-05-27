@@ -79,12 +79,7 @@ class NotationRepository
 
         $notation->update($request);
 
-        foreach ($request['notes'] as $note) {
-            $notation->performances()->update([
-                'performance_indicator_id' => $note['performance_indicator_id'],
-                'note' => $note['note']
-            ]);
-        }
+        $this->updateNotes($notation, $request['notes']);
 
         return $notation;
     }
@@ -128,12 +123,7 @@ class NotationRepository
 
         $notation->update($request);
 
-        foreach ($request['notes'] as $note) {
-            $notation->performances()->update([
-                'performance_indicator_id' => $note['performance_indicator_id'],
-                'note' => $note['note']
-            ]);
-        }
+        $this->updateNotes($notation, $request['notes']);
 
         return $notation;
     }
@@ -146,5 +136,17 @@ class NotationRepository
         });
 
         $notation->delete();
+    }
+
+    public function updateNotes($notation, $notes) {
+        foreach ($notes as $note) {
+            $performance = $notation->performances()->where('performance_indicator_id', $note['performance_indicator_id'])->first();
+
+            if ($performance) {
+                $performance->update([
+                    'note' => $note['note']
+                ]);
+            }
+        }
     }
 }
