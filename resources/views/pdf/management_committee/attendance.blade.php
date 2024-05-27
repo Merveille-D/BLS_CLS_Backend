@@ -29,7 +29,7 @@
                 <tr>
                     <td height="50px" >{{ $director->name }}</td>
                     <td>{{ $director->quality  }}</td>
-                    <td>{{ $director->poste  }}</td>
+                    <td>{{ $director->position  }}</td>
                     <td></td>
                     <td></td>
                 </tr>
