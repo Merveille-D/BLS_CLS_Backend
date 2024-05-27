@@ -35,7 +35,7 @@ class AuditNotationRepository
     public function auditNotationRessource($audit_notation) {
 
         $audit_notation->title = $audit_notation->title;
-        $$audit_notation->created = $$audit_notation->createdBy;
+        $audit_notation->created = $audit_notation->createdBy;
         $audit_notation->transfers = $audit_notation->transfers->makeHidden(['audit'])->map(function ($transfer) {
 
             $transfer->notation = AuditNotation::find($transfer->audit->first()->audit_id);
