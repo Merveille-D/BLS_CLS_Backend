@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(LitigationResourceSeeder::class); //containing test data
         $this->call(ConvHypothecSeeder::class);
-        // $this->call(LitigationSeeder::class); //for test
+        $this->call(PermissionTableSeeder::class);
         $this->call(LawyerSeeder::class); //for test
         $this->call(PartSeeder::class); //for test
         $this->call(AuthorSeeder::class); //for test
