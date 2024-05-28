@@ -19,3 +19,15 @@ if (!function_exists('storeFile')) {
         }
     }
 }
+
+//generate base64 image
+if (!function_exists('generateBase64Image')) {
+    function generateBase64Image($imagePath) {
+        $imagePath = public_path($imagePath);
+        $imageData = base64_encode(file_get_contents($imagePath));
+        $imageType = pathinfo($imagePath, PATHINFO_EXTENSION);
+        $base64Image = 'data:image/' . $imageType . ';base64,' . $imageData;
+
+        return $base64Image;
+    }
+}

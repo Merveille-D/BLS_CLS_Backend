@@ -14,13 +14,11 @@ return new class extends Migration
         Schema::create('attendance_list_management_committees', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-            $table->string('grade')->nullable();
-            $table->string('lastname')->nullable();
-            $table->string('firstname')->nullable();
-
-            $table->uuid('director_id');
+            $table->uuid('director_id')->nullable();
             $table->foreign('director_id')->references('id')->on('directors')->onDelete('cascade');
 
+            $table->uuid('representant_id')->nullable();
+            $table->foreign('representant_id')->references('id')->on('representants')->onDelete('cascade');
 
             $table->uuid('session_id');
             $table->foreign('session_id')->references('id')->on('management_committees')->onDelete('cascade');

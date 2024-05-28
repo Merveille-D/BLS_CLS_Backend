@@ -30,5 +30,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/guarantees/tasks/complete/{task}', [GuaranteeTaskController::class, 'complete']);
     Route::resource('/guarantees/tasks', GuaranteeTaskController::class);
     Route::post('/guarantees/realization/{guarantee}', [GuaranteeController::class, 'realization']);
+    Route::get('/guarantees/generate-pdf/{guarantee}', [GuaranteeController::class, 'generatePdf']);
     Route::resource('/guarantees', GuaranteeController::class);
 });

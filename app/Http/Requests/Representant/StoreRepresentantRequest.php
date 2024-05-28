@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Requests\AttendanceListGeneralMeeting;
+namespace App\Http\Requests\Representant;
 
+use App\Models\Gourvernance\Representant;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
-class DeleteAttendanceListGeneralMeetingRequest extends FormRequest
+class StoreRepresentantRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +26,10 @@ class DeleteAttendanceListGeneralMeetingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'general_meeting_id' => ['required', 'uuid'],
-            'shareholders' => 'required|array',
-            'shareholders.*' => 'required|uuid',
+            'meeting_id' => ['required', 'uuid'],
+            'name' => ['required', 'string'],
+            'type' => ['required',  Rule::in(Representant::MEETING_TYPE) ],
+            'grade' => ['required', 'string'],
         ];
     }
 

@@ -11,10 +11,8 @@ class AttendanceListGeneralMeeting extends Model
     use HasFactory, HasUuids;
 
     protected $fillable = [
-        'grade',
-        'lastname',
-        'firstname',
         'shareholder_id',
         'general_meeting_id',
+        'representant_id',
     ];
 }
