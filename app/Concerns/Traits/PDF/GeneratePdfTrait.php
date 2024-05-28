@@ -7,8 +7,8 @@ trait GeneratePdfTrait
 {
     public function generateFromView($view_path, $data = [], $filename = 'test.pdf', $options = [])
     {
-        $data['base64Image'] = generateBase64Image('assets/bls-logo.png');
-        $data['bankLogo'] = generateBase64Image('assets/ecobank.png') ?? generateBase64Image('bls-logo.png');
+        $data['base64Image'] = generateBase64Image('bls-logo.png');
+        $data['bankLogo'] = generateBase64Image('ecobank.png') ?? generateBase64Image('bls-logo.png');
         // return view($view_path, $data);
         $pdf = Pdf::loadView($view_path, $data);
         return $pdf->stream($filename, $options);
