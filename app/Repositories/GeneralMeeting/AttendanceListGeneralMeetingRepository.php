@@ -19,12 +19,12 @@ class AttendanceListGeneralMeetingRepository
 
         $shareholders = Shareholder::select('name', 'id')->get()->map(function ($shareholder) {
             $shareholder->type = "shareholder";
-            $shareholder->status = (empty(AttendanceListGeneralMeeting::where('shareholder_id', $shareholder->id)->get())) ? true : false ;
+            $shareholder->status = (empty(AttendanceListGeneralMeeting::where('shareholder_id', $shareholder->id)->get())) ? false : true ;
             return $shareholder;
         });
         $representants = Representant::select('name', 'id')->get()->map(function ($representant) {
             $representant->type = "not_shareholder";
-            $representant->status = (AttendanceListGeneralMeeting::where('representant_id', $representant->id)->get()) ? true : false ;
+            $representant->status = (empty(AttendanceListGeneralMeeting::where('representant_id', $representant->id)->get())) ? false : true ;
             return $representant;
         });
 
@@ -54,7 +54,7 @@ class AttendanceListGeneralMeetingRepository
                 }
                 $this->attendance->create($data);
             }else {
-                $this->attendance->where('general_meeting_id', $request['general_meeting_id'])
+                $this->attendance ->where('general_meeting_id', $request['general_meeting_id'])
                                 ->where($shareholder['type'] == 'shareholder' ? 'shareholder_id' : 'representant_id', $shareholder['id'])
                                 ->delete();
             }
