@@ -24,7 +24,7 @@ class RoleController extends Controller
     public function store(AddRoleRequest $request)
     {
         try {
-            $role = Role::create(['name' => $request->name]);
+            $role = Role::create(['name' => $request->name, 'guard_name' => 'web']);
             //assign permissions
             if($request['permissions'])
                 $role->givePermissionTo(Permission::whereIn('id', $request['permissions'])->get());

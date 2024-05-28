@@ -2,6 +2,7 @@
 
 namespace App\Models\Guarantee;
 
+use App\Enums\Guarantee\GuaranteeType;
 use App\Models\Scopes\CountryScope;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
@@ -64,5 +65,18 @@ class Guarantee extends Model
                     ->defaultOrder()
                     ->where('status', true)
                     ->get()->last();
+    }
+
+    //readable_type
+    public function getReadableTypeAttribute() {
+        return GuaranteeType::VALUES[$this->type];
+    }
+
+    //readable_phase
+    public function getReadablePhaseAttribute() {
+        if ($this->phase == 'formalization')
+            return 'Formalisation';
+        else
+            return 'Réalisation';
     }
 }

@@ -3,13 +3,15 @@
 namespace App\Console\Commands;
 
 use App\Concerns\Traits\Guarantee\DefaultGuaranteeTaskTrait;
+use App\Concerns\Traits\Guarantee\MortgageDefaultStepTrait;
+use App\Enums\Guarantee\GuaranteeType;
 use App\Models\Guarantee\GuaranteeStep;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
 class TestNewFormat extends Command
 {
-    use DefaultGuaranteeTaskTrait;
+    use DefaultGuaranteeTaskTrait, MortgageDefaultStepTrait;
     /**
      * The name and signature of the console command.
      *
@@ -29,24 +31,27 @@ class TestNewFormat extends Command
      */
     public function handle()
     {
-        DB::table('guarantee_steps')->truncate();
-        $phases = $this->defaultStockSteps();
+        // DB::table('guarantee_steps')->truncate();
+        $this->saveMortgageSteps();
 
-        foreach ($phases as $key => $phase) {
 
-            if ($key == 'formalization') {
-                foreach ($phase as $key2 => $steps) {
-                    // $this->line($key);
-                    $formalization_type = $key2;
-                    foreach ($steps as $key3 => $step) {
-                        $step['formalization_type'] = $formalization_type;
-                        $step['guarantee_type'] = 'stock';
-                        $step['step_type'] = $key;
-                        $this->createStep($step);
-                    }
-                }
-            }
-        }
+        // $phases = $this->defaultStockSteps();
+
+        // foreach ($phases as $key => $phase) {
+
+        //     if ($key == 'formalization') {
+        //         foreach ($phase as $key2 => $steps) {
+        //             // $this->line($key);
+        //             $formalization_type = $key2;
+        //             foreach ($steps as $key3 => $step) {
+        //                 $step['formalization_type'] = $formalization_type;
+        //                 $step['guarantee_type'] = 'stock';
+        //                 $step['step_type'] = $key;
+        //                 $this->createStep($step);
+        //             }
+        //         }
+        //     }
+        // }
         $this->info('Test new format');
     }
 

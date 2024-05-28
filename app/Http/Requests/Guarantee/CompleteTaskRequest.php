@@ -45,8 +45,8 @@ class CompleteTaskRequest extends FormRequest
     }
 
     public function validationRulesByStep($task) : array {
-
         $form = $task->form ?? [];
+
         $data = [];
 
         if (!blank($form)) {
