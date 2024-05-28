@@ -29,7 +29,7 @@ class AttendanceListGeneralMeetingController extends Controller
     /**
      * Add a newly created resource in storage.
      */
-    public function update(UpdateAttendanceListGeneralMeetingRequest $request)
+    public function updateStatus(UpdateAttendanceListGeneralMeetingRequest $request)
     {
         try {
             $this->attendance->update($request->all());
