@@ -11,10 +11,8 @@ class AttendanceListManagementCommittee extends Model
     use HasFactory, HasUuids;
 
     protected $fillable = [
-        'grade',
-        'lastname',
-        'firstname',
         'director_id',
         'session_id',
+        'representant_id',
     ];
 }

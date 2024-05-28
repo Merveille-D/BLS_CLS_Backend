@@ -28,7 +28,7 @@
             @foreach ($shareholders as $shareholder)
                 <tr>
                     <td height="50px" >{{ $shareholder->name }}</td>
-                    <td></td>
+                    <td>{{ $shareholder->grade  }}</td>
                     <td>{{ $shareholder->actions_number  }}</td>
                     <td></td>
                     <td></td>

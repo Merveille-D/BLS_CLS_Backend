@@ -5,8 +5,9 @@ namespace App\Http\Requests\AttendanceListGeneralMeeting;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
-class AddAttendanceListGeneralMeetingRequest extends FormRequest
+class UpdateAttendanceListGeneralMeetingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +27,9 @@ class AddAttendanceListGeneralMeetingRequest extends FormRequest
         return [
             'general_meeting_id' => ['required', 'uuid'],
             'shareholders' => 'required|array',
-            'shareholders.*' => 'required|uuid',
+            'shareholders.*.id' => ['required', 'uuid'],
+            'shareholders.*.type' => ['required', Rule::in(['shareholder', 'not_shareholder'])],
+            'shareholders.*.status' => ['required', 'boolean']
         ];
     }
 

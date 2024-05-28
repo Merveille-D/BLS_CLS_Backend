@@ -11,10 +11,8 @@ class AttendanceListSessionAdministrator extends Model
     use HasFactory, HasUuids;
 
     protected $fillable = [
-        'grade',
-        'lastname',
-        'firstname',
         'administrator_id',
         'session_id',
+        'representant_id',
     ];
 }

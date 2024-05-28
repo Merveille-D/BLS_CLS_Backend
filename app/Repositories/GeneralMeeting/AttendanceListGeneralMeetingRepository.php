@@ -4,6 +4,7 @@ namespace App\Repositories\GeneralMeeting;
 use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use App\Models\Gourvernance\GeneralMeeting\AttendanceListGeneralMeeting;
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
+use App\Models\Gourvernance\Representant;
 use App\Models\Shareholder\Shareholder;
 
 class AttendanceListGeneralMeetingRepository
@@ -14,36 +15,41 @@ class AttendanceListGeneralMeetingRepository
 
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return AttendanceListGeneralMeeting
-     */
-    public function add($request) {
+    public function list() {
 
-        foreach($request['shareholders'] as $shareholder_id) {
-            $this->attendance->create([
-                'general_meeting_id' => $request['general_meeting_id'],
-                'shareholder_id' => $shareholder_id,
-            ]);
-        }
-        return 0;
+        $shareholders = Shareholder::all()->pluck('name', 'id');
+        $representants = Representant::all()->pluck('name', 'id');
+
+        $shareholders = $shareholders->merge($representants);
+
+        return $shareholders;
     }
 
     /**
      * @param Request $request
-     * @param AttendanceListGeneralMeeting $attendanceListGeneralMeeting
      *
      * @return AttendanceListGeneralMeeting
      */
-    public function delete($request) {
+    public function update($request) {
 
-        foreach( $request['shareholders'] as $shareholder_id) {
-            $attendance = $this->attendance
-                                ->where('general_meeting_id', $request['general_meeting_id'])
-                                ->where('shareholder_id', $shareholder_id)
-                                ->get();
-            $attendance->delete();
+        foreach ($request['shareholders'] as $shareholder) {
+
+            if ($shareholder['status']) {
+                $data = [
+                    'general_meeting_id' => $request['general_meeting_id']
+                ];
+
+                if ($shareholder['type'] == 'shareholder') {
+                    $data['shareholder_id'] = $shareholder['id'];
+                } else {
+                    $data['representant_id'] = $shareholder['id'];
+                }
+                $this->attendance->create($data);
+            }else {
+                $this->attendance->where('general_meeting_id', $request['general_meeting_id'])
+                                ->where($shareholder['type'] == 'shareholder' ? 'shareholder_id' : 'representant_id', $shareholder['id'])
+                                ->delete();
+            }
         }
         return 0;
     }
@@ -54,6 +60,11 @@ class AttendanceListGeneralMeetingRepository
 
         $shareholders_id = $general_meeting->attendanceList()->pluck('shareholder_id');
         $shareholders = Shareholder::whereIn('id', $shareholders_id)->get();
+
+        $representants_id = $general_meeting->attendanceList()->pluck('representant_id');
+        $representants = Representant::whereIn('id', $representants_id)->get();
+
+        $shareholders = $shareholders->merge($representants);
 
         $pdf =  $this->generateFromView( 'pdf.general_meeting.attendance',  [
             'shareholders' => $shareholders,
