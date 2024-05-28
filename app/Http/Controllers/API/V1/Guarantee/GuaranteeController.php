@@ -86,11 +86,11 @@ class GuaranteeController extends Controller
      */
     public function generatePdf($guarantee)
     {
-        // try {
+        try {
             $data = $this->guaranteeRepo->generatePdf($guarantee);
             return $data;
-        // } catch (\Throwable $th) {
-        //     return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
-        // }
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
+        }
     }
 }
