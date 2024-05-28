@@ -64,7 +64,6 @@ class GuaranteeTask extends Model
 
     public function getFormAttribute()
     {
-        // dd($this);
         if ($this->taskable->security == 'personal') {
             $form = $this->loadFormAttributeBasedOnType($this->taskable);
         } else {

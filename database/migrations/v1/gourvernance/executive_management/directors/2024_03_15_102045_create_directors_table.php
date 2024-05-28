@@ -1,8 +1,5 @@
 <?php
 
-use App\Enums\AdminFunction;
-use App\Enums\AdminType;
-use App\Enums\Quality;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

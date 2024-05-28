@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Guarantee;
 
+use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use App\Enums\Guarantee\GuaranteeType;
 use App\Http\Resources\Guarantee\GuaranteeResource;
 use App\Http\Resources\Guarantee\GuaranteeTaskResource;
@@ -12,9 +13,11 @@ use App\Models\Guarantee\HypothecTask;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Str;
 
 class GuaranteeRepository
 {
+    use GeneratePdfTrait;
     public function __construct(
         private Guarantee $guarantee_model
     ) {
@@ -26,6 +29,10 @@ class GuaranteeRepository
             })
             ->when($request->security == 'movable', function ($query) {
                 return $query->whereIn('security', ['pledge', 'collateral']);
+            })
+            //mortgage guarantees
+            ->when($request->security == 'property', function ($query) {
+                return $query->whereSecurity('property');
             })
             ->when($request->phase, function ($query, $phase) {
                 return $query->where('phase', $phase);
@@ -96,6 +103,7 @@ class GuaranteeRepository
             $task = new GuaranteeTask();
             $task->code = $step->code;
             $task->title = $step->title;
+            $task->step_id = $step->id;
             $task->rank = $step->rank;
             $task->type = $step->step_type;
             $task->max_deadline = $step->code == 'created' ? now() : null;
@@ -160,7 +168,7 @@ class GuaranteeRepository
 
     public function realization($guarantee) {
 
-        $steps = GuaranteeStep::orderBy('rank')->whereGuaranteeType($guarantee->type)->whereStepType('realization')->get();
+        $steps = GuaranteeStep::whereNull('parent_id')->whereGuaranteeType($guarantee->type)->whereStepType('realization')->get();
 
         $this->saveTasks($steps, $guarantee);
 
@@ -168,5 +176,34 @@ class GuaranteeRepository
             $guarantee->save();
 
         return GuaranteeTaskResource::collection($guarantee->tasks);
+    }
+
+    public function generatePdf($id) {
+        $guarantee = $this->guarantee_model->findOrFail($id);
+        $filename = Str::slug($guarantee->name). '_'.date('YmdHis') . '.pdf';
+
+        $pdf =  $this->generateFromView( 'pdf.guarantee.guarantee',  [
+            'model' => $guarantee,
+            'details' => $this->getDetails($guarantee)
+        ],
+        $filename);
+
+        return $pdf;
+    }
+
+    public function getDetails($guarantee) {
+        $details = [
+            'Référence' => $guarantee->reference,
+            'Type' => $guarantee->readable_type,
+            'Intitulé' => $guarantee->name ?? null,
+            'Phase' => $guarantee->readable_phase,
+        ];
+
+        if ($guarantee->security == 'property' && $guarantee->phase == 'realization') {
+            $details['Date de vente fixée'] = $guarantee->extra['date_sell'] ?? null;
+            $details['Prix de vente'] = $guarantee->extra['sell_price_estate'] ?? null;
+        }
+
+        return $details;
     }
 }

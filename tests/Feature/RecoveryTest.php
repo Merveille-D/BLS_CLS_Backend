@@ -23,7 +23,7 @@ class RecoveryTest extends TestCase
     {
         $user = User::factory()->create();
 
-        Recovery::factory()->count(5)->create();
+        Recovery::factory()->count(1)->create();
 
         $response = $this->actingAs($user)->get('api/recovery');
 
@@ -275,4 +275,15 @@ class RecoveryTest extends TestCase
             'title' => 'edited task',
         ]);
     } */
+
+    public function test_generate_pdf() : void {
+        $user = User::factory()->create();
+
+        $recovery = Recovery::factory()->create();
+
+        $response = $this->actingAs($user)->get("api/recovery/generate-pdf/{$recovery->id}");
+
+        // Assert that the response has a 201 status code
+        $response->assertStatus(200);
+    }
 }

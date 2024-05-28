@@ -3,6 +3,7 @@
 namespace Database\Seeders\Guarantee;
 
 use App\Concerns\Traits\Guarantee\DefaultGuaranteeTaskTrait;
+use App\Concerns\Traits\Guarantee\MortgageDefaultStepTrait;
 use App\Enums\ConvHypothecState;
 use App\Enums\Guarantee\AutonomousCounterState;
 use App\Enums\Guarantee\AutonomousState;
@@ -14,12 +15,13 @@ use Illuminate\Database\Seeder;
 
 class GuaranteeSeeder extends Seeder
 {
-    use DefaultGuaranteeTaskTrait;
+    use DefaultGuaranteeTaskTrait, MortgageDefaultStepTrait;
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
+
         $steps = $this->getBondSteps();
 
         foreach ($steps as $step) {
@@ -44,14 +46,6 @@ class GuaranteeSeeder extends Seeder
                 GuaranteeStep::create($step);
         }
 
-        /* $stock_steps = $this->getStockSteps();
-
-        foreach ($stock_steps as $step) {
-            $exist = GuaranteeStep::where('code', $step['code'])->whereGuaranteeType($step['guarantee_type'])->first();
-            if (!$exist)
-                GuaranteeStep::create($step);
-        } */
-
         $phases = $this->defaultStockSteps();
 
         foreach ($phases as $key => $phase) {
@@ -70,11 +64,12 @@ class GuaranteeSeeder extends Seeder
             }
         }
 
+        $this->saveMortgageSteps();
+
     }
 
     private function createStep($data, $parentId = null)
     {
-        // dd($data);
         //remove options from data before create
         $creating = $data;
         if (isset($creating['options']))
