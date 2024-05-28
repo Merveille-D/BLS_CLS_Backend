@@ -19,12 +19,12 @@ class AttendanceListSessionAdministratorRepository
 
         $administrators = CaAdministrator::select('name', 'id')->get()->map(function ($administrator) {
             $administrator->type = "administrator";
-            $administrator->status = (empty(AttendanceListSessionAdministrator::where('administrator_id', $administrator->id)->get())) ? false : true ;
+            $administrator->status = (empty(AttendanceListSessionAdministrator::where('session_id', request('session_adminisrator_id'))->where('administrator_id', $administrator->id)->get())) ? false : true ;
             return $administrator;
         });
-        $representants = Representant::select('name', 'id')->get()->map(function ($representant) {
+        $representants = Representant::select('grade', 'name', 'id')->get()->map(function ($representant) {
             $representant->type = "not_administrator";
-            $representant->status = (empty(AttendanceListSessionAdministrator::where('representant_id', $representant->id)->get())) ? false : true ;
+            $representant->status = (empty(AttendanceListSessionAdministrator::where('session_id', request('session_adminisrator_id'))->where('representant_id', $representant->id)->get())) ? false : true ;
             return $representant;
         });
 

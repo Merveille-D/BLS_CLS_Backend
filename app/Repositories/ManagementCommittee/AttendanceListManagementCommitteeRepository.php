@@ -23,12 +23,12 @@ class AttendanceListManagementCommitteeRepository
 
         $directors = Director::select('name', 'id')->get()->map(function ($director) {
             $director->type = "director";
-            $director->status = (empty(AttendanceListManagementCommittee::where('director_id', $director->id)->get())) ? false : true ;
+            $director->status = (empty(AttendanceListManagementCommittee::where('session_id', request('management_committe_id'))->where('director_id', $director->id)->get())) ? false : true ;
             return $director;
         });
         $representants = Representant::select('grade', 'name', 'id')->get()->map(function ($representant) {
             $representant->type = "not_director";
-            $representant->status = (empty(AttendanceListManagementCommittee::where('representant_id', $representant->id)->get())) ? false : true ;
+            $representant->status = (empty(AttendanceListManagementCommittee::where('session_id', request('management_committe_id'))->where('representant_id', $representant->id)->get())) ? false : true ;
             return $representant;
         });
 

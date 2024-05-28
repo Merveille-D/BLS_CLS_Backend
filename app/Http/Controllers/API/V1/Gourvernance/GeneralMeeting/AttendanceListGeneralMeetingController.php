@@ -7,7 +7,6 @@ use App\Http\Requests\AttendanceListGeneralMeeting\GeneratePdfAttendanceListGene
 use App\Http\Requests\AttendanceListGeneralMeeting\UpdateAttendanceListGeneralMeetingRequest;
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use App\Repositories\GeneralMeeting\AttendanceListGeneralMeetingRepository;
-use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class AttendanceListGeneralMeetingController extends Controller
@@ -19,7 +18,7 @@ class AttendanceListGeneralMeetingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function list(Request $request)
+    public function list(GeneratePdfAttendanceListGeneralMeetingRequest $request)
     {
         $attendance_list_general_meeting = $this->attendance->list($request->all());
         return api_response(true, "Liste de présence", $attendance_list_general_meeting , 200);
