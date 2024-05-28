@@ -15,8 +15,8 @@ return new class extends Migration
         Schema::create('capitals', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->date('date');
-            $table->integer('amount');
-            $table->integer('par_value');
+            $table->bigInteger('amount');
+            $table->bigInteger('par_value');
             $table->timestamps();
         });
     }

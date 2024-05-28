@@ -14,12 +14,8 @@ return new class extends Migration
         Schema::create('attendance_list_general_meetings', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-            $table->string('grade')->nullable();
-            $table->string('lastname')->nullable();
-            $table->string('firstname')->nullable();
-
-            $table->uuid('shareholder_id');
-            // $table->foreign('shareholder_id')->references('id')->on('shareholders')->onDelete('cascade');
+            $table->uuid('shareholder_id')->nullable();
+            $table->foreign('shareholder_id')->references('id')->on('shareholders')->onDelete('cascade');
 
             $table->uuid('representant_id')->nullable();
             $table->foreign('representant_id')->references('id')->on('representants')->onDelete('cascade');

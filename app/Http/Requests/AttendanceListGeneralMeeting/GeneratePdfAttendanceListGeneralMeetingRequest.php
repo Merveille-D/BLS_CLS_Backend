@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\AttendanceListManagementCommittee;
+namespace App\Http\Requests\AttendanceListGeneralMeeting;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class DeleteAttendanceListManagementCommitteeRequest extends FormRequest
+class GeneratePdfAttendanceListGeneralMeetingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,7 @@ class DeleteAttendanceListManagementCommitteeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'session_id' => ['required', 'uuid'],
-            'shareholders' => 'required|array',
-            'shareholders.*' => 'required|uuid',
+            'general_meeting_id' => ['required', 'uuid'],
         ];
     }
 
