@@ -17,7 +17,7 @@ class RepresentantRepository
      */
     public function store($request) {
 
-        $representant = $this->representant->create($request->all());
+        $representant = $this->representant->create($request);
 
         $request['representant_id'] = $representant->id;
         $request[Representant::MEETING_TYPE_ID[$request['type']]] = $request['meeting_id'];

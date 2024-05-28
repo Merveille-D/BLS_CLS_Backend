@@ -18,7 +18,6 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->date('birthdate')->nullable();
-            $table->string('quality ')->nullable();
             $table->string('position')->nullable();
             $table->string('birthplace')->nullable();
             $table->string('nationality')->nullable();

@@ -26,7 +26,6 @@ class UpdateDirectorRequest extends FormRequest
         return [
             'name' => 'string|max:255',
             'position' => 'string|max:255',
-            'quality' => 'string|max:255',
             'birthdate' => 'date',
             'birthplace' => 'string|max:255',
             'nationality' => 'string|max:255',

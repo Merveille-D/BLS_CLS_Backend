@@ -2,9 +2,9 @@
 
 namespace App\Models\Gourvernance;
 
-use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
-use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\ManagementCommittee;
-use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
+use App\Models\Gourvernance\BoardDirectors\Sessions\AttendanceListSessionAdministrator;
+use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\AttendanceListManagementCommittee;
+use App\Models\Gourvernance\GeneralMeeting\AttendanceListGeneralMeeting;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -26,9 +26,9 @@ class Representant extends Model
     ];
 
     const MEETING_MODEL = [
-        'general_meeting' => GeneralMeeting::class,
-        'session_administrator' => SessionAdministrator::class,
-        'management_committee' => ManagementCommittee::class,
+        'general_meeting' => AttendanceListGeneralMeeting::class,
+        'session_administrator' => AttendanceListSessionAdministrator::class,
+        'management_committee' => AttendanceListManagementCommittee::class,
     ];
 
     const MEETING_TYPE_ID = [

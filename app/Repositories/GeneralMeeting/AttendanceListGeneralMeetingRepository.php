@@ -17,8 +17,16 @@ class AttendanceListGeneralMeetingRepository
 
     public function list() {
 
-        $shareholders = Shareholder::all()->pluck('name', 'id');
-        $representants = Representant::all()->pluck('name', 'id');
+        $shareholders = Shareholder::select('name', 'id')->get()->map(function ($shareholder) {
+            $shareholder->type = "shareholder";
+            $shareholder->status = (empty(AttendanceListGeneralMeeting::where('shareholder_id', $shareholder->id)->get())) ? true : false ;
+            return $shareholder;
+        });
+        $representants = Representant::select('name', 'id')->get()->map(function ($representant) {
+            $representant->type = "not_shareholder";
+            $representant->status = (AttendanceListGeneralMeeting::where('representant_id', $representant->id)->get()) ? true : false ;
+            return $representant;
+        });
 
         $shareholders = $shareholders->merge($representants);
 
