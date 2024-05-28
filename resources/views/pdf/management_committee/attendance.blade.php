@@ -4,8 +4,8 @@
     <div class="header">
         <div class="left">
             <h1>Liste de présence</h1>
-            <p class="subtitle bold">CONSEIL DE DIRECTION</p>
-            <p class="subtitle italic underline">AG-01</p>
+            <p class="subtitle bold">{{$management_committee->libelle}}</p>
+            <p class="subtitle italic underline">{{ $management_committee->reference }}</p>
             <p class="subtitle gray">{{ date('d-m-Y H:i') }}</p>
         </div>
         <div class="right">
@@ -28,7 +28,7 @@
             @foreach ($directors as $director)
                 <tr>
                     <td height="50px" >{{ $director->name }}</td>
-                    <td>{{ $director->quality  }}</td>
+                    <td>{{ $director->grade  }}</td>
                     <td>{{ $director->position  }}</td>
                     <td></td>
                     <td></td>

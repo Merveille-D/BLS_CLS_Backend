@@ -5,6 +5,7 @@ use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use App\Models\Gourvernance\BoardDirectors\Administrators\CaAdministrator;
 use App\Models\Gourvernance\BoardDirectors\Sessions\AttendanceListSessionAdministrator;
 use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
+use App\Models\Gourvernance\Representant;
 
 class AttendanceListSessionAdministratorRepository
 {
@@ -14,20 +15,22 @@ class AttendanceListSessionAdministratorRepository
 
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return AttendanceListSessionAdministrator
-     */
-    public function add($request) {
+    public function list() {
 
-        foreach($request['administrators'] as $administrator_id) {
-            $this->attendance->create([
-                'session_id' => $request['session_id'],
-                'administrator_id' => $administrator_id,
-            ]);
-        }
-        return 0;
+        $administrators = CaAdministrator::select('name', 'id')->get()->map(function ($administrator) {
+            $administrator->type = "administrator";
+            $administrator->status = (empty(AttendanceListSessionAdministrator::where('administrator_id', $administrator->id)->get())) ? false : true ;
+            return $administrator;
+        });
+        $representants = Representant::select('name', 'id')->get()->map(function ($representant) {
+            $representant->type = "not_administrator";
+            $representant->status = (empty(AttendanceListSessionAdministrator::where('representant_id', $representant->id)->get())) ? false : true ;
+            return $representant;
+        });
+
+        $administrators = $administrators->merge($representants);
+
+        return $administrators;
     }
 
     /**
@@ -36,14 +39,26 @@ class AttendanceListSessionAdministratorRepository
      *
      * @return AttendanceListSessionAdministrator
      */
-    public function delete($request) {
+    public function update($request) {
 
-        foreach( $request['administrators'] as $administrator_id) {
-            $attendance = $this->attendance
-                                ->where('session_id', $request['session_id'])
-                                ->where('administrator_id', $administrator_id)
-                                ->get();
-            $attendance->delete();
+        foreach ($request['administrators'] as $administrator) {
+
+            if ($administrator['status']) {
+                $data = [
+                    'session_id' => $request['session_administrator_id']
+                ];
+
+                if ($administrator['type'] == 'administrator') {
+                    $data['administrator_id'] = $administrator['id'];
+                } else {
+                    $data['representant_id'] = $administrator['id'];
+                }
+                $this->attendance->create($data);
+            }else {
+                $this->attendance->where('session_id', $request['session_administrator_id'])
+                                ->where($administrator['type'] == 'administrator' ? 'administrator_id' : 'representant_id', $administrator['id'])
+                                ->delete();
+            }
         }
         return 0;
     }
@@ -54,6 +69,11 @@ class AttendanceListSessionAdministratorRepository
 
         $administrators_id = $session_administrator->attendanceList()->pluck('administrator_id');
         $administrators = CaAdministrator::whereIn('id', $administrators_id)->get();
+
+        $representants_id = $session_administrator->attendanceList()->pluck('representant_id');
+        $representants = Representant::whereIn('id', $representants_id)->get();
+
+        $administrators = $administrators->merge($representants);
 
         $pdf =  $this->generateFromView( 'pdf.session_administrator.attendance',  [
             'administrators' => $administrators,

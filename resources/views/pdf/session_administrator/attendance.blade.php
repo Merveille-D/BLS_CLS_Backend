@@ -29,7 +29,7 @@
             @foreach ($administrators as $administrator)
                 <tr>
                     <td height="50px" >{{ $administrator->name }}</td>
-                    <td>{{ $administrator->quality  }}</td>
+                    <td>{{ $administrator->grade  }}</td>
                     <td>{{ $administrator->shares  }}</td>
                     <td>{{ $administrator->function  }}</td>
                     <td></td>

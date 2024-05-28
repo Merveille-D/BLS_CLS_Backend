@@ -67,14 +67,12 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     // Liste de présence CA
     Route::get('list_attendance_session_administrators', [AttendanceListSessionAdministratorController::class, 'list'] );
-    Route::post('add_attendance_session_administrators', [AttendanceListSessionAdministratorController::class, 'add'] );
-    Route::post('delete_attendance_session_administrators', [AttendanceListSessionAdministratorController::class, 'delete'] );
+    Route::post('update_attendance_session_administrators', [AttendanceListSessionAdministratorController::class, 'updateStatus'] );
     Route::get('generate_pdf_attendance_session_administrators', [AttendanceListSessionAdministratorController::class, 'generatePdf'] );
 
     // Liste de présence CODIR
     Route::get('list_attendance_management_committees', [AttendanceListManagementCommitteeController::class, 'list'] );
-    Route::post('add_attendance_management_committees', [AttendanceListManagementCommitteeController::class, 'add'] );
-    Route::post('delete_attendance_management_committees', [AttendanceListManagementCommitteeController::class, 'delete'] );
+    Route::post('update_attendance_management_committees', [AttendanceListManagementCommitteeController::class, 'updateStatus'] );
     Route::get('generate_pdf_attendance_management_committees', [AttendanceListManagementCommitteeController::class, 'generatePdf'] );
 
 

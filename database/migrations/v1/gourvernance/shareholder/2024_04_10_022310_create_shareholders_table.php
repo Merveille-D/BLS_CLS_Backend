@@ -20,9 +20,9 @@ return new class extends Migration
             $table->string('nationality')->nullable();
             $table->string('address')->nullable();
             $table->enum('corporate_type', Shareholder::CORPORATE_TYPES)->nullable();
-            $table->integer('actions_number');
-            $table->integer('actions_encumbered');
-            $table->integer('actions_no_encumbered');
+            $table->bigInteger('actions_number');
+            $table->bigIinteger('actions_encumbered');
+            $table->bigIinteger('actions_no_encumbered');
             $table->integer('percentage')->nullable();
             $table->timestamps();
         });

@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Requests\AttendanceListSessionAdministrator;
+namespace App\Http\Requests\AttendanceListManagementCommittee;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
-class AddAttendanceListSessionAdministratorRequest extends FormRequest
+class UpdateAttendanceListManagementCommitteeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +25,11 @@ class AddAttendanceListSessionAdministratorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'session_id' => ['required', 'uuid'],
-            'administrators' => 'required|array',
-            'administrators.*' => 'required|uuid',
+            'management_committee_id' => ['required', 'uuid'],
+            'directors' => 'required|array',
+            'directors.*.id' => ['required', 'uuid'],
+            'directors.*.type' => ['required', Rule::in(['director', 'not_director'])],
+            'directors.*.status' => ['required', 'boolean']
         ];
     }
 

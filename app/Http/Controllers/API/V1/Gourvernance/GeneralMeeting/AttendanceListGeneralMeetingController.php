@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AttendanceListGeneralMeeting\GeneratePdfAttendanceListGeneralMeetingRequest;
 use App\Http\Requests\AttendanceListGeneralMeeting\UpdateAttendanceListGeneralMeetingRequest;
-use App\Http\Requests\AttendanceListGeneralMeeting\ListAttendanceListGeneralMeetingRequest;
-use App\Models\Gourvernance\GeneralMeeting\AttendanceListGeneralMeeting;
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use App\Repositories\GeneralMeeting\AttendanceListGeneralMeetingRepository;
 use Illuminate\Http\Request;
@@ -39,7 +38,7 @@ class AttendanceListGeneralMeetingController extends Controller
         }
     }
 
-    public function generatePdf(ListAttendanceListGeneralMeetingRequest $request) {
+    public function generatePdf(GeneratePdfAttendanceListGeneralMeetingRequest $request) {
         try {
 
             $general_meeting = GeneralMeeting::find($request['general_meeting_id']);
