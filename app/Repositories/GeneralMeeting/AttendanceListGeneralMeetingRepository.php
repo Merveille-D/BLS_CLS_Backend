@@ -24,12 +24,13 @@ class AttendanceListGeneralMeetingRepository
 
         $shareholders = Shareholder::select('name', 'id')->get()->map(function ($shareholder) {
             $shareholder->type = "shareholder";
-            $shareholder->status = (empty(AttendanceListGeneralMeeting::where('general_meeting_id', request('general_meeting_id'))->where('shareholder_id', $shareholder->id)->get())) ? false : true ;
+            $shareholder->status = (AttendanceListGeneralMeeting::where('general_meeting_id', request('general_meeting_id'))->where('shareholder_id', $shareholder->id)->exists()) ? true : false ;
             return $shareholder;
         });
+
         $representants = Representant::select('grade', 'name', 'id')->get()->map(function ($representant) {
             $representant->type = "not_shareholder";
-            $representant->status = (empty(AttendanceListGeneralMeeting::where('general_meeting_id',  request('general_meeting_id'))->where('representant_id', $representant->id)->get())) ? false : true ;
+            $representant->status = (AttendanceListGeneralMeeting::where('general_meeting_id',  request('general_meeting_id'))->where('representant_id', $representant->id)->exists()) ? true : false ;
             return $representant;
         });
 
