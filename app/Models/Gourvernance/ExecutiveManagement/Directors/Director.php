@@ -24,7 +24,6 @@ class Director extends Model
         'birthdate',
         'position',
         'birthplace',
-        'quality',
         'nationality',
         'address',
     ];

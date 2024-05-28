@@ -25,6 +25,7 @@ use App\Http\Controllers\API\V1\Gourvernance\ExecutiveManagement\ManagementCommi
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\AttendanceListGeneralMeetingController;
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\GeneralMeetingController;
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\TaskGeneralMeetingController;
+use App\Http\Controllers\API\V1\Gourvernance\Representant\RepresentantController;
 use App\Http\Controllers\API\V1\Gourvernance\Shareholder\ActionTransferController;
 use App\Http\Controllers\API\V1\Gourvernance\Shareholder\ShareholderController;
 use App\Http\Controllers\API\V1\Incident\AuthorIncidentController;
@@ -58,9 +59,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     // Liste de présence AG
     Route::get('list_attendance_general_meetings', [AttendanceListGeneralMeetingController::class, 'list'] );
-    Route::post('add_attendance_general_meetings', [AttendanceListGeneralMeetingController::class, 'add'] );
-    Route::post('delete_attendance_general_meetings', [AttendanceListGeneralMeetingController::class, 'delete'] );
+    Route::post('update_attendance_general_meetings', [AttendanceListGeneralMeetingController::class, 'updateStatus'] );
     Route::get('generate_pdf_attendance_general_meetings', [AttendanceListGeneralMeetingController::class, 'generatePdf'] );
+
+    Route::resource('representants', RepresentantController::class);
+
 
     // Liste de présence CA
     Route::get('list_attendance_session_administrators', [AttendanceListSessionAdministratorController::class, 'list'] );
