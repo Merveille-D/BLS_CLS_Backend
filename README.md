@@ -38,8 +38,16 @@ startsecs=0
 - composer require directorytree/ldaprecord-laravel
 
 ## to do 
+list of permissions
+- all permissions 
+- manage user
+- view all subsidiary
+- view local subsidiary
+- manage subsidiary
+- manage roles
 
-
-imprimer
-<!-- union list des garanties -->
-<!-- improve update has_recovery -->
+* garantie pdf
+* manage permission
+* general settings
+* translation in the system
+* gestion des alertes

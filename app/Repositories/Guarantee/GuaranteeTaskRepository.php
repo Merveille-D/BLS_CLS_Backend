@@ -142,11 +142,11 @@ class GuaranteeTaskRepository
 
     public function saveNextTasks($current_task, $radio_field) {
         $steps = $current_task?->step?->children()->where('parent_response', $radio_field)->get();
-
         foreach ($steps as $key => $step) {
             $task = new GuaranteeTask();
             $task->code = $step->code;
             $task->title = $step->title;
+            $task->step_id = $step->id;
             $task->rank = $step->rank;
             $task->type = $step->step_type;
             $task->max_deadline = null;

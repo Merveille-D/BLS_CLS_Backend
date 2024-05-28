@@ -132,7 +132,7 @@ class MortgageTest extends TestCase
             'status' => true
         ]);
 
-        $agreement = $this->actingAs($user)->post('api/conventionnal_hypothec/update/'.Guarantee::find($hypothec_id)->next_task->id, [
+        $agreement = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.Guarantee::find($hypothec_id)->next_task->id, [
             'documents' => $documents
         ]);
 
@@ -142,7 +142,7 @@ class MortgageTest extends TestCase
         //     'state' => ConvHypothecState::AGREEMENT_SIGNED
         // ]);
 
-        // $forwarded = $this->actingAs($user)->post('api/conventionnal_hypothec/update/'.$hypothec_id, [
+        // $forwarded = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.$hypothec_id, [
         //     'documents' => $documents,
         //     'forwarded_date' => date('Y-m-d')
         // ]);
@@ -209,11 +209,12 @@ class MortgageTest extends TestCase
     public function test_initiate_realization_process() : void {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->post('api/conventionnal_hypothec', [
+        $response = $this->actingAs($user)->post('api/guarantees', [
             'name' => 'Test Hypothec Conventionnelle',
             'contract_id'=> '9c2305a7-c6f8-4473-99a0-9cf055044ee1',
+            'type' => 'mortgage',
         ]);
-        $response->assertStatus(200);
+        $response->assertStatus(201);
 
         $documents = [
             [
@@ -225,36 +226,33 @@ class MortgageTest extends TestCase
         ];
 
         $hypothec_id = $response->json('data.id');
-        $verifyProperty = $this->actingAs($user)->post('api/conventionnal_hypothec/update/'.$hypothec_id, [
+        $verifyProperty = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.Guarantee::find($hypothec_id)->next_task->id, [
             'documents' => $documents
         ]);
 
-        $agreement = $this->actingAs($user)->post('api/conventionnal_hypothec/update/'.$hypothec_id, [
+        $agreement = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.Guarantee::find($hypothec_id)->next_task->id, [
             'documents' => $documents
         ]);
 
-        $forwarded = $this->actingAs($user)->post('api/conventionnal_hypothec/update/'.$hypothec_id, [
+        $forwarded = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.Guarantee::find($hypothec_id)->next_task->id, [
             'documents' => $documents,
-            'forwarded_date' => date('Y-m-d')
         ]);
 
-        $register_requested = $this->actingAs($user)->post('api/conventionnal_hypothec/update/'.$hypothec_id, [
+        $register_requested = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.Guarantee::find($hypothec_id)->next_task->id, [
             'documents' => $documents,
-            'registering_date' => date('Y-m-d')
         ]);
 
-        $registered = $this->actingAs($user)->post('api/conventionnal_hypothec/update/'.$hypothec_id, [
+        $registered = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.Guarantee::find($hypothec_id)->next_task->id, [
             'documents' => $documents,
             'is_approved' => 'yes',
-            'registration_date' => date('Y-m-d')
         ]);
 
-        $realization = $this->actingAs($user)->post('api/conventionnal_hypothec/realization/'.$hypothec_id);
+        $realization = $this->actingAs($user)->post('api/guarantees/realization/'.$hypothec_id);
 
         $realization->assertStatus(200);
 
-        $this->assertDatabaseHas('conv_hypothecs', [
-            'step' => 'realization',
+        $this->assertDatabaseHas('guarantees', [
+            'phase' => 'realization',
             'name' => 'Test Hypothec Conventionnelle',
             'contract_id'=> '9c2305a7-c6f8-4473-99a0-9cf055044ee1',
         ]);
@@ -291,25 +289,25 @@ class MortgageTest extends TestCase
         ];
 
         $hypothec_id = $response->json('data.id');
-        $verifyProperty = $this->actingAs($user)->post('api/conventionnal_hypothec/update/'.$hypothec_id, [
+        $verifyProperty = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.$hypothec_id, [
             'documents' => $documents
         ]);
 
-        $agreement = $this->actingAs($user)->post('api/conventionnal_hypothec/update/'.$hypothec_id, [
+        $agreement = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.$hypothec_id, [
             'documents' => $documents
         ]);
 
-        $forwarded = $this->actingAs($user)->post('api/conventionnal_hypothec/update/'.$hypothec_id, [
+        $forwarded = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.$hypothec_id, [
             'documents' => $documents,
             'forwarded_date' => date('Y-m-d')
         ]);
 
-        $register_requested = $this->actingAs($user)->post('api/conventionnal_hypothec/update/'.$hypothec_id, [
+        $register_requested = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.$hypothec_id, [
             'documents' => $documents,
             'registering_date' => date('Y-m-d')
         ]);
 
-        $registered = $this->actingAs($user)->post('api/conventionnal_hypothec/update/'.$hypothec_id, [
+        $registered = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.$hypothec_id, [
             'documents' => $documents,
             'is_approved' => 'yes',
             'registration_date' => date('Y-m-d')

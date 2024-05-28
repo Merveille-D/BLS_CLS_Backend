@@ -45,4 +45,19 @@ enum GuaranteeType : string {
         GuaranteeType::TRADE_FUND => 'GA',
         GuaranteeType::BANK_ACCOUNT => 'GA',
     ];
+
+    const VALUES = [
+        GuaranteeType::MORTGAGE => 'Hypothèque conventionnelle',
+
+        GuaranteeType::AUTONOMOUS => 'Garantie autonome',
+        GuaranteeType::BONDING => 'Garantie de cautionnement',
+        GuaranteeType::AUTONOMOUS_COUNTER => 'Contre garantie autonome',
+
+        GuaranteeType::STOCK => 'Gage de stock',
+        GuaranteeType::VEHICLE => 'Gage de véhicule ...',
+
+        GuaranteeType::SHAREHOLDER_RIGHTS => 'Nantissement de droits d\'associés, les valeurs mobilières ...',
+        GuaranteeType::TRADE_FUND => 'Nantissement de fonds de commerce',
+        GuaranteeType::BANK_ACCOUNT => 'Nantissement de créances/compte bancaire',
+    ];
 }

@@ -23,7 +23,7 @@ class RecoveryTest extends TestCase
     {
         $user = User::factory()->create();
 
-        Recovery::factory()->count(5)->create();
+        Recovery::factory()->count(1)->create();
 
         $response = $this->actingAs($user)->get('api/recovery');
 

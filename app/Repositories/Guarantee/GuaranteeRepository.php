@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Guarantee;
 
+use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use App\Enums\Guarantee\GuaranteeType;
 use App\Http\Resources\Guarantee\GuaranteeResource;
 use App\Http\Resources\Guarantee\GuaranteeTaskResource;
@@ -12,9 +13,11 @@ use App\Models\Guarantee\HypothecTask;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Str;
 
 class GuaranteeRepository
 {
+    use GeneratePdfTrait;
     public function __construct(
         private Guarantee $guarantee_model
     ) {
@@ -73,7 +76,7 @@ class GuaranteeRepository
         $this->saveTasks($steps, $guarantee);
         $this->updateTaskState($guarantee);
 
-        return new GuaranteeResource($guarantee);
+        return new GuaranteeResource($guarantee->refresh());
     }
 
     public function getOne($guarantee): ?JsonResource
@@ -165,7 +168,7 @@ class GuaranteeRepository
 
     public function realization($guarantee) {
 
-        $steps = GuaranteeStep::orderBy('rank')->whereGuaranteeType($guarantee->type)->whereStepType('realization')->get();
+        $steps = GuaranteeStep::whereNull('parent_id')->whereGuaranteeType($guarantee->type)->whereStepType('realization')->get();
 
         $this->saveTasks($steps, $guarantee);
 
@@ -173,5 +176,34 @@ class GuaranteeRepository
             $guarantee->save();
 
         return GuaranteeTaskResource::collection($guarantee->tasks);
+    }
+
+    public function generatePdf($id) {
+        $guarantee = $this->guarantee_model->findOrFail($id);
+        $filename = Str::slug($guarantee->name). '_'.date('YmdHis') . '.pdf';
+
+        $pdf =  $this->generateFromView( 'pdf.guarantee.guarantee',  [
+            'model' => $guarantee,
+            'details' => $this->getDetails($guarantee)
+        ],
+        $filename);
+
+        return $pdf;
+    }
+
+    public function getDetails($guarantee) {
+        $details = [
+            'Référence' => $guarantee->reference,
+            'Type' => $guarantee->readable_type,
+            'Intitulé' => $guarantee->name ?? null,
+            'Phase' => $guarantee->readable_phase,
+        ];
+
+        if ($guarantee->security == 'property' && $guarantee->phase == 'realization') {
+            $details['Date de vente fixée'] = $guarantee->extra['date_sell'] ?? null;
+            $details['Prix de vente'] = $guarantee->extra['sell_price_estate'] ?? null;
+        }
+
+        return $details;
     }
 }
