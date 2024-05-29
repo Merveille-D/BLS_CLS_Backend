@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AddRoleRequest;
+use App\Http\Resources\Auth\PermissionResource;
 use App\Models\Auth\Permission;
+use App\Models\Auth\PermissionEntity;
 use App\Models\Auth\Role;
 use Illuminate\Http\Request;
 
@@ -15,7 +17,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        return api_response(true, 'Permissions retrieved successfully', Permission::all());
+        return api_response(true, 'Permissions retrieved successfully', PermissionResource::collection(PermissionEntity::all()));
     }
 
     /**
