@@ -21,6 +21,7 @@ class GeneralMeetingController extends Controller
      */
     public function index()
     {
+        $this->meeting->checkStatus();
 
         $general_meetings = GeneralMeeting::when(request('status') === 'pending', function($query) {
             $query->where('status', 'pending');

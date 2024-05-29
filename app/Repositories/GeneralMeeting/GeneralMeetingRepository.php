@@ -83,8 +83,6 @@ class GeneralMeetingRepository
             }
         }
 
-        // $this->checkFilesFilled($general_meeting);
-
         return $general_meeting;
     }
 
@@ -114,25 +112,14 @@ class GeneralMeetingRepository
         return $general_meeting;
     }
 
-    public function checkFilesFilled($general_meeting) {
+    public function checkStatus() {
 
-        $fileFields = GeneralMeeting::FILE_FIELD;
-        $allFilled = true;
-
-        foreach ($fileFields as $field) {
-            if (empty($general_meeting->$field)) {
-                $allFilled = false;
-                break;
-            }
+        $general_meetings = GeneralMeeting::where('meeting_date', '<', now())->get();
+        foreach($general_meetings as $general_meeting) {
+            $general_meeting->update(['status' => 'post_ag']);
         }
 
-        if ($allFilled) {
-            $general_meeting->update([
-                'status' => 'post_ag',
-            ]);
-        }
-
-        return $general_meeting;
+        return 0;
     }
 
 
