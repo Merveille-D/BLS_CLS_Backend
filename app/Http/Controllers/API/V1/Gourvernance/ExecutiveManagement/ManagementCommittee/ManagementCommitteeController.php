@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\Gourvernance\ExecutiveManagement\ManagementCommittee;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ManagementCommittee\GeneratePdfManagementCommitteeRequest;
 use App\Http\Requests\ManagementCommittee\StoreManagementCommitteeRequest;
 use App\Http\Requests\ManagementCommittee\UpdateAttachementManagementCommitteeRequest;
 use App\Http\Requests\ManagementCommittee\UpdateManagementCommitteeRequest;
@@ -21,6 +22,8 @@ class ManagementCommitteeController extends Controller
      */
     public function index()
     {
+        $this->session->checkStatus();
+
         $management_committees = ManagementCommittee::when(request('status') === 'pending', function($query) {
             $query->where('status', 'pending');
         }, function($query) {
@@ -94,5 +97,15 @@ class ManagementCommitteeController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function generatePdfFicheSuivi(GeneratePdfManagementCommitteeRequest $request) {
+        try {
+
+            $data = $this->session->generatePdf($request);
+            return $data;
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
+        }
     }
 }

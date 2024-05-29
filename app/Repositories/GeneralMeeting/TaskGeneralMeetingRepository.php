@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories\GeneralMeeting;
 
+use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
 use Carbon\Carbon;
@@ -8,6 +9,8 @@ use DateTime;
 
 class TaskGeneralMeetingRepository
 {
+    use GeneratePdfTrait;
+
     public function __construct(private TaskGeneralMeeting $task) {
 
     }
@@ -96,6 +99,24 @@ class TaskGeneralMeetingRepository
         }
 
         return true;
+    }
+
+    public function generatePdf($request){
+
+        $general_meeting = GeneralMeeting::find($request['general_meeting_id']);
+
+        $meeting_type = GeneralMeeting::GENERAL_MEETING_TYPES_VALUE[$general_meeting->type];
+
+        $tasks = TaskGeneralMeeting::where('general_meeting_id', $general_meeting->id)
+                                    ->whereIn('type', ['checklist', 'procedure'])
+                                    ->get();
+
+        $pdf =  $this->generateFromView( 'pdf.general_meeting.checklist_and_procedure',  [
+            'tasks' => $tasks,
+            'general_meeting' => $general_meeting,
+            'meeting_type' => $meeting_type,
+        ]);
+        return $pdf;
     }
 
 }

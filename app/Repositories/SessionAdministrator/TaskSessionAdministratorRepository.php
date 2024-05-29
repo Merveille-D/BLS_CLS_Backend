@@ -1,12 +1,15 @@
 <?php
 namespace App\Repositories\SessionAdministrator;
 
+use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
 use App\Models\Gourvernance\BoardDirectors\Sessions\TaskSessionAdministrator;
 use Carbon\Carbon;
 
 class TaskSessionAdministratorRepository
 {
+    use GeneratePdfTrait;
+
     public function __construct(private TaskSessionAdministrator $task) {
 
     }
@@ -92,5 +95,23 @@ class TaskSessionAdministratorRepository
         }
 
         return true;
+    }
+
+    public function generatePdf($request){
+
+        $session_administrator = SessionAdministrator::find($request['session_administrator_id']);
+
+        $meeting_type = SessionAdministrator::SESSION_MEETING_TYPES_VALUES[$session_administrator->type];
+
+        $tasks = TaskSessionAdministrator::where('session_administrator_id', $session_administrator->id)
+                                    ->whereIn('type', ['checklist', 'procedure'])
+                                    ->get();
+
+        $pdf =  $this->generateFromView( 'pdf.session_administrator.checklist_and_procedure',  [
+            'tasks' => $tasks,
+            'session_administrator' => $session_administrator,
+            'meeting_type' => $meeting_type,
+        ]);
+        return $pdf;
     }
 }

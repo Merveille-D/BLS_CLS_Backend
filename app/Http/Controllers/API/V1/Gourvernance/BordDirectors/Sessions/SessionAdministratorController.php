@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SessionAdministrator\GeneratePdfSessionAdministratorRequest;
 use App\Http\Requests\SessionAdministrator\StoreSessionAdministratorRequest;
 use App\Http\Requests\SessionAdministrator\UpdateAttachementSessionAdministratorRequest;
 use App\Http\Requests\SessionAdministrator\UpdateSessionAdministratorRequest;
@@ -21,6 +22,8 @@ class SessionAdministratorController extends Controller
      */
     public function index()
     {
+        $this->session->checkStatus();
+
         $session_administrators = SessionAdministrator::when(request('status') === 'pending', function($query) {
             $query->where('status', 'pending');
         }, function($query) {
@@ -94,5 +97,15 @@ class SessionAdministratorController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function generatePdfFicheSuivi(GeneratePdfSessionAdministratorRequest $request) {
+        try {
+
+            $data = $this->session->generatePdf($request);
+            return $data;
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
+        }
     }
 }

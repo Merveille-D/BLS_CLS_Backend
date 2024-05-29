@@ -1,12 +1,15 @@
 <?php
 namespace App\Repositories\ManagementCommittee;
 
+use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\ManagementCommittee;
 use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\TaskManagementCommittee;
 use Carbon\Carbon;
 
 class TaskManagementCommitteeRepository
 {
+    use GeneratePdfTrait;
+
     public function __construct(private TaskManagementCommittee $task) {
 
     }
@@ -92,5 +95,20 @@ class TaskManagementCommitteeRepository
         }
 
         return true;
+    }
+
+    public function generatePdf($request){
+
+        $management_committee = ManagementCommittee::find($request['management_committee_id']);
+
+        $tasks = TaskManagementCommittee::where('management_committee_id', $management_committee->id)
+                                    ->whereIn('type', ['checklist', 'procedure'])
+                                    ->get();
+
+        $pdf =  $this->generateFromView( 'pdf.management_committee.checklist_and_procedure',  [
+            'tasks' => $tasks,
+            'management_committee' => $management_committee,
+        ]);
+        return $pdf;
     }
 }

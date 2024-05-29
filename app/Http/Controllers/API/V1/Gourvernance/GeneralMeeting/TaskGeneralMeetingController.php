@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\GeneralMeeting\GeneratePdfGeneralMeetingRequest;
 use App\Http\Requests\GeneralMeeting\ListTaskGeneralMeetingRequest;
 use App\Http\Requests\TaskGeneralMeeting\DeleteTaskGeneralMeetingRequest;
 use App\Http\Requests\TaskGeneralMeeting\StoreTaskGeneralMeetingRequest;
@@ -95,6 +96,16 @@ class TaskGeneralMeetingController extends Controller
             return api_response(true, "Succès de la mise à jour des taches", null, 200);
         } catch (ValidationException $e) {
             return api_response(false, "Echec de la mise à jour des taches", $e->errors(), 422);
+        }
+    }
+
+    public function generatePdfTasks(GeneratePdfGeneralMeetingRequest $request) {
+        try {
+
+            $data = $this->task->generatePdf($request);
+            return $data;
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }
 }

@@ -3,12 +3,8 @@
 namespace App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AttendanceListSessionAdministrator\AddAttendanceListSessionAdministratorRequest;
-use App\Http\Requests\AttendanceListSessionAdministrator\DeleteAttendanceListSessionAdministratorRequest;
-use App\Http\Requests\AttendanceListSessionAdministrator\GeneratePdfAttendanceListSessionAdministratorRequest;
-use App\Http\Requests\AttendanceListSessionAdministrator\ListAttendanceListSessionAdministratorRequest;
 use App\Http\Requests\AttendanceListSessionAdministrator\UpdateAttendanceListSessionAdministratorRequest;
-use App\Models\Gourvernance\BoardDirectors\Sessions\AttendanceListSessionAdministrator;
+use App\Http\Requests\SessionAdministrator\GeneratePdfSessionAdministratorRequest;
 use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
 use App\Repositories\SessionAdministrator\AttendanceListSessionAdministratorRepository;
 use Illuminate\Http\Request;
@@ -42,7 +38,7 @@ class AttendanceListSessionAdministratorController extends Controller
         }
     }
 
-    public function generatePdf(GeneratePdfAttendanceListSessionAdministratorRequest $request) {
+    public function generatePdf(GeneratePdfSessionAdministratorRequest $request) {
         try {
 
             $session_administrator = SessionAdministrator::find($request['session_administrator_id']);

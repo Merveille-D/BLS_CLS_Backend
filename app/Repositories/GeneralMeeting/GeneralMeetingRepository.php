@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories\GeneralMeeting;
 
+use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
 use App\Models\Gourvernance\GourvernanceDocument;
@@ -8,6 +9,8 @@ use DateTime;
 
 class GeneralMeetingRepository
 {
+    use GeneratePdfTrait;
+
     public function __construct(private GeneralMeeting $meeting) {
 
     }
@@ -20,7 +23,7 @@ class GeneralMeetingRepository
     public function store($request) {
 
         $date = new DateTime($request['meeting_date']);
-        $reference = 'AG-' . (GeneralMeeting::max('id') + 1) . '-' . $date->format('d') . '/' . $date->format('m') . '/' . $date->format('Y');
+        $reference = 'AG-' . '-' . $date->format('d') . '/' . $date->format('m') . '/' . $date->format('Y');
         $request['reference'] = $reference;
 
         $general_meeting = $this->meeting->create($request->all());
@@ -122,5 +125,22 @@ class GeneralMeetingRepository
         return 0;
     }
 
+    public function generatePdf($request){
+
+        $general_meeting = GeneralMeeting::find($request['general_meeting_id']);
+
+        $meeting_type = GeneralMeeting::GENERAL_MEETING_TYPES_VALUE[$general_meeting->type];
+
+        $tasks = TaskGeneralMeeting::where('general_meeting_id', $general_meeting->id)
+                                    ->whereIn('type', ['pre_ag', 'post_ag'])
+                                    ->get();
+
+        $pdf =  $this->generateFromView( 'pdf.general_meeting.fiche_de_suivi',  [
+            'tasks' => $tasks,
+            'general_meeting' => $general_meeting,
+            'meeting_type' => $meeting_type,
+        ]);
+        return $pdf;
+    }
 
 }

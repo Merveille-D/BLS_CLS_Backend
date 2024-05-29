@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories\ManagementCommittee;
 
+use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\ManagementCommittee;
 use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\TaskManagementCommittee;
 use App\Models\Gourvernance\GourvernanceDocument;
@@ -8,6 +9,8 @@ use DateTime;
 
 class ManagementCommitteeRepository
 {
+    use GeneratePdfTrait;
+
     public function __construct(private ManagementCommittee $session) {
 
     }
@@ -20,7 +23,7 @@ class ManagementCommitteeRepository
     public function store($request) {
 
         $date = new DateTime(now());
-        $reference = 'CD-' . (ManagementCommittee::max('id') + 1) . '-' . $date->format('d') . '/' . $date->format('m') . '/' . $date->format('Y');
+        $reference = 'CD-' . '-' . $date->format('d') . '/' . $date->format('m') . '/' . $date->format('Y');
         $request['reference'] = $reference;
 
         $management_committee = $this->session->create($request->all());
@@ -44,7 +47,7 @@ class ManagementCommitteeRepository
         $date_diff = $current_date->diff($old_date);
 
         $management_committee->update($request);
-        
+
         if($date_diff->format('%R%a') != 0) {
             $this->createTasks($management_committee);
         }
@@ -115,24 +118,28 @@ class ManagementCommitteeRepository
         return $management_committee;
     }
 
-    public function checkFilesFilled($management_committee) {
+    public function checkStatus() {
 
-        $fileFields = ManagementCommittee::FILE_FIELD;
-        $allFilled = true;
-
-        foreach ($fileFields as $field) {
-            if (empty($management_committee->$field)) {
-                $allFilled = false;
-                break;
-            }
+        $management_committees = ManagementCommittee::where('session_date', '<', now())->get();
+        foreach($management_committees as $management_committee) {
+            $management_committee->update(['status' => 'post_cd']);
         }
 
-        if ($allFilled) {
-            $management_committee->update([
-                'status' => 'post_ag',
-            ]);
-        }
+        return 0;
+    }
 
-        return $management_committee;
+    public function generatePdf($request){
+
+        $management_committee = ManagementCommittee::find($request['management_committee_id']);
+
+        $tasks = TaskManagementCommittee::where('management_committee_id', $management_committee->id)
+                                    ->whereIn('type', ['pre_cd', 'post_cd'])
+                                    ->get();
+
+        $pdf =  $this->generateFromView( 'pdf.management_committee.fiche_de_suivi',  [
+            'tasks' => $tasks,
+            'management_committee' => $management_committee,
+        ]);
+        return $pdf;
     }
 }
