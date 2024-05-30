@@ -4,11 +4,15 @@ namespace App\Models\Gourvernance\GeneralMeeting;
 
 use App\Concerns\Traits\Alert\Alertable;
 use App\Models\Alert\Alert;
+use App\Models\Scopes\CountryScope;
+use App\Models\User;
 use App\Observers\TaskGeneralMeetingObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+#[ScopedBy([CountryScope::class])]
 #[ObservedBy([TaskGeneralMeetingObserver::class])]
 class TaskGeneralMeeting extends Model
 {
@@ -31,6 +35,8 @@ class TaskGeneralMeeting extends Model
         'responsible',
         'supervisor',
         'general_meeting_id',
+        'completed_by',
+        'created_by',
     ];
 
     const MEETING_TASK_TYPE = [
@@ -129,4 +135,8 @@ class TaskGeneralMeeting extends Model
             ['libelle' => "Remettre Liste de présence au PCA"],
         ],
     ];
+
+    public function creator() {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 }

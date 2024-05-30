@@ -5,6 +5,7 @@ use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
 use App\Models\Gourvernance\BoardDirectors\Sessions\TaskSessionAdministrator;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class TaskSessionAdministratorRepository
 {
@@ -45,6 +46,7 @@ class TaskSessionAdministratorRepository
             $request['type'] = $sessionDate->isPast() ? 'post_ca' : 'pre_ca';
         }
 
+        $request['created_by'] = Auth::user()->id;
         $task_session_administrator = $this->task->create($request->all());
 
         return $task_session_administrator;
@@ -69,15 +71,13 @@ class TaskSessionAdministratorRepository
      public function updateStatus($request) {
         foreach ($request['tasks'] as $data) {
             $taskSessionAdministrator = $this->task->findOrFail($data['id']);
-            $taskSessionAdministrator->update(['status' => $data['status']]);
-            $updatedTasks[] = $taskSessionAdministrator;
 
-            if($taskSessionAdministrator->type === 'pre_ca') {
-                $session_administrator = $taskSessionAdministrator->session_administrator();
-                if($taskSessionAdministrator->deadline === $session_administrator->session_date) {
-                    $session_administrator->update(['status' => 'post_ca']);
-                }
+            $updateData = ['status' => $data['status']];
+            if ($data['status']) {
+                $updateData['completed_by'] = Auth::user()->id;
             }
+
+            $taskSessionAdministrator->update($updateData);
         }
 
         return $taskSessionAdministrator;

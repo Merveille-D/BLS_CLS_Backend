@@ -18,7 +18,7 @@ class NotationRepository
     public function notationRessource($notation) {
 
         $notation->collaborator = $notation->collaborator;
-        $notation->created = $notation->createdBy;
+        $notation->created = $notation->creator;
         $notation->transfers = $notation->transfers->makeHidden(['evaluation'])->map(function ($transfer) {
 
             $transfer->notation = Notation::find($transfer->evaluation->first()->evaluation_id);

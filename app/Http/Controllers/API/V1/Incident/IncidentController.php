@@ -40,7 +40,7 @@ class IncidentController extends Controller
     public function store(StoreIncidentRequest $request)
     {
         try {
-            $incident = $this->incident->store($request);
+            $incident = $this->incident->store($request->all());
 
             $incident->load('authorIncident');
             $data = $incident->toArray();

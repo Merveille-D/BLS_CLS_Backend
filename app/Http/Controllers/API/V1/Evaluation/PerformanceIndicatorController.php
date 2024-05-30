@@ -39,7 +39,7 @@ class PerformanceIndicatorController extends Controller
     public function store(Request $request)
     {
         try {
-            $performanceIndicator = $this->performanceIndicator->store($request);
+            $performanceIndicator = $this->performanceIndicator->store($request->all());
             return api_response(true, "Succès de l'enregistrement de l'indicateur de performance", $performanceIndicator, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement de l'indicateur de performance", $e->errors(), 422);

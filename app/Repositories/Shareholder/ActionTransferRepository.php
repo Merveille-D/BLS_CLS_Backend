@@ -4,6 +4,7 @@ namespace App\Repositories\Shareholder;
 use App\Models\Gourvernance\GourvernanceDocument;
 use App\Models\Shareholder\ActionTransfer;
 use App\Models\Shareholder\Shareholder;
+use Illuminate\Support\Facades\Auth;
 
 class ActionTransferRepository
 {
@@ -18,7 +19,8 @@ class ActionTransferRepository
      */
     public function store($request) {
 
-        $action_transfer = $this->action_transfer->create($request->all());
+        $request['created_by'] = Auth::user()->id;
+        $action_transfer = $this->action_transfer->create($request);
 
         $owner = Shareholder::find($request['owner_id']);
         $owner->update([

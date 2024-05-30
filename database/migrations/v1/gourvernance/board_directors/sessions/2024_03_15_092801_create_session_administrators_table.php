@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('session_administrators', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('libelle');
-            $table->string('reference');
+            $table->string('session_reference');
             $table->datetime('session_date');
 
             $table->enum('type', SessionAdministrator::SESSION_MEETING_TYPES );
@@ -31,6 +31,10 @@ return new class extends Migration
 
             $table->string('attendance_list_file')->nullable();
             $table->string('attendance_list_file_date')->nullable();
+
+            $table->string('reference');
+            $table->uuid('created_by')->nullable();
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
 
             $table->enum('status', SessionAdministrator::SESSION_MEETING_STATUS )->default('pending');
 

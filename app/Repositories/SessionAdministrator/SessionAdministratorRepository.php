@@ -6,6 +6,7 @@ use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
 use App\Models\Gourvernance\BoardDirectors\Sessions\TaskSessionAdministrator;
 use App\Models\Gourvernance\GourvernanceDocument;
 use DateTime;
+use Illuminate\Support\Facades\Auth;
 
 class SessionAdministratorRepository
 {
@@ -24,7 +25,10 @@ class SessionAdministratorRepository
 
         $date = new DateTime(now());
         $reference = 'CA-' . '-' . $date->format('d') . '/' . $date->format('m') . '/' . $date->format('Y');
-        $request['reference'] = $reference;
+        $request['session_reference'] = $reference;
+
+        $request['reference'] = generateReference('AG', $this->session);
+        $request['created_by'] = Auth::user()->id;
 
         $session_administrator = $this->session->create($request->all());
 
@@ -102,6 +106,7 @@ class SessionAdministratorRepository
             foreach($tasks as $task) {
                 $task['type'] = $type;
                 $task['session_administrator_id'] = $session_administrator->id;
+                $task['created_by'] = Auth::user()->id;
 
                 if($type == "pre_ca") {
                     $session_date = new DateTime($session_administrator->session_date);

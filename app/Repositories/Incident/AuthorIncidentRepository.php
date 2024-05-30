@@ -3,6 +3,7 @@ namespace App\Repositories\Incident;
 
 use App\Models\Gourvernance\GourvernanceDocument;
 use App\Models\Incident\AuthorIncident;
+use Illuminate\Support\Facades\Auth;
 
 class AuthorIncidentRepository
 {
@@ -17,10 +18,11 @@ class AuthorIncidentRepository
      */
     public function store($request) {
 
-        $authorIncident = $this->authorIncident->create($request->all());
+        $request['created_by'] = Auth::user()->id;
+        $authorIncident = $this->authorIncident->create($request);
         return $authorIncident;
     }
-
+   
      /**
      * @param Request $request
      *

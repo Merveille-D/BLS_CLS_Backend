@@ -5,7 +5,7 @@
         <div class="left">
             <h1>Liste de présence</h1>
             <p class="subtitle bold">{{$session_administrator->libelle}} {{ $meeting_type }}</p>
-            <p class="subtitle italic underline">{{ $session_administrator->reference }}</p>
+            <p class="subtitle italic underline">{{ $session_administrator->session_reference }}</p>
             <p class="subtitle gray">{{ date('d-m-Y H:i') }}</p>
         </div>
         <div class="right">

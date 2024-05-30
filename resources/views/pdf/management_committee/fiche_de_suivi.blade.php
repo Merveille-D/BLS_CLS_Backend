@@ -9,7 +9,7 @@
         <div class="center" style="margin-top: 10px;">
             <h1>Fiche de suivi </h1>
             <p class="subtitle bold">{{$management_committee->libelle}}</p>
-            <p class="subtitle italic underline">{{ $management_committee->reference }}</p>
+            <p class="subtitle italic underline">{{ $management_committee->session_reference }}</p>
             <p class="subtitle gray">{{ date('d-m-Y H:i') }}</p>
         </div>
         <div class="right">

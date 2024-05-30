@@ -36,7 +36,7 @@ class ActionTransferController extends Controller
     public function store(StoreActionTransferRequest $request)
     {
         try {
-            $action_transfer = $this->action_transfer->store($request);
+            $action_transfer = $this->action_transfer->store($request->all());
             return api_response(true, "Succès de l'enregistrement du transfert", $action_transfer, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement", $e->errors(), 422);

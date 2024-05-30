@@ -3,6 +3,7 @@ namespace App\Repositories\Contract;
 
 use App\Enums\AdminType;
 use App\Models\Contract\Part;
+use Illuminate\Support\Facades\Auth;
 
 class PartRepository
 {
@@ -17,8 +18,10 @@ class PartRepository
      * @return Part
      */
     public function store($request) {
+        $request['created_by'] = Auth::user()->id;
+
         if ($request->type == "individual") {
-            $part = $this->part->create($request->all());
+            $part = $this->part->create($request);
 
             return $part;
         } else if ($request->type == "corporate") {

@@ -32,7 +32,7 @@ class AuthorIncidentController extends Controller
     public function store(StoreAuthorIncidentRequest $request)
     {
         try {
-            $authorIncident = $this->authorIncident->store($request);
+            $authorIncident = $this->authorIncident->store($request->all());
             return api_response(true, "Succès de l'enregistrement de l'auteur", $authorIncident, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement de l'auteur", $e->errors(), 422);

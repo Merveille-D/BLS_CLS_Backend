@@ -6,6 +6,7 @@ use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
 use App\Models\Gourvernance\GourvernanceDocument;
 use DateTime;
+use Illuminate\Support\Facades\Auth;
 
 class GeneralMeetingRepository
 {
@@ -24,7 +25,10 @@ class GeneralMeetingRepository
 
         $date = new DateTime($request['meeting_date']);
         $reference = 'AG-' . '-' . $date->format('d') . '/' . $date->format('m') . '/' . $date->format('Y');
-        $request['reference'] = $reference;
+        $request['meeting_reference'] = $reference;
+
+        $request['reference'] = generateReference('AG', $this->meeting);
+        $request['created_by'] = Auth::user()->id;
 
         $general_meeting = $this->meeting->create($request->all());
 
@@ -100,6 +104,7 @@ class GeneralMeetingRepository
             foreach($tasks as $task) {
                 $task['type'] = $type;
                 $task['general_meeting_id'] = $general_meeting->id;
+                $task['created_by'] = Auth::user()->id;
 
                 if($type == "pre_ag") {
                     $meeting_date = new DateTime($general_meeting->meeting_date);

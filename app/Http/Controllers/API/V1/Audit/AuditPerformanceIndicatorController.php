@@ -31,7 +31,7 @@ class AuditPerformanceIndicatorController extends Controller
     public function store(StoreAuditPerformanceIndicatorRequest $request)
     {
         try {
-            $auditPerformanceIndicator = $this->auditPerformanceIndicator->store($request);
+            $auditPerformanceIndicator = $this->auditPerformanceIndicator->store($request->all());
             return api_response(true, "Succès de l'enregistrement de l'indicateur de performance", $auditPerformanceIndicator, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement de l'indicateur de performance", $e->errors(), 422);

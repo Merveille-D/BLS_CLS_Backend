@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('title');
             $table->datetime('date');
             $table->boolean('status')->default(false);
+
+            $table->uuid('created_by')->nullable();
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

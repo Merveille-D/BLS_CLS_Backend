@@ -13,12 +13,14 @@ use App\Models\Guarantee\Guarantee;
 use App\Models\Incident\Incident;
 use App\Models\Litigation\Litigation;
 use App\Models\Recovery\Recovery;
+use App\Models\Scopes\CountryScope;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Http;
-
+#[ScopedBy([CountryScope::class])]
 class AuditNotation extends Model
 {
     use HasFactory, HasUuids, Alertable, Transferable;
@@ -91,8 +93,7 @@ class AuditNotation extends Model
         return $response->libelle ?? $response->name ?? $response->title;
     }
 
-    public function createdBy()
-    {
+    public function creator() {
         return $this->belongsTo(User::class, 'created_by');
     }
 }

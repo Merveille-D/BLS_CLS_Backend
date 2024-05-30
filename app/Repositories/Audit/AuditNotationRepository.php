@@ -4,6 +4,9 @@ namespace App\Repositories\Audit;
 use App\Concerns\Traits\Transfer\AddTransferTrait;
 use App\Models\Audit\AuditNotation;
 use App\Models\Audit\AuditPerformanceIndicator;
+use App\Models\Scopes\CountryScope;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Support\Facades\Auth;
 
 class AuditNotationRepository
@@ -20,7 +23,7 @@ class AuditNotationRepository
             ->map(function ($audit_notation) {
 
                 $audit_notation->title = $audit_notation->title;
-                $audit_notation->created = $audit_notation->createdBy;
+                $audit_notation->created = $audit_notation->creator;
 
                 $hiddenAttributes = [
                     'indicators', 'status', 'note', 'observation', 'date',
@@ -35,7 +38,7 @@ class AuditNotationRepository
     public function auditNotationRessource($audit_notation) {
 
         $audit_notation->title = $audit_notation->title;
-        $audit_notation->created = $audit_notation->createdBy;
+        $audit_notation->created = $audit_notation->creator;
         $audit_notation->transfers = $audit_notation->transfers->makeHidden(['audit'])->map(function ($transfer) {
 
             $transfer->notation = AuditNotation::find($transfer->audit->first()->audit_id);
@@ -166,5 +169,7 @@ class AuditNotationRepository
             }
         }
     }
+
+
 
 }

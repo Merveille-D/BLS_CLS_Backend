@@ -6,6 +6,7 @@ use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\ManagementCo
 use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\TaskManagementCommittee;
 use App\Models\Gourvernance\GourvernanceDocument;
 use DateTime;
+use Illuminate\Support\Facades\Auth;
 
 class ManagementCommitteeRepository
 {
@@ -24,7 +25,10 @@ class ManagementCommitteeRepository
 
         $date = new DateTime(now());
         $reference = 'CD-' . '-' . $date->format('d') . '/' . $date->format('m') . '/' . $date->format('Y');
-        $request['reference'] = $reference;
+        $request['session_reference'] = $reference;
+
+        $request['reference'] = generateReference('AG', $this->session);
+        $request['created_by'] = Auth::user()->id;
 
         $management_committee = $this->session->create($request->all());
 
@@ -103,6 +107,7 @@ class ManagementCommitteeRepository
             foreach($tasks as $task) {
                 $task['type'] = $type;
                 $task['management_committee_id'] = $management_committee->id;
+                $task['created_by'] = Auth::user()->id;
 
                 if($type == "pre_cd") {
                     $session_date = new DateTime($management_committee->session_date);

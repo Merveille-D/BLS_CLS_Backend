@@ -36,7 +36,7 @@ class CollaboratorController extends Controller
     public function store(StoreCollaboratorRequest $request)
     {
         try {
-            $collaborator = $this->collaborator->store($request);
+            $collaborator = $this->collaborator->store($request->all());
             return api_response(true, "Succès de l'enregistrement du collaborateur", $collaborator, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement du collaborateur", $e->errors(), 422);

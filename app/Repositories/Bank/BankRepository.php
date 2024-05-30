@@ -4,6 +4,7 @@ namespace App\Repositories\Bank;
 use App\Models\Bank\Bank;
 use App\Models\Gourvernance\GourvernanceDocument;
 use DateTime;
+use Illuminate\Support\Facades\Auth;
 
 class BankRepository
 {
@@ -22,7 +23,8 @@ class BankRepository
             $request['file_name'] = getFileName($request['file']);
             $request['file_url'] = uploadFile($request['file'], 'bank_documents');
         }
-        $bank = $this->bank->create($request->all());
+        $request['created_by'] = Auth::user()->id;
+        $bank = $this->bank->create($request);
         return $bank;
     }
 

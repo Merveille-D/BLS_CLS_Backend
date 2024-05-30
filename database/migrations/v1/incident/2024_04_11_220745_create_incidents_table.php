@@ -22,6 +22,9 @@ return new class extends Migration
             $table->uuid('author_incident_id');
             $table->foreign('author_incident_id')->references('id')->on('author_incidents')->onDelete('cascade');
 
+            $table->uuid('created_by')->nullable();
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+
             $table->uuid('user_id')->nullable();
 
             $table->boolean('client');

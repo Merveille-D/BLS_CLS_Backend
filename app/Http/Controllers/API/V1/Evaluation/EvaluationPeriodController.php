@@ -31,7 +31,7 @@ class EvaluationPeriodController extends Controller
     public function store(StoreEvaluationPeriodRequest $request)
     {
         try {
-            $evaluation_period = $this->evaluation_period->store($request);
+            $evaluation_period = $this->evaluation_period->store($request->all());
             return api_response(true, "Succès de l'enregistrement de la période", $evaluation_period, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement", $e->errors(), 422);

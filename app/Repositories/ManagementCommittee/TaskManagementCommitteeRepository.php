@@ -5,6 +5,7 @@ use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\ManagementCommittee;
 use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\TaskManagementCommittee;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class TaskManagementCommitteeRepository
 {
@@ -45,6 +46,7 @@ class TaskManagementCommitteeRepository
             $request['type'] = $sessionDate->isPast() ? 'post_cd' : 'pre_cd';
         }
 
+        $request['created_by'] = Auth::user()->id;
         $task_management_committee = $this->task->create($request->all());
 
         return $task_management_committee;
@@ -69,15 +71,13 @@ class TaskManagementCommitteeRepository
      public function updateStatus($request) {
         foreach ($request['tasks'] as $data) {
             $taskManagementCommittee = $this->task->findOrFail($data['id']);
-            $taskManagementCommittee->update(['status' => $data['status']]);
-            $updatedTasks[] = $taskManagementCommittee;
 
-            if($taskManagementCommittee->type === 'pre_cd') {
-                $management_committee = $taskManagementCommittee->management_committee();
-                if($taskManagementCommittee->deadline === $management_committee->session_date) {
-                    $management_committee->update(['status' => 'post_cd']);
-                }
+            $updateData = ['status' => $data['status']];
+            if ($data['status']) {
+                $updateData['completed_by'] = Auth::user()->id;
             }
+
+            $taskManagementCommittee->update($updateData);
         }
 
         return $taskManagementCommittee;

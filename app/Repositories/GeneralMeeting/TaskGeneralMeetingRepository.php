@@ -6,6 +6,7 @@ use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
 use Carbon\Carbon;
 use DateTime;
+use Illuminate\Support\Facades\Auth;
 
 class TaskGeneralMeetingRepository
 {
@@ -46,6 +47,7 @@ class TaskGeneralMeetingRepository
             $meetingDate = Carbon::parse($general_meeting->meeting_date);
             $request['type'] = $meetingDate->isPast() ? 'post_ag' : 'pre_ag';
         }
+        $request['created_by'] = Auth::user()->id;
 
         $task_general_meeting = $this->task->create($request->all());
 
@@ -71,17 +73,13 @@ class TaskGeneralMeetingRepository
     public function updateStatus($request) {
         foreach ($request['tasks'] as $data) {
             $taskGeneralMeeting = $this->task->findOrFail($data['id']);
-            $taskGeneralMeeting->update(['status' => $data['status']]);
-            $updatedTasks[] = $taskGeneralMeeting;
 
-
-            if($taskGeneralMeeting->type === 'pre_ag') {
-                $general_meeting = $taskGeneralMeeting->general_meeting();
-                if($taskGeneralMeeting->deadline === $general_meeting->meeting_date) {
-                    $general_meeting->update(['status' => 'post_ag']);
-                }
+            $updateData = ['status' => $data['status']];
+            if ($data['status']) {
+                $updateData['completed_by'] = Auth::user()->id;
             }
 
+            $taskGeneralMeeting->update($updateData);
         }
 
         return $taskGeneralMeeting;
