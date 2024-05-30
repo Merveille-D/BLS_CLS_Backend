@@ -65,7 +65,7 @@ body {
     position: absolute;
 }
 .header img {
-    width: 140px;
+    width: 120px;
     padding: 0.67rem 0;
 }
 .header h1 {

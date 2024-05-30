@@ -2,7 +2,7 @@
 
 <div class="header">
     <div class="left">
-        <img src="{{ $bankLogo }}" alt="Bank Logo">
+        <img src="{{ $bankLogo }}" alt="Bank Logo" style="height: 60px; width : 100px">
     </div>
     <div class="center" style="margin-top: 10px;">
         <h1>Fiche de suivi </h1>

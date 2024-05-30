@@ -52,7 +52,8 @@ class LegalWatchRepository
      * @return JsonResource
      */
     public function add($request) : JsonResource {
-        $legal_watch = $this->watch_model->create($request->all());
+        $legal_watch = $this->watch_model->create(array_merge($request->all(), ['created_by' => auth()->id()]));
+
         if ($legal_watch && !blank($legal_watch->mail_addresses) && count($legal_watch->mail_addresses) >=1) {
             $this->sendMessage($legal_watch);
         }

@@ -118,6 +118,7 @@ class LitigationRepository {
             'jurisdiction_location' => $request->jurisdiction_location,
             'email' => $request->email,
             'phone' => $request->phone,
+            'created_by' => auth()->id(),
         ]);
         foreach ($request->parties as $key => $party) {
             $party_model = LitigationParty::findOrFail($party['party_id']);
@@ -155,7 +156,7 @@ class LitigationRepository {
 
         $litigation->update([
             'name' => $request->name,
-            'reference' => $request->reference,
+            'case_number' => $request->case_number,
             'nature_id' => $request->nature_id,
             'jurisdiction_id' => $request->jurisdiction_id,
             'jurisdiction_location' => $request->jurisdiction_location,
@@ -337,7 +338,7 @@ class LitigationRepository {
 
     public function generatePdf($id) {
         $litigation = $this->findById($id);
-        // dd($litigation);
+
         $filename = Str::slug($litigation->name). '_'.date('YmdHis') . '.pdf';
 
         $pdf =  $this->generateFromView( 'pdf.litigation.litigation',  [

@@ -127,6 +127,7 @@ class RecoveryRepository
             'has_guarantee' => $request->has_guarantee ?? 0,
             'guarantee_id' => $request->guarantee_id ?? null,
             'contract_id' =>  $request->contract_id ?? null,
+            'created_by' => auth()->id(),
         );
 
         $recovery = $this->recovery_model->create($data);

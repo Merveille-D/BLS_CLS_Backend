@@ -68,5 +68,9 @@ class User extends Authenticatable implements LdapAuthenticatable
         return $this->morphToMany(Litigation::class, 'litigationable');
     }
 
-    // Relation for transfer
+    // fullname
+    public function getFullnameAttribute()
+    {
+        return ucfirst($this->firstname) . ' ' . ucfirst($this->lastname);
+    }
 }

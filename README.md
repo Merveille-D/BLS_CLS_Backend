@@ -59,4 +59,8 @@ list of permissions
 * general settings
 * translation in the system
 * gestion des alertes
-* AD
+
+* pdf legal watch [frontend] and litigation 
+* set auth mode in env
+* frontend change email to username
+
