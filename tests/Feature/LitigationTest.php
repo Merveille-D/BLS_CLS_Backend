@@ -78,6 +78,45 @@ class LitigationTest extends TestCase
     }
 
     /**
+     * test retrieve single litigation
+     */
+    public function test_retrieve_litigation() : void {
+        $user = User::factory()->create();
+
+        $file = UploadedFile::fake()->create(
+            'document.pdf', 2048, 'application/pdf'
+        );
+
+        $litigation = $this->actingAs($user)->post('api/litigation', [
+            'name' => 'Test Litigation',
+            'case_number' => 'LT-1234',
+            'nature_id' => LitigationSetting::whereType('nature')->first()->id,
+            'jurisdiction_id' => LitigationSetting::whereType('jurisdiction')->first()->id,
+            'jurisdiction_location' => 'Lagos',
+            'parties' => [
+                [
+                    'party_id' =>  LitigationParty::first()->id,
+                    'category' => 'intervenant',
+                    'type' => 'client',
+                ],
+            ],
+            'documents' => [
+                [
+                    'name' => 'Test Document',
+                    'file' => $file,
+                ],
+            ],
+        ]);
+
+        $id = $litigation->json('data.id');
+
+        $response = $this->actingAs($user)->get('api/litigation/'.$id);
+
+        // Assert that the response has a 200 status code
+        $response->assertStatus(200);
+    }
+
+    /**
      * test generate pdf
      */
     public function test_generate_litigation_pdf() : void {
