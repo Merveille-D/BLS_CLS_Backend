@@ -24,6 +24,7 @@ return new class extends Migration
             $table->boolean('is_seized')->default(0);
             $table->boolean('is_archived')->default(0);
             $table->boolean('payement_status')->default(0);
+            $table->uuid('created_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

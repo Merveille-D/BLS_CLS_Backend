@@ -6,13 +6,16 @@ use App\Concerns\Traits\Alert\Alertable;
 use App\Concerns\Traits\Recovery\RecoveryFormFieldTrait;
 use App\Models\Guarantee\ConvHypothec;
 use App\Models\ModuleTask;
+use App\Models\Scopes\CountryScope;
+use App\Models\User;
 use App\Observers\Recovery\RecoveryObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-
+#[ScopedBy([CountryScope::class])]
 #[ObservedBy([RecoveryObserver::class])]
 class Recovery extends Model
 {
@@ -30,6 +33,7 @@ class Recovery extends Model
         'is_entrusted',
         'is_archived',
         'contract_id',
+        'created_by',
     ];
 
     protected $casts = [
@@ -38,6 +42,10 @@ class Recovery extends Model
         'is_entrusted' => 'boolean',
         'is_archived' => 'boolean',
     ];
+
+    public function creator() {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 
     public function tasks() {
         return $this->morphMany(RecoveryTask::class, 'taskable')->defaultOrder();

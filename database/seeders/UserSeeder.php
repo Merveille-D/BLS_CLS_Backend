@@ -24,11 +24,7 @@ class UserSeeder extends Seeder
                 Permission::create(['name' => $permission]);
             }
         }
-        if (!Role::where('name', 'super_admin')->exists()) {
-            $role = Role::create(['name' => 'super_admin']);
-            //attach permission
-            $role->givePermissionTo(Permission::all());
-        }
+        $role = Role::firstOrCreate(['name' => 'super_admin', 'guard_name' => 'web']);
 
 
         foreach ($this->users_list() as $user) {
@@ -69,12 +65,12 @@ class UserSeeder extends Seeder
 
     public function defaultPermissions() : array {
         return [
-            'manage_user',
-            'manage_local_user',
-            'view_all_subsidiary',
-            'view_local_subsidiary',
-            'manage_subsidiary',
-            'manage_roles',
+            // 'manage_user',
+            // 'manage_local_user',
+            // 'view_all_subsidiary',
+            // 'view_local_subsidiary',
+            // 'manage_subsidiary',
+            // 'manage_roles',
             // 'manage_permissions',
             // 'manage_settings',
         ];

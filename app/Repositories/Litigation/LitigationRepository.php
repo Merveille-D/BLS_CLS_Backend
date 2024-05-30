@@ -337,6 +337,7 @@ class LitigationRepository {
 
     public function generatePdf($id) {
         $litigation = $this->findById($id);
+        // dd($litigation);
         $filename = Str::slug($litigation->name). '_'.date('YmdHis') . '.pdf';
 
         $pdf =  $this->generateFromView( 'pdf.litigation.litigation',  [

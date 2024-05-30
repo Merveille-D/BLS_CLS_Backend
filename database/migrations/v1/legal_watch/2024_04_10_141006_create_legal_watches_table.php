@@ -31,6 +31,7 @@ return new class extends Migration
             $table->text('mail_content')->nullable();
             $table->json('mail_addresses')->nullable();
             $table->boolean('is_sent')->default(false);
+            $table->uuid('created_by')->nullable();
             $table->timestamps();
         });
     }

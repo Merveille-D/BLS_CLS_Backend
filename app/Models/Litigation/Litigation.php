@@ -2,17 +2,21 @@
 
 namespace App\Models\Litigation;
 
-use App\Models\ModuleTask;
+use App\Models\Scopes\CountryScope;
 use App\Models\User;
+use App\Observers\Litigation\LitigationObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[ScopedBy([CountryScope::class])]
+#[ObservedBy([LitigationObserver::class])]
 class Litigation extends Model
 {
     use HasFactory,  HasUuids, SoftDeletes;
@@ -28,6 +32,10 @@ class Litigation extends Model
         'extra' => 'array',
         'is_archived' => 'boolean',
     ];
+
+    public function creator() {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 
 
     /**

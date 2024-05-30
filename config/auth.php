@@ -18,6 +18,11 @@ return [
         'passwords' => 'users',
     ],
 
+    /**
+     * authentification mode
+     */
+    'auth_mode' => env('AUTH_MODE', 'ldap'),
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards
@@ -40,6 +45,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'ldap' => [
+            'driver' => 'session',
+            'provider' => 'ldap',
+        ],
     ],
 
     /*
@@ -60,15 +69,33 @@ return [
     */
 
     'providers' => [
+        'ldap' => [
+            'driver' => 'ldap',
+            'model' =>  LdapRecord\Models\OpenLDAP\User::class,
+        ],
+
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
-        ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+            // added config for LDAP
+            /* 'driver' => 'ldap',
+            'model' => LdapRecord\Models\OpenLDAP\User::class,
+
+            'rules' => [],
+            'database' => [
+                'model' => App\Models\User::class,
+                'sync_passwords' => false,
+                'sync_attributes' => [
+                    'firstname' => 'givenName',
+                    'lastname' => 'sn',
+                    'email' => 'mail',
+                    'username' => 'uid',
+                    'password' => 'userPassword',
+                    'guid' => 'ou',
+                ],
+            ], */
+        ],
     ],
 
     /*

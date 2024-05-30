@@ -9,6 +9,7 @@ use App\Http\Resources\User\UserResource;
 use App\Models\User;
 use App\Repositories\Authentication\UserRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -20,7 +21,8 @@ class UserController extends Controller
         $this->middleware('auth:sanctum')->only('current', 'logout', 'index');
     }
 
-    public function index() {
+    public function index()
+    {
         return api_response(true, 'Liste des utlisateurs', $data = $this->userRepo->getList(request()));
     }
 
@@ -41,7 +43,8 @@ class UserController extends Controller
         }
     }
 
-    public function store(RegisterRequest $request) {
+    public function store(RegisterRequest $request)
+    {
         try {
             DB::beginTransaction();
             $user = $this->userRepo->add($request);
@@ -50,11 +53,11 @@ class UserController extends Controller
         } catch (\Throwable $th) {
             Log::error($th->getMessage());
             DB::rollBack();
-            return api_error(false, $th->getMessage(), ['server' => $th->getMessage() ]);
+            return api_error(false, $th->getMessage(), ['server' => $th->getMessage()]);
         }
     }
 
-    public function login(LoginRequest $request)
+    /* public function login(LoginRequest $request)
     {
         try {
             $token = $this->userRepo->check($request);
@@ -71,6 +74,30 @@ class UserController extends Controller
             return api_error(false, $th->getMessage(), ['server' => $th->getMessage() ]);
         }
     }
+ */
+
+    public function login(LoginRequest $request)
+    {
+        try {
+            $credentials = [
+                'uid' => $request['username'],
+                'password' => $request['password'],
+            ];
+
+            $data = $this->userRepo->authenticate($credentials);
+
+            if (!array_key_exists('access_token', $data)) {
+                return api_response(false, 'Non autorisé', '', 401);
+            }
+            return api_response(true, 'Utilisateur connecté avec succès', $data);
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+
+            return api_error(false, $th->getMessage(), ['server' => $th->getMessage() ]);
+        }
+
+        return response()->json(['success' =>false, 'message' => 'Unauthorized'], 401);
+    }
 
     public function logout()
     {
@@ -81,11 +108,12 @@ class UserController extends Controller
         } catch (\Throwable $th) {
             Log::error($th->getMessage());
 
-            return api_error(false, $th->getMessage(), ['server' => $th->getMessage() ]);
+            return api_error(false, $th->getMessage(), ['server' => $th->getMessage()]);
         }
     }
 
-    public function destroy(string $id) {
+    public function destroy(string $id)
+    {
         try {
             $this->userRepo->delete($id);
 
@@ -93,7 +121,7 @@ class UserController extends Controller
         } catch (\Throwable $th) {
             Log::error($th->getMessage());
 
-            return api_error(false, $th->getMessage(), ['serveur' => $th->getMessage() ]);
+            return api_error(false, $th->getMessage(), ['serveur' => $th->getMessage()]);
         }
     }
 }
