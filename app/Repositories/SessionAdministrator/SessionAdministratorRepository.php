@@ -1,13 +1,17 @@
 <?php
 namespace App\Repositories\SessionAdministrator;
 
+use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
 use App\Models\Gourvernance\BoardDirectors\Sessions\TaskSessionAdministrator;
 use App\Models\Gourvernance\GourvernanceDocument;
 use DateTime;
+use Illuminate\Support\Facades\Auth;
 
 class SessionAdministratorRepository
 {
+    use GeneratePdfTrait;
+
     public function __construct(private SessionAdministrator $session) {
 
     }
@@ -20,8 +24,11 @@ class SessionAdministratorRepository
     public function store($request) {
 
         $date = new DateTime(now());
-        $reference = 'CA-' . (SessionAdministrator::max('id') + 1) . '-' . $date->format('d') . '/' . $date->format('m') . '/' . $date->format('Y');
-        $request['reference'] = $reference;
+        $reference = 'CA-' . '-' . $date->format('d') . '/' . $date->format('m') . '/' . $date->format('Y');
+        $request['session_reference'] = $reference;
+
+        $request['reference'] = generateReference('AG', $this->session);
+        $request['created_by'] = Auth::user()->id;
 
         $session_administrator = $this->session->create($request->all());
 
@@ -85,8 +92,6 @@ class SessionAdministratorRepository
             }
         }
 
-        // $this->checkFilesFilled($session_administrator);
-
         return $session_administrator;
     }
 
@@ -101,6 +106,7 @@ class SessionAdministratorRepository
             foreach($tasks as $task) {
                 $task['type'] = $type;
                 $task['session_administrator_id'] = $session_administrator->id;
+                $task['created_by'] = Auth::user()->id;
 
                 if($type == "pre_ca") {
                     $session_date = new DateTime($session_administrator->session_date);
@@ -115,24 +121,31 @@ class SessionAdministratorRepository
         return $session_administrator;
     }
 
-    public function checkFilesFilled($session_administrator) {
+    public function checkStatus() {
 
-        $fileFields = SessionAdministrator::FILE_FIELD;
-        $allFilled = true;
-
-        foreach ($fileFields as $field) {
-            if (empty($session_administrator->$field)) {
-                $allFilled = false;
-                break;
-            }
+        $session_administrators = SessionAdministrator::where('session_date', '<', now())->get();
+        foreach($session_administrators as $session_administrator) {
+            $session_administrator->update(['status' => 'post_ca']);
         }
 
-        if ($allFilled) {
-            $session_administrator->update([
-                'status' => 'post_ag',
-            ]);
-        }
+        return 0;
+    }
 
-        return $session_administrator;
+    public function generatePdf($request){
+
+        $session_administrator = SessionAdministrator::find($request['session_administrator_id']);
+
+        $meeting_type = SessionAdministrator::SESSION_MEETING_TYPES_VALUES[$session_administrator->type];
+
+        $tasks = TaskSessionAdministrator::where('session_administrator_id', $session_administrator->id)
+                                    ->whereIn('type', ['pre_ca', 'post_ca'])
+                                    ->get();
+
+        $pdf =  $this->generateFromView( 'pdf.session_administrator.fiche_de_suivi',  [
+            'tasks' => $tasks,
+            'session_administrator' => $session_administrator,
+            'meeting_type' => $meeting_type,
+        ]);
+        return $pdf;
     }
 }

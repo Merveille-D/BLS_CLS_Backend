@@ -2,6 +2,7 @@
 namespace App\Repositories\Evaluation;
 
 use App\Models\Evaluation\PerformanceIndicator;
+use Illuminate\Support\Facades\Auth;
 
 class PerformanceIndicatorRepository
 {
@@ -16,7 +17,8 @@ class PerformanceIndicatorRepository
      */
     public function store($request) {
 
-        $performance_indicator = $this->performance_indicator->create($request->all());
+        $request['created_by'] = Auth::user()->id;
+        $performance_indicator = $this->performance_indicator->create($request);
         return $performance_indicator;
     }
 

@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\API\V1\Gourvernance\ExecutiveManagement\ManagementCommittee;;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AttendanceListManagementCommittee\GeneratePdfAttendanceListManagementCommitteeRequest;
-use App\Http\Requests\AttendanceListManagementCommittee\ListAttendanceListManagementCommitteeRequest;
 use App\Http\Requests\AttendanceListManagementCommittee\UpdateAttendanceListManagementCommitteeRequest;
+use App\Http\Requests\ManagementCommittee\GeneratePdfManagementCommitteeRequest;
 use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\ManagementCommittee;
 use App\Repositories\ManagementCommittee\AttendanceListManagementCommitteeRepository;
 use Illuminate\Http\Request;
@@ -40,7 +39,7 @@ class AttendanceListManagementCommitteeController extends Controller
         }
     }
 
-    public function generatePdf(GeneratePdfAttendanceListManagementCommitteeRequest $request) {
+    public function generatePdf(GeneratePdfManagementCommitteeRequest $request) {
         try {
 
             $management_committee = ManagementCommittee::find($request['management_committee_id']);

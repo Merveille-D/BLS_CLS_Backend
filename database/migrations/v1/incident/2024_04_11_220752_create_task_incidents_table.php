@@ -27,6 +27,12 @@ return new class extends Migration
             $table->datetime('deadline')->nullable();
 
 
+            $table->uuid('completed_by')->nullable();
+            $table->foreign('completed_by')->references('id')->on('users')->onDelete('cascade');
+
+            $table->uuid('created_by')->nullable();
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+
             $table->uuid('incident_id')->nullable();
             $table->foreign('incident_id')->references('id')->on('incidents')->onDelete('cascade');
 

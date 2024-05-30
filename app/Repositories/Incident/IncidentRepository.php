@@ -3,6 +3,7 @@ namespace App\Repositories\Incident;
 
 use App\Models\Incident\Incident;
 use App\Models\Incident\TaskIncident;
+use Illuminate\Support\Facades\Auth;
 
 class IncidentRepository
 {
@@ -17,7 +18,8 @@ class IncidentRepository
      */
     public function store($request) {
 
-        $incident = $this->incident->create($request->all());
+        $request['created_by'] = Auth::user()->id;
+        $incident = $this->incident->create($request);
 
         $this->createTasks($incident);
         return $incident;
@@ -51,6 +53,7 @@ class IncidentRepository
                 'code' => $key,
                 'incident_id' => $incident->id,
                 'deadline' => $deadline,
+                'created_by' => Auth::user()->id,
             ]);
 
             $previousDeadline = $deadline;

@@ -2,6 +2,7 @@
 namespace App\Repositories\Evaluation;
 
 use App\Models\Evaluation\EvaluationPeriod;
+use Illuminate\Support\Facades\Auth;
 
 class EvaluationPeriodRepository
 {
@@ -16,7 +17,8 @@ class EvaluationPeriodRepository
      */
     public function store($request) {
 
-        $evaluation_period = $this->evaluation_period->create($request->all());
+        $request['created_by'] = Auth::user()->id;
+        $evaluation_period = $this->evaluation_period->create($request);
         return $evaluation_period;
     }
 

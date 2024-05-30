@@ -52,10 +52,12 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::resource('general_meetings', GeneralMeetingController::class);
     Route::post('ag_attachements', [GeneralMeetingController::class, 'attachment']);
+    Route::get('generate_pdf_fiche_suivi_ag', [GeneralMeetingController::class, 'generatePdfFicheSuivi'] );
 
     Route::resource('task_general_meetings', TaskGeneralMeetingController::class);
     Route::delete('delete_array_task_general_meetings', [TaskGeneralMeetingController::class, 'deleteArrayTaskGeneralMeeting'] );
     Route::put('update_status_task_general_meetings', [TaskGeneralMeetingController::class, 'updateStatusTaskGeneralMeeting'] );
+    Route::get('generate_pdf_checklist_and_procedures_ag', [TaskGeneralMeetingController::class, 'generatePdfTasks'] );
 
     // Liste de présence AG
     Route::get('list_attendance_general_meetings', [AttendanceListGeneralMeetingController::class, 'list'] );
@@ -81,10 +83,14 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::resource('session_administrators', SessionAdministratorController::class);
     Route::post('ca_attachements', [SessionAdministratorController::class, 'attachment']);
+    Route::get('generate_pdf_fiche_suivi_ca', [SessionAdministratorController::class, 'generatePdfFicheSuivi'] );
+
 
     Route::resource('task_session_administrators', TaskSessionAdministratorController::class);
     Route::delete('delete_array_task_session_administrators', [TaskSessionAdministratorController::class, 'deleteArrayTaskSessionAdministrator'] );
     Route::put('update_status_task_session_administrators', [TaskSessionAdministratorController::class, 'updateStatusTaskSessionAdministrator'] );
+    Route::get('generate_pdf_checklist_and_procedures_ca', [TaskGeneralMeetingController::class, 'generatePdfTasks'] );
+
 
     Route::resource('shareholders', ShareholderController::class);
     Route::resource('action_transfers', ActionTransferController::class);
@@ -123,10 +129,13 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::resource('management_committees', ManagementCommitteeController::class);
     Route::post('cd_attachements', [ManagementCommitteeController::class, 'attachment']);
+    Route::get('generate_pdf_fiche_suivi_codir', [ManagementCommitteeController::class, 'generatePdfFicheSuivi'] );
 
     Route::resource('task_management_committees', TaskManagementCommitteeController::class);
     Route::delete('delete_array_task_management_committees', [TaskManagementCommitteeController::class, 'deleteArrayTaskManagementCommittee'] );
     Route::put('update_status_task_management_committees', [TaskManagementCommitteeController::class, 'updateStatusTaskManagementCommittee'] );
+    Route::get('generate_pdf_checklist_and_procedures_codir', [TaskGeneralMeetingController::class, 'generatePdfTasks'] );
+
 
     // EVALUATION
     Route::resource('notations', NotationController::class);

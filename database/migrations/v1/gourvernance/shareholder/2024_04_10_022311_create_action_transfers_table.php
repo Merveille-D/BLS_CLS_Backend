@@ -31,6 +31,9 @@ return new class extends Migration
 
             $table->enum('status', ActionTransfer::STATUS )->default(ActionTransfer::STATUS[1]);
 
+            $table->uuid('created_by')->nullable();
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

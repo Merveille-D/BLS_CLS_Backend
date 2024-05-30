@@ -23,6 +23,8 @@ class ContractRepository
 
         $request = $request->all();
         $request['created_by'] = Auth::user()->id;
+        $request['reference'] = generateReference('CONTRACT', $this->contract);
+
 
         $contract = $this->contract->create($request);
 

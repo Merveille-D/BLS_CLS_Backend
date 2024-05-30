@@ -14,6 +14,7 @@ class ContractModel extends Model
         'name',
         'file',
         'contract_model_category_id',
+        'created_by'
     ];
 
 }

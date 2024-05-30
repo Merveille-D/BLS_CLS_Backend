@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\AttendanceListSessionAdministrator;
+namespace App\Http\Requests\ManagementCommittee;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class GeneratePdfAttendanceListSessionAdministratorRequest extends FormRequest
+class GeneratePdfManagementCommitteeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class GeneratePdfAttendanceListSessionAdministratorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'session_administrator_id' => ['required', 'uuid'],
+            'management_committee_id' => ['required', 'uuid'],
         ];
     }
 

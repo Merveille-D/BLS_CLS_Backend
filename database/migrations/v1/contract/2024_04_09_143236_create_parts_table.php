@@ -25,6 +25,9 @@ return new class extends Migration
             $table->string('capital')->nullable();
             $table->enum('type', Part::TYPES_PART)->nullable();
             $table->uuid('permanent_representative_id')->nullable();
+
+            $table->uuid('created_by')->nullable();
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

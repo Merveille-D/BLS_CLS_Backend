@@ -27,7 +27,7 @@ class AttendanceListSessionAdministratorRepository
             $representant->status = (AttendanceListSessionAdministrator::where('session_id', request('session_adminisrator_id'))->where('representant_id', $representant->id)->exists()) ? true : false ;
             return $representant;
         });
-
+ 
         $administrators = $administrators->merge($representants);
 
         return $administrators;

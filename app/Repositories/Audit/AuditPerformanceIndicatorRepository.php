@@ -2,6 +2,7 @@
 namespace App\Repositories\Audit;
 
 use App\Models\Audit\AuditPerformanceIndicator;
+use Illuminate\Support\Facades\Auth;
 
 class AuditPerformanceIndicatorRepository
 {
@@ -16,7 +17,8 @@ class AuditPerformanceIndicatorRepository
      */
     public function store($request) {
 
-        $audit_performance_indicator = $this->audit_performance_indicator->create($request->all());
+        $request['created_by'] = Auth::user()->id;
+        $audit_performance_indicator = $this->audit_performance_indicator->create($request);
         return $audit_performance_indicator;
     }
 

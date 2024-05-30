@@ -4,11 +4,13 @@ namespace App\Models\Evaluation;
 
 use App\Concerns\Traits\Alert\Alertable;
 use App\Concerns\Traits\Transfer\Transferable;
+use App\Models\Scopes\CountryScope;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+#[ScopedBy([CountryScope::class])]
 class Notation extends Model
 {
     use HasFactory, HasUuids, Alertable, Transferable;
@@ -57,8 +59,7 @@ class Notation extends Model
         return $indicators;
     }
 
-    public function createdBy()
-    {
+    public function creator() {
         return $this->belongsTo(User::class, 'created_by');
     }
 }

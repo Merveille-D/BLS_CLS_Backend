@@ -17,6 +17,10 @@ return new class extends Migration
             $table->date('date');
             $table->bigInteger('amount');
             $table->bigInteger('par_value');
+
+            $table->uuid('created_by')->nullable();
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

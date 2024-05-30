@@ -19,6 +19,10 @@ return new class extends Migration
             $table->enum('type', AuditPerformanceIndicator::TYPES);
             $table->string('note');
             $table->text('description');
+            
+            $table->uuid('created_by')->nullable();
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

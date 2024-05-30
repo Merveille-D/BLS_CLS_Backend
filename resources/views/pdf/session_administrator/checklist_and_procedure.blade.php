@@ -3,7 +3,7 @@
 <div class="container">
     <div class="header">
         <div class="left">
-            <h1>Liste de présence</h1>
+            <h1>Checklist & Procédures</h1>
             <p class="subtitle bold">{{$session_administrator->libelle}} {{ $meeting_type }}</p>
             <p class="subtitle italic underline">{{ $session_administrator->session_reference }}</p>
             <p class="subtitle gray">{{ date('d-m-Y H:i') }}</p>
@@ -13,27 +13,19 @@
         </div>
     </div>
 
-    <h2>Administrateurs</h2>
+    <h2>Planification</h2>
     <table class="data-table">
         <thead>
             <tr>
-                <th>Nom & Prénoms</th>
-                <th>Qualité</th>
-                <th>Nombre de parts</th>
-                <th>Poste</th>
-                <th>Emargement</th>
-                <th>Observation</th>
+                <th>Titre</th>
+                <th>Réalisation</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($administrators as $administrator)
+            @foreach ($tasks as $task)
                 <tr>
-                    <td height="50px" >{{ $administrator->name }}</td>
-                    <td>{{ $administrator->grade  }}</td>
-                    <td>{{ $administrator->shares  }}</td>
-                    <td>{{ $administrator->function  }}</td>
-                    <td></td>
-                    <td></td>
+                    <td height="50px" >{{ $task->libelle }}</td>
+                    <td>{{ $task->status ? 'Fait' : 'Non Fait'  }}</td>
                 </tr>
             @endforeach
         </tbody>

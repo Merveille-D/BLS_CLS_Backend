@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('management_committees', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('libelle');
-            $table->string('reference');
+            $table->string('session_reference');
             $table->datetime('session_date');
 
             $table->string('pv_file')->nullable();
@@ -29,6 +29,10 @@ return new class extends Migration
 
             $table->string('attendance_list_file')->nullable();
             $table->string('attendance_list_file_date')->nullable();
+
+            $table->string('reference');
+            $table->uuid('created_by')->nullable();
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
 
             $table->enum('status', ManagementCommittee::SESSION_MEETING_STATUS )->default('pending');
 

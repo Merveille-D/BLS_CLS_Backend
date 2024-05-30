@@ -34,7 +34,7 @@ class PartController extends Controller
     public function store(StorePartRequest $request)
     {
         try {
-            $part = $this->part->store($request);
+            $part = $this->part->store($request->all());
             return api_response(true, 'Partie ajouté avec succès', $part, 201);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'ajout de la partie", $e->errors(), 422);

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\AttendanceListGeneralMeeting;
+namespace App\Http\Requests\SessionAdministrator;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class GeneratePdfAttendanceListGeneralMeetingRequest extends FormRequest
+class GeneratePdfSessionAdministratorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class GeneratePdfAttendanceListGeneralMeetingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'general_meeting_id' => ['required', 'uuid'],
+            'session_administrator_id' => ['required', 'uuid'],
         ];
     }
 

@@ -3,6 +3,7 @@ namespace App\Repositories\Evaluation;
 
 use App\Models\Evaluation\Collaborator;
 use DateTime;
+use Illuminate\Support\Facades\Auth;
 
 class CollaboratorRepository
 {
@@ -17,7 +18,8 @@ class CollaboratorRepository
      */
     public function store($request) {
 
-        $collaborator = $this->collaborator->create($request->all());
+        $request['created_by'] = Auth::user()->id;
+        $collaborator = $this->collaborator->create($request);
         return $collaborator;
     }
 

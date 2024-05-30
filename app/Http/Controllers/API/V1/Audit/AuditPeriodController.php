@@ -31,7 +31,7 @@ class AuditPeriodController extends Controller
     public function store(StoreAuditPeriodRequest $request)
     {
         try {
-            $audit_period = $this->audit_period->store($request);
+            $audit_period = $this->audit_period->store($request->all());
             return api_response(true, "Succès de l'enregistrement de la période", $audit_period, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement", $e->errors(), 422);

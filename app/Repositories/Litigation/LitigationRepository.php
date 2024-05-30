@@ -12,7 +12,6 @@ use App\Models\Litigation\LitigationParty;
 use App\Models\Litigation\LitigationSetting;
 use App\Models\Litigation\LitigationStep;
 use App\Models\Litigation\LitigationTask;
-use App\Models\ModuleTask;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -348,7 +347,6 @@ class LitigationRepository {
         $filename);
 
         return $pdf;
-
     }
 
     public function getDetails($litigation) {

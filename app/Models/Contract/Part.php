@@ -22,6 +22,7 @@ class Part extends Model
         'capital',
         'permanent_representative_id',
         'type',
+        'created_by'
     ];
 
     const TYPES_PART = [

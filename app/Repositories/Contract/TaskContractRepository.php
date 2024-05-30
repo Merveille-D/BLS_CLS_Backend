@@ -76,8 +76,13 @@ class TaskContractRepository
     public function updateStatus($request) {
         foreach ($request['tasks'] as $data) {
             $task = $this->task->findOrFail($data['id']);
-            $task->update(['status' => $data['status']]);
-            $updatedTasks[] = $task;
+
+            $updateData = ['status' => $data['status']];
+            if ($data['status']) {
+                $updateData['completed_by'] = Auth::user()->id;
+            }
+
+            $task->update($updateData);
         }
 
         return $task;

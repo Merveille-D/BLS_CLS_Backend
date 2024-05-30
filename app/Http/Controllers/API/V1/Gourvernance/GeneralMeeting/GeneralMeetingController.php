@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\GeneralMeeting\GeneratePdfGeneralMeetingRequest;
 use App\Http\Requests\GeneralMeeting\StoreGeneralMeetingRequest;
 use App\Http\Requests\GeneralMeeting\UpdateAttachementGeneralMeetingRequest;
 use App\Http\Requests\GeneralMeeting\UpdateGeneralMeetingRequest;
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
+use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
 use App\Repositories\GeneralMeeting\GeneralMeetingRepository;
 use Illuminate\Validation\ValidationException;
 
@@ -21,6 +23,7 @@ class GeneralMeetingController extends Controller
      */
     public function index()
     {
+        $this->meeting->checkStatus();
 
         $general_meetings = GeneralMeeting::when(request('status') === 'pending', function($query) {
             $query->where('status', 'pending');
@@ -96,5 +99,15 @@ class GeneralMeetingController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function generatePdfFicheSuivi(GeneratePdfGeneralMeetingRequest $request) {
+        try {
+
+            $data = $this->meeting->generatePdf($request);
+            return $data;
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
+        }
     }
 }

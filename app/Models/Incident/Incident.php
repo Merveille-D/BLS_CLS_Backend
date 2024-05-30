@@ -2,10 +2,13 @@
 
 namespace App\Models\Incident;
 
+use App\Models\Scopes\CountryScope;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+#[ScopedBy([CountryScope::class])]
 class Incident extends Model
 {
     use HasFactory, HasUuids;
@@ -28,6 +31,7 @@ class Incident extends Model
         'user_id',
         'client',
         'status',
+        'created_by',
     ];
 
     const TYPES = [
@@ -84,5 +88,9 @@ class Incident extends Model
             }
         }
         return $files;
+    }
+
+    public function creator() {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

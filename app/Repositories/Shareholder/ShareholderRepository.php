@@ -4,6 +4,7 @@ namespace App\Repositories\Shareholder;
 use App\Models\Gourvernance\BankInfo\BankInfo;
 use App\Models\Shareholder\Capital;
 use App\Models\Shareholder\Shareholder;
+use Illuminate\Support\Facades\Auth;
 
 class ShareholderRepository
 {
@@ -29,7 +30,8 @@ class ShareholderRepository
 
         $request['percentage'] = $percentage ?? null;
 
-        $Shareholder = $this->shareholder->create($request->all());
+        $request['created_by'] = Auth::user()->id;
+        $Shareholder = $this->shareholder->create($request);
 
         $bank_info = BankInfo::get()->first();
         if($bank_info) {

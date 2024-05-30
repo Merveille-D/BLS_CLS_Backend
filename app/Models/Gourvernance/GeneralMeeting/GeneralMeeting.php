@@ -3,17 +3,20 @@
 namespace App\Models\Gourvernance\GeneralMeeting;
 
 use App\Models\Gourvernance\GourvernanceDocument;
+use App\Models\Scopes\CountryScope;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+#[ScopedBy([CountryScope::class])]
 class GeneralMeeting extends Model
 {
     use HasFactory, HasUuids;
 
     protected $fillable =  [
         'libelle',
-        'reference',
+        'meeting_reference',
         'meeting_date',
         'type',
         'status',
@@ -25,6 +28,8 @@ class GeneralMeeting extends Model
         'convocation_file_date',
         'attendance_list_file',
         'attendance_list_file_date',
+        'reference',
+        'created_by',
     ];
 
     const GENERAL_MEETING_TYPES = [
@@ -137,6 +142,10 @@ class GeneralMeeting extends Model
     {
         $task = $this->tasks()->whereNotNull('deadline')->orderBy('deadline', 'asc')->where('status', false)->first();
         return $task;
+    }
+
+    public function creator() {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }
 

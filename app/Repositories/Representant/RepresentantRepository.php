@@ -3,6 +3,7 @@ namespace App\Repositories\Representant;
 
 use App\Models\Gourvernance\GourvernanceDocument;
 use App\Models\Gourvernance\Representant;
+use Illuminate\Support\Facades\Auth;
 
 class RepresentantRepository
 {
@@ -17,6 +18,7 @@ class RepresentantRepository
      */
     public function store($request) {
 
+        $request['created_by'] = Auth::user()->id;
         $representant = $this->representant->create($request);
 
         $request['representant_id'] = $representant->id;

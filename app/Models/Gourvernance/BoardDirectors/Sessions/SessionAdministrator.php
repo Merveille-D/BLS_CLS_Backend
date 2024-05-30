@@ -3,20 +3,25 @@
 namespace App\Models\Gourvernance\BoardDirectors\Sessions;
 
 use App\Models\Gourvernance\GourvernanceDocument;
+use App\Models\Scopes\CountryScope;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+#[ScopedBy([CountryScope::class])]
 class SessionAdministrator extends Model
 {
     use HasFactory, HasUuids;
 
     protected $fillable =  [
         'libelle',
-        'reference',
+        'session_reference',
         'session_date',
         'type',
         'status',
+        'reference',
+        'created_by',
         'pv_file',
         'pv_file_date',
         'agenda_file',
@@ -136,6 +141,10 @@ class SessionAdministrator extends Model
     {
         $task = $this->tasks()->whereNotNull('deadline')->orderBy('deadline', 'asc')->where('status', false)->first();
         return $task;
+    }
+
+    public function creator() {
+        return $this->belongsTo(User::class, 'created_by');
     }
 
 }

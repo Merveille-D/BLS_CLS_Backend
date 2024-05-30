@@ -4,12 +4,15 @@ namespace App\Models\Contract;
 
 use App\Concerns\Traits\Alert\Alertable;
 use App\Concerns\Traits\Transfer\Transferable;
+use App\Models\Scopes\CountryScope;
+use App\Models\User;
 use App\Observers\TaskContractObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+#[ScopedBy([CountryScope::class])]
 #[ObservedBy([TaskContractObserver::class])]
 class Task extends Model
 {
@@ -29,6 +32,7 @@ class Task extends Model
         'status',
         'contract_id',
         'created_by',
+        'completed_by',
         'date',
     ];
 
@@ -53,5 +57,9 @@ class Task extends Model
             'method' => 'PUT',
             'action' => env('APP_URL'). '/api/tasks/' . $this->id,
         ];
+    }
+
+    public function creator() {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

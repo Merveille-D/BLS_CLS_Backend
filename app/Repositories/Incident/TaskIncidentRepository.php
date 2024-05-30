@@ -4,6 +4,7 @@ namespace App\Repositories\Incident;
 use App\Models\Incident\IncidentDocument;
 use App\Models\Incident\TaskIncident;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class TaskIncidentRepository
 {
@@ -54,6 +55,7 @@ class TaskIncidentRepository
         }
 
         $request['status'] = true;
+        $request['completed_by'] = Auth::user()->id;
 
         $taskIncident->update($request);
 
@@ -104,6 +106,7 @@ class TaskIncidentRepository
                         'code' => $key,
                         'incident_id' => $taskIncident->incident_id,
                         'deadline' => $deadline,
+                        'created_by' => Auth::user()->id,
                     ]);
 
                     $previousDeadline = $deadline;

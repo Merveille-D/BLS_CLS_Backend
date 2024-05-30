@@ -3,7 +3,7 @@
 <div class="container">
     <div class="header">
         <div class="left">
-            <h1>Liste de présence</h1>
+            <h1>Checklist & Procédures</h1>
             <p class="subtitle bold">{{$management_committee->libelle}}</p>
             <p class="subtitle italic underline">{{ $management_committee->session_reference }}</p>
             <p class="subtitle gray">{{ date('d-m-Y H:i') }}</p>
@@ -13,25 +13,19 @@
         </div>
     </div>
 
-    <h2>Directeurs</h2>
+    <h2>Planification</h2>
     <table class="data-table">
         <thead>
             <tr>
-                <th>Nom & Prénoms</th>
-                <th>Qualité</th>
-                <th>Poste</th>
-                <th>Emargement</th>
-                <th>Observation</th>
+                <th>Titre</th>
+                <th>Réalisation</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($directors as $director)
+            @foreach ($tasks as $task)
                 <tr>
-                    <td height="50px" >{{ $director->name }}</td>
-                    <td>{{ $director->grade  }}</td>
-                    <td>{{ $director->position  }}</td>
-                    <td></td>
-                    <td></td>
+                    <td height="50px" >{{ $task->libelle }}</td>
+                    <td>{{ $task->status ? 'Fait' : 'Non Fait'  }}</td>
                 </tr>
             @endforeach
         </tbody>
