@@ -10,4 +10,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 //Veille juridique
+Route::get('/legal-watches/generate-pdf/{legal_watch}', [LegalWatchController::class, 'generatePdf'])->middleware('auth:sanctum');
 Route::resource('/legal-watches', LegalWatchController::class)->middleware('auth:sanctum');
