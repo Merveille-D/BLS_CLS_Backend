@@ -26,7 +26,7 @@ trait LitigationFormFieldTrait
                 $customFields = $this->commonProperties(LitigationTaskState::STATES_VALUES[LitigationTaskState::TRANSFER],
                         ['file', 'documents', 'Documents de transfert'],
                         ['date', 'completed_at', 'Date de transfert'],
-                        ['text', 'firm_name', 'Nom du cabinet'],
+                        // ['text', 'firm_name', 'Nom du cabinet'],
 
                     );
             break;
