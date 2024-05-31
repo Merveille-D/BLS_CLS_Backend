@@ -64,7 +64,7 @@ class LitigationRepository {
                 ->when($request->type == 'provisioned', function($qry) {
                     $qry->whereNotNull('added_amount');
                 })
-                ->when($request->provision == 'not_provisioned', function($qry) {
+                ->when($request->type == 'not_provisioned', function($qry) {
                     $qry->whereNull('added_amount');
                 })
                 ->orderByDesc('created_at')
