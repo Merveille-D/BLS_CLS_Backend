@@ -3,7 +3,7 @@
 <div class="container">
     <div class="header">
         <div class="left">
-            <h1>Checklist & Procédures</h1>
+            <h1>{{$title}}</h1>
             <p class="subtitle bold">{{$general_meeting->libelle}} {{ $meeting_type }}</p>
             <p class="subtitle italic underline">{{ $general_meeting->meeting_reference }}</p>
             <p class="subtitle gray">{{ date('d-m-Y H:i') }}</p>

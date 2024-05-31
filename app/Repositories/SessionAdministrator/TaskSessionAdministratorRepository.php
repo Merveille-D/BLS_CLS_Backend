@@ -104,14 +104,17 @@ class TaskSessionAdministratorRepository
         $meeting_type = SessionAdministrator::SESSION_MEETING_TYPES_VALUES[$session_administrator->type];
 
         $tasks = TaskSessionAdministrator::where('session_administrator_id', $session_administrator->id)
-                                    ->whereIn('type', ['checklist', 'procedure'])
+                                    ->whereIn('type', $request['general_meeting_id'])
                                     ->get();
+        $title = $request['type'] == 'checklist' ? 'Checklist' : 'Procedure';
+        $filename = $title .''. $session_administrator->libelle;
 
         $pdf =  $this->generateFromView( 'pdf.session_administrator.checklist_and_procedure',  [
             'tasks' => $tasks,
             'session_administrator' => $session_administrator,
             'meeting_type' => $meeting_type,
-        ]);
+            'title' => $title,
+        ], $filename);
         return $pdf;
     }
 }

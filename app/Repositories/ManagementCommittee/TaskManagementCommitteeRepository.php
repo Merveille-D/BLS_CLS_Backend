@@ -102,13 +102,16 @@ class TaskManagementCommitteeRepository
         $management_committee = ManagementCommittee::find($request['management_committee_id']);
 
         $tasks = TaskManagementCommittee::where('management_committee_id', $management_committee->id)
-                                    ->whereIn('type', ['checklist', 'procedure'])
+                                    ->whereIn('type', $request['general_meeting_id'])
                                     ->get();
+        $title = $request['type'] == 'checklist' ? 'Checklist' : 'Procedure';
+        $filename = $title .''. $management_committee->libelle;
 
         $pdf =  $this->generateFromView( 'pdf.management_committee.checklist_and_procedure',  [
             'tasks' => $tasks,
             'management_committee' => $management_committee,
-        ]);
+            'title' => $title,
+        ], $filename);
         return $pdf;
     }
 }

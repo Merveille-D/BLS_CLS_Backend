@@ -106,14 +106,17 @@ class TaskGeneralMeetingRepository
         $meeting_type = GeneralMeeting::GENERAL_MEETING_TYPES_VALUE[$general_meeting->type];
 
         $tasks = TaskGeneralMeeting::where('general_meeting_id', $general_meeting->id)
-                                    ->whereIn('type', ['checklist', 'procedure'])
+                                    ->whereIn('type', $request['type'])
                                     ->get();
+        $title = $request['type'] == 'checklist' ? 'Checklist' : 'Procedure';
+        $filename = $title .''. $general_meeting->libelle;
 
         $pdf =  $this->generateFromView( 'pdf.general_meeting.checklist_and_procedure',  [
             'tasks' => $tasks,
             'general_meeting' => $general_meeting,
             'meeting_type' => $meeting_type,
-        ]);
+            'title' => $title,
+        ], $filename);
         return $pdf;
     }
 

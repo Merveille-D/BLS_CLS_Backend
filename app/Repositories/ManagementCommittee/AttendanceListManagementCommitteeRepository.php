@@ -77,10 +77,12 @@ class AttendanceListManagementCommitteeRepository
 
         $directors = $directors->merge($representants);
 
+        $filename = 'Liste de présence | ' . $management_committee->libelle;
+
         $pdf =  $this->generateFromView( 'pdf.management_committee.attendance',  [
             'directors' => $directors,
             'management_committee' => $management_committee,
-        ]);
+        ], $filename);
         return $pdf;
     }
 }

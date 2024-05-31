@@ -78,13 +78,15 @@ class AttendanceListGeneralMeetingRepository
         $representants_id = $general_meeting->attendanceList()->pluck('representant_id');
         $representants = Representant::whereIn('id', $representants_id)->get();
 
+        $filename = 'Liste de présence | ' . $general_meeting->libelle;
+
         $shareholders = $shareholders->merge($representants);
 
         $pdf =  $this->generateFromView( 'pdf.general_meeting.attendance',  [
             'shareholders' => $shareholders,
             'general_meeting' => $general_meeting,
             'meeting_type' => $meeting_type,
-        ]);
+        ], $filename);
         return $pdf;
     }
 }

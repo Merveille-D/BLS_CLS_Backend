@@ -27,7 +27,7 @@ class AttendanceListSessionAdministratorRepository
             $representant->status = (AttendanceListSessionAdministrator::where('session_id', request('session_adminisrator_id'))->where('representant_id', $representant->id)->exists()) ? true : false ;
             return $representant;
         });
- 
+
         $administrators = $administrators->merge($representants);
 
         return $administrators;
@@ -75,11 +75,13 @@ class AttendanceListSessionAdministratorRepository
 
         $administrators = $administrators->merge($representants);
 
+        $filename = 'Liste de présence | '.$session_administrator->libelle;
+
         $pdf =  $this->generateFromView( 'pdf.session_administrator.attendance',  [
             'administrators' => $administrators,
             'session_administrator' => $session_administrator,
             'meeting_type' => $meeting_type,
-        ]);
+        ], $filename);
         return $pdf;
     }
 }

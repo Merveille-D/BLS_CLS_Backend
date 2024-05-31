@@ -144,7 +144,8 @@ class GeneralMeetingRepository
             'tasks' => $tasks,
             'general_meeting' => $general_meeting,
             'meeting_type' => $meeting_type,
-        ]);
+        ],$general_meeting->libelle);
+
         return $pdf;
     }
 

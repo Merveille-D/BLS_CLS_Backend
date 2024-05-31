@@ -145,7 +145,7 @@ class SessionAdministratorRepository
             'tasks' => $tasks,
             'session_administrator' => $session_administrator,
             'meeting_type' => $meeting_type,
-        ]);
+        ],$session_administrator->libelle);
         return $pdf;
     }
 }

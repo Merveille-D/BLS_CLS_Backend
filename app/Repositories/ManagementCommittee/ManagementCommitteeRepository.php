@@ -144,7 +144,7 @@ class ManagementCommitteeRepository
         $pdf =  $this->generateFromView( 'pdf.management_committee.fiche_de_suivi',  [
             'tasks' => $tasks,
             'management_committee' => $management_committee,
-        ]);
+        ],$management_committee->libelle);
         return $pdf;
     }
 }
