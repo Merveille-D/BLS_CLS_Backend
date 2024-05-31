@@ -68,8 +68,7 @@ class LitigationRepository {
                     $qry->whereNull('added_amount');
                 })
                 ->orderByDesc('created_at')
-                ->dd();
-                // ->paginate();
+                ->paginate();
 
 
         return LitigationResource::collection($query);
