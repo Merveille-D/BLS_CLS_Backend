@@ -22,6 +22,8 @@ class Notation extends Model
         'collaborator_id',
         'created_by',
         'parent_id',
+        'reference',
+        'evaluation_reference'
     ];
 
     protected $appends = ['indicators'];

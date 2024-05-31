@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories\Contract;
 
+use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use App\Models\Contract\Contract;
 use App\Concerns\Traits\Transfer\AddTransferTrait;
 use App\Models\Contract\ContractDocument;
@@ -9,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class ContractRepository
 {
     use AddTransferTrait;
+    use GeneratePdfTrait;
 
     public function __construct(private Contract $contract) {
 
@@ -117,5 +119,23 @@ class ContractRepository
         }
 
         return $contract;
+    }
+
+    public function generatePdf($request){
+
+        $contract = Contract::find($request['contract_id']);
+
+        $data = $contract->toArray();
+        $data['first_part'] = $contract->first_part;
+        $data['second_part'] = $contract->second_part;
+        $data['type_category'] = $contract->info_type_category;
+        $data['category'] = $contract->info_category;
+        $data['tasks'] = $contract->tasks;
+
+        $pdf =  $this->generateFromView( 'pdf.general_meeting.fiche_de_suivi',  [
+            'data' => $data,
+        ],$contract->title);
+
+        return $pdf;
     }
 }

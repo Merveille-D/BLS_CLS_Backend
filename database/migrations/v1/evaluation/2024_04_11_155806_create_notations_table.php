@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('observation')->nullable();
 
             $table->uuid('parent_id')->nullable();
+            $table->string('reference');
+            $table->string('evaluation_reference');
 
             $table->uuid('collaborator_id');
             $table->foreign('collaborator_id')->references('id')->on('collaborators')->onDelete('cascade');

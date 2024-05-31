@@ -19,6 +19,9 @@ class IncidentRepository
     public function store($request) {
 
         $request['created_by'] = Auth::user()->id;
+        $request['incident_reference'] = $request['type'] . '-' . now()->format('d') . '/' . now()->format('m') . '/' . now()->format('Y');
+        $request['reference'] = generateReference('ICD - '. $request['type'], $this->incident);
+
         $incident = $this->incident->create($request);
 
         $this->createTasks($incident);

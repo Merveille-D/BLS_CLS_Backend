@@ -217,4 +217,8 @@ class Contract extends Model
     public function creator() {
         return $this->belongsTo(User::class, 'created_by');
     }
+
+    public function tasks() {
+        return $this->hasMany(Task::class);
+    }
 }

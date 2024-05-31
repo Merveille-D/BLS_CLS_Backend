@@ -32,6 +32,8 @@ class Incident extends Model
         'client',
         'status',
         'created_by',
+        'reference',
+        'incident_reference',
     ];
 
     const TYPES = [

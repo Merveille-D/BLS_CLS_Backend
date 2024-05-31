@@ -81,6 +81,9 @@ class AuditNotationRepository
         $request['note'] = array_sum(array_column($request['notes'], 'note'));
         $request['created_by'] = Auth::user()->id;
 
+        $request['audit_reference'] ='ADT-' . '-' . now()->format('d') . '/' . now()->format('m') . '/' . now()->format('Y');
+        $request['reference'] = generateReference('ADT', $this->audit_notation);
+
         $audit_notation = $this->audit_notation->create($request);
 
         foreach ($request['notes'] as $note) {

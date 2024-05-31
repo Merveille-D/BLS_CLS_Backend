@@ -21,9 +21,12 @@ return new class extends Migration
             $table->string('observation')->nullable();
 
             $table->uuid('parent_id')->nullable();
+            $table->string('reference');
+            $table->string('audit_reference');
 
             $table->uuid('module_id');
             $table->enum('module', AuditPerformanceIndicator::MODULES);
+
 
             $table->uuid('created_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');

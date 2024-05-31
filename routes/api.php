@@ -105,6 +105,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('contracts', ContractController::class);
     Route::get('get_contract_categories', [ContractController::class, 'getCategories']);
     Route::get('get_contract_type_categories', [ContractController::class, 'getTypeCategories']);
+    Route::get('contract_fiche_suivi', [ContractController::class, 'generatePdfFicheSuivi'] );
 
     Route::resource('parts', PartController::class);
 

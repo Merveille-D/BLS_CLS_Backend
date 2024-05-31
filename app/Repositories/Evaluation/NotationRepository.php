@@ -55,6 +55,9 @@ class NotationRepository
         $request['note'] = array_sum(array_column($request['notes'], 'note'));
         $request['created_by'] = Auth::user()->id;
 
+        $request['evaluation_reference'] ='EVT-' . '-' . now()->format('d') . '/' . now()->format('m') . '/' . now()->format('Y');
+        $request['reference'] = generateReference('EVT', $this->notation);
+
         $notation = $this->notation->create($request);
 
         foreach ($request['notes'] as $note) {

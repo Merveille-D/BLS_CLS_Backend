@@ -33,6 +33,8 @@ class AuditNotation extends Model
         'module',
         'created_by',
         'parent_id',
+        'reference',
+        'audit_reference'
     ];
 
     protected $appends = ['indicators'];
