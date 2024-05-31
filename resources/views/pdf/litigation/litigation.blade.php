@@ -26,6 +26,50 @@
         </tbody>
     </table>
 
+    {{-- assigned collaborators --}}
+    @if ($litigation->users->count())
+        <h2>Collaborateurs affectés</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($litigation->users as $key => $collaborator)
+                    <tr>
+                        <td>{{ $collaborator->fullname }}</td>
+                    </tr>
+                @endforeach
+
+            </tbody>
+        </table>
+    @endif
+
+    {{-- assigned lawyers --}}
+    @if ($litigation->lawyers->count())
+        <h2>Cabinets d'avocat en charge</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Contact</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($litigation->lawyers as $key => $lawyer)
+                    <tr>
+                        <td>{{ $lawyer->name }}</td>
+                        <td>{{ $lawyer->phone }} <br> {{ $lawyer->email }} </td>
+                    </tr>
+                @endforeach
+
+            </tbody>
+        </table>
+
+    @endif
+
+
     <h2>Planification</h2>
     <table class="data-table">
         <thead>

@@ -12,7 +12,7 @@ Route::post('login',[UserController::class,'login']);
 
 //countries resource
 
-Route::group(['middleware' => 'auth:sanctum'], function () {
+Route::group(['middleware' => [/* 'can:view_all_data', */ 'auth:sanctum']], function () {
     Route::resource('subsidiaries', CountryController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionController::class);

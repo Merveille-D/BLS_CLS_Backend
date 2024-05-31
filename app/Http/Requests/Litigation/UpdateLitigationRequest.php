@@ -28,7 +28,7 @@ class UpdateLitigationRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'reference' => 'nullable',
+            'case_number' => 'required',
             'nature_id' => 'required|exists:litigation_settings,id',
             'jurisdiction_id' => 'required|exists:litigation_settings,id',
             'jurisdiction_location' => 'required',

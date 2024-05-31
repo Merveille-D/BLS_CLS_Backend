@@ -74,13 +74,13 @@ class AuthTest extends TestCase
     public function test_create_role() : void {
         $user = User::factory()->create();
         $response = $this->actingAs($user)->postJson('/api/roles', [
-            'name' => 'admin'
+            'name' => 'administrator'
         ]);
 
         $response->assertStatus(201);
 
         $this->assertDatabaseHas('roles', [
-            'name' => 'admin'
+            'name' => 'administrator'
         ]);
     }
 
@@ -102,7 +102,7 @@ class AuthTest extends TestCase
         $country = Subsidiary::factory()->create();
 
         $role_res = $this->actingAs($user)->postJson('/api/roles', [
-            'name' => 'admin',
+            'name' => 'administrator',
         ]);
 
         $role_res->assertStatus(201);
@@ -176,7 +176,9 @@ class AuthTest extends TestCase
      * test retrieve all countries
      */
     public function test_retrieve_all_subsidiaries() : void {
-        $user = User::factory()->create();
+        $user = User::factory()
+        ->hasRoles(Role::whereName('super_admin')->first())
+        ->create();
         $response = $this->actingAs($user)->getJson('/api/subsidiaries');
 
         $response->assertStatus(200);
@@ -222,7 +224,7 @@ class AuthTest extends TestCase
         ]);
 
         $response = $this->postJson('/api/login', [
-            'email' => 'test@example.com',
+            'username' => 'julienadimi',
             'password' => 'password'
         ]);
 

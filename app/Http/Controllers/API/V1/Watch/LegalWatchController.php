@@ -57,4 +57,17 @@ class LegalWatchController extends Controller
     {
         //
     }
+
+    /**
+     * generate pdf
+     */
+    public function generatePdf($recovery)
+    {
+        try {
+            $data = $this->watchRepo->generatePdf($recovery);
+            return $data;
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
+        }
+    }
 }
