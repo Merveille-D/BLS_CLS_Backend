@@ -189,6 +189,7 @@ class Contract extends Model
                 $part1[] = [
                     'description' => $part->description,
                     'part_id' => $part->part_id,
+                    'part' => $part,
                 ];
             }
         }
@@ -208,6 +209,7 @@ class Contract extends Model
                 $part2[] = [
                     'description' => $part->description,
                     'part_id' => $part->part_id,
+                    'part' => $part,
                 ];
             }
         }
