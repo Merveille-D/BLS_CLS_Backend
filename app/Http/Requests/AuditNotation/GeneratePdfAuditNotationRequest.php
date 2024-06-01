@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Requests\AuditPeriod;
+namespace App\Http\Requests\AuditNotation;
 
-use App\Models\Audit\AuditPeriod;
+use App\Models\Audit\AuditPerformanceIndicator;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
-class StoreAuditPeriodRequest extends FormRequest
+class GeneratePdfAuditNotationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,20 +26,8 @@ class StoreAuditPeriodRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string'],
-            'deadline' => ['required', 'date'],
+            'audit_notation_id' => ['required','uuid'],
         ];
-    }
-
-    public function withValidator($validator)
-    {
-        $validator->after(function ($validator) {
-            $lastAuditPeriod = AuditPeriod::orderBy('created_at', 'desc')->first();
-
-            if ($lastAuditPeriod && !$lastAuditPeriod->status) {
-                $validator->errors()->add('status', 'The last audit period must be completed before creating a new one.');
-            }
-        });
     }
 
     public function failedValidation(Validator $validator)

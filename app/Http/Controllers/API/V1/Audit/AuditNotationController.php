@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Audit;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuditNotation\CheckFoldersAuditNotationRequest;
+use App\Http\Requests\AuditNotation\GeneratePdfAuditNotationRequest;
 use App\Http\Requests\AuditNotation\StoreAuditNotationRequest;
 use App\Http\Requests\AuditNotation\StoreTransferAuditNotationRequest;
 use App\Models\Audit\AuditNotation;
@@ -95,6 +96,16 @@ class AuditNotationController extends Controller
             return api_response(true, "Transfert de l'audit avec succès", $audit_notation, 200);
         } catch (ValidationException $e) {
             return api_response(false, "Echec de la création du transfert", $e->errors(), 422);
+        }
+    }
+
+    public function generatePdfFicheSuivi(GeneratePdfAuditNotationRequest $request) {
+        try {
+
+            $data = $this->audit_notation->generatePdf($request);
+            return $data;
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }
 }

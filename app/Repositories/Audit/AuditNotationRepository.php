@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories\Audit;
 
+use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use App\Concerns\Traits\Transfer\AddTransferTrait;
 use App\Models\Audit\AuditNotation;
 use App\Models\Audit\AuditPerformanceIndicator;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 class AuditNotationRepository
 {
     use AddTransferTrait;
+    use GeneratePdfTrait;
 
     public function __construct(private AuditNotation $audit_notation) {
 
@@ -118,6 +120,8 @@ class AuditNotationRepository
         $request['parent_id'] = $audit_notation->id;
         $request['created_by'] = Auth::user()->id;
         $request['status'] = $request['forward_title'];
+        $request['audit_reference'] ='ADT-' . '-' . now()->format('d') . '/' . now()->format('m') . '/' . now()->format('Y');
+        $request['reference'] = generateReference('ADT', $this->audit_notation);
 
         $new_audit_notation = $this->audit_notation->create($request);
 
@@ -171,6 +175,32 @@ class AuditNotationRepository
                 ]);
             }
         }
+    }
+
+    public function generatePdf($request){
+
+        $audit_notation = AuditNotation::find($request['audit_notation_id']);
+
+        $data = $this->auditNotationRessource($audit_notation);
+
+        $pdf =  $this->generateFromView( 'pdf.audit.fiche_audit',  [
+            'data' => $data,
+            'details' => $this->getDetails($data)
+        ],$audit_notation->audit_reference);
+
+        return $pdf;
+    }
+
+    public function getDetails($data) {
+        $details = [
+            'N° de dossier' => $data['audit_reference'],
+            'Statut actuel' => $data['status'],
+            'Module' => AuditNotation::MODELS_MODULES_VALUES[$data['module']],
+            'Intitulé du dosser' => $data['title'],
+            'Créé par' => $data['creator']['firstname'] . '' . $data['creator']['lastname'],
+        ];
+
+        return $details;
     }
 
 

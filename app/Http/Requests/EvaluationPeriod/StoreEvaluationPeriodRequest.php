@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\EvaluationPeriod;
 
+use App\Models\Evaluation\EvaluationPeriod;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -25,8 +26,19 @@ class StoreEvaluationPeriodRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string'],
-            'date' => ['required', 'date'],
+            'deadline' => ['required', 'date'],
         ];
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $lastEvaluationPeriod = EvaluationPeriod::orderBy('created_at', 'desc')->first();
+
+            if ($lastEvaluationPeriod && !$lastEvaluationPeriod->status) {
+                $validator->errors()->add('status', 'The last evaluation period must be completed before creating a new one.');
+            }
+        });
     }
 
     public function failedValidation(Validator $validator)

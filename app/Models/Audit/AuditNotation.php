@@ -39,6 +39,19 @@ class AuditNotation extends Model
 
     protected $appends = ['indicators'];
 
+    const MODELS_MODULES_VALUES = [
+        'contracts' => 'Contrat',
+        'conventionnal_hypothec' => 'Hypothèque conventionnelle',
+        'litigation' => 'Contentieux',
+        'incidents' => 'Incident',
+        'recovery' => 'Recouvrement',
+        'general_meeting' => 'Assemblée générale',
+        'session_administrators' => 'Session administrateurs',
+        'management_committees' => 'Comité de direction',
+        'guarantees_security_movable' => 'Garanties mobilières',
+        'guarantees_security_personal' => 'Garanties personnelles',
+    ];
+
     const MODELS_MODULES = [
         'contracts'=> Contract::class,
         'conventionnal_hypothec'=> ConvHypothec::class,

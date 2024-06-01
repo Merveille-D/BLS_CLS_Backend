@@ -99,6 +99,8 @@ class NotationRepository
         $request['parent_id'] = $notation->id;
         $request['created_by'] = Auth::user()->id;
         $request['status'] = $request['forward_title'];
+        $request['evaluation_reference'] ='EVT-' . '-' . now()->format('d') . '/' . now()->format('m') . '/' . now()->format('Y');
+        $request['reference'] = generateReference('EVT', $this->notation);
 
         $new_notation = $this->notation->create($request);
 
@@ -159,15 +161,9 @@ class NotationRepository
 
         $notation = Notation::find($request['notation_id']);
 
-        $data = $notation->toArray();
-        // $data['first_part'] = $contract->first_part;
-        // $data['second_part'] = $contract->second_part;
-        // $data['creator'] = $contract->creator;
-        // $data['type_category'] = $contract->info_type_category;
-        // $data['category'] = $contract->info_category;
-        // $data['tasks'] = $contract->tasks;
+        $data = $this->notationRessource($notation);
 
-        $pdf =  $this->generateFromView( 'pdf.evaluation.fiche_de_suivi',  [
+        $pdf =  $this->generateFromView( 'pdf.evaluation.fiche_evaluation',  [
             'data' => $data,
             'details' => $this->getDetails($data)
         ],$notation->evaluation_reference);
@@ -177,15 +173,10 @@ class NotationRepository
 
     public function getDetails($data) {
         $details = [
-            'N° de dossier' => $data['contract_reference'],
+            'N° de dossier' => $data['evaluation_reference'],
             'Statut actuel' => $data['status'],
-            'Intitulé' => $data['title'],
-            'Catégorie' => $data['category']['label'],
-            'Type de catégorie' => $data['type_category']['label'],
-            'Date de signature' => $data['date_signature'],
-            'Date de prise d\'effet' => $data['date_effective'],
-            'Date d\'expiration' => $data['date_expiration'],
-            'Date de renouvellement' => $data['date_renewal'],
+            'Collaborateur' => $data['collaborator']['lastname'] . ' ' . $data['collaborator']['firstname'],
+            'Poste' => Collaborator::POSITIONS_VALUES[$data['collaborator']['position']],
             'Créé par' => $data['creator']['firstname'] . '' . $data['creator']['lastname'],
         ];
 

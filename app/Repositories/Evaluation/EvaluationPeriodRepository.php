@@ -29,6 +29,10 @@ class EvaluationPeriodRepository
      */
     public function update(EvaluationPeriod $evaluation_period, $request) {
 
+        if($request->status == true) {
+            $request['completed_by'] = Auth::user()->id;
+        }
+        
         $evaluation_period->update($request);
         return $evaluation_period;
     }

@@ -15,8 +15,11 @@ return new class extends Migration
 
             $table->uuid('id')->primary();
             $table->string('title');
-            $table->datetime('date');
+            $table->datetime('deadline');
             $table->boolean('status')->default(false);
+
+            $table->uuid('completed_by')->nullable();
+            $table->foreign('completed_by')->references('id')->on('users')->onDelete('cascade');
 
             $table->uuid('created_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');

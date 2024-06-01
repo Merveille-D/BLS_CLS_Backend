@@ -29,6 +29,9 @@ class AuditPeriodRepository
      */
     public function update(AuditPeriod $audit_period, $request) {
 
+        if($request->status == true) {
+            $request['completed_by'] = Auth::user()->id;
+        }
         $audit_period->update($request);
         return $audit_period;
     }
