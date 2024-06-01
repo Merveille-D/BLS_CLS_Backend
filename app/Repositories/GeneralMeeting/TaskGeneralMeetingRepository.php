@@ -2,6 +2,7 @@
 namespace App\Repositories\GeneralMeeting;
 
 use App\Concerns\Traits\PDF\GeneratePdfTrait;
+use App\Concerns\Traits\Transfer\AddTransferTrait;
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
 use Carbon\Carbon;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class TaskGeneralMeetingRepository
 {
     use GeneratePdfTrait;
+    use AddTransferTrait;
 
     public function __construct(private TaskGeneralMeeting $task) {
 
@@ -61,6 +63,10 @@ class TaskGeneralMeetingRepository
      */
     public function update(TaskGeneralMeeting $taskGeneralMeeting, $request) {
         $taskGeneralMeeting->update($request);
+
+        if(isset($request['forward_title'])) {
+            $this->add_transfer($taskGeneralMeeting, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
+        }
         return $taskGeneralMeeting;
     }
 

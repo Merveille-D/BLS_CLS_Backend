@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\Incident;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Incident\GeneratePdfIncidentRequest;
 use App\Http\Requests\Incident\ListIncidentRequest;
 use App\Http\Requests\Incident\StoreIncidentRequest;
 use App\Http\Requests\Incident\UpdateIncidentRequest;
@@ -104,6 +105,16 @@ class IncidentController extends Controller
             return api_response(true, "Succès de la suppression de l'incident", null, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de la supression de l'incident", $e->errors(), 422);
+        }
+    }
+
+    public function generatePdfFicheSuivi(GeneratePdfIncidentRequest $request) {
+        try {
+
+            $data = $this->incident->generatePdf($request->all());
+            return $data;
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }
 }

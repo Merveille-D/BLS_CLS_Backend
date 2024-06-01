@@ -3,6 +3,7 @@
 namespace App\Models\Gourvernance\BoardDirectors\Sessions;
 
 use App\Concerns\Traits\Alert\Alertable;
+use App\Concerns\Traits\Transfer\Transferable;
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use App\Models\Scopes\CountryScope;
 use App\Models\User;
@@ -16,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
 #[ObservedBy([TaskSessionAdministratorObserver::class])]
 class TaskSessionAdministrator extends Model
 {
-    use HasFactory, HasUuids, Alertable;
+    use HasFactory, HasUuids, Alertable, Transferable;
 
     /**
      * Les attributs qui doivent être castés vers des types natifs.

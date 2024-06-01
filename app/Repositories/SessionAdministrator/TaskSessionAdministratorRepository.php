@@ -2,6 +2,7 @@
 namespace App\Repositories\SessionAdministrator;
 
 use App\Concerns\Traits\PDF\GeneratePdfTrait;
+use App\Concerns\Traits\Transfer\AddTransferTrait;
 use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
 use App\Models\Gourvernance\BoardDirectors\Sessions\TaskSessionAdministrator;
 use Carbon\Carbon;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class TaskSessionAdministratorRepository
 {
     use GeneratePdfTrait;
+    use AddTransferTrait;
 
     public function __construct(private TaskSessionAdministrator $task) {
 
@@ -59,6 +61,11 @@ class TaskSessionAdministratorRepository
      */
     public function update(TaskSessionAdministrator $taskSessionAdministrator, $request) {
         $taskSessionAdministrator->update($request);
+
+        if(isset($request['forward_title'])) {
+            $this->add_transfer($taskSessionAdministrator, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
+        }
+
         return $taskSessionAdministrator;
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\Evaluation;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Notation\GeneratePdfNotationRequest;
 use App\Http\Requests\Notation\StoreNotationRequest;
 use App\Http\Requests\Notation\StoreTransferNotationRequest;
 use App\Http\Requests\Notation\UpdateNotationRequest;
@@ -90,6 +91,16 @@ class NotationController extends Controller
             return api_response(true, "Transfert de la tache avec succès", $notation, 200);
         } catch (ValidationException $e) {
             return api_response(false, "Echec de la création du transfert", $e->errors(), 422);
+        }
+    }
+
+    public function generatePdfFicheSuivi(GeneratePdfNotationRequest $request) {
+        try {
+
+            $data = $this->notation->generatePdf($request);
+            return $data;
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }
 }

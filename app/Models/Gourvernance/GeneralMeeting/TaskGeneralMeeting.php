@@ -3,6 +3,7 @@
 namespace App\Models\Gourvernance\GeneralMeeting;
 
 use App\Concerns\Traits\Alert\Alertable;
+use App\Concerns\Traits\Transfer\Transferable;
 use App\Models\Alert\Alert;
 use App\Models\Scopes\CountryScope;
 use App\Models\User;
@@ -16,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
 #[ObservedBy([TaskGeneralMeetingObserver::class])]
 class TaskGeneralMeeting extends Model
 {
-    use HasFactory, HasUuids, Alertable;
+    use HasFactory, HasUuids, Alertable, Transferable;
 
     /**
      * Les attributs qui doivent être castés vers des types natifs.

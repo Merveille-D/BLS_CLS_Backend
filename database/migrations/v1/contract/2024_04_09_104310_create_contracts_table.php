@@ -23,6 +23,7 @@ return new class extends Migration
             $table->date('date_renewal')->nullable();
             $table->string('status')->default('Initié');
 
+            $table->string('contract_reference');
             $table->string('reference');
 
             $table->uuid('created_by')->nullable();

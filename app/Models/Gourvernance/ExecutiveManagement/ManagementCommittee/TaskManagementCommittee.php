@@ -3,6 +3,7 @@
 namespace App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee;
 
 use App\Concerns\Traits\Alert\Alertable;
+use App\Concerns\Traits\Transfer\Transferable;
 use App\Models\Scopes\CountryScope;
 use App\Models\User;
 use App\Observers\TaskManagementCommitteeObserver;
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
 #[ObservedBy([TaskManagementCommitteeObserver::class])]
 class TaskManagementCommittee extends Model
 {
-    use HasFactory, HasUuids, Alertable;
+    use HasFactory, HasUuids, Alertable, Transferable;
 
     /**
      * Les attributs qui doivent être castés vers des types natifs.

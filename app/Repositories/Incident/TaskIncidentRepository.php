@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories\Incident;
 
+use App\Concerns\Traits\Transfer\AddTransferTrait;
 use App\Models\Incident\IncidentDocument;
 use App\Models\Incident\TaskIncident;
 use Carbon\Carbon;
@@ -8,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskIncidentRepository
 {
+    use AddTransferTrait;
+
     public function __construct(private TaskIncident $taskIncident) {
 
     }
@@ -54,12 +57,16 @@ class TaskIncidentRepository
             $request['conversion_certificate'] = ($request['conversion_certificate'] === 'yes') ? true : false;
         }
 
-        $request['status'] = true;
-        $request['completed_by'] = Auth::user()->id;
+        if($request['status']) {
+            $request['completed_by'] = Auth::user()->id;
+            $taskIncident->update($request);
 
-        $taskIncident->update($request);
-
-        $this->createNextTasks($taskIncident);
+            $this->createNextTasks($taskIncident);
+        }else {
+            if(isset($request['forward_title'])) {
+                $this->add_transfer($taskIncident, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
+            }
+        }
 
         return $taskIncident;
     }

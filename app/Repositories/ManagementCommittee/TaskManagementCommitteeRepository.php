@@ -2,6 +2,7 @@
 namespace App\Repositories\ManagementCommittee;
 
 use App\Concerns\Traits\PDF\GeneratePdfTrait;
+use App\Concerns\Traits\Transfer\AddTransferTrait;
 use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\ManagementCommittee;
 use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\TaskManagementCommittee;
 use Carbon\Carbon;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class TaskManagementCommitteeRepository
 {
     use GeneratePdfTrait;
+    use AddTransferTrait;
 
     public function __construct(private TaskManagementCommittee $task) {
 
@@ -59,6 +61,10 @@ class TaskManagementCommitteeRepository
      */
     public function update(TaskManagementCommittee $taskManagementCommittee, $request) {
         $taskManagementCommittee->update($request);
+
+        if(isset($request['forward_title'])) {
+            $this->add_transfer($taskManagementCommittee, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
+        }
         return $taskManagementCommittee;
     }
 

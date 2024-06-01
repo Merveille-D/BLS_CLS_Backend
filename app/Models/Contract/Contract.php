@@ -26,6 +26,7 @@ class Contract extends Model
         'date_renewal',
         'status',
         'created_by',
+        'contract_reference',
         'reference',
     ];
 

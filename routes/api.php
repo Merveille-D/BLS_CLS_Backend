@@ -105,7 +105,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('contracts', ContractController::class);
     Route::get('get_contract_categories', [ContractController::class, 'getCategories']);
     Route::get('get_contract_type_categories', [ContractController::class, 'getTypeCategories']);
-    Route::get('contract_fiche_suivi', [ContractController::class, 'generatePdfFicheSuivi'] );
+    Route::get('generate_pdf_fiche_suivi_contract', [ContractController::class, 'generatePdfFicheSuivi'] );
 
     Route::resource('parts', PartController::class);
 
@@ -119,10 +119,12 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // Incidents
 
     Route::resource('incidents', IncidentController::class);
+    Route::get('generate_pdf_fiche_suivi_incident', [IncidentController::class, 'generatePdfFicheSuivi'] );
     Route::resource('author_incidents', AuthorIncidentController::class);
     Route::resource('task_incidents', TaskIncidentController::class);
     Route::get('get_current_task_incidents', [TaskIncidentController::class, 'getCurrentTaskIncident'] );
     Route::post('complete_task_incidents', [TaskIncidentController::class, 'completeTaskIncident'] );
+
 
     // DIRECTION GENERALE
 
@@ -140,6 +142,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     // EVALUATION
     Route::resource('notations', NotationController::class);
+    Route::get('generate_pdf_fiche_suivi_evaluation', [NotationController::class, 'generatePdfFicheSuivi'] );
     Route::resource('performance_indicators', PerformanceIndicatorController::class);
     Route::resource('collaborators', CollaboratorController::class);
     Route::post('evaluation_create_transfers', [NotationController::class, 'createTransfer'] );

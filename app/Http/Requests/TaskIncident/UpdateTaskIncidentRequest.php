@@ -30,11 +30,19 @@ class UpdateTaskIncidentRequest extends FormRequest
 
         if (!$request->has('type')) {
             $rules['type'] = 'required';
+            $rules['status'] = 'required|boolean';
         }else {
             $task = searchElementIndice(TaskIncident::TASKS, $request->input('type'));
             $rules = $task['rules'];
             $rules['task_incident_id'] = ['required', 'uuid'];
         }
+
+        // For Transfer
+        $rules['forward_title'] = ['string', 'required_with_all:deadline_transfer,description,collaborators'];
+        $rules['deadline_transfer'] = ['date', 'required_with_all:forward_title,description,collaborators'];
+        $rules['description'] = ['string', 'required_with_all:forward_title,deadline_transfer,collaborators'];
+        $rules['collaborators'] = ['required_with_all:forward_title,deadline_transfer,description','array'];
+        $rules['collaborators.*'] = ['required_with_all:forward_title,deadline_transfer,description','uuid'];
 
         return $rules;
     }

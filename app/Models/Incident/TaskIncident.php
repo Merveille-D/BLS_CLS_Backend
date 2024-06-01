@@ -3,6 +3,7 @@
 namespace App\Models\Incident;
 
 use App\Concerns\Traits\Alert\Alertable;
+use App\Concerns\Traits\Transfer\Transferable;
 use App\Models\Scopes\CountryScope;
 use App\Models\User;
 use App\Observers\TaskIncidentObserver;
@@ -16,7 +17,7 @@ use Illuminate\Validation\Rule;
 #[ObservedBy([TaskIncidentObserver::class])]
 class TaskIncident extends Model
 {
-    use HasFactory, HasUuids, Alertable;
+    use HasFactory, HasUuids, Alertable, Transferable;
 
     /**
      * Les attributs qui doivent être castés vers des types natifs.
