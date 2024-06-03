@@ -20,6 +20,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->uuid('subsidiary_id')->nullable();
+            $table->foreign('subsidiary_id')->references('id')->on('subsidiaries')->onDelete('set null');
             $table->rememberToken();
             $table->timestamps();
         });

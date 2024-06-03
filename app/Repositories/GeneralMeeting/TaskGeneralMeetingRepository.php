@@ -1,13 +1,19 @@
 <?php
 namespace App\Repositories\GeneralMeeting;
 
+use App\Concerns\Traits\PDF\GeneratePdfTrait;
+use App\Concerns\Traits\Transfer\AddTransferTrait;
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
 use Carbon\Carbon;
 use DateTime;
+use Illuminate\Support\Facades\Auth;
 
 class TaskGeneralMeetingRepository
 {
+    use GeneratePdfTrait;
+    use AddTransferTrait;
+
     public function __construct(private TaskGeneralMeeting $task) {
 
     }
@@ -43,6 +49,7 @@ class TaskGeneralMeetingRepository
             $meetingDate = Carbon::parse($general_meeting->meeting_date);
             $request['type'] = $meetingDate->isPast() ? 'post_ag' : 'pre_ag';
         }
+        $request['created_by'] = Auth::user()->id;
 
         $task_general_meeting = $this->task->create($request->all());
 
@@ -56,6 +63,10 @@ class TaskGeneralMeetingRepository
      */
     public function update(TaskGeneralMeeting $taskGeneralMeeting, $request) {
         $taskGeneralMeeting->update($request);
+
+        if(isset($request['forward_title'])) {
+            $this->add_transfer($taskGeneralMeeting, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
+        }
         return $taskGeneralMeeting;
     }
 
@@ -68,17 +79,13 @@ class TaskGeneralMeetingRepository
     public function updateStatus($request) {
         foreach ($request['tasks'] as $data) {
             $taskGeneralMeeting = $this->task->findOrFail($data['id']);
-            $taskGeneralMeeting->update(['status' => $data['status']]);
-            $updatedTasks[] = $taskGeneralMeeting;
 
-
-            if($taskGeneralMeeting->type === 'pre_ag') {
-                $general_meeting = $taskGeneralMeeting->general_meeting();
-                if($taskGeneralMeeting->deadline === $general_meeting->meeting_date) {
-                    $general_meeting->update(['status' => 'post_ag']);
-                }
+            $updateData = ['status' => $data['status']];
+            if ($data['status']) {
+                $updateData['completed_by'] = Auth::user()->id;
             }
 
+            $taskGeneralMeeting->update($updateData);
         }
 
         return $taskGeneralMeeting;
@@ -96,6 +103,27 @@ class TaskGeneralMeetingRepository
         }
 
         return true;
+    }
+
+    public function generatePdf($request){
+
+        $general_meeting = GeneralMeeting::find($request['general_meeting_id']);
+
+        $meeting_type = GeneralMeeting::GENERAL_MEETING_TYPES_VALUE[$general_meeting->type];
+
+        $tasks = TaskGeneralMeeting::where('general_meeting_id', $general_meeting->id)
+                                    ->whereIn('type', $request['type'])
+                                    ->get();
+        $title = $request['type'] == 'checklist' ? 'Checklist' : 'Procedure';
+        $filename = $title .''. $general_meeting->libelle;
+
+        $pdf =  $this->generateFromView( 'pdf.general_meeting.checklist_and_procedure',  [
+            'tasks' => $tasks,
+            'general_meeting' => $general_meeting,
+            'meeting_type' => $meeting_type,
+            'title' => $title,
+        ], $filename);
+        return $pdf;
     }
 
 }

@@ -2,7 +2,9 @@
 
 namespace App\Models\Alert;
 
+use App\Models\Audit\AuditPeriod;
 use App\Models\Contract\Task;
+use App\Models\Evaluation\EvaluationPeriod;
 use App\Models\Gourvernance\BoardDirectors\Sessions\TaskSessionAdministrator;
 use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\TaskManagementCommittee;
 use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
@@ -61,6 +63,14 @@ class Alert extends Model
         [
             'model' => TaskIncident::class,
             'type' => 'incident',
+        ],
+        [
+            'model' => AuditPeriod::class,
+            'type' => 'audit',
+        ],
+        [
+            'model' => EvaluationPeriod::class,
+            'type' => 'evaluation',
         ],
     ];
 

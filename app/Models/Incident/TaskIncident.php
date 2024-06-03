@@ -3,16 +3,21 @@
 namespace App\Models\Incident;
 
 use App\Concerns\Traits\Alert\Alertable;
+use App\Concerns\Traits\Transfer\Transferable;
+use App\Models\Scopes\CountryScope;
+use App\Models\User;
 use App\Observers\TaskIncidentObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
+#[ScopedBy([CountryScope::class])]
 #[ObservedBy([TaskIncidentObserver::class])]
 class TaskIncident extends Model
 {
-    use HasFactory, HasUuids, Alertable;
+    use HasFactory, HasUuids, Alertable, Transferable;
 
     /**
      * Les attributs qui doivent être castés vers des types natifs.
@@ -36,6 +41,8 @@ class TaskIncident extends Model
         'code',
         'conversion_certificate',
         'deadline',
+        'completed_by',
+        'created_by',
     ];
 
     const CHANNELS = [
@@ -957,6 +964,10 @@ class TaskIncident extends Model
             'action' => env('APP_URL') . '/api/complete_task_incidents?type=' . $this->code . '&task_incident_id=' . $this->id,
             'form' => $this->form,
         ];
+    }
+
+    public function creator() {
+        return $this->belongsTo(User::class, 'created_by');
     }
 
 }

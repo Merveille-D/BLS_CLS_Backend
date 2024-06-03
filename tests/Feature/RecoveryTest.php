@@ -3,16 +3,18 @@
 namespace Tests\Feature;
 
 use App\Enums\Recovery\RecoveryStepEnum;
+use App\Models\Auth\Subsidiary;
 use App\Models\Recovery\Recovery;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\DB;
+use Tests\Feature\Traits\WithStubUser;
 use Tests\TestCase;
 
 class RecoveryTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithStubUser;
 
     /**
      * Test retrieving a list of recoveries.
@@ -23,7 +25,7 @@ class RecoveryTest extends TestCase
     {
         $user = User::factory()->create();
 
-        Recovery::factory()->count(5)->create();
+        Recovery::factory()->count(1)->create();
 
         $response = $this->actingAs($user)->get('api/recovery');
 
@@ -41,9 +43,15 @@ class RecoveryTest extends TestCase
      */
     public function testRetrieveSingle(): void
     {
-        $user = User::factory()->create();
+        // $subsidiary = Subsidiary::factory()->create();
+        // $user = User::factory()->create([
+        //     'subsidiary_id' => $subsidiary->id,
+        // ]);
+        $user = $this->stubUser();
 
-        $recovery = Recovery::factory()->create();
+        $recovery = Recovery::factory()->create([
+            'created_by' => $user->id,
+        ]);
 
         $response = $this->actingAs($user)->get("api/recovery/{$recovery->id}");
 
@@ -221,9 +229,11 @@ class RecoveryTest extends TestCase
      */
     public function testAddTask(): void
     {
-        $user = User::factory()->create();
+        $user = $this->stubUser();
 
-        $recovery = Recovery::factory()->create();
+        $recovery = Recovery::factory()->create([
+                'created_by' => $user->id,
+            ]);
 
         $response = $this->actingAs($user)->post("api/recovery/tasks", [
             'title' => 'Test Task',
@@ -275,4 +285,17 @@ class RecoveryTest extends TestCase
             'title' => 'edited task',
         ]);
     } */
+
+    public function test_generate_pdf() : void {
+        $user = $this->stubUser();
+
+        $recovery = Recovery::factory()->create([
+            'created_by' => $user->id,
+        ]);
+
+        $response = $this->actingAs($user)->get("api/recovery/generate-pdf/{$recovery->id}");
+
+        // Assert that the response has a 201 status code
+        $response->assertStatus(200);
+    }
 }

@@ -1,36 +1,9 @@
 @extends('pdf.layout')
 @section('content')
 <div class="container">
-    <div class="header">
-        <div class="left">
-            <h1>Fiche de suivi</h1>
-            <p class="subtitle bold">{{ $litigation->name }}</p>
-            <p class="subtitle italic underline">{{ $litigation->reference }}</p>
-            <p class="subtitle gray">{{ date('d-m-Y H:i') }}</p>
-        </div>
-        <div class="right">
-            <img src="{{ $base64Image }}" alt="Logo">
-        </div>
-    </div>
-
+    <x-pdf-header :data="$litigation" :bankLogo="$bankLogo" :blsLogo="$base64Image" />
     <h2>Détail du dossier</h2>
-    <table class="data-table">
-        {{-- <thead>
-            <tr>
-                <th>Désignation</th>
-                <th>Valeur</th>
-            </tr>
-        </thead> --}}
-        <tbody>
-            @foreach ($details as $key => $item)
-                <tr>
-                    <td>{{ $key }}</td>
-                    <td>{{ $item }}</td>
-                </tr>
-            @endforeach
-
-        </tbody>
-    </table>
+    <x-pdf-details :details="$details" />
 
     <h2>Parties</h2>
     <table class="data-table">
@@ -52,6 +25,50 @@
 
         </tbody>
     </table>
+
+    {{-- assigned collaborators --}}
+    @if ($litigation->users->count())
+        <h2>Collaborateurs affectés</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($litigation->users as $key => $collaborator)
+                    <tr>
+                        <td>{{ $collaborator->fullname }}</td>
+                    </tr>
+                @endforeach
+
+            </tbody>
+        </table>
+    @endif
+
+    {{-- assigned lawyers --}}
+    @if ($litigation->lawyers->count())
+        <h2>Cabinets d'avocat en charge</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Contact</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($litigation->lawyers as $key => $lawyer)
+                    <tr>
+                        <td>{{ $lawyer->name }}</td>
+                        <td>{{ $lawyer->phone }} <br> {{ $lawyer->email }} </td>
+                    </tr>
+                @endforeach
+
+            </tbody>
+        </table>
+
+    @endif
+
 
     <h2>Planification</h2>
     <table class="data-table">

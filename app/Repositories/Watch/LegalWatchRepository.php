@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories\Watch;
 
+use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use App\Enums\Watch\WatchType;
 use App\Http\Resources\Watch\LegalWatchResource;
 use App\Mail\Watch\LegalWatchEmail;
@@ -9,9 +10,11 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class LegalWatchRepository
 {
+    use GeneratePdfTrait;
     /**
      * __construct
      *
@@ -52,7 +55,8 @@ class LegalWatchRepository
      * @return JsonResource
      */
     public function add($request) : JsonResource {
-        $legal_watch = $this->watch_model->create($request->all());
+        $legal_watch = $this->watch_model->create(array_merge($request->all(), ['created_by' => auth()->id()]));
+
         if ($legal_watch && !blank($legal_watch->mail_addresses) && count($legal_watch->mail_addresses) >=1) {
             $this->sendMessage($legal_watch);
         }
@@ -69,5 +73,36 @@ class LegalWatchRepository
         } catch (\Throwable $th) {
             Log::error($th->getMessage());
         }
+    }
+
+    public function generatePdf($id) {
+        $legal_watch = $this->watch_model->find($id);
+
+        $filename = Str::slug($legal_watch->name). '_'.date('YmdHis') . '.pdf';
+
+        $pdf =  $this->generateFromView( 'pdf.legal_watch.legal_watch',  [
+            'legal_watch' => $legal_watch,
+            'details' => $this->getDetails($legal_watch)
+        ],
+        $filename);
+
+        return $pdf;
+    }
+
+    public function getDetails($legal_watch) {
+        $details = [
+            'Référence' => $legal_watch->reference ?? null,
+            'Intitulé' => $legal_watch->name ?? null,
+            'Type' => WatchType::TYPES_VALUES[$legal_watch->type] ?? null,
+        ];
+        if ($legal_watch->type == WatchType::LEGAL) {
+            $details['Date de l\'événement'] = $legal_watch->event_date ?? null;
+            $details['Juridiction'] = $legal_watch->jurisdiction?->name ?? null;
+        } else {
+            $details['Date de prise d\'effet'] = $legal_watch->effective_date ?? null;
+            $details['Matière'] = $legal_watch->nature?->name ?? null;
+        }
+
+        return $details;
     }
 }

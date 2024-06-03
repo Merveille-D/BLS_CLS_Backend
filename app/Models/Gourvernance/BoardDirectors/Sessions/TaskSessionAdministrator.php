@@ -3,16 +3,21 @@
 namespace App\Models\Gourvernance\BoardDirectors\Sessions;
 
 use App\Concerns\Traits\Alert\Alertable;
+use App\Concerns\Traits\Transfer\Transferable;
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
+use App\Models\Scopes\CountryScope;
+use App\Models\User;
 use App\Observers\TaskSessionAdministratorObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+#[ScopedBy([CountryScope::class])]
 #[ObservedBy([TaskSessionAdministratorObserver::class])]
 class TaskSessionAdministrator extends Model
 {
-    use HasFactory, HasUuids, Alertable;
+    use HasFactory, HasUuids, Alertable, Transferable;
 
     /**
      * Les attributs qui doivent être castés vers des types natifs.
@@ -31,6 +36,8 @@ class TaskSessionAdministrator extends Model
         'responsible',
         'supervisor',
         'session_administrator_id',
+        'completed_by',
+        'created_by',
     ];
 
     const SESSION_TASK_TYPE = [
@@ -98,5 +105,7 @@ class TaskSessionAdministrator extends Model
         ],
     ];
 
-
+    public function creator() {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 }

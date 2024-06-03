@@ -2,6 +2,7 @@
 namespace App\Repositories\Shareholder;
 
 use App\Models\Shareholder\Capital;
+use Illuminate\Support\Facades\Auth;
 
 class CapitalRepository
 {
@@ -16,7 +17,8 @@ class CapitalRepository
      */
     public function store($request) {
 
-        $capital = $this->capital->create($request->all());
+        $request['created_by'] = Auth::user()->id;
+        $capital = $this->capital->create($request);
         return $capital;
     }
 

@@ -10,9 +10,11 @@ use App\Enums\Guarantee\StockState;
 
 trait GuaranteeFormFieldTrait
 {
+    use HypothecFormFieldTrait;
 
     public function loadFormAttributeBasedTask($task) {
         $form = $task?->step?->extra['form'] ?? [];
+
         if (empty($form))
             return [];
 
@@ -46,6 +48,9 @@ trait GuaranteeFormFieldTrait
 
             case GuaranteeType::STOCK:
                 return $this->stockFormFields($this->code);
+            break;
+            case GuaranteeType::MORTGAGE:
+                return $this->getCustomFormFields($this->code);
             break;
 
             default:

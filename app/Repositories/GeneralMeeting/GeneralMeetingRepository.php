@@ -1,13 +1,17 @@
 <?php
 namespace App\Repositories\GeneralMeeting;
 
+use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
 use App\Models\Gourvernance\GourvernanceDocument;
 use DateTime;
+use Illuminate\Support\Facades\Auth;
 
 class GeneralMeetingRepository
 {
+    use GeneratePdfTrait;
+
     public function __construct(private GeneralMeeting $meeting) {
 
     }
@@ -20,8 +24,11 @@ class GeneralMeetingRepository
     public function store($request) {
 
         $date = new DateTime($request['meeting_date']);
-        $reference = 'AG-' . (GeneralMeeting::max('id') + 1) . '-' . $date->format('d') . '/' . $date->format('m') . '/' . $date->format('Y');
-        $request['reference'] = $reference;
+        $reference = 'AG-' . '-' . $date->format('d') . '/' . $date->format('m') . '/' . $date->format('Y');
+        $request['meeting_reference'] = $reference;
+
+        $request['reference'] = generateReference('AG', $this->meeting);
+        $request['created_by'] = Auth::user()->id;
 
         $general_meeting = $this->meeting->create($request->all());
 
@@ -83,8 +90,6 @@ class GeneralMeetingRepository
             }
         }
 
-        // $this->checkFilesFilled($general_meeting);
-
         return $general_meeting;
     }
 
@@ -99,6 +104,7 @@ class GeneralMeetingRepository
             foreach($tasks as $task) {
                 $task['type'] = $type;
                 $task['general_meeting_id'] = $general_meeting->id;
+                $task['created_by'] = Auth::user()->id;
 
                 if($type == "pre_ag") {
                     $meeting_date = new DateTime($general_meeting->meeting_date);
@@ -114,26 +120,33 @@ class GeneralMeetingRepository
         return $general_meeting;
     }
 
-    public function checkFilesFilled($general_meeting) {
+    public function checkStatus() {
 
-        $fileFields = GeneralMeeting::FILE_FIELD;
-        $allFilled = true;
-
-        foreach ($fileFields as $field) {
-            if (empty($general_meeting->$field)) {
-                $allFilled = false;
-                break;
-            }
+        $general_meetings = GeneralMeeting::where('meeting_date', '<', now())->get();
+        foreach($general_meetings as $general_meeting) {
+            $general_meeting->update(['status' => 'post_ag']);
         }
 
-        if ($allFilled) {
-            $general_meeting->update([
-                'status' => 'post_ag',
-            ]);
-        }
-
-        return $general_meeting;
+        return 0;
     }
 
+    public function generatePdf($request){
+
+        $general_meeting = GeneralMeeting::find($request['general_meeting_id']);
+
+        $meeting_type = GeneralMeeting::GENERAL_MEETING_TYPES_VALUE[$general_meeting->type];
+
+        $tasks = TaskGeneralMeeting::where('general_meeting_id', $general_meeting->id)
+                                    ->whereIn('type', ['pre_ag', 'post_ag'])
+                                    ->get();
+
+        $pdf =  $this->generateFromView( 'pdf.general_meeting.fiche_de_suivi',  [
+            'tasks' => $tasks,
+            'general_meeting' => $general_meeting,
+            'meeting_type' => $meeting_type,
+        ],$general_meeting->libelle);
+
+        return $pdf;
+    }
 
 }

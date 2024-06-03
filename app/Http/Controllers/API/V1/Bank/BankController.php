@@ -36,7 +36,7 @@ class BankController extends Controller
     public function store(StoreBankRequest $request)
     {
         try {
-            $bank = $this->bank->store($request);
+            $bank = $this->bank->store($request->all());
             return api_response(true, "Succès de l'enregistrement dans la banque de texte", $bank, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement dans la banque de texte", $e->errors(), 422);

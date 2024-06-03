@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\Gourvernance\ExecutiveManagement\ManagementCommittee;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ManagementCommittee\GeneratePdfManagementCommitteeRequest;
 use App\Http\Requests\ManagementCommittee\ListTaskManagementCommitteeRequest;
 use App\Http\Requests\TaskManagementCommittee\DeleteTaskManagementCommitteeRequest;
 use App\Http\Requests\TaskManagementCommittee\StoreTaskManagementCommitteeRequest;
@@ -97,6 +98,16 @@ class TaskManagementCommitteeController extends Controller
             return api_response(true, "Succès de la mise à jour des taches", null, 200);
         } catch (ValidationException $e) {
             return api_response(false, "Echec de la mise à jour des taches", $e->errors(), 422);
+        }
+    }
+
+    public function generatePdfTasks(GeneratePdfManagementCommitteeRequest $request) {
+        try {
+
+            $data = $this->task->generatePdf($request);
+            return $data;
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }
 }

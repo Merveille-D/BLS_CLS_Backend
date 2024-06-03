@@ -18,10 +18,10 @@ return new class extends Migration
             $table->uuid('audit_notation_id');
             $table->foreign('audit_notation_id')->references('id')->on('audit_notations')->onDelete('cascade');
 
-            $table->uuid('performance_indicator_id');
-            $table->foreign('performance_indicator_id')->references('id')->on('audit_performance_indicators')->onDelete('cascade');
+            $table->uuid('audit_performance_indicator_id');
+            // $table->foreign('performance_indicator_id')->references('id')->on('audit_performance_indicators')->onDelete('cascade');
 
-            $table->string('note');
+            $table->string('note')->nullable();
 
             $table->timestamps();
         });

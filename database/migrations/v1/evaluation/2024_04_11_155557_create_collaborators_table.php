@@ -22,6 +22,9 @@ return new class extends Migration
 
             $table->enum('position', PerformanceIndicator::POSITIONS);
 
+            $table->uuid('created_by')->nullable();
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

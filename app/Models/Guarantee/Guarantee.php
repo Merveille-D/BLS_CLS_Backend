@@ -2,8 +2,11 @@
 
 namespace App\Models\Guarantee;
 
+use App\Enums\Guarantee\GuaranteeType;
 use App\Models\Scopes\CountryScope;
 use App\Models\User;
+use App\Observers\Guarantee\GuaranteeObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Testing\Fluent\Concerns\Has;
 
 #[ScopedBy([CountryScope::class])]
+#[ObservedBy([GuaranteeObserver::class])]
 class Guarantee extends Model
 {
     use HasFactory, HasUuids;
@@ -64,5 +68,18 @@ class Guarantee extends Model
                     ->defaultOrder()
                     ->where('status', true)
                     ->get()->last();
+    }
+
+    //readable_type
+    public function getReadableTypeAttribute() {
+        return GuaranteeType::VALUES[$this->type];
+    }
+
+    //readable_phase
+    public function getReadablePhaseAttribute() {
+        if ($this->phase == 'formalization')
+            return 'Formalisation';
+        else
+            return 'Réalisation';
     }
 }

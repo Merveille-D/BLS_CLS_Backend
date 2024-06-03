@@ -36,10 +36,31 @@ startsecs=0
 ## Config LDAP
 - sudo apt install php-ldap
 - composer require directorytree/ldaprecord-laravel
+- set up auth mode in .env AUTH_MODE=ldap or AUTH_MODE=database
+- set env params
+- php artisan ldap:test <!-- to test if set succesfully -->
+- php artisan ldap:import users <!-- import AD users -->
+
+* ref <!-- https://anqorithm.medium.com/implementing-ldap-authentication-integration-in-laravel-a-guide-to-using-openldap-phpldapadmin-f34a37e401bd -->
+
+
 
 ## to do 
+list of permissions
+- all permissions 
+- manage user
+- view all subsidiary
+- view local subsidiary
+- manage subsidiary
+- manage roles
 
 
-imprimer
-<!-- union list des garanties -->
-<!-- improve update has_recovery -->
+* manage permission **
+* general settings
+* translation in the system
+* gestion des alertes
+
+* pdf legal watch [frontend] and litigation 
+* set auth mode in env
+* frontend change email to username
+

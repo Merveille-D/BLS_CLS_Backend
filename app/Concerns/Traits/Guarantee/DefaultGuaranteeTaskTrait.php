@@ -34,7 +34,7 @@ trait DefaultGuaranteeTaskTrait
                                     [
                                         "name" => "documents",
                                         "type" => "file",
-                                        "label" => "Date de la convention",
+                                        "label" => "Documents de la convention",
                                         "required" => true
                                     ],
 

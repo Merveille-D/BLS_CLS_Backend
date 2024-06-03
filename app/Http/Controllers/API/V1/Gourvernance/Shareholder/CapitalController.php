@@ -31,7 +31,7 @@ class CapitalController extends Controller
     public function store(StoreCapitalRequest $request)
     {
         try {
-            $capital = $this->capital->store($request);
+            $capital = $this->capital->store($request->all());
             return api_response(true, "Succès de l'enregistrement du capital", $capital, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement du capital", $e->errors(), 422);

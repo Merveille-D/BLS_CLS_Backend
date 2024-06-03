@@ -25,7 +25,7 @@ class UpdateAuditPeriodRequest extends FormRequest
     {
         return [
             'title' => ['string'],
-            'date' => ['date'],
+            'deadline' => ['date'],
         ];
     }
 

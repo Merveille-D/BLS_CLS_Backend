@@ -3,15 +3,20 @@
 namespace App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee;
 
 use App\Concerns\Traits\Alert\Alertable;
+use App\Concerns\Traits\Transfer\Transferable;
+use App\Models\Scopes\CountryScope;
+use App\Models\User;
 use App\Observers\TaskManagementCommitteeObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+#[ScopedBy([CountryScope::class])]
 #[ObservedBy([TaskManagementCommitteeObserver::class])]
 class TaskManagementCommittee extends Model
 {
-    use HasFactory, HasUuids, Alertable;
+    use HasFactory, HasUuids, Alertable, Transferable;
 
     /**
      * Les attributs qui doivent être castés vers des types natifs.
@@ -30,6 +35,8 @@ class TaskManagementCommittee extends Model
         'responsible',
         'supervisor',
         'management_committee_id',
+        'completed_by',
+        'created_by',
     ];
 
     const SESSION_TASK_TYPE = [
@@ -86,5 +93,8 @@ class TaskManagementCommittee extends Model
         ],
     ];
 
+    public function creator() {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 
 }

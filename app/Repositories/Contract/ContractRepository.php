@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories\Contract;
 
+use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use App\Models\Contract\Contract;
 use App\Concerns\Traits\Transfer\AddTransferTrait;
 use App\Models\Contract\ContractDocument;
@@ -9,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class ContractRepository
 {
     use AddTransferTrait;
+    use GeneratePdfTrait;
 
     public function __construct(private Contract $contract) {
 
@@ -23,6 +25,12 @@ class ContractRepository
 
         $request = $request->all();
         $request['created_by'] = Auth::user()->id;
+
+        $reference = 'CNT-' . '-' . now()->format('d') . '/' . now()->format('m') . '/' . now()->format('Y');
+        $request['contract_reference'] = $reference;
+
+        $request['reference'] = generateReference('CONTRACT', $this->contract);
+
 
         $contract = $this->contract->create($request);
 
@@ -115,5 +123,42 @@ class ContractRepository
         }
 
         return $contract;
+    }
+
+    public function generatePdf($request){
+
+        $contract = Contract::find($request['contract_id']);
+
+        $data = $contract->toArray();
+        $data['first_part'] = $contract->first_part;
+        $data['second_part'] = $contract->second_part;
+        $data['creator'] = $contract->creator;
+        $data['type_category'] = $contract->info_type_category;
+        $data['category'] = $contract->info_category;
+        $data['tasks'] = $contract->tasks;
+
+        $pdf =  $this->generateFromView( 'pdf.contract.fiche_de_suivi',  [
+            'data' => $data,
+            'details' => $this->getDetails($data)
+        ],$contract->title);
+
+        return $pdf;
+    }
+
+    public function getDetails($data) {
+        $details = [
+            'N° de dossier' => $data['contract_reference'],
+            'Statut actuel' => $data['status'],
+            'Intitulé' => $data['title'],
+            'Catégorie' => $data['category']['label'],
+            'Type de catégorie' => $data['type_category']['label'],
+            'Date de signature' => $data['date_signature'],
+            'Date de prise d\'effet' => $data['date_effective'],
+            'Date d\'expiration' => $data['date_expiration'],
+            'Date de renouvellement' => $data['date_renewal'],
+            'Créé par' => $data['creator']['firstname'] . '' . $data['creator']['lastname'],
+        ];
+
+        return $details;
     }
 }

@@ -22,6 +22,9 @@ return new class extends Migration
             $table->uuid('contract_id')->nullable();
             $table->foreign('contract_id')->references('id')->on('contracts')->onDelete('cascade');
 
+            $table->uuid('completed_by')->nullable();
+            $table->foreign('completed_by')->references('id')->on('users')->onDelete('cascade');
+
             $table->uuid('created_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
 

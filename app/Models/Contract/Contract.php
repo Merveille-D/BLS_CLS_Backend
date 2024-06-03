@@ -4,11 +4,14 @@ namespace App\Models\Contract;
 
 use App\Concerns\Traits\Alert\Alertable;
 use App\Concerns\Traits\Transfer\Transferable;
+use App\Models\Scopes\CountryScope;
 use App\Models\Transfer\TransferDocument;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+#[ScopedBy([CountryScope::class])]
 class Contract extends Model
 {
     use HasFactory, HasUuids, Alertable, Transferable;
@@ -23,6 +26,8 @@ class Contract extends Model
         'date_renewal',
         'status',
         'created_by',
+        'contract_reference',
+        'reference',
     ];
 
     const CATEGORIES = [
@@ -185,6 +190,7 @@ class Contract extends Model
                 $part1[] = [
                     'description' => $part->description,
                     'part_id' => $part->part_id,
+                    'part' => $part->part,
                 ];
             }
         }
@@ -204,9 +210,18 @@ class Contract extends Model
                 $part2[] = [
                     'description' => $part->description,
                     'part_id' => $part->part_id,
+                    'part' => $part->part,
                 ];
             }
         }
         return $part2;
+    }
+
+    public function creator() {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function tasks() {
+        return $this->hasMany(Task::class);
     }
 }

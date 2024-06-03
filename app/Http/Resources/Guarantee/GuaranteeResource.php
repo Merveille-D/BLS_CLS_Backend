@@ -25,8 +25,10 @@ class GuaranteeResource extends JsonResource
             'phase' => $this->phase,
             'contract_id' => $this->contract_id,
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
+            // mortage especial fields
+            'sell_price_estate' => $this->when($this->type == 'mortgage', $this->extra['sell_price_estate'] ?? null),
+            'is_approved' =>  $this->when($this->type == 'mortgage', $this->extra['is_approved'] ?? false),
 
             'next_step' => $this->when($id, new GuaranteeTaskResource($this->next_task)),
             'current_step' => $this->when($id, new GuaranteeTaskResource($this->current_task)),

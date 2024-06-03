@@ -35,7 +35,7 @@ class ShareholderController extends Controller
     public function store(StoreShareholderRequest $request)
     {
         try {
-            $shareholder = $this->shareholder->store($request);
+            $shareholder = $this->shareholder->store($request->all());
             return api_response(true, "Succès de l'enregistrement de l'actionnaires", $shareholder, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement de l'actionnaires", $e->errors(), 422);

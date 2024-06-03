@@ -5,6 +5,7 @@ use App\Http\Resources\User\UserResource;
 use App\Models\Auth\Role;
 use App\Models\User;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserRepository
@@ -26,7 +27,8 @@ class UserRepository
                 ->when(!blank($search), function($qry) use($search) {
                     $qry->where('name', 'like', '%'.$search.'%');
                 })
-                ->paginate();
+                ->orderBy('created_at', 'desc')
+                ->paginate(DEFAULT_DATA_LIMIT);
 
 
         return UserResource::collection($query);
@@ -57,6 +59,41 @@ class UserRepository
             return false;
         }
         return $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
+    }
+
+    public function authenticate($credentials) {
+        $auth_mode = config('auth.auth_mode');
+        $data = [];
+
+        if ($auth_mode == 'database') {
+            $user = User::where('username', $credentials['uid'])->first();
+
+            if(!$user || !Hash::check($credentials['password'], $user->password)){
+                return ['error' => 'Unauthorized'];
+            }
+            $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
+
+                $data = [
+                    'access_token' => $token,
+                    'user' => new UserResource($user),
+                ];
+
+        } else if ($auth_mode == 'ldap') {
+            if (Auth::guard('ldap')->attempt($credentials)) {
+
+                $user = Auth::guard('ldap')->user();
+                // Generate Sanctum token
+                $user = $this->user_model->where('username', $user->uid)->first();
+                $token = $user->createToken($user->username.'-AuthToken')->plainTextToken;
+
+                $data = [
+                    'access_token' => $token,
+                    'user' => new UserResource($user),
+                ];
+            }
+        }
+        return $data;
+
     }
 
     public function logout() {

@@ -51,7 +51,6 @@ class UpdateContractRequest extends FormRequest
             ],
             'first_part.*.description' => ['string'],
 
-
             'second_part' => ['array'],
             'second_part.*.part_id' => [
                 'uuid',

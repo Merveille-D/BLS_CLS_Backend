@@ -12,7 +12,6 @@ use App\Models\Litigation\LitigationParty;
 use App\Models\Litigation\LitigationSetting;
 use App\Models\Litigation\LitigationStep;
 use App\Models\Litigation\LitigationTask;
-use App\Models\ModuleTask;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -65,7 +64,7 @@ class LitigationRepository {
                 ->when($request->type == 'provisioned', function($qry) {
                     $qry->whereNotNull('added_amount');
                 })
-                ->when($request->provision == 'not_provisioned', function($qry) {
+                ->when($request->type == 'not_provisioned', function($qry) {
                     $qry->whereNull('added_amount');
                 })
                 ->orderByDesc('created_at')
@@ -118,6 +117,7 @@ class LitigationRepository {
             'jurisdiction_location' => $request->jurisdiction_location,
             'email' => $request->email,
             'phone' => $request->phone,
+            'created_by' => auth()->id(),
         ]);
         foreach ($request->parties as $key => $party) {
             $party_model = LitigationParty::findOrFail($party['party_id']);
@@ -155,7 +155,7 @@ class LitigationRepository {
 
         $litigation->update([
             'name' => $request->name,
-            'reference' => $request->reference,
+            'case_number' => $request->case_number,
             'nature_id' => $request->nature_id,
             'jurisdiction_id' => $request->jurisdiction_id,
             'jurisdiction_location' => $request->jurisdiction_location,
@@ -337,6 +337,7 @@ class LitigationRepository {
 
     public function generatePdf($id) {
         $litigation = $this->findById($id);
+
         $filename = Str::slug($litigation->name). '_'.date('YmdHis') . '.pdf';
 
         $pdf =  $this->generateFromView( 'pdf.litigation.litigation',  [
@@ -346,7 +347,6 @@ class LitigationRepository {
         $filename);
 
         return $pdf;
-
     }
 
     public function getDetails($litigation) {

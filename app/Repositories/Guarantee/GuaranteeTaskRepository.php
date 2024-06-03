@@ -109,11 +109,13 @@ class GuaranteeTaskRepository
                 }elseif ($field['type'] == 'file') {
                     $this->saveFiles($request->documents, $guarantee, $task->code);
                 } elseif ($field['type'] == 'date') {
-                    $task->completed_at = $request->completed_at;
+                    if ($field['name'] == 'completed_at')
+                        $task->completed_at = $request->completed_at;
+                    else
+                        $data[]  =  [$field['name'] => $request->{$field['name']}];
                 }elseif ($field['type'] == 'radio') {
-                    // dd($task->step->children);
                     $radio_field = $request->{$field['name']};
-                    $data[]  =  [$field['name'] => $request->{$field['name']}];
+                    $data[]  =  [$field['name'] => $request->{$field['name']} == 'yes' ? true : false];
                 }
             }
 
@@ -140,11 +142,11 @@ class GuaranteeTaskRepository
 
     public function saveNextTasks($current_task, $radio_field) {
         $steps = $current_task?->step?->children()->where('parent_response', $radio_field)->get();
-
         foreach ($steps as $key => $step) {
             $task = new GuaranteeTask();
             $task->code = $step->code;
             $task->title = $step->title;
+            $task->step_id = $step->id;
             $task->rank = $step->rank;
             $task->type = $step->step_type;
             $task->max_deadline = null;

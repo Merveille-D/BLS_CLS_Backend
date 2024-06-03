@@ -22,6 +22,7 @@ class Director extends Model
     protected $fillable = [
         'name',
         'birthdate',
+        'position',
         'birthplace',
         'nationality',
         'address',

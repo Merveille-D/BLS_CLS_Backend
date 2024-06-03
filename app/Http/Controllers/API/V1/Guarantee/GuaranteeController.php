@@ -80,4 +80,17 @@ class GuaranteeController extends Controller
     {
         //
     }
+
+    /**
+     * generate pdf
+     */
+    public function generatePdf($guarantee)
+    {
+        try {
+            $data = $this->guaranteeRepo->generatePdf($guarantee);
+            return $data;
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
+        }
+    }
 }

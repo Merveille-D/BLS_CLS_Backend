@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\AuditPeriod;
 
+use App\Models\Audit\AuditPeriod;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -25,8 +26,19 @@ class StoreAuditPeriodRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string'],
-            'date' => ['required', 'date'],
+            'deadline' => ['required', 'date'],
         ];
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $lastAuditPeriod = AuditPeriod::orderBy('created_at', 'desc')->first();
+
+            if ($lastAuditPeriod && !$lastAuditPeriod->status) {
+                $validator->errors()->add('status', 'The last audit period must be completed before creating a new one.');
+            }
+        });
     }
 
     public function failedValidation(Validator $validator)

@@ -24,6 +24,12 @@ return new class extends Migration
             $table->string('responsible')->nullable();
             $table->string('supervisor')->nullable();
 
+            $table->uuid('completed_by')->nullable();
+            $table->foreign('completed_by')->references('id')->on('users')->onDelete('cascade');
+
+            $table->uuid('created_by')->nullable();
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+
             $table->uuid('management_committee_id')->nullable();
             $table->foreign('management_committee_id')->references('id')->on('management_committees')->onDelete('cascade');
 

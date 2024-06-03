@@ -21,7 +21,7 @@ class CountryScope implements Scope
             if ($user->hasRole('super_admin')) {
                 return;
             }
-
+            //Otherwise, filter based on the subsidiary_id of the creator
             $subsidiaryId = $user->subsidiary_id;
             $builder->whereHas('creator', function (Builder $query) use ($subsidiaryId) {
                 $query->where('subsidiary_id', $subsidiaryId);

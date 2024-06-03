@@ -1,12 +1,18 @@
 <?php
 namespace App\Repositories\SessionAdministrator;
 
+use App\Concerns\Traits\PDF\GeneratePdfTrait;
+use App\Concerns\Traits\Transfer\AddTransferTrait;
 use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
 use App\Models\Gourvernance\BoardDirectors\Sessions\TaskSessionAdministrator;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class TaskSessionAdministratorRepository
 {
+    use GeneratePdfTrait;
+    use AddTransferTrait;
+
     public function __construct(private TaskSessionAdministrator $task) {
 
     }
@@ -42,6 +48,7 @@ class TaskSessionAdministratorRepository
             $request['type'] = $sessionDate->isPast() ? 'post_ca' : 'pre_ca';
         }
 
+        $request['created_by'] = Auth::user()->id;
         $task_session_administrator = $this->task->create($request->all());
 
         return $task_session_administrator;
@@ -54,6 +61,11 @@ class TaskSessionAdministratorRepository
      */
     public function update(TaskSessionAdministrator $taskSessionAdministrator, $request) {
         $taskSessionAdministrator->update($request);
+
+        if(isset($request['forward_title'])) {
+            $this->add_transfer($taskSessionAdministrator, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
+        }
+
         return $taskSessionAdministrator;
     }
 
@@ -66,15 +78,13 @@ class TaskSessionAdministratorRepository
      public function updateStatus($request) {
         foreach ($request['tasks'] as $data) {
             $taskSessionAdministrator = $this->task->findOrFail($data['id']);
-            $taskSessionAdministrator->update(['status' => $data['status']]);
-            $updatedTasks[] = $taskSessionAdministrator;
 
-            if($taskSessionAdministrator->type === 'pre_ca') {
-                $session_administrator = $taskSessionAdministrator->session_administrator();
-                if($taskSessionAdministrator->deadline === $session_administrator->session_date) {
-                    $session_administrator->update(['status' => 'post_ca']);
-                }
+            $updateData = ['status' => $data['status']];
+            if ($data['status']) {
+                $updateData['completed_by'] = Auth::user()->id;
             }
+
+            $taskSessionAdministrator->update($updateData);
         }
 
         return $taskSessionAdministrator;
@@ -92,5 +102,26 @@ class TaskSessionAdministratorRepository
         }
 
         return true;
+    }
+
+    public function generatePdf($request){
+
+        $session_administrator = SessionAdministrator::find($request['session_administrator_id']);
+
+        $meeting_type = SessionAdministrator::SESSION_MEETING_TYPES_VALUES[$session_administrator->type];
+
+        $tasks = TaskSessionAdministrator::where('session_administrator_id', $session_administrator->id)
+                                    ->whereIn('type', $request['general_meeting_id'])
+                                    ->get();
+        $title = $request['type'] == 'checklist' ? 'Checklist' : 'Procedure';
+        $filename = $title .''. $session_administrator->libelle;
+
+        $pdf =  $this->generateFromView( 'pdf.session_administrator.checklist_and_procedure',  [
+            'tasks' => $tasks,
+            'session_administrator' => $session_administrator,
+            'meeting_type' => $meeting_type,
+            'title' => $title,
+        ], $filename);
+        return $pdf;
     }
 }

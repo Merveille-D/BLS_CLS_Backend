@@ -25,7 +25,7 @@ enum ConvHypothecState {
     ];
 
     const STATES_VALUES = [
-        ConvHypothecState::CREATED => 'Création nouvelle hypothèque',
+        ConvHypothecState::CREATED => 'Initiation de l\'hypothèque',
         ConvHypothecState::PROPERTY_VERIFIED => 'Vérification propriété de l\'hypothèque',
         ConvHypothecState::AGREEMENT_SIGNED => 'Convention signée',
         // ConvHypothecState::REGISTER_REQUESTED => 'Envoie de la demande d\'inscription',

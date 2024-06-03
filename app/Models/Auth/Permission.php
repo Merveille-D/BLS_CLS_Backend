@@ -10,4 +10,12 @@ use Spatie\Permission\Models\Permission as ModelsPermission;
 class Permission extends ModelsPermission
 {
     use HasFactory, HasUuids;
+
+    protected $fillable = [
+        'name',
+        'label',
+        'description',
+        'permission_entity_id',
+        'guard_name',
+    ];
 }

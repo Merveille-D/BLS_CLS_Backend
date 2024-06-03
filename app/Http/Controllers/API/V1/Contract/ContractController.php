@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\Contract;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Contract\GeneratePdfContractRequest;
 use App\Http\Requests\Contract\StoreContractRequest;
 use App\Http\Requests\Contract\StoreTransferContractRequest;
 use App\Http\Requests\Contract\UpdateContractRequest;
@@ -122,5 +123,15 @@ class ContractController extends Controller
 
     public function getTypeCategories() {
         return api_response(true, "Liste des type de categories", Contract::TYPE_CATEGORIES_VALUES, 200);
+    }
+
+    public function generatePdfFicheSuivi(GeneratePdfContractRequest $request) {
+        try {
+
+            $data = $this->contract->generatePdf($request->all());
+            return $data;
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
+        }
     }
 }

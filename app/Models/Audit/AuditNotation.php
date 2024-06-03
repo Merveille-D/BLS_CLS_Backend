@@ -13,11 +13,14 @@ use App\Models\Guarantee\Guarantee;
 use App\Models\Incident\Incident;
 use App\Models\Litigation\Litigation;
 use App\Models\Recovery\Recovery;
+use App\Models\Scopes\CountryScope;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Http;
-
+#[ScopedBy([CountryScope::class])]
 class AuditNotation extends Model
 {
     use HasFactory, HasUuids, Alertable, Transferable;
@@ -28,18 +31,25 @@ class AuditNotation extends Model
         'observation',
         'module_id',
         'module',
-        'date',
         'created_by',
         'parent_id',
+        'reference',
+        'audit_reference'
     ];
 
-    protected $appends = ['indicators', 'steps'];
+    protected $appends = ['indicators'];
 
-    const STATUS =[
-        'evaluated',
-        'verified',
-        'validated',
-        'archived',
+    const MODELS_MODULES_VALUES = [
+        'contracts' => 'Contrat',
+        'conventionnal_hypothec' => 'Hypothèque conventionnelle',
+        'litigation' => 'Contentieux',
+        'incidents' => 'Incident',
+        'recovery' => 'Recouvrement',
+        'general_meeting' => 'Assemblée générale',
+        'session_administrators' => 'Session administrateurs',
+        'management_committees' => 'Comité de direction',
+        'guarantees_security_movable' => 'Garanties mobilières',
+        'guarantees_security_personal' => 'Garanties personnelles',
     ];
 
     const MODELS_MODULES = [
@@ -60,14 +70,14 @@ class AuditNotation extends Model
         return $this->hasMany(AuditNotationPerformance::class);
     }
 
-    public function getStepsAttribute() {
+    public function getLastAuditNotationAttribute(){
 
-        $childrens = self::where('parent_id', $this->id)->get()->makeHidden(['performances', 'steps']);
-        $parent = collect([self::find($this->id)->makeHidden(['performances', 'steps'])]);
+        $transfer_notation = self::where('parent_id', $this->id)
+        ->whereNotNull('note')
+        ->orderBy('created_at', 'desc')
+        ->first();
 
-        $steps = $parent->merge($childrens);
-
-        return $steps;
+        return ($transfer_notation) ? $transfer_notation : self::find($this->id);
     }
 
     public function getIndicatorsAttribute() {
@@ -96,5 +106,9 @@ class AuditNotation extends Model
                       ->where('id', $this->module_id)
                       ->first();
         return $response->libelle ?? $response->name ?? $response->title;
+    }
+
+    public function creator() {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

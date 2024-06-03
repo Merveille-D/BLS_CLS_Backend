@@ -26,6 +26,7 @@ class RecoveryFactory extends Factory
             'has_guarantee' => $this->faker->boolean(),
             'guarantee_id' => $this->faker->uuid(),
             'contract_id' => $this->faker->uuid(),
+            'created_by' => $this->faker->uuid(),
 
         ];
     }

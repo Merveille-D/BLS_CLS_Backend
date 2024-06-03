@@ -25,6 +25,7 @@ class AddDirectorRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
+            'position' => 'required|string|max:255',
             'birthdate' => 'required|date',
             'birthplace' => 'required|string|max:255',
             'nationality' => 'required|string|max:255',
