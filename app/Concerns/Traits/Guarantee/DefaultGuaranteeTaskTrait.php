@@ -11,24 +11,24 @@ trait DefaultGuaranteeTaskTrait
             "formalization" => [
                 "conventionnal" => [
                     [
-                        "title" => "Iniation de la garantie",
+                        "title" => 'Initiation of the guarantee',
                         "code" => "created",
                         "min_delay" => null,
                         "max_delay" => 0,
                     ],
                     [
-                        "title" => "Rédaction de la convention de garantie",
+                        "title" => 'Drafting of the guarantee agreement',
                         "code" => "redaction",
                         "min_delay" => null,
                         "max_delay" => 10,
                         "extra" => [
                             "form" => [
-                                "title" => "Rédaction de la convention de garantie",
+                                "title" => 'Drafting of the guarantee agreement',
                                 "fields" => [
                                     [
                                         "name" => "completed_at",
                                         "type" => "date",
-                                        "label" => "Date de la convention",
+                                        "label" => "Date of the agreement",
                                         "required" => true
                                     ],
                                     [
@@ -43,18 +43,18 @@ trait DefaultGuaranteeTaskTrait
                         ]
                     ],
                     [
-                        "title" => "Dépot de la convention au rang des minutes d'un notaire",
+                        "title" => 'Deposit of the agreement with the notary',
                         "code" => "notary_deposit",
                         "min_delay" => null,
                         "max_delay" => 10,
                         "extra" => [
                             "form" => [
-                                "title" => "Dépot de la convention au rang des minutes d'un notaire",
+                                "title" => 'Deposit of the agreement with the notary',
                                 "fields" => [
                                     [
                                         "name" => "completed_at",
                                         "type" => "date",
-                                        "label" => "Date de dépot de la convention",
+                                        "label" => "Date of deposit of the agreement",
                                         "required" => true
                                     ],
                                     [
@@ -69,18 +69,18 @@ trait DefaultGuaranteeTaskTrait
                         ]
                     ],
                     [
-                        "title" => "Transmission au notaire d'une demande d'incription de la garantie au RCCM",
+                        "title" => 'Transmission to the notary of a request for registration of the guarantee with the RCCM',
                         "code" => "notary_transmission",
                         "min_delay" => null,
                         "max_delay" => 10,
                         "extra" => [
                             "form" => [
-                                "title" => "Transmission au notaire d'une demande d'incription de la garantie au RCCM",
+                                "title" => 'Transmission to the notary of a request for registration of the guarantee with the RCCM',
                                 "fields" => [
                                     [
                                         "name" => "completed_at",
                                         "type" => "date",
-                                        "label" => "Date de transmission",
+                                        "label" => "Date of transmission",
                                         "required" => true
                                     ],
                                     [
@@ -95,18 +95,18 @@ trait DefaultGuaranteeTaskTrait
                         ]
                     ],
                     [
-                        "title" => "Obtention de la convention de garantie enregistrée",
+                        "title" => 'Obtaining the registered guarantee agreement',
                         "code" => "convention_obtention",
                         "min_delay" => null,
                         "max_delay" => 10,
                         "extra" => [
                             "form" => [
-                                "title" => "Obtention de la convention de garantie enregistrée",
+                                "title" => 'Obtaining the registered guarantee agreement',
                                 "fields" => [
                                     [
                                         "name" => "completed_at",
                                         "type" => "date",
-                                        "label" => "Date d'obtention",
+                                        "label" => "Date of obtaining",
                                         "required" => true
                                     ],
                                     [
@@ -121,18 +121,18 @@ trait DefaultGuaranteeTaskTrait
                         ]
                     ],
                     [
-                        "title" => "Envoi d'une demande par le notaire au RCCM pour enregistrement de la garantie",
+                        "title" => 'Sending a request by the notary to the RCCM for registration of the guarantee',
                         "code" => "rccm_registration",
                         "min_delay" => null,
                         "max_delay" => 10,
                         "extra" => [
                             "form" => [
-                                "title" => "Envoi d'une demande par le notaire au RCCM pour enregistrement de la garantie",
+                                "title" => 'Sending a request by the notary to the RCCM for registration of the guarantee',
                                 "fields" => [
                                     [
                                         "name" => "completed_at",
                                         "type" => "date",
-                                        "label" => "Date d'envoi",
+                                        "label" => "Date of sending",
                                         "required" => true
                                     ],
                                     [
@@ -147,18 +147,18 @@ trait DefaultGuaranteeTaskTrait
                         ]
                     ],
                     [
-                        "title" => "Réception de la preuve d'inscription de la garantie",
+                        "title" => 'Receipt of proof of registration of the guarantee',
                         "code" => "rccm_proof",
                         "min_delay" => null,
                         "max_delay" => 10,
                         "extra" => [
                             "form" => [
-                                "title" => "Réception de la preuve d'inscription de la garantie",
+                                "title" => 'Receipt of proof of registration of the guarantee',
                                 "fields" => [
                                     [
                                         "name" => "completed_at",
                                         "type" => "date",
-                                        "label" => "Date de réception",
+                                        "label" => "Date of receipt",
                                         "required" => true
                                     ],
                                     [
@@ -173,18 +173,18 @@ trait DefaultGuaranteeTaskTrait
                         ]
                     ],
                     [
-                        "title" => "Saisine de l'huissier pour les notifications et/ou les formalités de domiciliation avec l'avis 'déclaration favorable'",
+                        "title" => 'Referral to the bailiff for notifications and/or domiciliation formalities with "favorable declaration" notice',
                         "code" => "huissier_notification",
                         "min_delay" => null,
                         "max_delay" => 10,
                         "extra" => [
                             "form" => [
-                                "title" => "Saisine de l'huissier pour les notifications et/ou les formalités de domiciliation avec l'avis 'déclaration favorable'",
+                                "title" => 'Referral to the bailiff for notifications and/or domiciliation formalities with "favorable declaration" notice',
                                 "fields" => [
                                     [
                                         "name" => "completed_at",
                                         "type" => "date",
-                                        "label" => "Date de saisine",
+                                        "label" => "Date of referral",
                                         "required" => true
                                     ],
                                     [
@@ -199,18 +199,18 @@ trait DefaultGuaranteeTaskTrait
                         ]
                     ],
                     [
-                        "title" => "Obtention des actes de domiciliation avec l'avis 'déclaration favorable'",
+                        "title" => 'Obtaining domiciliation acts with "favorable declaration" notice',
                         "code" => "domiciliation_obtention",
                         "min_delay" => null,
                         "max_delay" => 10,
                         "extra" => [
                             "form" => [
-                                "title" => "Obtention des actes de domiciliation avec l'avis 'déclaration favorable'",
+                                "title" => 'Obtaining domiciliation acts with "favorable declaration" notice',
                                 "fields" => [
                                     [
                                         "name" => "completed_at",
                                         "type" => "date",
-                                        "label" => "Date d'obtention",
+                                        "label" => "Date of obtaining",
                                         "required" => true
                                     ],
                                     [
@@ -225,18 +225,18 @@ trait DefaultGuaranteeTaskTrait
                         ]
                     ],
                     [
-                        "title" => "Obtention du bordereau de gage de stocks émis par le greffier au débiteur",
+                        "title" => 'Obtaining the pledge slip issued by the clerk to the debtor',
                         "code" => "stock_pledge_obtention",
                         "min_delay" => null,
                         "max_delay" => 10,
                         "extra" => [
                             "form" => [
-                                "title" => "Obtention du bordereau de gage de stocks émis par le greffier au débiteur",
+                                "title" => 'Obtaining the pledge slip issued by the clerk to the debtor',
                                 "fields" => [
                                     [
                                         "name" => "completed_at",
                                         "type" => "date",
-                                        "label" => "Date d'obtention",
+                                        "label" => "Date of obtaining",
                                         "required" => true
                                     ],
                                     [
@@ -254,24 +254,24 @@ trait DefaultGuaranteeTaskTrait
                 ],
                 "legal" => [
                     [
-                        "title" => "Iniation de la garantie",
+                        "title" => 'Initiation of the guarantee',
                         "code" => "created",
                         "min_delay" => null,
                         "max_delay" => 10,
                     ],
                     [
-                        "title" => "Saisine de la juridiction compétente",
+                        "title" => 'Referral to the competent jurisdiction',
                         "code" => "referral",
                         "min_delay" => null,
                         "max_delay" => 10,
                         "extra" => [
                             "form" => [
-                                "title" => "Saisine de la juridiction compétente",
+                                "title" => 'Referral to the competent jurisdiction',
                                 "fields" => [
                                     [
                                         "name" => "completed_at",
                                         "type" => "date",
-                                        "label" => "Date de saisine",
+                                        "label" => "Date of referral",
                                         "required" => true
                                     ],
                                     [
@@ -283,7 +283,7 @@ trait DefaultGuaranteeTaskTrait
                                     [
                                         "name" => "is_favorable",
                                         "type" => "radio",
-                                        "label" => "La décision est-elle favorable ?",
+                                        "label" => "Is the decision favorable?",
                                         "required" => true
                                     ],
                                 ]
@@ -292,18 +292,18 @@ trait DefaultGuaranteeTaskTrait
                         "options" => [
                                     "yes" => [
                                         [
-                                            "title" => "Obtenir la décision autorisant la garantie",
+                                            "title" => 'Obtaining the decision authorizing the guarantee',
                                             "code" => "obtenir_decision_autorisant_garantie",
                                             "min_delay" => null,
                                             "max_delay" => 10,
                                             "extra" => [
                                                 "form" => [
-                                                    "title" => "Obtenir la décision autorisant la garantie",
+                                                    "title" => 'Obtaining the decision authorizing the guarantee',
                                                     "fields" => [
                                                         [
                                                             "name" => "completed_at",
                                                             "type" => "date",
-                                                            "label" => "Date de décision",
+                                                            "label" => "Date of obtaining",
                                                             "required" => true
                                                         ],
                                                         [
@@ -317,18 +317,18 @@ trait DefaultGuaranteeTaskTrait
                                             ]
                                         ],
                                         [
-                                            "title" => "Transmission au notaire d'une demande d'inscription de la garantie au RCCM",
+                                            "title" => 'Transmission to the notary of a request for registration of the guarantee with the RCCM',
                                             "code" => "transmission_notaire_demande_inscription_garantie_rccm",
                                             "min_delay" => null,
                                             "max_delay" => 10,
                                             "extra" => [
                                                 "form" => [
-                                                    "title" => "Transmission au notaire d'une demande d'inscription de la garantie au RCCM",
+                                                    "title" => 'Transmission to the notary of a request for registration of the guarantee with the RCCM',
                                                     "fields" => [
                                                         [
                                                             "name" => "completed_at",
                                                             "type" => "date",
-                                                            "label" => "Date de transmission",
+                                                            "label" => "Date of transmission",
                                                             "required" => true
                                                         ],
                                                         [
@@ -342,18 +342,18 @@ trait DefaultGuaranteeTaskTrait
                                             ]
                                         ],
                                         [
-                                            "title" => "Envoi d'une demande par le notaire au RCCM pour enregistrement de la garantie",
+                                            "title" => 'Sending a request by the notary to the RCCM for registration of the guarantee',
                                             "code" => "envoi_demande_notaire_rccm_enregistrement_garantie",
                                             "min_delay" => null,
                                             "max_delay" => 10,
                                             "extra" => [
                                                 "form" => [
-                                                    "title" => "Envoi d'une demande par le notaire au RCCM pour enregistrement de la garantie",
+                                                    "title" => 'Sending a request by the notary to the RCCM for registration of the guarantee',
                                                     "fields" => [
                                                         [
                                                             "name" => "completed_at",
                                                             "type" => "date",
-                                                            "label" => "Date d'envoi",
+                                                            "label" => "Date of sending",
                                                             "required" => true
                                                         ],
                                                         [
@@ -367,18 +367,18 @@ trait DefaultGuaranteeTaskTrait
                                             ]
                                         ],
                                         [
-                                            "title" => "Réception de la preuve d'inscription de la garantie",
+                                            "title" => 'Receipt of proof of registration of the guarantee',
                                             "code" => "reception_preuve_inscription_garantie",
                                             "min_delay" => null,
                                             "max_delay" => 10,
                                             "extra" => [
                                                 "form" => [
-                                                    "title" => "Réception de la preuve d'inscription de la garantie",
+                                                    "title" => 'Receipt of proof of registration of the guarantee',
                                                     "fields" => [
                                                         [
                                                             "name" => "completed_at",
                                                             "type" => "date",
-                                                            "label" => "Date de réception",
+                                                            "label" => "Date of receipt",
                                                             "required" => true
                                                         ],
                                                         [
@@ -395,62 +395,62 @@ trait DefaultGuaranteeTaskTrait
 
                                     "no" => [
                                         [
-                                            "title" => "Exercer les voies de recours",
+                                            "title" => 'Exercising legal remedies',
                                             "code" => "exercer_les_voies_de_recours",
                                             "min_delay" => null,
                                             "max_delay" => 10,
                                             "extra" => [
                                                 "form" => [
-                                                    "title" => "Exercer les voies de recours",
+                                                    "title" => 'Exercising legal remedies',
                                                     "fields" => [
-                                                        ["name" => "completed_at", "type" => "date", "label" => "Date de recours", "required" => true],
+                                                        ["name" => "completed_at", "type" => "date", "label" => "Date of appeal", "required" => true],
                                                         ["name" => "documents", "type" => "file", "label" => "Documents de recours", "required" => true],
-                                                        [ "name" => "recourse_is_favorable", "type" => "radio", "label" => "Le recours est-il favorable ?", "required" => true],
+                                                        [ "name" => "recourse_is_favorable", "type" => "radio", "label" => "Is the appeal favorable?", "required" => true],
                                                     ]
                                                 ]
                                                     ],
                                             "options" => [
                                                 "yes" => [
                                                     [
-                                                        "title" => "Transmission au notaire d'une demande d'inscription de la garantie au RCCM",
+                                                        "title" => 'Transmission to the notary of a request for registration of the guarantee with the RCCM',
                                                         "code" => "transmission_notaire_demande_inscription_garantie_rccm",
                                                         "min_delay" => null,
                                                         "max_delay" => 10,
                                                         "extra" => [
                                                             "form" => [
-                                                                "title" => "Transmission au notaire d'une demande d'inscription de la garantie au RCCM",
+                                                                "title" => 'Transmission to the notary of a request for registration of the guarantee with the RCCM',
                                                                 "fields" => [
-                                                                    ["name" => "completed_at", "type" => "date", "label" => "Date de transmission", "required" => true],
+                                                                    ["name" => "completed_at", "type" => "date", "label" => "Date of transmission", "required" => true],
                                                                     ["name" => "documents", "type" => "file", "label" => "Documents de transmission", "required" => true]
                                                                 ]
                                                             ]
                                                         ]
                                                     ],
                                                     [
-                                                        "title" => "Envoi d'une demande par le notaire au RCCM pour enrégistrement de la garantie",
+                                                        "title" => 'Sending a request by the notary to the RCCM for registration of the guarantee',
                                                         "code" => "envoi_demande_notaire_rccm_enregistrement_garantie",
                                                         "min_delay" => null,
                                                         "max_delay" => 10,
                                                         "extra" => [
                                                             "form" => [
-                                                                "title" => "Envoi d'une demande par le notaire au RCCM pour enrégistrement de la garantie",
+                                                                "title" => 'Sending a request by the notary to the RCCM for registration of the guarantee',
                                                                 "fields" => [
-                                                                    ["name" => "completed_at", "type" => "date", "label" => "Date d'envoi", "required" => true],
+                                                                    ["name" => "completed_at", "type" => "date", "label" => "Date of sending", "required" => true],
                                                                     ["name" => "documents", "type" => "file", "label" => "Documents d'envoi", "required" => true]
                                                                 ]
                                                             ]
                                                         ]
                                                     ],
                                                     [
-                                                        "title" => "Réception de la preuve d'inscription de la garantie",
+                                                        "title" => 'Receipt of proof of registration of the guarantee',
                                                         "code" => "reception_preuve_inscription_garantie",
                                                         "min_delay" => null,
                                                         "max_delay" => 10,
                                                         "extra" => [
                                                             "form" => [
-                                                                "title" => "Réception de la preuve d'inscription de la garantie",
+                                                                "title" => 'Receipt of proof of registration of the guarantee',
                                                                 "fields" => [
-                                                                    ["name" => "completed_at", "type" => "date", "label" => "Date de réception", "required" => true],
+                                                                    ["name" => "completed_at", "type" => "date", "label" => "Date of receipt", "required" => true],
                                                                     ["name" => "documents", "type" => "file", "label" => "Documents de preuve", "required" => true]
                                                                 ]
                                                             ]
@@ -459,7 +459,7 @@ trait DefaultGuaranteeTaskTrait
                                                                 ],
                                                 "no" => [
                                                      [
-                                                        "title" => "Obtenir une autre garantie",
+                                                        "title" => 'Obtaining another guarantee',
                                                         "code" => "other_guarantee",
                                                         "min_delay" => null,
                                                         "max_delay" => 10,
@@ -478,17 +478,17 @@ trait DefaultGuaranteeTaskTrait
                 ],
             "realization" => [
 
-                "title" => "Commandement de payer",
+                "title" => 'Payment order',
                 "code" => "command_to_pay",
                 "min_delay" => null,
                 "max_delay" => 10,
                 "extra" => [
                     "form" => [
-                        "title" => "Commandement de payer",
+                        "title" => 'Payment order',
                         "fields" => [
-                            ["name" => "completed_at", "type" => "date", "label" => "Date de commandement", "required" => true],
+                            ["name" => "completed_at", "type" => "date", "label" => "Date of command", "required" => true],
                             ["name" => "documents", "type" => "file", "label" => "Documents de commandement", "required" => true],
-                            ["name" => "is_fruitful", "type" => "radio", "label" => "Le commendement a été fructueux ?", "required" => true],
+                            ["name" => "is_fruitful", "type" => "radio", "label" => "Was the command successful?", "required" => true],
 
                         ]
                     ]
@@ -496,15 +496,15 @@ trait DefaultGuaranteeTaskTrait
                 "options" => [
                     "yes" => [
                         [
-                            "title" => "Radiation de l'inscription",
+                            "title" => 'Cancellation of the registration',
                             "code" => "deletion_registration",
                             "min_delay" => null,
                             "max_delay" => 10,
                             "extra" => [
                                 "form" => [
-                                    "title" => "Radiation de l'inscription",
+                                    "title" => 'Cancellation of the registration',
                                     "fields" => [
-                                        ["name" => "completed_at", "type" => "date", "label" => "Date de radiation", "required" => true],
+                                        ["name" => "completed_at", "type" => "date", "label" => "Date of cancellation", "required" => true],
                                         ["name" => "documents", "type" => "file", "label" => "Documents de radiation", "required" => true]
                                     ]
                                 ]
@@ -514,54 +514,54 @@ trait DefaultGuaranteeTaskTrait
 
                     "no"  => [
                         [
-                            "title" => "Pratiquer une saisie conservatoire",
+                            "title" => 'Practicing a conservatory seizure',
                             "code" => "saisie_conservatoire",
                             "min_delay" => null,
                             "max_delay" => 10,
                             "extra" => [
                                 "form" => [
-                                    "title" => "Saisie conservatoire",
+                                    "title" => 'Practicing a conservatory seizure',
                                     "fields" => [
-                                        ["name" => "completed_at", "type" => "date", "label" => "Date de radiation", "required" => true],
+                                        ["name" => "completed_at", "type" => "date", "label" => "Date of seizure", "required" => true],
                                         ["name" => "documents", "type" => "file", "label" => "Documents de radiation", "required" => true]
                                     ]
                                 ]
                             ]
                         ],
                         [
-                            "title" => " Saisine du Notaire pour dénonciation au débiteur de la saisie conservatoire",
+                            "title" => "Referral to the notary for notification to the debtor of the conservatory seizure",
                             "code" => "denonciation_debiteur",
                             "min_delay" => null,
                             "max_delay" => 10,
                             "extra" => [
                                 "form" => [
-                                    "title" => "Saisine du notaire",
+                                    "title" => "Referral to the notary for notification to the debtor of the conservatory seizure",
                                     "fields" => [
-                                        ["name" => "completed_at", "type" => "date", "label" => "Date de radiation", "required" => true],
+                                        ["name" => "completed_at", "type" => "date", "label" => "Date of referral", "required" => true],
                                         ["name" => "documents", "type" => "file", "label" => "Documents de radiation", "required" => true]
                                     ]
                                 ]
                             ]
                         ],
                         [
-                            "title" => "Obtention de la preuve de la dénonciation",
+                            "title" => "Obtaining proof of notification",
                             "code" => "denonciation_proof",
                             "min_delay" => null,
                             "max_delay" => 10,
                             "extra" => [
                                 "form" => [
-                                    "title" => "Preuve de la dénonciation",
+                                    "title" => "Obtaining proof of notification",
                                     "fields" => [
-                                        ["name" => "completed_at", "type" => "date", "label" => "Date de radiation", "required" => true],
+                                        ["name" => "completed_at", "type" => "date", "label" => "Date of obtaining", "required" => true],
                                         ["name" => "documents", "type" => "file", "label" => "Documents de radiation", "required" => true],
-                                        ["name" => "favorable_response", "type" => "radio", "label" => "La suite est elle favorable ?", "required" => true],
+                                        ["name" => "favorable_response", "type" => "radio", "label" => "Is the outcome favorable?", "required" => true],
                                     ]
                                 ]
                             ],
                             "options" => [
                                 "yes" => [
                                     [
-                                        "title" => "Radiation de l'inscription",
+                                        "title" => "Referral to the court for conversion to seizure-sale",
                                         "code" => "inscription_radiation",
                                         "min_delay" => null,
                                         "max_delay" => 10,
@@ -569,7 +569,7 @@ trait DefaultGuaranteeTaskTrait
                                             "form" => [
                                                 "title" => "Radiation de l'inscription",
                                                 "fields" => [
-                                                    ["name" => "completed_at", "type" => "date", "label" => "Date de radiation", "required" => true],
+                                                    ["name" => "completed_at", "type" => "date", "label" => "Date of cancellation", "required" => true],
                                                     ["name" => "documents", "type" => "file", "label" => "Documents de radiation", "required" => true]
                                                 ]
                                             ]
@@ -578,22 +578,22 @@ trait DefaultGuaranteeTaskTrait
                                 ],
                                 "no" => [
                                     [
-                                        "title" => "Saisine de la juridiction pour conversion en saisie-vente",
+                                        "title" => "Referral to the court for conversion to seizure-sale",
                                         "code" => "jurisdiction_seizure_conversion",
                                         "min_delay" => null,
                                         "max_delay" => 10,
                                         "extra" => [
                                             "form" => [
-                                                "title" => "Saisine de la juridiction pour conversion en saisie-vente",
+                                                "title" => "Referral to the court for conversion to seizure-sale",
                                                 "fields" => [
-                                                    ["name" => "completed_at", "type" => "date", "label" => "Date de saisine", "required" => true],
+                                                    ["name" => "completed_at", "type" => "date", "label" => "Date of referral", "required" => true],
                                                     ["name" => "documents", "type" => "file", "label" => "Documents de saisine", "required" => true]
                                                 ]
                                             ]
                                         ]
                                     ],
                                     [
-                                        "title" => "Obtention de la preuve de conversion en saisie-vente",
+                                        "title" => "Obtaining proof of conversion to seizure-sale",
                                         "code" => "proof_seizure_conversion",
                                         "min_delay" => null,
                                         "max_delay" => 10,
@@ -601,14 +601,14 @@ trait DefaultGuaranteeTaskTrait
                                             "form" => [
                                                 "title" => "Obtention de la preuve de conversion en saisie-vente",
                                                 "fields" => [
-                                                    ["name" => "completed_at", "type" => "date", "label" => "Date d'obtention", "required" => true],
+                                                    ["name" => "completed_at", "type" => "date", "label" => "Date of obtaining", "required" => true],
                                                     ["name" => "documents", "type" => "file", "label" => "Documents de preuve", "required" => true]
                                                 ]
                                             ]
                                         ]
                                     ],
                                     [
-                                        "title" => "Saisine du notaire pour signification de l'acte de conversion",
+                                        "title" => "Referral to the notary for serving the act of conversion",
                                         "code" => "notary_act_conversion",
                                         "min_delay" => null,
                                         "max_delay" => 10,
@@ -616,14 +616,14 @@ trait DefaultGuaranteeTaskTrait
                                             "form" => [
                                                 "title" => "Saisine du notaire pour signification de l'acte de conversion",
                                                 "fields" => [
-                                                    ["name" => "completed_at", "type" => "date", "label" => "Date de saisine", "required" => true],
+                                                    ["name" => "completed_at", "type" => "date", "label" => "Date of referral", "required" => true],
                                                     ["name" => "documents", "type" => "file", "label" => "Documents de saisine", "required" => true]
                                                 ]
                                             ]
                                         ]
                                     ],
                                     [
-                                        "title" => "Obtention de la preuve de signification de l'acte de conversion par le notaire",
+                                        "title" => "Obtaining proof of serving the act of conversion by the notary",
                                         "code" => "proof_notary_conversion",
                                         "min_delay" => null,
                                         "max_delay" => 10,
@@ -631,24 +631,24 @@ trait DefaultGuaranteeTaskTrait
                                             "form" => [
                                                 "title" => "Obtention de la preuve de signification de l'acte de conversion par le notaire",
                                                 "fields" => [
-                                                    ["name" => "completed_at", "type" => "date", "label" => "Date d'obtention", "required" => true],
+                                                    ["name" => "completed_at", "type" => "date", "label" => "Date of obtaining", "required" => true],
                                                     ["name" => "documents", "type" => "file", "label" => "Documents de preuve", "required" => true]
                                                 ]
                                             ]
                                         ]
                                     ],
                                     [
-                                        "title" => "Vente",
+                                        "title" => "Sale",
                                         "code" => "sale",
                                         "min_delay" => null,
                                         "max_delay" => 10,
                                         "extra" => [
                                             "form" => [
-                                                "title" => "Vente",
+                                                "title" => "Sale",
                                                 "fields" => [
-                                                    ["name" => "completed_at", "type" => "date", "label" => "Date de vente", "required" => true],
+                                                    ["name" => "completed_at", "type" => "date", "label" => "Date of sale", "required" => true],
                                                     ["name" => "documents", "type" => "file", "label" => "Documents de preuve", "required" => true],
-                                                    ["name" => "is_friendly", "type" => "radio", "label" => "La vente est-elle amiable ?", "required" => true]
+                                                    ["name" => "is_friendly", "type" => "radio", "label" => "Is the sale amicable?", "required" => true]
                                                 ]
                                             ]
                                                 ],
@@ -656,60 +656,60 @@ trait DefaultGuaranteeTaskTrait
                                             "yes" => [],
                                             "no" => [
                                                 [
-                                                    "title" => "Notification de la date de vente au débiteur et aux créanciers opposants",
+                                                    "title" => "Notification of the sale date to the debtor and opposing creditors",
                                                     "code" => "sale_date_notification",
                                                     "min_delay" => null,
                                                     "max_delay" => 10,
                                                     "extra" => [
                                                         "form" => [
-                                                            "title" => "Notification de la date de vente au débiteur et aux créanciers opposants",
+                                                            "title" => "Notification of the sale date to the debtor and opposing creditors",
                                                             "fields" => [
-                                                                ["name" => "completed_at", "type" => "date", "label" => "Date de notification", "required" => true],
+                                                                ["name" => "completed_at", "type" => "date", "label" => "Date of notification", "required" => true],
                                                                 ["name" => "documents", "type" => "file", "label" => "Documents de notification", "required" => true]
                                                             ]
                                                         ]
                                                     ]
                                                 ],
                                                 [
-                                                    "title" => "Saisine du notaire pour les formalités de publicité",
+                                                    "title" => "Referral to the notary for publicity formalities",
                                                     "code" => "notary_publicity_formalities",
                                                     "min_delay" => null,
                                                     "max_delay" => 10,
                                                     "extra" => [
                                                         "form" => [
-                                                            "title" => "Saisine du notaire pour les formalités de publicité",
+                                                            "title" => "Referral to the notary for publicity formalities",
                                                             "fields" => [
-                                                                ["name" => "completed_at", "type" => "date", "label" => "Date de saisine", "required" => true],
+                                                                ["name" => "completed_at", "type" => "date", "label" => "Date of referral", "required" => true],
                                                                 ["name" => "documents", "type" => "file", "label" => "Documents de saisine", "required" => true]
                                                             ]
                                                         ]
                                                     ]
                                                 ],
                                                 [
-                                                    "title" => "Distribution du prix de vente",
+                                                    "title" => "Distribution of the sale price",
                                                     "code" => "sale_price_distribution",
                                                     "min_delay" => null,
                                                     "max_delay" => 10,
                                                     "extra" => [
                                                         "form" => [
-                                                            "title" => "Distribution du prix de vente",
+                                                            "title" => "Distribution of the sale price",
                                                             "fields" => [
-                                                                ["name" => "completed_at", "type" => "date", "label" => "Date de distribution", "required" => true],
+                                                                ["name" => "completed_at", "type" => "date", "label" => "Date of distribution", "required" => true],
                                                                 ["name" => "documents", "type" => "file", "label" => "Documents de distribution", "required" => true]
                                                             ]
                                                         ]
                                                     ]
                                                 ],
                                                 [
-                                                    "title" => "Vente forcée du stock",
+                                                    "title" => "Forced sale of the stock",
                                                     "code" => "forced_stock_sale",
                                                     "min_delay" => null,
                                                     "max_delay" => 10,
                                                     "extra" => [
                                                         "form" => [
-                                                            "title" => "Vente forcée du stock",
+                                                            "title" => "Forced sale of the stock",
                                                             "fields" => [
-                                                                ["name" => "completed_at", "type" => "date", "label" => "Date de vente forcée", "required" => true],
+                                                                ["name" => "completed_at", "type" => "date", "label" => "Date of forced sale", "required" => true],
                                                                 ["name" => "documents", "type" => "file", "label" => "Documents de vente", "required" => true]
                                                             ]
                                                         ]
@@ -730,43 +730,43 @@ trait DefaultGuaranteeTaskTrait
                 ]
 
             ],
-            ];
+        ];
     }
 
     public function defaultVehicleSteps() : array {
         return [
             "formalization" => [
                     [
-                        "title" => "Iniation de la garantie",
+                        "title" => "Initiation of the guarantee",
                         "code" => "created",
                         "min_delay" => null,
                         "max_delay" => 0,
                     ],
                     [
-                        "title" => "Obtention des documents de propriété",
+                        "title" => "Obtaining property documents",
                         "code" => "obtention",
                         "min_delay" => null,
                         "max_delay" => 0,
                     ],
                     [
-                        "title" => "Rédaction de la convention de garantie",
+                        "title" => "Drafting of the guarantee agreement",
                         "code" => "redaction",
                         "min_delay" => null,
                         "max_delay" => 10,
                         "extra" => [
                             "form" => [
-                                "title" => "Rédaction de la convention de garantie",
+                                "title" => "Drafting of the guarantee agreement",
                                 "fields" => [
                                     [
                                         "name" => "completed_at",
                                         "type" => "date",
-                                        "label" => "Date de la convention",
+                                        "label" => "Date of the agreement",
                                         "required" => true
                                     ],
                                     [
                                         "name" => "documents",
                                         "type" => "file",
-                                        "label" => "Date de la convention",
+                                        "label" => "Documents",
                                         "required" => true
                                     ],
 
@@ -775,18 +775,18 @@ trait DefaultGuaranteeTaskTrait
                         ]
                     ],
                     [
-                        "title" => "Dépot de la convention au rang des minutes d'un notaire",
+                        "title" => "Deposit of the agreement with the notary",
                         "code" => "notary_deposit",
                         "min_delay" => null,
                         "max_delay" => 10,
                         "extra" => [
                             "form" => [
-                                "title" => "Dépot de la convention au rang des minutes d'un notaire",
+                                "title" => "Deposit of the agreement with the notary",
                                 "fields" => [
                                     [
                                         "name" => "completed_at",
                                         "type" => "date",
-                                        "label" => "Date de dépot de la convention",
+                                        "label" => "Date of deposit of the agreement",
                                         "required" => true
                                     ],
                                     [
@@ -801,18 +801,18 @@ trait DefaultGuaranteeTaskTrait
                         ]
                     ],
                     [
-                        "title" => "Transmission au notaire d'une demande d'incription de la garantie au RCCM",
+                        "title" => "Transmission to the notary of a request for registration of the guarantee with the RCCM",
                         "code" => "notary_transmission",
                         "min_delay" => null,
                         "max_delay" => 10,
                         "extra" => [
                             "form" => [
-                                "title" => "Transmission au notaire d'une demande d'incription de la garantie au RCCM",
+                                "title" => "Transmission to the notary of a request for registration of the guarantee with the RCCM",
                                 "fields" => [
                                     [
                                         "name" => "completed_at",
                                         "type" => "date",
-                                        "label" => "Date de transmission",
+                                        "label" => "Date of transmission",
                                         "required" => true
                                     ],
                                     [
@@ -827,18 +827,18 @@ trait DefaultGuaranteeTaskTrait
                         ]
                     ],
                     [
-                        "title" => "Obtention de la convention de garantie enregistrée",
+                        "title" => "Obtaining the registered guarantee agreement",
                         "code" => "convention_obtention",
                         "min_delay" => null,
                         "max_delay" => 10,
                         "extra" => [
                             "form" => [
-                                "title" => "Obtention de la convention de garantie enregistrée",
+                                "title" => "Obtaining the registered guarantee agreement",
                                 "fields" => [
                                     [
                                         "name" => "completed_at",
                                         "type" => "date",
-                                        "label" => "Date d'obtention",
+                                        "label" => "Date of obtaining",
                                         "required" => true
                                     ],
                                     [
@@ -853,18 +853,18 @@ trait DefaultGuaranteeTaskTrait
                         ]
                     ],
                     [
-                        "title" => "Envoi d'une demande par le notaire au RCCM pour enregistrement de la garantie",
+                        "title" => 'Sending a request by the notary to the RCCM for registration of the guarantee',
                         "code" => "rccm_registration",
                         "min_delay" => null,
                         "max_delay" => 10,
                         "extra" => [
                             "form" => [
-                                "title" => "Envoi d'une demande par le notaire au RCCM pour enregistrement de la garantie",
+                                "title" => 'Sending a request by the notary to the RCCM for registration of the guarantee',
                                 "fields" => [
                                     [
                                         "name" => "completed_at",
                                         "type" => "date",
-                                        "label" => "Date d'envoi",
+                                        "label" => "Date of sending",
                                         "required" => true
                                     ],
                                     [
@@ -879,18 +879,18 @@ trait DefaultGuaranteeTaskTrait
                         ]
                     ],
                     [
-                        "title" => "Réception de la preuve d'inscription de la garantie",
+                        "title" => 'Receipt of proof of registration of the guarantee',
                         "code" => "rccm_proof",
                         "min_delay" => null,
                         "max_delay" => 10,
                         "extra" => [
                             "form" => [
-                                "title" => "Réception de la preuve d'inscription de la garantie",
+                                "title" => 'Receipt of proof of registration of the guarantee',
                                 "fields" => [
                                     [
                                         "name" => "completed_at",
                                         "type" => "date",
-                                        "label" => "Date de réception",
+                                        "label" => "Date of receipt",
                                         "required" => true
                                     ],
                                     [
@@ -905,18 +905,18 @@ trait DefaultGuaranteeTaskTrait
                         ]
                     ],
                     [
-                        "title" => "Saisine de l'huissier pour les notifications et/ou les formalités de domiciliation avec l'avis 'déclaration favorable'",
+                        "title" => "Referral to the bailiff for notifications and/or domiciliation formalities with 'favorable declaration' notice",
                         "code" => "huissier_notification",
                         "min_delay" => null,
                         "max_delay" => 10,
                         "extra" => [
                             "form" => [
-                                "title" => "Saisine de l'huissier pour les notifications et/ou les formalités de domiciliation avec l'avis 'déclaration favorable'",
+                                "title" => "Referral to the bailiff for notifications and/or domiciliation formalities with 'favorable declaration' notice",
                                 "fields" => [
                                     [
                                         "name" => "completed_at",
                                         "type" => "date",
-                                        "label" => "Date de saisine",
+                                        "label" => "Date of referral",
                                         "required" => true
                                     ],
                                     [
@@ -931,18 +931,18 @@ trait DefaultGuaranteeTaskTrait
                         ]
                     ],
                     [
-                        "title" => "Obtention des actes de domiciliation avec l'avis 'déclaration favorable'",
+                        "title" => "Obtaining domiciliation acts with 'favorable declaration' notice",
                         "code" => "domiciliation_obtention",
                         "min_delay" => null,
                         "max_delay" => 10,
                         "extra" => [
                             "form" => [
-                                "title" => "Obtention des actes de domiciliation avec l'avis 'déclaration favorable'",
+                                "title" => "Obtaining domiciliation acts with 'favorable declaration' notice",
                                 "fields" => [
                                     [
                                         "name" => "completed_at",
                                         "type" => "date",
-                                        "label" => "Date d'obtention",
+                                        "label" => "Date of obtaining",
                                         "required" => true
                                     ],
                                     [
@@ -960,17 +960,17 @@ trait DefaultGuaranteeTaskTrait
                 ],
             "realization" => [
 
-                "title" => "Commandement de payer",
+                "title" => "Payment order",
                 "code" => "command_to_pay",
                 "min_delay" => null,
                 "max_delay" => 10,
                 "extra" => [
                     "form" => [
-                        "title" => "Commandement de payer",
+                        "title" => "Payment order",
                         "fields" => [
-                            ["name" => "completed_at", "type" => "date", "label" => "Date de commandement", "required" => true],
-                            ["name" => "documents", "type" => "file", "label" => "Documents de commandement", "required" => true],
-                            ["name" => "is_fruitful", "type" => "radio", "label" => "Le commendement a été fructueux ?", "required" => true],
+                            ["name" => "completed_at", "type" => "date", "label" => "Date of command", "required" => true],
+                            ["name" => "documents", "type" => "file", "label" => "Documents", "required" => true],
+                            ["name" => "is_fruitful", "type" => "radio", "label" => "Was the command successful?", "required" => true],
 
                         ]
                     ]
@@ -978,16 +978,16 @@ trait DefaultGuaranteeTaskTrait
                 "options" => [
                     "yes" => [
                         [
-                            "title" => "Radiation de l'inscription",
+                            "title" => "Cancellation of the registration",
                             "code" => "deletion_registration",
                             "min_delay" => null,
                             "max_delay" => 10,
                             "extra" => [
                                 "form" => [
-                                    "title" => "Radiation de l'inscription",
+                                    "title" => "Cancellation of the registration",
                                     "fields" => [
-                                        ["name" => "completed_at", "type" => "date", "label" => "Date de radiation", "required" => true],
-                                        ["name" => "documents", "type" => "file", "label" => "Documents de radiation", "required" => true]
+                                        ["name" => "completed_at", "type" => "date", "label" => "Date of cancellation", "required" => true],
+                                        ["name" => "documents", "type" => "file", "label" => "Documents", "required" => true]
                                     ]
                                 ]
                             ]
@@ -996,46 +996,46 @@ trait DefaultGuaranteeTaskTrait
                     //TODO : update convenient info
                     "no"  => [
                         [
-                            "title" => "Pratiquer une saisie conservatoire",
+                            "title" => "Practicing a conservatory seizure",
                             "code" => "saisie_conservatoire",
                             "min_delay" => null,
                             "max_delay" => 10,
                             "extra" => [
                                 "form" => [
-                                    "title" => "Saisie conservatoire",
+                                    "title" => "Practicing a conservatory seizure",
                                     "fields" => [
-                                        ["name" => "completed_at", "type" => "date", "label" => "Date de radiation", "required" => true],
-                                        ["name" => "documents", "type" => "file", "label" => "Documents de radiation", "required" => true]
+                                        ["name" => "completed_at", "type" => "date", "label" => "Date of seizure", "required" => true],
+                                        ["name" => "documents", "type" => "file", "label" => "Documents", "required" => true]
                                     ]
                                 ]
                             ]
                         ],
                         [
-                            "title" => " Saisine du Notaire pour dénonciation au débiteur de la saisie conservatoire",
+                            "title" => "Referral to the notary for notification to the debtor of the conservatory seizure",
                             "code" => "denonciation_debiteur",
                             "min_delay" => null,
                             "max_delay" => 10,
                             "extra" => [
                                 "form" => [
-                                    "title" => "Saisine du notaire",
+                                    "title" => "Referral to the notary for notification to the debtor of the conservatory seizure",
                                     "fields" => [
-                                        ["name" => "completed_at", "type" => "date", "label" => "Date de radiation", "required" => true],
-                                        ["name" => "documents", "type" => "file", "label" => "Documents de radiation", "required" => true]
+                                        ["name" => "completed_at", "type" => "date", "label" => "Date of referral", "required" => true],
+                                        ["name" => "documents", "type" => "file", "label" => "Documents", "required" => true]
                                     ]
                                 ]
                             ]
                         ],
                         [
-                            "title" => "Obtention de la preuve de la dénonciation",
+                            "title" => "Obtaining proof of notification",
                             "code" => "denonciation_proof",
                             "min_delay" => null,
                             "max_delay" => 10,
                             "extra" => [
                                 "form" => [
-                                    "title" => "Preuve de la dénonciation",
+                                    "title" => "Obtaining proof of notification",
                                     "fields" => [
-                                        ["name" => "completed_at", "type" => "date", "label" => "Date de radiation", "required" => true],
-                                        ["name" => "documents", "type" => "file", "label" => "Documents de radiation", "required" => true],
+                                        ["name" => "completed_at", "type" => "date", "label" => "Date of obtaining", "required" => true],
+                                        ["name" => "documents", "type" => "file", "label" => "Documents", "required" => true],
                                         ["name" => "favorable_response", "type" => "radio", "label" => "La suite est elle favorable ?", "required" => true],
                                     ]
                                 ]
@@ -1043,16 +1043,16 @@ trait DefaultGuaranteeTaskTrait
                             "options" => [
                                 "yes" => [
                                     [
-                                        "title" => "Radiation de l'inscription",
+                                        "title" => "Cancellation of the registration",
                                         "code" => "inscription_radiation",
                                         "min_delay" => null,
                                         "max_delay" => 10,
                                         "extra" => [
                                             "form" => [
-                                                "title" => "Radiation de l'inscription",
+                                                "title" => "Cancellation of the registration",
                                                 "fields" => [
-                                                    ["name" => "completed_at", "type" => "date", "label" => "Date de radiation", "required" => true],
-                                                    ["name" => "documents", "type" => "file", "label" => "Documents de radiation", "required" => true]
+                                                    ["name" => "completed_at", "type" => "date", "label" => "Date of cancellation", "required" => true],
+                                                    ["name" => "documents", "type" => "file", "label" => "Documents", "required" => true]
                                                 ]
                                             ]
                                         ]
@@ -1060,77 +1060,77 @@ trait DefaultGuaranteeTaskTrait
                                 ],
                                 "no" => [
                                     [
-                                        "title" => "Saisine de la juridiction pour conversion en saisie-vente",
+                                        "title" => "Referral to the court for conversion to seizure-sale",
                                         "code" => "jurisdiction_seizure_conversion",
                                         "min_delay" => null,
                                         "max_delay" => 10,
                                         "extra" => [
                                             "form" => [
-                                                "title" => "Saisine de la juridiction pour conversion en saisie-vente",
+                                                "title" => "Referral to the court for conversion to seizure-sale",
                                                 "fields" => [
-                                                    ["name" => "completed_at", "type" => "date", "label" => "Date de saisine", "required" => true],
+                                                    ["name" => "completed_at", "type" => "date", "label" => "Date of referral", "required" => true],
                                                     ["name" => "documents", "type" => "file", "label" => "Documents de saisine", "required" => true]
                                                 ]
                                             ]
                                         ]
                                     ],
                                     [
-                                        "title" => "Obtention de la preuve de conversion en saisie-vente",
+                                        "title" => "Obtaining proof of conversion to seizure-sale",
                                         "code" => "proof_seizure_conversion",
                                         "min_delay" => null,
                                         "max_delay" => 10,
                                         "extra" => [
                                             "form" => [
-                                                "title" => "Obtention de la preuve de conversion en saisie-vente",
+                                                "title" => "Obtaining proof of conversion to seizure-sale",
                                                 "fields" => [
-                                                    ["name" => "completed_at", "type" => "date", "label" => "Date d'obtention", "required" => true],
+                                                    ["name" => "completed_at", "type" => "date", "label" => "Date of obtaining", "required" => true],
                                                     ["name" => "documents", "type" => "file", "label" => "Documents de preuve", "required" => true]
                                                 ]
                                             ]
                                         ]
                                     ],
                                     [
-                                        "title" => "Saisine du notaire pour signification de l'acte de conversion",
+                                        "title" => "Referral to the notary for serving the act of conversion",
                                         "code" => "notary_act_conversion",
                                         "min_delay" => null,
                                         "max_delay" => 10,
                                         "extra" => [
                                             "form" => [
-                                                "title" => "Saisine du notaire pour signification de l'acte de conversion",
+                                                "title" => "Referral to the notary for serving the act of conversion",
                                                 "fields" => [
-                                                    ["name" => "completed_at", "type" => "date", "label" => "Date de saisine", "required" => true],
+                                                    ["name" => "completed_at", "type" => "date", "label" => "Date of referral", "required" => true],
                                                     ["name" => "documents", "type" => "file", "label" => "Documents de saisine", "required" => true]
                                                 ]
                                             ]
                                         ]
                                     ],
                                     [
-                                        "title" => "Obtention de la preuve de signification de l'acte de conversion par le notaire",
+                                        "title" => "Obtaining proof of serving the act of conversion by the notary",
                                         "code" => "proof_notary_conversion",
                                         "min_delay" => null,
                                         "max_delay" => 10,
                                         "extra" => [
                                             "form" => [
-                                                "title" => "Obtention de la preuve de signification de l'acte de conversion par le notaire",
+                                                "title" => "Obtaining proof of serving the act of conversion by the notary",
                                                 "fields" => [
-                                                    ["name" => "completed_at", "type" => "date", "label" => "Date d'obtention", "required" => true],
+                                                    ["name" => "completed_at", "type" => "date", "label" => "Date of obtaining", "required" => true],
                                                     ["name" => "documents", "type" => "file", "label" => "Documents de preuve", "required" => true]
                                                 ]
                                             ]
                                         ]
                                     ],
                                     [
-                                        "title" => "Vente",
+                                        "title" => "Sale",
                                         "code" => "sale",
                                         "min_delay" => null,
                                         "max_delay" => 10,
                                         "extra" => [
                                             "form" => [
-                                                "title" => "Vente",
+                                                "title" => "Sale",
                                                 "fields" => [
-                                                    ["name" => "completed_at", "type" => "date", "label" => "Date de vente", "required" => true],
-                                                    ["name" => "documents", "type" => "file", "label" => "Documents de preuve", "required" => true],
-                                                    ["name" => "is_friendly", "type" => "radio", "label" => "La vente est-elle amiable ?", "required" => true]
+                                                    ["name" => "completed_at", "type" => "date", "label" => "Date of sale", "required" => true],
+                                                    ["name" => "documents", "type" => "file", "label" => "Documents", "required" => true],
+                                                    ["name" => "is_friendly", "type" => "radio", "label" => "Is the sale amicable?", "required" => true]
                                                 ]
                                             ]
                                                 ],
@@ -1138,60 +1138,60 @@ trait DefaultGuaranteeTaskTrait
                                             "yes" => [],
                                             "no" => [
                                                 [
-                                                    "title" => "Notification de la date de vente au débiteur et aux créanciers opposants",
+                                                    "title" => "Notification of the sale date to the debtor and opposing creditors",
                                                     "code" => "sale_date_notification",
                                                     "min_delay" => null,
                                                     "max_delay" => 10,
                                                     "extra" => [
                                                         "form" => [
-                                                            "title" => "Notification de la date de vente au débiteur et aux créanciers opposants",
+                                                            "title" => "Notification of the sale date to the debtor and opposing creditors",
                                                             "fields" => [
-                                                                ["name" => "completed_at", "type" => "date", "label" => "Date de notification", "required" => true],
+                                                                ["name" => "completed_at", "type" => "date", "label" => "Date of notification", "required" => true],
                                                                 ["name" => "documents", "type" => "file", "label" => "Documents de notification", "required" => true]
                                                             ]
                                                         ]
                                                     ]
                                                 ],
                                                 [
-                                                    "title" => "Saisine du notaire pour les formalités de publicité",
+                                                    "title" => "Referral to the notary for publicity formalities",
                                                     "code" => "notary_publicity_formalities",
                                                     "min_delay" => null,
                                                     "max_delay" => 10,
                                                     "extra" => [
                                                         "form" => [
-                                                            "title" => "Saisine du notaire pour les formalités de publicité",
+                                                            "title" => "Referral to the notary for publicity formalities",
                                                             "fields" => [
-                                                                ["name" => "completed_at", "type" => "date", "label" => "Date de saisine", "required" => true],
+                                                                ["name" => "completed_at", "type" => "date", "label" => "Date of referral", "required" => true],
                                                                 ["name" => "documents", "type" => "file", "label" => "Documents de saisine", "required" => true]
                                                             ]
                                                         ]
                                                     ]
                                                 ],
                                                 [
-                                                    "title" => "Distribution du prix de vente",
+                                                    "title" => "Distribution of the sale price",
                                                     "code" => "sale_price_distribution",
                                                     "min_delay" => null,
                                                     "max_delay" => 10,
                                                     "extra" => [
                                                         "form" => [
-                                                            "title" => "Distribution du prix de vente",
+                                                            "title" => "Distribution of the sale price",
                                                             "fields" => [
-                                                                ["name" => "completed_at", "type" => "date", "label" => "Date de distribution", "required" => true],
+                                                                ["name" => "completed_at", "type" => "date", "label" => "Date of distribution", "required" => true],
                                                                 ["name" => "documents", "type" => "file", "label" => "Documents de distribution", "required" => true]
                                                             ]
                                                         ]
                                                     ]
                                                 ],
                                                 [
-                                                    "title" => "Vente forcée du stock",
+                                                    "title" => "Forced sale of the stock",
                                                     "code" => "forced_stock_sale",
                                                     "min_delay" => null,
                                                     "max_delay" => 10,
                                                     "extra" => [
                                                         "form" => [
-                                                            "title" => "Vente forcée du stock",
+                                                            "title" => "Forced sale of the stock",
                                                             "fields" => [
-                                                                ["name" => "completed_at", "type" => "date", "label" => "Date de vente forcée", "required" => true],
+                                                                ["name" => "completed_at", "type" => "date", "label" => "Date of forced sale", "required" => true],
                                                                 ["name" => "documents", "type" => "file", "label" => "Documents de vente", "required" => true]
                                                             ]
                                                         ]

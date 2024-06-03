@@ -39,6 +39,7 @@ class AddGuaranteeRequest extends FormRequest
             'contract_id' => 'required|uuid',
             'security' => 'nullable|string',
             'formalization_type' => 'nullable|string',
+            'autonomous_id' => 'required_if:type,autonomous_counter|uuid|exists:guarantees,id',
         ];
     }
 }
