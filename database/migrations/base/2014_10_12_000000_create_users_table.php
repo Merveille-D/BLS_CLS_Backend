@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->uuid('subsidiary_id')->nullable();
-            $table->foreign('subsidiary_id')->references('id')->on('subsidiaries')->onDelete('set null');
+            $table->uuid('subsidiary_id')->nullable()->index();
+            // $table->foreign('subsidiary_id')->references('id')->on('subsidiaries')->onDelete('set null');
             $table->rememberToken();
             $table->timestamps();
         });
