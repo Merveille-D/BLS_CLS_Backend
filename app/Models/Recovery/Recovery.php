@@ -5,6 +5,7 @@ namespace App\Models\Recovery;
 use App\Concerns\Traits\Alert\Alertable;
 use App\Concerns\Traits\Recovery\RecoveryFormFieldTrait;
 use App\Models\Guarantee\ConvHypothec;
+use App\Models\Guarantee\Guarantee;
 use App\Models\ModuleTask;
 use App\Models\Scopes\CountryScope;
 use App\Models\User;
@@ -74,7 +75,7 @@ class Recovery extends Model
      */
     public function guarantee()
     {
-        return $this->belongsTo(ConvHypothec::class, 'guarantee_id');
+        return $this->belongsTo(Guarantee::class, 'guarantee_id');
     }
 
     public function getValidationAttribute()

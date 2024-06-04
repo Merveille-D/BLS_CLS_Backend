@@ -60,7 +60,12 @@ class LegalWatchController extends Controller
      */
     public function destroy(LegalWatch $legalWatch)
     {
-        //
+        try {
+            $legalWatch->delete();
+            return api_response($success = true, 'Veille supprimée avec succès', $data = []);
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
+        }
     }
 
     /**

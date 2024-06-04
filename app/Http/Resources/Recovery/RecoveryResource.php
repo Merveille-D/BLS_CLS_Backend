@@ -24,6 +24,7 @@ class RecoveryResource extends JsonResource
             'name' => $this->name,
             'type' => $this->type,
             'guarantee_id' => $this->guarantee_id,
+            'guarantee_type' => $this->guarantee?->security,
             'contract_id' => $this->contract_id,
             // 'guarantee' => new ConvHypothecResource($this->guarantee),
             'has_guarantee' => $this->has_guarantee ? true : false,

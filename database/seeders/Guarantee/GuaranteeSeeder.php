@@ -100,7 +100,7 @@ class GuaranteeSeeder extends Seeder
     function getBondSteps() : array {
         return [
             [
-                'title' => 'Initiation de la garantie',
+                'title' => 'Initiation of the guarantee',
                 'code' => BondState::CREATED,
                 'guarantee_type' => GuaranteeType::BONDING,
                 'step_type' => 'formalization',
@@ -110,7 +110,7 @@ class GuaranteeSeeder extends Seeder
             ],
             //attacher date et un contrat de cautionnement
             [
-                'title' => 'Rédaction du contrat de cautionnement',
+                'title' => 'Bonding Contract Drafting',
                 'guarantee_type' => GuaranteeType::BONDING,
                 'code' => BondState::REDACTION,
                 'step_type' => 'formalization',
@@ -120,7 +120,7 @@ class GuaranteeSeeder extends Seeder
             ],
             // completer
             [
-                'title' => 'VERIFICATION DE LA VALIDITE DU CONTRAT DE CAUTIONNEMENT (ECRIT ET MENTIONS OBLIGATOIRES)',
+                'title' => 'Verification of Bonding Contract Validity (Written and Mandatory Clauses)',
                 'guarantee_type' => GuaranteeType::BONDING,
                 'code' => BondState::VERIFICATION,
                 'step_type' => 'formalization',
@@ -130,7 +130,7 @@ class GuaranteeSeeder extends Seeder
             ],
             // A completer
             [
-                'title' => 'VERIFICATION DE LA SOLVABILITE DE LA CAUTION',
+                'title' => 'Debtor\'s Solvency Verification',
                 'guarantee_type' => GuaranteeType::BONDING,
                 'code' => BondState::VERIFICATION,
                 'step_type' => 'formalization',
@@ -141,7 +141,7 @@ class GuaranteeSeeder extends Seeder
 
             //inserer date et doc de communication
             [
-                'title' => 'COMMUNICATION DE L\'ETAT DES DETTES DU DEBITEUR A FAIRE A LA CAUTION AU PLUS TARD TOUS LES 7 MOIS',
+                'title' => 'Debtor\'s Debt Status Communication to the Surety Every 7 Months',
                 'guarantee_type' => GuaranteeType::BONDING,
                 'code' => BondState::COMMUNICATION,
                 'step_type' => 'formalization',
@@ -152,7 +152,7 @@ class GuaranteeSeeder extends Seeder
 
             //realization doc, date
             [
-                'title' => 'Mise en demeure adressée au débiteur principal',
+                'title' => 'Formal Notice to the Principal Debtor',
                 'guarantee_type' => GuaranteeType::BONDING,
                 'code' => BondState::DEBTOR_FORMAL_NOTICE,
                 'step_type' => 'realization',
@@ -161,7 +161,7 @@ class GuaranteeSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => 'EXECUTION PAR LE DEBITEUR',
+                'title' => 'Debtor\'s Performance',
                 'guarantee_type' => GuaranteeType::BONDING,
                 'code' => BondState::EXECUTION,
                 'step_type' => 'realization',
@@ -170,7 +170,7 @@ class GuaranteeSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => 'INFORMER LA CAUTION DANS LE MOIS DE LA MISE EN DEMEURE DU DEBITEUR RESTER SANS EFFET',
+                'title' => 'Surety Notification Within a Month of Debtor\'s Formal Notice',
                 'guarantee_type' => GuaranteeType::BONDING,
                 'code' => BondState::INFORM_GUARANTOR,
                 'step_type' => 'realization',
@@ -180,7 +180,7 @@ class GuaranteeSeeder extends Seeder
             ],
             // documenjt et  date
             [
-                'title' => 'MISE EN DEMEURE DE LA CAUTION',
+                'title' => 'Formal Notice to the guarantor',
                 'guarantee_type' => GuaranteeType::BONDING,
                 'code' => BondState::GUARANTOR_FORMAL_NOTICE,
                 'step_type' => 'realization',
@@ -189,7 +189,7 @@ class GuaranteeSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => 'PAIEMENT PAR LA CAUTION',
+                'title' => 'Payment by the guarantor',
                 'guarantee_type' => GuaranteeType::BONDING,
                 'code' => BondState::GUARANTOR_PAYMENT,
                 'step_type' => 'realization',
@@ -204,7 +204,7 @@ class GuaranteeSeeder extends Seeder
     public function getAutonomousSteps() {
         return [
             [
-                'title' => 'Initiation de la garantie',
+                'title' => 'Initiation of the guarantee',
                 'code' => AutonomousState::CREATED,
                 'guarantee_type' => GuaranteeType::AUTONOMOUS,
                 'step_type' => 'formalization',
@@ -214,7 +214,7 @@ class GuaranteeSeeder extends Seeder
             ],
             //attacher date et un contrat de cautionnement
             [
-                'title' => 'Rédaction du contrat de la garantie autonome',
+                'title' => 'Drafting of Counter-Guarantee Contract',
                 'guarantee_type' => GuaranteeType::AUTONOMOUS,
                 'code' => AutonomousState::REDACTION,
                 'step_type' => 'formalization',
@@ -223,7 +223,7 @@ class GuaranteeSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => 'Vérification de la validité du contrat',
+                'title' => 'Counter-Guarantee Contract Validity Verification',
                 'guarantee_type' => GuaranteeType::AUTONOMOUS,
                 'code' => AutonomousState::VERIFICATION,
                 'step_type' => 'formalization',
@@ -233,7 +233,7 @@ class GuaranteeSeeder extends Seeder
             ],
             //CHOISIR LA duree du contrat : gdd ou gdi [revocable/non revokable]
             [
-                'title' => 'SIGNATURE DU CONTRAT DE GARANTIE AUTONOME',
+                'title' => 'Signing of the Autonomous Guarantee Contract',
                 'guarantee_type' => GuaranteeType::AUTONOMOUS,
                 'code' => AutonomousState::SIGNATURE,
                 'step_type' => 'formalization',
@@ -245,7 +245,7 @@ class GuaranteeSeeder extends Seeder
             //realization
             //doc et date
             [
-                'title' => 'DEMANDE DE PAIEMENT ADRESSE AU GARANT',
+                'title' => 'Payment Request to the counter-guarantor',
                 'guarantee_type' => GuaranteeType::AUTONOMOUS,
                 'code' => AutonomousState::PAYEMENT_REQUEST,
                 'step_type' => 'realization',
@@ -255,7 +255,7 @@ class GuaranteeSeeder extends Seeder
             ],
             //radio payement, date de paiement
             [
-                'title' => 'VERIFICATION DE LA DEMANDE PAR LE GARANT',
+                'title' => 'Guarantor\'s Request Verification',
                 'guarantee_type' => GuaranteeType::AUTONOMOUS,
                 'code' => AutonomousState::REQUEST_VERIFICATION,
                 'step_type' => 'realization',
@@ -269,7 +269,7 @@ class GuaranteeSeeder extends Seeder
     public function getCounterAutonomousStep() {
         return [
             [
-                'title' => 'Initiation de la contre garantie',
+                'title' => 'Start of Counter-Guarantee',
                 'code' => AutonomousCounterState::CREATED,
                 'guarantee_type' => GuaranteeType::AUTONOMOUS_COUNTER,
                 'step_type' => 'formalization',
@@ -278,7 +278,7 @@ class GuaranteeSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => 'Rédaction du contrat de la contre garantie',
+                'title' => 'Drafting of Counter-Guarantee Contract',
                 'guarantee_type' => GuaranteeType::AUTONOMOUS_COUNTER,
                 'code' => AutonomousCounterState::REDACTION,
                 'step_type' => 'formalization',
@@ -287,7 +287,7 @@ class GuaranteeSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => 'Vérification de la validité du contrat',
+                'title' => 'Counter-Guarantee Contract Validity Verification',
                 'guarantee_type' => GuaranteeType::AUTONOMOUS_COUNTER,
                 'code' => AutonomousCounterState::VERIFICATION,
                 'step_type' => 'formalization',
@@ -296,7 +296,7 @@ class GuaranteeSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => 'SIGNATURE DU CONTRAT DE GARANTIE AUTONOME',
+                'title' => 'Signing of the Autonomous Guarantee Contract',
                 'guarantee_type' => GuaranteeType::AUTONOMOUS_COUNTER,
                 'code' => AutonomousCounterState::SIGNATURE,
                 'step_type' => 'formalization',
@@ -307,7 +307,7 @@ class GuaranteeSeeder extends Seeder
 
             //realization
             [
-                'title' => 'DEMANDE DE PAIEMENT ADRESSE AU GARANT',
+                'title' => 'Payment Request to the counter-guarantor',
                 'guarantee_type' => GuaranteeType::AUTONOMOUS_COUNTER,
                 'code' => AutonomousCounterState::GUARANTOR_PAYEMENT_REQUEST,
                 'step_type' => 'realization',
@@ -316,7 +316,7 @@ class GuaranteeSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => 'DEMANDE DE PAIEMENT ADRESSE AU CONTRE GARANT',
+                'title' => 'Payment Request to the counter-guarantor',
                 'guarantee_type' => GuaranteeType::AUTONOMOUS_COUNTER,
                 'code' => AutonomousCounterState::COUNTER_GUARD_REQUEST,
                 'step_type' => 'realization',
@@ -325,7 +325,7 @@ class GuaranteeSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => 'VERIFICATION DE LA DEMANDE PAR LE CONTRE GARANT',
+                'title' => 'Counter-guarantor\'s Request Verification',
                 'guarantee_type' => GuaranteeType::AUTONOMOUS_COUNTER,
                 'code' => AutonomousCounterState::REQUEST_VERIFICATION,
                 'step_type' => 'realization',

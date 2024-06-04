@@ -31,6 +31,43 @@ return [
     'Forced sale of the stock' => 'Vente forcée du stock',
     'Obtaining property documents' => 'Obtention des documents de propriété',
 
+    //personnal securities
+    'Drafting of Guarantee Contract' => 'Rédaction du contrat de garantie',
+    'Bonding Contract Drafting' => 'Rédaction du contrat de cautionnement',
+    'Verification of Bonding Contract Validity (Written and Mandatory Clauses)' => 'Vérification de la validité du contrat de cautionnement (écrit et mentions obligatoires)',
+    'Debtor\'s Solvency Verification' => 'Vérification de la solvabilité de la caution',
+    'Debtor\'s Debt Status Communication to the Surety Every 7 Months' => 'Communication de l\'état des dettes du débiteur à faire à la caution au plus tard tous les 7 mois',
+    'Formal Notice to the Principal Debtor' => 'Mise en demeure adressée au débiteur principal',
+    'Debtor\'s Performance' => 'Exécution par le débiteur',
+    'Surety Notification Within a Month of Debtor\'s Formal Notice' => 'Informer la caution dans le mois de la mise en demeure du débiteur rester sans effet',
+    'Formal Notice to the guarantor' => 'Mise en demeure de la caution',
+    'Payment by the guarantor' => 'Paiement par la caution',
+    'Start of Counter-Guarantee' => 'Initiation de la contre garantie',
+    'Drafting of Counter-Guarantee Contract' => 'Rédaction du contrat de contre-garantie',
+    'Counter-Guarantee Contract Validity Verification' => 'Vérification de la validité du contrat',
+    'Signing of the Autonomous Guarantee Contract' => 'Signature du contrat de garantie autonome',
+    'Payment Request to the counter-guarantor' => 'Demande de paiement adressée au contre-garant',
+    'Counter-guarantor\'s Request Verification' => 'Vérification de la demande par le contre-garant',
+
+    // property securities
+    'Initiation of mortgage' => 'Initiation de l\'hypothèque',
+    'Verification of property ownership' => 'Vérifier la propriété de l\'immeuble',
+    'Drafting of mortgage agreement' => 'Rédiger la convention d\'hypothèque',
+    'Submit registration request to notary' => 'Transmettre une demande d\'inscription au notaire',
+    'Notary sends registration request to registrar' => 'Envoi de la demande d\'inscription par le notaire au régisseur',
+    'Receive proof of mortgage registration from notary' => 'Recevoir la preuve d\'inscription de l\'hypothèque chez le notaire',
+    'Service of payment order' => 'Signification commendement de payer',
+    'Request for registration and publication of the payment order in the land registry' => 'Demande d\'inscription et publication du commendement de payer dans les registres de la propriété foncière',
+    'Foreclosure after registrar\'s visa on the payment order' => 'Saisie immobilière après visa du régisseur sur le commendement de payer',
+    'Proceed with expropriation: file specifications' => 'Poursuivre l\'expropriation : DEPOSER CAHIER DE CHARGES',
+    'Proceed with expropriation: address summons to acknowledge specifications' => 'Poursuivre l\'expropriation : ADRESSER SOMMATION A PRENDRE CONNAISSANCE DU CAHIER DES CHARGES',
+    'Publicity of sale' => 'Publicité de vente',
+    'Sale of the property' => 'Vente de l\'immeuble',
+
+
+
+
+
     //form
     'Date of the agreement' => 'Date de la convention',
     'Date of deposit of the agreement' => 'Date de dépot de la convention',

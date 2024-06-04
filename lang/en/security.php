@@ -31,6 +31,26 @@ return [
     'Forced sale of the stock' => 'Forced sale of the stock',
     'Obtaining property documents' => 'Obtaining property documents',
 
+    //personnal securities
+    'Drafting of Guarantee Contract' => 'Drafting of Guarantee Contract',
+    'Bonding Contract Drafting' => 'Bonding Contract Drafting',
+    'Verification of Bonding Contract Validity (Written and Mandatory Clauses)' => 'Verification of Bonding Contract Validity (Written and Mandatory Clauses)',
+    'Debtor\'s Solvency Verification' => 'Debtor\'s Solvency Verification',
+    'Debtor\'s Debt Status Communication to the Surety Every 7 Months' => 'Debtor\'s Debt Status Communication to the Surety Every 7 Months',
+    'Formal Notice to the Principal Debtor' => 'Formal Notice to the Principal Debtor',
+    'Debtor\'s Performance' => 'Debtor\'s Performance',
+    'Surety Notification Within a Month of Debtor\'s Formal Notice' => 'Surety Notification Within a Month of Debtor\'s Formal Notice',
+    'Formal Notice to the guarantor' => 'Formal Notice to the guarantor',
+    'Payment by the guarantor' => 'Payment by the guarantor',
+    'Start of Counter-Guarantee' => 'Start of Counter-Guarantee',
+    'Drafting of Counter-Guarantee Contract' => 'Drafting of Counter-Guarantee Contract',
+    'Counter-Guarantee Contract Validity Verification' => 'Counter-Guarantee Contract Validity Verification',
+    'Signing of the Autonomous Guarantee Contract' => 'Signing of the Autonomous Guarantee Contract',
+    'Payment Request to the counter-guarantor' => 'Payment Request to the counter-guarantor',
+    'Counter-guarantor\'s Request Verification' => 'Guarantor\'s Request Verification',
+
+
+
     //form
     'Date of the agreement' => 'Date of the agreement',
     'Date of deposit of the agreement' => 'Date of deposit of the agreement',
@@ -56,5 +76,3 @@ return [
     'Is the outcome favorable?' => 'Is the outcome favorable?',
     'Is the sale amicable?' => 'Is the sale amicable?',
 ];
-
-

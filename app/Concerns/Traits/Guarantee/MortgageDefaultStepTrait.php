@@ -47,7 +47,7 @@ trait MortgageDefaultStepTrait
         return [
             "formalization" => [
                 [
-                    'title' => 'Initiation de l\'hypothèque',
+                    'title' => 'Initiation of mortgage',
                     'code' => ConvHypothecState::CREATED,
                     'step_type' => 'formalization',
                     'guarantee_type' => GuaranteeType::MORTGAGE,
@@ -56,7 +56,7 @@ trait MortgageDefaultStepTrait
                     'max_delay' => 10,
                 ],
                 [
-                    'title' => 'Vérifier la propriété de l\'immeuble',
+                    'title' => 'Verification of property ownership',
                     'code' => ConvHypothecState::PROPERTY_VERIFIED,
                     'step_type' => 'formalization',
                     'guarantee_type' => GuaranteeType::MORTGAGE,
@@ -65,7 +65,7 @@ trait MortgageDefaultStepTrait
                     'max_delay' => 10,
                     "extra" => [
                         "form" => [
-                            "title" => ConvHypothecState::STATES_VALUES[ConvHypothecState::PROPERTY_VERIFIED],
+                            "title" => "Verification of property ownership",
                             "fields" => [
                                 [
                                     "name" => "documents",
@@ -79,7 +79,7 @@ trait MortgageDefaultStepTrait
                     ]
                 ],
                 [
-                    'title' => 'Rédiger la convention d\'hypothèque',
+                    'title' => 'Drafting of mortgage agreement',
                     'code' => ConvHypothecState::AGREEMENT_SIGNED,
                     'step_type' => 'formalization',
                     'guarantee_type' => GuaranteeType::MORTGAGE,
@@ -88,7 +88,7 @@ trait MortgageDefaultStepTrait
                     'max_delay' => 10,
                     "extra" => [
                         "form" => [
-                            "title" => ConvHypothecState::STATES_VALUES[ConvHypothecState::AGREEMENT_SIGNED],
+                            "title" => "Drafting of mortgage agreement",
                             "fields" => [
                                 [
                                     "name" => "documents",
@@ -102,7 +102,7 @@ trait MortgageDefaultStepTrait
                     ]
                 ],
                 [
-                    'title' => 'Transmettre une demande d\'inscription au notaire',
+                    'title' => 'Submit registration request to notary',
                     'code' => ConvHypothecState::REGISTER_REQUEST_FORWARDED,
                     'step_type' => 'formalization',
                     'guarantee_type' => GuaranteeType::MORTGAGE,
@@ -111,7 +111,7 @@ trait MortgageDefaultStepTrait
                     'max_delay' => 10,
                     "extra" => [
                         "form" => [
-                            "title" => ConvHypothecState::STATES_VALUES[ConvHypothecState::REGISTER_REQUEST_FORWARDED],
+                            "title" => "Submit registration request to notary",
                             "fields" => [
                                 [
                                     "name" => "completed_at",
@@ -131,7 +131,7 @@ trait MortgageDefaultStepTrait
                     ]
                 ],
                 [
-                    'title' => 'Envoi de la demande d\'inscription par le notaire au régisseur',
+                    'title' => 'Notary sends registration request to registrar',
                     'code' => ConvHypothecState::REGISTER_REQUESTED,
                     'step_type' => 'formalization',
                     'guarantee_type' => GuaranteeType::MORTGAGE,
@@ -140,7 +140,7 @@ trait MortgageDefaultStepTrait
                     'max_delay' => 10,
                     "extra" => [
                         "form" => [
-                            "title" => ConvHypothecState::STATES_VALUES[ConvHypothecState::REGISTER_REQUESTED],
+                            "title" => "Notary sends registration request to registrar",
                             "fields" => [
                                 [
                                     "name" => "completed_at",
@@ -160,7 +160,7 @@ trait MortgageDefaultStepTrait
                     ]
                 ],
                 [
-                    'title' => 'Recevoir la preuve d\'inscription de l\'hypothèque chez le notaire',
+                    'title' => 'Receive proof of mortgage registration from notary',
                     'code' => ConvHypothecState::REGISTER,
                     'step_type' => 'formalization',
                     'guarantee_type' => GuaranteeType::MORTGAGE,
@@ -169,7 +169,7 @@ trait MortgageDefaultStepTrait
                     'max_delay' => 10,
                     "extra" => [
                         "form" => [
-                            "title" => ConvHypothecState::STATES_VALUES[ConvHypothecState::REGISTER],
+                            "title" => "Receive proof of mortgage registration from notary",
                             "fields" => [
                                 [
                                     "name" => "is_approved",
@@ -200,7 +200,7 @@ trait MortgageDefaultStepTrait
             //realizations steps
             "realization" => [
                 [
-                    'title' => 'Signification commendement de payer',
+                    'title' => 'Service of payment order',
                     'code' => ConvHypothecState::SIGNIFICATION_REGISTERED,
                     'step_type' => 'realization',
                     'guarantee_type' => GuaranteeType::MORTGAGE,
@@ -209,7 +209,7 @@ trait MortgageDefaultStepTrait
                     'max_delay' => 10,
                     "extra" => [
                         "form" => [
-                            "title" => ConvHypothecState::STATES_VALUES[ConvHypothecState::SIGNIFICATION_REGISTERED],
+                            "title" => "Service of payment order",
                             "fields" => [
                                 [
                                     "name" => "completed_at",
@@ -229,7 +229,7 @@ trait MortgageDefaultStepTrait
                     ]
                 ],
                 [
-                    'title' => 'Demande D\'inscription et publication du commendement de payer dans  les registres de la propriété foncière',
+                    'title' => 'Request for registration and publication of the payment order in the land registry',
                     'code' => ConvHypothecState::ORDER_PAYMENT_VERIFIED,
                     'step_type' => 'realization',
                     'guarantee_type' => GuaranteeType::MORTGAGE,
@@ -238,7 +238,7 @@ trait MortgageDefaultStepTrait
                     'max_delay' => 90,
                     "extra" => [
                         "form" => [
-                            "title" => ConvHypothecState::STATES_VALUES[ConvHypothecState::ORDER_PAYMENT_VERIFIED],
+                            "title" => "Request for registration and publication of the payment order in the land registry",
                             "fields" => [
                                 [
                                     "name" => "order_is_verified",
@@ -254,7 +254,7 @@ trait MortgageDefaultStepTrait
                         "no" => [],
                         "yes" => [
                             [
-                                'title' => 'Saisie immobilière après visa du régisseur sur le commendement de payer',
+                                'title' => 'Foreclosure after registrar\'s visa on the payment order',
                                 'code' => ConvHypothecState::ORDER_PAYMENT_VISA,
                                 'step_type' => 'realization',
                                 'guarantee_type' => GuaranteeType::MORTGAGE,
@@ -263,7 +263,7 @@ trait MortgageDefaultStepTrait
                                 'max_delay' => 10,
                                 "extra" => [
                                     "form" => [
-                                        "title" => ConvHypothecState::STATES_VALUES[ConvHypothecState::ORDER_PAYMENT_VISA],
+                                        "title" => "Foreclosure after registrar\'s visa on the payment order",
                                         "fields" => [
                                             [
                                                 "name" => "completed_at",
@@ -283,7 +283,7 @@ trait MortgageDefaultStepTrait
                                 ]
                             ],
                             [
-                                'title' => 'Poursuivre l\'expropriation : DEPOSER CAHIER DE CHARGES',
+                                'title' => 'Proceed with expropriation: file specifications',
                                 'code' => ConvHypothecState::EXPROPRIATION_SPECIFICATION,
                                 'step_type' => 'realization',
                                 'guarantee_type' => GuaranteeType::MORTGAGE,
@@ -292,7 +292,7 @@ trait MortgageDefaultStepTrait
                                 'max_delay' => 50,
                                 "extra" => [
                                     "form" => [
-                                        "title" => ConvHypothecState::STATES_VALUES[ConvHypothecState::EXPROPRIATION_SPECIFICATION],
+                                        "title" => "Proceed with expropriation: file specifications",
                                         "fields" => [
                                             [
                                                 "name" => "completed_at",
@@ -318,7 +318,7 @@ trait MortgageDefaultStepTrait
                                 ]
                             ],
                             [
-                                'title' => 'Poursuivre l\'expropriation : ADRESSER SOMMATION A PRENDRE CONNAISSANCE DU CAHIER DES CHARGES',
+                                'title' => 'Proceed with expropriation: address summons to acknowledge specifications',
                                 'code' => ConvHypothecState::EXPROPRIATION_SUMMATION,
                                 'step_type' => 'realization',
                                 'guarantee_type' => GuaranteeType::MORTGAGE,
@@ -327,7 +327,7 @@ trait MortgageDefaultStepTrait
                                 'max_delay' => 8,
                                 "extra" => [
                                     "form" => [
-                                        "title" => ConvHypothecState::STATES_VALUES[ConvHypothecState::EXPROPRIATION_SUMMATION],
+                                        "title" => "Proceed with expropriation: address summons to acknowledge specifications",
                                         "fields" => [
                                             [
                                                 "name" => "completed_at",
@@ -347,7 +347,7 @@ trait MortgageDefaultStepTrait
                                 ]
                             ],
                             [
-                                'title' => 'Publicité de vente',
+                                'title' => 'Publicity of sale',
                                 'code' => ConvHypothecState::ADVERTISEMENT,
                                 'step_type' => 'realization',
                                 'guarantee_type' => GuaranteeType::MORTGAGE,
@@ -356,7 +356,7 @@ trait MortgageDefaultStepTrait
                                 'max_delay' => 30,
                                 "extra" => [
                                     "form" => [
-                                        "title" => ConvHypothecState::STATES_VALUES[ConvHypothecState::ADVERTISEMENT],
+                                        "title" => "Publicity of sale",
                                         "fields" => [
                                             [
                                                 "name" => "completed_at",
@@ -376,7 +376,7 @@ trait MortgageDefaultStepTrait
                                 ]
                             ],
                             [
-                                'title' => 'Vente de l\'immeuble',
+                                'title' => 'Sale of the property',
                                 'code' => ConvHypothecState::PROPERTY_SALE,
                                 'step_type' => 'realization',
                                 'guarantee_type' => GuaranteeType::MORTGAGE,
@@ -385,7 +385,7 @@ trait MortgageDefaultStepTrait
                                 'max_delay' => 10,
                                 "extra" => [
                                     "form" => [
-                                        "title" =>  ConvHypothecState::STATES_VALUES[ConvHypothecState::PROPERTY_SALE],
+                                        "title" =>  "Sale of the property",
                                         "fields" => [
                                             [
                                                 "name" => "sell_price_estate",

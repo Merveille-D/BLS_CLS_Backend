@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::table('legal_watches', function (Blueprint $table) {
             $table->string('jurisdiction_location')->nullable();
             $table->string('case_number')->nullable();
+            $table->softDeletes();
         });
     }
 
@@ -25,6 +26,7 @@ return new class extends Migration
         Schema::table('legal_watches', function (Blueprint $table) {
             $table->dropColumn('jurisdiction_location');
             $table->dropColumn('case_number');
+            $table->dropSoftDeletes();
         });
     }
 };

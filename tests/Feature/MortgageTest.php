@@ -346,7 +346,7 @@ class MortgageTest extends TestCase
             'name' => 'Test Hypothec Conventionnelle',
             'contract_id'=> '9c2305a7-c6f8-4473-99a0-9cf055044ee1',
             'type' => 'mortgage',
-            'phase' => 'realized'
+            'phase' => 'realization'
         ]);
 
         /*
