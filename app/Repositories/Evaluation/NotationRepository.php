@@ -104,9 +104,9 @@ class NotationRepository
 
         $new_notation = $this->notation->create($request);
 
-        $position = $notation->collaborator->position;
+        $position_id = $notation->collaborator->position_id;
 
-        $indicators = PerformanceIndicator::where('position', $position)->pluck('id');
+        $indicators = PerformanceIndicator::where('position_id', $position_id)->pluck('id');
 
         foreach ($indicators as $indicator) {
             $new_notation->performances()->create([
@@ -176,10 +176,9 @@ class NotationRepository
             'N° de dossier' => $data['evaluation_reference'],
             'Statut actuel' => $data['status'],
             'Collaborateur' => $data['collaborator']['lastname'] . ' ' . $data['collaborator']['firstname'],
-            'Poste' => Collaborator::POSITIONS_VALUES[$data['collaborator']['position']],
+            'Poste' => Collaborator::find($data['collaborator']['position_id'])->title,
             'Créé par' => $data['creator']['firstname'] . '' . $data['creator']['lastname'],
         ];
-
         return $details;
     }
 }

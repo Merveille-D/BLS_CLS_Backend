@@ -1,6 +1,7 @@
 <?php
 
-use App\Models\Evaluation\PerformanceIndicator;
+use App\Models\Gourvernance\Mandate;
+use App\Models\Gourvernance\Representant;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,15 +13,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('performance_indicators', function (Blueprint $table) {
+        Schema::create('tiers', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('title');
-            $table->enum('type', PerformanceIndicator::TYPES);
-            $table->string('note');
-            $table->text('description');
 
-            $table->uuid('position_id')->nullable();
-            $table->foreign('position_id')->references('id')->on('positions')->onDelete('cascade');
+            $table->string('grade')->nullable();
+            $table->string('name')->nullable();
 
             $table->uuid('created_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
@@ -34,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('performance_indicators');
+        Schema::dropIfExists('representants');
     }
 };

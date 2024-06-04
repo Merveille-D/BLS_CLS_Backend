@@ -18,7 +18,7 @@ class Collaborator extends Model
         'firstname',
         'user_id',
         'performance_indicator_id',
-        'position',
+        'position_id',
         'created_by',
     ];
 

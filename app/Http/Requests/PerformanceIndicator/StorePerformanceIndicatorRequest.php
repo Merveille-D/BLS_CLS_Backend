@@ -27,7 +27,7 @@ class StorePerformanceIndicatorRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string'],
-            'position' => ['required',  Rule::in(PerformanceIndicator::POSITIONS) ],
+            'position_id' => ['required','uuid'],
             'type' => ['required',  Rule::in(PerformanceIndicator::TYPES) ],
             'note' => ['required', 'numeric'],
             'description' => ['required', 'string'],
