@@ -47,7 +47,12 @@ class LegalWatchController extends Controller
      */
     public function update(Request $request, LegalWatch $legalWatch)
     {
-        //
+        try {
+            $legalWatch->update($request->all());
+            return api_response($success = true, 'Veille modifiée avec succès', $data = new LegalWatchResource($legalWatch));
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
+        }
     }
 
     /**

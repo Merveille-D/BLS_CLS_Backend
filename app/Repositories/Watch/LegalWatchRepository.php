@@ -43,6 +43,7 @@ class LegalWatchRepository
                 ->when(!blank($search), function($qry) use($search) {
                     $qry->where('name', 'like', '%'.$search.'%');
                 })
+                ->orderBy('created_at', 'desc')
                 ->paginate();
 
 
