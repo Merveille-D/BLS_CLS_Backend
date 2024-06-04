@@ -32,10 +32,14 @@ class LegalWatch extends Model
         'mail_addresses',
         'is_sent',
         'created_by',
+        'jurisdiction_location',
+        'case_number',
     ];
 
     protected $casts = [
         'mail_addresses' => 'array',
+        'is_archived' => 'boolean',
+        'is_sent' => 'boolean',
     ];
 
     public function creator()

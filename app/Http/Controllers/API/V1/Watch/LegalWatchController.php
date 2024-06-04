@@ -28,7 +28,7 @@ class LegalWatchController extends Controller
         try {
             $data = $this->watchRepo->add($request);
 
-            return api_response($success = true, 'Contentieux ajouté avec succès', $data);
+            return api_response($success = true, 'Veille ajoutée avec succès', $data);
         } catch (\Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
