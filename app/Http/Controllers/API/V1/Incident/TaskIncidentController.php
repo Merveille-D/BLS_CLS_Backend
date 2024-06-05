@@ -8,7 +8,6 @@ use App\Http\Requests\TaskIncident\ListTaskIncidentRequest;
 use App\Http\Requests\TaskIncident\UpdateTaskIncidentRequest;
 use App\Models\Incident\TaskIncident;
 use App\Repositories\Incident\TaskIncidentRepository;
-use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class TaskIncidentController extends Controller

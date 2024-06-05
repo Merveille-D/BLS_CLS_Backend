@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests\ActionTransfer;
 
+use App\Models\Shareholder\ActionTransfer;
 use App\Models\Shareholder\Shareholder;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class StoreActionTransferRequest extends FormRequest
 {
@@ -27,8 +29,10 @@ class StoreActionTransferRequest extends FormRequest
         $actions_no_encumbered_owner = Shareholder::find(request()->input('owner_id'))->actions_no_encumbered;
 
         return [
+            'type' => ['required',  Rule::in(ActionTransfer::TYPES) ],
             'owner_id' => 'required|uuid',
-            'buyer_id' => 'uuid',
+            'buyer_id' => ['required_if:type,shareholder', 'uuid'],
+            'tier_id' => ['required_if:type,tier', 'uuid'],
             'count_actions' => [
                 'required',
                 'numeric',
@@ -38,11 +42,8 @@ class StoreActionTransferRequest extends FormRequest
                     }
                 },
             ],
-            'lastname' => 'string',
-            'firstname' => 'string',
             'transfer_date' => ['required', 'date'],
-            'ask_date' => ['required_if:buyer_id,null', 'date'],
-            'ask_agrement' => ['required_if:buyer_id,null', 'file']
+
         ];
     }
 

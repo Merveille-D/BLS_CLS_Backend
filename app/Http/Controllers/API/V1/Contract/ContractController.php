@@ -23,9 +23,11 @@ class ContractController extends Controller
      */
     public function index()
     {
-        $contracts = Contract::when(request('filter') === 'recover_without_garantee', function($query) {
+        $contracts = Contract::query()
+        ->when(request('filter') === 'recover_without_guarantee', function ($query) {
             $query->whereNotNull('date_signature');
-        })->get()->map(function ($contract) {
+        })
+        ->get()->map(function ($contract) {
 
             $contract->first_part = $contract->first_part;
             $contract->second_part = $contract->second_part;

@@ -24,15 +24,7 @@ class UpdateActionTransferRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'owner_id' => 'uuid',
-            'buyer_id' => 'uuid',
-            'count_actions' => 'integer',
-            'lastname' => 'string',
-            'firstname' => 'string',
-            'transfer_date' => 'date',
-
-            'response_agrement' => 'boolean',
-            'file_agrement_ca' => ['required_if:buyer_id,true', 'file'],
+            //
         ];
     }
 

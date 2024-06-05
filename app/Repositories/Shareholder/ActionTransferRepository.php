@@ -20,32 +20,30 @@ class ActionTransferRepository
     public function store($request) {
 
         $request['created_by'] = Auth::user()->id;
-        $action_transfer = $this->action_transfer->create($request);
 
-        $owner = Shareholder::find($request['owner_id']);
-        $owner->update([
-            'actions_no_encumbered' => $owner->actions_no_encumbered - $request['count_actions'],
-            'actions_number' => $owner->actions_number - $request['count_actions'],
-        ]);
+        if($request['type'] == 'shareholder') {
 
-        $buyer = Shareholder::find($request['buyer_id']);
-        $buyer->update([
-            'actions_no_encumbered' => $buyer->actions_no_encumbered + $request['count_actions'],
-            'actions_number' => $buyer->actions_number + $request['count_actions'],
-        ]);
+            $action_transfer = $this->action_transfer->create($request);
 
-        if (is_null($request['buyer_id'])) {
+            $owner = Shareholder::find($request['owner_id']);
+            $owner->update([
+                'actions_no_encumbered' => $owner->actions_no_encumbered - $request['count_actions'],
+                'actions_number' => $owner->actions_number - $request['count_actions'],
+            ]);
 
-            // $fileUpload = new GourvernanceDocument([
-            //     'name' => getFileName($request['ask_agrement']),
-            //     'file' => uploadFile($request['ask_agrement'], 'action_transfer_documents'),
-            //     'status' => 'pending'
-            // ]);
+            $buyer = Shareholder::find($request['buyer_id']);
+            $buyer->update([
+                'actions_no_encumbered' => $buyer->actions_no_encumbered + $request['count_actions'],
+                'actions_number' => $buyer->actions_number + $request['count_actions'],
+            ]);
 
-            // $action_transfer->fileUploads()->save($fileUpload);
+        }else {
+
+            $request['status'] = 'pending';
+            $action_transfer = $this->action_transfer->create($request);
+
+            // Create Task
         }
-
-        // $action_transfer->update($request->all());
 
         return $action_transfer;
     }
@@ -57,21 +55,7 @@ class ActionTransferRepository
      */
     public function update(ActionTransfer $action_transfer, $request) {
 
-        // if($request['response_agrement']) {
-        //     $fileUpload = new GourvernanceDocument([
-        //         'name' => getFileName($request['file_agrement_ca']),
-        //         'file' => uploadFile($request['file_agrement_ca'], 'action_transfer_documents'),
-        //         'status' => $action_transfer->status
-        //     ]);
-
-        //     $action_transfer->fileUploads()->save($fileUpload);
-        //     $request['status'] = 'accepted';
-        // }else {
-        //     $request['status'] = 'rejected';
-        // }
-
-        // $action_transfer = $this->action_transfer->update($request->all());
-        // return $action_transfer;
+        //
     }
 
 }

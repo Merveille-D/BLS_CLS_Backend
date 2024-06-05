@@ -17,17 +17,17 @@ class ActionTransfer extends Model
     protected $fillable = [
         'owner_id',
         'buyer_id',
+        'tier_id',
+        'type',
         'count_actions',
-        'lastname',
-        'firstname',
         'status',
         'transfer_date',
-        'ask_date',
-        'ask_agrement',
         'created_by',
     ];
 
-    const STATUS = ['pending', 'accepted', 'rejected'];
+    const STATUS = ['pending', 'accepted', 'rejected', 'cancelled'];
+    
+    const TYPES = ['shareholder', 'tier'];
 
     public function fileUploads()
     {
