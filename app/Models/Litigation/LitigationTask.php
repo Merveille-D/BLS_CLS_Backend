@@ -17,7 +17,7 @@ class LitigationTask extends ModuleTask
     protected $table = 'module_tasks';
 
     public function getFormAttribute() {
-        $form = $this->getCustomFormFields($this->code);
+        $form = $this->getCustomFormFields($this);
 
         return $form;
     }

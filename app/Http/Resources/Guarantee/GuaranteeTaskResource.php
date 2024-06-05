@@ -19,7 +19,7 @@ class GuaranteeTaskResource extends JsonResource
         return [
             'id' => $this->id,
             'code' => $this->code,
-            'title' => __('security.' . $this->title),
+            'title' => $this->type == 'task' ? $this->title : __('security.' . $this->title),
             'status' => $this->status,
             'min_deadline' => $this->min_deadline,
             'max_deadline' => $this->max_deadline,

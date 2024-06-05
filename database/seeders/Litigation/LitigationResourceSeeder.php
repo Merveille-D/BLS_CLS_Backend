@@ -35,10 +35,22 @@ class LitigationResourceSeeder extends Seeder
             }
         }
 
+
+
+        $documents = $this->litigation_documents();
+        foreach ($documents as $document) {
+            $exist = LitigationSetting::where('name', $document)->first();
+            if (!$exist) {
+                LitigationSetting::create(['name' => $document, 'type' => LitigationType::DOCUMENT, 'description' => 'Catégorie de document'] );
+            }
+        }
+
         $steps = $this->defaultSteps();
 
         foreach ($steps as $step) {
-            LitigationStep::create($step);
+            if (!LitigationStep::where('code', $step['code'])->exists()) {
+                LitigationStep::create($step);
+            }
         }
 
         // create default litigation for test
@@ -102,10 +114,10 @@ class LitigationResourceSeeder extends Seeder
     public function litigation_natures() : array {
         return [
             'Administrative',
-            'Civile',
-            'Commerciale',
-            'Penale',
-            'Sociale',
+            'Civil',
+            'Commercial',
+            'Penal',
+            'Social',
         ];
     }
 
@@ -116,13 +128,27 @@ class LitigationResourceSeeder extends Seeder
      */
     public function litigation_jurisdictions() : array {
         return [
-            'Cour d\'Appel',
-            'Cour Constitutionnelle',
-            'Cour Suprême ',
-            'Tribunal Administratif',
-            'Tribunal Arbitral',
-            'Tribunal de Commerce',
-            'Tribunal de Première Instance',
+            'Court of Appeal',
+            'Constitutional Court',
+            'Supreme Court',
+            'Administrative Court',
+            'Arbitration Court',
+            'Commercial Court',
+            'First Instance Court',
+        ];
+    }
+
+    // documents categories
+    public function litigation_documents() : array {
+        return [
+            'Summons to appear',
+            'Convocation',
+            'Direct citation',
+            'Court judgment',
+            'Court of Appeal judgment',
+            'Hearing report',
+            'Expertise report',
+            'Petition',
         ];
     }
 
@@ -131,7 +157,7 @@ class LitigationResourceSeeder extends Seeder
         return [
 
             [
-                'title' => 'Enregistrement du dossier',
+                'title' => 'Registration of the case',
                 'code' => LitigationTaskState::CREATED,
                 'rank' => 1,
                 'type' => 'step',
@@ -140,7 +166,7 @@ class LitigationResourceSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => 'Transférer le dossier à un cabinet d\'avocat',
+                'title' => 'Transfer the case to a law firm',
                 'code' => LitigationTaskState::TRANSFER,
                 'rank' => 2,
                 'min_delay' => null,
@@ -148,7 +174,7 @@ class LitigationResourceSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => 'Saisine de la juridiction compétente',
+                'title' => 'Referral to the competent jurisdiction',
                 'code' => LitigationTaskState::REFERRAL,
                 'rank' => 3,
                 'min_delay' => null,
@@ -156,7 +182,7 @@ class LitigationResourceSeeder extends Seeder
                 'max_delay' => 5,
             ],
             [
-                'title' => 'Date de la première audience',
+                'title' => 'Date of the first hearing',
                 'code' => LitigationTaskState::HEARING,
                 'rank' => 4,
                 'min_delay' => null,
@@ -164,7 +190,7 @@ class LitigationResourceSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => 'Rapport de l\'audience',
+                'title' => 'Hearing report',
                 'code' => LitigationTaskState::REPORT,
                 'rank' => 5,
                 'min_delay' => null,
@@ -172,7 +198,7 @@ class LitigationResourceSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => 'Décision',
+                'title' => 'Decision',
                 'code' => LitigationTaskState::DECISION,
                 'rank' => 6,
                 'min_delay' => null,

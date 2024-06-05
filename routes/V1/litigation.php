@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\V1\Litigation\JurisdictionController;
 use App\Http\Controllers\API\V1\Litigation\LitigationController;
+use App\Http\Controllers\API\V1\Litigation\LitigationDocumentController;
 use App\Http\Controllers\API\V1\Litigation\LitigationLawyerController;
 use App\Http\Controllers\API\V1\Litigation\LitigationPartyController;
 use App\Http\Controllers\API\V1\Litigation\LitigationTaskController;
@@ -20,6 +21,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::resource('/litigation/parties', LitigationPartyController::class);
     Route::resource('/litigation/natures', NatureController::class);
+    Route::get('/litigation/document-types', [LitigationDocumentController::class, 'index']);
     Route::resource('/litigation/lawyers', LitigationLawyerController::class);
     Route::resource('/litigation/jurisdiction', JurisdictionController::class);
     Route::get('/litigation/tasks/transfer/{task_id}', [LitigationTaskController::class, 'transferHistory']);

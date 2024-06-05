@@ -13,9 +13,10 @@ trait LitigationFormFieldTrait
      * @param string $state
      * @return array
      */
-    public function getCustomFormFields(string $state): array
+    public function getCustomFormFields($step): array
     {
         $customFields = [];
+        $state = $step?->code;
 
         switch ($state) {
             case LitigationTaskState::CREATED:
@@ -23,35 +24,37 @@ trait LitigationFormFieldTrait
                 break;
 
             case LitigationTaskState::TRANSFER:
-                $customFields = $this->commonProperties(LitigationTaskState::STATES_VALUES[LitigationTaskState::TRANSFER],
-                        ['file', 'documents', 'Documents de transfert'],
-                        ['date', 'completed_at', 'Date de transfert'],
+                $customFields = $this->commonProperties($step->title,
+                        ['file', 'documents', 'Transfer documents'],
+                        ['date', 'completed_at', 'Date of transfert'],
                         // ['text', 'firm_name', 'Nom du cabinet'],
 
                     );
             break;
             case LitigationTaskState::REFERRAL:
-                $customFields = $this->commonProperties(LitigationTaskState::STATES_VALUES[LitigationTaskState::REFERRAL],
-                        ['file', 'documents', 'Acte de saisine'],
-                        ['date', 'completed_at', 'Date de saisine'],
-                        ['text', 'jurisdiction', 'Juridiction saisie'],
+                $customFields = $this->commonProperties($step->title,
+                        ['file', 'documents', 'Referral act'],
+                        ['date', 'completed_at', 'Referral date'],
+                        ['text', 'jurisdiction', 'Jurisdiction seized'],
                     );
             break;
             case LitigationTaskState::HEARING:
-                $customFields = $this->commonProperties(LitigationTaskState::STATES_VALUES[LitigationTaskState::HEARING],
-                        ['date', 'completed_at', 'Date de l\'audience'],
+                $customFields = $this->commonProperties($step->title,
+                        ['date', 'completed_at', 'Date of the hearing'],
+
                     );
             break;
             case LitigationTaskState::REPORT:
-                $customFields = $this->commonProperties(LitigationTaskState::STATES_VALUES[LitigationTaskState::REPORT],
-                        ['file', 'documents', 'Rapport de l\'audience'],
-                        ['date', 'completed_at', 'Date du rapport'],
+                $customFields = $this->commonProperties($step->title,
+                        ['file', 'documents', 'Hearing report'],
+
+                        ['date', 'completed_at', 'Date of the report'],
                     );
             break;
             case LitigationTaskState::DECISION:
-                $customFields = $this->commonProperties(LitigationTaskState::STATES_VALUES[LitigationTaskState::DECISION],
-                        ['file', 'documents', 'Décision'],
-                        ['date', 'completed_at', 'Date de la décision'],
+                $customFields = $this->commonProperties($step->title,
+                        ['file', 'documents', 'Documents'],
+                        ['date', 'completed_at', 'Date of the decision'],
                     );
             break;
 
@@ -71,13 +74,13 @@ trait LitigationFormFieldTrait
             $fields[] = [
                 "type" => $type,
                 "name" => $name,
-                "label" => $label,
+                "label" => __($label),
             ];
         }
 
         $customAttribute = [
             "fields" => $fields,
-            "form_title" => $form_title
+            "form_title" => __($form_title)
         ];
 
         return $customAttribute;
