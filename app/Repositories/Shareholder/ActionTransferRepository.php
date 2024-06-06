@@ -4,6 +4,7 @@ namespace App\Repositories\Shareholder;
 use App\Models\Gourvernance\GourvernanceDocument;
 use App\Models\Shareholder\ActionTransfer;
 use App\Models\Shareholder\Shareholder;
+use App\Models\Shareholder\TaskActionTransfer;
 use Illuminate\Support\Facades\Auth;
 
 class ActionTransferRepository
@@ -43,6 +44,7 @@ class ActionTransferRepository
             $action_transfer = $this->action_transfer->create($request);
 
             // Create Task
+            $this->createTasks($action_transfer);
         }
 
         return $action_transfer;
@@ -56,6 +58,28 @@ class ActionTransferRepository
     public function update(ActionTransfer $action_transfer, $request) {
 
         //
+    }
+
+    private function createTasks($action_transfer) {
+
+        $previousDeadline = null;
+
+        foreach (TaskActionTransfer::TASKS as $key => $task) {
+
+            $deadline = $previousDeadline ? $previousDeadline->addDays($task['delay']) : $action_transfer->created_at->addDays($task['delay']);
+
+            TaskActionTransfer::create([
+                'title' => $task['title'],
+                'code' => $key,
+                'action_transfer_id' => $action_transfer->id,
+                'deadline' => $deadline,
+                'created_by' => Auth::user()->id,
+            ]);
+
+            $previousDeadline = $deadline;
+        }
+
+        return true;
     }
 
 }

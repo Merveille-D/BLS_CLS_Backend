@@ -25,9 +25,14 @@ class ActionTransferController extends Controller
 
             $action_transfer->owner = $action_transfer->owner;
             $action_transfer->buyer = $action_transfer->buyer;
+
+            $action_transfer->category = $action_transfer->category;
+            $action_transfer->current_task = $action_transfer->current_task;
+            $action_transfer->files = $action_transfer->files;
+
             return $action_transfer;
         });
-        return api_response(true, "Historique des transfert", $action_transfers, 200);
+        return api_response(true, "Liste des transferts d'actions", $action_transfers, 200);
     }
 
     /**

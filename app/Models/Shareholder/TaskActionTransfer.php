@@ -26,6 +26,7 @@ class TaskActionTransfer extends Model
      */
     protected $casts = [
         'status' => 'boolean',
+        'asked_agrement' => 'boolean',
     ];
 
     protected $fillable = [
@@ -36,11 +37,12 @@ class TaskActionTransfer extends Model
         'action_transfer_id',
         'status',
         'date',
+        'asked_agrement',
         'completed_by',
     ];
 
     const TASKS = [
-        'atd_1' => [
+        'action_1' => [
             'title' => 'Demande d\'agrément au CA',
             'rules' => [
                 'date' => ['required', 'date'],
@@ -54,20 +56,20 @@ class TaskActionTransfer extends Model
                     [
                         'type' => 'date',
                         'name' => 'date',
-                        'label' => 'Date de blocage',
+                        'label' => 'Date de demande d\'agrément au CA',
                     ],
                     [
                         'type' => 'documents',
                         'name' => 'documents',
-                        'label' => 'Joindre le courrier d\'information au client',
+                        'label' => 'Joindre le document de demande d\'agrément au CA',
                     ],
 
                 ],
                 'form_title' => 'Information de demande d\'agrément au CA'
             ],
         ],
-        'atd_2' => [
-            'title' => 'Demande d\'agrément au CA',
+        'action_2' => [
+            'title' => 'Réponse de la Demande d\'agrément au CA',
             'rules' => [
                 'date' => ['required', 'date'],
                 'documents' => ['required', 'array'],
@@ -81,28 +83,22 @@ class TaskActionTransfer extends Model
                     [
                         'type' => 'date',
                         'name' => 'date',
-                        'label' => 'Date de blocage',
-                    ],
-                    [
-                        'type' => 'documents',
-                        'name' => 'documents',
-                        'label' => 'Joindre le courrier d\'information au client',
+                        'label' => 'Date de demande d\'agrément au CA',
                     ],
                     [
                         'type' => 'radio',
                         'name' => 'asked_agrement',
-                        'label' => 'Avez vous reçu de Main levée ?',
+                        'label' => 'Avez vous reçu l\'aval du CA ?',
                     ],
                     [
                         'type' => 'documents',
                         'name' => 'documents',
-                        'label' => 'Joindre le courrier de main levée',
+                        'label' => 'Joindre le document de réponse du CA',
                     ],
                 ],
-                'form_title' => 'Information de demande d\'agrément au CA'
+                'form_title' => 'Information sur la réponse d\'agrément au CA'
             ],
         ],
-
     ];
 
     public function fileUploads()
@@ -116,7 +112,7 @@ class TaskActionTransfer extends Model
     }
 
     public function getFolderAttribute() {
-        // return $this->actionTransfer->owner->name;
+        return 'Transfer d\'action de ' . $this->actionTransfer->owner->name . ' à ' . $this->actionTransfer->buyer->name ?? $this->actionTransfer->tier->name;
     }
 
     public function getFormAttribute() {
@@ -131,7 +127,7 @@ class TaskActionTransfer extends Model
 
         return [
             'method' => 'POST',
-            // 'action' => env('APP_URL') . '/api/complete_task_incidents?type=' . $this->code . '&task_incident_id=' . $this->id,
+            'action' => env('APP_URL') . '/api/complete_task_action_transfers?type=' . $this->code . '&task_action_transfer_id=' . $this->id,
             'form' => $this->form,
         ];
     }

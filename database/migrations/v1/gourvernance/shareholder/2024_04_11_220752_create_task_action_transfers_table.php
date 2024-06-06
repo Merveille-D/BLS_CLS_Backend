@@ -27,6 +27,8 @@ return new class extends Migration
 
             $table->boolean('status')->default(false);
 
+            $table->boolean('asked_agrement')->nullable();
+
             $table->date('date')->nullable();
             $table->uuid('completed_by')->nullable();
             $table->foreign('completed_by')->references('id')->on('users')->onDelete('cascade');

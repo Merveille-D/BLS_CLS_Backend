@@ -32,6 +32,7 @@ use App\Http\Controllers\API\V1\Incident\AuthorIncidentController;
 use App\Http\Controllers\API\V1\Incident\IncidentController;
 use App\Http\Controllers\API\V1\Incident\TaskIncidentController;
 use App\Http\Controllers\API\V1\Gourvernance\Shareholder\CapitalController;
+use App\Http\Controllers\API\V1\Gourvernance\Shareholder\TaskActionTransferController;
 use App\Http\Controllers\API\V1\Gourvernance\Tier\TierController;
 use App\Http\Controllers\API\V1\Position\PositionController;
 use Illuminate\Http\Request;
@@ -96,6 +97,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::resource('shareholders', ShareholderController::class);
     Route::resource('action_transfers', ActionTransferController::class);
+    Route::resource('task_action_transfers', TaskActionTransferController::class);
+    Route::get('get_current_task_action_transfers', [TaskActionTransferController::class, 'getCurrentTaskActionTransfer'] );
+    Route::post('complete_task_action_transfers', [TaskActionTransferController::class, 'completeTaskActionTransfer'] );
 
     Route::resource('bank_infos', BankInfoController::class);
     Route::resource('capitals', CapitalController::class);

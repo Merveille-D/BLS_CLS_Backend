@@ -29,7 +29,7 @@ return new class extends Migration
 
             $table->date('transfer_date');
 
-            $table->enum('type', ActionTransfer::TYPES )->default('shareholder');
+            $table->enum('type', ActionTransfer::TYPES );
 
             $table->enum('status', ActionTransfer::STATUS )->default('accepted');
 
