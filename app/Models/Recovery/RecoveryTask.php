@@ -19,7 +19,7 @@ class RecoveryTask extends ModuleTask
     }
 
     public function getFormAttribute() {
-        $form = $this->getCustomFormFields($this->code);
+        $form = $this->getCustomFormFields($this);
 
         return $form;
     }

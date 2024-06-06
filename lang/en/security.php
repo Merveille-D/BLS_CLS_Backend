@@ -1,6 +1,7 @@
 <?php
 
 return [
+    // movable security steps
     'Initiation of the guarantee' => 'Initiation of the guarantee',
     'Drafting of the guarantee agreement' => 'Drafting of the guarantee agreement',
     'Deposit of the agreement with the notary' => 'Deposit of the agreement with the notary',
@@ -49,9 +50,38 @@ return [
     'Payment Request to the counter-guarantor' => 'Payment Request to the counter-guarantor',
     'Counter-guarantor\'s Request Verification' => 'Guarantor\'s Request Verification',
 
+    // property securities
+    'Initiation of mortgage' => 'Initiation of mortgage',
+    'Verification of property ownership' => 'Verification of property ownership',
+    'Drafting of mortgage agreement' => 'Drafting of mortgage agreement',
+    'Submit registration request to notary' => 'Submit registration request to notary',
+    'Notary sends registration request to registrar' => 'Notary sends registration request to registrar',
+    'Receive proof of mortgage registration from notary' => 'Receive proof of mortgage registration from notary',
+    'Service of payment order' => 'service of payment order',
+    'Request for registration and publication of the payment order in the land registry' => 'Request for registration and publication of the payment order in the land registry',
+    'Foreclosure after registrar\'s visa on the payment order' => 'Foreclosure after registrar\'s visa on the payment order',
+    'proceed with expropriation: file specifications' => 'Proceed with expropriation: file specifications',
+    'Proceed with expropriation: address summons to acknowledge specifications' => 'Proceed with expropriation: address summons to acknowledge specifications',
+    'Publicity of sale' => 'publicity of sale',
+    'Sale of the property' => 'sale of the property',
+
+    'Is the registration approved?' => 'Is the registration approved?',
+    'Registration date' => 'Registration date',
+    'Proof of registration' => 'Proof of registration',
+    'Date of notification' => 'Date of notification',
+    'Is the registration request made and the payment order published?' => 'Is the registration request made and the payment order published?',
+    'Date of the visa' => 'Date of the visa',
+    'Date of expropriation' => 'Date of expropriation',
+    'Enter the set sale date' => 'Enter the set sale date',
+    'Date of sending the summons' => 'Date of sending the summons',
+    'Date of publication' => 'Date of publication',
+    'Sale amount' => 'Sale amount',
+    'Insert sale PV' => 'Insert sale PV',
+
 
 
     //form
+    'Documents' => 'Documents',
     'Date of the agreement' => 'Date of the agreement',
     'Date of deposit of the agreement' => 'Date of deposit of the agreement',
     'Date of transmission' => 'Date of transmission',
@@ -75,4 +105,15 @@ return [
     'Was the command successful?' => 'Was the command successful?',
     'Is the outcome favorable?' => 'Is the outcome favorable?',
     'Is the sale amicable?' => 'Is the sale amicable?',
+
+    'Property documents' => 'Property documents',
+    'Documents sent to the notary' => 'Documents sent to the notary',
+    'Request documents' => 'Request documents',
+    'Proof of registration' => 'Proof of registration',
+    'Notification documents' => 'Notification documents',
+    'Payment order documents' => 'Payment order documents',
+    'Expropriation documents' => 'Expropriation documents',
+    'Summons addressing documents' => 'Summons addressing documents',
+    'Publication documents' => 'Publication documents',
+
 ];

@@ -70,7 +70,7 @@ trait MortgageDefaultStepTrait
                                 [
                                     "name" => "documents",
                                     "type" => "file",
-                                    "label" => "Documents de la propriété",
+                                    "label" => "Property documents",
                                     "required" => true
                                 ],
 
@@ -93,7 +93,7 @@ trait MortgageDefaultStepTrait
                                 [
                                     "name" => "documents",
                                     "type" => "file",
-                                    "label" => "Documents de la convention",
+                                    "label" => "Documents",
                                     "required" => true
                                 ],
 
@@ -116,13 +116,13 @@ trait MortgageDefaultStepTrait
                                 [
                                     "name" => "completed_at",
                                     "type" => "date",
-                                    "label" => "Date de la transmission",
+                                    "label" => "Date of transmission",
                                     "required" => true
                                 ],
                                 [
                                     "name" => "documents",
                                     "type" => "file",
-                                    "label" => "Documents envoyés au notaire",
+                                    "label" => "Documents sent to the notary",
                                     "required" => true
                                 ],
 
@@ -145,13 +145,13 @@ trait MortgageDefaultStepTrait
                                 [
                                     "name" => "completed_at",
                                     "type" => "date",
-                                    "label" => "Date d'envoi",
+                                    "label" => "Date of sending",
                                     "required" => true
                                 ],
                                 [
                                     "name" => "documents",
                                     "type" => "file",
-                                    "label" => "Documents de la demande",
+                                    "label" => "Request documents",
                                     "required" => true
                                 ],
 
@@ -174,19 +174,19 @@ trait MortgageDefaultStepTrait
                                 [
                                     "name" => "is_approved",
                                     "type" => "radio",
-                                    "label" => "L\'inscription est elle approuvée ?",
+                                    "label" => "Is the registration approved?",
                                     "required" => true
                                 ],
                                 [
                                     "name" => "completed_at",
                                     "type" => "date",
-                                    "label" => "Date de l'inscription",
+                                    "label" => "Registration date",
                                     "required" => true
                                 ],
                                 [
                                     "name" => "documents",
                                     "type" => "file",
-                                    "label" => "Preuve de l'inscription",
+                                    "label" => "Proof of registration",
                                     "required" => true
                                 ],
 
@@ -214,13 +214,13 @@ trait MortgageDefaultStepTrait
                                 [
                                     "name" => "completed_at",
                                     "type" => "date",
-                                    "label" => "Date de la signification",
+                                    "label" => "Date of notification",
                                     "required" => true
                                 ],
                                 [
                                     "name" => "documents",
                                     "type" => "file",
-                                    "label" => "Documents de la signification",
+                                    "label" => "Payment order documents",
                                     "required" => true
                                 ],
 
@@ -243,7 +243,7 @@ trait MortgageDefaultStepTrait
                                 [
                                     "name" => "order_is_verified",
                                     "type" => "radio",
-                                    "label" => "Est-ce que la demande d\'inscription est éffectué et le commendement de payer est publié ?",
+                                    "label" => "Is the registration request made and the payment order published?",
                                     "required" => true
                                 ],
 
@@ -274,7 +274,7 @@ trait MortgageDefaultStepTrait
                                             [
                                                 "name" => "documents",
                                                 "type" => "file",
-                                                "label" => "Documents du commendement",
+                                                "label" => "Documents",
                                                 "required" => true
                                             ],
 
@@ -297,19 +297,19 @@ trait MortgageDefaultStepTrait
                                             [
                                                 "name" => "completed_at",
                                                 "type" => "date",
-                                                "label" => "Date de l'expropriation",
+                                                "label" => "Date of expropriation",
                                                 "required" => true
                                             ],
                                             [
                                                 "name" => "date_sell",
                                                 "type" => "date",
-                                                "label" => "Renseigner la date de vente fixée",
+                                                "label" => "Enter the set sale date",
                                                 "required" => true,
                                             ],
                                             [
                                                 "name" => "documents",
                                                 "type" => "file",
-                                                "label" => "Documents de l'expropriation",
+                                                "label" => "Expropriation documents",
                                                 "required" => true
                                             ],
 
@@ -332,13 +332,13 @@ trait MortgageDefaultStepTrait
                                             [
                                                 "name" => "completed_at",
                                                 "type" => "date",
-                                                "label" => "Date d'adressage de la sommation",
+                                                "label" => "Date of sending the summons",
                                                 "required" => true
                                             ],
                                             [
                                                 "name" => "documents",
                                                 "type" => "file",
-                                                "label" => "Documents d'adressage de la sommation",
+                                                "label" => "Summons addressing documents",
                                                 "required" => true
                                             ],
 
@@ -361,13 +361,13 @@ trait MortgageDefaultStepTrait
                                             [
                                                 "name" => "completed_at",
                                                 "type" => "date",
-                                                "label" => "Date de la publication",
+                                                "label" => "Date of publication",
                                                 "required" => true
                                             ],
                                             [
                                                 "name" => "documents",
                                                 "type" => "file",
-                                                "label" => "Documents de la publication",
+                                                "label" => "Publication documents",
                                                 "required" => true
                                             ],
 
@@ -390,13 +390,13 @@ trait MortgageDefaultStepTrait
                                             [
                                                 "name" => "sell_price_estate",
                                                 "type" => "number",
-                                                "label" => "Montant de vente",
+                                                "label" => "Sale amount",
                                                 "required" => true
                                             ],
                                             [
                                                 "name" => "documents",
                                                 "type" => "file",
-                                                "label" => "Insérer PV de la vente",
+                                                "label" => "Documents",
                                                 "required" => true
                                             ],
 

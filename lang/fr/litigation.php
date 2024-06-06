@@ -36,7 +36,7 @@ return [
     //form
     'Date of transfer' => 'Date de transfert',
     'Transfer documents' => 'Documents de transfert',
-    'Date of referral' => 'Date de saisine',
+    'Referral date' => 'Date de saisine',
     'Jurisdiction seized' => 'Juridiction saisie',
     'Referral act' => 'Acte de saisine',
     'Date of the hearing' => 'Date de l\'audience',

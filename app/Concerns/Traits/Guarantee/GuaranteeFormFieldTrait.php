@@ -29,7 +29,7 @@ trait GuaranteeFormFieldTrait
         }
         $form_fields = $this->commonProperties($form['title'], ...$form_fields);
 
-        return $form;
+        return $form_fields;
     }
 
     public function loadFormAttributeBasedOnType($guarantee) {
@@ -309,13 +309,13 @@ trait GuaranteeFormFieldTrait
             $fields[] = [
                 "type" => $type,
                 "name" => $name,
-                "label" => $label,
+                "label" => __('security.' . $label),
             ];
         }
 
         $customAttribute = [
             "fields" => $fields,
-            "form_title" => $form_title
+            "form_title" => __('security.' . $form_title),
         ];
 
         return $customAttribute;

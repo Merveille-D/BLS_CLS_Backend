@@ -31,7 +31,7 @@ class RecoveryResourceSeeder extends Seeder
     function getSteps() : array {
         return [
             [
-                'title' => 'Initiation du recouvrement amical',
+                'title' => 'Initiation of friendly recovery',
                 'code' => RecoveryStepEnum::CREATED,
                 'type' => 'friendly',
                 'rank' => 1,
@@ -49,7 +49,7 @@ class RecoveryResourceSeeder extends Seeder
 
             //forced with guarantee
             [
-                'title' => 'Initialisation du recouvrement forcé',
+                'title' => 'Initiation of forced recovery',
                 'code' => RecoveryStepEnum::CREATED,
                 'type' => 'forced',
                 'rank' => 1,
@@ -57,7 +57,7 @@ class RecoveryResourceSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => "Mise en demeure de payer adressée au client débiteur",
+                'title' => "Formal notice to pay addressed to the debtor client",
                 'code' => RecoveryStepEnum::FORMAL_NOTICE,
                 'type' => 'forced',
                 'rank' => 2,
@@ -65,7 +65,7 @@ class RecoveryResourceSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => "le débiteur paie sa dette",
+                'title' => "The debtor pays his debt",
                 'code' => RecoveryStepEnum::DEBT_PAYEMENT,
                 'type' => 'forced',
                 'rank' => 3,
@@ -73,7 +73,7 @@ class RecoveryResourceSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => "Initier une procédure de saisie des biens du débiteur",
+                'title' => "Initiate a procedure for the seizure of the debtor's property",
                 'code' => RecoveryStepEnum::SEIZURE,
                 'type' => 'forced',
                 'rank' => 4,
@@ -81,7 +81,7 @@ class RecoveryResourceSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => "Obtenir un titre exécutoire",
+                'title' => "Obtain an enforceable title",
                 'code' => RecoveryStepEnum::EXECUTORY,
                 'type' => 'forced',
                 'rank' => 5,
@@ -89,7 +89,7 @@ class RecoveryResourceSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => "Saisie de la juridiction compétente",
+                'title' => "Seizure of the competent jurisdiction",
                 'code' => RecoveryStepEnum::JURISDICTION,
                 'type' => 'forced',
                 'rank' => 6,
@@ -97,7 +97,7 @@ class RecoveryResourceSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => "Confier la procédure à un avocat",
+                'title' => "Entrust the procedure to a lawyer",
                 'code' => RecoveryStepEnum::ENTRUST_LAWYER,
                 'type' => 'forced',
                 'rank' => 7,

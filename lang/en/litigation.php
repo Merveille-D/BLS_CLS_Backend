@@ -36,7 +36,7 @@ return [
     //form
     'Date of transfer' => 'Date of transfer',
     'Transfer documents' => 'Transfer documents',
-    'Date of referral' => 'Date of referral',
+    'Referral date' => 'Referral date',
     'Jurisdiction seized' => 'Jurisdiction seized',
     'Referral act' => 'Referral act',
     'Date of the hearing' => 'Date of the hearing',

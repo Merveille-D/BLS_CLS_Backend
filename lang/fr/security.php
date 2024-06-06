@@ -1,6 +1,7 @@
 <?php
 
 return [
+    //movanble securities steps
     'Initiation of the guarantee' => 'Iniation de la garantie',
     'Drafting of the guarantee agreement' => 'Rédaction de la convention de garantie',
     'Deposit of the agreement with the notary' => 'Dépot de la convention au rang des minutes d\'un notaire',
@@ -64,11 +65,24 @@ return [
     'Publicity of sale' => 'Publicité de vente',
     'Sale of the property' => 'Vente de l\'immeuble',
 
+    'Is the registration approved?' => 'L\'inscription est elle approuvée ?',
+    'Registration date' => 'Date de l\'inscription',
+    'Proof of registration' => 'Preuve de l\'inscription',
+    'Date of notification' => 'Date de la signification',
+    'Is the registration request made and the payment order published?' => 'Est-ce que la demande d\'inscription est éffectué et le commendement de payer est publié ?',
+    'Date of the visa' => 'Date du visa',
+    'Date of expropriation' => 'Date de l\'expropriation',
+    'Enter the set sale date' => 'Renseigner la date de vente fixée',
+    'Date of sending the summons' => 'Date d\'adressage de la sommation',
+    'Date of publication' => 'Date de la publication',
+    'Sale amount' => 'Montant de vente',
+    'Insert sale PV' => 'Insérer PV de la vente',
 
 
 
 
     //form
+    'Documents' => 'Documents',
     'Date of the agreement' => 'Date de la convention',
     'Date of deposit of the agreement' => 'Date de dépot de la convention',
     'Date of transmission' => 'Date de transmission',
@@ -90,5 +104,16 @@ return [
     'Date of distribution' => 'Date de distribution',
     'Date of forced sale' => 'Date de vente forcée',
     'Is the sale amicable?' => 'La vente est-elle amiable ?',
+
+    'Property documents' => 'Documents de la propriété',
+    'Documents sent to the notary' => 'Documents envoyés au notaire',
+    'Request documents' => 'Documents de la demande',
+    'Proof of registration' => 'Preuve de l\'inscription',
+    'Notification documents' => 'Documents de la signification',
+    'Payment order documents' => 'Documents du commendement',
+    'Expropriation documents' => 'Documents de l\'expropriation',
+    'Summons addressing documents' => 'Documents d\'adressage de la sommation',
+    'Publication documents' => 'Documents de la publication',
+
 
 ];

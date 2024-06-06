@@ -6,30 +6,32 @@ use App\Enums\Recovery\RecoveryStepEnum;
 
 trait RecoveryFormFieldTrait
 {
-    public function getCustomFormFields(string $status) : array {
+    public function getCustomFormFields($step) : array {
         $customFields = [];
+
+        $status = $step?->code;
 
         switch ($status) {
             case RecoveryStepEnum::FORMALIZATION:
-                $customFields = $this->commonProperties('Attacher l\'acte transactionnel formalisé',  ['file', 'documents', 'documents de l\'acte transactionnel']);
+                $customFields = $this->commonProperties($step->title,  ['file', 'documents', 'Documents of the transactional act']);
                 break;
             case RecoveryStepEnum::FORMAL_NOTICE:
-                $customFields = $this->commonProperties('Insérer document de la mise en demeure',  ['file', 'documents', 'documents de la mise en demeure']);
+                $customFields = $this->commonProperties($step->title,  ['file', 'documents', 'Documents of the formal notice']);
                 break;
             case RecoveryStepEnum::DEBT_PAYEMENT:
-                $customFields = $this->commonProperties('Le débiteur paie sa dette',  ['radio', 'payement_status', 'Le débiteur paie sa dette']);
+                $customFields = $this->commonProperties($step->title,  ['radio', 'payement_status', 'The debtor has paid his debt']);
                 break;
             case RecoveryStepEnum::JURISDICTION:
-                $customFields = $this->commonProperties('Initier une procédure de saisie des biens du débiteur',  ['file', 'documents', 'documents de la procédure']);
+                $customFields = $this->commonProperties($step->title,  ['file', 'documents', 'Documents of the procedure']);
                 break;
             case RecoveryStepEnum::SEIZURE:
-                $customFields = $this->commonProperties('Saisie de la juridiction compétente',  ['radio', 'is_seized', 'Saisie de la juridiction compétente']);
+                $customFields = $this->commonProperties($step->title,  ['radio', 'is_seized', 'Seizure of the competent jurisdiction']);
                 break;
             case RecoveryStepEnum::EXECUTORY:
-                $customFields = $this->commonProperties('Attacher le titre exécutoire',  ['file', 'documents', 'Titre exécutoire']);
+                $customFields = $this->commonProperties($step->title,  ['file', 'documents', 'Enforceable title']);
                 break;
             case RecoveryStepEnum::ENTRUST_LAWYER:
-                $customFields = $this->commonProperties('Confier la procédure à un avocat',  ['radio', 'is_entrusted', 'La procédure a bien été confiée']);
+                $customFields = $this->commonProperties($step->title,  ['radio', 'is_entrusted', 'The procedure has been entrusted']);
                 break;
 
             default:
@@ -49,13 +51,13 @@ trait RecoveryFormFieldTrait
             $fields[] = [
                 "type" => $type,
                 "name" => $name,
-                "label" => $label,
+                "label" => __('recovery.'.$label)
             ];
         }
 
         $customAttribute = [
             "fields" => $fields,
-            "form_title" => $form_title
+            "form_title" => __('recovery.'.$form_title)
         ];
 
         return $customAttribute;

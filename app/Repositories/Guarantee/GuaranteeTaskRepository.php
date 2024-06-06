@@ -28,11 +28,13 @@ class GuaranteeTaskRepository
             return array();
         }
 
-        return GuaranteeTaskResource::collection(
+        $tasks = GuaranteeTaskResource::collection(
             $modele?->tasks()
             ->defaultOrder()
             ->get()
         );
+
+        return $tasks;
     }
 
     public function getOne($id) {
