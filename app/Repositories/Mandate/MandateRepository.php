@@ -2,6 +2,7 @@
 namespace App\Repositories\Mandate;
 
 use App\Models\Gourvernance\Mandate;
+use Carbon\Carbon;
 
 class MandateRepository
 {
@@ -14,29 +15,24 @@ class MandateRepository
      *
      * @return Mandate
      */
-    public function store($request) {
-
-        if(!($request['type'] == 'link')) {
-            $request['file_name'] = getFileName($request['file']);
-        }
-        $mandate = $this->mandate->create($request->all());
-        return $mandate;
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return Mandate
-     */
     public function update(Mandate $mandate, $request) {
 
-        if (isset($request['type'])) {
-            if(!($request['type'] == 'link')) {
-                $request['file_name'] = getFileName($request['file']);
-            }
+        if($request['type'] == 'renew') {
+
+            $mandate->update([
+                'appointment_date' => $request['appointment_date'],
+                'renewal_date' => Carbon::parse($request['appointment_date'])->addDay(1),
+                'expiry_date' => Carbon::parse($request['appointment_date'])->addYears(5),
+            ]);
+        } else {
+
+            $mandate->mandatable()->mandates()->create([
+                'appointment_date' => $request['renew_appointment_date'],
+                'renewal_date' => Carbon::parse($request['renew_appointment_date'])->addDay(1),
+                'expiry_date' => Carbon::parse($request['renew_appointment_date'])->addYears(5),
+            ]);
         }
 
-        $mandate->update($request);
         return $mandate;
     }
 

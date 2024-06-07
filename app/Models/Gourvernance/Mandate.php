@@ -22,5 +22,9 @@ class Mandate extends Model
         'expired',
     ];
 
-    
+    public function mandatable()
+    {
+        return $this->morphTo();
+    }
+
 }

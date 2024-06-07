@@ -6,6 +6,7 @@ use App\Enums\AdminType;
 use App\Enums\Quality;
 use App\Models\Gourvernance\BoardDirectors\Administrators\CaAdministrator;
 use App\Models\Gourvernance\Mandate;
+use Carbon\Carbon;
 
 class AdministratorRepository
 {
@@ -37,9 +38,9 @@ class AdministratorRepository
         }
 
         $administrator->mandates()->create([
-            'appointment_date' => $request['appointment_date'] ?? null,
-            'renewal_date' => $request['renewal_date'] ?? null,
-            'expiry_date' => $request['expiry_date'] ?? null,
+            'appointment_date' => $request['appointment_date'],
+            'renewal_date' => Carbon::parse($request['appointment_date'])->addDay(1),
+            'expiry_date' => Carbon::parse($request['appointment_date'])->addYears(5),
         ]);
 
         return $administrator;
@@ -68,26 +69,6 @@ class AdministratorRepository
             $corporate = CaAdministrator::where('permanent_representative_id', $administrator->id)->first();
             $corporate->update(array_merge(['permanent_representative_id' => $administrator->id], $company_info));
 
-        }
-
-
-        $mandates = $administrator->mandates()->where('status', 'active')->exists();
-
-        if (!$mandates) {
-
-            $administrator->mandates()->create([
-                'appointment_date' => $request['appointment_date'] ?? null,
-                'renewal_date' => $request['renewal_date'] ?? null,
-                'expiry_date' => $request['expiry_date'] ?? null,
-            ]);
-        }else {
-            $last_mandate = $administrator->mandates()->where('status', 'active')->latest()->first();
-            $administrator->mandates()->update([
-                'appointment_date' => $request['appointment_date'] ?? null,
-                'renewal_date' => $request['renewal_date'] ?? null,
-                'expiry_date' => $request['expiry_date'] ?? null,
-                'status' => ($last_mandate->expiry_date < now()) ? 'expired' : 'active',
-            ]);
         }
 
         return $administrator;

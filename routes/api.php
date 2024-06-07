@@ -25,6 +25,7 @@ use App\Http\Controllers\API\V1\Gourvernance\ExecutiveManagement\ManagementCommi
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\AttendanceListGeneralMeetingController;
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\GeneralMeetingController;
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\TaskGeneralMeetingController;
+use App\Http\Controllers\API\V1\Gourvernance\Mandate\MandateController;
 use App\Http\Controllers\API\V1\Gourvernance\Representant\RepresentantController;
 use App\Http\Controllers\API\V1\Gourvernance\Shareholder\ActionTransferController;
 use App\Http\Controllers\API\V1\Gourvernance\Shareholder\ShareholderController;
@@ -135,6 +136,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // DIRECTION GENERALE
 
     Route::resource('directors', DirectorController::class);
+
+    //Mandats
+    Route::resource('mandates', MandateController::class);
 
     Route::resource('management_committees', ManagementCommitteeController::class);
     Route::post('cd_attachements', [ManagementCommitteeController::class, 'attachment']);

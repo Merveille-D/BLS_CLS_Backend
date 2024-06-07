@@ -2,10 +2,13 @@
 
 namespace App\Http\Requests\Mandate;
 
+use App\Enums\AdminFunction;
+use App\Enums\AdminType;
+use App\Enums\Quality;
+use App\Rules\Administrator\ArrayElementMatch;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
 class UpdateMandateRequest extends FormRequest
 {
@@ -25,11 +28,9 @@ class UpdateMandateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['string'],
-            // 'type' => [Rule::in(Bank::TYPES) ],
-            'file' => ['file'],
-            'link' => ['string'],
-
+            'type' => 'required|in:renew,update',
+            'appointment_date' => 'required_if:type,update|date',
+            'renew_appointment_date' => 'required_if:type,renew|date',
         ];
     }
 
