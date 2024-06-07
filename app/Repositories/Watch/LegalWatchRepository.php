@@ -43,6 +43,7 @@ class LegalWatchRepository
                 ->when(!blank($search), function($qry) use($search) {
                     $qry->where('name', 'like', '%'.$search.'%');
                 })
+                ->orderBy('created_at', 'desc')
                 ->paginate();
 
 
@@ -55,7 +56,11 @@ class LegalWatchRepository
      * @return JsonResource
      */
     public function add($request) : JsonResource {
-        $legal_watch = $this->watch_model->create(array_merge($request->all(), ['created_by' => auth()->id()]));
+        $legal_watch = $this->watch_model->create(array_merge($request->all(),
+                        [
+                            'created_by' => auth()->id(),
+                            'reference' => generateReference('VJ', $this->watch_model)
+                        ]));
 
         if ($legal_watch && !blank($legal_watch->mail_addresses) && count($legal_watch->mail_addresses) >=1) {
             $this->sendMessage($legal_watch);
@@ -98,9 +103,11 @@ class LegalWatchRepository
         if ($legal_watch->type == WatchType::LEGAL) {
             $details['Date de l\'événement'] = $legal_watch->event_date ?? null;
             $details['Juridiction'] = $legal_watch->jurisdiction?->name ?? null;
+            $details['Lieu de la juridiction'] = $legal_watch->jurisdiction_location ?? null;
         } else {
             $details['Date de prise d\'effet'] = $legal_watch->effective_date ?? null;
             $details['Matière'] = $legal_watch->nature?->name ?? null;
+            $details['Référence de l\'affaire'] = $legal_watch->case_number ?? null;
         }
 
         return $details;

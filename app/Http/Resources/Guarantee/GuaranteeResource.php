@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Guarantee;
 
+use App\Enums\Guarantee\GuaranteeType;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -29,6 +30,10 @@ class GuaranteeResource extends JsonResource
             // mortage especial fields
             'sell_price_estate' => $this->when($this->type == 'mortgage', $this->extra['sell_price_estate'] ?? null),
             'is_approved' =>  $this->when($this->type == 'mortgage', $this->extra['is_approved'] ?? false),
+            // movable especial fields
+            'formalization_type' => $this->when($this->security == 'movable', $this->extra['formalization_type'] ?? null),
+            // autonomous_counter especial fields
+            'autonomous_id' => $this->when($this->type == GuaranteeType::AUTONOMOUS_COUNTER, $this->extra['autonomous_id'] ?? null),
 
             'next_step' => $this->when($id, new GuaranteeTaskResource($this->next_task)),
             'current_step' => $this->when($id, new GuaranteeTaskResource($this->current_task)),

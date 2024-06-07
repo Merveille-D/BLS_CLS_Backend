@@ -134,6 +134,7 @@ class GuaranteeTaskRepository
 
             $this->saveNextTasks($task, $radio_field);
             $this->guaranteeRepo->updateTaskState($guarantee);
+            $this->updatePhaseState($guarantee);
 
         }
 
@@ -156,6 +157,17 @@ class GuaranteeTaskRepository
             $task->save();
         }
 
+    }
+
+    // function that change phase to formalized or realized when all tasks for the phase are completed
+    public function updatePhaseState($guarantee) {
+        $current_phase = $guarantee->phase;
+        $tasks = $guarantee->tasks()->whereType($current_phase)->where('status', false)->get();
+        // dd($tasks);
+        if ($tasks->count() == 0) {
+            $guarantee->phase = $current_phase == 'formalization' ? 'formalized' : 'realized';
+            $guarantee->save();
+        }
     }
 
     public function saveFiles($files,Model $guarantee, string $state) : array|bool {

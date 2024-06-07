@@ -365,12 +365,8 @@ class RecoveryRepository
     }
 
     public function updateHypothecStatus($recovery, $request) {
-        if ($request->type == 'conv_hypothec') {
-            $guarantee = ConvHypothec::find($recovery->guarantee_id);
-        }
-        else {
-            $guarantee = Guarantee::find($recovery->guarantee_id);
-        }
+
+        $guarantee = Guarantee::find($recovery->guarantee_id);
 
         if ($guarantee) {
             $guarantee->update([

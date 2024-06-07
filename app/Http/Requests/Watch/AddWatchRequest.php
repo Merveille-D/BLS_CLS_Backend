@@ -29,7 +29,7 @@ class AddWatchRequest extends FormRequest
         // dd(request('is_archived'));
         return [
             'name' => 'required|string|max:255',
-            'reference' => 'nullable|string|max:255',
+            'case_number' => 'nullable|string|max:255',
             'type' => ['required', new ArrayElementMatch(WatchType::TYPES)],
             'summary' => 'required|string',
             'innovation' => 'required|string',
@@ -38,6 +38,7 @@ class AddWatchRequest extends FormRequest
             'effective_date' => 'nullable|date',
             'nature_id' => 'nullable|exists:litigation_settings,id',
             'jurisdiction_id' => 'nullable|exists:litigation_settings,id',
+            'jurisdiction_location' => 'nullable',
             'recipient_type' =>  ['required_if:is_archived,false', new ArrayElementMatch(array('admin', 'personnel'))],
             'mail_object' =>'required_if:is_archived,false',
             'mail_content' => 'required_if:is_archived,false',

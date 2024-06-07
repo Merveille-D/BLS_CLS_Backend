@@ -7,7 +7,7 @@ enum GuaranteeType : string {
     const BONDING = 'bonding'; //cautionnement
     const AUTONOMOUS = 'autonomous'; //garantie autonome
     const AUTONOMOUS_COUNTER = 'autonomous_counter'; //contre garantie autonome
-    //movable guarantee const
+    //movable guarantee (pledge)
     const STOCK = 'stock'; //stock
     const VEHICLE = 'vehicle'; //vehicle and equipment
     //collateral guarantee const

@@ -37,6 +37,10 @@ class GuaranteeRepository
             ->when($request->phase, function ($query, $phase) {
                 return $query->where('phase', $phase);
             })
+            // retrieve based on type
+            ->when($request->type, function ($query, $type) {
+                return $query->where('type', $type);
+            })
             ->when($request->search, function ($query, $search) {
                 return $query->where('name', 'like', '%' . $search . '%')
                     ->orWhere('reference', 'like', '%' . $search . '%');
@@ -61,6 +65,8 @@ class GuaranteeRepository
             $data['security'] = $request->security;
         if ($request->formalization_type)
             $data['extra'] = ['formalization_type' => $request->formalization_type];
+        if ($request->autonomous_id)
+            $data['extra'] = ['autonomous_id' => $request->autonomous_id];
 
         $guarantee = $this->guarantee_model->create($data);
 
@@ -167,6 +173,8 @@ class GuaranteeRepository
     }
 
     public function realization($guarantee) {
+        if (!$guarantee->has_recovery)
+            return;
 
         $steps = GuaranteeStep::whereNull('parent_id')->whereGuaranteeType($guarantee->type)->whereStepType('realization')->get();
 

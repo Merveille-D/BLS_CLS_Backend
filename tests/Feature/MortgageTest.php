@@ -10,11 +10,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Testing\Fakes\Fake;
+use Tests\Feature\Traits\WithStubUser;
 use Tests\TestCase;
 
 class MortgageTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithStubUser;
     /**
      * A basic feature test example.
      */
@@ -120,7 +121,9 @@ class MortgageTest extends TestCase
 
         $hypothec_id = $response->json('data.id');
         $next_step_id = Guarantee::find($hypothec_id)->next_task->id;
+        $tasks = Guarantee::find($hypothec_id)?->tasks()->whereStatus(false)->get();
 
+        //verification property
         $verifyProperty = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.$next_step_id, [
             'documents' => $documents
         ]);
@@ -131,53 +134,58 @@ class MortgageTest extends TestCase
             'id' => $next_step_id,
             'status' => true
         ]);
-
+        //agreement
         $agreement = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.Guarantee::find($hypothec_id)->next_task->id, [
             'documents' => $documents
         ]);
 
         $agreement->assertStatus(200);
+        $this->assertDatabaseHas('module_tasks', [
+            'id' => $next_step_id,
+            'status' => true
+        ]);
 
-        // $this->assertDatabaseHas('conv_hypothecs', [
-        //     'state' => ConvHypothecState::AGREEMENT_SIGNED
-        // ]);
+        $request_transmission = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.Guarantee::find($hypothec_id)->next_task->id, [
+            'documents' => $documents,
+            'completed_at' => date('Y-m-d')
+        ]);
 
-        // $forwarded = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.$hypothec_id, [
-        //     'documents' => $documents,
-        //     'forwarded_date' => date('Y-m-d')
-        // ]);
+        $request_transmission->assertStatus(200);
+        $this->assertDatabaseHas('module_tasks', [
+            'id' => $next_step_id,
+            'status' => true
+        ]);
 
-        // $forwarded->assertStatus(200);
+        $request_sent = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.Guarantee::find($hypothec_id)->next_task->id, [
+            'documents' => $documents,
+            'completed_at' => date('Y-m-d')
+        ]);
 
-        // $this->assertDatabaseHas('conv_hypothecs', [
-        //     'state' => ConvHypothecState::REGISTER_REQUEST_FORWARDED
-        // ]);
+        $request_sent->assertStatus(200);
+        $this->assertDatabaseHas('module_tasks', [
+            'id' => $next_step_id,
+            'status' => true
+        ]);
 
-        // $register_requested = $this->actingAs($user)->post('api/conventionnal_hypothec/update/'.$hypothec_id, [
-        //     'documents' => $documents,
-        //     'registering_date' => date('Y-m-d')
-        // ]);
+        $register = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.Guarantee::find($hypothec_id)->next_task->id, [
+            'documents' => $documents,
+            'completed_at' => date('Y-m-d'),
+            'is_approved' => 'yes'
+        ]);
 
-        // $register_requested->assertStatus(200);
+        $register->assertStatus(200);
 
-        // $this->assertDatabaseHas('conv_hypothecs', [
-        //     'state' => ConvHypothecState::REGISTER_REQUESTED,
-        //     'registering_date' => date('Y-m-d')
-        // ]);
+        $this->assertDatabaseHas('module_tasks', [
+            'id' => $next_step_id,
+            'status' => true
+        ]);
 
-        // $registered = $this->actingAs($user)->post('api/conventionnal_hypothec/update/'.$hypothec_id, [
-        //     'documents' => $documents,
-        //     'is_approved' => 'yes',
-        //     'registration_date' => date('Y-m-d')
-        // ]);
-
-        // $registered->assertStatus(200);
-
-        // $this->assertDatabaseHas('conv_hypothecs', [
-        //     'state' => ConvHypothecState::REGISTER,
-        //     'registration_date' => date('Y-m-d'),
-        //     'is_approved' => true
-        // ]);
+        $this->assertDatabaseHas('guarantees', [
+            'name' => 'Test Hypothec Conventionnelle',
+            'contract_id'=> '9c2305a7-c6f8-4473-99a0-9cf055044ee1',
+            'type' => 'mortgage',
+            'phase' => 'formalized'
+        ]);
 
     }
 
@@ -247,6 +255,15 @@ class MortgageTest extends TestCase
             'is_approved' => 'yes',
         ]);
 
+        $recovery = $this->actingAs($user)->post('api/recovery', [
+            'name' => 'Test Recovery',
+            'type' => 'forced',
+            'has_guarantee' => true,
+            'guarantee_id' => $hypothec_id
+        ]);
+
+        $recovery->assertStatus(200);
+
         $realization = $this->actingAs($user)->post('api/guarantees/realization/'.$hypothec_id);
 
         $realization->assertStatus(200);
@@ -271,13 +288,14 @@ class MortgageTest extends TestCase
      * @return void
      */
     public function test_full_realization_process() : void {
-        $user = User::factory()->create();
+        $user = $this->stubUser();
 
-        $response = $this->actingAs($user)->post('api/conventionnal_hypothec', [
+        $response = $this->actingAs($user)->post('api/guarantees', [
             'name' => 'Test Hypothec Conventionnelle',
             'contract_id'=> '9c2305a7-c6f8-4473-99a0-9cf055044ee1',
+            'type' => 'mortgage',
         ]);
-        $response->assertStatus(200);
+        $response->assertStatus(201);
 
         $documents = [
             [
@@ -313,16 +331,56 @@ class MortgageTest extends TestCase
             'registration_date' => date('Y-m-d')
         ]);
 
-        $realization = $this->actingAs($user)->post('api/conventionnal_hypothec/realization/'.$hypothec_id);
+        $recovery = $this->actingAs($user)->post('api/recovery', [
+            'name' => 'Test Recovery',
+            'type' => 'forced',
+            'has_guarantee' => true,
+            'guarantee_id' => $hypothec_id
+        ]);
+
+        $realization = $this->actingAs($user)->post('api/guarantees/realization/'.$hypothec_id);
 
         $realization->assertStatus(200);
 
-        // $this->assertDatabaseHas('conv_hypothecs', [
-        //     'step' => 'realization',
-        //     'name' => 'Test Hypothec Conventionnelle',
-        //     'contract_id'=> '9c2305a7-c6f8-4473-99a0-9cf055044ee1',
-        // ]);
+        $this->assertDatabaseHas('guarantees', [
+            'name' => 'Test Hypothec Conventionnelle',
+            'contract_id'=> '9c2305a7-c6f8-4473-99a0-9cf055044ee1',
+            'type' => 'mortgage',
+            'phase' => 'realization'
+        ]);
 
-        // $realization = $this
+        /*
+
+
+        foreach ($tasks as $key => $task) {
+            $data = [];
+            $fields = $task?->form['fields'] ?? [];
+            foreach ($fields as $field) {
+
+                if ($field['type'] == 'text' || $field['type'] == 'select') {
+                    $data[]  =  [$field['name'] => 'text'];
+                }elseif ($field['type'] == 'file') {
+                    $data[] = ['documents' => $documents];
+                } elseif ($field['type'] == 'date') {
+                        $data[]  =  [$field['name'] => date('Y-m-d')];
+                }elseif ($field['type'] == 'radio') {
+                    $data[]  =  [$field['name'] => 'yes'];
+                }
+            }
+
+            // dd($data[0]);
+
+            $completing = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.$task->id, $data[0]);
+
+            $completing->assertStatus(200);
+
+            $this->assertDatabaseHas('module_tasks', [
+                'id' => $next_step_id,
+                'status' => true
+            ]);
+        }
+
+        */
     }
+
 }
