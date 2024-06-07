@@ -32,6 +32,9 @@ use App\Http\Controllers\API\V1\Incident\AuthorIncidentController;
 use App\Http\Controllers\API\V1\Incident\IncidentController;
 use App\Http\Controllers\API\V1\Incident\TaskIncidentController;
 use App\Http\Controllers\API\V1\Gourvernance\Shareholder\CapitalController;
+use App\Http\Controllers\API\V1\Gourvernance\Shareholder\TaskActionTransferController;
+use App\Http\Controllers\API\V1\Gourvernance\Tier\TierController;
+use App\Http\Controllers\API\V1\Position\PositionController;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Route;
@@ -65,7 +68,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('generate_pdf_attendance_general_meetings', [AttendanceListGeneralMeetingController::class, 'generatePdf'] );
 
     Route::resource('representants', RepresentantController::class);
-
+    Route::resource('tiers', TierController::class);
 
     // Liste de présence CA
     Route::get('list_attendance_session_administrators', [AttendanceListSessionAdministratorController::class, 'list'] );
@@ -94,6 +97,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::resource('shareholders', ShareholderController::class);
     Route::resource('action_transfers', ActionTransferController::class);
+    Route::resource('task_action_transfers', TaskActionTransferController::class);
+    Route::get('get_current_task_action_transfers', [TaskActionTransferController::class, 'getCurrentTaskActionTransfer'] );
+    Route::post('complete_task_action_transfers', [TaskActionTransferController::class, 'completeTaskActionTransfer'] );
 
     Route::resource('bank_infos', BankInfoController::class);
     Route::resource('capitals', CapitalController::class);
@@ -146,6 +152,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('performance_indicators', PerformanceIndicatorController::class);
     Route::resource('collaborators', CollaboratorController::class);
     Route::post('evaluation_create_transfers', [NotationController::class, 'createTransfer'] );
+    Route::resource('positions', PositionController::class);
 
     // AUDIT
     Route::resource('audit_notations', AuditNotationController::class);

@@ -25,9 +25,14 @@ class ActionTransferController extends Controller
 
             $action_transfer->owner = $action_transfer->owner;
             $action_transfer->buyer = $action_transfer->buyer;
+
+            $action_transfer->category = $action_transfer->category;
+            $action_transfer->current_task = $action_transfer->current_task;
+            $action_transfer->files = $action_transfer->files;
+
             return $action_transfer;
         });
-        return api_response(true, "Historique des transfert", $action_transfers, 200);
+        return api_response(true, "Liste des transferts d'actions", $action_transfers, 200);
     }
 
     /**
@@ -60,12 +65,6 @@ class ActionTransferController extends Controller
      */
     public function update(UpdateActionTransferRequest $request, ActionTransfer $action_transfer)
     {
-        // try {
-        //     $this->action_transfer->update($action_transfer, $request->all());
-        //     return api_response(true, "Mis à jour du du transfert", $action_transfer, 200);
-        // } catch (ValidationException $e) {
-
-        //     return api_response(false, "Echec de la mise à jour", $e->errors(), 422);
-        // }
+        //
     }
 }

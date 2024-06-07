@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Collaborator;
+namespace App\Http\Requests\Position;
 
-use App\Models\Evaluation\Collaborator;
-use App\Models\Evaluation\PerformanceIndicator;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
-class UpdateCollaboratorRequest extends FormRequest
+class UpdatePositionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,11 +24,7 @@ class UpdateCollaboratorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'lastname' => ['string'],
-            'position_id' => ['uuid'],
-            'firstname' => ['string'],
-            'user_id' => ['string'],
-
+            'title' => ['string'],
         ];
     }
 
