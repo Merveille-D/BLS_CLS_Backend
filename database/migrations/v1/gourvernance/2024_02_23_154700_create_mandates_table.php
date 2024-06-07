@@ -14,10 +14,13 @@ return new class extends Migration
     {
         Schema::create('mandates', function (Blueprint $table) {
             $table->uuid('id')->primary();
+
             $table->date('appointment_date')->nullable();
             $table->date('renewal_date')->nullable();
             $table->date('expiry_date')->nullable();
+
             $table->enum('status', Mandate::STATUS)->default('active');
+
             $table->uuidMorphs('mandatable');
             $table->timestamps();
         });
