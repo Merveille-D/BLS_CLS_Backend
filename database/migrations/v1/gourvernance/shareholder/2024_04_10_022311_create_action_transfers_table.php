@@ -31,7 +31,7 @@ return new class extends Migration
 
             $table->enum('type', ActionTransfer::TYPES );
 
-            $table->enum('status', ActionTransfer::STATUS )->default('accepted');
+            $table->enum('status', ActionTransfer::STATUS )->default('approved');
 
             $table->uuid('created_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
