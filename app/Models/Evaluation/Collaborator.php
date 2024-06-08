@@ -17,14 +17,15 @@ class Collaborator extends Model
         'lastname',
         'firstname',
         'user_id',
-        'performance_indicator_id',
         'position_id',
         'created_by',
     ];
 
-    public function performanceIndicator()
+    protected $appends = ['position'];
+
+    public function position()
     {
-        return $this->belongsTo(PerformanceIndicator::class);
+        return $this->belongsTo(Position::class);
     }
 
     public function creator() {

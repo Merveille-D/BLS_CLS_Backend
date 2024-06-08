@@ -31,7 +31,7 @@ class PositionController extends Controller
     public function store(StorePositionRequest $request)
     {
         try {
-            $position = $this->position->store($request);
+            $position = $this->position->store($request->all());
             return api_response(true, "Succès de l'enregistrement de la position", $position, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement de la position", $e->errors(), 422);
