@@ -21,8 +21,6 @@ class Collaborator extends Model
         'created_by',
     ];
 
-    protected $appends = ['position'];
-
     public function position()
     {
         return $this->belongsTo(Position::class);

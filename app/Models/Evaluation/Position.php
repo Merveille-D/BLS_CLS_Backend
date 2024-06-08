@@ -14,14 +14,12 @@ class Position extends Model
         'title',
     ];
 
-    protected $appends = ['collaborators', 'indicators'];
-
-    public function getCollaboratorsAttribute()
+    public function collaborators()
     {
         return $this->hasMany(Collaborator::class);
     }
 
-    public function getIndicatorsAttribute()
+    public function indicators()
     {
         return $this->hasMany(PerformanceIndicator::class);
     }

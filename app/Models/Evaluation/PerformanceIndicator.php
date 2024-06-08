@@ -27,11 +27,11 @@ class PerformanceIndicator extends Model
         'qualitative',
     ];
 
-    public function collaborators()
+    public function position()
     {
-        return $this->hasMany(Collaborator::class);
+        return $this->belongsTo(Position::class);
     }
-
+    
     public function notations()
     {
         return $this->hasMany(Notation::class);

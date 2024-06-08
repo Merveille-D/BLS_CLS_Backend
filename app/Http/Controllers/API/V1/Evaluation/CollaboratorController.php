@@ -23,8 +23,8 @@ class CollaboratorController extends Controller
      */
     public function index(ListCollaboratorRequest $request)
     {
-        $collaborators = Collaborator::where('position_id', $request->position_id)->get();
-        return api_response(true, "Liste des indicateurs de performance", $collaborators, 200);
+        $collaborators = Collaborator::where('position_id', $request->position_id)->get()->load('position');
+        return api_response(true, "Liste des Collaborateurs", $collaborators, 200);
     }
 
     /**
