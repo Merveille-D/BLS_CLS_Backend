@@ -21,7 +21,20 @@ class PositionController extends Controller
      */
     public function index()
     {
-        $positions = Position::all()->load('collaborators', 'indicators');
+        $positions = Position::all()->map(function ($position) {
+            $position->collaborators = $position->collaborators->map(function ($collaborator) {
+                $collaborator->position = $collaborator->position;
+                return $collaborator;
+            });
+
+            $position->indicators = $position->indicators->map(function ($indicator) {
+                $indicator->position = $indicator->position;
+                return $indicator;
+            });
+
+            return $position;
+        });
+
         return api_response(true, "Liste des positions", $positions, 200);
     }
 
