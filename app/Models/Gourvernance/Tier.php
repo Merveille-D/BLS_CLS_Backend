@@ -2,9 +2,6 @@
 
 namespace App\Models\Gourvernance;
 
-use App\Models\Gourvernance\BoardDirectors\Sessions\AttendanceListSessionAdministrator;
-use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\AttendanceListManagementCommittee;
-use App\Models\Gourvernance\GeneralMeeting\AttendanceListGeneralMeeting;
 use App\Models\Scopes\CountryScope;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;

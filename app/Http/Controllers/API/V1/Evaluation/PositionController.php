@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\V1\Position;
+namespace App\Http\Controllers\API\V1\Evaluation;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Position\StorePositionRequest;

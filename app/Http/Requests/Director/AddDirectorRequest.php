@@ -31,9 +31,8 @@ class AddDirectorRequest extends FormRequest
             'nationality' => 'required|string|max:255',
             'address' => 'required|string|max:255',
 
-            // 'appointment_date' => 'required|date',
-            // 'renewal_date' => 'required|date',
-            // 'expiry_date' => 'required|date',
+            // Mandate
+            'appointment_date' => 'required|date',
         ];
     }
 
