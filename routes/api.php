@@ -35,7 +35,7 @@ use App\Http\Controllers\API\V1\Incident\TaskIncidentController;
 use App\Http\Controllers\API\V1\Gourvernance\Shareholder\CapitalController;
 use App\Http\Controllers\API\V1\Gourvernance\Shareholder\TaskActionTransferController;
 use App\Http\Controllers\API\V1\Gourvernance\Tier\TierController;
-use App\Http\Controllers\API\V1\Position\PositionController;
+use App\Http\Controllers\API\V1\Evaluation\PositionController;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Route;

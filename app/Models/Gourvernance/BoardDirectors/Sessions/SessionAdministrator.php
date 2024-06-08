@@ -72,7 +72,7 @@ class SessionAdministrator extends Model
         'pv' => 'Procès verbal',
         'agenda' => 'Ordre du jour',
         'convocation' => 'Convocation',
-        'attendance_list' => 'Liste de présence des actionnaires',
+        'attendance_list' => 'Liste de présence des administrateurs',
     ];
 
     const DATE_FILE_FIELD = [

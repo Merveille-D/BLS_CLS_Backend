@@ -22,13 +22,6 @@ class Collaborator extends Model
         'created_by',
     ];
 
-    const POSITIONS_VALUES = [
-        'lawyer' => 'Avocat',
-        'notary' => 'Notaire',
-        'hussier' => 'Huissier',
-        'real_estate_expert' => 'Expert immobilier',
-    ];
-
     public function performanceIndicator()
     {
         return $this->belongsTo(PerformanceIndicator::class);
