@@ -5,11 +5,15 @@ use App\Models\Gourvernance\GourvernanceDocument;
 use App\Models\Shareholder\ActionTransfer;
 use App\Models\Shareholder\Shareholder;
 use App\Models\Shareholder\TaskActionTransfer;
+use App\Repositories\Tier\TierRepository;
 use Illuminate\Support\Facades\Auth;
 
 class ActionTransferRepository
 {
-    public function __construct(private ActionTransfer $action_transfer) {
+    public function __construct(
+        private ActionTransfer $action_transfer,
+        public TierRepository $tier,
+        ) {
 
     }
 
@@ -39,6 +43,10 @@ class ActionTransferRepository
             ]);
 
         }else {
+
+            if(!isset($request['tier_id'])) {
+                $request['tier_id'] = $this->tier->store($request)->id;
+            }
 
             $request['status'] = 'pending';
             $action_transfer = $this->action_transfer->create($request);
