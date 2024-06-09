@@ -55,7 +55,7 @@ class StoreActionTransferRequest extends FormRequest
             'name' => [
                 'string',
                 function ($attribute, $value, $fail) {
-                    if (request()->input('buyer_id') === null) {
+                    if (request()->input('type') === 'tier' && request()->input('buyer_id') === null) {
                         if (empty($value)) {
                             $fail('The ' . $attribute . ' field is required when type is tier and tier_id is null.');
                         }
@@ -65,7 +65,7 @@ class StoreActionTransferRequest extends FormRequest
             'grade' => [
                 'string',
                 function ($attribute, $value, $fail) {
-                    if (request()->input('type') === 'tier' && request()->input('tier_id') === null) {
+                    if (request()->input('type') === 'tier' && request()->input('buyer_id') === null) {
                         if (empty($value)) {
                             $fail('The ' . $attribute . ' field is required when type is tier and tier_id is null.');
                         }
