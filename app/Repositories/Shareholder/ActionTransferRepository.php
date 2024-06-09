@@ -1,7 +1,6 @@
 <?php
 namespace App\Repositories\Shareholder;
 
-use App\Models\Gourvernance\GourvernanceDocument;
 use App\Models\Shareholder\ActionTransfer;
 use App\Models\Shareholder\Shareholder;
 use App\Models\Shareholder\TaskActionTransfer;
@@ -13,6 +12,7 @@ class ActionTransferRepository
     public function __construct(
         private ActionTransfer $action_transfer,
         public TierRepository $tier,
+        public ShareholderRepository $shareholder,
         ) {
 
     }
@@ -90,4 +90,27 @@ class ActionTransferRepository
         return true;
     }
 
+    public function approvedActionTransfer($request) {
+
+        $action_transfer = ActionTransfer::find($request['action_transfer_id']);
+
+        $tier = $action_transfer->tier;
+
+        $request['name'] = $tier->name;
+        $request['actions_encumbered'] = $action_transfer->count_actions;
+        $request['actions_no_encumbered'] = 0;
+
+        $shareholder = $this->shareholder->store($request);
+
+        $action_transfer->update([
+            'status' => 'approved',
+            'buyer_id' => $shareholder->id,
+            'tier_id' => null,
+        ]);
+
+        $tier->delete();
+
+        return $action_transfer;
+
+    }
 }

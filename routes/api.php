@@ -102,6 +102,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('get_current_task_action_transfers', [TaskActionTransferController::class, 'getCurrentTaskActionTransfer'] );
     Route::post('complete_task_action_transfers', [TaskActionTransferController::class, 'completeTaskActionTransfer'] );
 
+    Route::post('approved_action_transfers', [ActionTransferController::class, 'approvedActionTransfer'] );
+
     Route::resource('bank_infos', BankInfoController::class);
     Route::resource('capitals', CapitalController::class);
 

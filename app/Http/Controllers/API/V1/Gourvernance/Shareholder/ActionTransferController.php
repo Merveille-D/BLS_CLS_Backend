@@ -7,6 +7,7 @@ use App\Http\Requests\ActionTransfer\StoreActionTransferRequest;
 use App\Http\Requests\ActionTransfer\UpdateActionTransferRequest;
 use App\Models\Shareholder\ActionTransfer;
 use App\Repositories\Shareholder\ActionTransferRepository;
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class ActionTransferController extends Controller
@@ -69,5 +70,17 @@ class ActionTransferController extends Controller
     public function update(UpdateActionTransferRequest $request, ActionTransfer $action_transfer)
     {
         //
+    }
+
+    public function approvedActionTransfer(Request $request, )
+    {
+
+        try {
+            $action_transfer = $this->action_transfer->approvedActionTransfer($request->all());
+
+            return api_response(true, "Succès de l'enregistrement de la tache", $action_transfer, 200);
+        }catch (ValidationException $e) {
+                return api_response(false, "Echec de l'enregistrement de la tache", $e->errors(), 422);
+        }
     }
 }
