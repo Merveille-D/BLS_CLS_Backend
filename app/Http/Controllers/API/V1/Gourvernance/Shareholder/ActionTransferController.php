@@ -21,7 +21,11 @@ class ActionTransferController extends Controller
      */
     public function index()
     {
-        $action_transfers = ActionTransfer::orderBy('created_at', 'desc')->get();
+        $action_transfers = ActionTransfer::orderBy('created_at', 'desc')->get()->makeHidden('owner_id', 'buyer_id', 'tier_id', 'created_at', 'updated_at')->map(function ($action_transfer) {
+            $action_transfer->owner= $action_transfer->owner;
+            $action_transfer->buyer = $action_transfer->buyer;
+            return $action_transfer;
+        });
         return api_response(true, "Liste des transferts d'actions", $action_transfers, 200);
     }
 
