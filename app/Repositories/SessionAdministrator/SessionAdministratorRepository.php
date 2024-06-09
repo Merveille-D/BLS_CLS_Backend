@@ -7,6 +7,7 @@ use App\Models\Gourvernance\BoardDirectors\Sessions\TaskSessionAdministrator;
 use App\Models\Gourvernance\GourvernanceDocument;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class SessionAdministratorRepository
 {
@@ -140,12 +141,13 @@ class SessionAdministratorRepository
         $tasks = TaskSessionAdministrator::where('session_administrator_id', $session_administrator->id)
                                     ->whereIn('type', ['pre_ca', 'post_ca'])
                                     ->get();
+        $filename = Str::slug($session_administrator->libelle). '_'.date('YmdHis') . '.pdf';
 
         $pdf =  $this->generateFromView( 'pdf.session_administrator.fiche_de_suivi',  [
             'tasks' => $tasks,
             'session_administrator' => $session_administrator,
             'meeting_type' => $meeting_type,
-        ],$session_administrator->libelle);
+        ],$filename);
         return $pdf;
     }
 }

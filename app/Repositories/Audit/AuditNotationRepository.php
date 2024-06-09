@@ -5,10 +5,8 @@ use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use App\Concerns\Traits\Transfer\AddTransferTrait;
 use App\Models\Audit\AuditNotation;
 use App\Models\Audit\AuditPerformanceIndicator;
-use App\Models\Scopes\CountryScope;
-use App\Models\User;
-use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class AuditNotationRepository
 {
@@ -183,10 +181,12 @@ class AuditNotationRepository
 
         $data = $this->auditNotationRessource($audit_notation);
 
+        $filename = Str::slug($audit_notation->audit_reference). '_'.date('YmdHis') . '.pdf';
+
         $pdf =  $this->generateFromView( 'pdf.audit.fiche_audit',  [
             'data' => $data,
             'details' => $this->getDetails($data)
-        ],$audit_notation->audit_reference);
+        ],$filename);
 
         return $pdf;
     }

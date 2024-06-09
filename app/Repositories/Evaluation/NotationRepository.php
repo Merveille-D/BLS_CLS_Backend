@@ -7,6 +7,7 @@ use App\Models\Evaluation\Collaborator;
 use App\Models\Evaluation\Notation;
 use App\Models\Evaluation\PerformanceIndicator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class NotationRepository
 {
@@ -163,10 +164,12 @@ class NotationRepository
 
         $data = $this->notationRessource($notation);
 
+        $filename = Str::slug($notation->evaluation_reference). '_'.date('YmdHis') . '.pdf';
+
         $pdf =  $this->generateFromView( 'pdf.evaluation.fiche_evaluation',  [
             'data' => $data,
             'details' => $this->getDetails($data)
-        ],$notation->evaluation_reference);
+        ],$filename);
 
         return $pdf;
     }

@@ -6,6 +6,7 @@ use App\Models\Contract\Contract;
 use App\Concerns\Traits\Transfer\AddTransferTrait;
 use App\Models\Contract\ContractDocument;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ContractRepository
 {
@@ -137,10 +138,12 @@ class ContractRepository
         $data['category'] = $contract->info_category;
         $data['tasks'] = $contract->tasks;
 
+        $filename = Str::slug($contract->title). '_'.date('YmdHis') . '.pdf';
+
         $pdf =  $this->generateFromView( 'pdf.contract.fiche_de_suivi',  [
             'data' => $data,
             'details' => $this->getDetails($data)
-        ],$contract->title);
+        ],$filename);
 
         return $pdf;
     }
