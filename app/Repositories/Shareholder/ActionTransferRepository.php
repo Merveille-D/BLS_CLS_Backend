@@ -44,7 +44,7 @@ class ActionTransferRepository
 
         }else {
 
-            $request['tier_id'] = (!isset($request['buyer_id'])) ? $this->tier->store($request->except('type', 'owner_id', 'count_actions', 'transfer_date'))->id : $request['buyer_id'];
+            $request['tier_id'] = (isset($request['name'])) ? $this->tier->store($request->except('type', 'owner_id', 'count_actions', 'transfer_date'))->id : $request['buyer_id'];
             $request['status'] = 'pending';
 
             $action_transfer = $this->action_transfer->create($request->except('buyer_id'));
