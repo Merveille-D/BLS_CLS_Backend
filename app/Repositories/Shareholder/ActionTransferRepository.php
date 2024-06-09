@@ -47,7 +47,9 @@ class ActionTransferRepository
             $request['tier_id'] = (isset($request['name'])) ? $this->tier->store($request)->id : $request['buyer_id'];
             $request['status'] = 'pending';
 
-            $action_transfer = $this->action_transfer->create($request->except('buyer_id'));
+            unset($request['buyer_id']);
+
+            $action_transfer = $this->action_transfer->create($request);
 
             // Create Task
             $this->createTasks($action_transfer);
