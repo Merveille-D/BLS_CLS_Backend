@@ -23,7 +23,7 @@ class ActionTransferController extends Controller
     {
         $action_transfers = ActionTransfer::orderBy('created_at', 'desc')->get()->map(function ($action_transfer) {
             $action_transfer->owner= $action_transfer->owner;
-            $action_transfer->buyer = $action_transfer->buyer ?? $action_transfer->tier;
+            $action_transfer->buyer = $action_transfer->shareholder ?? $action_transfer->tier;
 
             $action_transfer->makeHidden('owner_id', 'buyer_id', 'tier_id', 'created_at', 'updated_at');
             return $action_transfer;
@@ -52,7 +52,7 @@ class ActionTransferController extends Controller
         try {
             $data = $action_transfer->makeHidden('owner_id', 'buyer_id', 'tier_id', 'created_at', 'updated_at', '')->toArray();
             $data['owner'] = $action_transfer->owner;
-            $data['buyer'] = $action_transfer->buyer ?? $action_transfer->tier;
+            $data['buyer'] = $action_transfer->shareholder ?? $action_transfer->tier;
             $data['category'] = $action_transfer->category;
             $data['current_task'] = $action_transfer->current_task;
             $data['files'] = $action_transfer->files;

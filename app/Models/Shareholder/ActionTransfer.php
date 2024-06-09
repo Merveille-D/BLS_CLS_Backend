@@ -82,7 +82,7 @@ class ActionTransfer extends Model
         return $this->belongsTo(Shareholder::class, 'owner_id');
     }
 
-    public function buyer()
+    public function shareholder()
     {
         return $this->belongsTo(Shareholder::class, 'buyer_id');
     }
