@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Administrator;
 
+use App\Models\Gourvernance\BoardDirectors\Administrators\CaAdministrator;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -24,7 +25,18 @@ class RenewMandateAdministratorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'administrator_id' => 'string|max:255',
+            'administrator_id' => [
+                'uuid',
+                function ($attribute, $value, $fail) {
+
+                    $last_mandate = CaAdministrator::find(request()->input('administrator_id'))->lastMandate();
+
+                    if($last_mandate->expiry_date > now()) {
+                        $fail('Le mandat de cet administrateur n\'est pas encore expiré.');
+                    }
+
+                },
+            ],
             'appointment_date' => 'string|max:255',
         ];
     }

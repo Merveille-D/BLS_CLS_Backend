@@ -33,4 +33,9 @@ class Director extends Model
         return $this->morphMany(Mandate::class, 'mandatable');
     }
 
+    public function lastMandate()
+    {
+        return $this->mandates()->latest()->first();
+    }
+
 }

@@ -49,6 +49,10 @@ class MandateController extends Controller
      */
     public function update(UpdateMandateRequest $request, Mandate $mandate)
     {
+        if($mandate->mandatable->lastMandate()->id != $mandate->id) {
+            return api_response(false, "Ce n'est pas le dernier mandat à modifier", null, 422);
+        }
+
         try {
             $this->mandate->update($mandate, $request->all());
 

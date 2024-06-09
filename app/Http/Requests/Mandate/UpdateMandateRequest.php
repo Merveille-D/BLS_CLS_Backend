@@ -9,6 +9,7 @@ use App\Rules\Administrator\ArrayElementMatch;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Request;
 
 class UpdateMandateRequest extends FormRequest
 {
@@ -25,7 +26,7 @@ class UpdateMandateRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules(Request $request): array
     {
         return [
             'appointment_date' => 'required_if:type,update|date',

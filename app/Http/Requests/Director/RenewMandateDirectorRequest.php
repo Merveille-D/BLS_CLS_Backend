@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Director;
 
+use App\Models\Gourvernance\ExecutiveManagement\Directors\Director;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -24,7 +25,17 @@ class RenewMandateDirectorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'director_id' => 'string|max:255',
+            'director_id' => [
+                'uuid',
+                function ($attribute, $value, $fail) {
+
+                    $last_mandate = Director::find(request()->input('director_id'))->lastMandate();
+
+                    if($last_mandate->expiry_date > now()) {
+                        $fail('Le mandat de ce directeur n\'est pas encore expiré.');
+                    }
+                },
+            ],
             'appointment_date' => 'string|max:255',
         ];
     }
