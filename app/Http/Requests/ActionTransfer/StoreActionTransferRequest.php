@@ -31,11 +31,10 @@ class StoreActionTransferRequest extends FormRequest
         return [
             'type' => ['required',  Rule::in(ActionTransfer::TYPES) ],
             'owner_id' => 'required|uuid',
-            'buyer_id' => ['required_if:type,shareholder', 'uuid'],
-            'tier_id' => [
+            'buyer_id' => [
                 'uuid',
                 function ($attribute, $value, $fail) {
-                    if (request()->input('type') === 'tier' && empty(request()->input('name')) && empty(request()->input('grade'))) {
+                    if (empty(request()->input('name')) && empty(request()->input('grade'))) {
                         if (empty($value)) {
                             $fail('The ' . $attribute . ' field is required when type is tier and both name and grade are not provided.');
                         }
@@ -56,7 +55,7 @@ class StoreActionTransferRequest extends FormRequest
             'name' => [
                 'string',
                 function ($attribute, $value, $fail) {
-                    if (request()->input('type') === 'tier' && request()->input('tier_id') === null) {
+                    if (request()->input('buyer_id') === null) {
                         if (empty($value)) {
                             $fail('The ' . $attribute . ' field is required when type is tier and tier_id is null.');
                         }

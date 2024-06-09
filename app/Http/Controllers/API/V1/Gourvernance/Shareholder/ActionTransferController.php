@@ -21,17 +21,7 @@ class ActionTransferController extends Controller
      */
     public function index()
     {
-        $action_transfers = ActionTransfer::orderBy('created_at', 'desc')->get()->map(function ($action_transfer) {
-
-            $action_transfer->owner = $action_transfer->owner;
-            $action_transfer->buyer = $action_transfer->buyer ?? $action_transfer->tier;
-
-            $action_transfer->category = $action_transfer->category;
-            $action_transfer->current_task = $action_transfer->current_task;
-            $action_transfer->files = $action_transfer->files;
-
-            return $action_transfer;
-        });
+        $action_transfers = ActionTransfer::orderBy('created_at', 'desc')->get();
         return api_response(true, "Liste des transferts d'actions", $action_transfers, 200);
     }
 
@@ -54,7 +44,14 @@ class ActionTransferController extends Controller
     public function show(ActionTransfer $action_transfer)
     {
         try {
-            return api_response(true, "Infos du transfert d'action", $action_transfer, 200);
+            $data = $action_transfer->makeHidden('owner_id', 'buyer_id', 'tier_id', 'created_at', 'updated_at', '')->toArray();
+            $data['owner'] = $action_transfer->owner;
+            $data['buyer'] = $action_transfer->buyer ?? $action_transfer->tier;
+            $data['category'] = $action_transfer->category;
+            $data['current_task'] = $action_transfer->current_task;
+            $data['files'] = $action_transfer->files;
+
+            return api_response(true, "Infos du transfert d'action", $data, 200);
         }catch( ValidationException $e ) {
             return api_response(false, "Echec de la récupération des infos du transfer", $e->errors(), 422);
         }
