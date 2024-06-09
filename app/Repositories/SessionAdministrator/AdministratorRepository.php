@@ -81,4 +81,17 @@ class AdministratorRepository
             'function' => AdminFunction::ADMIN_FUNCTIONS_VALUES,
         );
     }
+
+    public function renewMandate($request) {
+
+        $administrator = CaAdministrator::find($request['administrator_id']);
+
+        $administrator->mandates()->create([
+            'appointment_date' => $request['appointment_date'],
+            'expiry_date' => Carbon::parse($request['appointment_date'])->addYears(5),
+            'renewal_date' => Carbon::parse($request['appointment_date'])->addYears(5)->addDay(1),
+        ]);
+
+        return $administrator;
+    }
 }

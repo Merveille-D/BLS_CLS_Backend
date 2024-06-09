@@ -84,6 +84,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::get('/ca_administrators/settings', [AdministratorController::class, 'settings']);
     Route::resource('/ca_administrators', AdministratorController::class);
+    Route::post('renew_mandate_administrator', [AdministratorController::class, 'renewMandate'] );
 
     Route::resource('session_administrators', SessionAdministratorController::class);
     Route::post('ca_attachements', [SessionAdministratorController::class, 'attachment']);
@@ -138,6 +139,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // DIRECTION GENERALE
 
     Route::resource('directors', DirectorController::class);
+    Route::post('renew_mandate_director', [DirectorController::class, 'renewMandate'] );
 
     //Mandats
     Route::resource('mandates', MandateController::class);

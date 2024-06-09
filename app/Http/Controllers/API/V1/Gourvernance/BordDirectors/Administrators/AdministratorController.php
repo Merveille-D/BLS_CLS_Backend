@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Administrators;
 use App\Enums\AdminType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Administrator\AddAdministratorRequest;
+use App\Http\Requests\Administrator\RenewMandateAdministratorRequest;
 use App\Http\Requests\Administrator\UpdateAdministratorRequest;
 use App\Http\Resources\Administrator\AdministratorCollection;
 use App\Models\Gourvernance\BoardDirectors\Administrators\CaAdministrator;
@@ -94,5 +95,16 @@ class AdministratorController extends Controller
     public function settings()
     {
         return api_response(true, 'select box values recupérés avec succès', $this->adminRepo->settings());
+    }
+
+    public function renewMandate(RenewMandateAdministratorRequest $request)
+    {
+        try {
+            $administrator = $this->adminRepo->renewMandate($request->all());
+            return api_response(true, "Renouvellement du mandat avec succès", $administrator, 200);
+        } catch (ValidationException $e) {
+
+            return api_response(false, "Echec de la mise à jour", $e->errors(), 422);
+        }
     }
 }

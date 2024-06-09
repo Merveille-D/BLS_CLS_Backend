@@ -1,16 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Mandate;
+namespace App\Http\Requests\Administrator;
 
-use App\Enums\AdminFunction;
-use App\Enums\AdminType;
-use App\Enums\Quality;
-use App\Rules\Administrator\ArrayElementMatch;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateMandateRequest extends FormRequest
+class RenewMandateAdministratorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +24,8 @@ class UpdateMandateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'appointment_date' => 'required_if:type,update|date',
+            'administrator_id' => 'string|max:255',
+            'appointment_date' => 'string|max:255',
         ];
     }
 
