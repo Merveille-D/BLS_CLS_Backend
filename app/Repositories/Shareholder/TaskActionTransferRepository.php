@@ -53,8 +53,10 @@ class TaskActionTransferRepository
             $request['asked_agrement'] = ($request['asked_agrement'] === 'yes') ? true : false;
         }
 
-        if($request['status']) {
-
+        if(isset($request['forward_title'])) {
+            $this->add_transfer($taskActionTransfer, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
+        }else {
+            $request['status'] = true;
             $request['completed_by'] = Auth::user()->id;
             $taskActionTransfer->update($request);
 
@@ -66,12 +68,6 @@ class TaskActionTransferRepository
                     $taskActionTransfer->actionTransfer->update(['status' => 'rejected']);
                 }
 
-            }
-
-        }else {
-
-            if(isset($request['forward_title'])) {
-                $this->add_transfer($taskActionTransfer, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
             }
         }
 

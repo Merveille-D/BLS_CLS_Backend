@@ -32,7 +32,6 @@ class UpdateTaskActionTransferRequest extends FormRequest
         }else {
             $task = searchElementIndice(TaskActionTransfer::TASKS, $request->input('type'));
             $rules = $task['rules'];
-            $rules['status'] = 'required|boolean';
             $rules['task_action_transfer_id'] = ['required', 'uuid'];
         }
 
