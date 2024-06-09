@@ -25,7 +25,7 @@ class ActionTransferController extends Controller
             $action_transfer->owner= $action_transfer->owner;
             $action_transfer->buyer = $action_transfer->shareholder ?? $action_transfer->tier;
 
-            $action_transfer->makeHidden('owner_id', 'buyer_id', 'tier_id', 'created_at', 'updated_at');
+            $action_transfer->makeHidden('owner_id', 'buyer_id', 'tier_id', 'tier', 'shareholder', 'created_at', 'updated_at');
             return $action_transfer;
         });
         return api_response(true, "Liste des transferts d'actions", $action_transfers, 200);
