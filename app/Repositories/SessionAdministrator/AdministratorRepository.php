@@ -39,8 +39,8 @@ class AdministratorRepository
 
         $administrator->mandates()->create([
             'appointment_date' => $request['appointment_date'],
-            'renewal_date' => Carbon::parse($request['appointment_date'])->addDay(1),
             'expiry_date' => Carbon::parse($request['appointment_date'])->addYears(5),
+            'renewal_date' => Carbon::parse($request['appointment_date'])->addYears(5)->addDay(1),
         ]);
 
         return $administrator;
@@ -54,10 +54,10 @@ class AdministratorRepository
      */
     public function update(CaAdministrator $administrator, $request) {
 
-        if ($request->type == AdminType::INDIVIDUAL) {
-            $administrator->update($request->all());
+        if ($request['type'] == AdminType::INDIVIDUAL) {
+            $administrator->update($request);
 
-        } else if ($request->type == AdminType::CORPORATE) {
+        } else if ($request['type'] == AdminType::CORPORATE) {
             $company_info = [
                 'name' => $request->denomination,
                 'address' => $request->company_head_office,

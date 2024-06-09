@@ -22,8 +22,8 @@ class DirectorRepository
 
         $director->mandates()->create([
             'appointment_date' => $request['appointment_date'],
-            'renewal_date' => Carbon::parse($request['appointment_date'])->addDay(1),
             'expiry_date' => Carbon::parse($request['appointment_date'])->addYears(5),
+            'renewal_date' => Carbon::parse($request['appointment_date'])->addYears(5)->addDay(1),
         ]);
 
         return $director;
