@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AddRoleRequest;
+use App\Http\Resources\User\RoleResource;
 use App\Models\Auth\Permission;
 use App\Models\Auth\Role;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return api_response(true, 'Roles retrieved successfully', Role::all());
+        return api_response(true, 'Roles retrieved successfully', RoleResource::collection(Role::all()));
     }
 
     /**
@@ -41,7 +42,7 @@ class RoleController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return api_response(true, 'Role retrieved successfully', new RoleResource(Role::find($id)));
     }
 
     /**
@@ -49,7 +50,17 @@ class RoleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $role = Role::find($id);
+            $role->update($request->all());
+            //assign permissions
+            if($request['permissions'])
+                $role->syncPermissions(Permission::whereIn('id', $request['permissions'])->get());
+
+            return api_response(true, 'Role updated successfully', new RoleResource($role));
+        } catch (\Throwable $th) {
+            return api_error(false, $th->getMessage(), ['server' => $th->getMessage() ]);
+        }
     }
 
     /**
@@ -57,6 +68,12 @@ class RoleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $role = Role::find($id);
+            $role->delete();
+            return api_response(true, 'Role deleted successfully');
+        } catch (\Throwable $th) {
+            return api_error(false, $th->getMessage(), ['server' => $th->getMessage() ]);
+        }
     }
 }

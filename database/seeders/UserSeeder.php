@@ -19,17 +19,14 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         //create permissions
-        foreach ($this->defaultPermissions() as $key => $permission) {
-            if (!Permission::where('name', $permission)->exists()) {
-                Permission::create(['name' => $permission]);
-            }
-        }
         $role = Role::firstOrCreate(['name' => 'super_admin', 'guard_name' => 'web']);
 
 
         foreach ($this->users_list() as $user) {
             $user = User::create($user);
             $user->assignRole($role);
+
+            $user->givePermissionTo(Permission::all());
         }
     }
 
