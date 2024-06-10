@@ -6,6 +6,7 @@ use App\Models\Gourvernance\GeneralMeeting\AttendanceListGeneralMeeting;
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use App\Models\Gourvernance\Representant;
 use App\Models\Shareholder\Shareholder;
+use Illuminate\Support\Str;
 
 class AttendanceListGeneralMeetingRepository
 {
@@ -78,9 +79,9 @@ class AttendanceListGeneralMeetingRepository
         $representants_id = $general_meeting->attendanceList()->pluck('representant_id');
         $representants = Representant::whereIn('id', $representants_id)->get();
 
-        $filename = 'Liste de présence | ' . $general_meeting->libelle;
-
         $shareholders = $shareholders->merge($representants);
+
+        $filename = Str::slug('Liste de présence | ' . $general_meeting->libelle). '_'.date('YmdHis') . '.pdf';
 
         $pdf =  $this->generateFromView( 'pdf.general_meeting.attendance',  [
             'shareholders' => $shareholders,

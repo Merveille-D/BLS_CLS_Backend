@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Mandate;
+namespace App\Http\Requests\Director;
 
+use App\Models\Gourvernance\ExecutiveManagement\Directors\Director;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
-class StoreMandateRequest extends FormRequest
+class RenewMandateDirectorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +25,18 @@ class StoreMandateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string'],
-            'file' => ['required_if:type,file,other', 'file'],
-            'link' => ['required_if:type,link', 'string'],
+            'director_id' => [
+                'uuid',
+                function ($attribute, $value, $fail) {
+
+                    $last_mandate = Director::find(request()->input('director_id'))->lastMandate();
+
+                    if($last_mandate->expiry_date > now()) {
+                        $fail('Le mandat de ce directeur n\'est pas encore expiré.');
+                    }
+                },
+            ],
+            'appointment_date' => 'string|max:255',
         ];
     }
 

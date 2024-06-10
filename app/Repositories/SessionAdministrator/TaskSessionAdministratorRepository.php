@@ -7,6 +7,7 @@ use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
 use App\Models\Gourvernance\BoardDirectors\Sessions\TaskSessionAdministrator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class TaskSessionAdministratorRepository
 {
@@ -114,7 +115,8 @@ class TaskSessionAdministratorRepository
                                     ->whereIn('type', $request['general_meeting_id'])
                                     ->get();
         $title = $request['type'] == 'checklist' ? 'Checklist' : 'Procedure';
-        $filename = $title .''. $session_administrator->libelle;
+
+        $filename = Str::slug($title .''. $session_administrator->libelle). '_'.date('YmdHis') . '.pdf';
 
         $pdf =  $this->generateFromView( 'pdf.session_administrator.checklist_and_procedure',  [
             'tasks' => $tasks,

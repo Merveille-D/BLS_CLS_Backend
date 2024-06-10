@@ -15,18 +15,11 @@ class PerformanceIndicator extends Model
 
     protected $fillable = [
         'title',
-        'position',
+        'position_id',
         'type',
         'note',
         'description',
         'created_by',
-    ];
-
-    const POSITIONS = [
-        'lawyer',
-        'notary',
-        'hussier',
-        'real_estate_expert',
     ];
 
     const TYPES = [
@@ -34,11 +27,11 @@ class PerformanceIndicator extends Model
         'qualitative',
     ];
 
-    public function collaborators()
+    public function position()
     {
-        return $this->hasMany(Collaborator::class);
+        return $this->belongsTo(Position::class);
     }
-
+    
     public function notations()
     {
         return $this->hasMany(Notation::class);

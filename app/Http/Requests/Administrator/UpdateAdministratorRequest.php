@@ -41,10 +41,6 @@ class UpdateAdministratorRequest extends FormRequest
             'denomination' => 'required_if:type,corporate',
             'company_head_office' => 'required_if:type,corporate',
             'company_nationality' => 'required_if:type,corporate',
-
-            'appointment_date' => 'date',
-            'renewal_date' => 'date',
-            'expiry_date' => 'date',
         ];
     }
 

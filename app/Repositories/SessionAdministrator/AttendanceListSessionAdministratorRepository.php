@@ -6,6 +6,7 @@ use App\Models\Gourvernance\BoardDirectors\Administrators\CaAdministrator;
 use App\Models\Gourvernance\BoardDirectors\Sessions\AttendanceListSessionAdministrator;
 use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
 use App\Models\Gourvernance\Representant;
+use Illuminate\Support\Str;
 
 class AttendanceListSessionAdministratorRepository
 {
@@ -75,7 +76,7 @@ class AttendanceListSessionAdministratorRepository
 
         $administrators = $administrators->merge($representants);
 
-        $filename = 'Liste de présence | '.$session_administrator->libelle;
+        $filename = Str::slug('Liste de présence | ' . $session_administrator->libelle). '_'.date('YmdHis') . '.pdf';
 
         $pdf =  $this->generateFromView( 'pdf.session_administrator.attendance',  [
             'administrators' => $administrators,

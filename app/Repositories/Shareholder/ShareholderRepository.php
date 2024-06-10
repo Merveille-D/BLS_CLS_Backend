@@ -31,7 +31,7 @@ class ShareholderRepository
         $request['percentage'] = $percentage ?? null;
 
         $request['created_by'] = Auth::user()->id;
-        $Shareholder = $this->shareholder->create($request);
+        $shareholder = $this->shareholder->create($request);
 
         $bank_info = BankInfo::get()->first();
         if($bank_info) {
@@ -40,7 +40,7 @@ class ShareholderRepository
             ]);
         }
 
-        return $Shareholder;
+        return $shareholder;
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Enums\AdminType;
 use App\Enums\Quality;
 use App\Models\Gourvernance\BoardDirectors\Administrators\CaAdministrator;
 use App\Models\Gourvernance\Mandate;
+use Carbon\Carbon;
 
 class AdministratorRepository
 {
@@ -37,9 +38,9 @@ class AdministratorRepository
         }
 
         $administrator->mandates()->create([
-            'appointment_date' => $request['appointment_date'] ?? null,
-            'renewal_date' => $request['renewal_date'] ?? null,
-            'expiry_date' => $request['expiry_date'] ?? null,
+            'appointment_date' => $request['appointment_date'],
+            'expiry_date' => Carbon::parse($request['appointment_date'])->addYears(5),
+            'renewal_date' => Carbon::parse($request['appointment_date'])->addYears(5)->addDay(1),
         ]);
 
         return $administrator;
@@ -53,10 +54,10 @@ class AdministratorRepository
      */
     public function update(CaAdministrator $administrator, $request) {
 
-        if ($request->type == AdminType::INDIVIDUAL) {
-            $administrator->update($request->all());
+        if ($request['type'] == AdminType::INDIVIDUAL) {
+            $administrator->update($request);
 
-        } else if ($request->type == AdminType::CORPORATE) {
+        } else if ($request['type'] == AdminType::CORPORATE) {
             $company_info = [
                 'name' => $request->denomination,
                 'address' => $request->company_head_office,
@@ -70,26 +71,6 @@ class AdministratorRepository
 
         }
 
-
-        $mandates = $administrator->mandates()->where('status', 'active')->exists();
-
-        if (!$mandates) {
-
-            $administrator->mandates()->create([
-                'appointment_date' => $request['appointment_date'] ?? null,
-                'renewal_date' => $request['renewal_date'] ?? null,
-                'expiry_date' => $request['expiry_date'] ?? null,
-            ]);
-        }else {
-            $last_mandate = $administrator->mandates()->where('status', 'active')->latest()->first();
-            $administrator->mandates()->update([
-                'appointment_date' => $request['appointment_date'] ?? null,
-                'renewal_date' => $request['renewal_date'] ?? null,
-                'expiry_date' => $request['expiry_date'] ?? null,
-                'status' => ($last_mandate->expiry_date < now()) ? 'expired' : 'active',
-            ]);
-        }
-
         return $administrator;
     }
 
@@ -99,5 +80,18 @@ class AdministratorRepository
             'type' => AdminType::TYPES_VALUES,
             'function' => AdminFunction::ADMIN_FUNCTIONS_VALUES,
         );
+    }
+
+    public function renewMandate($request) {
+
+        $administrator = CaAdministrator::find($request['administrator_id']);
+
+        $administrator->mandates()->create([
+            'appointment_date' => $request['appointment_date'],
+            'expiry_date' => Carbon::parse($request['appointment_date'])->addYears(5),
+            'renewal_date' => Carbon::parse($request['appointment_date'])->addYears(5)->addDay(1),
+        ]);
+
+        return $administrator;
     }
 }

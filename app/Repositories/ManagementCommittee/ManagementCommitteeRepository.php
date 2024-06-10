@@ -7,6 +7,7 @@ use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\TaskManageme
 use App\Models\Gourvernance\GourvernanceDocument;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ManagementCommitteeRepository
 {
@@ -140,11 +141,12 @@ class ManagementCommitteeRepository
         $tasks = TaskManagementCommittee::where('management_committee_id', $management_committee->id)
                                     ->whereIn('type', ['pre_cd', 'post_cd'])
                                     ->get();
+        $filename = Str::slug($management_committee->libelle). '_'.date('YmdHis') . '.pdf';
 
         $pdf =  $this->generateFromView( 'pdf.management_committee.fiche_de_suivi',  [
             'tasks' => $tasks,
             'management_committee' => $management_committee,
-        ],$management_committee->libelle);
+        ],$filename);
         return $pdf;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Models\Shareholder;
 
 use App\Models\Gourvernance\GourvernanceDocument;
+use App\Models\Gourvernance\Tier;
 use App\Models\Scopes\CountryScope;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
@@ -17,21 +18,63 @@ class ActionTransfer extends Model
     protected $fillable = [
         'owner_id',
         'buyer_id',
+        'tier_id',
+        'type',
         'count_actions',
-        'lastname',
-        'firstname',
         'status',
         'transfer_date',
-        'ask_date',
-        'ask_agrement',
         'created_by',
     ];
 
-    const STATUS = ['pending', 'accepted', 'rejected'];
+    const STATUS = ['pending', 'rejected', 'cancelled', 'validated', 'approved'];
+
+    const TYPES = ['shareholder', 'tier'];
+
+    const TYPE_VALUES = [
+        'shareholder' => 'Actionnaire vers Actionnaire',
+        'tier' => 'Actionnaire vers Tiers',
+    ];
 
     public function fileUploads()
     {
         return $this->morphMany(GourvernanceDocument::class, 'uploadable');
+    }
+
+    public function getCategoryAttribute() {
+
+        $value = $this->type;
+        $label = self::TYPE_VALUES[$value];
+
+        return [
+            'value' => $value,
+            'label' => $label,
+        ];
+    }
+
+    public function taskActionTransfers()
+    {
+        return $this->hasMany(TaskActionTransfer::class);
+    }
+
+    public function getCurrentTaskAttribute() {
+
+        $current_task_action_transfer = $this->taskActionTransfers->where('status', false)->first();
+        return $current_task_action_transfer;
+    }
+
+    public function getFilesAttribute() {
+
+        $files = [];
+
+        foreach ($this->taskActionTransfers as $taskActionTransfers) {
+            foreach ($taskActionTransfers->fileUploads as $fileUpload) {
+                $files[] = [
+                    'filename' => $fileUpload->name ?? null,
+                    'file_url' => $fileUpload->file,
+                ];
+            }
+        }
+        return $files;
     }
 
     public function owner()
@@ -39,9 +82,14 @@ class ActionTransfer extends Model
         return $this->belongsTo(Shareholder::class, 'owner_id');
     }
 
-    public function buyer()
+    public function shareholder()
     {
         return $this->belongsTo(Shareholder::class, 'buyer_id');
+    }
+
+    public function tier()
+    {
+        return $this->belongsTo(Tier::class, 'tier_id');
     }
 
     public function creator()

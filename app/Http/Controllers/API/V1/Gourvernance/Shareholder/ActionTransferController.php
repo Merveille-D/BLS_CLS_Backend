@@ -7,6 +7,7 @@ use App\Http\Requests\ActionTransfer\StoreActionTransferRequest;
 use App\Http\Requests\ActionTransfer\UpdateActionTransferRequest;
 use App\Models\Shareholder\ActionTransfer;
 use App\Repositories\Shareholder\ActionTransferRepository;
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class ActionTransferController extends Controller
@@ -22,12 +23,13 @@ class ActionTransferController extends Controller
     public function index()
     {
         $action_transfers = ActionTransfer::orderBy('created_at', 'desc')->get()->map(function ($action_transfer) {
+            $action_transfer->owner= $action_transfer->owner;
+            $action_transfer->buyer = $action_transfer->shareholder ?? $action_transfer->tier;
 
-            $action_transfer->owner = $action_transfer->owner;
-            $action_transfer->buyer = $action_transfer->buyer;
+            $action_transfer->makeHidden('owner_id', 'buyer_id', 'tier_id', 'tier', 'shareholder', 'created_at', 'updated_at');
             return $action_transfer;
         });
-        return api_response(true, "Historique des transfert", $action_transfers, 200);
+        return api_response(true, "Liste des transferts d'actions", $action_transfers, 200);
     }
 
     /**
@@ -49,7 +51,14 @@ class ActionTransferController extends Controller
     public function show(ActionTransfer $action_transfer)
     {
         try {
-            return api_response(true, "Infos du transfert d'action", $action_transfer, 200);
+            $data = $action_transfer->makeHidden('owner_id', 'buyer_id', 'tier_id', 'created_at', 'updated_at', '')->toArray();
+            $data['owner'] = $action_transfer->owner;
+            $data['buyer'] = $action_transfer->shareholder ?? $action_transfer->tier;
+            $data['category'] = $action_transfer->category;
+            $data['current_task'] = $action_transfer->current_task;
+            $data['files'] = $action_transfer->files;
+
+            return api_response(true, "Infos du transfert d'action", $data, 200);
         }catch( ValidationException $e ) {
             return api_response(false, "Echec de la récupération des infos du transfer", $e->errors(), 422);
         }
@@ -60,12 +69,18 @@ class ActionTransferController extends Controller
      */
     public function update(UpdateActionTransferRequest $request, ActionTransfer $action_transfer)
     {
-        // try {
-        //     $this->action_transfer->update($action_transfer, $request->all());
-        //     return api_response(true, "Mis à jour du du transfert", $action_transfer, 200);
-        // } catch (ValidationException $e) {
+        //
+    }
 
-        //     return api_response(false, "Echec de la mise à jour", $e->errors(), 422);
-        // }
+    public function approvedActionTransfer(Request $request, )
+    {
+
+        try {
+            $action_transfer = $this->action_transfer->approvedActionTransfer($request->all());
+
+            return api_response(true, "Succès de l'enregistrement de la tache", $action_transfer, 200);
+        }catch (ValidationException $e) {
+                return api_response(false, "Echec de l'enregistrement de la tache", $e->errors(), 422);
+        }
     }
 }

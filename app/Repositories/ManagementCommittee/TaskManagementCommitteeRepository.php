@@ -7,6 +7,7 @@ use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\ManagementCo
 use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\TaskManagementCommittee;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class TaskManagementCommitteeRepository
 {
@@ -111,7 +112,8 @@ class TaskManagementCommitteeRepository
                                     ->whereIn('type', $request['general_meeting_id'])
                                     ->get();
         $title = $request['type'] == 'checklist' ? 'Checklist' : 'Procedure';
-        $filename = $title .''. $management_committee->libelle;
+
+        $filename = Str::slug($title .''. $management_committee->libelle). '_'.date('YmdHis') . '.pdf';
 
         $pdf =  $this->generateFromView( 'pdf.management_committee.checklist_and_procedure',  [
             'tasks' => $tasks,

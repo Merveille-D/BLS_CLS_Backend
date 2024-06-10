@@ -20,7 +20,8 @@ return new class extends Migration
 
             $table->uuid('user_id')->nullable();
 
-            $table->enum('position', PerformanceIndicator::POSITIONS);
+            $table->uuid('position_id')->nullable();
+            $table->foreign('position_id')->references('id')->on('positions')->onDelete('cascade');
 
             $table->uuid('created_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');

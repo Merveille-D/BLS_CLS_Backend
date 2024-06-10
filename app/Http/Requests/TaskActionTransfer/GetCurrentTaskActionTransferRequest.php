@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Mandate;
+namespace App\Http\Requests\TaskActionTransfer;
 
-use App\Models\Gourvernance\Mandate;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
-class ListMandateRequest extends FormRequest
+class GetCurrentTaskActionTransferRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,9 +24,7 @@ class ListMandateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => [Rule::in(Mandate::TYPES) ],
-            'type_id' => ['required','uuid'],
-
+            'action_transfer_id' => ['required', 'uuid'],
         ];
     }
 

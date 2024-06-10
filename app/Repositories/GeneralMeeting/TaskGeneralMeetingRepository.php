@@ -6,7 +6,7 @@ use App\Concerns\Traits\Transfer\AddTransferTrait;
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
 use Carbon\Carbon;
-use DateTime;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
 class TaskGeneralMeetingRepository
@@ -115,7 +115,7 @@ class TaskGeneralMeetingRepository
                                     ->whereIn('type', $request['type'])
                                     ->get();
         $title = $request['type'] == 'checklist' ? 'Checklist' : 'Procedure';
-        $filename = $title .''. $general_meeting->libelle;
+        $filename = Str::slug($title .''. $general_meeting->libelle). '_'.date('YmdHis') . '.pdf';
 
         $pdf =  $this->generateFromView( 'pdf.general_meeting.checklist_and_procedure',  [
             'tasks' => $tasks,

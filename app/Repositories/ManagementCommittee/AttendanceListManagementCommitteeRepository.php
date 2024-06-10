@@ -5,6 +5,8 @@ use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use App\Models\Gourvernance\ExecutiveManagement\Directors\Director;
 use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\AttendanceListManagementCommittee;
 use App\Models\Gourvernance\Representant;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class AttendanceListManagementCommitteeRepository
 {
@@ -77,7 +79,7 @@ class AttendanceListManagementCommitteeRepository
 
         $directors = $directors->merge($representants);
 
-        $filename = 'Liste de présence | ' . $management_committee->libelle;
+        $filename = Str::slug('Liste de présence | ' . $management_committee->libelle). '_'.date('YmdHis') . '.pdf';
 
         $pdf =  $this->generateFromView( 'pdf.management_committee.attendance',  [
             'directors' => $directors,

@@ -25,6 +25,7 @@ use App\Http\Controllers\API\V1\Gourvernance\ExecutiveManagement\ManagementCommi
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\AttendanceListGeneralMeetingController;
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\GeneralMeetingController;
 use App\Http\Controllers\API\V1\Gourvernance\GeneralMeeting\TaskGeneralMeetingController;
+use App\Http\Controllers\API\V1\Gourvernance\Mandate\MandateController;
 use App\Http\Controllers\API\V1\Gourvernance\Representant\RepresentantController;
 use App\Http\Controllers\API\V1\Gourvernance\Shareholder\ActionTransferController;
 use App\Http\Controllers\API\V1\Gourvernance\Shareholder\ShareholderController;
@@ -32,6 +33,9 @@ use App\Http\Controllers\API\V1\Incident\AuthorIncidentController;
 use App\Http\Controllers\API\V1\Incident\IncidentController;
 use App\Http\Controllers\API\V1\Incident\TaskIncidentController;
 use App\Http\Controllers\API\V1\Gourvernance\Shareholder\CapitalController;
+use App\Http\Controllers\API\V1\Gourvernance\Shareholder\TaskActionTransferController;
+use App\Http\Controllers\API\V1\Gourvernance\Tier\TierController;
+use App\Http\Controllers\API\V1\Evaluation\PositionController;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Route;
@@ -65,7 +69,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('generate_pdf_attendance_general_meetings', [AttendanceListGeneralMeetingController::class, 'generatePdf'] );
 
     Route::resource('representants', RepresentantController::class);
-
+    Route::resource('tiers', TierController::class);
 
     // Liste de présence CA
     Route::get('list_attendance_session_administrators', [AttendanceListSessionAdministratorController::class, 'list'] );
@@ -80,6 +84,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::get('/ca_administrators/settings', [AdministratorController::class, 'settings']);
     Route::resource('/ca_administrators', AdministratorController::class);
+    Route::post('renew_mandate_administrator', [AdministratorController::class, 'renewMandate'] );
 
     Route::resource('session_administrators', SessionAdministratorController::class);
     Route::post('ca_attachements', [SessionAdministratorController::class, 'attachment']);
@@ -94,6 +99,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::resource('shareholders', ShareholderController::class);
     Route::resource('action_transfers', ActionTransferController::class);
+    Route::resource('task_action_transfers', TaskActionTransferController::class);
+    Route::get('get_current_task_action_transfers', [TaskActionTransferController::class, 'getCurrentTaskActionTransfer'] );
+    Route::post('complete_task_action_transfers', [TaskActionTransferController::class, 'completeTaskActionTransfer'] );
+
+    Route::post('approved_action_transfers', [ActionTransferController::class, 'approvedActionTransfer'] );
 
     Route::resource('bank_infos', BankInfoController::class);
     Route::resource('capitals', CapitalController::class);
@@ -129,6 +139,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // DIRECTION GENERALE
 
     Route::resource('directors', DirectorController::class);
+    Route::post('renew_mandate_director', [DirectorController::class, 'renewMandate'] );
+
+    //Mandats
+    Route::resource('mandates', MandateController::class);
 
     Route::resource('management_committees', ManagementCommitteeController::class);
     Route::post('cd_attachements', [ManagementCommitteeController::class, 'attachment']);
@@ -146,6 +160,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('performance_indicators', PerformanceIndicatorController::class);
     Route::resource('collaborators', CollaboratorController::class);
     Route::post('evaluation_create_transfers', [NotationController::class, 'createTransfer'] );
+    Route::resource('positions', PositionController::class);
 
     // AUDIT
     Route::resource('audit_notations', AuditNotationController::class);

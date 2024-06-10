@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Gourvernance\ExecutiveManagement\Directors
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Director\AddDirectorRequest;
+use App\Http\Requests\Director\RenewMandateDirectorRequest;
 use App\Http\Requests\Director\UpdateDirectorRequest;
 use App\Models\Gourvernance\ExecutiveManagement\Directors\Director;
 use App\Repositories\ManagementCommittee\DirectorRepository;
@@ -84,6 +85,17 @@ class DirectorController extends Controller
             return api_response(true, "Succès de la suppression du directeur", null, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de la supression du directeur", $e->errors(), 422);
+        }
+    }
+
+    public function renewMandate(RenewMandateDirectorRequest $request)
+    {
+        try {
+            $director = $this->director->renewMandate($request->all());
+            return api_response(true, "Renouvellement du mandat avec succès", $director, 200);
+        } catch (ValidationException $e) {
+
+            return api_response(false, "Echec de la mise à jour", $e->errors(), 422);
         }
     }
 }

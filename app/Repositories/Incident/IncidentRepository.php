@@ -5,6 +5,7 @@ use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use App\Models\Incident\Incident;
 use App\Models\Incident\TaskIncident;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class IncidentRepository
 {
@@ -77,10 +78,12 @@ class IncidentRepository
         $data['author'] = $incident->authorIncident;
         $data['tasks'] = $incident->taskIncident;
 
+        $filename = Str::slug($incident->title). '_'.date('YmdHis') . '.pdf';
+
         $pdf =  $this->generateFromView( 'pdf.incident.fiche_de_suivi',  [
             'data' => $data,
             'details' => $this->getDetails($data)
-        ],$incident->title);
+        ],$filename);
 
         return $pdf;
     }

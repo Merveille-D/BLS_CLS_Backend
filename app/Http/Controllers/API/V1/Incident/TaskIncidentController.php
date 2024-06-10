@@ -8,7 +8,6 @@ use App\Http\Requests\TaskIncident\ListTaskIncidentRequest;
 use App\Http\Requests\TaskIncident\UpdateTaskIncidentRequest;
 use App\Models\Incident\TaskIncident;
 use App\Repositories\Incident\TaskIncidentRepository;
-use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class TaskIncidentController extends Controller
@@ -35,24 +34,6 @@ class TaskIncidentController extends Controller
             return api_response(true, "Information de la tache", $taskIncident, 200);
         }catch( ValidationException $e ) {
             return api_response(false, "Echec de la récupération des infos de la tache", $e->errors(), 422);
-        }
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateTaskIncidentRequest $request, TaskIncident $taskIncident)
-    {
-        $current_task_incident = TaskIncident::where('incident_id', $taskIncident->incident_id)->where('status', false)->first();
-        if($current_task_incident->id != $taskIncident->id) {
-            return api_response(false, "Ce n'est pas la tache suivante à modifier", null, 422);
-        }
-
-        try {
-            $this->taskIncident->update($taskIncident, $request->all());
-            return api_response(true, "Succès de l'enregistrement de la tache", $taskIncident, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de l'enregistrement de la tache", $e->errors(), 422);
         }
     }
 

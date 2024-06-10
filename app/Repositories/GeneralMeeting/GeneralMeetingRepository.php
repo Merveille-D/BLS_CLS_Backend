@@ -5,6 +5,7 @@ use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
 use App\Models\Gourvernance\GourvernanceDocument;
+use Illuminate\Support\Str;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
 
@@ -140,11 +141,13 @@ class GeneralMeetingRepository
                                     ->whereIn('type', ['pre_ag', 'post_ag'])
                                     ->get();
 
+        $filename = Str::slug($general_meeting->libelle). '_'.date('YmdHis') . '.pdf';
+
         $pdf =  $this->generateFromView( 'pdf.general_meeting.fiche_de_suivi',  [
             'tasks' => $tasks,
             'general_meeting' => $general_meeting,
             'meeting_type' => $meeting_type,
-        ],$general_meeting->libelle);
+        ],$filename);
 
         return $pdf;
     }

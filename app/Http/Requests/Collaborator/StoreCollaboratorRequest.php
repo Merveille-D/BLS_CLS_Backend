@@ -29,7 +29,7 @@ class StoreCollaboratorRequest extends FormRequest
         return [
             'lastname' => ['required', 'string'],
             'firstname' => ['required', 'string'],
-            'position' => ['required',  Rule::in(PerformanceIndicator::POSITIONS) ],
+            'position_id' => ['required', 'uuid'],
         ];
     }
 

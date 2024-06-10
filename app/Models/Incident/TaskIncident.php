@@ -927,7 +927,7 @@ class TaskIncident extends Model
                                     'label' => 'Joindre sur la fiche de déclaration',
                                 ]
                             ],
-                            'form_title' => ''
+                            'form_title' => 'Preuve de la déclaration'
                         ],
                         "next" => false,
                     ],

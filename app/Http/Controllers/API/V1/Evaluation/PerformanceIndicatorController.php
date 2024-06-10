@@ -21,14 +21,7 @@ class PerformanceIndicatorController extends Controller
      */
     public function index(ListPerformanceIndicatorRequest $request)
     {
-        if ($request->has('collaborator_id')) {
-            $collaborator = Collaborator::find(request('collaborator_id'));
-            $position = $collaborator->position;
-        } else {
-            $position = request('position');
-        }
-
-        $performance_indicators = PerformanceIndicator::where('position', $position)->get();
+        $performance_indicators = PerformanceIndicator::where('position_id', $request->position_id)->get()->load('position');
 
         return api_response(true, "Liste des indicateurs de performance", $performance_indicators, 200);
     }

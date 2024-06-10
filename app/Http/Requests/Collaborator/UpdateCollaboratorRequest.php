@@ -28,7 +28,7 @@ class UpdateCollaboratorRequest extends FormRequest
     {
         return [
             'lastname' => ['string'],
-            'position' => [Rule::in(PerformanceIndicator::POSITIONS) ],
+            'position_id' => ['uuid'],
             'firstname' => ['string'],
             'user_id' => ['string'],
 

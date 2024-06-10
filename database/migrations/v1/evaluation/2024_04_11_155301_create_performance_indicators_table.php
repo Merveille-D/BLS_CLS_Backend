@@ -15,10 +15,12 @@ return new class extends Migration
         Schema::create('performance_indicators', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('title');
-            $table->enum('position', PerformanceIndicator::POSITIONS);
             $table->enum('type', PerformanceIndicator::TYPES);
             $table->string('note');
             $table->text('description');
+
+            $table->uuid('position_id')->nullable();
+            $table->foreign('position_id')->references('id')->on('positions')->onDelete('cascade');
 
             $table->uuid('created_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');

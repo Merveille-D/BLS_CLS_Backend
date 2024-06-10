@@ -30,11 +30,11 @@ class UpdateTaskIncidentRequest extends FormRequest
 
         if (!$request->has('type')) {
             $rules['type'] = 'required';
-            $rules['status'] = 'required|boolean';
         }else {
             $task = searchElementIndice(TaskIncident::TASKS, $request->input('type'));
             $rules = $task['rules'];
             $rules['task_incident_id'] = ['required', 'uuid'];
+            $rules['status'] = 'required|boolean';
         }
 
         // For Transfer
