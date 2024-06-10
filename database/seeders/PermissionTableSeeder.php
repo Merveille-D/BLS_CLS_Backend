@@ -23,6 +23,16 @@ class PermissionTableSeeder extends Seeder
             'Subsidiary',
             'Role',
             'User',
+            'Governance',
+            'Guarantee',
+            'Contract',
+            'Litigation',
+            'Recovery',
+            'Audit',
+            'Evaluation',
+            'Legal watch',
+            'Document',
+            'Incident',
         ];
 
         // foreach ($models as $model) {
@@ -34,6 +44,16 @@ class PermissionTableSeeder extends Seeder
             'Role' => 'Rôle',
             'Subsidiary' => 'Filiale',
             'User' => 'Utilisateur',
+            'Governance' => 'Gouvernance',
+            'Guarantee' => 'Sureté',
+            'Contract' => 'Contrat',
+            'Litigation' => 'Contentieux',
+            'Recovery' => 'Recouvrement',
+            'Audit' => 'Audit',
+            'Evaluation' => 'Evaluation',
+            'Legal watch' => 'Veille juridique',
+            'Document' => 'Document',
+            'Incident' => 'Incident',
         ];
 
         foreach ($models as $model) {
