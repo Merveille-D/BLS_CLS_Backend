@@ -34,16 +34,16 @@ enum GuaranteeType : string {
     const CODES = [
         GuaranteeType::MORTGAGE => 'HC',
 
-        GuaranteeType::AUTONOMOUS => 'GP',
-        GuaranteeType::BONDING => 'GP',
-        GuaranteeType::AUTONOMOUS_COUNTER => 'GP',
+        GuaranteeType::AUTONOMOUS => 'GA',
+        GuaranteeType::BONDING => 'CA',
+        GuaranteeType::AUTONOMOUS_COUNTER => 'CG',
 
-        GuaranteeType::STOCK => 'NA',
-        GuaranteeType::VEHICLE => 'NA',
+        GuaranteeType::STOCK => 'GG',
+        GuaranteeType::VEHICLE => 'GG',
 
-        GuaranteeType::SHAREHOLDER_RIGHTS => 'GA',
-        GuaranteeType::TRADE_FUND => 'GA',
-        GuaranteeType::BANK_ACCOUNT => 'GA',
+        GuaranteeType::SHAREHOLDER_RIGHTS => 'NA',
+        GuaranteeType::TRADE_FUND => 'NA',
+        GuaranteeType::BANK_ACCOUNT => 'NA',
     ];
 
     const VALUES = [

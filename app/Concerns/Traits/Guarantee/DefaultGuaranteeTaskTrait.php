@@ -9,7 +9,7 @@ trait DefaultGuaranteeTaskTrait
     public function defaultStockSteps() : array {
         return [
             "formalization" => [
-                "conventionnal" => [
+                "conventional" => [
                     [
                         "title" => 'Initiation of the guarantee',
                         "code" => "created",

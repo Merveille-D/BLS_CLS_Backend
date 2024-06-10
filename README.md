@@ -46,21 +46,10 @@ startsecs=0
 
 
 ## to do 
-list of permissions
-- all permissions 
-- manage user
-- view all subsidiary
-- view local subsidiary
-- manage subsidiary
-- manage roles
 
 
 * manage permission **
 * general settings
 * translation in the system
 * gestion des alertes
-
-* pdf legal watch [frontend] and litigation 
-* set auth mode in env
-* frontend change email to username
 

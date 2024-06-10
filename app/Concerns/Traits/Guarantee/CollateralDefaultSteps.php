@@ -15,7 +15,7 @@ trait CollateralDefaultSteps
     public function ShareholderRightsDefaultSteps() : array {
         return [
             "formalization" => [
-                "conventionnal" => [
+                "conventional" => [
                     [
                         "title" => 'Initiation of the guarantee',
                         "code" => "created",
