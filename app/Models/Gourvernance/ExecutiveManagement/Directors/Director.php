@@ -30,7 +30,7 @@ class Director extends Model
 
     public function mandates()
     {
-        return $this->morphMany(Mandate::class, 'mandatable');
+        return $this->morphMany(Mandate::class, 'mandatable')->orderBy('created_at', 'desc');;
     }
 
     public function lastMandate()
