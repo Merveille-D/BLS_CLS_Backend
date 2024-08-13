@@ -4,7 +4,7 @@ return [
     'Litigation' => 'Contentieux',
     'Litigation Parties' => 'Parties au contentieux',
     //natures
-    'Admisnistrative' => 'Administrative',
+    'Administrative' => 'Administrative',
     'Civil' => 'Civile',
     'Commercial' => 'Commerciale',
     'Penal' => 'Penale',
