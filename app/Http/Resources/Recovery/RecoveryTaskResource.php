@@ -19,7 +19,7 @@ class RecoveryTaskResource extends JsonResource
         return [
             'id' => $this->id,
             'code' => $this->code,
-            'title' => $this->title,
+            'title' => $this->type == 'task' ? $this->title : __('recovery.' . $this->title),
             'status' => $this->status,
             'min_deadline' => $this->min_deadline,
             'max_deadline' => $this->max_deadline,

@@ -16,7 +16,7 @@ trait RecoveryNotificationTrait
         switch ($recovery->status) {
             case RecoveryStepEnum::CREATED:
                 if ($recovery->type == 'friendly') {
-                    $data['message'] = 'Formalisation de l\'acte (Dépôt de l\'acte au rang des minutes d\'un notaire ou homologatuion)';
+                    $data['message'] = 'Formalisation de l\'acte (Dépôt de l\'acte au rang des minutes d\'un notaire ou homologation)';
                 } else {
                     $data['message'] = 'Procéder à la mise en demeure de payer adressée au client débiteur';
                 }

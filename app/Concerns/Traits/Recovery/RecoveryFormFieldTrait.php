@@ -19,7 +19,7 @@ trait RecoveryFormFieldTrait
                 $customFields = $this->commonProperties($step->title,  ['file', 'documents', 'Documents of the formal notice']);
                 break;
             case RecoveryStepEnum::DEBT_PAYEMENT:
-                $customFields = $this->commonProperties($step->title,  ['radio', 'payement_status', 'The debtor has paid his debt']);
+                $customFields = $this->commonProperties($step->title,  ['radio', 'payement_status', 'The debtor pays his debt']);
                 break;
             case RecoveryStepEnum::JURISDICTION:
                 $customFields = $this->commonProperties($step->title,  ['file', 'documents', 'Documents of the procedure']);

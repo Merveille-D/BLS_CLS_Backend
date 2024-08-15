@@ -64,6 +64,17 @@ class GuaranteeSeeder extends Seeder
             }
         }
 
+        $phases = $this->defaultVehicleSteps();
+
+        foreach ($phases as $key => $phase) {
+            foreach ($phase as $step) {
+                // $step['formalization_type'] = $formalization_type;
+                $step['guarantee_type'] = 'vehicle';
+                $step['step_type'] = $key;
+                $this->createStep($step);
+            }
+        }
+
         $this->saveMortgageSteps();
 
     }

@@ -17,6 +17,8 @@ return [
     'Arbitration Court' => 'Tribunal Arbitral',
     'Commercial Court' => 'Tribunal de Commerce',
     'First Instance Court' => 'Tribunal de Première Instance',
+    'CRIET' => 'CRIET',
+    'Special Land Court' => 'Cour Spéciale des Affaires Foncières',
     //documents
     'Summons to appear' => 'Assignation à comparaître',
     'Convocation' => 'Convocation',

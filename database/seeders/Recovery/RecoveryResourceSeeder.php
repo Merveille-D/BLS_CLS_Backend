@@ -39,7 +39,7 @@ class RecoveryResourceSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => "Formalisation de l'acte (Dépôt de l'acte au rang des minutes d'un notaire ou homologatuion)",
+                'title' => "Formalisation de l'acte (Dépôt de l'acte au rang des minutes d'un notaire ou homologation)",
                 'code' => RecoveryStepEnum::FORMALIZATION,
                 'type' => 'friendly',
                 'rank' => 2,

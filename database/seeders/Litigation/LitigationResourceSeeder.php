@@ -135,6 +135,8 @@ class LitigationResourceSeeder extends Seeder
             'Arbitration Court',
             'Commercial Court',
             'First Instance Court',
+            'CRIET',
+            'Special Land Court',
         ];
     }
 

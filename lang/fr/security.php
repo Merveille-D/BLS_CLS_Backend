@@ -2,7 +2,7 @@
 
 return [
     //movanble securities steps
-    'Initiation of the guarantee' => 'Iniation de la garantie',
+    'Initiation of the guarantee' => 'Initiation de la garantie',
     'Drafting of the guarantee agreement' => 'Rédaction de la convention de garantie',
     'Deposit of the agreement with the notary' => 'Dépot de la convention au rang des minutes d\'un notaire',
     'Transmission to the notary of a request for registration of the guarantee with the RCCM' => 'Transmission au notaire d\'une demande d\'incription de la garantie au RCCM',
@@ -44,9 +44,9 @@ return [
     'Formal Notice to the guarantor' => 'Mise en demeure de la caution',
     'Payment by the guarantor' => 'Paiement par la caution',
     'Start of Counter-Guarantee' => 'Initiation de la contre garantie',
-    'Drafting of Counter-Guarantee Contract' => 'Rédaction du contrat de contre-garantie',
+    'Drafting of Counter-Guarantee Contract' => 'Rédiger le contrat de garantie autonome',
     'Counter-Guarantee Contract Validity Verification' => 'Vérification de la validité du contrat',
-    'Signing of the Autonomous Guarantee Contract' => 'Signature du contrat de garantie autonome',
+    'Signing of the Autonomous Guarantee Contract' => 'Signature du contrat de contre-garantie autonome',
     'Payment Request to the counter-guarantor' => 'Demande de paiement adressée au contre-garant',
     'Counter-guarantor\'s Request Verification' => 'Vérification de la demande par le contre-garant',
 
