@@ -112,7 +112,7 @@ class TaskSessionAdministratorRepository
         $meeting_type = SessionAdministrator::SESSION_MEETING_TYPES_VALUES[$session_administrator->type];
 
         $tasks = TaskSessionAdministrator::where('session_administrator_id', $session_administrator->id)
-                                    ->whereIn('type', $request['general_meeting_id'])
+                                    ->where('type', $request['type'])
                                     ->get();
         $title = $request['type'] == 'checklist' ? 'Checklist' : 'Procedure';
 

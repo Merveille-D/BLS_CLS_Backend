@@ -107,12 +107,13 @@ class TaskGeneralMeetingRepository
 
     public function generatePdf($request){
 
+
         $general_meeting = GeneralMeeting::find($request['general_meeting_id']);
 
         $meeting_type = GeneralMeeting::GENERAL_MEETING_TYPES_VALUE[$general_meeting->type];
 
         $tasks = TaskGeneralMeeting::where('general_meeting_id', $general_meeting->id)
-                                    ->whereIn('type', $request['type'])
+                                    ->where('type', $request['type'])
                                     ->get();
         $title = $request['type'] == 'checklist' ? 'Checklist' : 'Procedure';
         $filename = Str::slug($title .''. $general_meeting->libelle). '_'.date('YmdHis') . '.pdf';

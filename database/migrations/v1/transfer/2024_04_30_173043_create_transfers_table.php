@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('transfers', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            
             $table->boolean('status')->default(false);
             $table->string('title');
             $table->datetime('deadline')->nullable();
