@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Shareholder;
 
+use App\Models\Shareholder\Capital;
 use App\Models\Shareholder\Shareholder;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -34,6 +35,18 @@ class StoreShareholderRequest extends FormRequest
             'actions_encumbered' => ['required', 'numeric'],
             'actions_no_encumbered' => ['required', 'numeric'],
         ];
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+
+            $capital = Capital::all();
+
+            if ($capital->isEmpty()) {
+                $validator->errors()->add('capital', "Aucun capital n'est encore enregistré  .");
+            }
+        });
     }
 
     public function failedValidation(Validator $validator)

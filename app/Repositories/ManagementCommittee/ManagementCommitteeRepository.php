@@ -75,8 +75,8 @@ class ManagementCommitteeRepository
 
             $fieldName = ManagementCommittee::TYPE_FILE_FIELD_VALUE[$item['type']];
 
-            $ManagementCommittee = new ManagementCommittee();
-            if ($ManagementCommittee->isFillable($fieldName)) {
+            $managementCommittee = new ManagementCommittee();
+            if ($managementCommittee->isFillable($fieldName)) {
 
                 $management_committee->update([
                     $fieldName => uploadFile( $item['file'], 'ca_documents'),
