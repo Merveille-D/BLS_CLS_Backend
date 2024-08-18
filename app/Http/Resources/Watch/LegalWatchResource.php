@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Watch;
 
+use App\Http\Resources\Litigation\LitigationSettingResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -25,8 +26,8 @@ class LegalWatchResource extends JsonResource
             'is_archived' => $this->is_archived,
             'event_date' => $this->event_date,
             'effective_date' => $this->effective_date,
-            'nature' => $this->nature ?? null,
-            'jurisdiction' => $this->jurisdiction ?? null,
+            'nature' => new LitigationSettingResource($this->nature) ?? null,
+            'jurisdiction' => new LitigationSettingResource($this->jurisdiction) ?? null,
             'jurisdiction_location' => $this->jurisdiction_location,
             'recipient_type' => $this->recipient_type,
             'mail_object' => $this->mail_object,

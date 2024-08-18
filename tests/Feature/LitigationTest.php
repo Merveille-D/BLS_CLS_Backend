@@ -41,6 +41,7 @@ class LitigationTest extends TestCase
             'case_number' => 'LT-1234',
             'nature_id' => LitigationSetting::whereType('nature')->first()->id,
             // 'party_id' => LitigationParty::first()->id,
+            'has_provisions' => true,
             'jurisdiction_id' => LitigationSetting::whereType('jurisdiction')->first()->id,
             'jurisdiction_location' => 'Lagos',
             'parties' => [
@@ -131,6 +132,7 @@ class LitigationTest extends TestCase
             'nature_id' => LitigationSetting::whereType('nature')->first()->id,
             'jurisdiction_id' => LitigationSetting::whereType('jurisdiction')->first()->id,
             'jurisdiction_location' => 'Lagos',
+            'has_provisions' => true,
             'parties' => [
                 [
                     'party_id' =>  LitigationParty::first()->id,
