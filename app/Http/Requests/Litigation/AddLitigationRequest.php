@@ -32,6 +32,7 @@ class AddLitigationRequest extends FormRequest
             'nature_id' => 'required|exists:litigation_settings,id',
             'jurisdiction_id' => 'required|exists:litigation_settings,id',
             'jurisdiction_location' => 'required',
+            'has_provisions' => 'required|boolean',
             'parties' =>  'array|required',
             'parties.*.category' => ['required', new ArrayElementMatch(PartyCategory::CATEGORIES)],
             'parties.*.type' =>  ['required', new ArrayElementMatch(PartyType::TYPES)],

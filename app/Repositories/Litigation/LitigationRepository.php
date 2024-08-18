@@ -62,10 +62,12 @@ class LitigationRepository {
                     $qry->where('is_archived', $archive);
                 })
                 ->when($request->type == 'provisioned', function($qry) {
-                    $qry->whereNotNull('added_amount');
+                    $qry->whereNotNull('added_amount')
+                    ->where('has_provisions', false);
                 })
                 ->when($request->type == 'not_provisioned', function($qry) {
-                    $qry->whereNull('added_amount');
+                    $qry->whereNull('added_amount')
+                        ->where('has_provisions', true);
                 })
                 ->orderByDesc('created_at')
                 ->paginate();
@@ -118,6 +120,7 @@ class LitigationRepository {
             'email' => $request->email,
             'phone' => $request->phone,
             'created_by' => auth()->id(),
+            'has_provisions' => $request->has_provisions,
         ]);
         foreach ($request->parties as $key => $party) {
             $party_model = LitigationParty::findOrFail($party['party_id']);

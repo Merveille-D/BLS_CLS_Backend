@@ -18,7 +18,7 @@ class LitigationTaskResource extends JsonResource
         return [
             'id' => $this->id,
             'code' => $this->code,
-            'title' => __('litigation.'.$this->title),
+            'title' => $this->type == 'task' ? $this->title : __('litigation.' . $this->title),
             'status' => $this->status,
             'min_deadline' => $this->min_deadline,
             'max_deadline' => $this->status ? $this->completed_at : $this->max_deadline,

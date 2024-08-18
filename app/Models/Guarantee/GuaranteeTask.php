@@ -2,15 +2,19 @@
 
 namespace App\Models\Guarantee;
 
+use App\Concerns\Traits\Alert\Alertable;
 use App\Concerns\Traits\Guarantee\GuaranteeFormFieldTrait;
 use App\Concerns\Traits\Transfer\Transferable;
+use App\Observers\Guarantee\GuaranteeTaskObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+#[ObservedBy(GuaranteeTaskObserver::class)]
 class GuaranteeTask extends Model
 {
-    use HasFactory, HasUuids, Transferable, GuaranteeFormFieldTrait;
+    use HasFactory, HasUuids, Transferable, GuaranteeFormFieldTrait, Alertable;
 
     protected $table = 'module_tasks';
 
