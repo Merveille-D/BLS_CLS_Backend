@@ -102,11 +102,11 @@ class LegalWatchRepository
         ];
         if ($legal_watch->type == WatchType::LEGAL) {
             $details['Date de l\'événement'] = $legal_watch->event_date ?? null;
-            $details['Juridiction'] = $legal_watch->jurisdiction?->name ?? null;
+            $details['Juridiction'] = __('litigation.'.$legal_watch->jurisdiction?->name) ?? null;
             $details['Lieu de la juridiction'] = $legal_watch->jurisdiction_location ?? null;
         } else {
             $details['Date de prise d\'effet'] = $legal_watch->effective_date ?? null;
-            $details['Matière'] = $legal_watch->nature?->name ?? null;
+            $details['Matière'] = __('litigation.'.$legal_watch->nature?->name )?? null;
             $details['Référence de l\'affaire'] = $legal_watch->case_number ?? null;
         }
 
