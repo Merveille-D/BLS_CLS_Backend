@@ -234,15 +234,15 @@ class RecoveryRepository
                 $data = $this->debtPayement($request, $recovery);
                 break;
             case RecoveryStepEnum::DEBT_PAYEMENT:
-                $data = $this->jurisdiction($request, $recovery);
-                break;
-            case RecoveryStepEnum::JURISDICTION:
                 $data = $this->seizure($request, $recovery);
                 break;
             case RecoveryStepEnum::SEIZURE:
                 $data = $this->executory($request, $recovery);
                 break;
             case RecoveryStepEnum::EXECUTORY:
+                $data = $this->jurisdiction($request, $recovery);
+                break;
+            case RecoveryStepEnum::JURISDICTION:
                 $data = $this->entrustLawyer($request, $recovery);
                 break;
 

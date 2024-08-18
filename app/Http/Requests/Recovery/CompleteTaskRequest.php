@@ -64,9 +64,6 @@ class CompleteTaskRequest extends FormRequest
                 ];
 
             case RecoveryStepEnum::DEBT_PAYEMENT:
-                $data = $data;
-                break;
-            case RecoveryStepEnum::JURISDICTION:
                 $data = [
                     'is_seized' => ['required', new ArrayElementMatch(array('yes', 'no'))],
                 ];
@@ -75,9 +72,16 @@ class CompleteTaskRequest extends FormRequest
                 $data = $data;
                 break;
             case RecoveryStepEnum::EXECUTORY:
+                $data = $data;
+                break;
+
+            case RecoveryStepEnum::JURISDICTION:
                 $data = [
                     'is_entrusted' => ['required', new ArrayElementMatch(array('yes', 'no'))],
                 ];
+                // $data = [
+                //     'is_seized' => ['required', new ArrayElementMatch(array('yes', 'no'))],
+                // ];
                 break;
             case RecoveryStepEnum::ENTRUST_LAWYER:
                 $data = $data;
