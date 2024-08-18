@@ -138,7 +138,7 @@ trait GuaranteeFormFieldTrait
             case AutonomousState::REDACTION:
                 $form_fields = $this->commonProperties(AutonomousState::STATES_VALUES[AutonomousState::REDACTION],
                     ['file', 'documents', 'Documents du contrat'],
-                    ['date', 'completed_at', 'Date redaction du contrat'],
+                    ['date', 'completed_at', 'Contract date'],
                 );
             break;
             case AutonomousState::VERIFICATION:
@@ -185,7 +185,7 @@ trait GuaranteeFormFieldTrait
             case AutonomousState::REDACTION:
                 $form_fields = $this->commonProperties(AutonomousState::STATES_VALUES[AutonomousState::REDACTION],
                     ['file', 'documents', 'Documents du contrat'],
-                    ['date', 'completed_at', 'Date redaction du contrat'],
+                    ['date', 'completed_at', 'Contract date'],
                 );
             break;
 
@@ -241,55 +241,55 @@ trait GuaranteeFormFieldTrait
             case StockState::REDACTION:
                 $form_fields = $this->commonProperties(StockState::STATES_VALUES[StockState::REDACTION],
                     ['file', 'documents', 'Documents du contrat'],
-                    ['date', 'completed_at', 'Date redaction du contrat'],
+                    ['date', 'completed_at', 'Contract date'],
                 );
             break;
             case StockState::NOTARY_DEPOSIT:
                 $form_fields = $this->commonProperties(StockState::STATES_VALUES[StockState::NOTARY_DEPOSIT],
                     ['file', 'documents', 'Documents du contrat'],
-                    ['date', 'completed_at', 'Date redaction du contrat'],
+                    ['date', 'completed_at', 'Contract date'],
                 );
             break;
             case StockState::NOTARY_TRANSMISSION:
                 $form_fields = $this->commonProperties(StockState::STATES_VALUES[StockState::NOTARY_TRANSMISSION],
                     ['file', 'documents', 'Documents du contrat'],
-                    ['date', 'completed_at', 'Date redaction du contrat'],
+                    ['date', 'completed_at', 'Contract date'],
                 );
             break;
             case StockState::CONVENTION_OBTENTION:
                 $form_fields = $this->commonProperties(StockState::STATES_VALUES[StockState::CONVENTION_OBTENTION],
                     ['file', 'documents', 'Documents du contrat'],
-                    ['date', 'completed_at', 'Date redaction du contrat'],
+                    ['date', 'completed_at', 'Contract date'],
                 );
             break;
             case StockState::RCCM_REGISTRATION:
                 $form_fields = $this->commonProperties(StockState::STATES_VALUES[StockState::RCCM_REGISTRATION],
                     ['file', 'documents', 'Documents du contrat'],
-                    ['date', 'completed_at', 'Date redaction du contrat'],
+                    ['date', 'completed_at', 'Contract date'],
                 );
             break;
             case StockState::RCCM_PROOF:
                 $form_fields = $this->commonProperties(StockState::STATES_VALUES[StockState::RCCM_PROOF],
                     ['file', 'documents', 'Documents du contrat'],
-                    ['date', 'completed_at', 'Date redaction du contrat'],
+                    ['date', 'completed_at', 'Contract date'],
                 );
             break;
             case StockState::GUARANTEE_OBTENTION:
                 $form_fields = $this->commonProperties(StockState::STATES_VALUES[StockState::GUARANTEE_OBTENTION],
                     ['file', 'documents', 'Documents du contrat'],
-                    ['date', 'completed_at', 'Date redaction du contrat'],
+                    ['date', 'completed_at', 'Contract date'],
                 );
             break;
             case StockState::HUISSIER_NOTIFICATION:
                 $form_fields = $this->commonProperties(StockState::STATES_VALUES[StockState::HUISSIER_NOTIFICATION],
                     ['file', 'documents', 'Documents du contrat'],
-                    ['date', 'completed_at', 'Date redaction du contrat'],
+                    ['date', 'completed_at', 'Contract date'],
                 );
             break;
             case StockState::DOMICILIATION_OBTENTION:
                 $form_fields = $this->commonProperties(StockState::STATES_VALUES[StockState::DOMICILIATION_OBTENTION],
                     ['file', 'documents', 'Documents du contrat'],
-                    ['date', 'completed_at', 'Date redaction du contrat'],
+                    ['date', 'completed_at', 'Contract date'],
                 );
             break;
 

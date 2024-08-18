@@ -97,6 +97,7 @@ return [
     'Was the command successful?' => 'Was the command successful?',
     'Date of cancellation' => 'Date of cancellation',
     'Date of seizure' => 'Date of seizure',
+    'Contract date' => 'Contract date',
     'Is the outcome favorable?' => 'Is the outcome favorable?',
     'Date of sale' => 'Date of sale',
     'Date of notification' => 'Date of notification',

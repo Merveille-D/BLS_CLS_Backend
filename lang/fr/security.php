@@ -98,6 +98,7 @@ return [
     'Was the command successful?' => 'Le commendement a t-il été fructueux ?',
     'Date of cancellation' => 'Date de radiation',
     'Date of seizure' => 'Date de saisie',
+    'Contract date' =>'Date redaction du contrat',
     'Is the outcome favorable?' => 'La suite est elle favorable ?',
     'Date of sale' => 'Date de vente',
     'Date of notification' => 'Date de notification',

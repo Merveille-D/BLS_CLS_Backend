@@ -10,13 +10,13 @@ use Illuminate\Support\Facades\Log;
 
 trait AddAlertTrait
 {
-    public function new_alert(Model $model, string $title, $message, string $type, $trigger_at, string $priority) : void {
+    public function new_alert(Model $model, string $title, $message, string $type, $trigger_at, string $priority, $deadline = null) : void {
 
         $alert = new Alert();
         $alert->title = $title;
         $alert->type = $type;
         $alert->priority =  $priority;
-        $alert->deadline = now()->addDays(10);
+        $alert->deadline = $deadline ?? now()->addDays(10);
         $alert->message = $message;
         $alert->trigger_at = env('EMAIL_SENDING_MODE') == 'test' ? Carbon::now()->addMinute() :  $trigger_at;
         // Log::info('Alert created', ['alert' => $alert]);
@@ -29,7 +29,7 @@ trait AddAlertTrait
         $interval = $deadline->diff($today);
         $totalDays = $interval->days;
 
-        $percentages = [0.2, 0.6, 0.9];
+        $percentages = [0.2, 0.6, 0.9, 1];
         $milestoneIntervals = array_map(
             fn ($percentage) => new DateInterval("P" . round($totalDays * $percentage) . "D"),
             $percentages

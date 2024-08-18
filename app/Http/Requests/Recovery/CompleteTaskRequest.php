@@ -34,7 +34,7 @@ class CompleteTaskRequest extends FormRequest
             return [];
         }
 
-        $validationRules = $this->validationRulesByStep($task?->taskable?->state);
+        $validationRules = $this->validationRulesByStep($task?->taskable?->status);
 
         return $validationRules;
     }

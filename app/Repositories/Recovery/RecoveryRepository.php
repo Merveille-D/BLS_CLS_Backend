@@ -177,13 +177,13 @@ class RecoveryRepository
     }
 
     public function continueForcedProcess($recovery) {
-        if ($recovery->payement_status) {
+        if (!$recovery->payement_status && $recovery->status == RecoveryStepEnum::DEBT_PAYEMENT) {
             $end_steps = RecoveryStep::orderBy('rank')
                     ->whereType('forced')
                     ->where('rank', '>', 3)
                     ->get();
 
-            $recovery->steps()->syncWithoutDetaching($end_steps);
+            $this->saveTasks($end_steps, $recovery);
         }
     }
 
@@ -206,6 +206,8 @@ class RecoveryRepository
 
             $nextTask->update($data);
         }
+
+        $this->continueForcedProcess($recovery);
     }
 
     public function updateProcess($request, $recovery) {
