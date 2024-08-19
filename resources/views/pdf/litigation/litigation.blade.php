@@ -81,7 +81,7 @@
         <tbody>
             @foreach ($litigation->tasks as $key => $task)
                 <tr  class="{{ $task->status ?: 'gray italic'}}">
-                    <td>{{ $task->title }}</td>
+                    <td>{{$task->type == 'task' ? $task->title : __('litigation.'.$task->title) }}</td>
                     <td>{{ $task->completed_at }}</td>
                 </tr>
             @endforeach

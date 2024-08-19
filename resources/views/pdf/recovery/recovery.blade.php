@@ -17,8 +17,8 @@
         <tbody>
             @foreach ($model->tasks as $key => $task)
                 <tr  class="{{ $task->status ?: 'gray italic'}}">
-                    <td>{{ $task->title }}</td>
-                    <td>{{ $task->completed_at }}</td>
+                    <td>{{$task->type == 'task' ? $task->title : __('recovery.'.$task->title) }}</td>
+                    <td>{{ formatDateTime($task->completed_at) }}</td>
                 </tr>
             @endforeach
 
