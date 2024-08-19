@@ -19,5 +19,6 @@ Route::group(['middleware' => [/* 'can:view_all_data', */ 'auth:sanctum']], func
     Route::get('/current-user', [UserController::class, 'current']);
     Route::resource('users', UserController::class);
     Route::post('logout',[UserController::class,'logout']);
+    
 });
 

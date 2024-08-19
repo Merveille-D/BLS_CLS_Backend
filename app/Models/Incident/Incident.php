@@ -50,6 +50,18 @@ class Incident extends Model
         'saisie-attribution' => 'Saisie Attribution',
     ];
 
+    const TYPE_CODES = [
+        'avis-tiers-detenteurs' => 'ATD',
+        'requisition' => 'REQ',
+        'saisie-conservatoire' => 'SC',
+        'saisie-attribution' => 'SA',
+    ];
+
+    public function fileUploads()
+    {
+        return $this->morphMany(IncidentDocument::class, 'uploadable');
+    }
+
     public function taskIncident()
     {
         return $this->hasMany(TaskIncident::class);
@@ -89,6 +101,14 @@ class Incident extends Model
                 ];
             }
         }
+
+        foreach ($this->fileUploads as $fileUpload) {
+            $files[] = [
+                'filename' => $fileUpload->name ?? null,
+                'file_url' => $fileUpload->file,
+            ];
+        }
+
         return $files;
     }
 

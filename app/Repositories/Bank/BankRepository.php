@@ -42,6 +42,8 @@ class BankRepository
             }
         }
 
+        // dd($request);
+
         $bank->update($request);
         return $bank;
     }
