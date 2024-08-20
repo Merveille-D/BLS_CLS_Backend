@@ -54,7 +54,7 @@ class ModuleTask extends Model
     {
         return $query->orderByRaw('
             CASE
-            WHEN completed_at IS NOT NULL THEN 0
+                WHEN completed_at IS NOT NULL THEN 0
             ELSE 1
             END,
             completed_at ASC,

@@ -32,6 +32,7 @@ class NotificationRepository
                 ->when($is_read == 'false', function($qry) {
                     $qry->whereNull('read_at');
                 })
+                ->whereNull('read_at')
                 ->wherenotifiableId($user_id)
                 ->paginate();
 
