@@ -23,6 +23,15 @@ class PerformanceIndicatorController extends Controller
     {
         $performance_indicators = PerformanceIndicator::where('position_id', $request->position_id)->get()->load('position');
 
+        $performance_indicators = PerformanceIndicator::when(request('position_id') !== null, function($query) {
+            $query->where('position_id', request('position_id'));
+        })
+        ->when(request('collaborator_id') !== null, function($query) {
+            $collaborator = Collaborator::find(request('collaborator_id'));
+            $query->where('position_id', $collaborator->position_id);
+        })
+        ->get()->load('position');
+
         return api_response(true, "Liste des indicateurs de performance", $performance_indicators, 200);
     }
 

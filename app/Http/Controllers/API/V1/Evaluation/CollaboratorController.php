@@ -21,7 +21,7 @@ class CollaboratorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(ListCollaboratorRequest $request)
+    public function index()
     {
         $collaborators = Collaborator::when(request('position_id') !== null, function($query) {
             $query->where('position_id', request('position_id'));
