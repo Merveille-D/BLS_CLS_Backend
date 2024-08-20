@@ -65,6 +65,29 @@ return [
     'Publicity of sale' => 'Publicité de vente',
     'Sale of the property' => 'Vente de l\'immeuble',
 
+    'Notary referral' => 'Saisine du notaire',
+    'Receipt of the minute to be signed by the bank' => 'Réception de la minute à signer par la banque',
+    'Return of the signed minute to the notary' => 'Retour de la minute signée au notaire',
+    'Monitoring of the signature by the client/Notary' => 'Suivi de la signature par le client/Notaire',
+    'Registration of the minute at ANDF' => 'Enregistrement de la minute à l\'ANDF',
+    'Return of the registered deed to the notary\'s office' => 'Retour de l\'acte enregistré au cabinet du notaire',
+    'Receipt of the copy by the bank' => 'Réception de la grosse par la banque',
+    'Credit disbursement under conditions' => 'Décaissement du crédit sous conditions',
+    'Receipt of the registration certificate' => 'Réception du certificat d\'inscription',
+
+    /*
+    Saisine du notaire
+    Réception de la minute à signer par la banque
+    Retour de la minute signée au notaire
+    Suivi de la signature par le client/Notaire
+    Enregistrement de la minute à l'ANDF
+    Retour de l'acte enregistré au cabinet du notaire
+    Reception de la grosse par la banque
+    Décaissement du crédit sous conditions
+    Réception du certificat d'inscription
+
+     */
+
     'Is the registration approved?' => 'L\'inscription est elle approuvée ?',
     'Registration date' => 'Date de l\'inscription',
     'Proof of registration' => 'Preuve de l\'inscription',
@@ -115,6 +138,8 @@ return [
     'Expropriation documents' => 'Documents de l\'expropriation',
     'Summons addressing documents' => 'Documents d\'adressage de la sommation',
     'Publication documents' => 'Documents de la publication',
+    'Signed minute documents' => 'Documents de la minute signée',
+    'Documents (TF, ID client, IFU client, credit convention)' => 'Documents (TF, pièce d\'identité du client, IFU du client, convention de crédit)'
 
 
 ];

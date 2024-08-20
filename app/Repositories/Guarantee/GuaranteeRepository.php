@@ -105,14 +105,20 @@ class GuaranteeRepository
     }
 
     public function saveTasks($steps, $guarantee) {
+        $past_task_deadline = null;
         foreach ($steps as $key => $step) {
+            $past_task_deadline = Carbon::parse($past_task_deadline)->addDays($step->max_delay);
             $task = new GuaranteeTask();
             $task->code = $step->code;
             $task->title = $step->title;
             $task->step_id = $step->id;
             $task->rank = $step->rank;
             $task->type = $step->step_type;
-            $task->max_deadline = $step->code == 'created' ? now() : null;
+            if($guarantee->security == 'property') {
+                $task->max_deadline = $past_task_deadline;
+            }else {
+                $task->max_deadline = $step->code == 'created' ? now() : null;
+            }
             $task->created_by = auth()->id();
 
             $task->taskable()->associate($guarantee);
@@ -128,6 +134,19 @@ class GuaranteeRepository
             if ($currentTask->completed_at == null)
                 $currentTask->completed_at = Carbon::now();
             $currentTask->save();
+        }
+
+        //for mortgage only
+        if ($guarantee->security == 'property') {
+            $next_tasks = $guarantee->next_tasks;
+            $past_task_deadline = $currentTask->completed_at;
+            foreach ($next_tasks as $key => $task) {
+                $past_task_deadline = Carbon::parse($past_task_deadline)->addDays($task?->step?->max_delay);
+
+                $task->max_deadline = $past_task_deadline;
+                $task->save();
+            }
+            return;
         }
 
         $nextTask = $guarantee->next_task;

@@ -9,7 +9,7 @@ use App\Models\Guarantee\GuaranteeStep;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
-class TestNewFormat extends Command
+class UpdateSteps extends Command
 {
     use DefaultGuaranteeTaskTrait, MortgageDefaultStepTrait;
     /**
@@ -17,7 +17,7 @@ class TestNewFormat extends Command
      *
      * @var string
      */
-    protected $signature = 'test-new-format';
+    protected $signature = 'update-steps';
 
     /**
      * The console command description.
@@ -31,34 +31,24 @@ class TestNewFormat extends Command
      */
     public function handle()
     {
-        // DB::table('guarantee_steps')->truncate();
+        $old_steps = GuaranteeStep::whereGuaranteeType('mortgage')->get();
+        foreach ($old_steps as $key => $old_step) {
+            $old_step->delete();
+        }
         $this->saveMortgageSteps();
 
-
-        // $phases = $this->defaultStockSteps();
-
-        // foreach ($phases as $key => $phase) {
-
-        //     if ($key == 'formalization') {
-        //         foreach ($phase as $key2 => $steps) {
-        //             // $this->line($key);
-        //             $formalization_type = $key2;
-        //             foreach ($steps as $key3 => $step) {
-        //                 $step['formalization_type'] = $formalization_type;
-        //                 $step['guarantee_type'] = 'stock';
-        //                 $step['step_type'] = $key;
-        //                 $this->createStep($step);
-        //             }
-        //         }
-        //     }
-        // }
-        $this->info('Test new format');
+        $this->info('mortgage steps updated! ');
     }
 
     private function createStep($data, $parentId = null)
     {
-        // dd($data);
-        $step = GuaranteeStep::create(array_merge($data, ['parent_id' => $parentId, 'rank' => $data['rank'] ?? 0]));
+        //remove options from data before create
+        $creating = $data;
+        if (isset($creating['options']))
+            unset($creating['options']);
+
+
+        $step = GuaranteeStep::create(array_merge($creating, ['parent_id' => $parentId, 'rank' => $data['rank'] ?? 0]));
 
         if (isset($data['options'])) {
             foreach ($data['options'] as $option => $subSteps) {

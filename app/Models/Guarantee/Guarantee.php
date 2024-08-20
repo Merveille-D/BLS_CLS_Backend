@@ -60,7 +60,13 @@ class Guarantee extends Model
     public function getNextTaskAttribute() {
         return $this->tasks()
                 ->defaultOrder()
+
                 ->where('status', false)->first();
+    }
+    public function getNextTasksAttribute() {
+        return $this->tasks()
+                ->defaultOrder()
+                ->where('status', false)->get();
     }
 
     public function getCurrentTaskAttribute() {

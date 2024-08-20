@@ -65,6 +65,17 @@ return [
     'Publicity of sale' => 'publicity of sale',
     'Sale of the property' => 'sale of the property',
 
+    'Notary referral' => 'Notary referral',
+    'Receipt of the minute to be signed by the bank' => 'Receipt of the minute to be signed by the bank',
+    'Return of the signed minute to the notary' => 'Return of the signed minute to the notary',
+    'Monitoring of the signature by the client/Notary' => 'Monitoring of the signature by the client/Notary',
+    'Registration of the minute at ANDF' => 'Registration of the minute at ANDF',
+    'Return of the registered deed to the notary\'s office' => 'Return of the registered deed to the notary\'s office',
+    'Receipt of the copy by the bank' => 'Receipt of the copy by the bank',
+    'Credit disbursement under conditions' => 'Credit disbursement under conditions',
+    'Receipt of the registration certificate' => 'Receipt of the registration certificate',
+
+
     'Is the registration approved?' => 'Is the registration approved?',
     'Registration date' => 'Registration date',
     'Proof of registration' => 'Proof of registration',
@@ -116,5 +127,7 @@ return [
     'Expropriation documents' => 'Expropriation documents',
     'Summons addressing documents' => 'Summons addressing documents',
     'Publication documents' => 'Publication documents',
+    'Signed minute documents' => 'Signed minute documents',
+    'Documents (TF, ID client, IFU client, credit convention)' => 'Documents (TF, ID client, IFU client, credit convention)'
 
 ];
