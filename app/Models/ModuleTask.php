@@ -66,4 +66,8 @@ class ModuleTask extends Model
             id ASC
         ');
     }
+
+    public function getModuleIdAttribute() : string|null {
+        return $this->taskable?->id;
+    }
 }

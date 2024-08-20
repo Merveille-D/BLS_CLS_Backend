@@ -40,6 +40,7 @@ class AlertNotification extends Notification implements ShouldQueue
                     ->greeting('Bonjour!')
                     ->subject($this->alert->title)
                     ->line($this->alert->message)
+                    ->line('Délai : '. $this->alert->deadline ?? null)
                     // ->action('Notification Action', url('/'))
                     ->line('Merci de faire diligence!');
     }
