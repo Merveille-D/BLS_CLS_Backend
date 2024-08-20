@@ -64,6 +64,10 @@ class TaskSessionAdministrator extends Model
         ];
     }
 
+    public function getModuleIdAttribute() : string|null {
+        return $this->session_administrator?->id;
+    }
+
     CONST TASKS = [
         'pre_ca' => [
             [

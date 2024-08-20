@@ -59,6 +59,10 @@ class Task extends Model
         ];
     }
 
+    public function getModuleIdAttribute() : string|null {
+        return $this->contract?->id;
+    }
+
     public function creator() {
         return $this->belongsTo(User::class, 'created_by');
     }

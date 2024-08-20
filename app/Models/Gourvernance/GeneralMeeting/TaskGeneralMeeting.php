@@ -64,6 +64,10 @@ class TaskGeneralMeeting extends Model
         ];
     }
 
+    public function getModuleIdAttribute() : string|null {
+        return $this->general_meeting?->id;
+    }
+
     CONST TASKS = [
         'pre_ag' => [
             [

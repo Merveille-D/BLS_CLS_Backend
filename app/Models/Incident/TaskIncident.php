@@ -957,6 +957,10 @@ class TaskIncident extends Model
         return $form;
     }
 
+    public function getModuleIdAttribute() : string|null {
+        return $this->incident?->id;
+    }
+
     public function getValidationAttribute() {
 
         return [

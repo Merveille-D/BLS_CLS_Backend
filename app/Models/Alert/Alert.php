@@ -64,14 +64,14 @@ class Alert extends Model
             'model' => TaskIncident::class,
             'type' => 'incident',
         ],
-        [
-            'model' => AuditPeriod::class,
-            'type' => 'audit',
-        ],
-        [
-            'model' => EvaluationPeriod::class,
-            'type' => 'evaluation',
-        ],
+        // [
+        //     'model' => AuditPeriod::class,
+        //     'type' => 'audit',
+        // ],
+        // [
+        //     'model' => EvaluationPeriod::class,
+        //     'type' => 'evaluation',
+        // ],
     ];
 
     public function alertable()

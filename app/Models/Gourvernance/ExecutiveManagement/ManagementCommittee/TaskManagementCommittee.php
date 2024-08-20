@@ -63,6 +63,10 @@ class TaskManagementCommittee extends Model
         ];
     }
 
+    public function getModuleIdAttribute() : string|null {
+        return $this->management_committee?->id;
+    }
+
     CONST TASKS = [
         'pre_cd' => [
             [
