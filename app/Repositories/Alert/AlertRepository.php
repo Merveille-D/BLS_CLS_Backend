@@ -72,7 +72,7 @@ class AlertRepository
         ];
 
         // $priorities = ['info', 'warning', 'urgent'];
-        $priorities = ['info', 'urgent'];
+        $priorities = ['urgent'];
 
         foreach ($deadlines as $index => $deadline) {
             $current_task->alerts()->create([
@@ -82,7 +82,7 @@ class AlertRepository
                 'priority' => $priorities[$index],
                 'type' =>  $current_task->type,
                 // 'trigger_at' => $deadline,
-                'trigger_at' => Carbon::now(),
+                'trigger_at' => Carbon::now()->addMinutes(10),
             ]);
         }
     }

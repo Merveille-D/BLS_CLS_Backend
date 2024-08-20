@@ -102,7 +102,7 @@ class TaskIncident extends Model
                         ],
                     ],
                 'atd_3' => [
-                        'title' => 'Rédaction du courrier à addreser à l\'administration fiscale',
+                        'title' => 'Rédaction du courrier à adreser à l\'administration fiscale',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -121,7 +121,7 @@ class TaskIncident extends Model
                         ],
                     ],
                 'atd_4' => [
-                        'title' => 'Validation du courrier par le responsable de service juridique',
+                        'title' => 'Validation du courrier par le responsable du service juridique',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -140,7 +140,7 @@ class TaskIncident extends Model
                         ],
                     ],
                 'atd_5' => [
-                        'title' => 'Transmission d\'une lettre signée par la DG de la banque et de l\'accusé de reception signé',
+                        'title' => 'Transmission d\'une lettre signée par la Direction Générale de la banque et de l\'accusé de reception signé',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -152,14 +152,14 @@ class TaskIncident extends Model
                                 [
                                     'type' => 'documents',
                                     'name' => 'documents',
-                                    'label' => 'Lettre signée par la DG & Accusé de réception signé',
+                                    'label' => 'Lettre signée par la Direction Générale & Accusé de réception signé',
                                 ]
                             ],
                             'form_title' => 'Preuve de la transmission de la lettre'
                         ],
                     ],
                 'atd_6' => [
-                        'title' => 'Avez vous reçu de Main levée ?',
+                        'title' => 'Avez vous reçu de main-levée ?',
                         'rules' => [
                             'raised_hand' => ['required', 'in:yes,no'],
                         ],
@@ -169,15 +169,15 @@ class TaskIncident extends Model
                                 [
                                     'type' => 'radio',
                                     'name' => 'raised_hand',
-                                    'label' => 'Avez vous reçu de Main levée ?',
+                                    'label' => 'Avez vous reçu de main-levée ?',
                                 ]
                             ],
-                            'form_title' => 'Réception de la main levée'
+                            'form_title' => 'Réception de la main-levée'
                         ],
                         "next" => [
                             true => [
                                 'atd_6_1' => [
-                                        'title' => 'Attacher le document de la main levée',
+                                        'title' => 'Attacher le document de la main-levée',
                                         'rules' => [
                                             'documents' => ['required', 'array'],
                                             'documents.*.name' => ['required', 'string'],
@@ -189,10 +189,10 @@ class TaskIncident extends Model
                                                 [
                                                     'type' => 'documents',
                                                     'name' => 'documents',
-                                                    'label' => 'Attacher le document de la main levée',
+                                                    'label' => 'Attacher le document de la main-levée',
                                                 ]
                                             ],
-                                            'form_title' => 'Preuve de réception de la main levée'
+                                            'form_title' => 'Preuve de réception de la main-levée'
                                         ],
                                     ],
                                 'atd_6_2' => [
@@ -312,7 +312,7 @@ class TaskIncident extends Model
             false => [
 
                 'atd_7' => [
-                        'title' => 'Rediger un courrier à l\'adresse de l\'ADM Fiscale à signer par la DG de la banque',
+                        'title' => 'Rediger un courrier à l\'adresse de l\'ADM Fiscale à signer par la Direction Générale de la banque',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -336,7 +336,7 @@ class TaskIncident extends Model
         'requisition' => [
             true => [
                 'req_1' => [
-                        'title' => ' Attacher le courrier d`\'information du client à signer par la DG de la banque',
+                        'title' => ' Attacher le courrier d`\'information du client à signer par la Direction Générale de la banque',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -393,7 +393,7 @@ class TaskIncident extends Model
                         ],
                     ],
                 'req_4' => [
-                        'title' => 'Attacher le courrier de transmission signé par la DG de la banque',
+                        'title' => 'Attacher le courrier de transmission signé par la Direction Générale de la banque',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -415,7 +415,7 @@ class TaskIncident extends Model
             ],
             false => [
                 'req_5' => [
-                        'title' => 'Rediger un courrier à l\'adresse de l\'autorité concernée à signer par la DG de la banque',
+                        'title' => 'Rediger un courrier à l\'adresse de l\'autorité concernée à signer par la Direction Générale de la banque',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -496,7 +496,7 @@ class TaskIncident extends Model
                         ],
                     ],
                 'sc_4' => [
-                        'title' => 'Avez vous reçu de Main levée ?',
+                        'title' => 'Avez vous reçu de main-levée ?',
                         'rules' => [
                             'raised_hand' => ['required', 'in:yes,no'],
                         ],
@@ -506,15 +506,15 @@ class TaskIncident extends Model
                                 [
                                     'type' => 'radio',
                                     'name' => 'raised_hand',
-                                    'label' => 'Avez vous reçu de Main levée ?',
+                                    'label' => 'Avez vous reçu de main-levée ?',
                                 ]
                             ],
-                            'form_title' => 'Réception de la main levée'
+                            'form_title' => 'Réception de la main-levée'
                         ],
                         "next" => [
                             true => [
                                 'sc_4_1' => [
-                                        'title' => 'Attacher le document de la main levée',
+                                        'title' => 'Attacher le document de la main-levée',
                                         'rules' => [
                                             'documents' => ['required', 'array'],
                                             'documents.*.name' => ['required', 'string'],
@@ -526,10 +526,10 @@ class TaskIncident extends Model
                                                 [
                                                     'type' => 'documents',
                                                     'name' => 'documents',
-                                                    'label' => 'Joindre le document de la main levée',
+                                                    'label' => 'Joindre le document de la main-levée',
                                                 ]
                                             ],
-                                            'form_title' => 'Preuve de réception de la main levée'
+                                            'form_title' => 'Preuve de réception de la main-levée'
                                         ],
                                     ],
                                 'sc_4_2' => [
@@ -619,7 +619,7 @@ class TaskIncident extends Model
                                                     ],
                                                 ],
                                             'sc_4_4_2' => [
-                                                    'title' => 'Attachement de la main levée de la saisie',
+                                                    'title' => 'Attachement de la main-levée de la saisie',
                                                     'rules' => [
                                                         'documents' => ['required', 'array'],
                                                         'documents.*.name' => ['required', 'string'],
@@ -631,10 +631,10 @@ class TaskIncident extends Model
                                                             [
                                                                 'type' => 'documents',
                                                                 'name' => 'documents',
-                                                                'label' => 'Attacher le document de la main levée',
+                                                                'label' => 'Attacher le document de la main-levée',
                                                             ]
                                                         ],
-                                                        'form_title' => 'Preuve de la main levée de la saisie'
+                                                        'form_title' => 'Preuve de la main-levée de la saisie'
                                                     ],
                                                     "next" => false,
                                                 ],
@@ -770,7 +770,7 @@ class TaskIncident extends Model
                         ],
                     ],
                 'sa_4' => [
-                        'title' => 'Avez vous reçu de Main levée ?',
+                        'title' => 'Avez vous reçu de main-levée ?',
                         'rules' => [
                             'raised_hand' => ['required', 'in:yes,no'],
                         ],
@@ -780,15 +780,15 @@ class TaskIncident extends Model
                                 [
                                     'type' => 'radio',
                                     'name' => 'raised_hand',
-                                    'label' => 'Avez vous reçu de Main levée ?',
+                                    'label' => 'Avez vous reçu de main-levée ?',
                                 ]
                             ],
-                            'form_title' => 'Réception de la main levée'
+                            'form_title' => 'Réception de la main-levée'
                         ],
                         "next" => [
                             true => [
                                 'sa_4_1' => [
-                                        'title' => 'Attacher le document de la main levée',
+                                        'title' => 'Attacher le document de la main-levée',
                                         'rules' => [
                                             'documents' => ['required', 'array'],
                                             'documents.*.name' => ['required', 'string'],
@@ -800,10 +800,10 @@ class TaskIncident extends Model
                                                 [
                                                     'type' => 'documents',
                                                     'name' => 'documents',
-                                                    'label' => 'Joindre le document de la main levée',
+                                                    'label' => 'Joindre le document de la main-levée',
                                                 ]
                                             ],
-                                            'form_title' => 'Preuve de réception de la main levée'
+                                            'form_title' => 'Preuve de réception de la main-levée'
                                         ],
                                     ],
                                 'sa_4_2' => [

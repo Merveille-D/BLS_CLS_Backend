@@ -29,6 +29,7 @@ class StoreAuthorIncidentRequest extends FormRequest
             'name' => ['required', 'string'],
             'email' => ['required', 'email' ],
             'telephone' => ['required', 'numeric'],
+            'adresse' => ['nullable', 'string'],
         ];
     }
 

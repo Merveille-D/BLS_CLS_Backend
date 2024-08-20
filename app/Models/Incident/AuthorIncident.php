@@ -17,6 +17,7 @@ class AuthorIncident extends Model
         'name',
         'email',
         'telephone',
+        'adresse',
         'created_by',
     ];
 

@@ -34,6 +34,10 @@ class UpdateIncidentRequest extends FormRequest
             'user_id' => ['uuid'],
             'client' => ['boolean'],
 
+            'incident_documents' => ['array'],
+            'incident_documents.*.name' => ['string'],
+            'incident_documents.*.file' => ['file'],
+
         ];
     }
 

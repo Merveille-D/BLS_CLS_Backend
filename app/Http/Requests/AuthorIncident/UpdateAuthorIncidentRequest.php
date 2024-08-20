@@ -29,6 +29,7 @@ class UpdateAuthorIncidentRequest extends FormRequest
             'name' => ['string'],
             'email' => ['email' ],
             'telephone' => ['numeric'],
+            'adresse' => ['string'],
         ];
     }
 
