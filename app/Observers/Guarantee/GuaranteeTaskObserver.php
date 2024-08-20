@@ -35,7 +35,7 @@ class GuaranteeTaskObserver implements ShouldHandleEventsAfterCommit
             // foreach ($dates as $key => $date) {
                 $this->new_alert(
                     $guaranteeTask,
-                    'RAPPEL    | '. $guaranteeTask->taskable?->name ?? '',
+                    'RAPPEL | '. $guaranteeTask->taskable?->name ?? '',
                     __('security.'.$guaranteeTask->taskable?->next_task?->title ?? ''),
                     $guaranteeTask->taskable?->security ?? 'guarantee',
                     /* $date, */now(),

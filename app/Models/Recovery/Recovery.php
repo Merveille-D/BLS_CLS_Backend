@@ -107,4 +107,8 @@ class Recovery extends Model
 
         return $type;
     }
+
+    public function getModuleIdAttribute() : string|null {
+        return $this->id;
+     }
 }

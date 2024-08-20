@@ -4,7 +4,7 @@ return [
     // steps
     'Recovery' => 'Recouvrement',
     'Initiation of friendly recovery' => 'Initiation du recouvrement amiable',
-    'Formalization of the act (Deposit of the act in the minutes of a notary or homologation)' => "Formalisation de l'acte (Dépôt de l'acte au rang des minutes d'un notaire ou homologation)",
+    'Formalization of the act (Deposit of the act in the minutes of a notary or homologation)' => 'Formalisation de l\'acte (Dépôt de l\'acte au rang des minutes d\'un notaire ou homologation)',
     'Initiation of forced recovery' => 'Initialisation du recouvrement forcé',
     'Formal notice to pay addressed to the debtor client' => "Mise en demeure de payer adressée au client débiteur",
     'The debtor pays his debt' => "Le débiteur a-t-il payé sa dette ?",
