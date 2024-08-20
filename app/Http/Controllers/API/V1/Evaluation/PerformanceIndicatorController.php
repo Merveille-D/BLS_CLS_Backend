@@ -22,7 +22,7 @@ class PerformanceIndicatorController extends Controller
     public function index(ListPerformanceIndicatorRequest $request)
     {
         $performance_indicators = PerformanceIndicator::where('position_id', $request->position_id)->get()->load('position');
-        
+
         return api_response(true, "Liste des indicateurs de performance", $performance_indicators, 200);
     }
 
@@ -33,6 +33,8 @@ class PerformanceIndicatorController extends Controller
     {
         try {
             $performanceIndicator = $this->performanceIndicator->store($request->all());
+            $performanceIndicator->position = $performanceIndicator->position;
+
             return api_response(true, "Succès de l'enregistrement de l'indicateur de performance", $performanceIndicator, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement de l'indicateur de performance", $e->errors(), 422);

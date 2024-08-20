@@ -33,12 +33,7 @@ class ShareholderRepository
         $request['created_by'] = Auth::user()->id;
         $shareholder = $this->shareholder->create($request);
 
-        $bank_info = BankInfo::get()->first();
-        if($bank_info) {
-            $bank_info->update([
-                'total_shareholders' => Shareholder::count()
-            ]);
-        }
+        $this->updateBankInfo();
 
         return $shareholder;
     }
@@ -63,6 +58,16 @@ class ShareholderRepository
 
         $shareholder->update($request);
         return $shareholder;
+    }
+
+    public function updateBankInfo() {
+
+        $bank_info = BankInfo::get()->first();
+        if($bank_info) {
+            $bank_info->update([
+                'total_shareholders' => Shareholder::count()
+            ]);
+        }
     }
 
 
