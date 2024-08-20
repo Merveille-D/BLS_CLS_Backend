@@ -25,19 +25,19 @@ class LitigationTaskObserver
     {
         if ($litigationTask->status == true && $litigationTask->taskable?->next_task) {
             $max_deadline = $litigationTask->taskable?->next_task?->max_deadline;
-            $dates = $this->getMilestoneDates(Carbon::parse($max_deadline));
+            // $dates = $this->getMilestoneDates(Carbon::parse($max_deadline));
 
-            foreach ($dates as $key => $date) {
+            // foreach ($dates as $key => $date) {
                 $this->new_alert(
                     $litigationTask,
                     'RAPPEL | '. $litigationTask->taskable?->name ?? '',
                     __('litigation.'.$litigationTask->taskable?->next_task?->title ?? ''),
                     'litigation',
-                    $date,
-                    Alert::STATUS[$key] ?? 'urgent',
+                    /* $date */now(),
+                    /* Alert::STATUS[$key] ??  */'urgent',
                     $max_deadline,
                 );
-            }
+            // }
         }
     }
 

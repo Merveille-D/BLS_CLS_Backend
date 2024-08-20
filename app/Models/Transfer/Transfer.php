@@ -57,4 +57,8 @@ class Transfer extends Model
     {
         return $this->hasMany(TransferEvaluation::class);
     }
+
+    public function getModuleIdAttribute() : string|null {
+        return $this->transferable?->id;
+    }
 }
