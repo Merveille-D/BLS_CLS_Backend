@@ -9,7 +9,7 @@ use App\Models\Guarantee\GuaranteeStep;
 trait MortgageDefaultStepTrait
 {
     public function saveMortgageSteps() : void {
-        $phases = $this->getMortgageSteps();
+        $phases = $this->getMortgageStepsNew();
 
         foreach ($phases as $key => $steps) {
             foreach ($steps as $key2 => $step) {
@@ -21,7 +21,6 @@ trait MortgageDefaultStepTrait
 
     private function createStepMortage($data, $parentId = null)
     {
-        // dd($data);
         //remove options from data before create
         $creating = $data;
         if (isset($creating['options']))
@@ -41,6 +40,344 @@ trait MortgageDefaultStepTrait
                 }
             }
         }
+    }
+
+    public function getMortgageStepsNew() : array {
+        return [
+            "formalization" => [
+                [
+                    'title' => 'Initiation of mortgage',
+                    'code' => 'created',
+                    'step_type' => 'formalization',
+                    'guarantee_type' => GuaranteeType::MORTGAGE,
+                    'rank' => 1,
+                    'min_delay' => null,
+                    'max_delay' => 0,
+                ],
+                [
+                    'title' => 'Notary referral',
+                    'code' => 'notary_referral',
+                    'step_type' => 'formalization',
+                    'guarantee_type' => GuaranteeType::MORTGAGE,
+                    'rank' => 2,
+                    'min_delay' => null,
+                    'max_delay' => 0,
+                    "extra" => [
+                        "form" => [
+                            "title" => "Notary referral",
+                            "fields" => [
+                                [
+                                    "name" => "documents",
+                                    "type" => "file",
+                                    "label" => "Documents (TF, ID client, IFU client, credit convention)",
+                                    "required" => true
+                                ],
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    'title' => 'Receipt of the minute to be signed by the bank',
+                    'code' => 'receipt_minute_bank',
+                    'step_type' => 'formalization',
+                    'guarantee_type' => GuaranteeType::MORTGAGE,
+                    'rank' => 3,
+                    'min_delay' => null,
+                    'max_delay' => 3,
+                ],
+                [
+                    'title' => 'Return of the signed minute to the notary',
+                    'code' => 'return_signed_minute',
+                    'step_type' => 'formalization',
+                    'guarantee_type' => GuaranteeType::MORTGAGE,
+                    'rank' => 4,
+                    'min_delay' => null,
+                    'max_delay' => 3,
+                    "extra" => [
+                        "form" => [
+                            "title" => "Return of the signed minute to the notary",
+                            "fields" => [
+                                [
+                                    "name" => "documents",
+                                    "type" => "file",
+                                    "label" => "Signed minute documents",
+                                    "required" => true
+                                ],
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    'title' => 'Monitoring of the signature by the client/Notary',
+                    'code' => 'monitoring_signature',
+                    'step_type' => 'formalization',
+                    'guarantee_type' => GuaranteeType::MORTGAGE,
+                    'rank' => 5,
+                    'min_delay' => null,
+                    'max_delay' => 3,
+                ],
+                [
+                    'title' => 'Registration of the minute at ANDF',
+                    'code' => 'registration_minute_andf',
+                    'step_type' => 'formalization',
+                    'guarantee_type' => GuaranteeType::MORTGAGE,
+                    'rank' => 6,
+                    'min_delay' => null,
+                    'max_delay' => 4,
+                ],
+                [
+                    'title' => 'Return of the registered deed to the notary\'s office',
+                    'code' => 'return_registered_deed',
+                    'step_type' => 'formalization',
+                    'guarantee_type' => GuaranteeType::MORTGAGE,
+                    'rank' => 7,
+                    'min_delay' => null,
+                    'max_delay' => 3,
+                ],
+                [
+                    'title' => 'Receipt of the copy by the bank',
+                    'code' => 'receipt_copy_bank',
+                    'step_type' => 'formalization',
+                    'guarantee_type' => GuaranteeType::MORTGAGE,
+                    'rank' => 8,
+                    'min_delay' => null,
+                    'max_delay' => 3,
+                ],
+                [
+                    'title' => 'Credit disbursement under conditions',
+                    'code' => 'credit_disbursement_conditions',
+                    'step_type' => 'formalization',
+                    'guarantee_type' => GuaranteeType::MORTGAGE,
+                    'rank' => 9,
+                    'min_delay' => null,
+                    'max_delay' => 3,
+                ],
+                [
+                    'title' => 'Receipt of the registration certificate',
+                    'code' => 'receipt_registration_certificate',
+                    'step_type' => 'formalization',
+                    'guarantee_type' => GuaranteeType::MORTGAGE,
+                    'rank' => 10,
+                    'min_delay' => null,
+                    'max_delay' => 15,
+                ],
+
+            ],
+
+            //realizations steps
+            "realization" => [
+                [
+                    'title' => 'Service of payment order',
+                    'code' => ConvHypothecState::SIGNIFICATION_REGISTERED,
+                    'step_type' => 'realization',
+                    'guarantee_type' => GuaranteeType::MORTGAGE,
+                    'rank' => 1,
+                    'min_delay' => null,
+                    'max_delay' => 10,
+                    "extra" => [
+                        "form" => [
+                            "title" => "Service of payment order",
+                            "fields" => [
+                                [
+                                    "name" => "completed_at",
+                                    "type" => "date",
+                                    "label" => "Date of notification",
+                                    "required" => true
+                                ],
+                                [
+                                    "name" => "documents",
+                                    "type" => "file",
+                                    "label" => "Payment order documents",
+                                    "required" => true
+                                ],
+
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    'title' => 'Request for registration and publication of the payment order in the land registry',
+                    'code' => ConvHypothecState::ORDER_PAYMENT_VERIFIED,
+                    'step_type' => 'realization',
+                    'guarantee_type' => GuaranteeType::MORTGAGE,
+                    'rank' => 2,
+                    'min_delay' => 20,
+                    'max_delay' => 90,
+                    "extra" => [
+                        "form" => [
+                            "title" => "Request for registration and publication of the payment order in the land registry",
+                            "fields" => [
+                                [
+                                    "name" => "order_is_verified",
+                                    "type" => "radio",
+                                    "label" => "Is the registration request made and the payment order published?",
+                                    "required" => true
+                                ],
+
+                            ]
+                        ]
+                    ],
+                    "options" => [
+                        "no" => [],
+                        "yes" => [
+                            [
+                                'title' => 'Foreclosure after registrar\'s visa on the payment order',
+                                'code' => ConvHypothecState::ORDER_PAYMENT_VISA,
+                                'step_type' => 'realization',
+                                'guarantee_type' => GuaranteeType::MORTGAGE,
+                                'rank' => 3,
+                                'min_delay' => null,
+                                'max_delay' => 10,
+                                "extra" => [
+                                    "form" => [
+                                        "title" => "Foreclosure after registrar\'s visa on the payment order",
+                                        "fields" => [
+                                            [
+                                                "name" => "completed_at",
+                                                "type" => "date",
+                                                "label" => "Date du visa",
+                                                "required" => true
+                                            ],
+                                            [
+                                                "name" => "documents",
+                                                "type" => "file",
+                                                "label" => "Documents",
+                                                "required" => true
+                                            ],
+
+                                        ]
+                                    ]
+                                ]
+                            ],
+                            [
+                                'title' => 'Proceed with expropriation: file specifications',
+                                'code' => ConvHypothecState::EXPROPRIATION_SPECIFICATION,
+                                'step_type' => 'realization',
+                                'guarantee_type' => GuaranteeType::MORTGAGE,
+                                'rank' => 4,
+                                'min_delay' => null,
+                                'max_delay' => 50,
+                                "extra" => [
+                                    "form" => [
+                                        "title" => "Proceed with expropriation: file specifications",
+                                        "fields" => [
+                                            [
+                                                "name" => "completed_at",
+                                                "type" => "date",
+                                                "label" => "Date of expropriation",
+                                                "required" => true
+                                            ],
+                                            [
+                                                "name" => "date_sell",
+                                                "type" => "date",
+                                                "label" => "Enter the set sale date",
+                                                "required" => true,
+                                            ],
+                                            [
+                                                "name" => "documents",
+                                                "type" => "file",
+                                                "label" => "Expropriation documents",
+                                                "required" => true
+                                            ],
+
+                                        ]
+                                    ]
+                                ]
+                            ],
+                            [
+                                'title' => 'Proceed with expropriation: address summons to acknowledge specifications',
+                                'code' => ConvHypothecState::EXPROPRIATION_SUMMATION,
+                                'step_type' => 'realization',
+                                'guarantee_type' => GuaranteeType::MORTGAGE,
+                                'rank' => 5,
+                                'min_delay' => null,
+                                'max_delay' => 8,
+                                "extra" => [
+                                    "form" => [
+                                        "title" => "Proceed with expropriation: address summons to acknowledge specifications",
+                                        "fields" => [
+                                            [
+                                                "name" => "completed_at",
+                                                "type" => "date",
+                                                "label" => "Date of sending the summons",
+                                                "required" => true
+                                            ],
+                                            [
+                                                "name" => "documents",
+                                                "type" => "file",
+                                                "label" => "Summons addressing documents",
+                                                "required" => true
+                                            ],
+
+                                        ]
+                                    ]
+                                ]
+                            ],
+                            [
+                                'title' => 'Publicity of sale',
+                                'code' => ConvHypothecState::ADVERTISEMENT,
+                                'step_type' => 'realization',
+                                'guarantee_type' => GuaranteeType::MORTGAGE,
+                                'rank' => 6,
+                                'min_delay' => 15,
+                                'max_delay' => 30,
+                                "extra" => [
+                                    "form" => [
+                                        "title" => "Publicity of sale",
+                                        "fields" => [
+                                            [
+                                                "name" => "completed_at",
+                                                "type" => "date",
+                                                "label" => "Date of publication",
+                                                "required" => true
+                                            ],
+                                            [
+                                                "name" => "documents",
+                                                "type" => "file",
+                                                "label" => "Publication documents",
+                                                "required" => true
+                                            ],
+
+                                        ]
+                                    ]
+                                ]
+                            ],
+                            [
+                                'title' => 'Sale of the property',
+                                'code' => ConvHypothecState::PROPERTY_SALE,
+                                'step_type' => 'realization',
+                                'guarantee_type' => GuaranteeType::MORTGAGE,
+                                'rank' => 7,
+                                'min_delay' => null,
+                                'max_delay' => 10,
+                                "extra" => [
+                                    "form" => [
+                                        "title" =>  "Sale of the property",
+                                        "fields" => [
+                                            [
+                                                "name" => "sell_price_estate",
+                                                "type" => "number",
+                                                "label" => "Sale amount",
+                                                "required" => true
+                                            ],
+                                            [
+                                                "name" => "documents",
+                                                "type" => "file",
+                                                "label" => "Documents",
+                                                "required" => true
+                                            ],
+
+                                        ]
+                                    ]
+                                ]
+                            ],
+                        ]
+                    ]
+
+                ],
+
+            ],
+        ];
     }
 
     function getMortgageSteps() : array {
@@ -413,4 +750,5 @@ trait MortgageDefaultStepTrait
 
         ];
     }
+
 }

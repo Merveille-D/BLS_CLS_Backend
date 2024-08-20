@@ -33,6 +33,10 @@ class StoreIncidentRequest extends FormRequest
             'author_incident_id' => ['required', 'uuid'],
             'user_id' => ['uuid'],
             'client' => ['required', 'boolean'],
+
+            'incident_documents' => ['array'],
+            'incident_documents.*.name' => ['string'],
+            'incident_documents.*.file' => ['file'],
         ];
     }
 

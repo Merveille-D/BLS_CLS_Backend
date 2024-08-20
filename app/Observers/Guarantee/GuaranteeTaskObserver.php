@@ -30,19 +30,19 @@ class GuaranteeTaskObserver implements ShouldHandleEventsAfterCommit
     {
         if ($guaranteeTask->status == true && $guaranteeTask->taskable?->next_task) {
             $max_deadline = $guaranteeTask->taskable?->next_task?->max_deadline;
-            $dates = $this->getMilestoneDates(Carbon::parse($max_deadline));
+            // $dates = $this->getMilestoneDates(Carbon::parse($max_deadline));
 
-            foreach ($dates as $key => $date) {
+            // foreach ($dates as $key => $date) {
                 $this->new_alert(
                     $guaranteeTask,
                     'RAPPEL    | '. $guaranteeTask->taskable?->name ?? '',
                     __('security.'.$guaranteeTask->taskable?->next_task?->title ?? ''),
                     $guaranteeTask->taskable?->security ?? 'guarantee',
-                    $date,
-                    Alert::STATUS[$key] ?? 'urgent',
+                    /* $date, */now(),
+                    /* Alert::STATUS[$key] ??  */'urgent',
                     $max_deadline,
                 );
-            }
+            // }
         }
     }
 

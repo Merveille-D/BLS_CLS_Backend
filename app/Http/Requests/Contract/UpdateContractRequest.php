@@ -76,6 +76,29 @@ class UpdateContractRequest extends FormRequest
         ];
     }
 
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+
+            // $capital = Capital::all();
+
+            // if ($capital->isEmpty()) {
+            //     $validator->errors()->add('capital', "Aucun capital n'est encore enregistré  .");
+            // }
+
+            // $capital = Capital::get()->last();
+            // $action_number = $capital->amount / $capital->par_value;
+            // $shareholder_total_actions = Shareholder::sum('actions_number');
+
+            // if($shareholder_total_actions > $action_number) {
+            //     $diff = $shareholder_total_actions - $action_number;
+            //     $validator->errors()->add('actions_number', "Il ne reste que ' . $diff .' actions pour le capital de la banque.");
+            // }
+
+
+        });
+    }
+
     public function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([

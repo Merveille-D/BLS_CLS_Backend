@@ -3,6 +3,7 @@ namespace App\Repositories\Incident;
 
 use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use App\Models\Incident\Incident;
+use App\Models\Incident\IncidentDocument;
 use App\Models\Incident\TaskIncident;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -24,9 +25,21 @@ class IncidentRepository
 
         $request['created_by'] = Auth::user()->id;
         $request['incident_reference'] = $request['type'] . '-' . now()->format('d') . '/' . now()->format('m') . '/' . now()->format('Y');
-        $request['reference'] = generateReference('ICD - '. $request['type'], $this->incident);
+        $request['reference'] = 'ICD -' .Incident::TYPE_CODES[ $request['type']] . '-' . now()->format('d') . '/' . now()->format('m') . '/' . now()->format('Y');
 
         $incident = $this->incident->create($request);
+
+        if(isset($request['incident_documents'])) {
+            foreach($request['incident_documents'] as $item) {
+
+                $fileUpload = new IncidentDocument();
+
+                $fileUpload->name = $item['name'];
+                $fileUpload->file = uploadFile($item['file'], 'incident_documents');
+
+                $incident->fileUploads()->save($fileUpload);
+            }
+        }
 
         $this->createTasks($incident);
         return $incident;
