@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use Database\Seeders\Audit\AuditPerformanceIndicatorSeeder;
 use Database\Seeders\Guarantee\ConvHypothecSeeder;
 use Database\Seeders\Incident\AuthorSeeder;
 use Database\Seeders\Litigation\LawyerSeeder;
@@ -21,15 +22,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(UserSeeder::class);
-        $this->call(LitigationResourceSeeder::class); //containing test data
-        $this->call(ConvHypothecSeeder::class);
-        $this->call(PermissionTableSeeder::class);
-        $this->call(LawyerSeeder::class); //for test
-        $this->call(PartSeeder::class); //for test
-        $this->call(AuthorSeeder::class); //for test
+        // $this->call(UserSeeder::class);
+        // $this->call(LitigationResourceSeeder::class); //containing test data
+        // $this->call(ConvHypothecSeeder::class);
+        // $this->call(PermissionTableSeeder::class);
+        // $this->call(LawyerSeeder::class); //for test
+        // $this->call(PartSeeder::class); //for test
+        // $this->call(AuthorSeeder::class); //for test
 
-        $this->call(RecoveryResourceSeeder::class);
-        $this->call(GuaranteeSeeder::class);
+        // $this->call(RecoveryResourceSeeder::class);
+        // $this->call(GuaranteeSeeder::class);
+
+        $this->call(AuditPerformanceIndicatorSeeder::class);
     }
 }

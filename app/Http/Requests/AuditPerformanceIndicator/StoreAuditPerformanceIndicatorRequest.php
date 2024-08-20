@@ -34,6 +34,25 @@ class StoreAuditPerformanceIndicatorRequest extends FormRequest
         ];
     }
 
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+
+            $module_total_note = AuditPerformanceIndicator::where('module', request()->input('module'))->sum('note');
+
+            if($module_total_note >= 100) {
+                $validator->errors()->add('actions_number', "Il ne reste plus de points à attribuer pour ce module.");
+            }else {
+                $note_ask = request()->input('note');
+                $note_diff = 100 - $module_total_note;
+
+                if($note_ask > $note_diff) {
+                    $validator->errors()->add('actions_number', "Il ne reste que ' . $note_diff .' points à attribuer pour ce module.");
+                }
+            }
+        });
+    }
+
     public function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([

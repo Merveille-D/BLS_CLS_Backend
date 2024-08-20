@@ -21,6 +21,8 @@ class NotationRepository
     public function notationRessource($notation) {
 
         $notation->collaborator = $notation->collaborator;
+        $notation->collaborator->position = $notation->collaborator->position;
+
         $notation->created = $notation->creator;
         $notation->transfers = $notation->transfers->makeHidden(['evaluation'])->map(function ($transfer) {
 

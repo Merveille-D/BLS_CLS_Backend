@@ -41,22 +41,28 @@ class StoreShareholderRequest extends FormRequest
     {
         $validator->after(function ($validator) {
 
-            $capital = Capital::all();
+            $actions_number_ask = request()->input('actions_encumbered') + request()->input('actions_no_encumbered');
 
+            $capital = Capital::all();
             if ($capital->isEmpty()) {
                 $validator->errors()->add('capital', "Aucun capital n'est encore enregistré  .");
             }
 
-            $capital = Capital::get()->last();
+            $capital = Capital::latest()->first();
             $action_number = $capital->amount / $capital->par_value;
             $shareholder_total_actions = Shareholder::sum('actions_number');
 
-            if($shareholder_total_actions > $action_number) {
-                $diff = $shareholder_total_actions - $action_number;
-                $validator->errors()->add('actions_number', "Il ne reste que ' . $diff .' actions pour le capital de la banque.");
+            if($action_number > $shareholder_total_actions) {
+
+                $diff = $action_number - $shareholder_total_actions;
+
+                if($actions_number_ask > $diff) {
+                    $validator->errors()->add('actions_number', "Il ne reste que ' . $diff .' actions pour le capital de la banque.");
+                }
+
+            }else {
+                $validator->errors()->add('actions_number', "Il ne reste plus d'action disponible pour le capital de la banque.");
             }
-
-
         });
     }
 
