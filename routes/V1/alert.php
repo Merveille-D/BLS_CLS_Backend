@@ -3,6 +3,7 @@
 use App\Http\Controllers\Alert\AlertController;
 use App\Http\Controllers\Alert\NotificationController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 
@@ -13,4 +14,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 });
 
 Route::get('trigger_module_alert', [AlertController::class, 'triggerModuleAlert'] );
+
+Route::get('queue-cmd', function() {
+    Artisan::call('queue:work', [
+        '--once' => true,
+    ]);
+    return "Commande queue executée avec succès!";
+});
 
