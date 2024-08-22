@@ -82,7 +82,7 @@ class AlertRepository
                 'priority' => $priorities[$index],
                 'type' =>  $current_task->type,
                 // 'trigger_at' => $deadline,
-                'trigger_at' => Carbon::now()->addMinutes(10),
+                'trigger_at' => Carbon::now()->addSeconds(5),
             ]);
         }
     }
