@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use Database\Seeders\Audit\AuditPerformanceIndicatorSeeder;
 use Database\Seeders\Guarantee\ConvHypothecSeeder;
 use Database\Seeders\Incident\AuthorSeeder;
 use Database\Seeders\Litigation\LawyerSeeder;
@@ -31,5 +32,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(RecoveryResourceSeeder::class);
         $this->call(GuaranteeSeeder::class);
+
+        $this->call(AuditPerformanceIndicatorSeeder::class);
     }
 }

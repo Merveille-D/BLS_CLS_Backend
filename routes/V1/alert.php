@@ -17,7 +17,7 @@ Route::get('trigger_module_alert', [AlertController::class, 'triggerModuleAlert'
 
 Route::get('queue-cmd', function() {
     Artisan::call('queue:work', [
-        '--once' => true,
+        '--stop-when-empty' => true,
     ]);
     return "Commande queue executée avec succès!";
 });

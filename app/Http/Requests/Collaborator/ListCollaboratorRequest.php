@@ -26,7 +26,7 @@ class ListCollaboratorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'position_id' => ['required', 'uuid'],
+            // 'position_id' => ['required', 'uuid'],
         ];
     }
 

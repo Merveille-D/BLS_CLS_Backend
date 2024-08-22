@@ -26,8 +26,10 @@ class ListPerformanceIndicatorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'position_id' => ['required', 'uuid'],
+            'position_id' => ['required_without:collaborator_id', 'uuid'],
+            'collaborator_id' => ['required_without:position_id', 'uuid'],
         ];
+
     }
 
     public function failedValidation(Validator $validator)

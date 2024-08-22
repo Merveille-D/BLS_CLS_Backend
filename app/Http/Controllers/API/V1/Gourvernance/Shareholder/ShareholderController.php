@@ -75,6 +75,7 @@ class ShareholderController extends Controller
     {
         try {
             $shareholder->delete();
+            $this->shareholder->updateBankInfo();
             return api_response(true, "Succès de la suppression de l'actionnaire", null, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de la supression de l'actionnaire", $e->errors(), 422);

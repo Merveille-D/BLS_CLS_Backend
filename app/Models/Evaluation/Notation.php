@@ -52,6 +52,7 @@ class Notation extends Model
 
         $indicators = [];
         foreach ($this->performances as $performance) {
+            $performance->performanceIndicator->position = $performance->performanceIndicator->position;
             $indicators[] = [
                 'performance_indicator' => $performance->performanceIndicator,
                 'note' => $performance->note,
