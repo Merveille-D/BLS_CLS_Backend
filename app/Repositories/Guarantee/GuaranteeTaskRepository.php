@@ -11,6 +11,7 @@ use App\Models\Guarantee\GuaranteeTask;
 use App\Models\Guarantee\HypothecTask;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Log;
 
 class GuaranteeTaskRepository
 {
@@ -92,18 +93,14 @@ class GuaranteeTaskRepository
     }
 
     public function complete($task, $request) : JsonResource {
-        if (/* $task->type == 'task' ||  */blank($task->form)) {
-            $task->update([
-                'status' => true,
-                'completed_at' => now(),
-                'completed_by' => auth()->id(),
-            ]);
-        } else {
-            $guarantee = $task->taskable;
+        $guarantee = $task->taskable;
+        $radio_field = null;
 
+        if (/* $task->type == 'task' ||  */blank($task->form)) {
+
+        } else {
             $fields = $task?->form['fields'];
             $data = [];
-            $radio_field = null;
             foreach ($fields as $field) {
 
                 if ($field['type'] == 'text' || $field['type'] == 'select') {
@@ -120,9 +117,6 @@ class GuaranteeTaskRepository
                     $data[]  =  [$field['name'] => $request->{$field['name']} == 'yes' ? true : false];
                 }
             }
-
-            $task->completed_by = auth()->id();
-            // $task->status = true;
             $guarantee->status = $task->code;
 
             if ($request->is_paid)
@@ -134,11 +128,10 @@ class GuaranteeTaskRepository
 
             $guarantee->save();
 
-            $this->saveNextTasks($task, $radio_field);
-            $this->guaranteeRepo->updateTaskState($guarantee);
-            $this->updatePhaseState($guarantee);
-
         }
+        $this->saveNextTasks($task, $radio_field);
+        $this->guaranteeRepo->updateTaskState($guarantee);
+        $this->updatePhaseState($guarantee);
 
         return new GuaranteeTaskResource($task->refresh());
     }
@@ -165,7 +158,7 @@ class GuaranteeTaskRepository
     public function updatePhaseState($guarantee) {
         $current_phase = $guarantee->phase;
         $tasks = $guarantee->tasks()->whereType($current_phase)->where('status', false)->get();
-        // dd($tasks);
+        // Log::info($tasks->count());
         if ($tasks->count() == 0) {
             $guarantee->phase = $current_phase == 'formalization' ? 'formalized' : 'realized';
             $guarantee->save();
