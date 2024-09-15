@@ -98,7 +98,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('task_session_administrators', TaskSessionAdministratorController::class);
     Route::delete('delete_array_task_session_administrators', [TaskSessionAdministratorController::class, 'deleteArrayTaskSessionAdministrator'] );
     Route::put('update_status_task_session_administrators', [TaskSessionAdministratorController::class, 'updateStatusTaskSessionAdministrator'] );
-    Route::get('generate_pdf_checklist_and_procedures_ca', [TaskGeneralMeetingController::class, 'generatePdfTasks'] );
+    Route::get('generate_pdf_checklist_and_procedures_ca', [TaskSessionAdministratorController::class, 'generatePdfTasks'] );
 
 
     Route::resource('shareholders', ShareholderController::class);
@@ -106,6 +106,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('task_action_transfers', TaskActionTransferController::class);
     Route::get('get_current_task_action_transfers', [TaskActionTransferController::class, 'getCurrentTaskActionTransfer'] );
     Route::post('complete_task_action_transfers', [TaskActionTransferController::class, 'completeTaskActionTransfer'] );
+    Route::get('generate_pdf_certificat_shareholder', [ShareholderController::class, 'generatePdfCertificatShareholder'] );
+
 
     Route::post('approved_action_transfers', [ActionTransferController::class, 'approvedActionTransfer'] );
 
@@ -131,7 +133,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::put('update_status_task_contracts', [TaskController::class, 'updateStatusTaskContract'] );
 
     // Incidents
-
     Route::resource('incidents', IncidentController::class);
     Route::get('generate_pdf_fiche_suivi_incident', [IncidentController::class, 'generatePdfFicheSuivi'] );
     Route::resource('author_incidents', AuthorIncidentController::class);
@@ -141,7 +142,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
 
     // DIRECTION GENERALE
-
     Route::resource('directors', DirectorController::class);
     Route::post('renew_mandate_director', [DirectorController::class, 'renewMandate'] );
 
@@ -155,7 +155,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('task_management_committees', TaskManagementCommitteeController::class);
     Route::delete('delete_array_task_management_committees', [TaskManagementCommitteeController::class, 'deleteArrayTaskManagementCommittee'] );
     Route::put('update_status_task_management_committees', [TaskManagementCommitteeController::class, 'updateStatusTaskManagementCommittee'] );
-    Route::get('generate_pdf_checklist_and_procedures_codir', [TaskGeneralMeetingController::class, 'generatePdfTasks'] );
+    Route::get('generate_pdf_checklist_and_procedures_codir', [TaskManagementCommitteeController::class, 'generatePdfTasks'] );
 
 
     // EVALUATION

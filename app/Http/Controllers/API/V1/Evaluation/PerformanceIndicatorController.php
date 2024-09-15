@@ -68,7 +68,8 @@ class PerformanceIndicatorController extends Controller
     public function update(Request $request, PerformanceIndicator $performanceIndicator)
     {
         try {
-            $this->performanceIndicator->update($performanceIndicator, $request->all());
+            $performanceIndicator =$this->performanceIndicator->update($performanceIndicator, $request->all());
+            $performanceIndicator->position = $performanceIndicator->position;
             return api_response(true, "Mis à jour de l'indicateur de performance", $performanceIndicator, 200);
         } catch (ValidationException $e) {
 
