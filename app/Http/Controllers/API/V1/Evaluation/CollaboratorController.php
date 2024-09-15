@@ -61,7 +61,9 @@ class CollaboratorController extends Controller
     public function update(UpdateCollaboratorRequest $request, Collaborator $collaborator)
     {
         try {
-            $this->collaborator->update($collaborator, $request->all());
+            $collaborator = $this->collaborator->update($collaborator, $request->all());
+            $collaborator->position = $collaborator->position;
+
             return api_response(true, "Mis à jour du collaborateur", $collaborator, 200);
         } catch (ValidationException $e) {
 

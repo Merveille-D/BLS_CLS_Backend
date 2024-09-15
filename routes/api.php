@@ -94,7 +94,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('task_session_administrators', TaskSessionAdministratorController::class);
     Route::delete('delete_array_task_session_administrators', [TaskSessionAdministratorController::class, 'deleteArrayTaskSessionAdministrator'] );
     Route::put('update_status_task_session_administrators', [TaskSessionAdministratorController::class, 'updateStatusTaskSessionAdministrator'] );
-    Route::get('generate_pdf_checklist_and_procedures_ca', [TaskGeneralMeetingController::class, 'generatePdfTasks'] );
+    Route::get('generate_pdf_checklist_and_procedures_ca', [TaskSessionAdministratorController::class, 'generatePdfTasks'] );
 
 
     Route::resource('shareholders', ShareholderController::class);
@@ -151,7 +151,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('task_management_committees', TaskManagementCommitteeController::class);
     Route::delete('delete_array_task_management_committees', [TaskManagementCommitteeController::class, 'deleteArrayTaskManagementCommittee'] );
     Route::put('update_status_task_management_committees', [TaskManagementCommitteeController::class, 'updateStatusTaskManagementCommittee'] );
-    Route::get('generate_pdf_checklist_and_procedures_codir', [TaskGeneralMeetingController::class, 'generatePdfTasks'] );
+    Route::get('generate_pdf_checklist_and_procedures_codir', [TaskManagementCommitteeController::class, 'generatePdfTasks'] );
 
 
     // EVALUATION
