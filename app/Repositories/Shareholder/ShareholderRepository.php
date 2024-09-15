@@ -70,5 +70,23 @@ class ShareholderRepository
         }
     }
 
+    public function generatePdfCertificat($request)
+    {
+        $shareholder = Shareholder::find($request['shareholder_id']);
+
+        // $meeting_type = SessionAdministrator::SESSION_MEETING_TYPES_VALUES[$session_administrator->type];
+
+        // $tasks = TaskSessionAdministrator::where('session_administrator_id', $session_administrator->id)
+        //                             ->whereIn('type', ['pre_ca', 'post_ca'])
+        //                             ->get();
+        // $filename = Str::slug($session_administrator->libelle). '_'.date('YmdHis') . '.pdf';
+
+        // $pdf =  $this->generateFromView( 'pdf.session_administrator.fiche_de_suivi',  [
+        //     'tasks' => $tasks,
+        //     'session_administrator' => $session_administrator,
+        //     'meeting_type' => $meeting_type,
+        // ],$filename);
+        // return $pdf;
+    }
 
 }

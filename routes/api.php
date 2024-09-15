@@ -102,6 +102,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('task_action_transfers', TaskActionTransferController::class);
     Route::get('get_current_task_action_transfers', [TaskActionTransferController::class, 'getCurrentTaskActionTransfer'] );
     Route::post('complete_task_action_transfers', [TaskActionTransferController::class, 'completeTaskActionTransfer'] );
+    Route::get('generate_pdf_certificat_shareholder', [ShareholderController::class, 'generatePdfCertificatShareholder'] );
+
 
     Route::post('approved_action_transfers', [ActionTransferController::class, 'approvedActionTransfer'] );
 
@@ -127,7 +129,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::put('update_status_task_contracts', [TaskController::class, 'updateStatusTaskContract'] );
 
     // Incidents
-
     Route::resource('incidents', IncidentController::class);
     Route::get('generate_pdf_fiche_suivi_incident', [IncidentController::class, 'generatePdfFicheSuivi'] );
     Route::resource('author_incidents', AuthorIncidentController::class);
@@ -137,7 +138,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
 
     // DIRECTION GENERALE
-
     Route::resource('directors', DirectorController::class);
     Route::post('renew_mandate_director', [DirectorController::class, 'renewMandate'] );
 
