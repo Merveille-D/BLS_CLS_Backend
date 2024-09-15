@@ -29,7 +29,7 @@
             border: 3px solid green;
             padding: 50px;
             text-align: center;
-            height: 85%;
+            height: 85.8%;
             /* width: 90%; */
             margin: 0 auto;
         }
@@ -71,23 +71,27 @@
             font-size: 28px;
             color: green;
             margin: 20px 0;
+            font-weight: 1000;
         }
 
         .company-info, .certificate-content {
             font-size: 16px;
             margin-bottom: 20px;
+            padding: 0 80px;
             text-align: center;
         }
 
         .done_at {
             text-align: right;
-            margin-top: 20px;
+            margin-top: 60px;
+            font-style: italic;
+            color: #494949
         }
 
         .signature-section {
             width: 100%;
             text-align: center;
-            margin-top: 40px;
+            margin-top: 80px;
         }
 
         .signature-block {
@@ -111,30 +115,31 @@
         <div class="certificate-container">
             <div class="header">
                 <div class="certificate-info">
-                    <p>Certificat d'actions : <span>[N° DU CERTIFICAT]</span></p>
+                    <p>Certificat : <span>N° {{ uniqId() }}</span></p>
                 </div>
                 <div class="share-info">
-                    <p>Nombre d'actions : <span>[NOMBRE]</span></p>
+                    <p>Nombre d'actions : <span>{{ $shareholder->actions_number }}</span></p>
                 </div>
                 <div class="clearfix"></div>
             </div>
 
             <div class="logo">
-                {{-- <img src="{{ asset('afrikskills-logo.webp') }}" alt="Logo de la Société"> --}}
+                <img src="{{ $logo }}" alt="Logo de la Société">
             </div>
 
             <h1>CERTIFICAT D'ACTIONS</h1>
 
             <div class="company-info">
-                <p><strong>[NOM DE LA SOCIÉTÉ]</strong></p>
-                <p>[ADRESSE DE LA SOCIÉTÉ]</p>
+                <p><strong>AFRIKSKILLS</strong></p>
+                <p>Cotonou, Bénin</p>
             </div>
 
             <div class="certificate-content">
                 <p>
-                    Nous soussigné, certifions que <strong>M. [NOM DE L’ACTIONNAIRE]</strong>, domicilié à
-                    <strong>[ADRESSE DE L’ACTIONNAIRE]</strong> est titulaire de
-                    <strong>[NOMBRE D’ACTIONS EN TOUTES LETTRES]</strong> action(s) dans le capital
+                    Nous soussigné, certifions que <strong>M. {{ $shareholder->name }}</strong>,<br>
+                    domicilié à
+                    <strong>{{ $shareholder->address }}</strong> est titulaire de
+                    <strong>{{ $shareholder->actions_number }}</strong> action(s) dans le capital
                     de la société.
                 </p>
             </div>

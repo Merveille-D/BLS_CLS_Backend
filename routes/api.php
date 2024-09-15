@@ -52,9 +52,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('certificat', function() {
-    return Pdf::loadView('pdf.certificat.certificat')->setPaper('A4', 'landscape')->stream();
-});
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
