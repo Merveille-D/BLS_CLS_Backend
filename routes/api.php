@@ -36,6 +36,7 @@ use App\Http\Controllers\API\V1\Gourvernance\Shareholder\CapitalController;
 use App\Http\Controllers\API\V1\Gourvernance\Shareholder\TaskActionTransferController;
 use App\Http\Controllers\API\V1\Gourvernance\Tier\TierController;
 use App\Http\Controllers\API\V1\Evaluation\PositionController;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Route;
@@ -51,6 +52,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('certificat', function() {
+    return Pdf::loadView('pdf.certificat.certificat')->setPaper('A4', 'landscape')->stream();
+});
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
 

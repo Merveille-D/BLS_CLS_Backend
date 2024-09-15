@@ -31,10 +31,10 @@ class UpdateSteps extends Command
      */
     public function handle()
     {
-        $old_steps = GuaranteeStep::whereGuaranteeType('mortgage')->get();
-        foreach ($old_steps as $key => $old_step) {
-            $old_step->delete();
-        }
+        $old_steps = GuaranteeStep::whereGuaranteeType('mortgage')->delete();
+        // foreach ($old_steps as $key => $old_step) {
+        //     $old_step->delete();
+        // }
         $this->saveMortgageSteps();
 
         $this->info('mortgage steps updated! ');
