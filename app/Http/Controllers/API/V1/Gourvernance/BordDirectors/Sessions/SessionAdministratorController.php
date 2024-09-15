@@ -101,7 +101,6 @@ class SessionAdministratorController extends Controller
 
     public function generatePdfFicheSuivi(GeneratePdfSessionAdministratorRequest $request) {
         try {
-
             $data = $this->session->generatePdf($request);
             return $data;
         } catch (\Throwable $th) {

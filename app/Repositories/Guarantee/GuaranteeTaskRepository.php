@@ -97,7 +97,7 @@ class GuaranteeTaskRepository
         $radio_field = null;
 
         if (/* $task->type == 'task' ||  */blank($task->form)) {
-
+            $guarantee->status = $task->code;
         } else {
             $fields = $task?->form['fields'];
             $data = [];
@@ -121,14 +121,14 @@ class GuaranteeTaskRepository
 
             if ($request->is_paid)
                 $guarantee->is_paid = $request->is_paid;
-            if ($request->contract_type)
+            if ($request->contract_type) {
                 $guarantee->contract_type = $request->contract_type;
 
+            }
+
             $guarantee->extra = $data;
-
-            $guarantee->save();
-
         }
+        $guarantee->save();
         $this->saveNextTasks($task, $radio_field);
         $this->guaranteeRepo->updateTaskState($guarantee);
         $this->updatePhaseState($guarantee);
