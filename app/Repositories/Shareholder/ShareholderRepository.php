@@ -1,13 +1,17 @@
 <?php
 namespace App\Repositories\Shareholder;
 
+use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use App\Models\Gourvernance\BankInfo\BankInfo;
 use App\Models\Shareholder\Capital;
 use App\Models\Shareholder\Shareholder;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ShareholderRepository
 {
+    use GeneratePdfTrait;
     public function __construct(private Shareholder $shareholder) {
 
     }
@@ -70,5 +74,23 @@ class ShareholderRepository
         }
     }
 
+    public function generatePdfCertificat($request)
+    {
+        $shareholder = Shareholder::find($request['shareholder_id']);
+        // dd($shareholder);
+        $filename = Str::slug('Certificat actions'). '_'.date('YmdHis') . '.pdf';
+        $logo = generateBase64Image('afrikskills-logo.webp') ?? generateBase64Image('bls-logo.png');
+
+        $pdf = Pdf::loadView('pdf.certificat.certificat', [
+            'shareholder' => $shareholder,
+            'logo' => $logo
+        ])->setPaper('A4', 'landscape');
+        return $pdf->stream($filename,);
+
+        // $pdf =  $this->generateFromView( 'pdf.certificat.certificat',  [
+        //     'shareholder' => $shareholder,
+        // ],$filename, ['format' => 'A4',  'landscape']);
+        return $pdf;
+    }
 
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\Gourvernance\Shareholder;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Shareholder\GeneratePdfCertificatShareholderRequest;
 use App\Http\Requests\Shareholder\ListShareholderRequest;
 use App\Http\Requests\Shareholder\StoreShareholderRequest;
 use App\Http\Requests\Shareholder\UpdateShareholderRequest;
@@ -79,6 +80,16 @@ class ShareholderController extends Controller
             return api_response(true, "Succès de la suppression de l'actionnaire", null, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de la supression de l'actionnaire", $e->errors(), 422);
+        }
+    }
+
+    public function generatePdfCertificatShareholder(GeneratePdfCertificatShareholderRequest $request)
+    {
+        try {
+            $data = $this->shareholder->generatePdfCertificat($request);
+            return $data;
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }
 }

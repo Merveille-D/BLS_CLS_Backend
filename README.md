@@ -44,6 +44,11 @@ startsecs=0
 * ref <!-- https://anqorithm.medium.com/implementing-ldap-authentication-integration-in-laravel-a-guide-to-using-openldap-phpldapadmin-f34a37e401bd -->
 
 
+## TEST EMAIL SENDING
+
+* php artisan tinker
+* Mail::raw('Hello World!', function($msg) {$msg->to('raoulgbadou@gmail.com')->subject('Test Email'); });
+
 
 ## to do 
 
