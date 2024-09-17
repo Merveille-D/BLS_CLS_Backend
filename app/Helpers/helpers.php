@@ -136,3 +136,56 @@ if (!function_exists("formatDateTime")) {
 
 //         return $alert;
 // }
+
+
+
+if (!function_exists("convertNumberToLetter")) {
+    function convertNumberToLetter($nombre) {
+        $unites = ['zéro', 'un', 'deux', 'trois', 'quatre', 'cinq', 'six', 'sept', 'huit', 'neuf'];
+        $dizaines = ['', 'dix', 'vingt', 'trente', 'quarante', 'cinquante', 'soixante', 'soixante', 'quatre-vingt', 'quatre-vingt'];
+        $specials = ['dix', 'onze', 'douze', 'treize', 'quatorze', 'quinze', 'seize', 'dix-sept', 'dix-huit', 'dix-neuf'];
+
+        if ($nombre < 10) {
+            return $unites[$nombre];
+        } elseif ($nombre < 20) {
+            return $specials[$nombre - 10];
+        } elseif ($nombre < 100) {
+            $dizaine = floor($nombre / 10);
+            $unite = $nombre % 10;
+            if ($unite == 0) {
+                return $dizaines[$dizaine];
+            } elseif ($dizaine == 7 || $dizaine == 9) {
+                return $dizaines[$dizaine] . '-' . $specials[$unite];
+            } else {
+                return $dizaines[$dizaine] . '-' . $unites[$unite];
+            }
+        } elseif ($nombre < 1000) {
+            $centaine = floor($nombre / 100);
+            $reste = $nombre % 100;
+            if ($centaine == 1) {
+                return 'cent' . ($reste ? ' ' . convertNumberToLetter($reste) : '');
+            } else {
+                return $unites[$centaine] . ' cent' . ($reste ? ' ' . convertNumberToLetter($reste) : '');
+            }
+        } elseif ($nombre < 1000000) {
+            $mille = floor($nombre / 1000);
+            $reste = $nombre % 1000;
+            if ($mille == 1) {
+                return 'mille' . ($reste ? ' ' . convertNumberToLetter($reste) : '');
+            } else {
+                return convertNumberToLetter($mille) . ' mille' . ($reste ? ' ' . convertNumberToLetter($reste) : '');
+            }
+        } elseif ($nombre < 1000000000) {
+            $million = floor($nombre / 1000000);
+            $reste = $nombre % 1000000;
+            if ($million == 1) {
+                return 'un million' . ($reste ? ' ' . convertNumberToLetter($reste) : '');
+            } else {
+                return convertNumberToLetter($million) . ' millions' . ($reste ? ' ' . convertNumberToLetter($reste) : '');
+            }
+        } else {
+            return $nombre; // Pour les très grands nombres non pris en charge ici
+        }
+    }
+
+}
