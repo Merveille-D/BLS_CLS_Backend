@@ -65,5 +65,13 @@ INSERT INTO `litigation_settings` (`id`, `type`, `name`, `description`, `created
 ('9d0fbe65-348d-4ef2-9b8b-0a9b9fa9f813', 'party_type', 'employee', NULL, '2024-09-21 09:04:03', '2024-09-21 09:04:03', 1, NULL),
 ('9d0fbe65-36b3-4299-85c7-631b71fd40c1', 'party_type', 'provider', NULL, '2024-09-21 09:04:03', '2024-09-21 09:04:03', 1, NULL),
 ('9d0fbe65-397f-444c-b69f-c0864747b0d7', 'party_type', 'partner', NULL, '2024-09-21 09:04:03', '2024-09-21 09:04:03', 1, NULL);
+
+INSERT INTO `litigation_settings` (`id`, `type`, `name`, `description`, `created_at`, `updated_at`, `default`, `created_by`) VALUES
+('9d0fe88a-dd2c-4c12-ac31-29677942fec6', 'quality', 'intervenant', NULL, '2024-09-21 11:01:54', '2024-09-21 11:01:54', 1, NULL),
+('9d0fe88a-de66-4fb0-b0a8-292454339fc9', 'quality', 'defendant', NULL, '2024-09-21 11:01:54', '2024-09-21 11:01:54', 1, NULL),
+('9d0fe88a-df91-4c31-847f-17b570ede9cc', 'quality', 'plaintiff', NULL, '2024-09-21 11:01:54', '2024-09-21 11:01:54', 1, NULL),
+('9d0fe88a-e165-4f10-b020-67b3b4027417', 'quality', 'forced_intervenant', NULL, '2024-09-21 11:01:54', '2024-09-21 11:01:54', 1, NULL);
 ```
+
+php artisan update-steps 
 

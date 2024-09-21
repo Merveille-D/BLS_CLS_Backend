@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class UpdateSteps extends Command
 {
-    use DefaultGuaranteeTaskTrait, MortgageDefaultStepTrait;
+    use DefaultGuaranteeTaskTrait, MortgageDefaultStepTrait, DefaultGuaranteeTaskTrait;
     /**
      * The name and signature of the console command.
      *
@@ -32,10 +32,28 @@ class UpdateSteps extends Command
     public function handle()
     {
         $old_steps = GuaranteeStep::whereGuaranteeType('mortgage')->delete();
+        $old_stock_steps = GuaranteeStep::whereGuaranteeType('stock')->delete();
         // foreach ($old_steps as $key => $old_step) {
         //     $old_step->delete();
         // }
+        $stock_steps = $this->defaultStockSteps();
         $this->saveMortgageSteps();
+
+        foreach ($stock_steps as $key => $phase) {
+
+            if ($key == 'formalization') {
+                foreach ($phase as $key2 => $steps) {
+                    // $this->line($key);
+                    $formalization_type = $key2;
+                    foreach ($steps as $key3 => $step) {
+                        $step['formalization_type'] = $formalization_type;
+                        $step['guarantee_type'] = 'stock';
+                        $step['step_type'] = $key;
+                        $this->createStep($step);
+                    }
+                }
+            }
+        }
 
         $this->info('mortgage steps updated! ');
     }

@@ -17,7 +17,7 @@ trait DefaultGuaranteeTaskTrait
                         "max_delay" => 0,
                     ],
                     [
-                        "title" => 'Drafting of the guarantee agreement',
+                        "title" => 'Drafting the pledge agreement',
                         "code" => "redaction",
                         "min_delay" => null,
                         "max_delay" => 10,
@@ -280,6 +280,25 @@ trait DefaultGuaranteeTaskTrait
                                         "label" => "Documents",
                                         "required" => true
                                     ],
+                                ]
+                            ]
+                        ],
+                    ],
+                    [
+                        "title" => 'Is the decision favorable?',
+                        "code" => "favorable_decision",
+                        "min_delay" => null,
+                        "max_delay" => 10,
+                        "extra" => [
+                            "form" => [
+                                "title" => 'Is the decision favorable?',
+                                "fields" => [
+                                    [
+                                        "name" => "completed_at",
+                                        "type" => "date",
+                                        "label" => "Date of decision",
+                                        "required" => true
+                                    ],
                                     [
                                         "name" => "is_favorable",
                                         "type" => "radio",
@@ -404,7 +423,7 @@ trait DefaultGuaranteeTaskTrait
                                                     "title" => 'Exercising legal remedies',
                                                     "fields" => [
                                                         ["name" => "completed_at", "type" => "date", "label" => "Date of appeal", "required" => true],
-                                                        ["name" => "documents", "type" => "file", "label" => "Documents de recours", "required" => true],
+                                                        ["name" => "documents", "type" => "file", "label" => "Appeal documents", "required" => true],
                                                         [ "name" => "recourse_is_favorable", "type" => "radio", "label" => "Is the appeal favorable?", "required" => true],
                                                     ]
                                                 ]
@@ -469,10 +488,8 @@ trait DefaultGuaranteeTaskTrait
                                             ]
                                         ]
                                     ]
-
-
-                                    ]
                                 ]
+                    ],
 
                     ],
                 ],

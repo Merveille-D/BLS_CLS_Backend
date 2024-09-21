@@ -67,6 +67,12 @@ trait MortgageDefaultStepTrait
                             "title" => "Notary referral",
                             "fields" => [
                                 [
+                                    "name" => "completed_at",
+                                    "type" => "date",
+                                    "label" => "Completed date",
+                                    "required" => true
+                                ],
+                                [
                                     "name" => "documents",
                                     "type" => "file",
                                     "label" => "Documents (TF, ID client, IFU client, credit convention)",
@@ -84,6 +90,25 @@ trait MortgageDefaultStepTrait
                     'rank' => 3,
                     'min_delay' => null,
                     'max_delay' => 3,
+                    "extra" => [
+                        "form" => [
+                            "title" => "Receipt of the minute to be signed by the bank",
+                            "fields" => [
+                                [
+                                    "name" => "completed_at",
+                                    "type" => "date",
+                                    "label" => "Completed date",
+                                    "required" => true
+                                ],
+                                [
+                                    "name" => "documents",
+                                    "type" => "file",
+                                    "label" => "Documents",
+                                    "required" => true
+                                ],
+                            ]
+                        ]
+                    ]
                 ],
                 [
                     'title' => 'Return of the signed minute to the notary',
@@ -97,6 +122,12 @@ trait MortgageDefaultStepTrait
                         "form" => [
                             "title" => "Return of the signed minute to the notary",
                             "fields" => [
+                                [
+                                    "name" => "completed_at",
+                                    "type" => "date",
+                                    "label" => "Completed date",
+                                    "required" => true
+                                ],
                                 [
                                     "name" => "documents",
                                     "type" => "file",
@@ -115,6 +146,19 @@ trait MortgageDefaultStepTrait
                     'rank' => 5,
                     'min_delay' => null,
                     'max_delay' => 3,
+                    "extra" => [
+                        "form" => [
+                            "title" => "Service of payment order",
+                            "fields" => [
+                                [
+                                    "name" => "completed_at",
+                                    "type" => "date",
+                                    "label" => "Completed date",
+                                    "required" => true
+                                ],
+                            ]
+                        ]
+                    ]
                 ],
                 [
                     'title' => 'Registration of the minute at ANDF',
@@ -124,6 +168,19 @@ trait MortgageDefaultStepTrait
                     'rank' => 6,
                     'min_delay' => null,
                     'max_delay' => 4,
+                    "extra" => [
+                        "form" => [
+                            "title" => "Service of payment order",
+                            "fields" => [
+                                [
+                                    "name" => "completed_at",
+                                    "type" => "date",
+                                    "label" => "Completed date",
+                                    "required" => true
+                                ],
+                            ]
+                        ]
+                    ]
                 ],
                 [
                     'title' => 'Return of the registered deed to the notary\'s office',
@@ -133,6 +190,19 @@ trait MortgageDefaultStepTrait
                     'rank' => 7,
                     'min_delay' => null,
                     'max_delay' => 3,
+                    "extra" => [
+                        "form" => [
+                            "title" => "Service of payment order",
+                            "fields" => [
+                                [
+                                    "name" => "completed_at",
+                                    "type" => "date",
+                                    "label" => "Completed date",
+                                    "required" => true
+                                ],
+                            ]
+                        ]
+                    ]
                 ],
                 [
                     'title' => 'Receipt of the copy by the bank',
@@ -142,6 +212,26 @@ trait MortgageDefaultStepTrait
                     'rank' => 8,
                     'min_delay' => null,
                     'max_delay' => 3,
+                    "extra" => [
+                        "form" => [
+                            "title" => "Service of payment order",
+                            "fields" => [
+                                [
+                                    "name" => "completed_at",
+                                    "type" => "date",
+                                    "label" => "Completed date",
+                                    "required" => true
+                                ],
+                                [
+                                    "name" => "documents",
+                                    "type" => "file",
+                                    "label" => "Documents",
+                                    "required" => true
+                                ],
+
+                            ]
+                        ]
+                    ]
                 ],
                 [
                     'title' => 'Credit disbursement under conditions',
@@ -151,6 +241,20 @@ trait MortgageDefaultStepTrait
                     'rank' => 9,
                     'min_delay' => null,
                     'max_delay' => 3,
+                    "extra" => [
+                        "form" => [
+                            "title" => "Service of payment order",
+                            "fields" => [
+                                [
+                                    "name" => "completed_at",
+                                    "type" => "date",
+                                    "label" => "Completed date",
+                                    "required" => true
+                                ],
+
+                            ]
+                        ]
+                    ]
                 ],
                 [
                     'title' => 'Receipt of the registration certificate',
@@ -160,6 +264,26 @@ trait MortgageDefaultStepTrait
                     'rank' => 10,
                     'min_delay' => null,
                     'max_delay' => 15,
+                    "extra" => [
+                        "form" => [
+                            "title" => "Service of payment order",
+                            "fields" => [
+                                [
+                                    "name" => "completed_at",
+                                    "type" => "date",
+                                    "label" => "Completed date",
+                                    "required" => true
+                                ],
+                                [
+                                    "name" => "documents",
+                                    "type" => "file",
+                                    "label" => "Documents",
+                                    "required" => true
+                                ],
+
+                            ]
+                        ]
+                    ]
                 ],
 
             ],

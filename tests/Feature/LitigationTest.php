@@ -48,7 +48,7 @@ class LitigationTest extends TestCase
                 [
                     'party_id' =>  LitigationParty::first()->id,
                     'category' => 'intervenant',
-                    'type' => 'client',
+                    'type_id' => LitigationSetting::whereType('party_type')->first()->id,
                 ],
             ],
             'documents' => [
@@ -137,7 +137,7 @@ class LitigationTest extends TestCase
                 [
                     'party_id' =>  LitigationParty::first()->id,
                     'category' => 'intervenant',
-                    'type' => 'client',
+                    'type_id' => LitigationSetting::whereType('party_type')->first()->id,
                 ],
             ],
             'documents' => [

@@ -4,12 +4,13 @@ return [
     //movanble securities steps
     'Initiation of the guarantee' => 'Initiation de la garantie',
     'Drafting of the guarantee agreement' => 'Rédaction de la convention de garantie',
+    'Drafting the pledge agreement' => 'Rédaction de la convention de gage',
     'Deposit of the agreement with the notary' => 'Dépot de la convention au rang des minutes d\'un notaire',
     'Transmission to the notary of a request for registration of the guarantee with the RCCM' => 'Transmission au notaire d\'une demande d\'incription de la garantie au RCCM',
     'Obtaining the registered guarantee agreement' => 'Obtention de la convention de garantie enregistrée',
     'Sending a request by the notary to the RCCM for registration of the guarantee' => 'Envoi d\'une demande par le notaire au RCCM pour enregistrement de la garantie',
     'Receipt of proof of registration of the guarantee' => 'Réception de la preuve d\'inscription de la garantie',
-    'Referral to the bailiff for notifications and/or domiciliation formalities with "favorable declaration" notice' => 'Saisine de l\'huissier pour les notifications et/ou les formalités de domiciliation avec l\'avis \'déclaration favorable\'',
+    'Referral to the bailiff for notifications and/or domiciliation formalities with favorable declaration notice' => 'Saisine de l\'huissier pour les notifications et/ou les formalités de domiciliation avec l\'avis déclaration favorable',
     'Obtaining domiciliation acts with "favorable declaration" notice' => 'Obtention des actes de domiciliation avec l\'avis \'déclaration favorable\'',
     'Obtaining the pledge slip issued by the clerk to the debtor' => 'Obtention du bordereau de gage de stocks émis par le greffier au débiteur',
     'Referral to the competent jurisdiction' => 'Saisine de la juridiction compétente',
@@ -106,6 +107,8 @@ return [
 
     //form
     'Documents' => 'Documents',
+    'Date' => 'Date',
+    'Completed date' => 'Date d\'exécution de la tâche',
     'Date of the agreement' => 'Date de la convention',
     'Date of deposit of the agreement' => 'Date de dépot de la convention',
     'Date of transmission' => 'Date de transmission',
@@ -139,6 +142,7 @@ return [
     'Summons addressing documents' => 'Documents d\'adressage de la sommation',
     'Publication documents' => 'Documents de la publication',
     'Signed minute documents' => 'Documents de la minute signée',
+    'Appeal documents' => 'Documents de recours',
     'Documents (TF, ID client, IFU client, credit convention)' => 'Documents (TF, pièce d\'identité du client, IFU du client, convention de crédit)'
 
 

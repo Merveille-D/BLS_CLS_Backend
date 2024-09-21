@@ -34,6 +34,7 @@ class GuaranteeRepository
             ->when($request->security == 'property', function ($query) {
                 return $query->whereSecurity('property');
             })
+            //get all guarantees based on phase
             ->when($request->phase, function ($query, $phase) {
                 return $query->where('phase', $phase);
             })

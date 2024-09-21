@@ -410,7 +410,7 @@ trait CollateralDefaultSteps
                                                     "title" => 'Exercising legal remedies',
                                                     "fields" => [
                                                         ["name" => "completed_at", "type" => "date", "label" => "Date of appeal", "required" => true],
-                                                        ["name" => "documents", "type" => "file", "label" => "Documents de recours", "required" => true],
+                                                        ["name" => "documents", "type" => "file", "label" => "Appeal documents", "required" => true],
                                                         [ "name" => "recourse_is_favorable", "type" => "radio", "label" => "Is the appeal favorable?", "required" => true],
                                                     ]
                                                 ]

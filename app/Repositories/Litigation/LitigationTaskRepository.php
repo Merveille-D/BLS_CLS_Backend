@@ -74,11 +74,13 @@ class LitigationTaskRepository
         return TransferResource::collection($task->transfers);
     }
 
-    public function delete($task_id) {
+    public function delete($task_id) : bool {
         $task = $this->task_model->findOrFail($task_id);
-        if ($task->type == 'task') {
+        if ($task->status == false) {
             $task->delete();
+            return true;
         }
+        return false;
     }
 
     public function complete($task, $request) : JsonResource {

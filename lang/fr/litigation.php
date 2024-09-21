@@ -52,6 +52,11 @@ return [
     'employee' => 'Employé',
     'provider' => 'Fournisseur',
     'partner' => 'Partenaire',
+    //qualities
+    'intervenant' => 'Intervenant',
+    'defendant' => 'Défendeur',
+    'plaintiff' => 'Demandeur',
+    'forced_intervenant' => 'Intervenant forcée',
 
 
 ];

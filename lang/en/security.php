@@ -9,7 +9,7 @@ return [
     'Obtaining the registered guarantee agreement' => 'Obtaining the registered guarantee agreement',
     'Sending a request by the notary to the RCCM for registration of the guarantee' => 'Sending a request by the notary to the RCCM for registration of the guarantee',
     'Receipt of proof of registration of the guarantee' => 'Receipt of proof of registration of the guarantee',
-    'Referral to the bailiff for notifications and/or domiciliation formalities with "favorable declaration" notice' => 'Referral to the bailiff for notifications and/or domiciliation formalities with "favorable declaration" notice',
+    'Referral to the bailiff for notifications and/or domiciliation formalities with favorable declaration notice' => 'Referral to the bailiff for notifications and/or domiciliation formalities with favorable declaration notice',
     'Obtaining domiciliation acts with "favorable declaration" notice' => 'Obtaining domiciliation acts with "favorable declaration" notice',
     'Obtaining the pledge slip issued by the clerk to the debtor' => 'Obtaining the pledge slip issued by the clerk to the debtor',
     'Referral to the competent jurisdiction' => 'Referral to the competent jurisdiction',
@@ -93,6 +93,8 @@ return [
 
     //form
     'Documents' => 'Documents',
+    'Date' => 'Date',
+    'Completed date' => 'Completed date',
     'Date of the agreement' => 'Date of the agreement',
     'Date of deposit of the agreement' => 'Date of deposit of the agreement',
     'Date of transmission' => 'Date of transmission',
@@ -128,6 +130,7 @@ return [
     'Summons addressing documents' => 'Summons addressing documents',
     'Publication documents' => 'Publication documents',
     'Signed minute documents' => 'Signed minute documents',
+    'Appeal documents' => 'Appeal documents',
     'Documents (TF, ID client, IFU client, credit convention)' => 'Documents (TF, ID client, IFU client, credit convention)'
 
 ];
