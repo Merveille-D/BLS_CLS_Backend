@@ -6,6 +6,7 @@ enum LitigationType : string
 {
     const JURISDICTION = 'jurisdiction';
     const NATURE = 'nature';
+    const PARTY_TYPE = 'party_type';
     const DOCUMENT = 'document';
 
     const TYPES = [

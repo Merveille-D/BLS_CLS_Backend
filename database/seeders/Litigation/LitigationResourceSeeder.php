@@ -35,7 +35,13 @@ class LitigationResourceSeeder extends Seeder
             }
         }
 
-
+        $party_types = $this->litigation_party_types();
+        foreach ($party_types as $party_type) {
+            $exist = LitigationSetting::where('name', $party_type)->first();
+            if (!$exist) {
+                LitigationSetting::create(['name' => $party_type, 'type' => LitigationType::PARTY_TYPE]);
+            }
+        }
 
         $documents = $this->litigation_documents();
         foreach ($documents as $document) {
@@ -118,6 +124,24 @@ class LitigationResourceSeeder extends Seeder
             'Commercial',
             'Penal',
             'Social',
+        ];
+    }
+
+    /**
+     * party type default seeds
+     *
+     * @return array
+     */
+    public function litigation_party_types() : array {
+        return [
+        // 'Client',
+        // 'Employé',
+        // 'Fournisseur',
+        // 'Partenaire',
+        'client',
+        'employee',
+        'provider',
+        'partner',
         ];
     }
 

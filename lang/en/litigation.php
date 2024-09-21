@@ -47,5 +47,10 @@ return [
     'Date of the decision' => 'Date of the decision',
     'Documents' => 'Documents',
     'Firm name' => 'Firm name',
+    //party types
+    'client' => 'Client',
+    'employee' => 'Employee',
+    'provider' => 'Provider',
+    'partner' => 'Partner',
 
 ];

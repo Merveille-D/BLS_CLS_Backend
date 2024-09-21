@@ -30,8 +30,7 @@ class LitigationRepository {
     public function __construct(
         private LitigationSetting $setting_model,
         private Litigation $litigation_model,
-    ) {
-    }
+    ) {}
 
     /**
      * getByIdWithDocuments
@@ -225,23 +224,13 @@ class LitigationRepository {
     /**
      * getResources
      *
-     * @param  mixed $type
+     * @param  Request $request
      * @return ResourceCollection
      */
-    public function getResources($type) : ResourceCollection {
-        $query = $this->queryByType($type);
+    public function getResources($request) : ResourceCollection {
+        $res = $this->setting_model->whereType($request->type)->get();
 
-
-        return LitigationSettingResource::collection($query);
-    }
-
-    /**
-     * queryByType
-     *
-     * @return Returntype
-     */
-    public function queryByType($type) {
-        return $this->setting_model->whereType($type)->paginate();
+        return LitigationSettingResource::collection($res);
     }
 
     /**
@@ -251,11 +240,13 @@ class LitigationRepository {
      * @param  mixed $type
      * @return void
      */
-    public function addResource($request, $type) : JsonResource {
+    public function addResource($request) : JsonResource {
         $resource = $this->setting_model->create([
             'name' => $request->name,
             'description' => $request->description,
-            'type' => $type,
+            'type' => $request->type,
+            'default' => false,
+            'created_by' => auth()->id(),
         ]);
 
         return new LitigationSettingResource($resource);
