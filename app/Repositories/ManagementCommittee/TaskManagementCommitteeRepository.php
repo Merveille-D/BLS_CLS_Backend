@@ -106,7 +106,7 @@ class TaskManagementCommitteeRepository
 
     public function generatePdf($request){
 
-        $management_committee = ManagementCommittee::find($request['management_committee_id']);
+        $management_committee = ManagementCommittee::find($request['management_committe_id']);
 
         $tasks = TaskManagementCommittee::where('management_committee_id', $management_committee->id)
                                     ->whereIn('type', $request['type'])

@@ -103,9 +103,6 @@ class TaskManagementCommitteeController extends Controller
 
     public function generatePdfTasks(GeneratePdfManagementCommitteeRequest $request) {
         try {
-            // A corriger après
-            $request['management_committee_id'] = $request['management_committe_id'];
-
             $data = $this->task->generatePdf($request);
             return $data;
         } catch (\Throwable $th) {
