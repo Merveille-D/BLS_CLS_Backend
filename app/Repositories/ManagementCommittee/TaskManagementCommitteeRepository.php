@@ -108,13 +108,10 @@ class TaskManagementCommitteeRepository
 
         $management_committee = ManagementCommittee::find($request['management_committe_id']);
 
-
         $tasks = TaskManagementCommittee::where('management_committee_id', $management_committee->id)
-                                    ->whereIn('type', $request['type'])
+                                    ->where('type', $request['type'])
                                     ->get();
         $title = $request['type'] == 'checklist' ? 'Checklist' : 'Procedure';
-
-        dd($tasks);
 
         $filename = Str::slug($title .''. $management_committee->libelle). '_'.date('YmdHis') . '.pdf';
 
