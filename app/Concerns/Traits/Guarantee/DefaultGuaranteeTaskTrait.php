@@ -6,7 +6,8 @@ use App\Enums\Guarantee\GuaranteeType;
 
 trait DefaultGuaranteeTaskTrait
 {
-    public function defaultStockSteps() : array {
+    public function defaultStockSteps(): array
+    {
         return [
             "formalization" => [
                 "conventional" => [
@@ -309,190 +310,190 @@ trait DefaultGuaranteeTaskTrait
                             ]
                         ],
                         "options" => [
-                                    "yes" => [
-                                        [
+                            "yes" => [
+                                [
+                                    "title" => 'Obtaining the decision authorizing the guarantee',
+                                    "code" => "obtenir_decision_autorisant_garantie",
+                                    "min_delay" => null,
+                                    "max_delay" => 10,
+                                    "extra" => [
+                                        "form" => [
                                             "title" => 'Obtaining the decision authorizing the guarantee',
-                                            "code" => "obtenir_decision_autorisant_garantie",
-                                            "min_delay" => null,
-                                            "max_delay" => 10,
-                                            "extra" => [
-                                                "form" => [
-                                                    "title" => 'Obtaining the decision authorizing the guarantee',
-                                                    "fields" => [
-                                                        [
-                                                            "name" => "completed_at",
-                                                            "type" => "date",
-                                                            "label" => "Date of obtaining",
-                                                            "required" => true
-                                                        ],
-                                                        [
-                                                            "name" => "documents",
-                                                            "type" => "file",
-                                                            "label" => "Documents de décision",
-                                                            "required" => true
-                                                        ],
-                                                    ]
-                                                ]
-                                            ]
-                                        ],
-                                        [
-                                            "title" => 'Transmission to the notary of a request for registration of the guarantee with the RCCM',
-                                            "code" => "transmission_notaire_demande_inscription_garantie_rccm",
-                                            "min_delay" => null,
-                                            "max_delay" => 10,
-                                            "extra" => [
-                                                "form" => [
-                                                    "title" => 'Transmission to the notary of a request for registration of the guarantee with the RCCM',
-                                                    "fields" => [
-                                                        [
-                                                            "name" => "completed_at",
-                                                            "type" => "date",
-                                                            "label" => "Date of transmission",
-                                                            "required" => true
-                                                        ],
-                                                        [
-                                                            "name" => "documents",
-                                                            "type" => "file",
-                                                            "label" => "Documents de transmission",
-                                                            "required" => true
-                                                        ],
-                                                    ]
-                                                ]
-                                            ]
-                                        ],
-                                        [
-                                            "title" => 'Sending a request by the notary to the RCCM for registration of the guarantee',
-                                            "code" => "envoi_demande_notaire_rccm_enregistrement_garantie",
-                                            "min_delay" => null,
-                                            "max_delay" => 10,
-                                            "extra" => [
-                                                "form" => [
-                                                    "title" => 'Sending a request by the notary to the RCCM for registration of the guarantee',
-                                                    "fields" => [
-                                                        [
-                                                            "name" => "completed_at",
-                                                            "type" => "date",
-                                                            "label" => "Date of sending",
-                                                            "required" => true
-                                                        ],
-                                                        [
-                                                            "name" => "documents",
-                                                            "type" => "file",
-                                                            "label" => "Documents d'envoi",
-                                                            "required" => true
-                                                        ],
-                                                    ]
-                                                ]
-                                            ]
-                                        ],
-                                        [
-                                            "title" => 'Receipt of proof of registration of the guarantee',
-                                            "code" => "reception_preuve_inscription_garantie",
-                                            "min_delay" => null,
-                                            "max_delay" => 10,
-                                            "extra" => [
-                                                "form" => [
-                                                    "title" => 'Receipt of proof of registration of the guarantee',
-                                                    "fields" => [
-                                                        [
-                                                            "name" => "completed_at",
-                                                            "type" => "date",
-                                                            "label" => "Date of receipt",
-                                                            "required" => true
-                                                        ],
-                                                        [
-                                                            "name" => "documents",
-                                                            "type" => "file",
-                                                            "label" => "Documents de preuve",
-                                                            "required" => true
-                                                        ],
-                                                    ]
-                                                ]
+                                            "fields" => [
+                                                [
+                                                    "name" => "completed_at",
+                                                    "type" => "date",
+                                                    "label" => "Date of obtaining",
+                                                    "required" => true
+                                                ],
+                                                [
+                                                    "name" => "documents",
+                                                    "type" => "file",
+                                                    "label" => "Documents de décision",
+                                                    "required" => true
+                                                ],
                                             ]
                                         ]
-                                    ],
-
-                                    "no" => [
-                                        [
-                                            "title" => 'Exercising legal remedies',
-                                            "code" => "exercer_les_voies_de_recours",
-                                            "min_delay" => null,
-                                            "max_delay" => 10,
-                                            "extra" => [
-                                                "form" => [
-                                                    "title" => 'Exercising legal remedies',
-                                                    "fields" => [
-                                                        ["name" => "completed_at", "type" => "date", "label" => "Date of appeal", "required" => true],
-                                                        ["name" => "documents", "type" => "file", "label" => "Appeal documents", "required" => true],
-                                                        [ "name" => "recourse_is_favorable", "type" => "radio", "label" => "Is the appeal favorable?", "required" => true],
-                                                    ]
-                                                ]
-                                                    ],
-                                            "options" => [
-                                                "yes" => [
-                                                    [
-                                                        "title" => 'Transmission to the notary of a request for registration of the guarantee with the RCCM',
-                                                        "code" => "transmission_notaire_demande_inscription_garantie_rccm",
-                                                        "min_delay" => null,
-                                                        "max_delay" => 10,
-                                                        "extra" => [
-                                                            "form" => [
-                                                                "title" => 'Transmission to the notary of a request for registration of the guarantee with the RCCM',
-                                                                "fields" => [
-                                                                    ["name" => "completed_at", "type" => "date", "label" => "Date of transmission", "required" => true],
-                                                                    ["name" => "documents", "type" => "file", "label" => "Documents de transmission", "required" => true]
-                                                                ]
-                                                            ]
-                                                        ]
-                                                    ],
-                                                    [
-                                                        "title" => 'Sending a request by the notary to the RCCM for registration of the guarantee',
-                                                        "code" => "envoi_demande_notaire_rccm_enregistrement_garantie",
-                                                        "min_delay" => null,
-                                                        "max_delay" => 10,
-                                                        "extra" => [
-                                                            "form" => [
-                                                                "title" => 'Sending a request by the notary to the RCCM for registration of the guarantee',
-                                                                "fields" => [
-                                                                    ["name" => "completed_at", "type" => "date", "label" => "Date of sending", "required" => true],
-                                                                    ["name" => "documents", "type" => "file", "label" => "Documents d'envoi", "required" => true]
-                                                                ]
-                                                            ]
-                                                        ]
-                                                    ],
-                                                    [
-                                                        "title" => 'Receipt of proof of registration of the guarantee',
-                                                        "code" => "reception_preuve_inscription_garantie",
-                                                        "min_delay" => null,
-                                                        "max_delay" => 10,
-                                                        "extra" => [
-                                                            "form" => [
-                                                                "title" => 'Receipt of proof of registration of the guarantee',
-                                                                "fields" => [
-                                                                    ["name" => "completed_at", "type" => "date", "label" => "Date of receipt", "required" => true],
-                                                                    ["name" => "documents", "type" => "file", "label" => "Documents de preuve", "required" => true]
-                                                                ]
-                                                            ]
-                                                        ]
-                                                    ]
-                                                                ],
-                                                "no" => [
-                                                     [
-                                                        "title" => 'Obtaining another guarantee',
-                                                        "code" => "other_guarantee",
-                                                        "min_delay" => null,
-                                                        "max_delay" => 10,
-                                                    ]
-                                                ]
-
+                                    ]
+                                ],
+                                [
+                                    "title" => 'Transmission to the notary of a request for registration of the guarantee with the RCCM',
+                                    "code" => "transmission_notaire_demande_inscription_garantie_rccm",
+                                    "min_delay" => null,
+                                    "max_delay" => 10,
+                                    "extra" => [
+                                        "form" => [
+                                            "title" => 'Transmission to the notary of a request for registration of the guarantee with the RCCM',
+                                            "fields" => [
+                                                [
+                                                    "name" => "completed_at",
+                                                    "type" => "date",
+                                                    "label" => "Date of transmission",
+                                                    "required" => true
+                                                ],
+                                                [
+                                                    "name" => "documents",
+                                                    "type" => "file",
+                                                    "label" => "Documents de transmission",
+                                                    "required" => true
+                                                ],
+                                            ]
+                                        ]
+                                    ]
+                                ],
+                                [
+                                    "title" => 'Sending a request by the notary to the RCCM for registration of the guarantee',
+                                    "code" => "envoi_demande_notaire_rccm_enregistrement_garantie",
+                                    "min_delay" => null,
+                                    "max_delay" => 10,
+                                    "extra" => [
+                                        "form" => [
+                                            "title" => 'Sending a request by the notary to the RCCM for registration of the guarantee',
+                                            "fields" => [
+                                                [
+                                                    "name" => "completed_at",
+                                                    "type" => "date",
+                                                    "label" => "Date of sending",
+                                                    "required" => true
+                                                ],
+                                                [
+                                                    "name" => "documents",
+                                                    "type" => "file",
+                                                    "label" => "Documents d'envoi",
+                                                    "required" => true
+                                                ],
+                                            ]
+                                        ]
+                                    ]
+                                ],
+                                [
+                                    "title" => 'Receipt of proof of registration of the guarantee',
+                                    "code" => "reception_preuve_inscription_garantie",
+                                    "min_delay" => null,
+                                    "max_delay" => 10,
+                                    "extra" => [
+                                        "form" => [
+                                            "title" => 'Receipt of proof of registration of the guarantee',
+                                            "fields" => [
+                                                [
+                                                    "name" => "completed_at",
+                                                    "type" => "date",
+                                                    "label" => "Date of receipt",
+                                                    "required" => true
+                                                ],
+                                                [
+                                                    "name" => "documents",
+                                                    "type" => "file",
+                                                    "label" => "Documents de preuve",
+                                                    "required" => true
+                                                ],
                                             ]
                                         ]
                                     ]
                                 ]
+                            ],
+
+                            "no" => [
+                                [
+                                    "title" => 'Exercising legal remedies',
+                                    "code" => "exercer_les_voies_de_recours",
+                                    "min_delay" => null,
+                                    "max_delay" => 10,
+                                    "extra" => [
+                                        "form" => [
+                                            "title" => 'Exercising legal remedies',
+                                            "fields" => [
+                                                ["name" => "completed_at", "type" => "date", "label" => "Date of appeal", "required" => true],
+                                                ["name" => "documents", "type" => "file", "label" => "Appeal documents", "required" => true],
+                                                ["name" => "recourse_is_favorable", "type" => "radio", "label" => "Is the appeal favorable?", "required" => true],
+                                            ]
+                                        ]
+                                    ],
+                                    "options" => [
+                                        "yes" => [
+                                            [
+                                                "title" => 'Transmission to the notary of a request for registration of the guarantee with the RCCM',
+                                                "code" => "transmission_notaire_demande_inscription_garantie_rccm",
+                                                "min_delay" => null,
+                                                "max_delay" => 10,
+                                                "extra" => [
+                                                    "form" => [
+                                                        "title" => 'Transmission to the notary of a request for registration of the guarantee with the RCCM',
+                                                        "fields" => [
+                                                            ["name" => "completed_at", "type" => "date", "label" => "Date of transmission", "required" => true],
+                                                            ["name" => "documents", "type" => "file", "label" => "Documents de transmission", "required" => true]
+                                                        ]
+                                                    ]
+                                                ]
+                                            ],
+                                            [
+                                                "title" => 'Sending a request by the notary to the RCCM for registration of the guarantee',
+                                                "code" => "envoi_demande_notaire_rccm_enregistrement_garantie",
+                                                "min_delay" => null,
+                                                "max_delay" => 10,
+                                                "extra" => [
+                                                    "form" => [
+                                                        "title" => 'Sending a request by the notary to the RCCM for registration of the guarantee',
+                                                        "fields" => [
+                                                            ["name" => "completed_at", "type" => "date", "label" => "Date of sending", "required" => true],
+                                                            ["name" => "documents", "type" => "file", "label" => "Documents d'envoi", "required" => true]
+                                                        ]
+                                                    ]
+                                                ]
+                                            ],
+                                            [
+                                                "title" => 'Receipt of proof of registration of the guarantee',
+                                                "code" => "reception_preuve_inscription_garantie",
+                                                "min_delay" => null,
+                                                "max_delay" => 10,
+                                                "extra" => [
+                                                    "form" => [
+                                                        "title" => 'Receipt of proof of registration of the guarantee',
+                                                        "fields" => [
+                                                            ["name" => "completed_at", "type" => "date", "label" => "Date of receipt", "required" => true],
+                                                            ["name" => "documents", "type" => "file", "label" => "Documents de preuve", "required" => true]
+                                                        ]
+                                                    ]
+                                                ]
+                                            ]
+                                        ],
+                                        "no" => [
+                                            [
+                                                "title" => 'Obtaining another guarantee',
+                                                "code" => "other_guarantee",
+                                                "min_delay" => null,
+                                                "max_delay" => 10,
+                                            ]
+                                        ]
+
+                                    ]
+                                ]
+                            ]
+                        ]
                     ],
 
-                    ],
                 ],
+            ],
             "realization" => [
 
                 "title" => 'Payment order',
@@ -668,7 +669,7 @@ trait DefaultGuaranteeTaskTrait
                                                     ["name" => "is_friendly", "type" => "radio", "label" => "Is the sale amicable?", "required" => true]
                                                 ]
                                             ]
-                                                ],
+                                        ],
                                         "options" => [
                                             "yes" => [],
                                             "no" => [
@@ -703,6 +704,21 @@ trait DefaultGuaranteeTaskTrait
                                                     ]
                                                 ],
                                                 [
+                                                    "title" => "Forced sale of the stock",
+                                                    "code" => "forced_stock_sale",
+                                                    "min_delay" => null,
+                                                    "max_delay" => 10,
+                                                    "extra" => [
+                                                        "form" => [
+                                                            "title" => "Forced sale of the stock",
+                                                            "fields" => [
+                                                                ["name" => "completed_at", "type" => "date", "label" => "Date of forced sale", "required" => true],
+                                                                ["name" => "documents", "type" => "file", "label" => "Documents de vente", "required" => true]
+                                                            ]
+                                                        ]
+                                                    ]
+                                                ],
+                                                [
                                                     "title" => "Distribution of the sale price",
                                                     "code" => "sale_price_distribution",
                                                     "min_delay" => null,
@@ -717,21 +733,6 @@ trait DefaultGuaranteeTaskTrait
                                                         ]
                                                     ]
                                                 ],
-                                                [
-                                                    "title" => "Forced sale of the stock",
-                                                    "code" => "forced_stock_sale",
-                                                    "min_delay" => null,
-                                                    "max_delay" => 10,
-                                                    "extra" => [
-                                                        "form" => [
-                                                            "title" => "Forced sale of the stock",
-                                                            "fields" => [
-                                                                ["name" => "completed_at", "type" => "date", "label" => "Date of forced sale", "required" => true],
-                                                                ["name" => "documents", "type" => "file", "label" => "Documents de vente", "required" => true]
-                                                            ]
-                                                        ]
-                                                    ]
-                                                ]
 
                                             ]
                                         ]
@@ -750,231 +751,252 @@ trait DefaultGuaranteeTaskTrait
         ];
     }
 
-    public function defaultVehicleSteps() : array {
+    public function defaultVehicleSteps(): array
+    {
         return [
             "formalization" => [
-                    [
-                        "title" => "Initiation of the guarantee",
-                        "code" => "created",
-                        "min_delay" => null,
-                        "max_delay" => 0,
-                    ],
-                    [
-                        "title" => "Obtaining property documents",
-                        "code" => "obtention",
-                        "min_delay" => null,
-                        "max_delay" => 0,
-                    ],
-                    [
-                        "title" => "Drafting of the guarantee agreement",
-                        "code" => "redaction",
-                        "min_delay" => null,
-                        "max_delay" => 10,
-                        "extra" => [
-                            "form" => [
-                                "title" => "Drafting of the guarantee agreement",
-                                "fields" => [
-                                    [
-                                        "name" => "completed_at",
-                                        "type" => "date",
-                                        "label" => "Date of the agreement",
-                                        "required" => true
-                                    ],
-                                    [
-                                        "name" => "documents",
-                                        "type" => "file",
-                                        "label" => "Documents",
-                                        "required" => true
-                                    ],
-
-                                ]
-                            ]
-                        ]
-                    ],
-                    [
-                        "title" => "Deposit of the agreement with the notary",
-                        "code" => "notary_deposit",
-                        "min_delay" => null,
-                        "max_delay" => 10,
-                        "extra" => [
-                            "form" => [
-                                "title" => "Deposit of the agreement with the notary",
-                                "fields" => [
-                                    [
-                                        "name" => "completed_at",
-                                        "type" => "date",
-                                        "label" => "Date of deposit of the agreement",
-                                        "required" => true
-                                    ],
-                                    [
-                                        "name" => "documents",
-                                        "type" => "file",
-                                        "label" => "Documents",
-                                        "required" => true
-                                    ],
-
-                                ]
-                            ]
-                        ]
-                    ],
-                    [
-                        "title" => "Transmission to the notary of a request for registration of the guarantee with the RCCM",
-                        "code" => "notary_transmission",
-                        "min_delay" => null,
-                        "max_delay" => 10,
-                        "extra" => [
-                            "form" => [
-                                "title" => "Transmission to the notary of a request for registration of the guarantee with the RCCM",
-                                "fields" => [
-                                    [
-                                        "name" => "completed_at",
-                                        "type" => "date",
-                                        "label" => "Date of transmission",
-                                        "required" => true
-                                    ],
-                                    [
-                                        "name" => "documents",
-                                        "type" => "file",
-                                        "label" => "Documents",
-                                        "required" => true
-                                    ],
-
-                                ]
-                            ]
-                        ]
-                    ],
-                    [
-                        "title" => "Obtaining the registered guarantee agreement",
-                        "code" => "convention_obtention",
-                        "min_delay" => null,
-                        "max_delay" => 10,
-                        "extra" => [
-                            "form" => [
-                                "title" => "Obtaining the registered guarantee agreement",
-                                "fields" => [
-                                    [
-                                        "name" => "completed_at",
-                                        "type" => "date",
-                                        "label" => "Date of obtaining",
-                                        "required" => true
-                                    ],
-                                    [
-                                        "name" => "documents",
-                                        "type" => "file",
-                                        "label" => "Documents",
-                                        "required" => true
-                                    ],
-
-                                ]
-                            ]
-                        ]
-                    ],
-                    [
-                        "title" => 'Sending a request by the notary to the RCCM for registration of the guarantee',
-                        "code" => "rccm_registration",
-                        "min_delay" => null,
-                        "max_delay" => 10,
-                        "extra" => [
-                            "form" => [
-                                "title" => 'Sending a request by the notary to the RCCM for registration of the guarantee',
-                                "fields" => [
-                                    [
-                                        "name" => "completed_at",
-                                        "type" => "date",
-                                        "label" => "Date of sending",
-                                        "required" => true
-                                    ],
-                                    [
-                                        "name" => "documents",
-                                        "type" => "file",
-                                        "label" => "Documents",
-                                        "required" => true
-                                    ],
-
-                                ]
-                            ]
-                        ]
-                    ],
-                    [
-                        "title" => 'Receipt of proof of registration of the guarantee',
-                        "code" => "rccm_proof",
-                        "min_delay" => null,
-                        "max_delay" => 10,
-                        "extra" => [
-                            "form" => [
-                                "title" => 'Receipt of proof of registration of the guarantee',
-                                "fields" => [
-                                    [
-                                        "name" => "completed_at",
-                                        "type" => "date",
-                                        "label" => "Date of receipt",
-                                        "required" => true
-                                    ],
-                                    [
-                                        "name" => "documents",
-                                        "type" => "file",
-                                        "label" => "Documents",
-                                        "required" => true
-                                    ],
-
-                                ]
-                            ]
-                        ]
-                    ],
-                    [
-                        "title" => "Referral to the bailiff for notifications and/or domiciliation formalities with 'favorable declaration' notice",
-                        "code" => "huissier_notification",
-                        "min_delay" => null,
-                        "max_delay" => 10,
-                        "extra" => [
-                            "form" => [
-                                "title" => "Referral to the bailiff for notifications and/or domiciliation formalities with 'favorable declaration' notice",
-                                "fields" => [
-                                    [
-                                        "name" => "completed_at",
-                                        "type" => "date",
-                                        "label" => "Date of referral",
-                                        "required" => true
-                                    ],
-                                    [
-                                        "name" => "documents",
-                                        "type" => "file",
-                                        "label" => "Documents",
-                                        "required" => true
-                                    ],
-
-                                ]
-                            ]
-                        ]
-                    ],
-                    [
-                        "title" => "Obtaining domiciliation acts with 'favorable declaration' notice",
-                        "code" => "domiciliation_obtention",
-                        "min_delay" => null,
-                        "max_delay" => 10,
-                        "extra" => [
-                            "form" => [
-                                "title" => "Obtaining domiciliation acts with 'favorable declaration' notice",
-                                "fields" => [
-                                    [
-                                        "name" => "completed_at",
-                                        "type" => "date",
-                                        "label" => "Date of obtaining",
-                                        "required" => true
-                                    ],
-                                    [
-                                        "name" => "documents",
-                                        "type" => "file",
-                                        "label" => "Documents",
-                                        "required" => true
-                                    ],
-
-                                ]
-                            ]
-                        ]
-                    ],
-
+                [
+                    "title" => "Initiation of the guarantee",
+                    "code" => "created",
+                    "min_delay" => null,
+                    "max_delay" => 0,
                 ],
+                [
+                    "title" => "Obtaining property documents",
+                    "code" => "obtention",
+                    "min_delay" => null,
+                    "max_delay" => 10,
+                    "extra" => [
+                        "form" => [
+                            "title" => "Obtaining property documents",
+                            "fields" => [
+                                [
+                                    "name" => "completed_at",
+                                    "type" => "date",
+                                    "label" => "Date of the agreement",
+                                    "required" => true
+                                ],
+                                [
+                                    "name" => "documents",
+                                    "type" => "file",
+                                    "label" => "Documents",
+                                    "required" => true
+                                ],
+
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    "title" => "Drafting of the guarantee agreement",
+                    "code" => "redaction",
+                    "min_delay" => null,
+                    "max_delay" => 10,
+                    "extra" => [
+                        "form" => [
+                            "title" => "Drafting of the guarantee agreement",
+                            "fields" => [
+                                [
+                                    "name" => "completed_at",
+                                    "type" => "date",
+                                    "label" => "Date of the agreement",
+                                    "required" => true
+                                ],
+                                [
+                                    "name" => "documents",
+                                    "type" => "file",
+                                    "label" => "Documents",
+                                    "required" => true
+                                ],
+
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    "title" => "Deposit of the agreement with the notary",
+                    "code" => "notary_deposit",
+                    "min_delay" => null,
+                    "max_delay" => 10,
+                    "extra" => [
+                        "form" => [
+                            "title" => "Deposit of the agreement with the notary",
+                            "fields" => [
+                                [
+                                    "name" => "completed_at",
+                                    "type" => "date",
+                                    "label" => "Date of deposit of the agreement",
+                                    "required" => true
+                                ],
+                                [
+                                    "name" => "documents",
+                                    "type" => "file",
+                                    "label" => "Documents",
+                                    "required" => true
+                                ],
+
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    "title" => "Transmission to the notary of a request for registration of the guarantee with the RCCM",
+                    "code" => "notary_transmission",
+                    "min_delay" => null,
+                    "max_delay" => 10,
+                    "extra" => [
+                        "form" => [
+                            "title" => "Transmission to the notary of a request for registration of the guarantee with the RCCM",
+                            "fields" => [
+                                [
+                                    "name" => "completed_at",
+                                    "type" => "date",
+                                    "label" => "Date of transmission",
+                                    "required" => true
+                                ],
+                                [
+                                    "name" => "documents",
+                                    "type" => "file",
+                                    "label" => "Documents",
+                                    "required" => true
+                                ],
+
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    "title" => "Obtaining the registered guarantee agreement",
+                    "code" => "convention_obtention",
+                    "min_delay" => null,
+                    "max_delay" => 10,
+                    "extra" => [
+                        "form" => [
+                            "title" => "Obtaining the registered guarantee agreement",
+                            "fields" => [
+                                [
+                                    "name" => "completed_at",
+                                    "type" => "date",
+                                    "label" => "Date of obtaining",
+                                    "required" => true
+                                ],
+                                [
+                                    "name" => "documents",
+                                    "type" => "file",
+                                    "label" => "Documents",
+                                    "required" => true
+                                ],
+
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    "title" => 'Sending a request by the notary to the RCCM for registration of the guarantee',
+                    "code" => "rccm_registration",
+                    "min_delay" => null,
+                    "max_delay" => 10,
+                    "extra" => [
+                        "form" => [
+                            "title" => 'Sending a request by the notary to the RCCM for registration of the guarantee',
+                            "fields" => [
+                                [
+                                    "name" => "completed_at",
+                                    "type" => "date",
+                                    "label" => "Date of sending",
+                                    "required" => true
+                                ],
+                                [
+                                    "name" => "documents",
+                                    "type" => "file",
+                                    "label" => "Documents",
+                                    "required" => true
+                                ],
+
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    "title" => 'Receipt of proof of registration of the guarantee',
+                    "code" => "rccm_proof",
+                    "min_delay" => null,
+                    "max_delay" => 10,
+                    "extra" => [
+                        "form" => [
+                            "title" => 'Receipt of proof of registration of the guarantee',
+                            "fields" => [
+                                [
+                                    "name" => "completed_at",
+                                    "type" => "date",
+                                    "label" => "Date of receipt",
+                                    "required" => true
+                                ],
+                                [
+                                    "name" => "documents",
+                                    "type" => "file",
+                                    "label" => "Documents",
+                                    "required" => true
+                                ],
+
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    "title" => 'Referral to the bailiff for notifications and/or domiciliation formalities with "favorable declaration" notice',
+                    "code" => "huissier_notification",
+                    "min_delay" => null,
+                    "max_delay" => 10,
+                    "extra" => [
+                        "form" => [
+                            "title" => 'Referral to the bailiff for notifications and/or domiciliation formalities with "favorable declaration" notice',
+                            "fields" => [
+                                [
+                                    "name" => "completed_at",
+                                    "type" => "date",
+                                    "label" => "Date of referral",
+                                    "required" => true
+                                ],
+                                [
+                                    "name" => "documents",
+                                    "type" => "file",
+                                    "label" => "Documents",
+                                    "required" => true
+                                ],
+
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    "title" => 'Obtaining domiciliation acts with "favorable declaration" notice',
+                    "code" => "domiciliation_obtention",
+                    "min_delay" => null,
+                    "max_delay" => 10,
+                    "extra" => [
+                        "form" => [
+                            "title" => 'Obtaining domiciliation acts with "favorable declaration" notice',
+                            "fields" => [
+                                [
+                                    "name" => "completed_at",
+                                    "type" => "date",
+                                    "label" => "Date of obtaining",
+                                    "required" => true
+                                ],
+                                [
+                                    "name" => "documents",
+                                    "type" => "file",
+                                    "label" => "Documents",
+                                    "required" => true
+                                ],
+
+                            ]
+                        ]
+                    ]
+                ],
+
+            ],
             "realization" => [
                 [
                     "title" => "Payment order",
@@ -1150,7 +1172,7 @@ trait DefaultGuaranteeTaskTrait
                                                         ["name" => "is_friendly", "type" => "radio", "label" => "Is the sale amicable?", "required" => true]
                                                     ]
                                                 ]
-                                                    ],
+                                            ],
                                             "options" => [
                                                 "yes" => [],
                                                 "no" => [

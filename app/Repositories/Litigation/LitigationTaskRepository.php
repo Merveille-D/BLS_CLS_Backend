@@ -6,7 +6,9 @@ use App\Http\Resources\Litigation\LitigationTaskResource;
 use App\Http\Resources\Transfer\TransferResource;
 use App\Models\Litigation\Litigation;
 use App\Models\Litigation\LitigationDocument;
+use App\Models\Litigation\LitigationStep;
 use App\Models\Litigation\LitigationTask;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -24,9 +26,7 @@ class LitigationTaskRepository
 
         return LitigationTaskResource::collection(
             $modele?->tasks()
-            ->orderByRaw('IF(max_deadline IS NOT NULL, 0, 1)')
-            ->orderBy('max_deadline')
-            ->orderBy('rank')
+            ->defaultOrder()
             ->get()
         );
     }
@@ -111,9 +111,42 @@ class LitigationTaskRepository
             $litigation->extra = $data;
             $litigation->save();
             $task->save();
+
+            $this->setDeadline($litigation->refresh());
         }
 
         return new LitigationTaskResource($task->refresh());
+    }
+
+    public function setDeadline($litigation) {
+        $nextTask = $litigation->next_task;
+
+        $defaultTask = $nextTask?->step;
+        if(!$defaultTask)
+            return false;
+
+        $minDelay = $defaultTask->min_delay;
+        $maxDelay = $defaultTask->max_delay;
+        $data = array();
+
+        $operationDate = $litigation->current_task->completed_at ?? null;
+
+        if ($operationDate == null)
+            return $data;
+
+        // $operationDate = substr($operationDate, 0, 10);
+        $formatted_date = Carbon::createFromFormat('Y-m-d H:i:s', $operationDate);
+
+        if ($minDelay) {
+            $data['min_deadline'] = $formatted_date->addDays($minDelay);
+        }elseif ($maxDelay) {
+            $data['max_deadline'] = $formatted_date->addDays($maxDelay);
+        }
+        if ($data == [])
+                return false;
+
+        $nextTask->update($data);
+        return true;
     }
 
     public function saveFiles($files,Model $litigation, string $state) : array|bool {

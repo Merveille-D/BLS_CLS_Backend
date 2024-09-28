@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Concerns\Traits\Guarantee\CollateralDefaultSteps;
 use App\Concerns\Traits\Guarantee\DefaultGuaranteeTaskTrait;
 use App\Concerns\Traits\Guarantee\MortgageDefaultStepTrait;
 use App\Enums\Guarantee\GuaranteeType;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class UpdateSteps extends Command
 {
-    use DefaultGuaranteeTaskTrait, MortgageDefaultStepTrait, DefaultGuaranteeTaskTrait;
+    use DefaultGuaranteeTaskTrait, MortgageDefaultStepTrait, DefaultGuaranteeTaskTrait, CollateralDefaultSteps;
     /**
      * The name and signature of the console command.
      *

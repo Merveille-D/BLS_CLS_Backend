@@ -146,6 +146,7 @@ class LitigationRepository {
             $task->type = $step->type;
             $task->max_deadline = $step->code == 'created' ? now() : null;
             $task->created_by = auth()->id();
+            $task->step_id = $step?->id;
 
             $task->taskable()->associate($litigation);
             $task->save();
