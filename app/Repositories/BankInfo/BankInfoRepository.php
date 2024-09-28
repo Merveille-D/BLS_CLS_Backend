@@ -45,6 +45,4 @@ class BankInfoRepository
         $bank_info->update($request);
         return $bank_info;
     }
-
-
 }

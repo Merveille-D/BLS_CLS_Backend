@@ -24,7 +24,7 @@ class GeneratePdfManagementCommitteeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'management_committee_id' => ['required', 'uuid'],
+            'management_committe_id' => ['required', 'uuid'],
         ];
     }
 
