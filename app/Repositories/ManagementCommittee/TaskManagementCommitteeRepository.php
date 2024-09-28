@@ -115,6 +115,8 @@ class TaskManagementCommitteeRepository
 
         $filename = Str::slug($title .''. $management_committee->libelle). '_'.date('YmdHis') . '.pdf';
 
+        dd(1);
+
         $pdf =  $this->generateFromView( 'pdf.management_committee.checklist_and_procedure',  [
             'tasks' => $tasks,
             'management_committee' => $management_committee,
