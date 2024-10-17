@@ -17,10 +17,12 @@ class BankInfoRepository
      */
     public function store($request) {
 
-        $path = uploadFile($request['logo'], 'bank_infos');
+        if($request->hasFile('logo')) {
+            $path = uploadFile($request['logo'], 'bank_infos');
+            $requestData = $request->except('logo');
+            $requestData['logo'] = $path;
+        }
 
-        $requestData = $request->except('logo');
-        $requestData['logo'] = $path;
         $requestData['total_shareholders'] = Shareholder::count();
 
         if(BankInfo::exists()) {
@@ -43,6 +45,4 @@ class BankInfoRepository
         $bank_info->update($request);
         return $bank_info;
     }
-
-
 }

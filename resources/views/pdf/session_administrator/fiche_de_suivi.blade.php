@@ -46,7 +46,6 @@
                     <td>{{ $task->deadline }}</td>
                 </tr>
             @endforeach
-
         </tbody>
     </table>
 

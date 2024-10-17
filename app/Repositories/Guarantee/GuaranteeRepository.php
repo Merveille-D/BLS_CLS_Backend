@@ -131,6 +131,7 @@ class GuaranteeRepository
         // dd($currentTask);
         if ($currentTask) {
             $currentTask->status = true;
+            $currentTask->completed_by = auth()->id();
             if ($currentTask->completed_at == null)
                 $currentTask->completed_at = Carbon::now();
             $currentTask->save();

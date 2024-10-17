@@ -172,6 +172,18 @@ class MortgageTest extends TestCase
             'completed_at' => date('Y-m-d'),
             'is_approved' => 'yes'
         ]);
+        $next7 = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.Guarantee::find($hypothec_id)->next_task->id, [
+
+        ]);
+        $next8 = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.Guarantee::find($hypothec_id)->next_task->id, [
+
+        ]);
+        $next9 = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.Guarantee::find($hypothec_id)->next_task->id, [
+
+        ]);
+        $next10 = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.Guarantee::find($hypothec_id)->next_task->id, [
+
+        ]);
 
         $register->assertStatus(200);
 
