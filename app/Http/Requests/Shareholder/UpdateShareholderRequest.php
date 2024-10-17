@@ -31,8 +31,8 @@ class UpdateShareholderRequest extends FormRequest
             'nationality' => 'string|max:255',
             'address' => 'string|max:255',
             'corporate_type' => [Rule::in(Shareholder::CORPORATE_TYPES) ],
-            'actions_encumbered' => ['numeric', 'gt:0'],
-            'actions_no_encumbered' => ['numeric', 'gt:0'],
+            'actions_encumbered' => ['required', 'numeric', 'gt:0'],
+            'actions_no_encumbered' => ['required', 'numeric', 'gt:0'],
         ];
     }
 
