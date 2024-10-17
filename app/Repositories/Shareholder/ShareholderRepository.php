@@ -26,6 +26,7 @@ class ShareholderRepository
         if($capital) {
             $total_actions = $capital->amount / $capital->par_value ;
             $percentage = round(($request['actions_number'] / $total_actions) * 100, 2);
+            $percentage = (fmod($percentage, 1) == 0) ? (int)$percentage : $percentage;
 
         }
 
@@ -53,6 +54,7 @@ class ShareholderRepository
         if($capital) {
             $total_actions = $capital->amount / $capital->par_value ;
             $percentage = round(($request['actions_number'] / $total_actions) * 100, 2);
+            $percentage = (fmod($percentage, 1) == 0) ? (int)$percentage : $percentage;
         }
 
         $request['percentage'] = $percentage ?? null;
