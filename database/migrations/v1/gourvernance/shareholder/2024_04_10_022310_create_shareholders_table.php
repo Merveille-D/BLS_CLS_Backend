@@ -20,10 +20,10 @@ return new class extends Migration
             $table->string('nationality')->nullable();
             $table->string('address')->nullable();
             $table->enum('corporate_type', Shareholder::CORPORATE_TYPES)->nullable();
-            $table->unsignedBigInteger('actions_number');
-            $table->unsignedBigInteger('actions_encumbered');
-            $table->unsignedBigInteger('actions_no_encumbered');
-            $table->integer('percentage')->nullable();
+            $table->decimal('actions_number', 10, 2);
+            $table->decimal('actions_encumbered', 10, 2);
+            $table->decimal('actions_no_encumbered', 10, 2);
+            $table->decimal('percentage', 10, 2)->nullable();
 
             $table->uuid('created_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
