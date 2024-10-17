@@ -38,6 +38,32 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/V1/recovery.php'))
                 ->group(base_path('routes/V1/alert.php'))
                 ->group(base_path('routes/V1/transfer.php'))
+
+                ->group(base_path('routes/V1/action_transfer.php'))
+                ->group(base_path('routes/V1/audit.php'))
+                ->group(base_path('routes/V1/bank.php'))
+                ->group(base_path('routes/V1/config.php'))
+                ->group(base_path('routes/V1/contract.php'))
+                ->group(base_path('routes/V1/director.php'))
+                ->group(base_path('routes/V1/evaluation.php'))
+                ->group(base_path('routes/V1/incident.php'))
+                ->group(base_path('routes/V1/mandate.php'))
+                ->group(base_path('routes/V1/shareholder.php'))
+
+                ->group(base_path('routes/V1/general_meeting/general_meeting.php'))
+                ->group(base_path('routes/V1/general_meeting/attendance_general_meeting.php'))
+                ->group(base_path('routes/V1/general_meeting/task_general_meeting.php'))
+
+                ->group(base_path('routes/V1/session_administrator/session_administrator.php'))
+                ->group(base_path('routes/V1/session_administrator/attendance_session_administrator.php'))
+                ->group(base_path('routes/V1/session_administrator/task_session_administrator.php'))
+                ->group(base_path('routes/V1/session_administrator/administrator.php'))
+
+                ->group(base_path('routes/V1/management_committee/management_committee.php'))
+                ->group(base_path('routes/V1/management_committee/attendance_management_committee.php'))
+                ->group(base_path('routes/V1/management_committee/task_management_committee.php'))
+
+                
                 ->group(base_path('routes/api.php'));
 
             Route::middleware('web')

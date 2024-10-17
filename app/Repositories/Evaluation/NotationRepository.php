@@ -181,7 +181,7 @@ class NotationRepository
             'N° de dossier' => $data['evaluation_reference'],
             'Statut actuel' => $data['status'],
             'Collaborateur' => $data['collaborator']['lastname'] . ' ' . $data['collaborator']['firstname'],
-            'Poste' => Collaborator::find($data['collaborator']['position_id'])->title,
+            'Poste' => $data['collaborator']['position']['title'],
             'Créé par' => $data['creator']['firstname'] . '' . $data['creator']['lastname'],
         ];
         return $details;
