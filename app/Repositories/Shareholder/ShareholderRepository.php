@@ -45,7 +45,7 @@ class ShareholderRepository
      */
     public function update(Shareholder $shareholder, $request) {
 
-        $request['actions_number'] = $request['actions_encumbered'] + $request['actions_no_encumbered'];
+        $request['actions_number'] = $request->actions_encumbered + $request['actions_no_encumbered'];
 
         $capital = Capital::get()->last();
 
