@@ -1,17 +1,13 @@
 <?php
 namespace App\Repositories\Shareholder;
 
-use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use App\Models\Gourvernance\BankInfo\BankInfo;
 use App\Models\Shareholder\Capital;
 use App\Models\Shareholder\Shareholder;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 
 class ShareholderRepository
 {
-    use GeneratePdfTrait;
     public function __construct(private Shareholder $shareholder) {
 
     }
@@ -49,7 +45,7 @@ class ShareholderRepository
      */
     public function update(Shareholder $shareholder, $request) {
 
-        $request['actions_number'] = $request->actions_encumbered + $request['actions_no_encumbered'];
+        $request['actions_number'] = $request['actions_encumbered'] + $request['actions_no_encumbered'];
 
         $capital = Capital::get()->last();
 
@@ -77,20 +73,20 @@ class ShareholderRepository
     public function generatePdfCertificat($request)
     {
         $shareholder = Shareholder::find($request['shareholder_id']);
-        // dd($shareholder);
-        $filename = Str::slug('Certificat actions'). '_'.date('YmdHis') . '.pdf';
-        $logo = generateBase64Image('afrikskills-logo.webp') ?? generateBase64Image('bls-logo.png');
 
-        $pdf = Pdf::loadView('pdf.certificat.certificat', [
-            'shareholder' => $shareholder,
-            'logo' => $logo
-        ])->setPaper('A4', 'landscape');
-        return $pdf->stream($filename,);
+        // $meeting_type = SessionAdministrator::SESSION_MEETING_TYPES_VALUES[$session_administrator->type];
 
-        // $pdf =  $this->generateFromView( 'pdf.certificat.certificat',  [
-        //     'shareholder' => $shareholder,
-        // ],$filename, ['format' => 'A4',  'landscape']);
-        return $pdf;
+        // $tasks = TaskSessionAdministrator::where('session_administrator_id', $session_administrator->id)
+        //                             ->whereIn('type', ['pre_ca', 'post_ca'])
+        //                             ->get();
+        // $filename = Str::slug($session_administrator->libelle). '_'.date('YmdHis') . '.pdf';
+
+        // $pdf =  $this->generateFromView( 'pdf.session_administrator.fiche_de_suivi',  [
+        //     'tasks' => $tasks,
+        //     'session_administrator' => $session_administrator,
+        //     'meeting_type' => $meeting_type,
+        // ],$filename);
+        // return $pdf;
     }
 
 }
