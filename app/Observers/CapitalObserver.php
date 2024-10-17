@@ -17,9 +17,7 @@ class CapitalObserver
         $total_actions = $capital->amount / $capital->par_value;
 
         foreach ($shareholders as $shareholder) {
-            $percentage = round(($shareholder->actions_number / $total_actions) * 100, 2);
-            $percentage = (fmod($percentage, 1) == 0) ? (int)$percentage : $percentage;
-
+            $percentage = ($shareholder->actions_number / $total_actions) * 100;
             $shareholder->update(['percentage' => $percentage]);
         }
 
@@ -35,9 +33,7 @@ class CapitalObserver
         $total_actions = $capital->amount / $capital->par_value;
 
         foreach ($shareholders as $shareholder) {
-            $percentage = round(($shareholder->actions_number / $total_actions) * 100, 2);
-            $percentage = (fmod($percentage, 1) == 0) ? (int)$percentage : $percentage;
-            
+            $percentage = ($shareholder->actions_number / $total_actions) * 100;
             $shareholder->update(['percentage' => $percentage]);
         }
     }
