@@ -24,7 +24,7 @@ return new class extends Migration
             $table->unsignedBigInteger('actions_number');
             $table->unsignedBigInteger('actions_encumbered');
             $table->unsignedBigInteger('actions_no_encumbered');
-            $table->decimal('percentage', 3, 2)->nullable();
+            $table->decimal('percentage', 5, 5)->nullable();
 
             $table->uuid('created_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
