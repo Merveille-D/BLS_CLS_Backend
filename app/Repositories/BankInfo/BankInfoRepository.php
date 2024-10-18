@@ -3,6 +3,7 @@ namespace App\Repositories\BankInfo;
 
 use App\Models\Gourvernance\BankInfo\BankInfo;
 use App\Models\Shareholder\Shareholder;
+use Illuminate\Support\Facades\Request;
 
 class BankInfoRepository
 {
@@ -15,7 +16,7 @@ class BankInfoRepository
      *
      * @return BankInfo
      */
-    public function store($request) {
+    public function store(Request $request) {
 
         $requestData = $request;
         
