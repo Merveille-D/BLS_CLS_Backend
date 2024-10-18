@@ -18,8 +18,8 @@ class BankInfoRepository
     public function store($request) {
 
         $requestData = $request;
-
-        if($request['logo']) {
+        
+        if($request->hasFile('logo')) {
             $path = uploadFile($request['logo'], 'bank_infos');
             $requestData = $request->except('logo');
             $requestData['logo'] = $path;
