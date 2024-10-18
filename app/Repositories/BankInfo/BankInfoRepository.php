@@ -27,7 +27,10 @@ class BankInfoRepository
 
         $bank_info = BankInfo::first(); 
         if ($bank_info) {
+
+            dd($requestData);
             $bank_info->update($requestData); 
+
         } else {
             $bank_info = BankInfo::create($requestData); 
         }
