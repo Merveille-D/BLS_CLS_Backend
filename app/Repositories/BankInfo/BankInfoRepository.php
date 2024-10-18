@@ -3,7 +3,6 @@ namespace App\Repositories\BankInfo;
 
 use App\Models\Gourvernance\BankInfo\BankInfo;
 use App\Models\Shareholder\Shareholder;
-use Illuminate\Support\Facades\Request;
 
 class BankInfoRepository
 {
@@ -16,13 +15,15 @@ class BankInfoRepository
      *
      * @return BankInfo
      */
-    public function store(Request $request) {
+    public function store($request) {
 
         $requestData = $request;
         
         if(isset($requestData['logo'])) {
+
             $path = uploadFile($request['logo'], 'bank_infos');
-            $requestData = $request->except('logo');
+            // $requestData = $request->except('logo');
+            unset($requestData['logo']);
             $requestData['logo'] = $path;
         }
 
