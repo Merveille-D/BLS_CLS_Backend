@@ -25,11 +25,11 @@ class BankInfoRepository
 
         $requestData['total_shareholders'] = Shareholder::count();
 
-        if(BankInfo::exists()) {
-            $bank_info = BankInfo::get()->first();
-            $bank_info->update($requestData);
-        }else {
-            $bank_info = BankInfo::create($requestData);
+        $bank_info = BankInfo::first(); 
+        if ($bank_info) {
+            $bank_info->update($requestData); 
+        } else {
+            $bank_info = BankInfo::create($requestData); 
         }
 
         return $bank_info;
