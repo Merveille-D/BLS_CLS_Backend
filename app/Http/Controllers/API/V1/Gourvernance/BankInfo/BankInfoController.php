@@ -42,7 +42,7 @@ class BankInfoController extends Controller
     {
 
         try {
-            $bank_info = $this->bank_info->store($request);
+            $bank_info = $this->bank_info->store($request->validated());
             return api_response(true, "Infos de la banque", $bank_info, 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement", $e->errors(), 422);
