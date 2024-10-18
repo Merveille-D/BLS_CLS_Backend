@@ -98,4 +98,13 @@ class DirectorController extends Controller
             return api_response(false, "Echec de la mise à jour", $e->errors(), 422);
         }
     }
+
+    public function generatePdf() {
+        try {
+            $data = $this->director->generatePdf();
+            return $data;
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
+        }
+    }
 }

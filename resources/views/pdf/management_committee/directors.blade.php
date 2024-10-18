@@ -3,9 +3,7 @@
 <div class="container">
     <div class="header">
         <div class="left">
-            <h1>Liste de présence</h1>
-            <p class="subtitle bold">{{$management_committee->libelle}}</p>
-            <p class="subtitle italic underline">{{ $management_committee->session_reference }}</p>
+            <h1>Liste des directeurs</h1>
             <p class="subtitle gray">{{ date('d-m-Y H:i') }}</p>
         </div>
         <div class="right">
@@ -13,25 +11,24 @@
         </div>
     </div>
 
-    <h2>Directeurs</h2>
     <table class="data-table">
         <thead>
             <tr>
                 <th>Nom & Prénoms</th>
-                <th>Qualité</th>
-                <th>Poste</th>
-                <th>Emargement</th>
-                <th>Observation</th>
+                <th>Date de naissance</th>
+                <th>Lieu de naissance</th>
+                <th>Nationalité</th>
+                <th>Adresse</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($directors as $director)
                 <tr>
                     <td height="50px" >{{ $director->name }}</td>
-                    <td>{{ $director->grade  }}</td>
-                    <td>{{ $director->position ? "Directeur" : "Representant"  }}</td>
-                    <td></td>
-                    <td></td>
+                    <td>{{ $director->birthdate  }}</td>
+                    <td>{{ $director->birthplace  }}</td>   
+                    <td>{{ $director->nationality  }}</td>
+                    <td>{{ $director->address  }}</td>
                 </tr>
             @endforeach
         </tbody>

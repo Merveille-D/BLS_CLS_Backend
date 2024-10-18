@@ -2,11 +2,15 @@
 namespace App\Repositories\ManagementCommittee;
 
 use App\Models\Gourvernance\ExecutiveManagement\Directors\Director;
-use App\Models\Gourvernance\Mandate;
+use App\Concerns\Traits\PDF\GeneratePdfTrait;
+use Illuminate\Support\Str;
+
 use Carbon\Carbon;
 
 class DirectorRepository
 {
+    use GeneratePdfTrait;
+
     public function __construct(private Director $director) {
 
     }
@@ -51,6 +55,18 @@ class DirectorRepository
         ]);
 
         return $director;
+    }
+
+    public function generatePdf(){
+
+        $directors = Director::all();
+
+        $filename = Str::slug('Liste des Directeurs _'.date('YmdHis') . '.pdf');
+
+        $pdf =  $this->generateFromView( 'pdf.management_committee.directors',  [
+            'directors' => $directors,
+        ], $filename);
+        return $pdf;
     }
 
 }
