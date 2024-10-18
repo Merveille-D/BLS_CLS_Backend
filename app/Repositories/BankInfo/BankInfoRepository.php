@@ -19,7 +19,7 @@ class BankInfoRepository
 
         $requestData = $request;
         
-        if($request->has('logo')) {
+        if(isset($requestData['logo'])) {
             $path = uploadFile($request['logo'], 'bank_infos');
             $requestData = $request->except('logo');
             $requestData['logo'] = $path;
