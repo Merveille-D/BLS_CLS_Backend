@@ -34,6 +34,7 @@ class GuaranteeRepository
             ->when($request->security == 'property', function ($query) {
                 return $query->whereSecurity('property');
             })
+            //get all guarantees based on phase
             ->when($request->phase, function ($query, $phase) {
                 return $query->where('phase', $phase);
             })
@@ -52,7 +53,6 @@ class GuaranteeRepository
 
     public function add($request): JsonResource
     {
-        // dd($request->all());
         $data = array(
             'type' => $request->type,
             'phase' => 'formalization',
@@ -69,9 +69,8 @@ class GuaranteeRepository
             $data['extra'] = ['autonomous_id' => $request->autonomous_id];
 
         $guarantee = $this->guarantee_model->create($data);
-
-        $steps = GuaranteeStep::/* orderBy('rank') */
-                    whereGuaranteeType($request->formalization_type ? 'stock' : $guarantee->type) //TODO : change to $guarantee->type
+        // dd($guarantee->type);
+        $steps = GuaranteeStep::whereGuaranteeType($guarantee->type)
                     ->whereStepType('formalization')
                     ->whereNull('parent_id')
                     ->when($guarantee->type == 'stock' || $guarantee->security == 'collateral' , function ($query) use ($request) {

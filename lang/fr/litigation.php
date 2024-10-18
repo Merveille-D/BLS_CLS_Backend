@@ -47,6 +47,16 @@ return [
     'Date of the decision' => 'Date de la décision',
     'Documents' => 'Documents',
     'Firm name' => 'Nom du cabinet',
+    //party types
+    'client' => 'Client',
+    'employee' => 'Employé',
+    'provider' => 'Fournisseur',
+    'partner' => 'Partenaire',
+    //qualities
+    'intervenant' => 'Intervenant',
+    'defendant' => 'Défendeur',
+    'plaintiff' => 'Demandeur',
+    'forced_intervenant' => 'Intervenant forcée',
 
 
 ];

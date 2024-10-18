@@ -30,8 +30,7 @@ class LitigationRepository {
     public function __construct(
         private LitigationSetting $setting_model,
         private Litigation $litigation_model,
-    ) {
-    }
+    ) {}
 
     /**
      * getByIdWithDocuments
@@ -124,7 +123,8 @@ class LitigationRepository {
         ]);
         foreach ($request->parties as $key => $party) {
             $party_model = LitigationParty::findOrFail($party['party_id']);
-            $party_model->litigations()->attach($litigation, ['category' => $party['category'], 'type' => $party['type']]);
+            $party_type = $this->setting_model->find($party['type_id']);
+            $party_model->litigations()->attach($litigation, ['category' => $party['category'], 'type' => $party_type?->name]);
         }
 
         $this->saveDocuments($files, $litigation);
@@ -146,6 +146,7 @@ class LitigationRepository {
             $task->type = $step->type;
             $task->max_deadline = $step->code == 'created' ? now() : null;
             $task->created_by = auth()->id();
+            $task->step_id = $step?->id;
 
             $task->taskable()->associate($litigation);
             $task->save();
@@ -168,7 +169,8 @@ class LitigationRepository {
 
         foreach ($request->parties as $key => $party) {
             $party_model = LitigationParty::findOrFail($party['party_id']);
-            $party_model->litigations()->sync($litigation, ['category' => $party['category'], 'type' => $party['type']]);
+            $party_type = $this->setting_model->find($party['type_id']);
+            $party_model->litigations()->sync($litigation, ['category' => $party['category'], 'type' => $party_type?->name]);
         }
 
         if ($request->documents && count($request->documents) > 0) {
@@ -225,23 +227,13 @@ class LitigationRepository {
     /**
      * getResources
      *
-     * @param  mixed $type
+     * @param  Request $request
      * @return ResourceCollection
      */
-    public function getResources($type) : ResourceCollection {
-        $query = $this->queryByType($type);
+    public function getResources($request) : ResourceCollection {
+        $res = $this->setting_model->whereType($request->type)->get();
 
-
-        return LitigationSettingResource::collection($query);
-    }
-
-    /**
-     * queryByType
-     *
-     * @return Returntype
-     */
-    public function queryByType($type) {
-        return $this->setting_model->whereType($type)->paginate();
+        return LitigationSettingResource::collection($res);
     }
 
     /**
@@ -251,11 +243,13 @@ class LitigationRepository {
      * @param  mixed $type
      * @return void
      */
-    public function addResource($request, $type) : JsonResource {
+    public function addResource($request) : JsonResource {
         $resource = $this->setting_model->create([
             'name' => $request->name,
             'description' => $request->description,
-            'type' => $type,
+            'type' => $request->type,
+            'default' => false,
+            'created_by' => auth()->id(),
         ]);
 
         return new LitigationSettingResource($resource);

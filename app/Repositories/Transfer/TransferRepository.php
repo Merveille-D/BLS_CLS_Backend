@@ -89,6 +89,21 @@ class TransferRepository
             ]);
         }
 
+        if($request['type'] === 'guarantee') {
+            foreach($request['documents'] as $item) {
+                $fileUpload = new TransferDocument();
+
+                $fileUpload->name = $item['name'];
+                $fileUpload->file = uploadFile($item['file'], 'guarantee/transfer');
+
+                $transfer->fileTransfers()->save($fileUpload);
+            }
+
+            $transfer->transferable->update([
+                'status' => $transfer->title,
+            ]);
+        }
+
         $transfer->update([
             'status' => true,
         ]);

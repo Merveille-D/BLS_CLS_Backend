@@ -125,7 +125,8 @@ class MortgageTest extends TestCase
 
         //verification property
         $verifyProperty = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.$next_step_id, [
-            'documents' => $documents
+            'documents' => $documents,
+            'completed_at' => date('Y-m-d')
         ]);
 
         $verifyProperty->assertStatus(200);
@@ -136,7 +137,8 @@ class MortgageTest extends TestCase
         ]);
         //agreement
         $agreement = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.Guarantee::find($hypothec_id)->next_task->id, [
-            'documents' => $documents
+            'documents' => $documents,
+            'completed_at' => date('Y-m-d')
         ]);
 
         $agreement->assertStatus(200);
@@ -173,16 +175,20 @@ class MortgageTest extends TestCase
             'is_approved' => 'yes'
         ]);
         $next7 = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.Guarantee::find($hypothec_id)->next_task->id, [
-
+            'documents' => $documents,
+            'completed_at' => date('Y-m-d'),
         ]);
         $next8 = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.Guarantee::find($hypothec_id)->next_task->id, [
-
+            'documents' => $documents,
+            'completed_at' => date('Y-m-d'),
         ]);
         $next9 = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.Guarantee::find($hypothec_id)->next_task->id, [
-
+            'documents' => $documents,
+            'completed_at' => date('Y-m-d'),
         ]);
         $next10 = $this->actingAs($user)->post('api/guarantees/tasks/complete/'.Guarantee::find($hypothec_id)->next_task->id, [
-
+            'documents' => $documents,
+            'completed_at' => date('Y-m-d'),
         ]);
 
         $register->assertStatus(200);

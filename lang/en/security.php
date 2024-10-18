@@ -23,6 +23,8 @@ return [
     'Obtaining proof of notification' => 'Obtaining proof of notification',
     'Referral to the court for conversion to seizure-sale' => 'Referral to the court for conversion to seizure-sale',
     'Obtaining proof of conversion to seizure-sale' => 'Obtaining proof of conversion to seizure-sale',
+    'Referral to the court for conversion to garnishment' => 'Referral to the court for conversion to garnishment',
+    'Obtaining proof of conversion to garnishment' => 'Obtaining proof of conversion to garnishment',
     'Referral to the notary for serving the act of conversion' => 'Referral to the notary for serving the act of conversion',
     'Obtaining proof of serving the act of conversion by the notary' => 'Obtaining proof of serving the act of conversion by the notary',
     'Sale' => 'Sale',
@@ -30,7 +32,22 @@ return [
     'Referral to the notary for publicity formalities' => 'Referral to the notary for publicity formalities',
     'Distribution of the sale price' => 'Distribution of the sale price',
     'Forced sale of the stock' => 'Forced sale of the stock',
+    'Forced sale' => 'Forced sale',
     'Obtaining property documents' => 'Obtaining property documents',
+    'Notification of registration to lessor, if applicable' => 'Notification of registration to lessor, if applicable',
+    'Transmission of a request to the notary for provisional registration of the guarantee with the RCCM' => 'Transmission of a request to the notary for provisional registration of the guarantee with the RCCM',
+    'Submission of a request by the notary to the RCCM for provisional registration of the guarantee' => 'Submission of a request by the notary to the RCCM for provisional registration of the guarantee',
+    'Receipt of the proof of provisional registration of the guarantee' => 'Receipt of the proof of provisional registration of the guarantee',
+    'Decision passed into force of res judicata' => 'Decision passed into force of res judicata',
+    'Transmission of a request to the notary for definitive registration of the guarantee with the RCCM' => 'Transmission of a request to the notary for definitive registration of the guarantee with the RCCM',
+    'Submission of a request by the notary to the RCCM for definitive registration of the guarantee' => 'Submission of a request by the notary to the RCCM for definitive registration of the guarantee',
+    'Receipt of the proof of definitive registration of the guarantee' => 'Receipt of the proof of definitive registration of the guarantee',
+    'Referral to the notary for notification of the pledge to the debtor of the pledged claim' => 'Referral to the notary for notification of the pledge to the debtor of the pledged claim',
+    'Obtaining proof of notification' => 'Obtaining proof of notification',
+    'Debtor objection' => 'Debtor\'s objection',
+    'Did the debtor object?' => 'Did the debtor object?',
+    'Allocation of the claim/sum seized on the account' => 'Allocation of the claim/sum seized on the account',
+
 
     //personnal securities
     'Drafting of Guarantee Contract' => 'Drafting of Guarantee Contract',
@@ -43,12 +60,19 @@ return [
     'Surety Notification Within a Month of Debtor\'s Formal Notice' => 'Surety Notification Within a Month of Debtor\'s Formal Notice',
     'Formal Notice to the guarantor' => 'Formal Notice to the guarantor',
     'Payment by the guarantor' => 'Payment by the guarantor',
-    'Start of Counter-Guarantee' => 'Start of Counter-Guarantee',
+    'Initiation of Counter-Guarantee' => 'Initiation of Counter-Guarantee',
     'Drafting of Counter-Guarantee Contract' => 'Drafting of Counter-Guarantee Contract',
+    'Drafting of Autonomous Guarantee Contract' => 'Drafting of Autonomous Guarantee Contract',
     'Counter-Guarantee Contract Validity Verification' => 'Counter-Guarantee Contract Validity Verification',
+    'Autonomous guarantee Contract Validity Verification' => 'Autonomous guarantee Contract Validity Verification',
     'Signing of the Autonomous Guarantee Contract' => 'Signing of the Autonomous Guarantee Contract',
     'Payment Request to the counter-guarantor' => 'Payment Request to the counter-guarantor',
+    'Payment Request to the guarantor' => 'Payment Request to the guarantor',
     'Counter-guarantor\'s Request Verification' => 'Guarantor\'s Request Verification',
+    'Performance by the debtor' => 'Performance by the debtor',
+    'Termination of the bond' => 'Termination of the bond',
+    'Choose the contract duration' => 'Choose the contract duration',
+    'Beneficiary\'s request for payment to the guarantor' => 'Beneficiary\'s request for payment to the guarantor',
 
     // property securities
     'Initiation of mortgage' => 'Initiation of mortgage',
@@ -93,6 +117,8 @@ return [
 
     //form
     'Documents' => 'Documents',
+    'Date' => 'Date',
+    'Completed date' => 'Completed date',
     'Date of the agreement' => 'Date of the agreement',
     'Date of deposit of the agreement' => 'Date of deposit of the agreement',
     'Date of transmission' => 'Date of transmission',
@@ -114,9 +140,11 @@ return [
     'Date of notification' => 'Date of notification',
     'Date of distribution' => 'Date of distribution',
     'Date of forced sale' => 'Date of forced sale',
+    'Date of objection' => 'Date of objection',
     'Was the command successful?' => 'Was the command successful?',
     'Is the outcome favorable?' => 'Is the outcome favorable?',
     'Is the sale amicable?' => 'Is the sale amicable?',
+    'Date of allocation' => 'Date of allocation',
 
     'Property documents' => 'Property documents',
     'Documents sent to the notary' => 'Documents sent to the notary',
@@ -128,6 +156,7 @@ return [
     'Summons addressing documents' => 'Summons addressing documents',
     'Publication documents' => 'Publication documents',
     'Signed minute documents' => 'Signed minute documents',
+    'Appeal documents' => 'Appeal documents',
     'Documents (TF, ID client, IFU client, credit convention)' => 'Documents (TF, ID client, IFU client, credit convention)'
 
 ];
