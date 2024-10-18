@@ -233,4 +233,8 @@ class GuaranteeRepository
 
         return $details;
     }
+
+    public function transfer() {
+
+    }
 }

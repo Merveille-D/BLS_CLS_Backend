@@ -61,7 +61,7 @@ class TransferRepository
     }
 
     public function completeTransfer($request, $transfer) {
-
+        dd($transfer);
         $model = $transfer->transferable;
 
         if($request['type'] === 'audit') {

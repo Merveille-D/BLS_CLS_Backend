@@ -93,4 +93,11 @@ class GuaranteeController extends Controller
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }
+
+    /**
+     * transfert dossier de surete
+     */
+    public function transfer($guarantee) {
+
+    }
 }

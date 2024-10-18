@@ -29,7 +29,7 @@ class CompleteTransferRequest extends FormRequest
     {
         $rules = [
 
-            'type' => ['required', Rule::in(['contract', 'audit', 'evaluation'])],
+            'type' => ['required', Rule::in(['contract', 'audit', 'evaluation', 'guarantee'])],
 
             'transfer_id' => ['required', 'uuid'],
 
@@ -37,6 +37,11 @@ class CompleteTransferRequest extends FormRequest
             'contract_documents' => ['required_if:type,contract', 'array'],
             'contract_documents.*.name' => ['required_if:type,contract', 'string'],
             'contract_documents.*.file' => ['required_if:type,contract', 'file'],
+
+            // for guarantees
+            'documents' => ['required_if:type,guarantee', 'array'],
+            'documents.*.name' => ['required_if:type,guarantee', 'string'],
+            'documents.*.file' => ['required_if:type,guarantee', 'file'],
 
             // For Audit
             'notes.*.audit_performance_indicator_id' => ['required_if:type,audit','uuid'],
