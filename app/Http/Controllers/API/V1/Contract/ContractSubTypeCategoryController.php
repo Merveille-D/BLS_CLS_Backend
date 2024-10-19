@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\V1\ContractSubTypeCategory;
+namespace App\Http\Controllers\API\V1\Contract;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ContractSubTypeCategory\StoreContractSubTypeCategoryRequest;
