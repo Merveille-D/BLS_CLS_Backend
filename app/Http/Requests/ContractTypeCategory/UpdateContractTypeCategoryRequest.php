@@ -24,7 +24,7 @@ class UpdateContractTypeCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id' => ['uuid'],
+            'contract_category_id' => ['uuid'],
             'value' => ['string'],
         ];
     }

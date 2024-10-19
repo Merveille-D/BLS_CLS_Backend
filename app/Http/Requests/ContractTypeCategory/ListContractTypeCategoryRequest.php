@@ -24,7 +24,7 @@ class ListContractTypeCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id' => ['required', 'uuid'],
+            'contract_category_id' => ['required', 'uuid'],
         ];
     }
 
