@@ -26,6 +26,9 @@ class ActionTransferRepository
 
         $request['created_by'] = Auth::user()->id;
 
+        $request['transfer_id'] = now()->format('d') . '/' . now()->format('m') . '/' . now()->format('Y');
+        $request['reference'] = generateReference('TRANSFER_ACTION', $this->action_transfer);
+
         if($request['type'] == 'shareholder') {
 
             $action_transfer = $this->action_transfer->create($request);

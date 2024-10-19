@@ -29,6 +29,9 @@ return new class extends Migration
 
             $table->date('transfer_date');
 
+            $table->string('transfer_id');
+            $table->string('reference');
+
             $table->enum('type', ActionTransfer::TYPES );
 
             $table->enum('status', ActionTransfer::STATUS )->default('approved');
