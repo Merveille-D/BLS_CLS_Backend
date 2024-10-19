@@ -14,6 +14,17 @@ class ContractSubTypeCategoryRepository
      *
      * @return ContractSubTypeCategory
      */
+    public function list($request) {
+
+        $contractSubTypeCategories = $this->contractSubTypeCategory->where('type_category_id', $request['type_category_id'])->get();
+        return $contractSubTypeCategories;
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return ContractSubTypeCategory
+     */
     public function store($request) {
 
         $contractSubTypeCategory = $this->contractSubTypeCategory->create($request);

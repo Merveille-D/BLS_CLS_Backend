@@ -25,7 +25,6 @@ class UpdateContractTypeCategoryRequest extends FormRequest
     {
         return [
             'category_id' => ['uuid'],
-            'keyword' => ['string'],
             'value' => ['string'],
         ];
     }

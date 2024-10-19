@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use Database\Seeders\Audit\AuditPerformanceIndicatorSeeder;
+use Database\Seeders\Contract\CategorySeeder;
 use Database\Seeders\Evaluation\EvaluationPerformanceIndicatorSeeder;
 use Database\Seeders\Guarantee\ConvHypothecSeeder;
 use Database\Seeders\Incident\AuthorSeeder;
@@ -33,6 +34,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call(RecoveryResourceSeeder::class);
         $this->call(GuaranteeSeeder::class);
+
+        $this->call(CategorySeeder::class);
 
         $this->call(AuditPerformanceIndicatorSeeder::class);
         $this->call(EvaluationPerformanceIndicatorSeeder::class);

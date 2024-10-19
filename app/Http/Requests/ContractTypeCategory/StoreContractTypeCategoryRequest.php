@@ -25,7 +25,6 @@ class StoreContractTypeCategoryRequest extends FormRequest
     {
         return [
             'category_id' => ['required', 'uuid'],
-            'keyword' => ['required', 'string'],
             'value' => ['required', 'string'],
         ];
     }

@@ -12,7 +12,6 @@ class ContractSubTypeCategory extends Model
 
     protected $fillable = [
         'type_category_id',
-        'keyword',
         'value',
     ];
 

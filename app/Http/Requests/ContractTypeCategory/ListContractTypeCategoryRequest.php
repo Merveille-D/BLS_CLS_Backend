@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\ContractCategory;
+namespace App\Http\Requests\ContractTypeCategory;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateContractCategoryRequest extends FormRequest
+class ListContractTypeCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class UpdateContractCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'value' => ['string'],
+            'category_id' => ['required', 'uuid'],
         ];
     }
 

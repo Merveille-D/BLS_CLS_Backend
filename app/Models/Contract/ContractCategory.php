@@ -11,7 +11,6 @@ class ContractCategory extends Model
     use HasFactory, HasUuids;
 
     protected $fillable = [
-        'keyword',
         'value',
     ];
 

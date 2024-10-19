@@ -24,7 +24,6 @@ class StoreContractCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'keyword' => ['required', 'string'],
             'value' => ['required', 'string'],
         ];
     }

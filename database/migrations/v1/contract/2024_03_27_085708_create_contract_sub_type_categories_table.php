@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('contract_sub_type_categories', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-            $table->string('keyword');
             $table->string('value');
 
             $table->uuid('contract_type_category_id')->nullable();

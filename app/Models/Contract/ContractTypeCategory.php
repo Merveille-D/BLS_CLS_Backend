@@ -12,7 +12,6 @@ class ContractTypeCategory extends Model
 
     protected $fillable = [
         'category_id',
-        'keyword',
         'value',
     ];
 
