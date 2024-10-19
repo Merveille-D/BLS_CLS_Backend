@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\API\V1\ContractCategory\ContractCategoryController;
+use App\Http\Controllers\API\V1\Contract\ContractCategoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
