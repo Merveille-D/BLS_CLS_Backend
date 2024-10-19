@@ -12,9 +12,15 @@ class ContractModel extends Model
 
     protected $fillable = [
         'name',
-        'file',
-        'contract_model_category_id',
+        'parent_id',
+        'type',
+        'file_path',
         'created_by'
+    ];
+
+    const TYPE = [
+        'file',
+        'folder'
     ];
 
 }

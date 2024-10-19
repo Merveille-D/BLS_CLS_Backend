@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests\ContractModel;
 
+use App\Models\Contract\ContractModel;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class StoreContractModelRequest extends FormRequest
 {
@@ -26,8 +28,9 @@ class StoreContractModelRequest extends FormRequest
 
         return [
             'name' => 'required|string|max:255',
-            'file' => 'required|file',
-            'contract_model_category_id',
+            'parent_id' => 'required|uuid|exists:contract_models,id|nullable',
+            'type' => ['required', Rule::in(ContractModel::TYPE)],
+            'file' => 'required_if:type,file|file|mimes:pdf,doc,docx,odt,txt',
         ];
     }
 
