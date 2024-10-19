@@ -16,7 +16,7 @@ class ContractSubTypeCategoryRepository
      */
     public function list($request) {
 
-        $contractSubTypeCategories = $this->contractSubTypeCategory->where('type_category_id', $request['type_category_id'])->get();
+        $contractSubTypeCategories = $this->contractSubTypeCategory->where('contract_type_category_id', $request['type_category_id'])->get();
         return $contractSubTypeCategories;
     }
 
