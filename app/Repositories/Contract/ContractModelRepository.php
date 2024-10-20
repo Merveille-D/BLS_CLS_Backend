@@ -18,8 +18,10 @@ class ContractModelRepository
      */
     public function store($request) {
 
-        $path = uploadFile($request['file'], 'contract_model_documents');
-        $request['file_path'] = $path;
+        if(isset($request['file'])) {
+            $path = uploadFile($request['file'], 'contract_model_documents');
+            $request['file_path'] = $path;
+        }
 
         $request['created_by'] = Auth::user()->id;
 
