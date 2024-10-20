@@ -44,10 +44,10 @@ class Incident extends Model
     ];
 
     const TYPE_VALUES = [
-        'avis-tiers-detenteurs' => __('incident.atd'),
-        'requisition' => __('incident.req'),
-        'saisie-conservatoire' => __('incident.sc'),
-        'saisie-attribution' => __('incident.sa'),
+        'avis-tiers-detenteurs' => 'incident.atd',
+        'requisition' => 'incident.req',
+        'saisie-conservatoire' => 'incident.sc',
+        'saisie-attribution' => 'incident.sa',
     ];
 
     const TYPE_CODES = [
@@ -81,7 +81,7 @@ class Incident extends Model
     public function getCategoryAttribute() {
 
         $value = $this->type;
-        $label = self::TYPE_VALUES[$value];
+        $label = __(self::TYPE_VALUES[$value]);
 
         return [
             'value' => $value,
