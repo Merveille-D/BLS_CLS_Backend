@@ -28,7 +28,7 @@ class StoreContractModelRequest extends FormRequest
 
         return [
             'name' => 'required|string|max:255',
-            'parent_id' => 'required|uuid|exists:contract_models,id|nullable',
+            'parent_id' => 'uuid|exists:contract_models,id|nullable',
             'type' => ['required', Rule::in(ContractModel::TYPE)],
             'file' => 'required_if:type,file|file|mimes:pdf,doc,docx,odt,txt',
         ];
