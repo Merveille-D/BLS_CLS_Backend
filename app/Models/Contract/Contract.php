@@ -18,8 +18,9 @@ class Contract extends Model
 
     protected $fillable = [
         'title',
-        'category',
-        'type_category',
+        'contract_category_id',
+        'contract_type_category_id',
+        'contract_sub_type_category_id',
         'date_signature',
         'date_effective',
         'date_expiration',
@@ -30,86 +31,11 @@ class Contract extends Model
         'reference',
     ];
 
-    const CATEGORIES = [
-        'leases',
-        'credits',
-        'jobs',
-        'warranties',
-        'services',
-    ];
-
     const STATUS = [
         'initiated',
         'revised',
         'finalized',
         'classified',
-    ];
-
-    const TYPE_CATEGORIES = [
-        'leases' => [
-
-        ],
-        'credits' => [
-            'amortizable',
-            'aval_discount',
-            'discoveries_ovecouvertes',
-            'spots_relay',
-            'campaign',
-            'syndications',
-        ],
-        'jobs' => [
-            'cdi',
-            'cdd',
-            'secondment',
-            'trial_engagement',
-            'academic_internship',
-            'professional_internship',
-        ],
-        'warranties' => [
-            'guarantees',
-            'personal_sureties',
-            'real_estate_sureties',
-        ],
-        'services' => [
-            'supplier',
-            'service_provider',
-        ],
-    ];
-
-    const CATEGORIES_VALUES = [
-        'leases' => 'Baux',
-        'credits' => 'Crédits',
-        'jobs' => 'Emplois',
-        'warranties' => 'Garanties',
-        'services' => 'Services',
-    ];
-
-    const TYPE_CATEGORIES_VALUES = [
-        'credits' => [
-            'amortizable' => 'Amortissable',
-            'aval_discount' => 'Aval / Escompte',
-            'discoveries_overdrafts' => 'Découvertes / Facilités de caisse',
-            'spots_relay' => 'Spots / Relais',
-            'campaign' => 'Campagne',
-            'syndications' => 'Syndications',
-        ],
-        'jobs' => [
-            'cdi' => 'CDI',
-            'cdd' => 'CDD',
-            'secondment' => 'Détachement / Mise en disponibilité',
-            'trial_engagement' => 'Engagement à l\'essai',
-            'academic_internship' => 'Stage académique',
-            'professional_internship' => 'Stage professionnel',
-        ],
-        'warranties' => [
-            'guarantees' => 'Garanties',
-            'personal_sureties' => 'Sûretés personnelles',
-            'real_estate_sureties' => 'Sûretés immobilières',
-        ],
-        'services' => [
-            'supplier' => 'Fournisseur',
-            'service_provider' => 'Prestataire',
-        ],
     ];
 
     public function fileUploads()
@@ -156,27 +82,19 @@ class Contract extends Model
         return $this->hasMany(ContractPart::class);
     }
 
-    public function getInfoCategoryAttribute()
+    public function contractCategory()
     {
-        $value = $this->category;
-        $label = self::CATEGORIES_VALUES[$value];
-
-        return [
-            'value' => $value,
-            'label' => $label,
-        ];
+        return $this->belongsTo(ContractCategory::class);
     }
 
-    public function getInfoTypeCategoryAttribute()
+    public function contractTypeCategory()
     {
-        $value = $this->getAttribute('type_category');
+        return $this->belongsTo(ContractTypeCategory::class);
+    }
 
-        $label = ($this->category != 'leases') ? self::TYPE_CATEGORIES_VALUES[$this->category][$value] : "";
-
-        return [
-            'value' => $value,
-            'label' => $label,
-        ];
+    public function contractSubTypeCategory()
+    {
+        return $this->belongsTo(ContractSubTypeCategory::class);
     }
 
     public function getFirstPartAttribute() {

@@ -44,10 +44,10 @@ class Incident extends Model
     ];
 
     const TYPE_VALUES = [
-        'avis-tiers-detenteurs' => 'Avis à Tiers Détenteurs',
-        'requisition' => 'Réquisition',
-        'saisie-conservatoire' => 'Saisie Conservatoire',
-        'saisie-attribution' => 'Saisie Attribution',
+        'avis-tiers-detenteurs' => __('incident.atd'),
+        'requisition' => __('incident.req'),
+        'saisie-conservatoire' => __('incident.sc'),
+        'saisie-attribution' => __('incident.sa'),
     ];
 
     const TYPE_CODES = [

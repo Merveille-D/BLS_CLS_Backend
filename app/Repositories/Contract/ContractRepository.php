@@ -140,8 +140,8 @@ class ContractRepository
         $data['first_part'] = $contract->first_part;
         $data['second_part'] = $contract->second_part;
         $data['creator'] = $contract->creator;
-        $data['type_category'] = $contract->info_type_category;
-        $data['category'] = $contract->info_category;
+        $data['category'] = $contract->contractCategory->value;
+        $data['type_category'] = $contract->contractTypeCategory->value;
         $data['tasks'] = $contract->tasks;
 
         $filename = Str::slug($contract->title). '_'.date('YmdHis') . '.pdf';
@@ -159,8 +159,8 @@ class ContractRepository
             'N° de dossier' => $data['contract_reference'],
             'Statut actuel' => $data['status'],
             'Intitulé' => $data['title'],
-            'Catégorie' => $data['category']['label'],
-            'Type de catégorie' => $data['type_category']['label'],
+            'Catégorie' => $data['category'],
+            'Type de catégorie' => $data['type_category'],
             'Date de signature' => $data['date_signature'],
             'Date de prise d\'effet' => $data['date_effective'],
             'Date d\'expiration' => $data['date_expiration'],
