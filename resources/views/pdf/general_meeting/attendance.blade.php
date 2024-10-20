@@ -13,7 +13,7 @@
         </div>
     </div>
 
-    {{-- <h2>Actionnaires</h2> --}}
+    <h2>Participants</h2>
     <table class="data-table">
         <thead>
             <tr>
