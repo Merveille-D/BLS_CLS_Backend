@@ -44,7 +44,7 @@ class ContractModelController extends Controller
     public function store(StoreContractModelRequest $request)
     {
         try {
-            $part = $this->contract_model->store($request);
+            $part = $this->contract_model->store($request->validated());
             return api_response(true, 'Modèle ajouté avec succès', $part, 201);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'ajout du modèle", $e->errors(), 422);
