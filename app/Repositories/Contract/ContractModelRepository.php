@@ -18,14 +18,14 @@ class ContractModelRepository
      */
     public function store($request) {
 
-            $path = uploadFile($request['file'], 'contract_model_documents');
-            $requestData['file_path'] = $path;
+        $path = uploadFile($request['file'], 'contract_model_documents');
+        $request['file_path'] = $path;
 
-            $request['created_by'] = Auth::user()->id;
+        $request['created_by'] = Auth::user()->id;
 
-            $contract_model = $this->contract_model->create($requestData);
+        $contract_model = $this->contract_model->create($request);
 
-            return $contract_model;
+        return $contract_model;
     }
 
 }
