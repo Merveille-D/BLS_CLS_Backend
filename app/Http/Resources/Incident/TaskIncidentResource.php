@@ -30,6 +30,7 @@ class TaskIncidentResource extends JsonResource
             'created_by' => $this->created_by,
             'created_at' => $this->created_at,
             'file_uploads' => $this->fileUploads,
+            'form' => $this->form,
         ];
     }
 }
