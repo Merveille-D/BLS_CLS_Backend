@@ -2,6 +2,7 @@
 
 namespace App\Models\Gourvernance\GeneralMeeting;
 
+use App\Http\Resources\GeneralMeeting\TaskGeneralMeetingResource;
 use App\Models\Gourvernance\GourvernanceDocument;
 use App\Models\Scopes\CountryScope;
 use App\Models\User;
@@ -135,7 +136,7 @@ class GeneralMeeting extends Model
     public function getNextTaskAttribute()
     {
         $task = $this->tasks()->whereNotNull('deadline')->orderBy('deadline', 'asc')->where('status', false)->first();
-        return $task;
+        return new TaskGeneralMeetingResource($task);
     }
 
     public function creator() {
