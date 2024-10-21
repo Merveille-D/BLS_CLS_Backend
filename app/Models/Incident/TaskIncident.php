@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Validation\Rule;
 #[ScopedBy([CountryScope::class])]
 #[ObservedBy([TaskIncidentObserver::class])]
 class TaskIncident extends Model

@@ -2,6 +2,7 @@
 
 namespace App\Models\Incident;
 
+use App\Http\Resources\Incident\TaskIncidentResource;
 use App\Models\Scopes\CountryScope;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
@@ -75,7 +76,7 @@ class Incident extends Model
     public function getCurrentTaskAttribute() {
 
         $current_task_incident = $this->taskIncident->where('status', false)->first();
-        return $current_task_incident;
+        return new TaskIncidentResource($current_task_incident);
     }
 
     public function getCategoryAttribute() {
