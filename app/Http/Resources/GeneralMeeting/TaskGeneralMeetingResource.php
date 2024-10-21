@@ -16,8 +16,8 @@ class TaskGeneralMeetingResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'libelle' => __($this->code),
-            // 'libelle' => $this->code ? __($this->code) : $this->libelle,
+            // 'libelle' => __($this->code),
+            'libelle' => $this->code ? __('governance.'. $this->code) : $this->libelle,
             'deadline' => $this->deadline,
             'type' => $this->type,
             'status' => $this->status,
