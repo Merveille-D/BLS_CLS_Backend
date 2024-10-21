@@ -71,7 +71,7 @@ class AttendanceListGeneralMeetingRepository
 
     public function generatePdf($general_meeting){
 
-        $meeting_type = GeneralMeeting::GENERAL_MEETING_TYPES_VALUE[$general_meeting->type];
+        $meeting_type = __($general_meeting->type);
 
         $shareholders_id = $general_meeting->attendanceList()->pluck('shareholder_id');
         $shareholders = Shareholder::whereIn('id', $shareholders_id)->get();

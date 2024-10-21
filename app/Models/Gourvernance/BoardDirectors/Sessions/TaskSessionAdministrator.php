@@ -53,7 +53,7 @@ class TaskSessionAdministrator extends Model
     }
 
     public function getFolderAttribute() {
-        return $this->session_administrator->libelle;
+        return $this->session_administrator->code;
     }
 
     public function getValidationAttribute() {
@@ -71,41 +71,41 @@ class TaskSessionAdministrator extends Model
     CONST TASKS = [
         'pre_ca' => [
             [
-                'libelle' => "Préparation de la convocation, ODJ et documents à étudier",
+                'code' => "pre_ca.lib.1",
                 'days' => -45,
             ],
             [
-                'libelle' => "Transmission de la convocation aux administrateurs",
+                'code' => "pre_ca.lib.2",
                 'days' => -15,
             ],
             [
-                'libelle' => "Tenue CA",
+                'code' => "pre_ca.lib.3",
                 'days' => 0,
             ],
             [
-                'libelle' => "Rédaction du PV et signature",
+                'code' => "pre_ca.lib.4",
                 'days' => 10,
             ],
             [
-                'libelle' => "Transmission du PV au Notaire",
+                'code' => "pre_ca.lib.5",
                 'days' => 15,
             ],
             [
-                'libelle' => "Reception PV enrégistré et classement",
+                'code' => "pre_ca.lib.6",
                 'days' => 25,
             ],
 
         ],
         'procedure' => [
-            ['libelle' => "PCA ouvre la séance, préside et confirme quorum"],
-            ['libelle' => "PCA annonce ordre du jour et lit Rapport de Gestion"],
+            ['code' => "procedure.lib.1"],
+            ['code' => "procedure.lib.2"],
         ],
         'checklist' => [
-            ['libelle' => "Vérifier salle et sonorisation"],
-            ['libelle' => "Installer PCA, Administrateurs, CC et invités"],
-            ['libelle' => "Imprimer Liste de présence"],
-            ['libelle' => "Vérifier Quorum"],
-            ['libelle' => "Remettre Liste de présence au PCA"],
+            ['code' => "checklist.lib.1"],
+            ['code' => "checklist.lib.2"],
+            ['code' => "checklist.lib.3"],
+            ['code' => "checklist.lib.4"],
+            ['code' => "checklist.lib.5"],
         ],
     ];
 

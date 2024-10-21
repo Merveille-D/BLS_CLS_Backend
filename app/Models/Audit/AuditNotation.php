@@ -40,16 +40,16 @@ class AuditNotation extends Model
     protected $appends = ['indicators'];
 
     const MODELS_MODULES_VALUES = [
-        'contracts' => __('audit.contracts'),
-        'conventionnal_hypothec' => __('audit.conventionnal_hypothec'),
-        'litigation' => __('audit.litigation'),
-        'incidents' => __('audit.incidents'),
-        'recovery' => __('audit.recovery'),
-        'general_meeting' => __('audit.general_meeting'),
-        'session_administrators' => __('audit.session_administrators'),
-        'management_committees' => __('audit.management_committees'),
-        'guarantees_security_movable' => __('audit.guarantees_security_movable'),
-        'guarantees_security_personal' => __('audit.guarantees_security_personal'),
+        'contracts' => 'audit.contracts',
+        'conventionnal_hypothec' => 'audit.conventionnal_hypothec',
+        'litigation' => 'audit.litigation',
+        'incidents' => 'audit.incidents',
+        'recovery' => 'audit.recovery',
+        'general_meeting' => 'audit.general_meeting',
+        'session_administrators' => 'audit.session_administrators',
+        'management_committees' => 'audit.management_committees',
+        'guarantees_security_movable' => 'audit.guarantees_security_movable',
+        'guarantees_security_personal' => 'audit.guarantees_security_personal',
     ];
 
     const MODELS_MODULES = [

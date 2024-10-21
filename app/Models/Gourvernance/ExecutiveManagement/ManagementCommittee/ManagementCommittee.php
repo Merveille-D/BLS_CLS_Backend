@@ -61,10 +61,11 @@ class ManagementCommittee extends Model
     ];
 
     const FILE_FIELD_VALUE = [
-        'pv' => 'Procès verbal',
-        'agenda' => 'Ordre du jour',
-        'convocation' => 'Convocation',
-        'attendance_list' => 'Liste de présence des directeurs',
+        'pv' => 'governance.pv',
+        'agenda' => 'governance.agenda',
+        'convocation' => 'governance.convocation',
+        'attendance_list' => 'governance.attendance_list_cd',
+        'other' => 'governance.other',
     ];
 
     const DATE_FILE_FIELD = [
@@ -105,7 +106,7 @@ class ManagementCommittee extends Model
         foreach ($directFiles as $field) {
             if (!empty($this->$field)) {
                 $files[] = [
-                    'filename' => self::FILE_FIELD_VALUE[$type[$field]],
+                    'filename' => __(self::FILE_FIELD_VALUE[$type[$field]]),
                     'file_url' => $this->$field,
                     'type' => $type[$field],
                 ];

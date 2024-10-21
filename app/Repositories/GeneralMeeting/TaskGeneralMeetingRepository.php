@@ -41,7 +41,7 @@ class TaskGeneralMeetingRepository
      * @param Request $request
      *
      * @return TaskGeneralMeeting
-     */
+    */
     public function store($request) {
 
         if(!$request->has('type')) {
@@ -107,10 +107,9 @@ class TaskGeneralMeetingRepository
 
     public function generatePdf($request){
 
-
         $general_meeting = GeneralMeeting::find($request['general_meeting_id']);
 
-        $meeting_type = GeneralMeeting::GENERAL_MEETING_TYPES_VALUE[$general_meeting->type];
+        $meeting_type = __($general_meeting->type);
 
         $tasks = TaskGeneralMeeting::where('general_meeting_id', $general_meeting->id)
                                     ->where('type', $request['type'])

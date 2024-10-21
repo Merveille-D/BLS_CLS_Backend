@@ -195,7 +195,7 @@ class AuditNotationRepository
         $details = [
             'N° de dossier' => $data['audit_reference'],
             'Statut actuel' => $data['status'],
-            'Module' => AuditNotation::MODELS_MODULES_VALUES[$data['module']],
+            'Module' => __(AuditNotation::MODELS_MODULES_VALUES[$data['module']]),
             'Intitulé du dosser' => $data['title'],
             'Créé par' => $data['creator']['firstname'] . '' . $data['creator']['lastname'],
         ];
