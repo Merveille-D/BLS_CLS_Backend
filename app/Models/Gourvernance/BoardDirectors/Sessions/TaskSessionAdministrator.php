@@ -97,15 +97,15 @@ class TaskSessionAdministrator extends Model
 
         ],
         'procedure' => [
-            ['code' => "procedure.lib.1"],
-            ['code' => "procedure.lib.2"],
+            ['code' => "procedure.ca.lib.1"],
+            ['code' => "procedure.ca.lib.2"],
         ],
         'checklist' => [
-            ['code' => "checklist.lib.1"],
-            ['code' => "checklist.lib.2"],
-            ['code' => "checklist.lib.3"],
-            ['code' => "checklist.lib.4"],
-            ['code' => "checklist.lib.5"],
+            ['code' => "checklist.ca.lib.1"],
+            ['code' => "checklist.ca.lib.2"],
+            ['code' => "checklist.ca.lib.3"],
+            ['code' => "checklist.ca.lib.4"],
+            ['code' => "checklist.ca.lib.5"],
         ],
     ];
 
