@@ -38,7 +38,7 @@ return [
     // Type General Meeting
     'ordinary' => 'Ordinaire',
     'extraordinary' => 'Extraordinaire',
-    'mixed' => 'Mixte',
+    'mixte' => 'Mixte',
     'special' => 'Spéciale',
 
     // ## Session Administator
