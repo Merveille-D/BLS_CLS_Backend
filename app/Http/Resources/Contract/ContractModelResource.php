@@ -22,10 +22,10 @@ class ContractModelResource extends JsonResource
                 'childrens' => $this->only(['name', 'type', 'file_path']),
                 'created_at' => $this->created_at,
             ];
+        }else {
+            return $this->defaultFormat();
         }
 
-        // Format par défaut si les conditions ne sont pas remplies
-        return $this->defaultFormat();
     }
 
     /**
