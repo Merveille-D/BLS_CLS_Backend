@@ -23,23 +23,17 @@ class ContractModelRepository
         )->get();
 
         return [
-            'name' => $parentId ? $this->getParentName($parentId) : null,
+            'parent' => $parentId ? ContractModelResource::collection($this->getParent($parentId)) : null,
             'children' => ContractModelResource::collection($contract_models),
         ];
     }
 
     
-    private function getParentName($parentId)
+    private function getParent($parentId)
     {
-        return $this->contract_model->where('id', $parentId)->value('name');
+        return $this->contract_model->where('id', $parentId);
     }
 
-
-    /**
-     * @param Request $request
-     *
-     * @return Part
-     */
     public function store($request) {
 
         if(isset($request['file'])) {
@@ -51,6 +45,12 @@ class ContractModelRepository
 
         $contract_model = $this->contract_model->create($request);
 
+        return $contract_model;
+    }
+
+    public function update(ContractModel $contract_model, $request) {
+
+        $contract_model->update($request);
         return $contract_model;
     }
 

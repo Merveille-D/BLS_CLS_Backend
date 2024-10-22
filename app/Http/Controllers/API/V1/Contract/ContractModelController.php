@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Contract;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ContractModel\StoreContractModelRequest;
+use App\Http\Requests\ContractModel\UpdateContractModelRequest;
 use App\Http\Resources\Contract\ContractModelResource;
 use App\Models\Contract\ContractModel;
 use App\Repositories\Contract\ContractModelRepository;
@@ -54,9 +55,14 @@ class ContractModelController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ContractModel $contractModel)
+    public function update(UpdateContractModelRequest $request, ContractModel $contractModel)
     {
-        //
+        try {
+            $contract_model = $this->contract_model->update($contractModel, $request->validated());
+            return api_response(true, 'Modèle mis à jour avec succès', $contract_model, 201);
+        }catch (ValidationException $e) {
+                return api_response(false, "Echec de la mise à jour du modèle", $e->errors(), 422);
+        }
     }
 
     /**
