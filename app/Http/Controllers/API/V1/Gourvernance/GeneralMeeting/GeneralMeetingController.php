@@ -33,7 +33,7 @@ class GeneralMeetingController extends Controller
         })->get()
         ->map(function ($meeting) {
             $meeting->files = $meeting->files;
-            // $meeting->next_task = $meeting->next_task;
+            $meeting->next_task = $meeting->next_task;
             return $meeting;
         });
 
