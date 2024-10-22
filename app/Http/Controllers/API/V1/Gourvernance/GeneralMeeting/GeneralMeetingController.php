@@ -37,8 +37,6 @@ class GeneralMeetingController extends Controller
         //     return $meeting;
         // });
 
-        dd($general_meetings);
-
         return api_response(true, "AG en cours", $general_meetings, 200);
     }
 
