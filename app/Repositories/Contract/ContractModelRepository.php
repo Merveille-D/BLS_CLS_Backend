@@ -14,9 +14,9 @@ class ContractModelRepository
     public function list($request){
 
         $contract_models = ContractModel::when(
-            $request->filled('parent_id'), 
+            isset($request['parent_id']), 
             function($query) use ($request) {
-                $query->where('parent_id', $request->parent_id);
+                $query->where('parent_id', $request['parent_id']);
             }, 
             function($query) {
                 $query->whereNull('parent_id');
@@ -24,14 +24,9 @@ class ContractModelRepository
         )->get();
 
         return [
-            'name' => $this->getParentName(),
+            'name' => ContractModel::where('parent_id', $request['parent_id'])->value('name'),
             'contract_models' => ContractModelResource::collection($contract_models),
         ];
-    }
-
-    private function getParentName(): ?string
-    {
-        return ContractModel::where('parent_id', $this->parent_id)->value('name');
     }
 
 
