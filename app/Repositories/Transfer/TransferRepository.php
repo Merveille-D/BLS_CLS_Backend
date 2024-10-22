@@ -61,7 +61,7 @@ class TransferRepository
     }
 
     public function completeTransfer($request, $transfer) {
-        dd($transfer);
+
         $model = $transfer->transferable;
 
         if($request['type'] === 'audit') {
@@ -99,9 +99,9 @@ class TransferRepository
                 $transfer->fileTransfers()->save($fileUpload);
             }
 
-            $transfer->transferable->update([
-                'status' => $transfer->title,
-            ]);
+            // $transfer->transferable->update([
+            //     'status' => $transfer->title,
+            // ]);
         }
 
         $transfer->update([

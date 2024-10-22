@@ -3,6 +3,7 @@
 namespace App\Repositories\Guarantee;
 
 use App\Concerns\Traits\PDF\GeneratePdfTrait;
+use App\Concerns\Traits\Transfer\AddTransferTrait;
 use App\Enums\Guarantee\GuaranteeType;
 use App\Http\Resources\Guarantee\GuaranteeResource;
 use App\Http\Resources\Guarantee\GuaranteeTaskResource;
@@ -17,7 +18,7 @@ use Illuminate\Support\Str;
 
 class GuaranteeRepository
 {
-    use GeneratePdfTrait;
+    use GeneratePdfTrait, AddTransferTrait;
     public function __construct(
         private Guarantee $guarantee_model
     ) {
@@ -234,7 +235,18 @@ class GuaranteeRepository
         return $details;
     }
 
-    public function transfer() {
+    public function transfer($data, $id) {
+        $guarantee = $this->guarantee_model->findOrFail($id);
 
+        $last_transfer = $guarantee->transfers()->orderby('created_at', 'desc')->first();
+        if (blank($last_transfer)) {
+            $this->add_transfer($guarantee, $data['forward_title'], $data['deadline_transfer'], $data['description'], $data['collaborators']);
+        }else if ($last_transfer?->sender_id === auth()->id()) {
+            if( ($last_transfer->status == true) && isset($data['forward_title'])) {
+                $this->add_transfer($guarantee, $data['forward_title'], $data['deadline_transfer'], $data['description'], $data['collaborators']);
+            }
+        }
+
+        return new GuaranteeResource($guarantee->refresh());
     }
 }

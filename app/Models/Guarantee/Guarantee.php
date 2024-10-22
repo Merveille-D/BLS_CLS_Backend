@@ -2,6 +2,7 @@
 
 namespace App\Models\Guarantee;
 
+use App\Concerns\Traits\Transfer\Transferable;
 use App\Enums\Guarantee\GuaranteeType;
 use App\Models\Scopes\CountryScope;
 use App\Models\User;
@@ -17,7 +18,7 @@ use Illuminate\Testing\Fluent\Concerns\Has;
 #[ObservedBy([GuaranteeObserver::class])]
 class Guarantee extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory, HasUuids, Transferable;
 
     protected $fillable = [
         'name',
