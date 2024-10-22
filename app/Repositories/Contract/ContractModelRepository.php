@@ -24,9 +24,9 @@ class ContractModelRepository
         )->get();
 
         return [
-            'name' => getParentName(),
+            'name' => $this->getParentName(),
             'contract_models' => ContractModelResource::collection($contract_models),
-        ]
+        ];
     }
 
     private function getParentName(): ?string
