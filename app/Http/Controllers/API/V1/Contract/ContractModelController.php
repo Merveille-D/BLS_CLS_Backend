@@ -24,16 +24,6 @@ class ContractModelController extends Controller
         try {
             $contract_models = $this->contract_model->list($request->all());
             
-            $contract_models = ContractModel::when(
-                $request->filled('parent_id'), 
-                function($query) use ($request) {
-                    $query->where('parent_id', $request->parent_id);
-                }, 
-                function($query) {
-                    $query->whereNull('parent_id');
-                }
-            )->get();
-            
             return api_response(true, 'Liste des modèles de contrat', ContractModelResource::collection($contract_models));
         }catch (\Exception $e) {
             return api_response(false, "Echec de la récupération", $e->getMessage(), 500);
