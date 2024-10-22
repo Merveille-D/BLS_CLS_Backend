@@ -15,16 +15,13 @@ class ContractModelResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // if ($this->parent_id && $this->type === 'folder') {
-            return [
-                'id' => $this->id,
-                'name' => $this->getParentName(),
-                'childrens' => $this->only(['name', 'type', 'file_path']),
-                'created_at' => $this->created_at,
-            ];
-        // }else {
-        //     return $this->defaultFormat();
-        // }
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'type' => $this->type,
+            'file_path' => $this->file_path,
+            'created_at' => $this->created_at,
+        ];
 
     }
 
@@ -36,21 +33,5 @@ class ContractModelResource extends JsonResource
     private function getParentName(): ?string
     {
         return ContractModel::where('parent_id', $this->parent_id)->value('name');
-    }
-
-    /**
-     * Format par défaut pour le contrat.
-     *
-     * @return array<string, mixed>
-     */
-    private function defaultFormat(): array
-    {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'type' => $this->type,
-            'file_path' => $this->file_path,
-            'created_at' => $this->created_at,
-        ];
     }
 }

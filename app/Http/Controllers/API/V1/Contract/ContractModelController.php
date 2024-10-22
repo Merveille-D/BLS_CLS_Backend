@@ -22,7 +22,8 @@ class ContractModelController extends Controller
     public function index(Request $request)
     {
         try {
-
+            $contract_models = $this->contract_model->list($request->all());
+            
             $contract_models = ContractModel::when(
                 $request->filled('parent_id'), 
                 function($query) use ($request) {
