@@ -28,13 +28,8 @@ class ContractModelRepository
         ];
     }
 
-    /**
-     * Récupère le nom du modèle parent.
-     *
-     * @param int $parentId
-     * @return string|null
-     */
-    private function getParentName(int $parentId): ?string
+    
+    private function getParentName($parentId)
     {
         return $this->contract_model->where('id', $parentId)->value('name');
     }
