@@ -15,16 +15,16 @@ class ContractModelResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        if ($this->parent_id && $this->type === 'folder') {
+        // if ($this->parent_id && $this->type === 'folder') {
             return [
                 'id' => $this->id,
                 'name' => $this->getParentName(),
                 'childrens' => $this->only(['name', 'type', 'file_path']),
                 'created_at' => $this->created_at,
             ];
-        }else {
-            return $this->defaultFormat();
-        }
+        // }else {
+        //     return $this->defaultFormat();
+        // }
 
     }
 
