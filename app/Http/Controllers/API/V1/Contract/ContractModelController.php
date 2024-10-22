@@ -24,7 +24,7 @@ class ContractModelController extends Controller
         try {
             $contract_models = $this->contract_model->list($request->all());
             
-            return api_response(true, 'Liste des modèles de contrat', ContractModelResource::collection($contract_models));
+            return api_response(true, 'Liste des modèles de contrat', $contract_models);
         }catch (\Exception $e) {
             return api_response(false, "Echec de la récupération", $e->getMessage(), 500);
         }
