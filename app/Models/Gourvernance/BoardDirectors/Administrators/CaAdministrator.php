@@ -2,6 +2,7 @@
 
 namespace App\Models\Gourvernance\BoardDirectors\Administrators;
 
+use App\Models\Gourvernance\ExecutiveCommittee;
 use App\Models\Gourvernance\Mandate;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -51,6 +52,11 @@ class CaAdministrator extends Model
     public function lastMandate()
     {
         return $this->mandates()->latest()->first();
+    }
+
+    public function executiveCommittees()
+    {
+        return $this->morphMany(ExecutiveCommittee::class, 'committable');
     }
 
 }

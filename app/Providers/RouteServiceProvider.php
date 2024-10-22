@@ -47,6 +47,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/V1/evaluation.php'))
                 ->group(base_path('routes/V1/incident.php'))
                 ->group(base_path('routes/V1/mandate.php'))
+                ->group(base_path('routes/V1/committee.php'))
                 ->group(base_path('routes/V1/shareholder.php'))
 
                 ->group(base_path('routes/V1/contract/contract.php'))

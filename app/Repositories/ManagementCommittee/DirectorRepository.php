@@ -3,6 +3,7 @@ namespace App\Repositories\ManagementCommittee;
 
 use App\Models\Gourvernance\ExecutiveManagement\Directors\Director;
 use App\Concerns\Traits\PDF\GeneratePdfTrait;
+use App\Models\Gourvernance\ExecutiveCommittee;
 use Illuminate\Support\Str;
 
 use Carbon\Carbon;
@@ -42,6 +43,22 @@ class DirectorRepository
 
         $director->update($request);
         return $director;
+    }
+
+    public function toggle($director, $request)
+    {
+        $existingRecord = ExecutiveCommittee::where('committee_id', $request['committee_id'])
+        ->where('committable_id', $director->id)
+        ->first();
+
+        if ($existingRecord) {
+            $existingRecord->delete();
+        } else {
+            
+            $executive_committee = new ExecutiveCommittee();
+            $executive_committee->committee_id = $request['committee_id'];
+            $director->executiveCommittees()->save($executive_committee);
+        }
     }
 
     public function renewMandate($request) {

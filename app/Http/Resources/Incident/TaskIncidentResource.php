@@ -16,7 +16,7 @@ class TaskIncidentResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => __($this->title),
+            'title' => __('incident.'. $this->title),
             'info_channel' => $this->info_channel,
             'info_channel_value' => $this->info_channel_value,
             'date' => $this->date,

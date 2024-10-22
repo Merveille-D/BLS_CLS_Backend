@@ -5,6 +5,7 @@ use App\Enums\AdminFunction;
 use App\Enums\AdminType;
 use App\Enums\Quality;
 use App\Models\Gourvernance\BoardDirectors\Administrators\CaAdministrator;
+use App\Models\Gourvernance\ExecutiveCommittee;
 use App\Models\Gourvernance\Mandate;
 use Carbon\Carbon;
 
@@ -80,6 +81,22 @@ class AdministratorRepository
             'type' => AdminType::TYPES_VALUES,
             'function' => AdminFunction::ADMIN_FUNCTIONS_VALUES,
         );
+    }
+
+    public function toggle($ca_administrator, $request)
+    {
+        $existingRecord = ExecutiveCommittee::where('committee_id', $request['committee_id'])
+        ->where('committable_id', $ca_administrator->id)
+        ->first();
+
+        if ($existingRecord) {
+            $existingRecord->delete();
+        } else {
+            
+            $executive_committee = new ExecutiveCommittee();
+            $executive_committee->committee_id = $request['committee_id'];
+            $ca_administrator->executiveCommittees()->save($executive_committee);
+        }
     }
 
     public function renewMandate($request) {

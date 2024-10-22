@@ -53,7 +53,7 @@ class TaskIncident extends Model
         'avis-tiers-detenteurs' => [
             true => [
                 'atd_1' => [
-                        'title' => 'incident.atd_1.title',
+                        'title' => 'atd_1.title',
                         'rules' => [
                             'date' => ['required', 'date'],
                             'info_channel' => ['required', 'in:email,call'],
@@ -78,11 +78,11 @@ class TaskIncident extends Model
                                     'label' => 'Date de blocage',
                                 ],
                             ],
-                            'form_title' => 'incident.atd_1.form_title'
+                            'form_title' => 'atd_1.form_title'
                         ],
                     ],
                 'atd_2' => [
-                        'title' => 'incident.atd_2.title',
+                        'title' => 'atd_2.title',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -97,11 +97,11 @@ class TaskIncident extends Model
                                     'label' => 'Joindre le courrier d\'information au client',
                                 ]
                             ],
-                            'form_title' => 'incident.atd_2.form_title'
+                            'form_title' => 'atd_2.form_title'
                         ],
                     ],
                 'atd_3' => [
-                        'title' => 'incident.atd_3.title',
+                        'title' => 'atd_3.title',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -116,11 +116,11 @@ class TaskIncident extends Model
                                     'label' => 'Joindre la rédaction',
                                 ]
                             ],
-                            'form_title' => 'incident.atd_3.form_title'
+                            'form_title' => 'atd_3.form_title'
                         ],
                     ],
                 'atd_4' => [
-                        'title' => 'incident.atd_4.title',
+                        'title' => 'atd_4.title',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -135,11 +135,11 @@ class TaskIncident extends Model
                                     'label' => 'Joindre le courrier validé',
                                 ]
                             ],
-                            'form_title' => 'incident.atd_4.form_title'
+                            'form_title' => 'atd_4.form_title'
                         ],
                     ],
                 'atd_5' => [
-                        'title' => 'incident.atd_5.title',
+                        'title' => 'atd_5.title',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -154,11 +154,11 @@ class TaskIncident extends Model
                                     'label' => 'Lettre signée par la Direction Générale & Accusé de réception signé',
                                 ]
                             ],
-                            'form_title' => 'incident.atd_5.form_title'
+                            'form_title' => 'atd_5.form_title'
                         ],
                     ],
                 'atd_6' => [
-                        'title' => 'incident.atd_6.title',
+                        'title' => 'atd_6.title',
                         'rules' => [
                             'raised_hand' => ['required', 'in:yes,no'],
                         ],
@@ -171,12 +171,12 @@ class TaskIncident extends Model
                                     'label' => 'Avez vous reçu de main-levée ?',
                                 ]
                             ],
-                            'form_title' => 'incident.atd_6.form_title'
+                            'form_title' => 'atd_6.form_title'
                         ],
                         "next" => [
                             true => [
                                 'atd_6_1' => [
-                                        'title' => 'incident.atd_6_1.title',
+                                        'title' => 'atd_6_1.title',
                                         'rules' => [
                                             'documents' => ['required', 'array'],
                                             'documents.*.name' => ['required', 'string'],
@@ -191,11 +191,11 @@ class TaskIncident extends Model
                                                     'label' => 'Attacher le document de la main-levée',
                                                 ]
                                             ],
-                                            'form_title' => 'incident.atd_6_1.form_title'
+                                            'form_title' => 'atd_6_1.form_title'
                                         ],
                                     ],
                                 'atd_6_2' => [
-                                        'title' => 'incident.atd_6_2.title',
+                                        'title' => 'atd_6_2.title',
                                         'rules' => [
                                             'date' => ['required', 'date'],
                                             'info_channel' => ['required', 'in:email,call'],
@@ -220,11 +220,11 @@ class TaskIncident extends Model
                                                     'label' => 'Date de blocage',
                                                 ],
                                             ],
-                                            'form_title' => 'incident.atd_6_2.form_title'
+                                            'form_title' => 'atd_6_2.form_title'
                                         ],
                                     ],
                                 'atd_6_3' => [
-                                        'title' => 'incident.atd_6_3.title',
+                                        'title' => 'atd_6_3.title',
                                         'rules' => [
                                             'documents' => ['required', 'array'],
                                             'documents.*.name' => ['required', 'string'],
@@ -239,14 +239,14 @@ class TaskIncident extends Model
                                                     'label' => 'Joindre le courrier d\'information au client',
                                                 ]
                                             ],
-                                            'form_title' => 'incident.atd_6_3.form_title'
+                                            'form_title' => 'atd_6_3.form_title'
                                         ],
                                         "next" => false,
                                     ],
                             ],
                             false => [
                                 'atd_6_4' => [
-                                        'title' => 'incident.atd_6_4.title',
+                                        'title' => 'atd_6_4.title',
                                         'rules' => [
                                             'documents' => ['required', 'array'],
                                             'documents.*.name' => ['required', 'string'],
@@ -261,11 +261,11 @@ class TaskIncident extends Model
                                                     'label' => 'Avis d\'execution de l\'administration fiscale',
                                                 ]
                                             ],
-                                            'form_title' => 'incident.atd_6_4.form_title'
+                                            'form_title' => 'atd_6_4.form_title'
                                         ],
                                     ],
                                 'atd_6_5' => [
-                                        'title' => 'incident.atd_6_5.title',
+                                        'title' => 'atd_6_5.title',
                                         'rules' => [
                                             'documents' => ['required', 'array'],
                                             'documents.*.name' => ['required', 'string'],
@@ -280,11 +280,11 @@ class TaskIncident extends Model
                                                     'label' => 'Joindre une copie du chèque',
                                                 ]
                                             ],
-                                            'form_title' => 'incident.atd_6_5.form_title'
+                                            'form_title' => 'atd_6_5.form_title'
                                         ],
                                     ],
                                 'atd_6_6' => [
-                                        'title' => 'incident.atd_6_6.title',
+                                        'title' => 'atd_6_6.title',
                                         'rules' => [
                                             'documents' => ['required', 'array'],
                                             'documents.*.name' => ['required', 'string'],
@@ -299,7 +299,7 @@ class TaskIncident extends Model
                                                     'label' => 'Joindre le courrier d\'information au client',
                                                 ]
                                             ],
-                                            'form_title' => 'incident.atd_6_6.form_title'
+                                            'form_title' => 'atd_6_6.form_title'
                                         ],
                                         "next" => false,
                                     ],
@@ -311,7 +311,7 @@ class TaskIncident extends Model
             false => [
 
                 'atd_7' => [
-                        'title' => 'incident.atd_7.title',
+                        'title' => 'atd_7.title',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -326,7 +326,7 @@ class TaskIncident extends Model
                                     'label' => 'Joindre le courrier à l\'adresse de l\'ADM Fiscale',
                                 ]
                             ],
-                            'form_title' => 'incident.atd_7.form_title'
+                            'form_title' => 'atd_7.form_title'
                         ],
                         "next" => false,
                     ],
@@ -335,7 +335,7 @@ class TaskIncident extends Model
         'requisition' => [
             true => [
                 'req_1' => [
-                        'title' => 'incident.req_1.title',
+                        'title' => 'req_1.title',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -350,11 +350,11 @@ class TaskIncident extends Model
                                     'label' => 'Joindre le courrier d\'information au client',
                                 ]
                             ],
-                            'form_title' => 'incident.req_1.form_title'
+                            'form_title' => 'req_1.form_title'
                         ],
                     ],
                 'req_2' => [
-                        'title' => 'incident.req_2.title',
+                        'title' => 'req_2.title',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -369,11 +369,11 @@ class TaskIncident extends Model
                                     'label' => 'Joindre la rédaction',
                                 ]
                             ],
-                            'form_title' => 'incident.req_2.form_title'
+                            'form_title' => 'req_2.form_title'
                         ],
                     ],
                 'req_3' => [
-                        'title' => 'incident.req_3.title',
+                        'title' => 'req_3.title',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -388,11 +388,11 @@ class TaskIncident extends Model
                                     'label' => 'Joindre le courrier validé',
                                 ]
                             ],
-                            'form_title' => 'incident.req_3.form_title'
+                            'form_title' => 'req_3.form_title'
                         ],
                     ],
                 'req_4' => [
-                        'title' => 'incident.req_4.title',
+                        'title' => 'req_4.title',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -407,14 +407,14 @@ class TaskIncident extends Model
                                     'label' => 'Joindre le courrier de transmission signé',
                                 ]
                             ],
-                            'form_title' => 'incident.req_4.form_title'
+                            'form_title' => 'req_4.form_title'
                         ],
                         "next" => false,
                     ],
             ],
             false => [
                 'req_5' => [
-                        'title' => 'incident.req_5.title',
+                        'title' => 'req_5.title',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -429,7 +429,7 @@ class TaskIncident extends Model
                                     'label' => 'Joindre le courrier signée à l\'adresse de l\'autorité concernée',
                                 ]
                             ],
-                            'form_title' => 'incident.req_5.form_title'
+                            'form_title' => 'req_5.form_title'
                         ],
                         "next" => false,
                     ],
@@ -438,7 +438,7 @@ class TaskIncident extends Model
         'saisie-conservatoire' => [
             true => [
                 'sc_1' => [
-                        'title' => 'incident.sc_1.title',
+                        'title' => 'sc_1.title',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -453,11 +453,11 @@ class TaskIncident extends Model
                                     'label' => 'Joindre la fiche de déclaration',
                                 ]
                             ],
-                            'form_title' => 'incident.sc_1.form_title'
+                            'form_title' => 'sc_1.form_title'
                         ],
                     ],
                 'sc_2' => [
-                        'title' => 'incident.sc_2.title',
+                        'title' => 'sc_2.title',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -472,11 +472,11 @@ class TaskIncident extends Model
                                     'label' => 'Joindre la fiche de prelevement',
                                 ]
                             ],
-                            'form_title' => 'incident.sc_2.form_title'
+                            'form_title' => 'sc_2.form_title'
                         ],
                     ],
                 'sc_3' => [
-                        'title' => 'incident.sc_3.title',
+                        'title' => 'sc_3.title',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -491,11 +491,11 @@ class TaskIncident extends Model
                                     'label' => 'Joindre le courrier d\'information du client',
                                 ]
                             ],
-                            'form_title' => 'incident.sc_3.form_title'
+                            'form_title' => 'sc_3.form_title'
                         ],
                     ],
                 'sc_4' => [
-                        'title' => 'incident.sc_4.title',
+                        'title' => 'sc_4.title',
                         'rules' => [
                             'raised_hand' => ['required', 'in:yes,no'],
                         ],
@@ -508,12 +508,12 @@ class TaskIncident extends Model
                                     'label' => 'Avez vous reçu de main-levée ?',
                                 ]
                             ],
-                            'form_title' => 'incident.sc_4.form_title'
+                            'form_title' => 'sc_4.form_title'
                         ],
                         "next" => [
                             true => [
                                 'sc_4_1' => [
-                                        'title' => 'incident.sc_4_1.title',
+                                        'title' => 'sc_4_1.title',
                                         'rules' => [
                                             'documents' => ['required', 'array'],
                                             'documents.*.name' => ['required', 'string'],
@@ -528,11 +528,11 @@ class TaskIncident extends Model
                                                     'label' => 'Joindre le document de la main-levée',
                                                 ]
                                             ],
-                                            'form_title' => 'incident.sc_4_1.form_title'
+                                            'form_title' => 'sc_4_1.form_title'
                                         ],
                                     ],
                                 'sc_4_2' => [
-                                        'title' => 'incident.sc_4_2.title',
+                                        'title' => 'sc_4_2.title',
                                         'rules' => [
                                             'documents' => ['required', 'array'],
                                             'documents.*.name' => ['required', 'string'],
@@ -547,11 +547,11 @@ class TaskIncident extends Model
                                                     'label' => 'Joindre la preuve de la levée des restrictions',
                                                 ]
                                             ],
-                                            'form_title' => 'incident.sc_4_2.form_title'
+                                            'form_title' => 'sc_4_2.form_title'
                                         ],
                                     ],
                                 'sc_4_3' => [
-                                        'title' => 'incident.sc_4_3.title',
+                                        'title' => 'sc_4_3.title',
                                         'rules' => [
                                             'documents' => ['required', 'array'],
                                             'documents.*.name' => ['required', 'string'],
@@ -566,14 +566,14 @@ class TaskIncident extends Model
                                                     'label' => 'Joindre le courrier d\'information du client',
                                                 ]
                                             ],
-                                            'form_title' => 'incident.sc_4_3.form_title'
+                                            'form_title' => 'sc_4_3.form_title'
                                         ],
                                         "next" => false,
                                     ],
                             ],
                             false => [
                                 'sc_4_4' => [
-                                    'title' => 'incident.sc_4_4.title',
+                                    'title' => 'sc_4_4.title',
                                     'rules' => [
                                         'conversion_certificate' => ['required', 'in:yes,no'],
                                     ],
@@ -586,12 +586,12 @@ class TaskIncident extends Model
                                                 'label' => 'Avez vous reçu l\'acte de conversion ?',
                                             ],
                                         ],
-                                        'form_title' => 'incident.sc_4_4.form_title'
+                                        'form_title' => 'sc_4_4.form_title'
                                     ],
                                     "next" => [
                                         false => [
                                             'sc_4_4_1' => [
-                                                    'title' => 'incident.sc_4_4_1.title',
+                                                    'title' => 'sc_4_4_1.title',
                                                     'rules' => [
                                                         'documents' => ['required', 'array'],
                                                         'documents.*.name' => ['required', 'string'],
@@ -606,11 +606,11 @@ class TaskIncident extends Model
                                                                 'label' => 'Joindre la caducite de la saisie',
                                                             ]
                                                         ],
-                                                        'form_title' => 'incident.sc_4_4_1.form_title'
+                                                        'form_title' => 'sc_4_4_1.form_title'
                                                     ],
                                                 ],
                                             'sc_4_4_2' => [
-                                                    'title' => 'incident.sc_4_4_2.title',
+                                                    'title' => 'sc_4_4_2.title',
                                                     'rules' => [
                                                         'documents' => ['required', 'array'],
                                                         'documents.*.name' => ['required', 'string'],
@@ -625,14 +625,14 @@ class TaskIncident extends Model
                                                                 'label' => 'Attacher le document de la main-levée',
                                                             ]
                                                         ],
-                                                        'form_title' => 'incident.sc_4_4_2.form_title'
+                                                        'form_title' => 'sc_4_4_2.form_title'
                                                     ],
                                                     "next" => false,
                                                 ],
                                         ],
                                         true => [
                                             'sc_4_4_3' => [
-                                                    'title' => 'incident.sc_4_4_3.title',
+                                                    'title' => 'sc_4_4_3.title',
                                                     'rules' => [
                                                         'documents' => ['required', 'array'],
                                                         'documents.*.name' => ['required', 'string'],
@@ -647,11 +647,11 @@ class TaskIncident extends Model
                                                                 'label' => 'Joindre les documents',
                                                             ]
                                                         ],
-                                                        'form_title' => 'incident.sc_4_4_3.form_title'
+                                                        'form_title' => 'sc_4_4_3.form_title'
                                                     ],
                                                 ],
                                             'sc_4_4_4' => [
-                                                    'title' => 'incident.sc_4_4_4.title',
+                                                    'title' => 'sc_4_4_4.title',
                                                     'rules' => [
                                                         'documents' => ['required', 'array'],
                                                         'documents.*.name' => ['required', 'string'],
@@ -666,7 +666,7 @@ class TaskIncident extends Model
                                                                 'label' => 'Joindre la fiche de paiement du creancier',
                                                             ]
                                                         ],
-                                                        'form_title' => 'incident.sc_4_4_4.form_title'
+                                                        'form_title' => 'sc_4_4_4.form_title'
                                                     ],
                                                     "next" => false,
                                                 ],
@@ -679,7 +679,7 @@ class TaskIncident extends Model
             ],
             false => [
                 'sc_5' => [
-                        'title' => 'incident.sc_5.title',
+                        'title' => 'sc_5.title',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -694,7 +694,7 @@ class TaskIncident extends Model
                                     'label' => 'Joindre la fiche de déclaration',
                                 ]
                             ],
-                            'form_title' => 'incident.sc_5.form_title'
+                            'form_title' => 'sc_5.form_title'
                         ],
                         "next" => false,
                     ],
@@ -704,7 +704,7 @@ class TaskIncident extends Model
         'saisie-attribution' => [
             true => [
                 'sa_1' => [
-                        'title' => 'incident.sa_1.title',
+                        'title' => 'sa_1.title',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -719,11 +719,11 @@ class TaskIncident extends Model
                                     'label' => 'Joindre la fiche de déclaration',
                                 ]
                             ],
-                            'form_title' => 'incident.sa_1.form_title'
+                            'form_title' => 'sa_1.form_title'
                         ],
                     ],
                 'sa_2' => [
-                        'title' =>  'incident.sa_2.title',
+                        'title' =>  'sa_2.title',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -738,11 +738,11 @@ class TaskIncident extends Model
                                     'label' => 'Joinndre la fiche de prelevement',
                                 ]
                             ],
-                            'form_title' =>  'incident.sa_2.form_title'
+                            'form_title' =>  'sa_2.form_title'
                         ],
                     ],
                 'sa_3' => [
-                        'title' =>  'incident.sa_3.title',
+                        'title' =>  'sa_3.title',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -757,11 +757,11 @@ class TaskIncident extends Model
                                     'label' => 'Joindre le courrier d\'information du client',
                                 ]
                             ],
-                            'form_title' =>  'incident.sa_3.form_title'
+                            'form_title' =>  'sa_3.form_title'
                         ],
                     ],
                 'sa_4' => [
-                        'title' =>  'incident.sa_4.title',
+                        'title' =>  'sa_4.title',
                         'rules' => [
                             'raised_hand' => ['required', 'in:yes,no'],
                         ],
@@ -774,12 +774,12 @@ class TaskIncident extends Model
                                     'label' => 'Avez vous reçu de main-levée ?',
                                 ]
                             ],
-                            'form_title' =>  'incident.sa_4.form_title'
+                            'form_title' =>  'sa_4.form_title'
                         ],
                         "next" => [
                             true => [
                                 'sa_4_1' => [
-                                        'title' =>  'incident.sa_4_1.title',
+                                        'title' =>  'sa_4_1.title',
                                         'rules' => [
                                             'documents' => ['required', 'array'],
                                             'documents.*.name' => ['required', 'string'],
@@ -794,11 +794,11 @@ class TaskIncident extends Model
                                                     'label' => 'Joindre le document de la main-levée',
                                                 ]
                                             ],
-                                            'form_title' =>  'incident.sa_4_1.form_title'
+                                            'form_title' =>  'sa_4_1.form_title'
                                         ],
                                     ],
                                 'sa_4_2' => [
-                                        'title' => 'incident.sa_4_2.title',
+                                        'title' => 'sa_4_2.title',
                                         'rules' => [
                                             'documents' => ['required', 'array'],
                                             'documents.*.name' => ['required', 'string'],
@@ -813,11 +813,11 @@ class TaskIncident extends Model
                                                     'label' => 'Joindre la preuve de la levée des restrictions',
                                                 ]
                                             ],
-                                            'form_title' => 'incident.sa_4_2.form_title'
+                                            'form_title' => 'sa_4_2.form_title'
                                         ],
                                     ],
                                 'sa_4_3' => [
-                                        'title' => 'incident.sa_4_3.title',
+                                        'title' => 'sa_4_3.title',
                                         'rules' => [
                                             'documents' => ['required', 'array'],
                                             'documents.*.name' => ['required', 'string'],
@@ -832,14 +832,14 @@ class TaskIncident extends Model
                                                     'label' => 'Joindre le courrier d\'information du client',
                                                 ]
                                             ],
-                                            'form_title' => 'incident.sa_4_3.form_title'
+                                            'form_title' => 'sa_4_3.form_title'
                                         ],
                                         "next" => false,
                                 ],
                             ],
                             false => [
                                 'sa_4_4' => [
-                                    'title' => 'incident.sa_4_4.title',
+                                    'title' => 'sa_4_4.title',
                                     'rules' => [
                                         'documents' => ['required', 'array'],
                                         'documents.*.name' => ['required', 'string'],
@@ -854,11 +854,11 @@ class TaskIncident extends Model
                                                 'label' => 'Joindre la caducite de la saisie',
                                             ]
                                         ],
-                                        'form_title' => 'incident.sa_4_4.form_title'
+                                        'form_title' => 'sa_4_4.form_title'
                                     ],
                                 ],
                                 'sa_4_5' => [
-                                    'title' => 'incident.sa_4_5.title',
+                                    'title' => 'sa_4_5.title',
                                     'rules' => [
                                         'documents' => ['required', 'array'],
                                         'documents.*.name' => ['required', 'string'],
@@ -873,11 +873,11 @@ class TaskIncident extends Model
                                                 'label' => 'Joindre la copie du chèque',
                                             ]
                                         ],
-                                        'form_title' => 'incident.sa_4_5.form_title'
+                                        'form_title' => 'sa_4_5.form_title'
                                     ],
                                 ],
                                 'sa_4_6' => [
-                                        'title' => 'incident.sa_4_6.title',
+                                        'title' => 'sa_4_6.title',
                                         'rules' => [
                                             'documents' => ['required', 'array'],
                                             'documents.*.name' => ['required', 'string'],
@@ -892,7 +892,7 @@ class TaskIncident extends Model
                                                     'label' => 'Joindre le courrier d\'information du client',
                                                 ]
                                             ],
-                                            'form_title' => 'incident.sa_4_6.form_title'
+                                            'form_title' => 'sa_4_6.form_title'
                                         ],
                                         "next" => false,
                                 ],
@@ -903,7 +903,7 @@ class TaskIncident extends Model
             ],
             false => [
                 'sa_5' => [
-                        'title' => 'incident.sa_5.title',
+                        'title' => 'sa_5.title',
                         'rules' => [
                             'documents' => ['required', 'array'],
                             'documents.*.name' => ['required', 'string'],
@@ -918,7 +918,7 @@ class TaskIncident extends Model
                                     'label' => 'Joindre sur la fiche de déclaration',
                                 ]
                             ],
-                            'form_title' => 'incident.sa_5.form_title'
+                            'form_title' => 'sa_5.form_title'
                         ],
                         "next" => false,
                     ],

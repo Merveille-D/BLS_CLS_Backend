@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Contract;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ContractModel\StoreContractModelRequest;
+use App\Http\Resources\Contract\ContractModelResource;
 use App\Models\Contract\ContractModel;
 use App\Repositories\Contract\ContractModelRepository;
 use Illuminate\Http\Request;
@@ -32,7 +33,7 @@ class ContractModelController extends Controller
                 }
             )->get();
             
-            return api_response(true, 'Liste des modèles de contrat', $contract_models);
+            return api_response(true, 'Liste des modèles de contrat', ContractModelResource::collection($contract_models));
         }catch (\Exception $e) {
             return api_response(false, "Echec de la récupération", $e->getMessage(), 500);
         }
