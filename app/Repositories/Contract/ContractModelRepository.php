@@ -11,22 +11,32 @@ class ContractModelRepository
 
     }
 
-    public function list($request){
+    public function list($request)
+    {
+        // Filtrer les modèles en fonction de la présence de parent_id
+        $parentId = $request['parent_id'] ?? null;
 
-        $contract_models = ContractModel::when(
-            isset($request['parent_id']), 
-            function($query) use ($request) {
-                $query->where('parent_id', $request['parent_id']);
-            }, 
-            function($query) {
-                $query->whereNull('parent_id');
-            }
+        $contract_models = $this->contract_model->when(
+            $parentId, 
+            fn($query) => $query->where('parent_id', $parentId),
+            fn($query) => $query->whereNull('parent_id')
         )->get();
 
         return [
-            'name' => ContractModel::where('parent_id', $request['parent_id'])->value('name'),
+            'name' => $parentId ? $this->getParentName($parentId) : null,
             'contract_models' => ContractModelResource::collection($contract_models),
         ];
+    }
+
+    /**
+     * Récupère le nom du modèle parent.
+     *
+     * @param int $parentId
+     * @return string|null
+     */
+    private function getParentName(int $parentId): ?string
+    {
+        return $this->contract_model->where('id', $parentId)->value('name');
     }
 
 
