@@ -21,7 +21,7 @@ enum StockState: string
 
     const STATES_VALUES = [
         StockState::CREATED => 'Initiation de la garantie',
-        StockState::REDACTION => 'Rédaction de la convention de garantie',
+        StockState::REDACTION => 'Rédaction de la convention de gage',
         StockState::NOTARY_DEPOSIT => 'Dépot de la convention au rang des minutes d\'un notaire',
         StockState::NOTARY_TRANSMISSION => 'Transmission au notaire d\'une demande d\'incription de la garantie au RCCM',
         StockState::CONVENTION_OBTENTION => 'Obtention de la convention de garantie enregistrée',

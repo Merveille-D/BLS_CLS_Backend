@@ -86,7 +86,7 @@ class ShareholderController extends Controller
     public function generatePdfCertificatShareholder(GeneratePdfCertificatShareholderRequest $request)
     {
         try {
-            $data = $this->shareholder->generatePdfCertificat($request);
+            $data = $this->shareholder->generatePdfCertificat($request->validated());
             return $data;
         } catch (\Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);

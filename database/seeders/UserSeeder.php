@@ -39,7 +39,7 @@ class UserSeeder extends Seeder
                 'lastname' => '',
                 'username' => 'afrikskills',
                 'email' => 'afrikskills@yopmail.com',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('afrikskills'),
                 'subsidiary_id' => $country->id,
             ),
             array(
@@ -47,7 +47,7 @@ class UserSeeder extends Seeder
                 'lastname' => 'Adjaho',
                 'username' => 'estelleadjaho',
                 'email' => 'estelleadjaho@gmail.com',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('afrikskills'),
                 'subsidiary_id' => $country->id,
             ),
             // array(

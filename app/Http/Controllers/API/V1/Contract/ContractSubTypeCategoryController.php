@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\V1\Contract;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ContractSubTypeCategory\StoreContractSubTypeCategoryRequest;
 use App\Http\Requests\ContractSubTypeCategory\UpdateContractSubTypeCategoryRequest;
-use App\Http\Requests\ContractTypeCategory\ListContractSubTypeCategoryRequest;
+use App\Http\Requests\ContractSubTypeCategory\ListContractSubTypeCategoryRequest;
 use App\Models\Contract\ContractSubTypeCategory;
 use App\Repositories\Contract\ContractSubTypeCategoryRepository;
 use Illuminate\Validation\ValidationException;
