@@ -31,9 +31,9 @@ class ContractController extends Controller
 
             $contract->first_part = $contract->first_part;
             $contract->second_part = $contract->second_part;
-            $contract->category = $contract->contractCategory->value;
-            $contract->type_category = $contract->contractTypeCategory->value;
-            $contract->sub_type_category = $contract->contractSubTypeCategory->value;
+            $contract->category = $contract->contractCategory;
+            $contract->type_category = $contract->contractTypeCategory;
+            $contract->sub_type_category = $contract->contractSubTypeCategory;
 
             return $contract;
         });
@@ -52,9 +52,9 @@ class ContractController extends Controller
             $data = $contract->toArray();
             $data['first_part'] = $contract->first_part;
             $data['second_part'] = $contract->second_part;
-            $data['category'] = $contract->contractCategory->value;
-            $data['type_category'] = $contract->contractTypeCategory->value;
-            $data['sub_type_category'] = $contract->contractSubTypeCategory->value;
+            $data['category'] = $contract->contractCategory;
+            $data['type_category'] = $contract->contractTypeCategory;
+            $data['sub_type_category'] = $contract->contractSubTypeCategory;
 
             $data['documents'] = $contract->documents;
 
@@ -74,9 +74,9 @@ class ContractController extends Controller
             $data = $contract->toArray();
             $data['first_part'] = $contract->first_part;
             $data['second_part'] = $contract->second_part;
-            $data['category'] = $contract->contractCategory->value;
-            $data['type_category'] = $contract->contractTypeCategory->value;
-            $data['sub_type_category'] = $contract->contractSubTypeCategory->value;
+            $data['category'] = $contract->contractCategory;
+            $data['type_category'] = $contract->contractTypeCategory;
+            $data['sub_type_category'] = $contract->contractSubTypeCategory;
             $data['documents'] = $contract->documents;
             $data['transfers'] = $contract->transfers->map(function ($transfer) {
                 $transfer->sender = $transfer->sender;
@@ -101,9 +101,9 @@ class ContractController extends Controller
             $data = $contract->toArray();
             $data['first_part'] = $contract->first_part;
             $data['second_part'] = $contract->second_part;
-            $data['category'] = $contract->contractCategory->value;
-            $data['type_category'] = $contract->contractTypeCategory->value;
-            $data['sub_type_category'] = $contract->contractSubTypeCategory->value;
+            $data['category'] = $contract->contractCategory;
+            $data['type_category'] = $contract->contractTypeCategory;
+            $data['sub_type_category'] = $contract->contractSubTypeCategory;
             $data['documents'] = $contract->documents;
 
             return api_response(true, "Mis à jour du contrat avec succès", $data, 200);

@@ -68,6 +68,17 @@ class CategorySeeder extends Seeder
                     ],
                     [
                         'value' => 'Sûretés personnelles',
+                        'sub_type_categories' => [
+                            [
+                                'value' => 'Cautionnement',
+                            ],
+                            [
+                                'value' => 'Garantie autonome',
+                            ],
+                            [
+                                'value' => 'Contre garantie autonomes',
+                            ]
+                        ],
                     ],
                     [
                         'value' => 'Sûretés immobilières',
