@@ -112,8 +112,11 @@ class LitigationTaskController extends Controller
      */
     public function destroy($task_id)
     {
-        $this->taskRepo->delete($task_id);
+        if($this->taskRepo->delete($task_id)) {
+            return api_response(true, 'Tache supprimée avec succès');
+        } else {
+            return api_error(false, 'Impossible de supprimer une tache exécuté');
+        }
 
-        return api_response(true, 'Tache supprimée avec succès');
     }
 }

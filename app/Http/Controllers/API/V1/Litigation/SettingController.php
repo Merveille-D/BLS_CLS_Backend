@@ -5,10 +5,11 @@ namespace App\Http\Controllers\API\V1\Litigation;
 use App\Enums\Litigation\LitigationType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Litigation\AddNatureRequest;
+use App\Http\Requests\Litigation\AddSettingRequest;
 use App\Repositories\Litigation\LitigationRepository;
 use Illuminate\Http\Request;
 
-class NatureController extends Controller
+class SettingController extends Controller
 {
     /**
      * __construct
@@ -24,16 +25,16 @@ class NatureController extends Controller
      */
     public function index()
     {
-        return api_response(true, 'Liste des natures', $data = $this->litigationRepo->getResources($type = LitigationType::NATURE));
+        return api_response(true, 'Liste des resources', $data = $this->litigationRepo->getResources(request()));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AddNatureRequest $request)
+    public function store(AddSettingRequest $request)
     {
         try {
-            $data = $this->litigationRepo->addResource($request, $type = LitigationType::NATURE);
+            $data = $this->litigationRepo->addResource($request);
 
             return api_response($success = true, 'Ressource ajoutée avec succès', $data);
         } catch (\Throwable $th) {

@@ -52,20 +52,20 @@ class CompleteTaskRequest extends FormRequest
             'documents.*.file' => 'required|file|max:8192|mimes:pdf,doc,docx',
         );
         switch ($state) {
-
             case RecoveryStepEnum::CREATED:
                 $data = $data;
                 break;
             case RecoveryStepEnum::FORMALIZATION:
                 $data = $data;
+                break;
             case RecoveryStepEnum::FORMAL_NOTICE:
                 $data = [
-                    'payement_status' => ['required', new ArrayElementMatch(array('yes', 'no'))],
+                    'payement_status' => ['required', 'in:yes,no'],
                 ];
-
+                break;
             case RecoveryStepEnum::DEBT_PAYEMENT:
                 $data = [
-                    'is_seized' => ['required', new ArrayElementMatch(array('yes', 'no'))],
+                    'is_seized' => ['required', 'in:yes,no'],
                 ];
                 break;
             case RecoveryStepEnum::SEIZURE:

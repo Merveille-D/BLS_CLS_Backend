@@ -20,6 +20,11 @@ class LitigationTask extends ModuleTask
 
     protected $table = 'module_tasks';
 
+    public function step()
+    {
+        return $this->belongsTo(LitigationStep::class, 'step_id', 'id');
+    }
+
     public function getFormAttribute() {
         $form = $this->getCustomFormFields($this);
 

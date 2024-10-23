@@ -38,7 +38,7 @@ class AddGuaranteeRequest extends FormRequest
             'type' => ['required', new ArrayElementMatch(GuaranteeType::TYPES)],
             'contract_id' => 'nullable|uuid',
             'security' => 'nullable|string',
-            'formalization_type' => 'nullable|string',
+            'formalization_type' => 'nullable|string|in:legal,conventional',
             'autonomous_id' => 'required_if:type,autonomous_counter|uuid|exists:guarantees,id',
         ];
     }

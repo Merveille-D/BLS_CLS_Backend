@@ -7,13 +7,13 @@ enum GuaranteeType : string {
     const BONDING = 'bonding'; //cautionnement
     const AUTONOMOUS = 'autonomous'; //garantie autonome
     const AUTONOMOUS_COUNTER = 'autonomous_counter'; //contre garantie autonome
-    //movable guarantee (pledge)
+    //movable guarantee (pledge) (GAGE)
     const STOCK = 'stock'; //stock
     const VEHICLE = 'vehicle'; //vehicle and equipment
-    //collateral guarantee const
-    const SHAREHOLDER_RIGHTS = 'shareholder_rights'; //shareholder rights
-    const TRADE_FUND = 'trade_fund'; //trade fund
-    const BANK_ACCOUNT = 'bank_account'; //bank account
+    //collateral (NANTISSEMENT) guarantee const
+    const SHAREHOLDER_RIGHTS = 'shareholder_rights'; //droit d'associé
+    const TRADE_FUND = 'trade_fund'; //fond de commerce
+    const BANK_ACCOUNT = 'bank_account'; //creance / compte bancaire
 
 
     const TYPES = [

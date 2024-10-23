@@ -17,7 +17,7 @@ class LitigationSettingResource extends JsonResource
         return [
             'id' => $this->id,
             'type' => $this->type,
-            'name' => __('litigation.'. $this->name),
+            'name' => $this->default ? __('litigation.'. $this->name) : $this->name,
             'description' => $this->description,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

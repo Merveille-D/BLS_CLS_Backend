@@ -15,5 +15,9 @@ class LitigationSetting extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'description', 'type'];
+    protected $fillable = ['name', 'description', 'type', 'default'];
+
+    protected $casts = [
+        'default' => 'boolean',
+    ];
 }

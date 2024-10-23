@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Guarantee;
 
 use App\Enums\Guarantee\GuaranteeType;
+use App\Http\Resources\Transfer\TransferResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -34,7 +35,7 @@ class GuaranteeResource extends JsonResource
             'formalization_type' => $this->when($this->security == 'movable', $this->extra['formalization_type'] ?? null),
             // autonomous_counter especial fields
             'autonomous_id' => $this->when($this->type == GuaranteeType::AUTONOMOUS_COUNTER, $this->extra['autonomous_id'] ?? null),
-
+            'transfers' => TransferResource::collection($this->transfers),
             'next_step' => $this->when($id, new GuaranteeTaskResource($this->next_task)),
             'current_step' => $this->when($id, new GuaranteeTaskResource($this->current_task)),
             'documents' => $this->when($id, DocumentResource::collection($this->documents)),
