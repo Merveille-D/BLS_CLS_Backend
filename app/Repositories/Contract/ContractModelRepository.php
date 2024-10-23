@@ -31,7 +31,7 @@ class ContractModelRepository
     
     private function getParent($parentId)
     {
-        return $this->contract_model->where('id', $parentId);
+        return $this->contract_model->where('id', $parentId)->first();
     }
 
     public function store($request) {

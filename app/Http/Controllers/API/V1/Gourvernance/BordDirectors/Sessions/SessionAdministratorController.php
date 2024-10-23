@@ -7,6 +7,7 @@ use App\Http\Requests\SessionAdministrator\GeneratePdfSessionAdministratorReques
 use App\Http\Requests\SessionAdministrator\StoreSessionAdministratorRequest;
 use App\Http\Requests\SessionAdministrator\UpdateAttachementSessionAdministratorRequest;
 use App\Http\Requests\SessionAdministrator\UpdateSessionAdministratorRequest;
+use App\Http\Resources\SessionAdministrator\TaskSessionAdministratorResource;
 use App\Models\Gourvernance\BoardDirectors\Sessions\SessionAdministrator;
 use App\Repositories\SessionAdministrator\SessionAdministratorRepository;
 use Illuminate\Validation\ValidationException;
@@ -31,7 +32,7 @@ class SessionAdministratorController extends Controller
                   ->orWhere('status', 'closed');
         })->get()->map(function ($meeting) {
             $meeting->files = $meeting->files;
-            $meeting->next_task = $meeting->next_task;
+            $meeting->next_task = new TaskSessionAdministratorResource($meeting->next_task);
             return $meeting;
         });
 

@@ -31,8 +31,7 @@ class GeneralMeetingController extends Controller
         }, function($query) {
             $query->where('status', 'post_ag')
                   ->orWhere('status', 'closed');
-        })->get()
-        ->map(function ($meeting) {
+        })->get()->map(function ($meeting) {
             $meeting->files = $meeting->files;
             $meeting->next_task = $meeting->next_task;
             $meeting->next_task = new TaskGeneralMeetingResource($meeting->next_task);
