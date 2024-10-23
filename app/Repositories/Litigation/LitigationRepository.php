@@ -230,9 +230,15 @@ class LitigationRepository {
      * @param  Request $request
      * @return ResourceCollection
      */
-    public function getResources($request) : ResourceCollection {
-        $res = $this->setting_model->whereType($request->type)->get();
+    public function getResources($type) : ResourceCollection {
+        // $res = $this->setting_model->whereType($request->type)->get();
+        $query = $this->queryByType($type);
 
+        return LitigationSettingResource::collection($query);
+    }
+
+    public function queryByType($type) {
+        return $this->setting_model->whereType($type)->get();
         return LitigationSettingResource::collection($res);
     }
 
