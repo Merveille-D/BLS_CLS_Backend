@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\ContractTypeCategory;
+namespace App\Http\Requests\ContractSubTypeCategory;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
