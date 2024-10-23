@@ -12,7 +12,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
 
 
-Bonjour babe 🫠. Tu m'as manqué depuis la dernière fois. On  🥲
+
 
 
 
