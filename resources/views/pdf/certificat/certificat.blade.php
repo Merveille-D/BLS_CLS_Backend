@@ -115,10 +115,10 @@
         <div class="certificate-container">
             <div class="header">
                 <div class="certificate-info">
-                    <p>Certificat : <span>N° {{ uniqId() }}</span></p>
+                    <p>Certificat : <strong>N° {{ random_int(100000000, 999999999) }}</strong></p>
                 </div>
                 <div class="share-info">
-                    <p>Nombre d'actions : <span>{{ $shareholder->actions_number }}</span></p>
+                    <p>Nombre d'actions : <strong>{{ $shareholder->actions_number }}</strong></p>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -138,8 +138,8 @@
                 <p>
                     Nous soussigné, certifions que <strong>M. {{ $shareholder->name }}</strong>,<br>
                     domicilié à
-                    <strong>{{ $shareholder->address }}</strong> est titulaire de
-                    <strong>{{ $shareholder->actions_number }}</strong> action(s) dans le capital
+                    <strong>{{ $shareholder->address }}</strong>, <br> est titulaire de
+                    <strong>{{ convertNumberToLetter($shareholder->actions_number)}} ({{$shareholder->actions_number}}) </strong> action(s) dans le capital
                     de la société.
                 </p>
             </div>

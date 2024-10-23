@@ -8,6 +8,7 @@ use App\Http\Controllers\API\V1\Litigation\LitigationLawyerController;
 use App\Http\Controllers\API\V1\Litigation\LitigationPartyController;
 use App\Http\Controllers\API\V1\Litigation\LitigationTaskController;
 use App\Http\Controllers\API\V1\Litigation\NatureController;
+use App\Http\Controllers\API\V1\Litigation\SettingController;
 use App\Models\Auth\Role;
 
 /*
@@ -20,7 +21,8 @@ use App\Models\Auth\Role;
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::resource('/litigation/parties', LitigationPartyController::class);
-    Route::resource('/litigation/natures', NatureController::class);
+    Route::resource('/litigation/settings', SettingController::class);
+    // Route::resource('/litigation/natures', NatureController::class);
     Route::get('/litigation/document-types', [LitigationDocumentController::class, 'index']);
     Route::resource('/litigation/lawyers', LitigationLawyerController::class);
     Route::resource('/litigation/jurisdiction', JurisdictionController::class);

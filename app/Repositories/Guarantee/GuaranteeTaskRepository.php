@@ -87,7 +87,7 @@ class GuaranteeTaskRepository
 
     public function delete($task_id) {
         $task = $this->task_model->findOrFail($task_id);
-        if ($task->type == 'task') {
+        if ($task->status == false) {
             $task->delete();
         }
     }

@@ -68,11 +68,11 @@ class GuaranteeTask extends Model
 
     public function getFormAttribute()
     {
-        if ($this->taskable->security == 'personal') {
-            $form = $this->loadFormAttributeBasedOnType($this->taskable);
-        } else {
+        // if ($this->taskable->security == 'personal') {
+        //     $form = $this->loadFormAttributeBasedOnType($this->taskable);
+        // } else {
             $form = $this->loadFormAttributeBasedTask($this);
-        }
+        // }
 
         return $form;
     }

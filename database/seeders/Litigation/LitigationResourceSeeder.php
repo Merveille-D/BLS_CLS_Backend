@@ -35,7 +35,21 @@ class LitigationResourceSeeder extends Seeder
             }
         }
 
+        $party_types = $this->litigation_party_types();
+        foreach ($party_types as $party_type) {
+            $exist = LitigationSetting::where('name', $party_type)->first();
+            if (!$exist) {
+                LitigationSetting::create(['name' => $party_type, 'type' => LitigationType::PARTY_TYPE]);
+            }
+        }
 
+        $qualities = $this->qualities();
+        foreach ($qualities as $quality) {
+            $exist = LitigationSetting::where('name', $quality)->first();
+            if (!$exist) {
+                LitigationSetting::create(['name' => $quality, 'type' => LitigationType::QUALITY]);
+            }
+        }
 
         $documents = $this->litigation_documents();
         foreach ($documents as $document) {
@@ -62,14 +76,6 @@ class LitigationResourceSeeder extends Seeder
             'phone' => '+22845869535',
             'email' => 'johncakpo@gmail.com'
         ]);
-        /* DB::table('litigation_parties')->insert([
-            'id' => '9bce26d8-3290-4b96-afcd-300d051cf458',
-            'name' => 'John Cakpo',
-            'type' => 'individual',
-            'address' => '123, Test Street, Lagos City',
-            'phone' => '123456789',
-            'email' => 'johncakpo@afrikskills.com'
-        ]); */
 
         DB::table('litigation_parties')->insert([
             'id' => '9bce26d8-32c0-4b96-afcd-300d0jk9f9f8',
@@ -118,6 +124,34 @@ class LitigationResourceSeeder extends Seeder
             'Commercial',
             'Penal',
             'Social',
+        ];
+    }
+
+    /**
+     * qualities
+     *
+     * @return array
+     */
+    public function qualities() : array {
+        return [
+            'intervenant',
+            'defendant',
+            'plaintiff',
+            'forced_intervenant',
+        ];
+    }
+
+    /**
+     * party type default seeds
+     *
+     * @return array
+     */
+    public function litigation_party_types() : array {
+        return [
+        'client',
+        'employee',
+        'provider',
+        'partner',
         ];
     }
 
