@@ -123,8 +123,9 @@ class LitigationRepository {
         ]);
         foreach ($request->parties as $key => $party) {
             $party_model = LitigationParty::findOrFail($party['party_id']);
-            $party_type = $this->setting_model->find($party['type_id']);
-            $party_model->litigations()->attach($litigation, ['category' => $party['category'], 'type' => $party_type?->name]);
+            $party_model->litigations()->attach($litigation, ['category' => $party['category'], 'type' => $party['type']]);
+            // $party_type = $this->setting_model->find($party['type_id']);
+            // $party_model->litigations()->attach($litigation, ['category' => $party['category'], 'type' => $party_type?->name]);
         }
 
         $this->saveDocuments($files, $litigation);
@@ -169,8 +170,9 @@ class LitigationRepository {
 
         foreach ($request->parties as $key => $party) {
             $party_model = LitigationParty::findOrFail($party['party_id']);
-            $party_type = $this->setting_model->find($party['type_id']);
-            $party_model->litigations()->sync($litigation, ['category' => $party['category'], 'type' => $party_type?->name]);
+            $party_model->litigations()->sync($litigation, ['category' => $party['category'], 'type' => $party['type']]);
+            // $party_type = $this->setting_model->find($party['type_id']);
+            // $party_model->litigations()->sync($litigation, ['category' => $party['category'], 'type' => $party_type?->name]);
         }
 
         if ($request->documents && count($request->documents) > 0) {
