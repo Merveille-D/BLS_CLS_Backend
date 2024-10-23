@@ -2,11 +2,16 @@
 namespace App\Repositories\ManagementCommittee;
 
 use App\Models\Gourvernance\ExecutiveManagement\Directors\Director;
-use App\Models\Gourvernance\Mandate;
+use App\Concerns\Traits\PDF\GeneratePdfTrait;
+use App\Models\Gourvernance\ExecutiveCommittee;
+use Illuminate\Support\Str;
+
 use Carbon\Carbon;
 
 class DirectorRepository
 {
+    use GeneratePdfTrait;
+
     public function __construct(private Director $director) {
 
     }
@@ -40,6 +45,22 @@ class DirectorRepository
         return $director;
     }
 
+    public function toggle($director, $request)
+    {
+        $existingRecord = ExecutiveCommittee::where('committee_id', $request['committee_id'])
+        ->where('committable_id', $director->id)
+        ->first();
+
+        if ($existingRecord) {
+            $existingRecord->delete();
+        } else {
+            
+            $executive_committee = new ExecutiveCommittee();
+            $executive_committee->committee_id = $request['committee_id'];
+            $director->executiveCommittees()->save($executive_committee);
+        }
+    }
+
     public function renewMandate($request) {
 
         $director = Director::find($request['director_id']);
@@ -51,6 +72,18 @@ class DirectorRepository
         ]);
 
         return $director;
+    }
+
+    public function generatePdf(){
+
+        $directors = Director::all();
+
+        $filename = Str::slug('Liste des Directeurs _'.date('YmdHis') . '.pdf');
+
+        $pdf =  $this->generateFromView( 'pdf.management_committee.directors',  [
+            'directors' => $directors,
+        ], $filename);
+        return $pdf;
     }
 
 }

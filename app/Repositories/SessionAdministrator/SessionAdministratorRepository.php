@@ -136,7 +136,7 @@ class SessionAdministratorRepository
 
         $session_administrator = SessionAdministrator::find($request['session_administrator_id']);
 
-        $meeting_type = SessionAdministrator::SESSION_MEETING_TYPES_VALUES[$session_administrator->type];
+        $meeting_type = __(SessionAdministrator::SESSION_MEETING_TYPES_VALUES[$session_administrator->type]);
 
         $tasks = TaskSessionAdministrator::where('session_administrator_id', $session_administrator->id)
                                     ->whereIn('type', ['pre_ca', 'post_ca'])

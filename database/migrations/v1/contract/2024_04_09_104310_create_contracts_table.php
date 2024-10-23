@@ -15,8 +15,16 @@ return new class extends Migration
         Schema::create('contracts', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('title');
-            $table->enum('category', Contract::CATEGORIES);
-            $table->string('type_category')->nullable();
+
+            $table->uuid('contract_category_id')->nullable();
+            $table->foreign('contract_category_id')->references('id')->on('contract_categories')->onDelete('cascade');
+
+            $table->uuid('contract_type_category_id')->nullable();
+            $table->foreign('contract_type_category_id')->references('id')->on('contract_type_categories')->onDelete('cascade');
+
+            $table->uuid('contract_sub_type_category_id')->nullable();
+            $table->foreign('contract_sub_type_category_id')->references('id')->on('contract_sub_type_categories')->onDelete('cascade');
+
             $table->date('date_signature')->nullable();
             $table->date('date_effective')->nullable();
             $table->date('date_expiration')->nullable();

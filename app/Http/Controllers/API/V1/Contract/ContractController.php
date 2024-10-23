@@ -31,8 +31,10 @@ class ContractController extends Controller
 
             $contract->first_part = $contract->first_part;
             $contract->second_part = $contract->second_part;
-            $contract->type_category = $contract->info_type_category;
-            $contract->category = $contract->info_category;
+            $contract->category = $contract->contractCategory->value;
+            $contract->type_category = $contract->contractTypeCategory->value;
+            $contract->sub_type_category = $contract->contractSubTypeCategory->value;
+
             return $contract;
         });
 
@@ -50,8 +52,10 @@ class ContractController extends Controller
             $data = $contract->toArray();
             $data['first_part'] = $contract->first_part;
             $data['second_part'] = $contract->second_part;
-            $data['type_category'] = $contract->info_type_category;
-            $data['category'] = $contract->info_category;
+            $data['category'] = $contract->contractCategory->value;
+            $data['type_category'] = $contract->contractTypeCategory->value;
+            $data['sub_type_category'] = $contract->contractSubTypeCategory->value;
+
             $data['documents'] = $contract->documents;
 
             return api_response(true, "Succès de l'enregistrement du contrat", $data, 200);
@@ -70,8 +74,9 @@ class ContractController extends Controller
             $data = $contract->toArray();
             $data['first_part'] = $contract->first_part;
             $data['second_part'] = $contract->second_part;
-            $data['type_category'] = $contract->info_type_category;
-            $data['category'] = $contract->info_category;
+            $data['category'] = $contract->contractCategory->value;
+            $data['type_category'] = $contract->contractTypeCategory->value;
+            $data['sub_type_category'] = $contract->contractSubTypeCategory->value;
             $data['documents'] = $contract->documents;
             $data['transfers'] = $contract->transfers->map(function ($transfer) {
                 $transfer->sender = $transfer->sender;
@@ -96,8 +101,9 @@ class ContractController extends Controller
             $data = $contract->toArray();
             $data['first_part'] = $contract->first_part;
             $data['second_part'] = $contract->second_part;
-            $data['type_category'] = $contract->info_type_category;
-            $data['category'] = $contract->info_category;
+            $data['category'] = $contract->contractCategory->value;
+            $data['type_category'] = $contract->contractTypeCategory->value;
+            $data['sub_type_category'] = $contract->contractSubTypeCategory->value;
             $data['documents'] = $contract->documents;
 
             return api_response(true, "Mis à jour du contrat avec succès", $data, 200);
@@ -118,15 +124,6 @@ class ContractController extends Controller
         } catch (ValidationException $e) {
             return api_response(false, "Echec de la suppression du contrat", $e->errors(), 422);
         }
-    }
-
-    public function getCategories()
-    {
-        return api_response(true, "Liste des catégories de contrats", Contract::CATEGORIES_VALUES, 200);
-    }
-
-    public function getTypeCategories() {
-        return api_response(true, "Liste des type de categories", Contract::TYPE_CATEGORIES_VALUES, 200);
     }
 
     public function generatePdfFicheSuivi(GeneratePdfContractRequest $request) {

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API\V1\Contract;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ContractModel\StoreContractModelRequest;
+use App\Http\Requests\ContractModel\UpdateContractModelRequest;
+use App\Http\Resources\Contract\ContractModelResource;
 use App\Models\Contract\ContractModel;
 use App\Repositories\Contract\ContractModelRepository;
 use Illuminate\Http\Request;
@@ -21,10 +23,8 @@ class ContractModelController extends Controller
     public function index(Request $request)
     {
         try {
-            $contract_models = ContractModel::when($request->category_id !== null, function($query) use ($request) {
-                $query->where('contract_model_category_id', $request->category_id);
-            })->get();
-
+            $contract_models = $this->contract_model->list($request->all());
+            
             return api_response(true, 'Liste des modèles de contrat', $contract_models);
         }catch (\Exception $e) {
             return api_response(false, "Echec de la récupération", $e->getMessage(), 500);
@@ -37,8 +37,8 @@ class ContractModelController extends Controller
     public function store(StoreContractModelRequest $request)
     {
         try {
-            $part = $this->contract_model->store($request);
-            return api_response(true, 'Modèle ajouté avec succès', $part, 201);
+            $contract_model = $this->contract_model->store($request->validated());
+            return api_response(true, 'Modèle ajouté avec succès', $contract_model, 201);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'ajout du modèle", $e->errors(), 422);
         }
@@ -55,9 +55,14 @@ class ContractModelController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ContractModel $contractModel)
+    public function update(UpdateContractModelRequest $request, ContractModel $contractModel)
     {
-        //
+        try {
+            $contract_model = $this->contract_model->update($contractModel, $request->validated());
+            return api_response(true, 'Modèle mis à jour avec succès', $contract_model, 201);
+        }catch (ValidationException $e) {
+                return api_response(false, "Echec de la mise à jour du modèle", $e->errors(), 422);
+        }
     }
 
     /**

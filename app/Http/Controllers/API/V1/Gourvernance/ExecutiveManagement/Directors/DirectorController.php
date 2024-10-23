@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\Gourvernance\ExecutiveManagement\Directors;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Committee\ToggleExecutiveCommitteeRequest;
 use App\Http\Requests\Director\AddDirectorRequest;
 use App\Http\Requests\Director\RenewMandateDirectorRequest;
 use App\Http\Requests\Director\UpdateDirectorRequest;
@@ -88,6 +89,17 @@ class DirectorController extends Controller
         }
     }
 
+    public function toggleExecutiveCommittee(ToggleExecutiveCommitteeRequest $request, Director $director)
+    {
+        try {
+            $committee = $this->director->toggle($director, $request->validated());
+
+            return api_response(true, "Succès du toggle du cadre", 200);
+        }catch (ValidationException $e) {
+                return api_response(false, "Echec du toggle du cadre", $e->errors(), 422);
+        }
+    }
+
     public function renewMandate(RenewMandateDirectorRequest $request)
     {
         try {
@@ -96,6 +108,15 @@ class DirectorController extends Controller
         } catch (ValidationException $e) {
 
             return api_response(false, "Echec de la mise à jour", $e->errors(), 422);
+        }
+    }
+
+    public function generatePdf() {
+        try {
+            $data = $this->director->generatePdf();
+            return $data;
+        } catch (\Throwable $th) {
+            return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }
 }

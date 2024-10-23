@@ -28,8 +28,9 @@ class UpdateContractRequest extends FormRequest
     {
         return [
             'title' => ['string'],
-            'category' => [Rule::in(Contract::CATEGORIES)],
-            'type_category' => ['string'],
+            'contract_category_id' => ['uuid', 'exists:contract_categories,id'],
+            'contract_type_category_id' => ['uuid', 'exists:contract_type_categories,id'],
+            'contract_sub_type_category_id' => ['uuid', 'exists:contract_sub_type_categories,id'],
 
             'contract_documents' => ['array'],
             'contract_documents.*.name' => ['string'],

@@ -7,6 +7,7 @@ use App\Http\Requests\GeneralMeeting\GeneratePdfGeneralMeetingRequest;
 use App\Http\Requests\GeneralMeeting\StoreGeneralMeetingRequest;
 use App\Http\Requests\GeneralMeeting\UpdateAttachementGeneralMeetingRequest;
 use App\Http\Requests\GeneralMeeting\UpdateGeneralMeetingRequest;
+use App\Http\Resources\GeneralMeeting\TaskGeneralMeetingResource;
 use App\Models\Gourvernance\GeneralMeeting\GeneralMeeting;
 use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
 use App\Repositories\GeneralMeeting\GeneralMeetingRepository;
@@ -33,6 +34,7 @@ class GeneralMeetingController extends Controller
         })->get()->map(function ($meeting) {
             $meeting->files = $meeting->files;
             $meeting->next_task = $meeting->next_task;
+            $meeting->next_task = new TaskGeneralMeetingResource($meeting->next_task);
             return $meeting;
         });
 

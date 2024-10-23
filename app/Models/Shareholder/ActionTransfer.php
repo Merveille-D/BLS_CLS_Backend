@@ -23,6 +23,8 @@ class ActionTransfer extends Model
         'count_actions',
         'status',
         'transfer_date',
+        'transfer_id',
+        'reference',
         'created_by',
     ];
 

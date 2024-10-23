@@ -66,7 +66,7 @@ class AttendanceListSessionAdministratorRepository
 
     public function generatePdf($session_administrator){
 
-        $meeting_type = SessionAdministrator::SESSION_MEETING_TYPES_VALUES[$session_administrator->type];
+        $meeting_type =  __(SessionAdministrator::SESSION_MEETING_TYPES_VALUES[$session_administrator->type]);
 
         $administrators_id = $session_administrator->attendanceList()->pluck('administrator_id');
         $administrators = CaAdministrator::whereIn('id', $administrators_id)->get();

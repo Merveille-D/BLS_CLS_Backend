@@ -7,6 +7,7 @@ use App\Http\Requests\Incident\GeneratePdfIncidentRequest;
 use App\Http\Requests\Incident\ListIncidentRequest;
 use App\Http\Requests\Incident\StoreIncidentRequest;
 use App\Http\Requests\Incident\UpdateIncidentRequest;
+use App\Http\Resources\Incident\IncidentResource;
 use App\Models\Incident\Incident;
 use App\Repositories\Incident\IncidentRepository;
 use Illuminate\Http\Request;
@@ -25,14 +26,8 @@ class IncidentController extends Controller
     {
         $incidents = Incident::with('authorIncident')->when(request('type') !== null, function($query) {
             $query->where('type', request('type'));
-        })->get()->map(function ($incident) {
-            $incident->category = $incident->category;
-            $incident->current_task = $incident->current_task;
-            $incident->files = $incident->files;
-            return $incident;
-        });
-
-        return api_response(true, "Liste des donnée de l'incident", $incidents, 200);
+        })->get();
+        return api_response(true, "Liste des donnée de l'incident", IncidentResource::collection($incidents), 200);
     }
 
     /**

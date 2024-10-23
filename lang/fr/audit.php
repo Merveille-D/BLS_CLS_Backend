@@ -5,15 +5,15 @@ return [
     // ## Audit
 
     // Module Audit
-    'Contrat' => 'Contrat',
-    'Hypothèque conventionnelle' => 'Hypothèque conventionnelle',
-    'Contentieux' => 'Contentieux',
-    'Incident' => 'Incident',
-    'Recouvrement' => 'Recouvrement',
-    'Assemblée générale' => 'Assemblée générale',
-    'Session administrateurs' => 'Session administrateurs',
-    'Comité de direction' => 'Comité de direction',
-    'Garanties mobilières' => 'Garanties mobilières',
-    'Garanties personnelles' => 'Garanties personnelles',
+    'contracts' => 'Contrat',
+    'conventionnal_hypothec' => 'Hypothèque conventionnelle',
+    'litigation' => 'Contentieux',
+    'incidents' => 'Incident',
+    'recovery' => 'Recouvrement',
+    'guarantees_security_personal' => 'Garanties personnelles',
+    'guarantees_security_movable' => 'Garanties mobilières',
+    'general_meeting' => 'Assemblée générale',
+    'session_administrators' => 'Session administrateurs',
+    'management_committees' => 'Comité de direction',
 
 ];

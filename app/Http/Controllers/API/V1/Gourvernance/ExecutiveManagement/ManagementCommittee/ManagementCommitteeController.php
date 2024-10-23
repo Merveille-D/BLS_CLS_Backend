@@ -7,6 +7,7 @@ use App\Http\Requests\ManagementCommittee\GeneratePdfManagementCommitteeRequest;
 use App\Http\Requests\ManagementCommittee\StoreManagementCommitteeRequest;
 use App\Http\Requests\ManagementCommittee\UpdateAttachementManagementCommitteeRequest;
 use App\Http\Requests\ManagementCommittee\UpdateManagementCommitteeRequest;
+use App\Http\Resources\ManagementCommittee\TaskManagementCommitteeResource;
 use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\ManagementCommittee;
 use App\Repositories\ManagementCommittee\ManagementCommitteeRepository;
 use Illuminate\Validation\ValidationException;
@@ -31,7 +32,7 @@ class ManagementCommitteeController extends Controller
                   ->orWhere('status', 'closed');
         })->get()->map(function ($meeting) {
             $meeting->files = $meeting->files;
-            $meeting->next_task = $meeting->next_task;
+            $meeting->next_task = new TaskManagementCommitteeResource($meeting->next_task);
             return $meeting;
         });
 

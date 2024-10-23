@@ -69,10 +69,11 @@ class SessionAdministrator extends Model
     ];
 
     const FILE_FIELD_VALUE = [
-        'pv' => 'Procès verbal',
-        'agenda' => 'Ordre du jour',
-        'convocation' => 'Convocation',
-        'attendance_list' => 'Liste de présence des administrateurs',
+        'pv' => 'governance.pv',
+        'agenda' => 'governance.agenda',
+        'convocation' => 'governance.convocation',
+        'attendance_list' => 'governance.attendance_list',
+        'other' => 'governance.other',
     ];
 
     const DATE_FILE_FIELD = [
@@ -83,10 +84,10 @@ class SessionAdministrator extends Model
     ];
 
     const SESSION_MEETING_TYPES_VALUES = [
-        'first_quarter' => '1er trimestre',
-        'second_quarter' => '2ème trimestre',
-        'third_quarter' => '3ème trimestre',
-        'fourth_quarter' => '4ème trimestre',
+        'first_quarter' => 'governance.first_quarter',
+        'second_quarter' => 'governance.second_quarter',
+        'third_quarter' => 'governance.third_quarter',
+        'fourth_quarter' => 'governance.fourth_quarter',
     ];
 
     public function fileUploads()
@@ -120,7 +121,7 @@ class SessionAdministrator extends Model
         foreach ($directFiles as $field) {
             if (!empty($this->$field)) {
                 $files[] = [
-                    'filename' => self::FILE_FIELD_VALUE[$type[$field]],
+                    'filename' => __(self::FILE_FIELD_VALUE[$type[$field]]),
                     'file_url' => $this->$field,
                     'type' => $type[$field],
                 ];

@@ -52,7 +52,7 @@ class TaskManagementCommittee extends Model
     }
 
     public function getFolderAttribute() {
-        return $this->management_committee->libelle;
+        return $this->management_committee->code;
     }
 
     public function getValidationAttribute() {
@@ -70,23 +70,23 @@ class TaskManagementCommittee extends Model
     CONST TASKS = [
         'pre_cd' => [
             [
-                'libelle' => "Préparation de la convocation, ODJ et documents à étudier",
+                'code' => "pre_cd.lib.1",
                 'days' => -5,
             ],
             [
-                'libelle' => "Transmission de la convocation aux membres du CODIR",
+                'code' => "pre_cd.lib.2",
                 'days' => -4,
             ],
             [
-                'libelle' => "Tenue session CODIR",
+                'code' => "pre_cd.lib.3",
                 'days' => 0,
             ],
             [
-                'libelle' => "Rédaction du PV et signature",
+                'code' => "pre_cd.lib.4",
                 'days' => 1,
             ],
             [
-                'libelle' => "Classement du PV",
+                'code' => "pre_cd.lib.5",
                 'days' => 2,
             ],
 

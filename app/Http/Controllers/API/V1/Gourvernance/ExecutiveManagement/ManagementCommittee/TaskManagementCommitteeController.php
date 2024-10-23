@@ -9,6 +9,7 @@ use App\Http\Requests\TaskManagementCommittee\DeleteTaskManagementCommitteeReque
 use App\Http\Requests\TaskManagementCommittee\StoreTaskManagementCommitteeRequest;
 use App\Http\Requests\TaskManagementCommittee\UpdateStatusTaskManagementCommitteeRequest;
 use App\Http\Requests\TaskManagementCommittee\UpdateTaskManagementCommitteeRequest;
+use App\Http\Resources\ManagementCommittee\TaskManagementCommitteeResource;
 use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\TaskManagementCommittee;
 use App\Repositories\ManagementCommittee\TaskManagementCommitteeRepository;
 use Illuminate\Validation\ValidationException;
@@ -25,8 +26,8 @@ class TaskManagementCommitteeController extends Controller
      */
     public function index(ListTaskManagementCommitteeRequest $request)
     {
-        $task_general_meetings = $this->task->all($request);
-        return api_response(true, "Liste des Taches du CD", $task_general_meetings, 200);
+        $task_management_committees = $this->task->all($request);
+        return api_response(true, "Liste des Taches du CD", TaskManagementCommitteeResource::collection($task_management_committees), 200);
     }
 
     /**
@@ -35,8 +36,8 @@ class TaskManagementCommitteeController extends Controller
     public function store(StoreTaskManagementCommitteeRequest $request)
     {
         try {
-            $task_session_administrator = $this->task->store($request);
-            return api_response(true, "Succès de l'enregistrement de la tache", $task_session_administrator, 200);
+            $task_management_committee = $this->task->store($request);
+            return api_response(true, "Succès de l'enregistrement de la tache", new TaskManagementCommitteeResource($task_management_committee), 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement de la tache", $e->errors(), 422);
         }
@@ -49,7 +50,7 @@ class TaskManagementCommitteeController extends Controller
     {
         try {
 
-            return api_response(true, "Information de la tache", $taskManagementCommittee, 200);
+            return api_response(true, "Information de la tache", new TaskManagementCommitteeResource($taskManagementCommittee), 200);
         }catch( ValidationException $e ) {
             return api_response(false, "Echec de la récupération des infos de la tache", $e->errors(), 422);
         }
@@ -75,7 +76,7 @@ class TaskManagementCommitteeController extends Controller
     {
         try {
             $this->task->update($taskManagementCommittee, $request->all());
-            return api_response(true, "Succès de l'enregistrement de la tache", $taskManagementCommittee, 200);
+            return api_response(true, "Succès de l'enregistrement de la tache", new TaskManagementCommitteeResource($taskManagementCommittee), 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement de la tache", $e->errors(), 422);
         }

@@ -3,10 +3,7 @@
 return [
 
     // ## Contract
-
-    // Document Attributes
-    "Initiation" => "Initiation",
-
+    
     // Contract Category
     'Baux' => 'Baux',
     'Crédits' => 'Crédits',

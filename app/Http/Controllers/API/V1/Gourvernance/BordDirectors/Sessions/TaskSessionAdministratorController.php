@@ -9,6 +9,7 @@ use App\Http\Requests\TaskSessionAdministrator\DeleteTaskSessionAdministratorReq
 use App\Http\Requests\TaskSessionAdministrator\StoreTaskSessionAdministratorRequest;
 use App\Http\Requests\TaskSessionAdministrator\UpdateStatusTaskSessionAdministratorRequest;
 use App\Http\Requests\TaskSessionAdministrator\UpdateTaskSessionAdministratorRequest;
+use App\Http\Resources\GeneralMeeting\TaskGeneralMeetingResource;
 use App\Models\Gourvernance\BoardDirectors\Sessions\TaskSessionAdministrator;
 use App\Repositories\SessionAdministrator\TaskSessionAdministratorRepository;
 use Illuminate\Validation\ValidationException;
@@ -26,7 +27,7 @@ class TaskSessionAdministratorController extends Controller
     public function index(ListTaskSessionAdministratorRequest $request)
     {
         $task_general_meetings = $this->task->all($request);
-        return api_response(true, "Liste des Taches du CA", $task_general_meetings, 200);
+        return api_response(true, "Liste des Taches du CA", TaskGeneralMeetingResource::collection($task_general_meetings), 200);
     }
 
     /**
@@ -36,7 +37,7 @@ class TaskSessionAdministratorController extends Controller
     {
         try {
             $task_session_administrator = $this->task->store($request);
-            return api_response(true, "Succès de l'enregistrement de la tache", $task_session_administrator, 200);
+            return api_response(true, "Succès de l'enregistrement de la tache", new TaskGeneralMeetingResource($task_session_administrator), 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement de la tache", $e->errors(), 422);
         }
@@ -49,7 +50,7 @@ class TaskSessionAdministratorController extends Controller
     {
         try {
 
-            return api_response(true, "Information de la tache", $taskSessionAdministrator, 200);
+            return api_response(true, "Information de la tache", new TaskGeneralMeetingResource($taskSessionAdministrator), 200);
         }catch( ValidationException $e ) {
             return api_response(false, "Echec de la récupération des infos de la tache", $e->errors(), 422);
         }
@@ -62,7 +63,7 @@ class TaskSessionAdministratorController extends Controller
     {
         try {
             $this->task->update($taskSessionAdministrator, $request->all());
-            return api_response(true, "Succès de l'enregistrement de la tache", $taskSessionAdministrator, 200);
+            return api_response(true, "Succès de l'enregistrement de la tache", new TaskGeneralMeetingResource($taskSessionAdministrator), 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement de la tache", $e->errors(), 422);
         }

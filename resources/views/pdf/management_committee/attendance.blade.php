@@ -29,7 +29,7 @@
                 <tr>
                     <td height="50px" >{{ $director->name }}</td>
                     <td>{{ $director->grade  }}</td>
-                    <td>{{ $director->position  }}</td>
+                    <td>{{ $director->position ? "Directeur" : "Representant"  }}</td>
                     <td></td>
                     <td></td>
                 </tr>

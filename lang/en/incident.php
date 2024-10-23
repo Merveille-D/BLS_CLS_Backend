@@ -5,97 +5,182 @@ return [
     // ## Incident
 
     // Type Incident
-    'Avis à Tiers Détenteurs' => 'Third Party Notice',
-    'Réquisition' => 'Requisition',
-    'Saisie Conservatoire' => 'Conservatory seizure',
-    'Saisie Attribution' => 'Attachment seizure',
+    'atd' => 'Third Party Notice',
+    'req' => 'Requisition',
+    'sc' => 'Conservatory seizure',
+    'sa' => 'Attachment seizure',
 
-    // Task Incident Title
-    'Prendre des mesures conservatoires avec les Cso (Bloquer les fonds sur le compte)' => 'Take conservatory measures with the Cso (Block the funds on the account)',
-    'Adresser un courrier d\'information au client' => 'Send a letter of information to the client',
-    'Rédaction du courrier à addreser à l\'administration fiscale' => 'Drafting of the letter to be sent to the tax administration',
-    'Validation du courrier par le responsable de service juridique' => 'Validation of the letter by the legal service manager',
-    'Transmission d\'une lettre signée par la DG de la banque et de l\'accusé de reception signé' => 'Transmission of a letter signed by the DG of the bank and the signed acknowledgment of receipt',
-    'Avez vous reçu de main-levée ?' => 'Have you received a main-levée?',
-    'Attacher le document de la main-levée' => 'Attach the document of the main-levée',
-    'Levée des mesures conservatoires et restitution des fonds bloques sur le compte du client' => 'Lifting of conservatory measures and return of funds blocked on the client\'s account',
-    'Informer le client par un courrier' => 'Inform the client by letter' ,
-    'Reception d\'un avis d\'execution de l\'administration fiscale par Labanque' => 'Receipt of an execution notice from the tax administration by Labanque',
-    'Etablissement d\'un cheque à l\'ordre de \'adm fiscale à concurrence du montant saisi' => 'Establishment of a cheque payable to the tax administration up to the amount seized',
-    'Informer le client par un courrier' => 'Inform the client by letter',
-    'Rediger un courrier à l\'adresse de l\'ADM Fiscale à signer par la DG de la banque' => 'Write a letter to the address of the Tax Administration to be signed by the DG of the bank',
-    ' Attacher le courrier d`\'information du client à signer par la DG de la banque' => 'Attach the letter of information to the client to be signed by the DG of the bank',
-    'Rédaction du courrier à addreser à l\'administration fiscale' => 'Drafting of the letter to be sent to the tax administration',
-    'Validation du courrier par le responsable de service juridique' => 'Validation of the letter by the legal service manager',
-    'Attacher le courrier de transmission signé par la DG de la banque' => 'Attach the transmission letter signed by the DG of the bank',
-    'Rediger un courrier à l\'adresse de l\'autorité concernée à signer par la DG de la banque' => 'Write a letter to the address of the authority concerned to be signed by the DG of the bank',
-    'Declarer la nature et le solde des comptes du client sur l\'acte d\'huissier' => 'Declare the nature and balance of the client\'s accounts on the bailiff\'s deed',
-    'Remplir une fiche de prélèvement signée par le responsable juridique à adresser à la direction des operations' => 'Fill in a withdrawal form signed by the legal manager to be sent to the operations department',
-    'Informer le client concerné par téléphone ou courrier' => 'Inform the client concerned by telephone or letter',
-    'Avez vous reçu de main-levée ?' => 'Have you received a main-levée?',
-    'Attacher le document de la main-levée' => 'Attach the document of the main-levée',
-    'Levée des restriction du compte client' => 'Lifting of the client\'s account restrictions',
-    'Informer le client par un courrier' => 'Inform the client by letter',
-    'Joindre l\'acte de conversion' => 'Attach the conversion deed',
-    'Caducite de la saisie en l\'absence de la presentation d\'un titre executoire' => 'Lapse of the seizure in the absence of the presentation of an enforceable title',
-    'Attachement de la main-levée de la saisie' => 'Attachment of the lifting of the seizure',
-    'Presentation d\'un titre executoire, d\'un acte de conversion de saisie conservatoire en saisie attribution et d\'une preuve d\'absence d\'opposition' => 'Presentation of an enforceable title, a deed of conversion of conservatory seizure into attachment seizure and proof of absence of opposition',
-    'Paiement du creancier par l\'etablissement d\'un cheque' => 'Payment of the creditor by issuing a cheque',
-    'Déclaration signée de l\'agent sur l\'acte d\'huissier' => 'Signed declaration of the agent on the bailiff\'s deed',
-    'Declarer la nature et le solde des comptes du client sur l\'acte d\'huissier' => 'Declare the nature and balance of the client\'s accounts on the bailiff\'s deed',
-    'Remplir une fiche de prelement signé par le responsable juridique à adresser à la direction des operations' => 'Fill in a withdrawal form signed by the legal manager to be sent to the operations department',
-    'Informer le client concerné par téléphone ou courrier' => 'Inform the client concerned by telephone or letter',
-    'Avez vous reçu de main-levée ?' => 'Have you received a main-levée?',
-    'Attacher le document de la main-levée' => 'Attach the document of the main-levée',
-    'Levée des restriction du compte client' => 'Lifting of the client\'s account restrictions',
-    'Informer le client par un courrier' => 'Inform the client by letter',
-    'Presentation par le créancier d\'un certificat du greffe portant commendement de payer (dans un delai 1 mois)' => 'Presentation by the creditor of a certificate from the registry office ordering payment (within 1 month)',
-    'Etablir un cheque au nom du creancier ou son mandataire dans la limite du montant saisi' => 'Establish a cheque in the name of the creditor or his agent up to the amount seized',
-    'Informer le client' => 'Inform the client',
-    'Declaration de l\'agent sur l\'exploit d\'huisser' => 'Declaration of the agent on the bailiff\'s exploit',
-
-    // Task Incident Form Title
-    'Informations sur le blocage des fonds' => 'Information on the blocking of funds',
-    'Preuve d\'information du client par courrier' => 'Proof of information to the client by letter',
-    'Preuve de la rédaction du courrier' => 'Proof of drafting the letter',
-    'Preuve de la validation du courrier' => 'Proof of validation of the letter',
-    'Preuve de la transmission de la lettre' => 'Proof of transmission of the letter',
-    'Réception de la main-levée' => 'Receipt of the main-levée',
-    'Preuve de réception de la main-levée' => 'Proof of receipt of the main-levée',
-    'Preuves de la levée des mesures conservatoires' => 'Proof of lifting of conservatory measures',
-    'Preuve d\'information du client par courrier' => 'Proof of information to the client by letter',
-    'Preuve de la réception de l\'avis' => 'Proof of receipt of the notice',
-    'Preuve de l\'établissement du chèque' => 'Proof of the establishment of the cheque',
-    'Preuve d\'information du client par courrier' => 'Proof of information to the client by letter',
-    'Preuve de la transmission du courrier' => 'Proof of transmission of the letter',
-    'Preuve d\'information du client par courrier' => 'Proof of information to the client by letter',
-    'Preuve de la rédaction du courrier' => 'Proof of drafting the letter',
-    'Preuve de la validation du courrier' => 'Proof of validation of the letter',
-    'Preuve de la transmission du courrier à l\'ADM Fiscale' => 'Proof of transmission of the letter to the Tax Administration',
-    'Preuve de l\'envoi du courrier à l\'autorité concernée' => 'Proof of sending the letter to the relevant authority',
-    'Preuve de la fiche de déclaration' => 'Proof of the declaration form',
-    'Attacher la fiche de paiement' => 'Attach the payment form',
-    'Preuve du courrier d\'information' => 'Proof of the information letter',
-    'Réception de la main-levée' => 'Receipt of the main-levée',
-    'Preuve de réception de la main-levée' => 'Proof of receipt of the main-levée',
-    'Preuve de la levée des restrictions' => 'Proof of lifting of restrictions',
-    'Preuve de l\'envoi du courrier au client' => 'Proof of sending the letter to the client',
-    'Réception de l\'acte de conversion' => 'Receipt of the conversion deed',
-    'Preuve de la caducité de la saisie' => 'Proof of the lapse of the seizure',
-    'Preuve de la main-levée de la saisie' => 'Proof of the lifting of the seizure',
-    'Preuve de la liste des documents' => 'Proof of the list of documents',
-    'Preuve de paiement du creancier' => 'Proof of payment of the creditor',
-    'Preuve de la déclaration de l\'agent' => 'Proof of the agent\'s declaration',
-    'Preuve de la fiche de déclaration' => 'Proof of the declaration form',
-    'Preuve de la fiche de paiement' => 'Proof of the payment form',
-    'Preuve de l\'envoi du courrier au client' => 'Proof of sending the letter to the client',
-    'Réception de la main-levée' => 'Receipt of the main-levée',
-    'Preuve de réception de la main-levée' => 'Proof of receipt of the main-levée',
-    'Preuve de la levée des restrictions' => 'Proof of lifting of restrictions',
-    'Preuve de l\'envoi du courrier au client' => 'Proof of sending the letter to the client',
-    'Preuve du certificat du greffe' => 'Proof of the registry certificate',
-    'Preuve de l\'établissement du chèque' => 'Proof of the establishment of the cheque',
-    'Preuve de l\'envoi du courrier au client' => 'Proof of sending the letter to the client',
-    'Preuve de la déclaration' => 'Proof of the declaration',
-
+    // Third Party Notice
+    'atd_1' => [
+        'title' => 'Take conservatory measures with the Cso (Block the funds on the account)',
+        'form_title' => 'Proof of the blocking of funds'
+    ],
+    'atd_2' => [
+        'title' => 'Send an information letter to the client',
+        'form_title' => 'Proof of information of the client by mail'
+    ],
+    'atd_3' => [
+        'title' => 'Writing the letter to be sent to the tax administration',
+        'form_title' => 'Proof of writing the letter'
+    ],
+    'atd_4' => [
+        'title' => 'Validation of the letter by the legal service manager',
+        'form_title' => 'Proof of validation of the letter'
+    ],
+    'atd_5' => [
+        'title' => 'Transmission of a letter signed by the General Management of the bank and the signed acknowledgment of receipt',
+        'form_title' => 'Proof of transmission of the letter'
+    ],
+    'atd_6' => [
+        'title' => 'Have you received a release?',
+        'form_title' => 'Reception of the release'
+    ],
+    'atd_6_1' => [
+        'title' => 'Attach the release document',
+        'form_title' => 'Proof of receipt of the release'
+    ],
+    'atd_6_2' => [
+        'title' => 'Lifting of conservatory measures and restitution of funds blocked on the client\'s account',
+        'form_title' => 'Proof of the lifting of conservatory measures'
+    ],
+    'atd_6_3' => [
+        'title' => 'Inform the client by mail',
+        'form_title' => 'Proof of information of the client by mail'
+    ],
+    'atd_6_4' => [
+        'title' => 'Reception of an execution notice from the tax administration by Labanque',
+        'form_title' => 'Proof of receipt of the notice'
+    ],
+    'atd_6_5' => [
+        'title' => 'Establishment of a check payable to the tax administration up to the amount seized',
+        'form_title' => 'Proof of the establishment of the check'
+    ],
+    'atd_6_6' => [
+        'title' => 'Inform the client by mail',
+        'form_title' => 'Proof of information of the client by mail'
+    ],
+    'atd_7' => [
+        'title' => 'Write a letter to the address of the Tax Administration to be signed by the General Management of the bank',
+        'form_title' => 'Proof of transmission of the letter'
+    ],
+    // Requisition
+    'req_1' => [
+        'title' => 'Attach the client information letter to be signed by the General Management of the bank',
+        'form_title' => 'Proof of information of the client by mail'
+    ],
+    'req_2' => [
+        'title' => 'Writing the letter to be sent to the tax administration',
+        'form_title' => 'Proof of writing the letter'
+    ],
+    'req_3' => [
+        'title' => 'Validation of the letter by the legal service manager',
+        'form_title' => 'Proof of validation of the letter'
+    ],
+    'req_4' => [
+        'title' => 'Attach the transmission letter signed by the General Management of the bank',
+        'form_title' => 'Proof of transmission of the letter to the Tax Administration'
+    ],
+    'req_5' => [
+        'title' => 'Write a letter to the address of the relevant authority to be signed by the General Management of the bank',
+        'form_title' => 'Proof of sending the letter to the relevant authority'
+    ],
+    // Conservatory seizure
+    'sc_1' => [
+        'title' => 'Declare the nature and balance of the client\'s accounts on the bailiff\'s act',
+        'form_title' => 'Proof of the declaration form'
+    ],
+    'sc_2' => [
+        'title' => 'Fill in a payment form signed by the legal manager to be sent to the operations department',
+        'form_title' => 'Attach the payment form'
+    ],
+    'sc_3' => [
+        'title' => 'Inform the client concerned by phone or mail',
+        'form_title' => 'Proof of the information letter'
+    ],
+    'sc_4' => [
+        'title' => 'Have you received a release?',
+        'form_title' => 'Reception of the release'
+    ],
+    'sc_4_1' => [
+        'title' => 'Attach the release document',
+        'form_title' => 'Proof of receipt of the release'
+    ],
+    'sc_4_2' => [
+        'title' => 'Lifting of the client\'s account restrictions',
+        'form_title' => 'Proof of the lifting of restrictions'
+    ],
+    'sc_4_3' => [
+        'title' => 'Inform the client by mail',
+        'form_title' => 'Proof of sending the letter to the client'
+    ],
+    'sc_4_4' => [
+        'title' => 'Attach the conversion act',
+        'form_title' => 'Receipt of the conversion act'
+    ],
+    'sc_4_4_1' => [
+        'title' => 'Lapse of the seizure in the absence of the presentation of an enforceable title',
+        'form_title' => 'Proof of the lapse of the seizure'
+    ],
+    'sc_4_4_2' => [
+        'title' => 'Attachment of the release of the seizure',
+        'form_title' => 'Proof of the release of the seizure'
+    ],
+    'sc_4_4_3' => [
+        'title' => 'Presentation of an enforceable title, a conversion act of a conservatory seizure into an attachment seizure and proof of absence of opposition',
+        'form_title' => 'Proof of the list of documents'
+    ],
+    'sc_4_4_4' => [
+        'title' => 'Payment of the creditor by the establishment of a check',
+        'form_title' => 'Proof of payment of the creditor'
+    ],
+    'sc_5' => [
+        'title' => 'Signed declaration of the agent on the bailiff\'s act',
+        'form_title' => 'Proof of the agent\'s declaration'
+    ],
+    // Attachment seizure
+    'sa_1' => [
+        'title' => 'Declare the nature and balance of the client\'s accounts on the bailiff\'s act',
+        'form_title' => 'Proof of the declaration form'
+    ],
+    'sa_2' => [
+        'title' => 'Fill in a payment form signed by the legal manager to be sent to the operations department',
+        'form_title' => 'Proof of the payment form'
+    ],
+    'sa_3' => [
+        'title' => 'Inform the client concerned by phone or mail',
+        'form_title' => 'Proof of sending the letter to the client'
+    ],
+    'sa_4' => [
+        'title' => 'Have you received a release?',
+        'form_title' => 'Reception of the release'
+    ],
+    'sa_4_1' => [
+        'title' => 'Attach the release document',
+        'form_title' => 'Proof of receipt of the release'
+    ],
+    'sa_4_2' => [
+        'title' => 'Lifting of the client\'s account restrictions',
+        'form_title' => 'Proof of the lifting of restrictions'
+    ],
+    'sa_4_3' => [
+        'title' => 'Inform the client by mail',
+        'form_title' => 'Proof of sending the letter to the client'
+    ],
+    'sa_4_4' => [
+        'title' => 'Presentation by the creditor of a certificate from the registry office ordering payment (within 1 month)',
+        'form_title' => 'Proof of the registry certificate'
+    ],
+    'sa_4_5' => [
+        'title' => 'Establish a check in the name of the creditor or his agent up to the amount seized',
+        'form_title' => 'Proof of the establishment of the check'
+    ],
+    'sa_4_6' => [
+        'title' => 'Inform the client',
+        'form_title' => 'Proof of sending the letter to the client'
+    ],
+    'sa_5' => [
+        'title' => 'Declaration of the agent on the bailiff\'s exploit',
+        'form_title' => 'Proof of the declaration'
+    ],
+    
 ];

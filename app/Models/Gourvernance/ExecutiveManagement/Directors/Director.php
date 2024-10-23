@@ -38,4 +38,9 @@ class Director extends Model
         return $this->mandates()->latest()->first();
     }
 
+    public function executiveCommittees()
+    {
+        return $this->morphMany(ExecutiveCommittee::class, 'committable');
+    }
+
 }

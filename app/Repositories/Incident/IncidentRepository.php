@@ -107,7 +107,7 @@ class IncidentRepository
             'Statut actuel' => ($data['status'] == 0) ? "En cours" : "Terminé",
             'Intitulé' => $data['title'],
             'Date de réception' => $data['date_received'],
-            'Type' => Incident::TYPE_VALUES[$data['type']],
+            'Type' => __(Incident::TYPE_VALUES[$data['type']]),
             'Auteur' => $data['author']['name'],
             'Client de la banque' => $data['client'] ? "Oui" : "Non",
             'Créé par' => $data['creator']['firstname'] . '' . $data['creator']['lastname'],

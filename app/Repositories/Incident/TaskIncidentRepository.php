@@ -2,6 +2,7 @@
 namespace App\Repositories\Incident;
 
 use App\Concerns\Traits\Transfer\AddTransferTrait;
+use App\Http\Resources\Incident\TaskIncidentResource;
 use App\Models\Incident\IncidentDocument;
 use App\Models\Incident\TaskIncident;
 use Carbon\Carbon;
@@ -22,11 +23,7 @@ class TaskIncidentRepository
      */
     public function all($request) {
 
-        $task_incidents = $this->taskIncident->where('incident_id', $request->incident_id)->get()->map(function ($taskIncident) {
-            $taskIncident->form = $taskIncident->form;
-            $taskIncident->deadline = $taskIncident->date ?? $taskIncident->deadline;
-            return $taskIncident;
-        });
+        $task_incidents = $this->taskIncident->where('incident_id', $request->incident_id)->get();
         return $task_incidents;
     }
 

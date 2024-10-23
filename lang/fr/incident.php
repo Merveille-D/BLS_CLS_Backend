@@ -2,100 +2,182 @@
 
 return [
 
-    // ## Incident
-
     // Type Incident
-    'Avis à Tiers Détenteurs' => 'Avis à Tiers Détenteurs',
-    'Réquisition' => 'Réquisition',
-    'Saisie Conservatoire' => 'Saisie Conservatoire',
-    'Saisie Attribution' => 'Saisie Attribution',
+    'atd' => 'Avis Tiers Détenteur',
+    'req' => 'Requisition',
+    'sc' => 'Saisie conservatoire',
+    'sa' => 'Saisie attribution',
 
-    // Task Incident Title
-    'Prendre des mesures conservatoires avec les Cso (Bloquer les fonds sur le compte)' => 'Prendre des mesures conservatoires avec les Cso (Bloquer les fonds sur le compte)',
-    'Adresser un courrier d\'information au client' => 'Adresser un courrier d\'information au client',
-    'Rédaction du courrier à addreser à l\'administration fiscale' => 'Rédaction du courrier à addreser à l\'administration fiscale',
-    'Validation du courrier par le responsable de service juridique' => 'Validation du courrier par le responsable de service juridique',
-    'Transmission d\'une lettre signée par la DG de la banque et de l\'accusé de reception signé' => 'Transmission d\'une lettre signée par la DG de la banque et de l\'accusé de reception signé',
-    'Avez vous reçu de main-levée ?' => 'Avez vous reçu de main-levée ?',
-    'Attacher le document de la main-levée' => 'Attacher le document de la main-levée',
-    'Levée des mesures conservatoires et restitution des fonds bloques sur le compte du client' => 'Levée des mesures conservatoires et restitution des fonds bloques sur le compte du client',
-    'Informer le client par un courrier' => 'Informer le client par un courrier',
-    'Reception d\'un avis d\'execution de l\'administration fiscale par Labanque' => 'Reception d\'un avis d\'execution de l\'administration fiscale par Labanque',
-    'Etablissement d\'un cheque à l\'ordre de \'adm fiscale à concurrence du montant saisi' => 'Etablissement d\'un cheque à l\'ordre de \'adm fiscale à concurrence du montant saisi',
-    'Informer le client par un courrier' => 'Informer le client par un courrier',
-    'Rediger un courrier à l\'adresse de l\'ADM Fiscale à signer par la DG de la banque' => 'Rediger un courrier à l\'adresse de l\'ADM Fiscale à signer par la DG de la banque',
-    ' Attacher le courrier d`\'information du client à signer par la DG de la banque' => ' Attacher le courrier d`\'information du client à signer par la DG de la banque',
-    'Rédaction du courrier à addreser à l\'administration fiscale' => 'Rédaction du courrier à addreser à l\'administration fiscale',
-    'Validation du courrier par le responsable de service juridique' => 'Validation du courrier par le responsable de service juridique',
-    'Attacher le courrier de transmission signé par la DG de la banque' => 'Attacher le courrier de transmission signé par la DG de la banque',
-    'Rediger un courrier à l\'adresse de l\'autorité concernée à signer par la DG de la banque' => 'Rediger un courrier à l\'adresse de l\'autorité concernée à signer par la DG de la banque',
-    'Declarer la nature et le solde des comptes du client sur l\'acte d\'huissier' => 'Declarer la nature et le solde des comptes du client sur l\'acte d\'huissier',
-    'Remplir une fiche de prélèvement signée par le responsable juridique à adresser à la direction des operations' => 'Remplir une fiche de prélèvement signée par le responsable juridique à adresser à la direction des operations',
-    'Informer le client concerné par téléphone ou courrier' => 'Informer le client concerné par téléphone ou courrier',
-    'Avez vous reçu de main-levée ?' => 'Avez vous reçu de main-levée ?',
-    'Attacher le document de la main-levée' => 'Attacher le document de la main-levée',
-    'Levée des restriction du compte client' => 'Levée des restriction du compte client',
-    'Informer le client par un courrier' => 'Informer le client par un courrier',
-    'Joindre l\'acte de conversion' => 'Joindre l\'acte de conversion',
-    'Caducite de la saisie en l\'absence de la presentation d\'un titre executoire' => 'Caducite de la saisie en l\'absence de la presentation d\'un titre executoire',
-    'Attachement de la main-levée de la saisie' => 'Attachement de la main-levée de la saisie',
-    'Presentation d\'un titre executoire, d\'un acte de conversion de saisie conservatoire en saisie attribution et d\'une preuve d\'absence d\'opposition' => 'Presentation d\'un titre executoire, d\'un acte de conversion de saisie conservatoire en saisie attribution et d\'une preuve d\'absence d\'opposition',
-    'Paiement du creancier par l\'etablissement d\'un cheque' => 'Paiement du creancier par l\'etablissement d\'un cheque',
-    'Déclaration signée de l\'agent sur l\'acte d\'huissier' => 'Déclaration signée de l\'agent sur l\'acte d\'huissier',
-    'Declarer la nature et le solde des comptes du client sur l\'acte d\'huissier' => 'Declarer la nature et le solde des comptes du client sur l\'acte d\'huissier',
-    'Remplir une fiche de prelement signé par le responsable juridique à adresser à la direction des operations' => 'Remplir une fiche de prelement signé par le responsable juridique à adresser à la direction des operations',
-    'Informer le client concerné par téléphone ou courrier' => 'Informer le client concerné par téléphone ou courrier',
-    'Avez vous reçu de main-levée ?' => 'Avez vous reçu de main-levée ?',
-    'Attacher le document de la main-levée' => 'Attacher le document de la main-levée',
-    'Levée des restriction du compte client' => 'Levée des restriction du compte client',
-    'Informer le client par un courrier' => 'Informer le client par un courrier',
-    'Presentation par le créancier d\'un certificat du greffe portant commendement de payer (dans un delai 1 mois)' => 'Presentation par le créancier d\'un certificat du greffe portant commendement de payer (dans un delai 1 mois)',
-    'Etablir un cheque au nom du creancier ou son mandataire dans la limite du montant saisi' => 'Etablir un cheque au nom du creancier ou son mandataire dans la limite du montant saisi',
-    'Informer le client' => 'Informer le client',
-    'Declaration de l\'agent sur l\'exploit d\'huisser' => 'Declaration de l\'agent sur l\'exploit d\'huisser',
-
-    // Task Incident Form Title
-    'Informations sur le blocage des fonds' => 'Informations sur le blocage des fonds',
-    'Preuve d\'information du client par courrier' => 'Preuve d\'information du client par courrier',
-    'Preuve de la rédaction du courrier' => 'Preuve de la rédaction du courrier',
-    'Preuve de la validation du courrier' => 'Preuve de la validation du courrier',
-    'Preuve de la transmission de la lettre' => 'Preuve de la transmission de la lettre',
-    'Réception de la main-levée' => 'Réception de la main-levée',
-    'Preuve de réception de la main-levée' => 'Preuve de réception de la main-levée',
-    'Preuves de la levée des mesures conservatoires' => 'Preuves de la levée des mesures conservatoires',
-    'Preuve d\'information du client par courrier' => 'Preuve d\'information du client par courrier',
-    'Preuve de la réception de l\'avis' => 'Preuve de la réception de l\'avis',
-    'Preuve de l\'établissement du chèque' => 'Preuve de l\'établissement du chèque',
-    'Preuve d\'information du client par courrier' => 'Preuve d\'information du client par courrier',
-    'Preuve de la transmission du courrier' => 'Preuve de la transmission du courrier',
-    'Preuve d\'information du client par courrier' => 'Preuve d\'information du client par courrier',
-    'Preuve de la rédaction du courrier' => 'Preuve de la rédaction du courrier',
-    'Preuve de la validation du courrier' => 'Preuve de la validation du courrier',
-    'Preuve de la transmission du courrier à l\'ADM Fiscale' => 'Preuve de la transmission du courrier à l\'ADM Fiscale',
-    'Preuve de l\'envoi du courrier à l\'autorité concernée' => 'Preuve de l\'envoi du courrier à l\'autorité concernée',
-    'Preuve de la fiche de déclaration' => 'Preuve de la fiche de déclaration',
-    'Attacher la fiche de paiement' => 'Attacher la fiche de paiement',
-    'Preuve du courrier d\'information' => 'Preuve du courrier d\'information',
-    'Réception de la main-levée' => 'Réception de la main-levée',
-    'Preuve de réception de la main-levée' => 'Preuve de réception de la main-levée',
-    'Preuve de la levée des restrictions' => 'Preuve de la levée des restrictions',
-    'Preuve de l\'envoi du courrier au client' => 'Preuve de l\'envoi du courrier au client',
-    'Réception de l\'acte de conversion' => 'Réception de l\'acte de conversion',
-    'Preuve de la caducité de la saisie' => 'Preuve de la caducité de la saisie',
-    'Preuve de la main-levée de la saisie' => 'Preuve de la main-levée de la saisie',
-    'Preuve de la liste des documents' => 'Preuve de la liste des documents',
-    'Preuve de paiement du creancier' => 'Preuve de paiement du creancier',
-    'Preuve de la déclaration de l\'agent' => 'Preuve de la déclaration de l\'agent',
-    'Preuve de la fiche de déclaration' => 'Preuve de la fiche de déclaration',
-    'Preuve de la fiche de paiement' => 'Preuve de la fiche de paiement',
-    'Preuve de l\'envoi du courrier au client' => 'Preuve de l\'envoi du courrier au client',
-    'Réception de la main-levée' => 'Réception de la main-levée',
-    'Preuve de réception de la main-levée' => 'Preuve de réception de la main-levée',
-    'Preuve de la levée des restrictions' => 'Preuve de la levée des restrictions',
-    'Preuve de l\'envoi du courrier au client' => 'Preuve de l\'envoi du courrier au client',
-    'Preuve du certificat du greffe' => 'Preuve du certificat du greffe',
-    'Preuve de l\'établissement du chèque' => 'Preuve de l\'établissement du chèque',
-    'Preuve de l\'envoi du courrier au client' => 'Preuve de l\'envoi du courrier au client',
-    'Preuve de la déclaration' => 'Preuve de la déclaration'
-
+    // Avis Tiers Détenteur
+    'atd_1' => [
+        'title' => 'Prendre des mesures conservatoires avec les Cso (Bloquer les fonds sur le compte)',
+        'form_title' => 'Informations sur le blocage des fonds'
+    ],
+    'atd_2' => [
+        'title' => 'Adresser un courrier d\'information au client',
+        'form_title' => 'Preuve d\'information du client par courrier'
+    ],
+    'atd_3' => [
+        'title' => 'Rédaction du courrier à adreser à l\'administration fiscale',
+        'form_title' => 'Preuve de la rédaction du courrier'
+    ],
+    'atd_4' => [
+        'title' => 'Validation du courrier par le responsable du service juridique',
+        'form_title' => 'Preuve de la validation du courrier'
+    ],
+    'atd_5' => [
+        'title' => 'Transmission d\'une lettre signée par la Direction Générale de la banque et de l\'accusé de reception signé',
+        'form_title' => 'Preuve de la transmission de la lettre'
+    ],
+    'atd_6' => [
+        'title' => 'Avez vous reçu de main-levée ?',
+        'form_title' => 'Réception de la main-levée'
+    ],
+    'atd_6_1' => [
+        'title' => 'Attacher le document de la main-levée',
+        'form_title' => 'Preuve de réception de la main-levée'
+    ],
+    'atd_6_2' => [
+        'title' => 'Levée des mesures conservatoires et restitution des fonds bloques sur le compte du client',
+        'form_title' => 'Preuves de la levée des mesures conservatoires'
+    ],
+    'atd_6_3' => [
+        'title' => 'Informer le client par un courrier',
+        'form_title' => 'Preuve d\'information du client par courrier'
+    ],
+    'atd_6_4' => [
+        'title' => 'Reception d\'un avis d\'execution de l\'administration fiscale par Labanque',
+        'form_title' => 'Preuve de la réception de l\'avis'
+    ],
+    'atd_6_5' => [
+        'title' => 'Etablissement d\'un cheque à l\'ordre de \'adm fiscale à concurrence du montant saisi',
+        'form_title' => 'Preuve de l\'établissement du chèque'
+    ],
+    'atd_6_6' => [
+        'title' => 'Informer le client par un courrier',
+        'form_title' => 'Preuve d\'information du client par courrier'
+    ],
+    'atd_7' => [
+        'title' => 'Rediger un courrier à l\'adresse de l\'ADM Fiscale à signer par la Direction Générale de la banque',
+        'form_title' => 'Preuve de la transmission du courrier'
+    ],
+    // Requisition
+    'req_1' => [
+        'title' => ' Attacher le courrier d`\'information du client à signer par la Direction Générale de la banque',
+        'form_title' => 'Preuve d\'information du client par courrier'
+    ],
+    'req_2' => [
+        'title' => 'Rédaction du courrier à addreser à l\'administration fiscale',
+        'form_title' => 'Preuve de la rédaction du courrier'
+    ],
+    'req_3' => [
+        'title' => 'Validation du courrier par le responsable de service juridique',
+        'form_title' => 'Preuve de la validation du courrier'
+    ],
+    'req_4' => [
+        'title' => 'Attacher le courrier de transmission signé par la Direction Générale de la banque',
+        'form_title' => 'Preuve de la transmission du courrier à l\'ADM Fiscale'
+    ],
+    'req_5' => [
+        'title' => 'Rediger un courrier à l\'adresse de l\'autorité concernée à signer par la Direction Générale de la banque',
+        'form_title' => 'Preuve de l\'envoi du courrier à l\'autorité concernée'
+    ],
+    // Saisie conservatoire
+    'sc_1' => [
+        'title' => 'Declarer la nature et le solde des comptes du client sur l\'acte d\'huissier',
+        'form_title' => 'Preuve de la fiche de déclaration'
+    ],
+    'sc_2' => [
+        'title' => 'Remplir une fiche de prélèvement signée par le responsable juridique à adresser à la direction des operations',
+        'form_title' => 'Attacher la fiche de paiement'
+    ],
+    'sc_3' => [
+        'title' => 'Informer le client concerné par téléphone ou courrier',
+        'form_title' => 'Preuve du courrier d\'information'
+    ],
+    'sc_4' => [
+        'title' => 'Avez vous reçu de main-levée ?',
+        'form_title' => 'Réception de la main-levée'
+    ],
+    'sc_4_1' => [
+        'title' => 'Attacher le document de la main-levée',
+        'form_title' => 'Preuve de réception de la main-levée'
+    ],
+    'sc_4_2' => [
+        'title' => 'Levée des restriction du compte client',
+        'form_title' => 'Preuve de la levée des restrictions'
+    ],
+    'sc_4_3' => [
+        'title' => 'Informer le client par un courrier',
+        'form_title' => 'Preuve de l\'envoi du courrier au client'
+    ],
+    'sc_4_4' => [
+        'title' => 'Joindre l\'acte de conversion',
+        'form_title' => 'Réception de l\'acte de conversion'
+    ],
+    'sc_4_4_1' => [
+        'title' => 'Caducite de la saisie en l\'absence de la presentation d\'un titre executoire',
+        'form_title' => 'Preuve de la caducité de la saisie'
+    ],
+    'sc_4_4_2' => [
+        'title' => 'Attachement de la main-levée de la saisie',
+        'form_title' => 'Preuve de la main-levée de la saisie'
+    ],
+    'sc_4_4_3' => [
+        'title' => 'Presentation d\'un titre executoire, d\'un acte de conversion de saisie conservatoire en saisie attribution et d\'une preuve d\'absence d\'opposition',
+        'form_title' => 'Preuve de la liste des documents'
+    ],
+    'sc_4_4_4' => [
+        'title' => 'Paiement du creancier par l\'etablissement d\'un cheque',
+        'form_title' => 'Preuve de paiement du creancier'
+    ],
+    'sc_5' => [
+        'title' => 'Déclaration signée de l\'agent sur l\'acte d\'huissier',
+        'form_title' => 'Preuve de la déclaration de l\'agent'
+    ],
+    // Saisie attribution
+    'sa_1' => [
+        'title' => 'Declarer la nature et le solde des comptes du client sur l\'acte d\'huissier',
+        'form_title' => 'Preuve de la fiche de déclaration'
+    ],
+    'sa_2' => [
+        'title' => 'Remplir une fiche de prelement signé par le responsable juridique à adresser à la direction des operations',
+        'form_title' => 'Preuve de la fiche de paiement'
+    ],
+    'sa_3' => [
+        'title' => 'Informer le client concerné par téléphone ou courrier',
+        'form_title' => 'Preuve de l\'envoi du courrier au client'
+    ],
+    'sa_4' => [
+        'title' => 'Avez vous reçu de main-levée ?',
+        'form_title' => 'Réception de la main-levée'
+    ],
+    'sa_4_1' => [
+        'title' => 'Attacher le document de la main-levée',
+        'form_title' => 'Preuve de réception de la main-levée'
+    ],
+    'sa_4_2' => [
+        'title' => 'Levée des restriction du compte client',
+        'form_title' => 'Preuve de la levée des restrictions'
+    ],
+    'sa_4_3' => [
+        'title' => 'Informer le client par un courrier',
+        'form_title' => 'Preuve de l\'envoi du courrier au client'
+    ],
+    'sa_4_4' => [
+        'title' => 'Presentation par le créancier d\'un certificat du greffe portant commendement de payer (dans un delai 1 mois)',
+        'form_title' => 'Preuve du certificat du greffe'
+    ],
+    'sa_4_5' => [
+        'title' => 'Etablir un cheque au nom du creancier ou son mandataire dans la limite du montant saisi',
+        'form_title' => 'Preuve de l\'établissement du chèque'
+    ],
+    'sa_4_6' => [
+        'title' => 'Informer le client',
+        'form_title' => 'Preuve de l\'envoi du courrier au client'
+    ],
+    'sa_5' => [
+        'title' => 'Declaration de l\'agent sur l\'exploit d\'huisser',
+        'form_title' => 'Preuve de la déclaration'
+    ],
 ];

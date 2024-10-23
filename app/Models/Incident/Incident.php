@@ -2,6 +2,7 @@
 
 namespace App\Models\Incident;
 
+use App\Http\Resources\Incident\TaskIncidentResource;
 use App\Models\Scopes\CountryScope;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
@@ -44,10 +45,10 @@ class Incident extends Model
     ];
 
     const TYPE_VALUES = [
-        'avis-tiers-detenteurs' => 'Avis à Tiers Détenteurs',
-        'requisition' => 'Réquisition',
-        'saisie-conservatoire' => 'Saisie Conservatoire',
-        'saisie-attribution' => 'Saisie Attribution',
+        'avis-tiers-detenteurs' => 'incident.atd',
+        'requisition' => 'incident.req',
+        'saisie-conservatoire' => 'incident.sc',
+        'saisie-attribution' => 'incident.sa',
     ];
 
     const TYPE_CODES = [
@@ -75,13 +76,13 @@ class Incident extends Model
     public function getCurrentTaskAttribute() {
 
         $current_task_incident = $this->taskIncident->where('status', false)->first();
-        return $current_task_incident;
+        return new TaskIncidentResource($current_task_incident);
     }
 
     public function getCategoryAttribute() {
 
         $value = $this->type;
-        $label = self::TYPE_VALUES[$value];
+        $label = __(self::TYPE_VALUES[$value]);
 
         return [
             'value' => $value,

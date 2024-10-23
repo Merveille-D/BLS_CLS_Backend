@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories\Contract;
 
+use App\Http\Resources\Contract\ContractModelResource;
 use App\Models\Contract\ContractModel;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,23 +11,47 @@ class ContractModelRepository
 
     }
 
+    public function list($request)
+    {
+        // Filtrer les modèles en fonction de la présence de parent_id
+        $parentId = $request['parent_id'] ?? null;
 
-    /**
-     * @param Request $request
-     *
-     * @return Part
-     */
+        $contract_models = $this->contract_model->when(
+            $parentId, 
+            fn($query) => $query->where('parent_id', $parentId),
+            fn($query) => $query->whereNull('parent_id')
+        )->get();
+
+        return [
+            'parent' => $parentId ? ContractModelResource::collection($this->getParent($parentId)) : null,
+            'children' => ContractModelResource::collection($contract_models),
+        ];
+    }
+
+    
+    private function getParent($parentId)
+    {
+        return $this->contract_model->where('id', $parentId)->first();
+    }
+
     public function store($request) {
 
+        if(isset($request['file'])) {
             $path = uploadFile($request['file'], 'contract_model_documents');
-            $requestData = $request->except('file');
-            $requestData['file'] = $path;
+            $request['file_path'] = $path;
+        }
 
-            $request['created_by'] = Auth::user()->id;
+        $request['created_by'] = Auth::user()->id;
 
-            $contract_model = $this->contract_model->create($requestData);
+        $contract_model = $this->contract_model->create($request);
 
-            return $contract_model;
+        return $contract_model;
+    }
+
+    public function update(ContractModel $contract_model, $request) {
+
+        $contract_model->update($request);
+        return $contract_model;
     }
 
 }

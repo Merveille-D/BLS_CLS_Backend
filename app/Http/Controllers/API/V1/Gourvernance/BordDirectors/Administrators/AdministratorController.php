@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Administrator\AddAdministratorRequest;
 use App\Http\Requests\Administrator\RenewMandateAdministratorRequest;
 use App\Http\Requests\Administrator\UpdateAdministratorRequest;
+use App\Http\Requests\Committee\ToggleExecutiveCommitteeRequest;
 use App\Http\Resources\Administrator\AdministratorCollection;
 use App\Models\Gourvernance\BoardDirectors\Administrators\CaAdministrator;
 use App\Repositories\SessionAdministrator\AdministratorRepository;
@@ -80,7 +81,7 @@ class AdministratorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CaAdministrator $ca_administrator)
+    public function destroy()
     {
         try {
             $ca_administrator->delete();
@@ -95,6 +96,17 @@ class AdministratorController extends Controller
     public function settings()
     {
         return api_response(true, 'select box values recupérés avec succès', $this->adminRepo->settings());
+    }
+
+    public function toggleExecutiveCommittee(ToggleExecutiveCommitteeRequest $request, CaAdministrator $ca_administrator)
+    {
+        try {
+            $committee = $this->adminRepo->toggle($ca_administrator, $request->validated());
+
+            return api_response(true, "Succès du toggle du cadre", 200);
+        }catch (ValidationException $e) {
+                return api_response(false, "Echec du toggle du cadre", $e->errors(), 422);
+        }
     }
 
     public function renewMandate(RenewMandateAdministratorRequest $request)

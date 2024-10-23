@@ -2,6 +2,7 @@
 
 namespace App\Models\Gourvernance\GeneralMeeting;
 
+use App\Http\Resources\GeneralMeeting\TaskGeneralMeetingResource;
 use App\Models\Gourvernance\GourvernanceDocument;
 use App\Models\Scopes\CountryScope;
 use App\Models\User;
@@ -39,13 +40,6 @@ class GeneralMeeting extends Model
         'special',
     ];
 
-    const GENERAL_MEETING_TYPES_VALUE = [
-        'ordinary' => 'Ordinaire',
-        'extraordinary' => 'Extraordinaire',
-        'mixte' => 'Mixte',
-        'special' => 'Spéciale',
-    ];
-
     const GENERAL_MEETING_STATUS = [
         'pending',
         'post_ag',
@@ -77,10 +71,11 @@ class GeneralMeeting extends Model
     ];
 
     const FILE_FIELD_VALUE = [
-        'pv' => 'Procès verbal',
-        'agenda' => 'Ordre du jour',
-        'convocation' => 'Convocation',
-        'attendance_list' => 'Liste de présence des actionnaires',
+        'pv' => 'governance.pv',
+        'agenda' => 'governance.agenda',
+        'convocation' => 'governance.convocation',
+        'attendance_list' => 'governance.attendance_list_ag',
+        'other' => 'governance.other',
     ];
 
     const DATE_FILE_FIELD = [
@@ -121,7 +116,7 @@ class GeneralMeeting extends Model
         foreach ($directFiles as $field) {
             if (!empty($this->$field)) {
                 $files[] = [
-                    'filename' => self::FILE_FIELD_VALUE[$type[$field]],
+                    'filename' =>  __(self::FILE_FIELD_VALUE[$type[$field]]),
                     'file_url' => $this->$field,
                     'type' => $type[$field],
                 ];

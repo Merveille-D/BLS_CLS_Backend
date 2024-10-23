@@ -34,6 +34,7 @@ class TaskGeneralMeeting extends Model
         'type',
         'status',
         'responsible',
+        'code',
         'supervisor',
         'general_meeting_id',
         'completed_by',
@@ -71,73 +72,73 @@ class TaskGeneralMeeting extends Model
     CONST TASKS = [
         'pre_ag' => [
             [
-                'libelle' => "Premier rappel des écheances du CA et de l'AG aux chefs departements.",
+                'code' => "pre_ag.lib.1",
                 'days' => -105,
             ],
             [
-                'libelle' => "Second rappel aux chefs departements",
+                'code' => "pre_ag.lib.2",
                 'days' => -90,
             ],
             [
-                'libelle' => "Appreter les dossiers de : CA (ODJ, rapports DG, rapports comités CA...) - AG (ODJ, rapports CA, rapports CC, projet de résolutions)",
+                'code' => "pre_ag.lib.3",
                 'days' => -65,
             ],
             [
-                'libelle' => "Convoquer le CA",
+                'code' => "pre_ag.lib.4",
                 'days' => -60,
             ],
             [
-                'libelle' => "Réception des rapports des Commissaires aux Comptes (CC)",
+                'code' => "pre_ag.lib.5",
                 'days' => -55,
             ],
             [
-                'libelle' => "Envoyer les dossiers du CA (et dossiers de l'AG à valider) aux administrateurs",
+                'code' => "pre_ag.lib.6",
                 'days' => -50,
             ],
             [
-                'libelle' => "Tenue du premier CA de l'année",
+                'code' => "pre_ag.lib.7",
                 'days' => -45,
             ],
             [
-                'libelle' => "Premiere publication dans la presse de l'avis de convocation",
+                'code' => "pre_ag.lib.8",
                 'days' => -30,
             ],
             [
-                'libelle' => "Deuxième publication dans la presse de l'avis de convocation",
+                'code' => "pre_ag.lib.9",
                 'days' => -15
             ],
             [
-                'libelle' => "Tenue de l'AG",
+                'code' => "pre_ag.lib.10",
                 'days' => 0
             ],
             [
-                'libelle' => "Rédaction du PV de l'AG et signature",
+                'code' => "pre_ag.lib.11",
                 'days' => 15
             ],
             [
-                'libelle' => "Transmission du PV de l'AG au Notaire pour les formalités légales",
+                'code' => "pre_ag.lib.12",
                 'days' => 20
             ],
             [
-                'libelle' => "Réception du PV enrégistré et classement",
+                'code' => "pre_ag.lib.13",
                 'days' => 30
             ],
         ],
         'procedure' => [
-            ['libelle' => "PCA ouvre la séance, préside et confirme quorum"],
-            ['libelle' => "PCA: Désignation Bureau (Scrutateurs + Secrétaire)"],
-            ['libelle' => "PCA confirme présence CC et documents légaux"],
-            ['libelle' => "PCA annonce ordre du jour et lit Rapport de Gestion"],
-            ['libelle' => "PCA invite CC à présenter leurs Rapports"],
-            ['libelle' => "PCA ouvre débats suivis du vote des résolutions"],
+            ['code' => "procedure.ag.lib.1"],
+            ['code' => "procedure.ag.lib.2"],
+            ['code' => "procedure.ag.lib.3"],
+            ['code' => "procedure.ag.lib.4"],
+            ['code' => "procedure.ag.lib.5"],
+            ['code' => "procedure.ag.lib.6"],
         ],
         'checklist' => [
-            ['libelle' => "Vérifier salle et sonorisation"],
-            ['libelle' => "Enregistrer actionnaires à l'arrivée dans le système IT"],
-            ['libelle' => "Installer PCA, Administrateurs, CAC et invités"],
-            ['libelle' => "Imprimer Liste de présence"],
-            ['libelle' => "Vérifier Quorum"],
-            ['libelle' => "Remettre Liste de présence au PCA"],
+            ['code' => "checklist.ag.lib.1"],
+            ['code' => "checklist.ag.lib.2"],
+            ['code' => "checklist.ag.lib.3"],
+            ['code' => "checklist.ag.lib.4"],
+            ['code' => "checklist.ag.lib.5"],
+            ['code' => "checklist.ag.lib.6"],
         ],
     ];
 

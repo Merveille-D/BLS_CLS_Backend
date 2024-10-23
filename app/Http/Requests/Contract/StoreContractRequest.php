@@ -28,8 +28,9 @@ class StoreContractRequest extends FormRequest
     {
         $rules = [
             'title' => ['required', 'string'],
-            'category' => ['required',  Rule::in(Contract::CATEGORIES) ],
-            // 'type_category' => [ Rule::in(Contract::TYPE_CATEGORIES[$request->input('category')]) ],
+            'contract_category_id' => ['required', 'uuid', 'exists:contract_categories,id'],
+            'contract_type_category_id' => ['required', 'uuid', 'exists:contract_type_categories,id'],
+            'contract_sub_type_category_id' => ['required', 'uuid', 'exists:contract_sub_type_categories,id'],
             'contract_documents' => ['required', 'array'],
             'contract_documents.*.name' => ['required', 'string'],
             'contract_documents.*.file' => ['required', 'file'],
