@@ -3,7 +3,7 @@
 return [
     //movanble securities steps
     'Initiation of the guarantee' => 'Initiation de la garantie',
-    'Drafting of the guarantee agreement' => 'Rédaction de la convention de garantie',
+    'Drafting of the guarantee agreement' => 'Rédaction de la convention de gage',
     'Drafting the pledge agreement' => 'Rédaction de la convention de gage',
     'Deposit of the agreement with the notary' => 'Dépot de la convention au rang des minutes d\'un notaire',
     'Transmission to the notary of a request for registration of the guarantee with the RCCM' => 'Transmission au notaire d\'une demande d\'incription de la garantie au RCCM',

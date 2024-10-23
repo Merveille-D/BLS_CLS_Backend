@@ -23,7 +23,7 @@ class ContractModelRepository
         )->get();
 
         return [
-            'parent' => $parentId ? ContractModelResource::collection($this->getParent($parentId)) : null,
+            'parent' => $parentId ? new ContractModelResource($this->getParent($parentId)) : null,
             'children' => ContractModelResource::collection($contract_models),
         ];
     }
