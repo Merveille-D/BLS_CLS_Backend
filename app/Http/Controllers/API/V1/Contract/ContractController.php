@@ -8,6 +8,7 @@ use App\Http\Requests\Contract\StoreContractRequest;
 use App\Http\Requests\Contract\StoreTransferContractRequest;
 use App\Http\Requests\Contract\UpdateContractRequest;
 use App\Http\Requests\Transfer\AddTransferRequest;
+use App\Http\Resources\Contract\ContractResource;
 use App\Models\Contract\Contract;
 use App\Repositories\Contract\ContractRepository;
 use Illuminate\Validation\ValidationException;
@@ -27,18 +28,9 @@ class ContractController extends Controller
         ->when(request('filter') === 'recover_without_guarantee', function ($query) {
             $query->whereNotNull('date_signature');
         })
-        ->get()->map(function ($contract) {
+        ->get();
 
-            $contract->first_part = $contract->first_part;
-            $contract->second_part = $contract->second_part;
-            $contract->category = $contract->contractCategory;
-            $contract->type_category = $contract->contractTypeCategory;
-            $contract->sub_type_category = $contract->contractSubTypeCategory;
-
-            return $contract;
-        });
-
-        return api_response(true, "Liste des contrats", $contracts, 200);
+        return api_response(true, "Liste des contrats", ContractResource::collection($contracts), 200);
     }
 
     /**
@@ -48,17 +40,7 @@ class ContractController extends Controller
     {
         try {
             $contract = $this->contract->store($request);
-
-            $data = $contract->toArray();
-            $data['first_part'] = $contract->first_part;
-            $data['second_part'] = $contract->second_part;
-            $data['category'] = $contract->contractCategory;
-            $data['type_category'] = $contract->contractTypeCategory;
-            $data['sub_type_category'] = $contract->contractSubTypeCategory;
-
-            $data['documents'] = $contract->documents;
-
-            return api_response(true, "Succès de l'enregistrement du contrat", $data, 200);
+            return api_response(true, "Succès de l'enregistrement du contrat", new ContractResource($contract), 200);
         }catch (ValidationException $e) {
                 return api_response(false, "Echec de l'enregistrement du contrat", $e->errors(), 422);
         }
@@ -70,21 +52,7 @@ class ContractController extends Controller
     public function show(Contract $contract)
     {
         try {
-
-            $data = $contract->toArray();
-            $data['first_part'] = $contract->first_part;
-            $data['second_part'] = $contract->second_part;
-            $data['category'] = $contract->contractCategory;
-            $data['type_category'] = $contract->contractTypeCategory;
-            $data['sub_type_category'] = $contract->contractSubTypeCategory;
-            $data['documents'] = $contract->documents;
-            $data['transfers'] = $contract->transfers->map(function ($transfer) {
-                $transfer->sender = $transfer->sender;
-                $transfer->collaborators = $transfer->collaborators;
-                return $transfer;
-            });
-
-            return api_response(true, "Information du contrat", $data, 200);
+            return api_response(true, "Information du contrat", new ContractResource($contract), 200);
         }catch( ValidationException $e ) {
             return api_response(false, "Echec de la récupération des infos du contrat", $e->errors(), 422);
         }
@@ -96,17 +64,8 @@ class ContractController extends Controller
     public function update(UpdateContractRequest $request, Contract $contract)
     {
         try {
-            $this->contract->update($contract, $request->all());
-
-            $data = $contract->toArray();
-            $data['first_part'] = $contract->first_part;
-            $data['second_part'] = $contract->second_part;
-            $data['category'] = $contract->contractCategory;
-            $data['type_category'] = $contract->contractTypeCategory;
-            $data['sub_type_category'] = $contract->contractSubTypeCategory;
-            $data['documents'] = $contract->documents;
-
-            return api_response(true, "Mis à jour du contrat avec succès", $data, 200);
+            $contract = $this->contract->update($contract, $request->all());
+            return api_response(true, "Mis à jour du contrat avec succès", new ContractResource($contract), 200);
         } catch (ValidationException $e) {
 
             return api_response(false, "Echec de la mise à jour du contrat", $e->errors(), 422);

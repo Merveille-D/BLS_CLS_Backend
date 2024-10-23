@@ -24,14 +24,4 @@ class ContractModelResource extends JsonResource
         ];
 
     }
-
-    /**
-     * Récupère le nom du modèle parent, s'il existe.
-     *
-     * @return string|null
-     */
-    private function getParentName(): ?string
-    {
-        return ContractModel::where('parent_id', $this->parent_id)->value('name');
-    }
 }
