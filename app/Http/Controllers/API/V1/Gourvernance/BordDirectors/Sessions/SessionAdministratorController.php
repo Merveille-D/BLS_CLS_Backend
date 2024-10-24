@@ -60,7 +60,7 @@ class SessionAdministratorController extends Controller
         try {
             $data = $session_administrator->toArray();
             $data['files'] = $session_administrator->files;
-            $data['next_task'] = $session_administrator->next_task;
+            $data['next_task'] = new TaskSessionAdministratorResource($session_administrator->next_task);
 
             return api_response(true, "Information du CA", $data, 200);
         } catch (ValidationException $e) {

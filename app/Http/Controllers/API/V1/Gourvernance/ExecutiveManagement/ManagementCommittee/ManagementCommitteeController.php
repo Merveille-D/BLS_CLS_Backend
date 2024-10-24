@@ -60,7 +60,7 @@ class ManagementCommitteeController extends Controller
         try {
             $data = $management_committee->toArray();
             $data['files'] = $management_committee->files;
-            $data['next_task'] = $management_committee->next_task;
+            $data['next_task'] = new TaskManagementCommitteeResource($management_committee->next_task);
 
             return api_response(true, "Information du CD", $data, 200);
         } catch (ValidationException $e) {
