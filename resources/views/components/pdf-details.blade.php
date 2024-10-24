@@ -7,7 +7,7 @@
                 <td>{{ $key }}</td>
                 <td>
                     <div class="text-right">
-                        {{ $item  ?? '_'}}
+                        {{ $item  ?? '_' }}
                     </div>
                 </td>
             </tr>

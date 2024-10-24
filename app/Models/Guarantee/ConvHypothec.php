@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 #[ObservedBy([ConvHypothecObserver::class])]
 class ConvHypothec extends Model
 {
-    use HasFactory, Alertable, HasUuids, HypothecFormFieldTrait, Transferable;
+    use Alertable, HasFactory, HasUuids, HypothecFormFieldTrait, Transferable;
 
     /**
      * @property int $id
@@ -25,7 +25,7 @@ class ConvHypothec extends Model
      * @property string $date_sell
      * @property string $date_signification
      */
-    protected $fillable = array(
+    protected $fillable = [
         'name',
         'is_verified',
         'contract_file',
@@ -48,7 +48,7 @@ class ConvHypothec extends Model
         'summation_date',
         'is_archived',
         'has_recovery',
-    );
+    ];
 
     protected $casts = [
         'is_verified' => 'boolean',
@@ -60,33 +60,34 @@ class ConvHypothec extends Model
         'has_recovery' => 'boolean',
     ];
 
-    public function tasks() {
+    public function tasks()
+    {
         return $this->morphMany(HypothecTask::class, 'taskable');
     }
 
-    public function getNextTaskAttribute() {
+    public function getNextTaskAttribute()
+    {
         return $this->tasks()
-                ->orderByRaw('IF(max_deadline IS NOT NULL, 0, 1)')
-                ->orderBy('max_deadline')
-                ->orderBy('rank')
-                ->where('status', false)->first();
+            ->orderByRaw('IF(max_deadline IS NOT NULL, 0, 1)')
+            ->orderBy('max_deadline')
+            ->orderBy('rank')
+            ->where('status', false)->first();
     }
 
-    public function getCurrentTaskAttribute() {
+    public function getCurrentTaskAttribute()
+    {
         return $this->tasks()
-                    ->orderByRaw('IF(max_deadline IS NOT NULL, 0, 1)')
-                    ->orderByDesc('max_deadline')
-                    ->orderByDesc('rank')
-                    ->where('status', true)
-                    ->first();
+            ->orderByRaw('IF(max_deadline IS NOT NULL, 0, 1)')
+            ->orderByDesc('max_deadline')
+            ->orderByDesc('rank')
+            ->where('status', true)
+            ->first();
     }
 
     /**
      * documents
-     *
-     * @return MorphMany
      */
-    public function documents() : MorphMany
+    public function documents(): MorphMany
     {
         return $this->morphMany(GuaranteeDocument::class, 'documentable');
     }
@@ -94,12 +95,13 @@ class ConvHypothec extends Model
     public function steps()
     {
         return $this->belongsToMany(ConvHypothecStep::class, 'hypothec_step', 'hypothec_id', 'step_id')
-                ->select('conv_hypothec_steps.id', 'code', 'rank', 'min_delay', 'max_delay', 'conv_hypothec_steps.name', 'conv_hypothec_steps.type', 'hypothec_step.max_deadline', 'hypothec_step.min_deadline', 'hypothec_step.created_at')
-                ->selectRaw('case when hypothec_step.status = 1 then true else false end as status')
-                ->withTimestamps();
+            ->select('conv_hypothec_steps.id', 'code', 'rank', 'min_delay', 'max_delay', 'conv_hypothec_steps.name', 'conv_hypothec_steps.type', 'hypothec_step.max_deadline', 'hypothec_step.min_deadline', 'hypothec_step.created_at')
+            ->selectRaw('case when hypothec_step.status = 1 then true else false end as status')
+            ->withTimestamps();
     }
 
-    function getCurrentStepAttribute() {
+    public function getCurrentStepAttribute()
+    {
         return $this->steps()->orderBy('rank', 'desc')->where('status', true)->first();
     }
 
@@ -112,7 +114,7 @@ class ConvHypothec extends Model
     {
         $step = $this->next_task;
 
-        if (!$step) {
+        if (! $step) {
             return [];
         }
         $form = $this->getCustomFormFields($step->code);
@@ -123,5 +125,4 @@ class ConvHypothec extends Model
             'form' => $form,
         ];
     }
-
 }

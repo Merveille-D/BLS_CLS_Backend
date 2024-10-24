@@ -11,6 +11,7 @@ use Illuminate\Contracts\Events\ShouldHandleEventsAfterCommit;
 class TransferObserver implements ShouldHandleEventsAfterCommit
 {
     use AddAlertTrait;
+
     /**
      * Handle the Transfer "created" event.
      */
@@ -19,13 +20,13 @@ class TransferObserver implements ShouldHandleEventsAfterCommit
         // $dates = $this->getMilestoneDates($transfer->deadline);
 
         // foreach ($dates as $key => $date) {
-            $this->new_alert(
-                $transfer, $transfer->title,
-                $transfer->description,
-                'transfer',
-                /* $date */Carbon::parse(now()),
-                /* Alert::STATUS[$key] ??  */'urgent'
-            );
+        $this->new_alert(
+            $transfer, $transfer->title,
+            $transfer->description,
+            'transfer',
+            /* $date */ Carbon::parse(now()),
+            /* Alert::STATUS[$key] ??  */ 'urgent'
+        );
         // }
 
     }
@@ -33,9 +34,7 @@ class TransferObserver implements ShouldHandleEventsAfterCommit
     /**
      * Handle the Transfer "updated" event.
      */
-    public function updated(Transfer $transfer): void
-    {
-    }
+    public function updated(Transfer $transfer): void {}
 
     /**
      * Handle the Transfer "deleted" event.

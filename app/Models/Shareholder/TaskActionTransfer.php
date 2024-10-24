@@ -17,7 +17,67 @@ use Illuminate\Database\Eloquent\Model;
 // #[ObservedBy([TaskIncidentObserver::class])]
 class TaskActionTransfer extends Model
 {
-    use HasFactory, HasUuids, Alertable, Transferable;
+    use Alertable, HasFactory, HasUuids, Transferable;
+
+    const TASKS = [
+        'action_1' => [
+            'title' => 'Demande d\'agrément au CA',
+            'rules' => [
+                'date' => ['required', 'date'],
+                'documents' => ['required', 'array'],
+                'documents.*.name' => ['required', 'string'],
+                'documents.*.file' => ['required', 'file'],
+            ],
+            'delay' => 10,
+            'form' => [
+                'fields' => [
+                    [
+                        'type' => 'date',
+                        'name' => 'date',
+                        'label' => 'Date de demande d\'agrément au CA',
+                    ],
+                    [
+                        'type' => 'documents',
+                        'name' => 'documents',
+                        'label' => 'Joindre le document de demande d\'agrément au CA',
+                    ],
+
+                ],
+                'form_title' => 'Information de demande d\'agrément au CA',
+            ],
+        ],
+        'action_2' => [
+            'title' => 'Réponse de la Demande d\'agrément au CA',
+            'rules' => [
+                'date' => ['required', 'date'],
+                'documents' => ['required', 'array'],
+                'documents.*.name' => ['required', 'string'],
+                'documents.*.file' => ['required', 'file'],
+                'asked_agrement' => ['required', 'in:yes,no'],
+            ],
+            'delay' => 10,
+            'form' => [
+                'fields' => [
+                    [
+                        'type' => 'date',
+                        'name' => 'date',
+                        'label' => 'Date de demande d\'agrément au CA',
+                    ],
+                    [
+                        'type' => 'radio',
+                        'name' => 'asked_agrement',
+                        'label' => 'Avez vous reçu l\'aval du CA ?',
+                    ],
+                    [
+                        'type' => 'documents',
+                        'name' => 'documents',
+                        'label' => 'Joindre le document de réponse du CA',
+                    ],
+                ],
+                'form_title' => 'Information sur la réponse d\'agrément au CA',
+            ],
+        ],
+    ];
 
     /**
      * Les attributs qui doivent être castés vers des types natifs.
@@ -41,66 +101,6 @@ class TaskActionTransfer extends Model
         'completed_by',
     ];
 
-    const TASKS = [
-        'action_1' => [
-            'title' => 'Demande d\'agrément au CA',
-            'rules' => [
-                'date' => ['required', 'date'],
-                'documents' => ['required', 'array'],
-                'documents.*.name' => ['required', 'string'],
-                'documents.*.file' => ['required', 'file']
-            ],
-            "delay" => 10,
-            "form" => [
-                'fields' => [
-                    [
-                        'type' => 'date',
-                        'name' => 'date',
-                        'label' => 'Date de demande d\'agrément au CA',
-                    ],
-                    [
-                        'type' => 'documents',
-                        'name' => 'documents',
-                        'label' => 'Joindre le document de demande d\'agrément au CA',
-                    ],
-
-                ],
-                'form_title' => 'Information de demande d\'agrément au CA'
-            ],
-        ],
-        'action_2' => [
-            'title' => 'Réponse de la Demande d\'agrément au CA',
-            'rules' => [
-                'date' => ['required', 'date'],
-                'documents' => ['required', 'array'],
-                'documents.*.name' => ['required', 'string'],
-                'documents.*.file' => ['required', 'file'],
-                'asked_agrement' => ['required', 'in:yes,no'],
-            ],
-            "delay" => 10,
-            "form" => [
-                'fields' => [
-                    [
-                        'type' => 'date',
-                        'name' => 'date',
-                        'label' => 'Date de demande d\'agrément au CA',
-                    ],
-                    [
-                        'type' => 'radio',
-                        'name' => 'asked_agrement',
-                        'label' => 'Avez vous reçu l\'aval du CA ?',
-                    ],
-                    [
-                        'type' => 'documents',
-                        'name' => 'documents',
-                        'label' => 'Joindre le document de réponse du CA',
-                    ],
-                ],
-                'form_title' => 'Information sur la réponse d\'agrément au CA'
-            ],
-        ],
-    ];
-
     public function fileUploads()
     {
         return $this->morphMany(ActionTransferDocument::class, 'uploadable');
@@ -111,19 +111,23 @@ class TaskActionTransfer extends Model
         return $this->belongsTo(ActionTransfer::class);
     }
 
-    public function getFolderAttribute() {
+    public function getFolderAttribute()
+    {
         return 'Transfer d\'action de ' . $this->actionTransfer->owner->name . ' à ' . $this->actionTransfer->buyer->name ?? $this->actionTransfer->tier->name;
     }
 
-    public function getFormAttribute() {
+    public function getFormAttribute()
+    {
 
         $next_task = searchElementIndice(self::TASKS, $this->code);
 
         $form = $next_task['form'];
+
         return $form;
     }
 
-    public function getValidationAttribute() {
+    public function getValidationAttribute()
+    {
 
         return [
             'method' => 'POST',
@@ -132,9 +136,8 @@ class TaskActionTransfer extends Model
         ];
     }
 
-    public function creator() {
+    public function creator()
+    {
         return $this->belongsTo(User::class, 'created_by');
     }
-
 }
-

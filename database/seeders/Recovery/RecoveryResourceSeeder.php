@@ -2,20 +2,15 @@
 
 namespace Database\Seeders\Recovery;
 
-use App\Enums\ConvHypothecState;
 use App\Enums\Recovery\RecoveryStepEnum;
-use App\Models\Guarantee\ConvHypothec;
-use App\Models\Guarantee\ConvHypothecStep;
-use App\Models\Recovery\Recovery;
 use App\Models\Recovery\RecoveryStep;
 use App\Repositories\Recovery\RecoveryRepository;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class RecoveryResourceSeeder extends Seeder
 {
     public function __construct(private RecoveryRepository $recoveryRepository) {}
+
     /**
      * Run the database seeds.
      */
@@ -28,7 +23,8 @@ class RecoveryResourceSeeder extends Seeder
         }
     }
 
-    function getSteps() : array {
+    public function getSteps(): array
+    {
         return [
             [
                 'title' => 'Initiation of friendly recovery',
@@ -39,7 +35,7 @@ class RecoveryResourceSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => "Formalization of the act (Deposit of the act in the minutes of a notary or homologation)",
+                'title' => 'Formalization of the act (Deposit of the act in the minutes of a notary or homologation)',
                 'code' => RecoveryStepEnum::FORMALIZATION,
                 'type' => 'friendly',
                 'rank' => 2,
@@ -57,7 +53,7 @@ class RecoveryResourceSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => "Formal notice to pay addressed to the debtor client",
+                'title' => 'Formal notice to pay addressed to the debtor client',
                 'code' => RecoveryStepEnum::FORMAL_NOTICE,
                 'type' => 'forced',
                 'rank' => 2,
@@ -65,7 +61,7 @@ class RecoveryResourceSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => "The debtor pays his debt",
+                'title' => 'The debtor pays his debt',
                 'code' => RecoveryStepEnum::DEBT_PAYEMENT,
                 'type' => 'forced',
                 'rank' => 3,
@@ -81,7 +77,7 @@ class RecoveryResourceSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => "Obtain an enforceable title",
+                'title' => 'Obtain an enforceable title',
                 'code' => RecoveryStepEnum::EXECUTORY,
                 'type' => 'forced',
                 'rank' => 5,
@@ -89,7 +85,7 @@ class RecoveryResourceSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => "Seizure of the competent jurisdiction",
+                'title' => 'Seizure of the competent jurisdiction',
                 'code' => RecoveryStepEnum::JURISDICTION,
                 'type' => 'forced',
                 'rank' => 6,
@@ -97,13 +93,13 @@ class RecoveryResourceSeeder extends Seeder
                 'max_delay' => 10,
             ],
             [
-                'title' => "Entrust the procedure to a lawyer",
+                'title' => 'Entrust the procedure to a lawyer',
                 'code' => RecoveryStepEnum::ENTRUST_LAWYER,
                 'type' => 'forced',
                 'rank' => 7,
                 'min_delay' => null,
                 'max_delay' => 10,
-            ]
+            ],
         ];
     }
 }

@@ -1,9 +1,10 @@
 <?php
+
 namespace App\Repositories\Contract;
 
 use App\Concerns\Traits\PDF\GeneratePdfTrait;
-use App\Models\Contract\Contract;
 use App\Concerns\Traits\Transfer\AddTransferTrait;
+use App\Models\Contract\Contract;
 use App\Models\Contract\ContractDocument;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -13,16 +14,14 @@ class ContractRepository
     use AddTransferTrait;
     use GeneratePdfTrait;
 
-    public function __construct(private Contract $contract) {
-
-    }
+    public function __construct(private Contract $contract) {}
 
     /**
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return Contract
      */
-    public function store($request) {
+    public function store($request)
+    {
 
         $request = $request->all();
         $request['created_by'] = Auth::user()->id;
@@ -31,7 +30,6 @@ class ContractRepository
         $request['contract_reference'] = $reference;
 
         $request['reference'] = generateReference('CONTRACT', $this->contract);
-
 
         $contract = $this->contract->create($request);
 
@@ -56,9 +54,9 @@ class ContractRepository
 
         $contract->contractParts()->createMany(array_merge($first_part, $second_part));
 
-        foreach($request['contract_documents'] as $item) {
+        foreach ($request['contract_documents'] as $item) {
 
-            $fileUpload = new ContractDocument();
+            $fileUpload = new ContractDocument;
 
             $fileUpload->name = $item['name'];
             $fileUpload->file = uploadFile($item['file'], 'contract_documents');
@@ -70,19 +68,19 @@ class ContractRepository
     }
 
     /**
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return Contract
      */
-    public function update(Contract $contract, $request) {
+    public function update(Contract $contract, $request)
+    {
 
         if (isset($request['contract_documents'])) {
 
             $contract->fileUploads()->delete();
 
-            foreach($request['contract_documents'] as $item) {
+            foreach ($request['contract_documents'] as $item) {
 
-                $fileUpload = new ContractDocument();
+                $fileUpload = new ContractDocument;
 
                 $fileUpload->name = $item['name'];
                 $fileUpload->file = uploadFile($item['file'], 'contract_documents');
@@ -91,7 +89,7 @@ class ContractRepository
             }
         }
 
-        if(isset($request['first_part']) && isset($request['second_part'])) {
+        if (isset($request['first_part']) && isset($request['second_part'])) {
 
             $contract->contractParts()->delete();
 
@@ -119,11 +117,11 @@ class ContractRepository
 
         $contract->update($request);
 
-        if(isset($request['forward_title'])) {
+        if (isset($request['forward_title'])) {
 
             $last_transfer = $contract->transfers()->orderby('created_at', 'desc')->first();
-            if($last_transfer->sender_id === Auth::user()->id) {
-                if( ($last_transfer->status == true) && isset($request['forward_title'])) {
+            if ($last_transfer->sender_id === Auth::user()->id) {
+                if (($last_transfer->status == true) && isset($request['forward_title'])) {
                     $this->add_transfer($contract, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
                 }
             }
@@ -132,7 +130,8 @@ class ContractRepository
         return $contract;
     }
 
-    public function generatePdf($request){
+    public function generatePdf($request)
+    {
 
         $contract = Contract::find($request['contract_id']);
 
@@ -144,17 +143,18 @@ class ContractRepository
         $data['type_category'] = $contract->contractTypeCategory->value;
         $data['tasks'] = $contract->tasks;
 
-        $filename = Str::slug($contract->title). '_'.date('YmdHis') . '.pdf';
+        $filename = Str::slug($contract->title) . '_' . date('YmdHis') . '.pdf';
 
-        $pdf =  $this->generateFromView( 'pdf.contract.fiche_de_suivi',  [
+        $pdf = $this->generateFromView('pdf.contract.fiche_de_suivi', [
             'data' => $data,
-            'details' => $this->getDetails($data)
-        ],$filename);
+            'details' => $this->getDetails($data),
+        ], $filename);
 
         return $pdf;
     }
 
-    public function getDetails($data) {
+    public function getDetails($data)
+    {
         $details = [
             'N° de dossier' => $data['contract_reference'],
             'Statut actuel' => $data['status'],

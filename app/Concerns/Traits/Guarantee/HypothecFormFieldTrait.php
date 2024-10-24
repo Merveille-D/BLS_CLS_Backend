@@ -8,9 +8,6 @@ trait HypothecFormFieldTrait
 {
     /**
      * Get the custom form fields for each step based on the state.
-     *
-     * @param string $state
-     * @return array
      */
     public function getCustomFormFields(string $state): array
     {
@@ -21,15 +18,15 @@ trait HypothecFormFieldTrait
 
                 break;
             case ConvHypothecState::PROPERTY_VERIFIED:
-                $customFields = $this->commonProperties('Insérer document de propriété',  ['file', 'documents', 'documents de la propriété']);
+                $customFields = $this->commonProperties('Insérer document de propriété', ['file', 'documents', 'documents de la propriété']);
 
                 break;
 
             case ConvHypothecState::AGREEMENT_SIGNED:
                 $customFields = $this->commonProperties(ConvHypothecState::STATES_VALUES[ConvHypothecState::AGREEMENT_SIGNED],
-                        ['file', 'documents', 'Documents de la convention signée'],
-                        // ['date', 'registering_date', 'Date signature convention'],
-                    );
+                    ['file', 'documents', 'Documents de la convention signée'],
+                    // ['date', 'registering_date', 'Date signature convention'],
+                );
 
                 break;
             case ConvHypothecState::REGISTER_REQUEST_FORWARDED:
@@ -84,19 +81,19 @@ trait HypothecFormFieldTrait
                     ['date', 'date_sell', 'Renseigner la date de vente fixée'],
                     ['file', 'documents', 'Insérer une copie du cahier de charge'],
                 );
-            break;
-            // case ConvHypothecState::EXPROPRIATION_SALE:
-            //     $customFields = $this->commonProperties(ConvHypothecState::STATES_VALUES[ConvHypothecState::EXPROPRIATION_SALE],
-            //         ['file', 'documents', 'Insérer une copie de la sommation'],
-            //         ['date', 'date_sell', 'Renseigner la date de vente fixée'],
-            //     );
-            // break;
+                break;
+                // case ConvHypothecState::EXPROPRIATION_SALE:
+                //     $customFields = $this->commonProperties(ConvHypothecState::STATES_VALUES[ConvHypothecState::EXPROPRIATION_SALE],
+                //         ['file', 'documents', 'Insérer une copie de la sommation'],
+                //         ['date', 'date_sell', 'Renseigner la date de vente fixée'],
+                //     );
+                // break;
             case ConvHypothecState::EXPROPRIATION_SUMMATION:
                 $customFields = $this->commonProperties(ConvHypothecState::STATES_VALUES[ConvHypothecState::EXPROPRIATION_SUMMATION],
                     ['date', 'summation_date', 'Date d\'envoi de la sommation'],
                     ['file', 'documents', 'Insérer une copie de la sommation'],
                 );
-            break;
+                break;
 
             case ConvHypothecState::ADVERTISEMENT:
                 $customFields = $this->commonProperties(ConvHypothecState::STATES_VALUES[ConvHypothecState::ADVERTISEMENT],
@@ -114,7 +111,6 @@ trait HypothecFormFieldTrait
 
                 break;
 
-
             default:
                 // $customFields = $this->commonProperties('Default title',  ['test', 'test', 'test']);
                 break;
@@ -123,21 +119,22 @@ trait HypothecFormFieldTrait
         return $customFields;
     }
 
-    public function commonProperties($form_title, ...$form_fields) : array {
-        $fields =  [] ;
+    public function commonProperties($form_title, ...$form_fields): array
+    {
+        $fields = [];
         foreach ($form_fields as $key => $form_field) {
-            list($type, $name, $label) = $form_field;
+            [$type, $name, $label] = $form_field;
 
             $fields[] = [
-                "type" => $type,
-                "name" => $name,
-                "label" => $label,
+                'type' => $type,
+                'name' => $name,
+                'label' => $label,
             ];
         }
 
         $customAttribute = [
-            "fields" => $fields,
-            "form_title" => $form_title
+            'fields' => $fields,
+            'form_title' => $form_title,
         ];
 
         return $customAttribute;

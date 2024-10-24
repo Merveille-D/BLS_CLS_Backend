@@ -9,17 +9,14 @@ class TaskSessionAdministratorObserver
     /**
      * Handle the TaskSessionAdministrator "created" event.
      */
-    public function created(TaskSessionAdministrator $taskSessionAdministrator): void
-    {
-
-    }
+    public function created(TaskSessionAdministrator $taskSessionAdministrator): void {}
 
     /**
      * Handle the TaskSessionAdministrator "updated" event.
      */
     public function updated(TaskSessionAdministrator $taskSessionAdministrator): void
     {
-        if($taskSessionAdministrator->status) {
+        if ($taskSessionAdministrator->status) {
             $alertsExist = $taskSessionAdministrator->alerts()->delete();
         }
     }

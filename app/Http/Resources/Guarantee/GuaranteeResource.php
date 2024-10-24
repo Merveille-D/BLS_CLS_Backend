@@ -17,6 +17,7 @@ class GuaranteeResource extends JsonResource
     public function toArray(Request $request): array
     {
         $id = $request->route('guarantee');
+
         return [
             'id' => $this->id,
             'status' => $this->status, // 'created', ...
@@ -30,7 +31,7 @@ class GuaranteeResource extends JsonResource
             'created_by' => $this->created_by,
             // mortage especial fields
             'sell_price_estate' => $this->when($this->type == 'mortgage', $this->extra['sell_price_estate'] ?? null),
-            'is_approved' =>  $this->when($this->type == 'mortgage', $this->extra['is_approved'] ?? false),
+            'is_approved' => $this->when($this->type == 'mortgage', $this->extra['is_approved'] ?? false),
             // movable especial fields
             'formalization_type' => $this->when($this->security == 'movable', $this->extra['formalization_type'] ?? null),
             // autonomous_counter especial fields

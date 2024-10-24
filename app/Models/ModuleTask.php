@@ -2,12 +2,7 @@
 
 namespace App\Models;
 
-use App\Concerns\Traits\Guarantee\HypothecFormFieldTrait;
 use App\Concerns\Traits\Transfer\Transferable;
-use App\Enums\ConvHypothecState;
-use App\Models\Guarantee\ConvHypothec;
-use App\Models\Litigation\Litigation;
-use App\Models\Recovery\Recovery;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -67,7 +62,8 @@ class ModuleTask extends Model
         ');
     }
 
-    public function getModuleIdAttribute() : string|null {
+    public function getModuleIdAttribute(): ?string
+    {
         return $this->taskable?->id;
     }
 }

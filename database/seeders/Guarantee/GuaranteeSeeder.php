@@ -6,19 +6,14 @@ use App\Concerns\Traits\Guarantee\CollateralDefaultSteps;
 use App\Concerns\Traits\Guarantee\DefaultGuaranteeTaskTrait;
 use App\Concerns\Traits\Guarantee\MortgageDefaultStepTrait;
 use App\Concerns\Traits\Guarantee\PersonalDefaultSteps;
-use App\Enums\ConvHypothecState;
-use App\Enums\Guarantee\AutonomousCounterState;
-use App\Enums\Guarantee\AutonomousState;
-use App\Enums\Guarantee\BondState;
-use App\Enums\Guarantee\GuaranteeType;
 use App\Models\Guarantee\GuaranteeStep;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class GuaranteeSeeder extends Seeder
 {
-    use DefaultGuaranteeTaskTrait, MortgageDefaultStepTrait, CollateralDefaultSteps;
+    use CollateralDefaultSteps, DefaultGuaranteeTaskTrait, MortgageDefaultStepTrait;
     use PersonalDefaultSteps;
+
     /**
      * Run the database seeds.
      */
@@ -67,8 +62,9 @@ class GuaranteeSeeder extends Seeder
     {
         //remove options from data before create
         $creating = $data;
-        if (isset($creating['options']))
+        if (isset($creating['options'])) {
             unset($creating['options']);
+        }
 
         $step = GuaranteeStep::create(array_merge($creating, ['parent_id' => $parentId, 'rank' => $data['rank'] ?? 0]));
 

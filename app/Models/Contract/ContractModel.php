@@ -10,17 +10,17 @@ class ContractModel extends Model
 {
     use HasFactory, HasUuids;
 
+    const TYPE = [
+        'file',
+        'folder',
+    ];
+
     protected $fillable = [
         'name',
         'parent_id',
         'type',
         'file_path',
-        'created_by'
-    ];
-
-    const TYPE = [
-        'file',
-        'folder'
+        'created_by',
     ];
 
 }

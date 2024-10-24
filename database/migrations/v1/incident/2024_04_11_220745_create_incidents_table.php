@@ -7,9 +7,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('incidents', function (Blueprint $table) {
@@ -17,7 +14,7 @@ return new class extends Migration
             $table->string('title');
             $table->date('date_received');
 
-            $table->enum('type', Incident::TYPES );
+            $table->enum('type', Incident::TYPES);
 
             $table->uuid('author_incident_id');
             $table->foreign('author_incident_id')->references('id')->on('author_incidents')->onDelete('cascade');
@@ -36,9 +33,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('incidents');

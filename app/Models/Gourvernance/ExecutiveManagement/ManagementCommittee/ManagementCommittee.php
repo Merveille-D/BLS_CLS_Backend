@@ -10,27 +10,11 @@ use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 #[ScopedBy([CountryScope::class])]
 class ManagementCommittee extends Model
 {
     use HasFactory, HasUuids;
-
-    protected $fillable =  [
-        'libelle',
-        'session_reference',
-        'session_date',
-        'status',
-        'reference',
-        'created_by',
-        'pv_file',
-        'pv_file_date',
-        'agenda_file',
-        'agenda_file_date',
-        'convocation_file',
-        'convocation_file_date',
-        'attendance_list_file',
-        'attendance_list_file_date',
-    ];
 
     const SESSION_MEETING_STATUS = [
         'pending',
@@ -50,7 +34,7 @@ class ManagementCommittee extends Model
         'agenda',
         'convocation',
         'attendance_list',
-        'other'
+        'other',
     ];
 
     const TYPE_FILE_FIELD_VALUE = [
@@ -74,6 +58,23 @@ class ManagementCommittee extends Model
         'agenda_file' => 'agenda_file_date',
         'convocation_file' => 'convocation_file_date',
         'attendance_list_file' => 'attendance_list_file_date',
+    ];
+
+    protected $fillable = [
+        'libelle',
+        'session_reference',
+        'session_date',
+        'status',
+        'reference',
+        'created_by',
+        'pv_file',
+        'pv_file_date',
+        'agenda_file',
+        'agenda_file_date',
+        'convocation_file',
+        'convocation_file_date',
+        'attendance_list_file',
+        'attendance_list_file_date',
     ];
 
     public function fileUploads()
@@ -101,11 +102,11 @@ class ManagementCommittee extends Model
             'pv_file',
             'convocation_file',
             'agenda_file',
-            'attendance_list_file'
+            'attendance_list_file',
         ];
 
         foreach ($directFiles as $field) {
-            if (!empty($this->$field)) {
+            if (! empty($this->$field)) {
                 $files[] = [
                     'filename' => __(self::FILE_FIELD_VALUE[$type[$field]]),
                     'file_url' => $this->$field,
@@ -121,16 +122,19 @@ class ManagementCommittee extends Model
                 'type' => 'other',
             ];
         }
+
         return $files;
     }
 
     public function getNextTaskAttribute()
     {
         $task = $this->tasks()->whereNotNull('deadline')->orderBy('deadline', 'asc')->where('status', false)->first();
+
         return new TaskManagementCommitteeResource($task);
     }
 
-    public function creator() {
+    public function creator()
+    {
         return $this->belongsTo(User::class, 'created_by');
     }
 }

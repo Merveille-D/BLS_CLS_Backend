@@ -7,9 +7,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('task_management_committees', function (Blueprint $table) {
@@ -17,10 +14,10 @@ return new class extends Migration
 
             $table->string('libelle')->nullable();
             $table->string('code')->nullable();
-            
+
             $table->datetime('deadline')->nullable();
 
-            $table->enum('type', TaskManagementCommittee::SESSION_TASK_TYPE );
+            $table->enum('type', TaskManagementCommittee::SESSION_TASK_TYPE);
             $table->boolean('status')->default(false);
 
             $table->string('responsible')->nullable();
@@ -39,9 +36,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('task_management_committees');

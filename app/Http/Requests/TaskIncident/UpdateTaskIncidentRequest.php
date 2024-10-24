@@ -7,7 +7,6 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class UpdateTaskIncidentRequest extends FormRequest
 {
@@ -28,9 +27,9 @@ class UpdateTaskIncidentRequest extends FormRequest
     {
         $rules = [];
 
-        if (!$request->has('type')) {
+        if (! $request->has('type')) {
             $rules['type'] = 'required';
-        }else {
+        } else {
             $task = searchElementIndice(TaskIncident::TASKS, $request->input('type'));
             $rules = $task['rules'];
             $rules['task_incident_id'] = ['required', 'uuid'];
@@ -41,8 +40,8 @@ class UpdateTaskIncidentRequest extends FormRequest
         $rules['forward_title'] = ['string', 'required_with_all:deadline_transfer,description,collaborators'];
         $rules['deadline_transfer'] = ['date', 'required_with_all:forward_title,description,collaborators'];
         $rules['description'] = ['string', 'required_with_all:forward_title,deadline_transfer,collaborators'];
-        $rules['collaborators'] = ['required_with_all:forward_title,deadline_transfer,description','array'];
-        $rules['collaborators.*'] = ['required_with_all:forward_title,deadline_transfer,description','uuid'];
+        $rules['collaborators'] = ['required_with_all:forward_title,deadline_transfer,description', 'array'];
+        $rules['collaborators.*'] = ['required_with_all:forward_title,deadline_transfer,description', 'uuid'];
 
         return $rules;
     }
@@ -52,7 +51,7 @@ class UpdateTaskIncidentRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

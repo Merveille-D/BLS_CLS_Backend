@@ -7,21 +7,22 @@ use App\Http\Requests\Litigation\AddLitigationRequest;
 use App\Http\Requests\Litigation\AssignUserRequest;
 use App\Http\Requests\Litigation\UpdateAmountRequest;
 use App\Http\Requests\Litigation\UpdateLitigationRequest;
-use App\Http\Resources\Litigation\LitigationResource;
 use App\Models\Litigation\Litigation;
 use App\Repositories\Litigation\LitigationRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class LitigationController extends Controller
 {
     /**
      * __construct
      *
-     * @param  mixed $litigationRepo
+     * @param  mixed  $litigationRepo
      * @return void
      */
     public function __construct(private LitigationRepository $litigationRepo) {}
+
     /**
      * Display a listing of the resource.
      */
@@ -39,9 +40,11 @@ class LitigationController extends Controller
             DB::beginTransaction();
             $data = $this->litigationRepo->add($request);
             DB::commit();
+
             return api_response($success = true, 'Contentieux ajouté avec succès', $data);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             DB::rollBack();
+
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
@@ -61,6 +64,7 @@ class LitigationController extends Controller
     {
         //
     }
+
     /**
      * Update the specified resource in storage.
      */
@@ -70,12 +74,15 @@ class LitigationController extends Controller
             DB::beginTransaction();
             $data = $this->litigationRepo->edit($litigation, $request);
             DB::commit();
+
             return api_response($success = true, 'Contentieux modifié avec succès', $data);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             DB::rollBack();
+
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
+
     /**
      * Update the specified resource in storage.
      */
@@ -83,8 +90,9 @@ class LitigationController extends Controller
     {
         try {
             $data = $this->litigationRepo->assign($litigation, $request);
+
             return api_response($success = true, 'Contentieux modifié avec succès', $data);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
@@ -96,11 +104,13 @@ class LitigationController extends Controller
     {
         try {
             $data = $this->litigationRepo->updateAmount($litigation, $request);
+
             return api_response($success = true, 'Provisions ajoutées  avec succès', $data);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }
+
     /**
      * Update the estimated amount field.
      */
@@ -108,21 +118,23 @@ class LitigationController extends Controller
     {
         try {
             $data = $this->litigationRepo->archive($litigation);
+
             return api_response($success = true, 'Archivage effectué avec succès', $data);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }
 
     /**
-        * Update the added amount field.
-        */
+     * Update the added amount field.
+     */
     public function updateAddedAmount(UpdateAmountRequest $request, $litigation)
     {
         try {
             $data = $this->litigationRepo->updateAddedAmount($litigation, $request->amount);
+
             return api_response($success = true, 'Montant ajouté mis à jour avec succès', $data);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }
@@ -134,22 +146,23 @@ class LitigationController extends Controller
     {
         try {
             $data = $this->litigationRepo->updateRemainingAmount($litigation, $request->amount);
+
             return api_response($success = true, 'Montant restant mis à jour avec succès', $data);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }
 
     /**
      * cumulation of provisions
-
-    */
+     */
     public function provisionStats()
     {
         try {
             $data = $this->litigationRepo->provisionStats();
+
             return api_response($success = true, 'Statistiques des provisions', $data);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }
@@ -161,8 +174,9 @@ class LitigationController extends Controller
     {
         try {
             $data = $this->litigationRepo->generatePdf($litigation);
+
             return $data;
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }

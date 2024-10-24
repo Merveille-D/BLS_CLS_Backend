@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 #[ObservedBy([TransferObserver::class])]
 class Transfer extends Model
 {
-    use HasFactory, HasUuids, Alertable;
+    use Alertable, HasFactory, HasUuids;
 
     protected $fillable = [
         'status',
@@ -28,14 +28,14 @@ class Transfer extends Model
         'status' => 'boolean',
     ];
 
-    function sender()
+    public function sender()
     {
         return $this->belongsTo(User::class, 'sender_id');
     }
 
     public function collaborators()
     {
-        return $this->belongsToMany(User::class, 'transfer_user',/*  'user_id', 'transfer_id' */);
+        return $this->belongsToMany(User::class, 'transfer_user'/*  'user_id', 'transfer_id' */);
     }
 
     public function transferable()
@@ -58,7 +58,8 @@ class Transfer extends Model
         return $this->hasMany(TransferEvaluation::class);
     }
 
-    public function getModuleIdAttribute() : string|null {
+    public function getModuleIdAttribute(): ?string
+    {
         return $this->transferable?->id;
     }
 }

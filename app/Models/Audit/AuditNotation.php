@@ -19,25 +19,11 @@ use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Http;
+
 #[ScopedBy([CountryScope::class])]
 class AuditNotation extends Model
 {
-    use HasFactory, HasUuids, Alertable, Transferable;
-
-    protected $fillable = [
-        'note',
-        'status',
-        'observation',
-        'module_id',
-        'module',
-        'created_by',
-        'parent_id',
-        'reference',
-        'audit_reference'
-    ];
-
-    protected $appends = ['indicators'];
+    use Alertable, HasFactory, HasUuids, Transferable;
 
     const MODELS_MODULES_VALUES = [
         'contracts' => 'audit.contracts',
@@ -53,8 +39,8 @@ class AuditNotation extends Model
     ];
 
     const MODELS_MODULES = [
-        'contracts'=> Contract::class,
-        'conventionnal_hypothec'=> ConvHypothec::class,
+        'contracts' => Contract::class,
+        'conventionnal_hypothec' => ConvHypothec::class,
         'litigation' => Litigation::class,
         'incidents' => Incident::class,
         'recovery' => Recovery::class,
@@ -65,22 +51,38 @@ class AuditNotation extends Model
         'guarantees_security_personal' => Guarantee::class,
     ];
 
+    protected $fillable = [
+        'note',
+        'status',
+        'observation',
+        'module_id',
+        'module',
+        'created_by',
+        'parent_id',
+        'reference',
+        'audit_reference',
+    ];
+
+    protected $appends = ['indicators'];
+
     public function performances()
     {
         return $this->hasMany(AuditNotationPerformance::class);
     }
 
-    public function getLastAuditNotationAttribute(){
+    public function getLastAuditNotationAttribute()
+    {
 
         $transfer_notation = self::where('parent_id', $this->id)
-        ->whereNotNull('note')
-        ->orderBy('created_at', 'desc')
-        ->first();
+            ->whereNotNull('note')
+            ->orderBy('created_at', 'desc')
+            ->first();
 
         return ($transfer_notation) ? $transfer_notation : self::find($this->id);
     }
 
-    public function getIndicatorsAttribute() {
+    public function getIndicatorsAttribute()
+    {
 
         $indicators = [];
         foreach ($this->performances as $audit_performance) {
@@ -89,26 +91,30 @@ class AuditNotation extends Model
                 'note' => $audit_performance->note,
             ];
         }
+
         return $indicators;
     }
 
-    public function getTitleAttribute() {
+    public function getTitleAttribute()
+    {
 
         $model = self::MODELS_MODULES[$this->module];
 
         $response = $model::query()
-                      ->when($this->module == 'guarantees_security_movable', function($query) {
-                          return $query->where('security', 'movable');
-                      })
-                      ->when($this->module == 'guarantees_security_personal', function($query) {
-                          return $query->where('security', 'personal');
-                      })
-                      ->where('id', $this->module_id)
-                      ->first();
+            ->when($this->module == 'guarantees_security_movable', function ($query) {
+                return $query->where('security', 'movable');
+            })
+            ->when($this->module == 'guarantees_security_personal', function ($query) {
+                return $query->where('security', 'personal');
+            })
+            ->where('id', $this->module_id)
+            ->first();
+
         return $response->libelle ?? $response->name ?? $response->title;
     }
 
-    public function creator() {
+    public function creator()
+    {
         return $this->belongsTo(User::class, 'created_by');
     }
 }

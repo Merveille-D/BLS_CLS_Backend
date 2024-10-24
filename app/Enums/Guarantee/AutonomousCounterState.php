@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Enums\Guarantee;
 
-enum AutonomousCounterState: string{
+enum AutonomousCounterState: string
+{
     const CREATED = 'created';
     const REDACTION = 'redaction';
     const VERIFICATION = 'verification';

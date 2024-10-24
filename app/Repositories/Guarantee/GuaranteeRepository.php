@@ -10,7 +10,6 @@ use App\Http\Resources\Guarantee\GuaranteeTaskResource;
 use App\Models\Guarantee\Guarantee;
 use App\Models\Guarantee\GuaranteeStep;
 use App\Models\Guarantee\GuaranteeTask;
-use App\Models\Guarantee\HypothecTask;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -18,12 +17,14 @@ use Illuminate\Support\Str;
 
 class GuaranteeRepository
 {
-    use GeneratePdfTrait, AddTransferTrait;
+    use AddTransferTrait, GeneratePdfTrait;
+
     public function __construct(
         private Guarantee $guarantee_model
-    ) {
-    }
-    public function getList($request) : ResourceCollection {
+    ) {}
+
+    public function getList($request): ResourceCollection
+    {
         $guarantees = $this->guarantee_model->with('tasks')
             ->when($request->security == 'personal', function ($query) {
                 return $query->whereSecurity('personal');
@@ -49,35 +50,39 @@ class GuaranteeRepository
             })
             ->orderBy('created_at', 'desc')
             ->paginate(DEFAULT_DATA_LIMIT);
+
         return GuaranteeResource::collection($guarantees);
     }
 
     public function add($request): JsonResource
     {
-        $data = array(
+        $data = [
             'type' => $request->type,
             'phase' => 'formalization',
-            'reference' => generateReference(GuaranteeType::CODES[$request->type] , $this->guarantee_model),
+            'reference' => generateReference(GuaranteeType::CODES[$request->type], $this->guarantee_model),
             'name' => $request->name,
-            'contract_id' =>  $request->contract_id,
+            'contract_id' => $request->contract_id,
             'created_by' => auth()->id(),
-        );
-        if ($request->security)
+        ];
+        if ($request->security) {
             $data['security'] = $request->security;
-        if ($request->formalization_type)
+        }
+        if ($request->formalization_type) {
             $data['extra'] = ['formalization_type' => $request->formalization_type];
-        if ($request->autonomous_id)
+        }
+        if ($request->autonomous_id) {
             $data['extra'] = ['autonomous_id' => $request->autonomous_id];
+        }
 
         $guarantee = $this->guarantee_model->create($data);
         // dd($guarantee->type);
         $steps = GuaranteeStep::whereGuaranteeType($guarantee->type)
-                    ->whereStepType('formalization')
-                    ->whereNull('parent_id')
-                    ->when($guarantee->type == 'stock' || $guarantee->security == 'collateral' , function ($query) use ($request) {
-                        return $query->whereFormalizationType($request->formalization_type);
-                    })
-                    ->get();
+            ->whereStepType('formalization')
+            ->whereNull('parent_id')
+            ->when($guarantee->type == 'stock' || $guarantee->security == 'collateral', function ($query) use ($request) {
+                return $query->whereFormalizationType($request->formalization_type);
+            })
+            ->get();
 
         $this->saveTasks($steps, $guarantee);
         $this->updateTaskState($guarantee);
@@ -104,19 +109,20 @@ class GuaranteeRepository
         return $guarantee->delete();
     }
 
-    public function saveTasks($steps, $guarantee) {
+    public function saveTasks($steps, $guarantee)
+    {
         $past_task_deadline = null;
         foreach ($steps as $key => $step) {
             $past_task_deadline = Carbon::parse($past_task_deadline)->addDays($step->max_delay);
-            $task = new GuaranteeTask();
+            $task = new GuaranteeTask;
             $task->code = $step->code;
             $task->title = $step->title;
             $task->step_id = $step->id;
             $task->rank = $step->rank;
             $task->type = $step->step_type;
-            if($guarantee->security == 'property') {
+            if ($guarantee->security == 'property') {
                 $task->max_deadline = $past_task_deadline;
-            }else {
+            } else {
                 $task->max_deadline = $step->code == 'created' ? now() : null;
             }
             $task->created_by = auth()->id();
@@ -126,14 +132,16 @@ class GuaranteeRepository
         }
     }
 
-    public function updateTaskState($guarantee) {
+    public function updateTaskState($guarantee)
+    {
         $currentTask = $guarantee->next_task;
         // dd($currentTask);
         if ($currentTask) {
             $currentTask->status = true;
             $currentTask->completed_by = auth()->id();
-            if ($currentTask->completed_at == null)
+            if ($currentTask->completed_at == null) {
                 $currentTask->completed_at = Carbon::now();
+            }
             $currentTask->save();
         }
 
@@ -147,6 +155,7 @@ class GuaranteeRepository
                 $task->max_deadline = $past_task_deadline;
                 $task->save();
             }
+
             return;
         }
 
@@ -154,26 +163,29 @@ class GuaranteeRepository
         if ($nextTask) {
             $data = $this->setDeadline($guarantee);
 
-            if ($data == [])
+            if ($data == []) {
                 return false;
+            }
 
             $nextTask->update($data);
         }
     }
 
-    function setDeadline($guarantee) {
+    public function setDeadline($guarantee)
+    {
         $nextTask = $guarantee->next_task;
         $defaultTask = GuaranteeStep::where('code', $nextTask->code)->first();
 
         $minDelay = $defaultTask->min_delay;
         $maxDelay = $defaultTask->max_delay;
         // dd($minDelay, $maxDelay);
-        $data = array();
+        $data = [];
         //date by hypothec state
         // $operationDate = $this->getOperationDateByState($guarantee);
         $operationDate = $guarantee->current_task->completed_at ?? null;
-        if ($operationDate == null)
+        if ($operationDate == null) {
             return $data;
+        }
 
         $operationDate = substr($operationDate, 0, 10);
         $formatted_date = Carbon::createFromFormat('Y-m-d', $operationDate);
@@ -181,45 +193,53 @@ class GuaranteeRepository
         if ($minDelay && $maxDelay) {
             $data['min_deadline'] = $formatted_date->copy()->addDays($minDelay);
             $data['max_deadline'] = $formatted_date->copy()->addDays($maxDelay);
+
             return $data;
-        }elseif ($minDelay) {
+        } elseif ($minDelay) {
             $data['min_deadline'] = $formatted_date->addDays($minDelay);
+
             return $data;
-        }elseif ($maxDelay) {
+        } elseif ($maxDelay) {
             $data['max_deadline'] = $formatted_date->addDays($maxDelay);
+
             return $data;
         }
+
         return $data;
     }
 
-    public function realization($guarantee) {
-        if (!$guarantee->has_recovery)
+    public function realization($guarantee)
+    {
+        if (! $guarantee->has_recovery) {
             return;
+        }
 
         $steps = GuaranteeStep::whereNull('parent_id')->whereGuaranteeType($guarantee->type)->whereStepType('realization')->get();
 
         $this->saveTasks($steps, $guarantee);
 
-            $guarantee->phase = 'realization';
-            $guarantee->save();
+        $guarantee->phase = 'realization';
+        $guarantee->save();
 
         return GuaranteeTaskResource::collection($guarantee->tasks);
     }
 
-    public function generatePdf($id) {
+    public function generatePdf($id)
+    {
         $guarantee = $this->guarantee_model->findOrFail($id);
-        $filename = Str::slug($guarantee->name). '_'.date('YmdHis') . '.pdf';
+        $filename = Str::slug($guarantee->name) . '_' . date('YmdHis') . '.pdf';
 
-        $pdf =  $this->generateFromView( 'pdf.guarantee.guarantee',  [
+        $pdf = $this->generateFromView('pdf.guarantee.guarantee', [
             'model' => $guarantee,
-            'details' => $this->getDetails($guarantee)
+            'details' => $this->getDetails($guarantee),
         ],
-        $filename);
+            $filename);
 
         return $pdf;
     }
 
-    public function getDetails($guarantee) {
+    public function getDetails($guarantee)
+    {
         $details = [
             'Référence' => $guarantee->reference,
             'Type' => $guarantee->readable_type,
@@ -235,14 +255,15 @@ class GuaranteeRepository
         return $details;
     }
 
-    public function transfer($data, $id) {
+    public function transfer($data, $id)
+    {
         $guarantee = $this->guarantee_model->findOrFail($id);
 
         $last_transfer = $guarantee->transfers()->orderby('created_at', 'desc')->first();
         if (blank($last_transfer)) {
             $this->add_transfer($guarantee, $data['forward_title'], $data['deadline_transfer'], $data['description'], $data['collaborators']);
-        }else if ($last_transfer?->sender_id === auth()->id()) {
-            if( ($last_transfer->status == true) && isset($data['forward_title'])) {
+        } elseif ($last_transfer?->sender_id === auth()->id()) {
+            if (($last_transfer->status == true) && isset($data['forward_title'])) {
                 $this->add_transfer($guarantee, $data['forward_title'], $data['deadline_transfer'], $data['description'], $data['collaborators']);
             }
         }

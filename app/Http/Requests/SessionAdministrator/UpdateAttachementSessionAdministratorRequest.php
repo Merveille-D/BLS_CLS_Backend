@@ -29,8 +29,8 @@ class UpdateAttachementSessionAdministratorRequest extends FormRequest
             'session_administrator_id' => ['required', 'uuid'],
             'files' => ['required', 'array'],
             'files.*' => ['required', 'array'],
-            'files.*.type' => ['required',  Rule::in(SessionAdministrator::TYPE_FILE_FIELD) ],
-            'files.*.file' => ['required', 'file']
+            'files.*.type' => ['required',  Rule::in(SessionAdministrator::TYPE_FILE_FIELD)],
+            'files.*.file' => ['required', 'file'],
         ];
     }
 
@@ -39,7 +39,7 @@ class UpdateAttachementSessionAdministratorRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

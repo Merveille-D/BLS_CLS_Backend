@@ -12,11 +12,13 @@ trait GuaranteeFormFieldTrait
 {
     use HypothecFormFieldTrait;
 
-    public function loadFormAttributeBasedTask($task) {
+    public function loadFormAttributeBasedTask($task)
+    {
         $form = $task?->step?->extra['form'] ?? [];
 
-        if (empty($form))
+        if (empty($form)) {
             return [];
+        }
 
         $form_fields = [];
 
@@ -32,7 +34,8 @@ trait GuaranteeFormFieldTrait
         return $form_fields;
     }
 
-    public function loadFormAttributeBasedOnType($guarantee) {
+    public function loadFormAttributeBasedOnType($guarantee)
+    {
 
         switch ($guarantee->type) {
             case GuaranteeType::BONDING:
@@ -48,22 +51,19 @@ trait GuaranteeFormFieldTrait
 
             case GuaranteeType::STOCK:
                 return $this->stockFormFields($this->code);
-            break;
+                break;
             case GuaranteeType::MORTGAGE:
                 return $this->getCustomFormFields($this->code);
-            break;
+                break;
 
             default:
-                # code...
+                // code...
                 break;
         }
     }
 
     /**
      * Get the custom form fields for each step based on the state.
-     *
-     * @param string $state
-     * @return array
      */
     public function bondFormFields(string $state): array
     {
@@ -72,49 +72,49 @@ trait GuaranteeFormFieldTrait
         switch ($state) {
             case BondState::CREATED:
 
-            break;
+                break;
             case BondState::REDACTION:
                 $formFields = $this->commonProperties(BondState::STATES_VALUES[BondState::REDACTION],
-                        ['file', 'documents', 'Documents du contrat de cautionnement'],
-                        ['date', 'completed_at', 'Date du contrat'],
-                    );
-            break;
+                    ['file', 'documents', 'Documents du contrat de cautionnement'],
+                    ['date', 'completed_at', 'Date du contrat'],
+                );
+                break;
             case BondState::VERIFICATION:
 
-            break;
+                break;
             case BondState::COMMUNICATION:
                 $formFields = $this->commonProperties(BondState::STATES_VALUES[BondState::COMMUNICATION],
-                        ['file', 'documents', 'Documents de la communication'],
-                        ['date', 'completed_at', 'Date de la communication'],
-                    );
-            break;
+                    ['file', 'documents', 'Documents de la communication'],
+                    ['date', 'completed_at', 'Date de la communication'],
+                );
+                break;
             case BondState::DEBTOR_FORMAL_NOTICE:
                 $formFields = $this->commonProperties(BondState::STATES_VALUES[BondState::DEBTOR_FORMAL_NOTICE],
-                        ['file', 'documents', 'Documents de la mise en demeure'],
-                        ['date', 'completed_at', 'Date de la mise en demeure'],
-                    );
-            break;
+                    ['file', 'documents', 'Documents de la mise en demeure'],
+                    ['date', 'completed_at', 'Date de la mise en demeure'],
+                );
+                break;
             case BondState::EXECUTION:
                 $formFields = $this->commonProperties(BondState::STATES_VALUES[BondState::EXECUTION],
-                        ['radio', 'is_executed', 'Exécution par le debiteur'],
-                        // ['date', 'completed_at', 'Date de l\'exécution'],
-                    );
-            break;
+                    ['radio', 'is_executed', 'Exécution par le debiteur'],
+                    // ['date', 'completed_at', 'Date de l\'exécution'],
+                );
+                break;
             case BondState::INFORM_GUARANTOR:
 
-            break;
+                break;
             case BondState::GUARANTOR_FORMAL_NOTICE:
                 $formFields = $this->commonProperties(BondState::STATES_VALUES[BondState::GUARANTOR_FORMAL_NOTICE],
-                        ['file', 'documents', 'Documents de la mise en demeure'],
-                        ['date', 'completed_at', 'Date de la mise en demeure'],
-                    );
-            break;
+                    ['file', 'documents', 'Documents de la mise en demeure'],
+                    ['date', 'completed_at', 'Date de la mise en demeure'],
+                );
+                break;
             case BondState::GUARANTOR_PAYMENT:
                 $formFields = $this->commonProperties(BondState::STATES_VALUES[BondState::GUARANTOR_PAYMENT],
-                        ['radio', 'is_paid', 'Paiement par la caution'],
-                        ['date', 'completed_at', 'Date du paiement'],
-                    );
-            break;
+                    ['radio', 'is_paid', 'Paiement par la caution'],
+                    ['date', 'completed_at', 'Date du paiement'],
+                );
+                break;
 
             default:
                 // do not display any form fields
@@ -127,10 +127,10 @@ trait GuaranteeFormFieldTrait
     /**
      * Provide form fields for each autonomous guarantee state
      *
-     * @param  mixed $state
-     * @return array
+     * @param  mixed  $state
      */
-    public function autonomousFormFields(string $state) : array {
+    public function autonomousFormFields(string $state): array
+    {
         $form_fields = [];
 
         switch ($state) {
@@ -140,28 +140,28 @@ trait GuaranteeFormFieldTrait
                     ['file', 'documents', 'Documents du contrat'],
                     ['date', 'completed_at', 'Contract date'],
                 );
-            break;
+                break;
             case AutonomousState::VERIFICATION:
 
-            break;
+                break;
             case AutonomousState::SIGNATURE:
                 $form_fields = $this->commonProperties(AutonomousState::STATES_VALUES[AutonomousState::SIGNATURE],
                     ['select', 'contract_type', 'Choisir la durée du contrat'],
                 );
-            break;
+                break;
 
             case AutonomousState::PAYEMENT_REQUEST:
                 $form_fields = $this->commonProperties(AutonomousState::STATES_VALUES[AutonomousState::PAYEMENT_REQUEST],
                     ['file', 'documents', 'Documents de la demande de paiement'],
                     ['date', 'completed_at', 'Date de la demande'],
                 );
-            break;
+                break;
             case AutonomousState::REQUEST_VERIFICATION:
                 $form_fields = $this->commonProperties(AutonomousState::STATES_VALUES[AutonomousState::REQUEST_VERIFICATION],
                     ['radio', 'is_paid', 'Paiement par le garant'],
                     ['date', 'completed_at', 'Date de la vérification'],
                 );
-            break;
+                break;
 
             default:
                 // do not display any form fields
@@ -171,14 +171,11 @@ trait GuaranteeFormFieldTrait
         return $form_fields;
     }
 
-
     /**
      * provide form fields for each counter autonomous state
-     *
-     * @param  string $state
-     * @return array
      */
-    public function counterAutonomousFormFields(string $state) : array {
+    public function counterAutonomousFormFields(string $state): array
+    {
         $form_fields = [];
 
         switch ($state) {
@@ -187,11 +184,11 @@ trait GuaranteeFormFieldTrait
                     ['file', 'documents', 'Documents du contrat'],
                     ['date', 'completed_at', 'Contract date'],
                 );
-            break;
+                break;
 
             case AutonomousCounterState::VERIFICATION:
 
-            break;
+                break;
 
             case AutonomousCounterState::SIGNATURE:
                 $form_fields = $this->commonProperties(AutonomousState::STATES_VALUES[AutonomousState::SIGNATURE],
@@ -220,7 +217,7 @@ trait GuaranteeFormFieldTrait
                 break;
 
             default:
-                # code...
+                // code...
                 break;
         }
 
@@ -229,12 +226,9 @@ trait GuaranteeFormFieldTrait
 
     /**
      * Provide form fields for each stock guarantee state
-     *
-     * @param  string $state
-     * @return array
      */
-
-    public function stockFormFields(string $state) : array {
+    public function stockFormFields(string $state): array
+    {
         $form_fields = [];
 
         switch ($state) {
@@ -243,55 +237,55 @@ trait GuaranteeFormFieldTrait
                     ['file', 'documents', 'Documents du contrat'],
                     ['date', 'completed_at', 'Contract date'],
                 );
-            break;
+                break;
             case StockState::NOTARY_DEPOSIT:
                 $form_fields = $this->commonProperties(StockState::STATES_VALUES[StockState::NOTARY_DEPOSIT],
                     ['file', 'documents', 'Documents du contrat'],
                     ['date', 'completed_at', 'Contract date'],
                 );
-            break;
+                break;
             case StockState::NOTARY_TRANSMISSION:
                 $form_fields = $this->commonProperties(StockState::STATES_VALUES[StockState::NOTARY_TRANSMISSION],
                     ['file', 'documents', 'Documents du contrat'],
                     ['date', 'completed_at', 'Contract date'],
                 );
-            break;
+                break;
             case StockState::CONVENTION_OBTENTION:
                 $form_fields = $this->commonProperties(StockState::STATES_VALUES[StockState::CONVENTION_OBTENTION],
                     ['file', 'documents', 'Documents du contrat'],
                     ['date', 'completed_at', 'Contract date'],
                 );
-            break;
+                break;
             case StockState::RCCM_REGISTRATION:
                 $form_fields = $this->commonProperties(StockState::STATES_VALUES[StockState::RCCM_REGISTRATION],
                     ['file', 'documents', 'Documents du contrat'],
                     ['date', 'completed_at', 'Contract date'],
                 );
-            break;
+                break;
             case StockState::RCCM_PROOF:
                 $form_fields = $this->commonProperties(StockState::STATES_VALUES[StockState::RCCM_PROOF],
                     ['file', 'documents', 'Documents du contrat'],
                     ['date', 'completed_at', 'Contract date'],
                 );
-            break;
+                break;
             case StockState::GUARANTEE_OBTENTION:
                 $form_fields = $this->commonProperties(StockState::STATES_VALUES[StockState::GUARANTEE_OBTENTION],
                     ['file', 'documents', 'Documents du contrat'],
                     ['date', 'completed_at', 'Contract date'],
                 );
-            break;
+                break;
             case StockState::HUISSIER_NOTIFICATION:
                 $form_fields = $this->commonProperties(StockState::STATES_VALUES[StockState::HUISSIER_NOTIFICATION],
                     ['file', 'documents', 'Documents du contrat'],
                     ['date', 'completed_at', 'Contract date'],
                 );
-            break;
+                break;
             case StockState::DOMICILIATION_OBTENTION:
                 $form_fields = $this->commonProperties(StockState::STATES_VALUES[StockState::DOMICILIATION_OBTENTION],
                     ['file', 'documents', 'Documents du contrat'],
                     ['date', 'completed_at', 'Contract date'],
                 );
-            break;
+                break;
 
             default:
                 // do not display any form fields
@@ -301,21 +295,22 @@ trait GuaranteeFormFieldTrait
         return $form_fields;
     }
 
-    public function commonProperties($form_title, ...$form_fields) : array {
-        $fields =  [] ;
+    public function commonProperties($form_title, ...$form_fields): array
+    {
+        $fields = [];
         foreach ($form_fields as $key => $form_field) {
-            list($type, $name, $label) = $form_field;
+            [$type, $name, $label] = $form_field;
 
             $fields[] = [
-                "type" => $type,
-                "name" => $name,
-                "label" => __('security.' . $label),
+                'type' => $type,
+                'name' => $name,
+                'label' => __('security.' . $label),
             ];
         }
 
         $customAttribute = [
-            "fields" => $fields,
-            "form_title" => __('security.' . $form_title),
+            'fields' => $fields,
+            'form_title' => __('security.' . $form_title),
         ];
 
         return $customAttribute;

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories\Watch;
 
 use App\Concerns\Traits\PDF\GeneratePdfTrait;
@@ -11,10 +12,12 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Throwable;
 
 class LegalWatchRepository
 {
     use GeneratePdfTrait;
+
     /**
      * __construct
      *
@@ -27,74 +30,78 @@ class LegalWatchRepository
     /**
      * get legal watches list
      *
-     * @param  mixed $request
-     * @return ResourceCollection
+     * @param  mixed  $request
      */
-    public function getList($request) : ResourceCollection {
+    public function getList($request): ResourceCollection
+    {
         $search = $request->search;
         $type = $request->type;
         $query = $this->watch_model
-                ->when(!blank($type) && $type == 'mixte', function($qry) use($type) {
-                    $qry->whereIn('type',  [WatchType::LEGISLATION, WatchType::REGULATION]);
-                })
-                ->when(!blank($type) && $type != 'mixte', function($qry) use($type) {
-                    $qry->whereType($type);
-                })
-                ->when(!blank($search), function($qry) use($search) {
-                    $qry->where('name', 'like', '%'.$search.'%');
-                })
-                ->orderBy('created_at', 'desc')
-                ->paginate();
-
+            ->when(! blank($type) && $type == 'mixte', function ($qry) {
+                $qry->whereIn('type', [WatchType::LEGISLATION, WatchType::REGULATION]);
+            })
+            ->when(! blank($type) && $type != 'mixte', function ($qry) use ($type) {
+                $qry->whereType($type);
+            })
+            ->when(! blank($search), function ($qry) use ($search) {
+                $qry->where('name', 'like', '%' . $search . '%');
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate();
 
         return LegalWatchResource::collection($query);
     }
+
     /**
      * add new legal watch resource
      *
-     * @param  mixed $request
-     * @return JsonResource
+     * @param  mixed  $request
      */
-    public function add($request) : JsonResource {
+    public function add($request): JsonResource
+    {
         $legal_watch = $this->watch_model->create(array_merge($request->all(),
-                        [
-                            'created_by' => auth()->id(),
-                            'reference' => generateReference('VJ', $this->watch_model)
-                        ]));
+            [
+                'created_by' => auth()->id(),
+                'reference' => generateReference('VJ', $this->watch_model),
+            ]));
 
-        if ($legal_watch && !blank($legal_watch->mail_addresses) && count($legal_watch->mail_addresses) >=1) {
+        if ($legal_watch && ! blank($legal_watch->mail_addresses) && count($legal_watch->mail_addresses) >= 1) {
             $this->sendMessage($legal_watch);
         }
+
         return new LegalWatchResource($legal_watch);
     }
 
-    public function sendMessage($legal_watch) {
+    public function sendMessage($legal_watch)
+    {
         try {
             foreach ($legal_watch->mail_addresses as $email) {
                 Mail::to($email)->send(new LegalWatchEmail($legal_watch));
             }
             $legal_watch->is_sent = true;
             $legal_watch->save();
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             Log::error($th->getMessage());
         }
     }
 
-    public function generatePdf($id) {
+    public function generatePdf($id)
+    {
         $legal_watch = $this->watch_model->find($id);
 
-        $filename = Str::slug($legal_watch->name). '_'.date('YmdHis') . '.pdf';
+        $filename = Str::slug($legal_watch->name) . '_' . date('YmdHis') . '.pdf';
 
-        $pdf =  $this->generateFromView( 'pdf.legal_watch.legal_watch',  [
+        $pdf = $this->generateFromView('pdf.legal_watch.legal_watch', [
             'legal_watch' => $legal_watch,
-            'details' => $this->getDetails($legal_watch)
+            'details' => $this->getDetails($legal_watch),
         ],
-        $filename);
+            $filename);
 
         return $pdf;
     }
 
-    public function getDetails($legal_watch) {
+    public function getDetails($legal_watch)
+    {
         $details = [
             'Référence' => $legal_watch->reference ?? null,
             'Intitulé' => $legal_watch->name ?? null,
@@ -102,11 +109,11 @@ class LegalWatchRepository
         ];
         if ($legal_watch->type == WatchType::LEGAL) {
             $details['Date de l\'événement'] = $legal_watch->event_date ?? null;
-            $details['Juridiction'] = __('litigation.'.$legal_watch->jurisdiction?->name) ?? null;
+            $details['Juridiction'] = __('litigation.' . $legal_watch->jurisdiction?->name) ?? null;
             $details['Lieu de la juridiction'] = $legal_watch->jurisdiction_location ?? null;
         } else {
             $details['Date de prise d\'effet'] = $legal_watch->effective_date ?? null;
-            $details['Matière'] = __('litigation.'.$legal_watch->nature?->name )?? null;
+            $details['Matière'] = __('litigation.' . $legal_watch->nature?->name) ?? null;
             $details['Référence de l\'affaire'] = $legal_watch->case_number ?? null;
         }
 

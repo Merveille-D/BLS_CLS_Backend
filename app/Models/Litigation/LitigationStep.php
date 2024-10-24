@@ -10,7 +10,7 @@ class LitigationStep extends Model
 {
     use HasFactory, HasUuids;
 
-    protected $fillable =  [
-        'code', 'title', 'max_delay', 'min_delay', 'type'
+    protected $fillable = [
+        'code', 'title', 'max_delay', 'min_delay', 'type',
     ];
 }

@@ -4,9 +4,7 @@ namespace App\Models\Recovery;
 
 use App\Concerns\Traits\Alert\Alertable;
 use App\Concerns\Traits\Recovery\RecoveryFormFieldTrait;
-use App\Models\Guarantee\ConvHypothec;
 use App\Models\Guarantee\Guarantee;
-use App\Models\ModuleTask;
 use App\Models\Scopes\CountryScope;
 use App\Models\User;
 use App\Observers\Recovery\RecoveryObserver;
@@ -16,11 +14,12 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+
 #[ScopedBy([CountryScope::class])]
 #[ObservedBy([RecoveryObserver::class])]
 class Recovery extends Model
 {
-    use HasFactory, HasUuids, Alertable, RecoveryFormFieldTrait;
+    use Alertable, HasFactory, HasUuids, RecoveryFormFieldTrait;
 
     protected $fillable = [
         'name',
@@ -44,26 +43,30 @@ class Recovery extends Model
         'is_archived' => 'boolean',
     ];
 
-    public function creator() {
+    public function creator()
+    {
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function tasks() {
+    public function tasks()
+    {
         return $this->morphMany(RecoveryTask::class, 'taskable')->defaultOrder();
     }
 
-    public function getNextTaskAttribute() {
+    public function getNextTaskAttribute()
+    {
         return $this->tasks()
-                ->where('status', false)->first();
+            ->where('status', false)->first();
     }
 
-    public function getCurrentTaskAttribute() {
+    public function getCurrentTaskAttribute()
+    {
         return $this->tasks()
-                    ->where('status', true)
-                    ->get()->last();
+            ->where('status', true)
+            ->get()->last();
     }
 
-    public function documents() : MorphMany
+    public function documents(): MorphMany
     {
         return $this->morphMany(RecoveryDocument::class, 'documentable');
     }
@@ -91,6 +94,7 @@ class Recovery extends Model
                 'form' => $form,
             ];
         }
+
         return null;
     }
 
@@ -108,7 +112,8 @@ class Recovery extends Model
         return $type;
     }
 
-    public function getModuleIdAttribute() : string|null {
+    public function getModuleIdAttribute(): ?string
+    {
         return $this->id;
-     }
+    }
 }

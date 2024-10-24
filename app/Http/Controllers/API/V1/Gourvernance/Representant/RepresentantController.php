@@ -12,10 +12,7 @@ use Illuminate\Validation\ValidationException;
 
 class RepresentantController extends Controller
 {
-
-    public function __construct(private RepresentantRepository $representant) {
-
-    }
+    public function __construct(private RepresentantRepository $representant) {}
 
     /**
      * Display a listing of the resource.
@@ -32,9 +29,10 @@ class RepresentantController extends Controller
     {
         try {
             $representant = $this->representant->store($request->all());
+
             return api_response(true, "Succès de l'enregistrement du representant", $representant, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de l'enregistrement", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de l'enregistrement", $e->errors(), 422);
         }
     }
 
@@ -44,9 +42,9 @@ class RepresentantController extends Controller
     public function show(Representant $representant)
     {
         try {
-            return api_response(true, "Infos du representant", $representant, 200);
-        }catch( ValidationException $e ) {
-            return api_response(false, "Echec de la récupération des infos", $e->errors(), 422);
+            return api_response(true, 'Infos du representant', $representant, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la récupération des infos', $e->errors(), 422);
         }
     }
 
@@ -58,9 +56,9 @@ class RepresentantController extends Controller
         try {
             $this->representant->update($representant, $request->all());
 
-            return api_response(true, "Mis à jour du representant", $representant, 200);
+            return api_response(true, 'Mis à jour du representant', $representant, 200);
         } catch (ValidationException $e) {
-            return api_response(false, "Echec de la mise à jour", $e->errors(), 422);
+            return api_response(false, 'Echec de la mise à jour', $e->errors(), 422);
         }
     }
 
@@ -71,9 +69,10 @@ class RepresentantController extends Controller
     {
         try {
             $representant->delete();
-            return api_response(true, "Succès de la suppression du representant", null, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de la supression", $e->errors(), 422);
+
+            return api_response(true, 'Succès de la suppression du representant', null, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la supression', $e->errors(), 422);
         }
     }
 }

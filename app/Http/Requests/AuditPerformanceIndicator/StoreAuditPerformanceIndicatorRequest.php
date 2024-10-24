@@ -27,8 +27,8 @@ class StoreAuditPerformanceIndicatorRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string'],
-            'module' => ['required',  Rule::in(AuditPerformanceIndicator::MODULES) ],
-            'type' => ['required',  Rule::in(AuditPerformanceIndicator::TYPES) ],
+            'module' => ['required',  Rule::in(AuditPerformanceIndicator::MODULES)],
+            'type' => ['required',  Rule::in(AuditPerformanceIndicator::TYPES)],
             'note' => ['required', 'numeric'],
             'description' => ['required', 'string'],
         ];
@@ -40,14 +40,14 @@ class StoreAuditPerformanceIndicatorRequest extends FormRequest
 
             $module_total_note = AuditPerformanceIndicator::where('module', request()->input('module'))->sum('note');
 
-            if($module_total_note >= 100) {
-                $validator->errors()->add('actions_number', "Il ne reste plus de points à attribuer pour ce module.");
-            }else {
+            if ($module_total_note >= 100) {
+                $validator->errors()->add('actions_number', 'Il ne reste plus de points à attribuer pour ce module.');
+            } else {
                 $note_ask = request()->input('note');
                 $note_diff = 100 - $module_total_note;
 
-                if($note_ask > $note_diff) {
-                    $validator->errors()->add('actions_number', "Il ne reste que ' . $note_diff .' points à attribuer pour ce module.");
+                if ($note_ask > $note_diff) {
+                    $validator->errors()->add('actions_number', "Il ne reste que ' . {$note_diff} .' points à attribuer pour ce module.");
                 }
             }
         });
@@ -58,7 +58,7 @@ class StoreAuditPerformanceIndicatorRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

@@ -27,7 +27,7 @@ class UpdateRepresentantRequest extends FormRequest
     {
         return [
             'name' => ['string'],
-            'type' => [Rule::in(Representant::MEETING_TYPE) ],
+            'type' => [Rule::in(Representant::MEETING_TYPE)],
             'grade' => ['string'],
 
         ];
@@ -38,7 +38,7 @@ class UpdateRepresentantRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

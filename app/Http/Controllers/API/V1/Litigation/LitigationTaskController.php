@@ -9,19 +9,17 @@ use App\Http\Requests\Transfer\AddTransferRequest;
 use App\Http\Resources\Task\TaskResource;
 use App\Models\Contract\Task;
 use App\Models\Litigation\LitigationTask;
-use App\Models\ModuleTask;
 use App\Repositories\Litigation\LitigationTaskRepository;
-use App\Repositories\Task\TaskRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class LitigationTaskController extends Controller
 {
     public function __construct(
         private LitigationTaskRepository $taskRepo,
-    ) {
+    ) {}
 
-    }
     /**
      * Display a listing of the resource.
      */
@@ -39,9 +37,11 @@ class LitigationTaskController extends Controller
             DB::beginTransaction();
             $task = $this->taskRepo->add($request);
             DB::commit();
+
             return api_response(true, 'Tache ajoutée avec succès', $task);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             DB::rollBack();
+
             return api_error(false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
@@ -65,7 +65,7 @@ class LitigationTaskController extends Controller
             $task = $this->taskRepo->edit($request, $task_id);
 
             return api_response(true, 'Tache ajoutée avec succès', $task);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error(false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
@@ -79,30 +79,34 @@ class LitigationTaskController extends Controller
             $task = $this->taskRepo->transfer($task, $request);
 
             return api_response(true, 'Transfert éffectué avec succès', new TaskResource($task));
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error(false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
 
-    public function transferHistory($task_id) {
+    public function transferHistory($task_id)
+    {
         return api_response(true, 'Liste des transferts recuperée', $this->taskRepo->getTransferHistory($task_id, request()));
     }
 
     /**
      * complete task
      *
-     * @param  array $request
-     * @param  mixed $task
+     * @param  array  $request
+     * @param  mixed  $task
      * @return void
      */
-    public function complete(CompleteTaskRequest $request, LitigationTask $task) {
+    public function complete(CompleteTaskRequest $request, LitigationTask $task)
+    {
         try {
             DB::beginTransaction();
             $task = $this->taskRepo->complete($task, $request);
             DB::commit();
+
             return api_response(true, 'Tâche complétée avec succès', $task);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             DB::rollBack();
+
             return api_error(false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
@@ -112,7 +116,7 @@ class LitigationTaskController extends Controller
      */
     public function destroy($task_id)
     {
-        if($this->taskRepo->delete($task_id)) {
+        if ($this->taskRepo->delete($task_id)) {
             return api_response(true, 'Tache supprimée avec succès');
         } else {
             return api_error(false, 'Impossible de supprimer une tache exécuté');

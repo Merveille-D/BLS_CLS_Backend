@@ -10,7 +10,6 @@ class RecoveryDocument extends Model
 {
     use HasFactory, HasUuids;
 
-
     public function documentable()
     {
         return $this->morphTo();

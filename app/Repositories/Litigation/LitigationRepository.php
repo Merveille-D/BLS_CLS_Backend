@@ -1,8 +1,8 @@
 <?php
+
 namespace App\Repositories\Litigation;
 
 use App\Concerns\Traits\PDF\GeneratePdfTrait;
-use Illuminate\Support\Str;
 use App\Http\Resources\Litigation\LitigationResource;
 use App\Http\Resources\Litigation\LitigationSettingResource;
 use App\Models\Litigation\Litigation;
@@ -17,9 +17,10 @@ use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
-class LitigationRepository {
+class LitigationRepository
+{
     use GeneratePdfTrait;
 
     /**
@@ -35,42 +36,44 @@ class LitigationRepository {
     /**
      * getByIdWithDocuments
      *
-     * @param  mixed $id
-     * @return JsonResource
+     * @param  mixed  $id
      */
-    public function findById($id) : JsonResource {
+    public function findById($id): JsonResource
+    {
         $litigation = $this->litigation_model->findOrFail($id);
 
         return new LitigationResource($litigation);
     }
-    public function getByIdWithDocuments($id) : JsonResource {
+
+    public function getByIdWithDocuments($id): JsonResource
+    {
         $litigation = $this->litigation_model->with('documents')->findOrFail($id);
 
         return new LitigationResource($litigation);
     }
 
-    public function getList($request) : ResourceCollection {
+    public function getList($request): ResourceCollection
+    {
         $search = $request->search;
         $is_archived = $request->is_archived;
         $query = $this->litigation_model
-                ->when(!blank($search), function($qry) use($search) {
-                    $qry->where('name', 'like', '%'.$search.'%');
-                })
-                ->when(!blank($is_archived), function($qry) use($is_archived) {
-                    $archive = $is_archived == 'yes' ? true : false;
-                    $qry->where('is_archived', $archive);
-                })
-                ->when($request->type == 'provisioned', function($qry) {
-                    $qry->whereNotNull('added_amount')
+            ->when(! blank($search), function ($qry) use ($search) {
+                $qry->where('name', 'like', '%' . $search . '%');
+            })
+            ->when(! blank($is_archived), function ($qry) use ($is_archived) {
+                $archive = $is_archived == 'yes' ? true : false;
+                $qry->where('is_archived', $archive);
+            })
+            ->when($request->type == 'provisioned', function ($qry) {
+                $qry->whereNotNull('added_amount')
                     ->where('has_provisions', false);
-                })
-                ->when($request->type == 'not_provisioned', function($qry) {
-                    $qry->whereNull('added_amount')
-                        ->where('has_provisions', true);
-                })
-                ->orderByDesc('created_at')
-                ->paginate();
-
+            })
+            ->when($request->type == 'not_provisioned', function ($qry) {
+                $qry->whereNull('added_amount')
+                    ->where('has_provisions', true);
+            })
+            ->orderByDesc('created_at')
+            ->paginate();
 
         return LitigationResource::collection($query);
     }
@@ -78,12 +81,13 @@ class LitigationRepository {
     /**
      * provisions stats
      */
-    public function provisionStats() {
+    public function provisionStats()
+    {
         // $total = $this->litigation_model->count();
         // $provisioned = $this->litigation_model->whereNotNull('added_amount')->count();
         // $not_provisioned = $this->litigation_model->whereNull('added_amount')->count();
         //sum amounts
-        $query =DB::select("
+        $query = DB::select("
             SELECT
                 SUM(estimated_amount) AS sum_estimated_amount,
                 (
@@ -100,13 +104,14 @@ class LitigationRepository {
             // 'total' => $total,
             // 'provisioned' => $provisioned,
             // 'not_provisioned' => $not_provisioned,
-            'sum_estimated_amount' => (double) $query[0]->sum_estimated_amount,
-            'sum_added_amount' => (double) $query[0]->sum_added_amount,
-            'sum_remaining_amount' => (double) $query[0]->sum_remaining_amount,
+            'sum_estimated_amount' => (float) $query[0]->sum_estimated_amount,
+            'sum_added_amount' => (float) $query[0]->sum_added_amount,
+            'sum_remaining_amount' => (float) $query[0]->sum_remaining_amount,
         ];
     }
 
-    public function add($request) : JsonResource {
+    public function add($request): JsonResource
+    {
         $files = $request->documents;
 
         $litigation = $this->litigation_model->create([
@@ -136,11 +141,12 @@ class LitigationRepository {
         return new LitigationResource($litigation);
     }
 
-    public function saveTasks($litigation) {
+    public function saveTasks($litigation)
+    {
         $steps = LitigationStep::all();
 
         foreach ($steps as $key => $step) {
-            $task = new LitigationTask();
+            $task = new LitigationTask;
             $task->code = $step->code;
             $task->title = $step->title;
             $task->rank = $step->rank;
@@ -155,7 +161,8 @@ class LitigationRepository {
 
     }
 
-    public function edit($id, $request) : JsonResource {
+    public function edit($id, $request): JsonResource
+    {
         $litigation = $this->litigation_model->findOrFail($id);
 
         $litigation->update([
@@ -182,7 +189,8 @@ class LitigationRepository {
         return new LitigationResource($litigation);
     }
 
-    public function assign($id, $request) {
+    public function assign($id, $request)
+    {
         $litigation = $this->litigation_model->findOrFail($id);
         // save assigned users
         foreach ($request->users as $key => $user_id) {
@@ -190,7 +198,7 @@ class LitigationRepository {
             $user->litigations()->sync($litigation);
         }
         // save assigned lawyers
-        if ($request->lawyers && count($request->lawyers) > 0 ){
+        if ($request->lawyers && count($request->lawyers) > 0) {
             foreach ($request->lawyers as $key => $lawyer_id) {
                 LitigationLawyer::find($lawyer_id)->litigations()->sync($litigation);
             }
@@ -199,7 +207,8 @@ class LitigationRepository {
         return new LitigationResource($litigation);
     }
 
-    public function updateAmount($id, $request) : JsonResource {
+    public function updateAmount($id, $request): JsonResource
+    {
         $litigation = $this->findById($id);
         $litigation->update([
             'estimated_amount' => $request->estimated_amount,
@@ -210,17 +219,19 @@ class LitigationRepository {
         return new LitigationResource($litigation);
     }
 
-    public function manageAddedAmount($request, $litigation) {
+    public function manageAddedAmount($request, $litigation)
+    {
         $existingAddedAmount = $litigation->added_amount ?? [];
         $existingAddedAmount[] = ['amount' => $request->added_amount, 'date' => now()];
 
         return $existingAddedAmount;
     }
 
-    public function archive($id) : JsonResource {
+    public function archive($id): JsonResource
+    {
         $litigation = $this->findById($id);
         $litigation->update([
-            'is_archived' => !$litigation->is_archived,
+            'is_archived' => ! $litigation->is_archived,
         ]);
 
         return new LitigationResource($litigation);
@@ -229,29 +240,32 @@ class LitigationRepository {
     /**
      * getResources
      *
-     * @param  Request $request
-     * @return ResourceCollection
+     * @param  Request  $request
      */
-    public function getResources($type) : ResourceCollection {
+    public function getResources($type): ResourceCollection
+    {
         // $res = $this->setting_model->whereType($request->type)->get();
         $query = $this->queryByType($type);
 
         return LitigationSettingResource::collection($query);
     }
 
-    public function queryByType($type) {
+    public function queryByType($type)
+    {
         return $this->setting_model->whereType($type)->get();
+
         return LitigationSettingResource::collection($res);
     }
 
     /**
      * add new nature/jurisdiction
      *
-     * @param  mixed $request
-     * @param  mixed $type
+     * @param  mixed  $request
+     * @param  mixed  $type
      * @return void
      */
-    public function addResource($request) : JsonResource {
+    public function addResource($request): JsonResource
+    {
         $resource = $this->setting_model->create([
             'name' => $request->name,
             'description' => $request->description,
@@ -263,13 +277,15 @@ class LitigationRepository {
         return new LitigationSettingResource($resource);
     }
 
-    public function updateTaskState($litigation) {
+    public function updateTaskState($litigation)
+    {
         $currentTask = $litigation->next_task;
 
         if ($currentTask) {
             $currentTask->status = true;
-            if ($currentTask->completed_at == null)
+            if ($currentTask->completed_at == null) {
                 $currentTask->completed_at = Carbon::now();
+            }
             $currentTask->save();
         }
 
@@ -277,26 +293,29 @@ class LitigationRepository {
         if ($nextTask) {
             $data = $this->setDeadline($litigation);
 
-            if ($data == [])
+            if ($data == []) {
                 return false;
+            }
 
             $nextTask->update($data);
         }
     }
 
-    public function setDeadline($guarantee) {
+    public function setDeadline($guarantee)
+    {
         $nextTask = $guarantee->next_task;
         $defaultTask = LitigationStep::where('code', $nextTask->code)->first();
 
         $minDelay = $defaultTask->min_delay;
         $maxDelay = $defaultTask->max_delay;
         // dd($minDelay, $maxDelay);
-        $data = array();
+        $data = [];
         //date by hypothec state
         // $operationDate = $this->getOperationDateByState($guarantee);
         $operationDate = $guarantee->current_task->completed_at ?? null;
-        if ($operationDate == null)
+        if ($operationDate == null) {
             return $data;
+        }
 
         $operationDate = substr($operationDate, 0, 10);
         $formatted_date = Carbon::createFromFormat('Y-m-d', $operationDate);
@@ -304,26 +323,32 @@ class LitigationRepository {
         if ($minDelay && $maxDelay) {
             $data['min_deadline'] = $formatted_date->copy()->addDays($minDelay);
             $data['max_deadline'] = $formatted_date->copy()->addDays($maxDelay);
+
             return $data;
-        }elseif ($minDelay) {
+        } elseif ($minDelay) {
             $data['min_deadline'] = $formatted_date->addDays($minDelay);
+
             return $data;
-        }elseif ($maxDelay) {
+        } elseif ($maxDelay) {
             $data['max_deadline'] = $formatted_date->addDays($maxDelay);
+
             return $data;
         }
+
         return $data;
     }
 
-    public function saveDocuments($files, $litigation) {
-        if (count($files)<=0)
+    public function saveDocuments($files, $litigation)
+    {
+        if (count($files) <= 0) {
             return false;
+        }
 
         foreach ($files as $key => $file) {
 
             $file_path = storeFile($file['file'], 'litigation');
 
-            $doc = new LitigationDocument();
+            $doc = new LitigationDocument;
             // $doc->state = $litigation->state;
             $doc->file_name = $file['name'];
             $doc->file_path = $file_path;
@@ -340,30 +365,32 @@ class LitigationRepository {
         }
     }
 
-    public function generatePdf($id) {
+    public function generatePdf($id)
+    {
         $litigation = $this->findById($id);
 
-        $filename = Str::slug($litigation->name). '_'.date('YmdHis') . '.pdf';
+        $filename = Str::slug($litigation->name) . '_' . date('YmdHis') . '.pdf';
 
-        $pdf =  $this->generateFromView( 'pdf.litigation.litigation',  [
+        $pdf = $this->generateFromView('pdf.litigation.litigation', [
             'litigation' => $litigation,
-            'details' => $this->getDetails($litigation)
+            'details' => $this->getDetails($litigation),
         ],
-        $filename);
+            $filename);
 
         return $pdf;
     }
 
-    public function getDetails($litigation) {
+    public function getDetails($litigation)
+    {
         $details = [
             'N° de dossier' => $litigation->case_number ?? null,
             'Intitulé' => $litigation->name ?? null,
             'Matière' => $litigation->nature?->name,
             'Juridiction' => $litigation->jurisdiction?->name,
             'Lieu de la juridiction' => $litigation->jurisdiction_location ?? null,
-            'Provisions à constituer' => (double) $litigation->estimated_amount,
+            'Provisions à constituer' => (float) $litigation->estimated_amount,
             'Provisions constituées' => collect($litigation->added_amount)->sum('amount'),
-            'Provisions reprises' => (double) $litigation->remaining_amount,
+            'Provisions reprises' => (float) $litigation->remaining_amount,
         ];
 
         return $details;

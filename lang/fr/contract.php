@@ -3,7 +3,7 @@
 return [
 
     // ## Contract
-    
+
     // Contract Category
     'Baux' => 'Baux',
     'Crédits' => 'Crédits',

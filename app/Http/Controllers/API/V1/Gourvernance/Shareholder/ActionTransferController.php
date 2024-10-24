@@ -12,10 +12,7 @@ use Illuminate\Validation\ValidationException;
 
 class ActionTransferController extends Controller
 {
-
-    public function __construct(private ActionTransferRepository $action_transfer) {
-
-    }
+    public function __construct(private ActionTransferRepository $action_transfer) {}
 
     /**
      * Display a listing of the resource.
@@ -23,12 +20,14 @@ class ActionTransferController extends Controller
     public function index()
     {
         $action_transfers = ActionTransfer::orderBy('created_at', 'desc')->get()->map(function ($action_transfer) {
-            $action_transfer->owner= $action_transfer->owner;
+            $action_transfer->owner = $action_transfer->owner;
             $action_transfer->buyer = $action_transfer->shareholder ?? $action_transfer->tier;
 
             $action_transfer->makeHidden('owner_id', 'buyer_id', 'tier_id', 'tier', 'shareholder', 'created_at', 'updated_at');
+
             return $action_transfer;
         });
+
         return api_response(true, "Liste des transferts d'actions", $action_transfers, 200);
     }
 
@@ -39,9 +38,10 @@ class ActionTransferController extends Controller
     {
         try {
             $action_transfer = $this->action_transfer->store($request->all());
+
             return api_response(true, "Succès de l'enregistrement du transfert", $action_transfer, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de l'enregistrement", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de l'enregistrement", $e->errors(), 422);
         }
     }
 
@@ -59,8 +59,8 @@ class ActionTransferController extends Controller
             $data['files'] = $action_transfer->files;
 
             return api_response(true, "Infos du transfert d'action", $data, 200);
-        }catch( ValidationException $e ) {
-            return api_response(false, "Echec de la récupération des infos du transfer", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la récupération des infos du transfer', $e->errors(), 422);
         }
     }
 
@@ -72,15 +72,15 @@ class ActionTransferController extends Controller
         //
     }
 
-    public function approvedActionTransfer(Request $request, )
+    public function approvedActionTransfer(Request $request)
     {
 
         try {
             $action_transfer = $this->action_transfer->approvedActionTransfer($request->all());
 
             return api_response(true, "Succès de l'enregistrement de la tache", $action_transfer, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de l'enregistrement de la tache", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de l'enregistrement de la tache", $e->errors(), 422);
         }
     }
 }

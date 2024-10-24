@@ -27,7 +27,7 @@ class StoreBankRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string'],
-            'type' => ['required',  Rule::in(Bank::TYPES) ],
+            'type' => ['required',  Rule::in(Bank::TYPES)],
             'file' => ['required_if:type,file,other', 'file'],
             'link' => ['required_if:type,link', 'string'],
         ];
@@ -38,7 +38,7 @@ class StoreBankRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

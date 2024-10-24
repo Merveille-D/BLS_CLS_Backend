@@ -10,6 +10,11 @@ class Part extends Model
 {
     use HasFactory, HasUuids;
 
+    const TYPES_PART = [
+        'individual',
+        'corporate',
+    ];
+
     protected $fillable = [
         'name',
         'email',
@@ -22,11 +27,6 @@ class Part extends Model
         'capital',
         'permanent_representative_id',
         'type',
-        'created_by'
-    ];
-
-    const TYPES_PART = [
-        'individual',
-        'corporate',
+        'created_by',
     ];
 }

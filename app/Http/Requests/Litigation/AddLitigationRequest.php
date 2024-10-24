@@ -33,10 +33,10 @@ class AddLitigationRequest extends FormRequest
             'jurisdiction_id' => 'required|exists:litigation_settings,id',
             'jurisdiction_location' => 'required',
             'has_provisions' => 'required|boolean',
-            'parties' =>  'array|required',
+            'parties' => 'array|required',
             'parties.*.category' => ['required', new ArrayElementMatch(PartyCategory::CATEGORIES)],
-            'parties.*.type' =>  ['required', new ArrayElementMatch(PartyType::TYPES)],
-            'parties.*.party_id' =>  'required|exists:litigation_parties,id',
+            'parties.*.type' => ['required', new ArrayElementMatch(PartyType::TYPES)],
+            'parties.*.party_id' => 'required|exists:litigation_parties,id',
             'documents' => 'array|required',
             'documents.*.name' => 'required|string',
             'documents.*.file' => 'required|file|max:8192|mimes:pdf,doc,docx',
@@ -45,6 +45,6 @@ class AddLitigationRequest extends FormRequest
 
     public function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(api_error(false, $validator->errors()->first(),  $validator->errors()));
+        throw new HttpResponseException(api_error(false, $validator->errors()->first(), $validator->errors()));
     }
 }

@@ -28,7 +28,7 @@ class StoreSessionAdministratorRequest extends FormRequest
         return [
             'libelle' => ['required', 'string'],
             'session_date' => ['required', 'date'],
-            'type' => ['required',  Rule::in(SessionAdministrator::SESSION_MEETING_TYPES) ],
+            'type' => ['required',  Rule::in(SessionAdministrator::SESSION_MEETING_TYPES)],
         ];
     }
 
@@ -37,7 +37,7 @@ class StoreSessionAdministratorRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

@@ -2,13 +2,10 @@
 
 namespace Tests\Feature;
 
-use App\Enums\Recovery\RecoveryStepEnum;
 use App\Models\Auth\Subsidiary;
 use App\Models\Recovery\Recovery;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\DB;
 use Tests\Feature\Traits\WithStubUser;
 use Tests\TestCase;
 
@@ -19,9 +16,10 @@ class RecoveryTest extends TestCase
     /**
      * Test retrieving a list of recoveries.
      *
-     * @return void
+     *
+     * @test
      */
-    public function testRetrieveList(): void
+    public function retrieveList(): void
     {
         $user = User::factory()->create();
 
@@ -39,9 +37,10 @@ class RecoveryTest extends TestCase
     /**
      * Test retrieving a single recovery.
      *
-     * @return void
+     *
+     * @test
      */
-    public function testRetrieveSingle(): void
+    public function retrieveSingle(): void
     {
         // $subsidiary = Subsidiary::factory()->create();
         // $user = User::factory()->create([
@@ -74,18 +73,19 @@ class RecoveryTest extends TestCase
     /**
      * Test creating a new recovery.
      *
-     * @return void
+     *
+     * @test
      */
-    public function test_create_friendly_with_guarante_recovery(): void
+    public function create_friendly_with_guarante_recovery(): void
     {
         $user = User::factory()->create();
         // Send a POST request to the endpoint with the necessary data
         $response = $this->actingAs($user)->post('api/recovery', [
             'name' => 'Test Recovery',
             'reference' => 'ABC123',
-            'type'=> 'friendly',
+            'type' => 'friendly',
             'has_guarantee' => true,
-            'guarantee_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47'
+            'guarantee_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47',
         ]);
 
         // Assert that the response has a 201 status code
@@ -94,26 +94,26 @@ class RecoveryTest extends TestCase
         // Assert that the recovery was created in the database
         $this->assertDatabaseHas('recoveries', [
             'name' => 'Test Recovery',
-            'type'=> 'friendly',
+            'type' => 'friendly',
             'has_guarantee' => true,
             //valid uuid
-            'guarantee_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47'
+            'guarantee_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47',
         ]);
     }
-
 
     /**
      * Test creating a new frinedly recovery without guarantee.
      *
-     * @return void
+     *
+     * @test
      */
-    public function test_create_friendly_without_guarantee_recovery(): void
+    public function create_friendly_without_guarantee_recovery(): void
     {
         $user = User::factory()->create();
         // Send a POST request to the endpoint with the necessary data
         $response = $this->actingAs($user)->post('api/recovery', [
             'name' => 'Test Recovery',
-            'type'=> 'friendly',
+            'type' => 'friendly',
             'has_guarantee' => false,
             'contract_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47',
         ]);
@@ -124,7 +124,7 @@ class RecoveryTest extends TestCase
         // Assert that the recovery was created in the database
         $this->assertDatabaseHas('recoveries', [
             'name' => 'Test Recovery',
-            'type'=> 'friendly',
+            'type' => 'friendly',
             'has_guarantee' => false,
             'contract_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47',
         ]);
@@ -139,10 +139,10 @@ class RecoveryTest extends TestCase
     /**
      * Test creating a forced recovery with garantee.
      *
-     * @return void
+     *
+     * @test
      */
-
-    public function test_create_forced_recovery_with_guarantee(): void
+    public function create_forced_recovery_with_guarantee(): void
     {
         $user = User::factory()->create();
 
@@ -150,7 +150,7 @@ class RecoveryTest extends TestCase
             'name' => 'Test Recovery',
             'type' => 'forced',
             'has_guarantee' => true,
-            'guarantee_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47'
+            'guarantee_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47',
         ]);
 
         // Assert that the response has a 201 status code
@@ -167,9 +167,10 @@ class RecoveryTest extends TestCase
 
     /**
      * Test creating forced recovery without garantee.
-     * @return void
+     *
+     * @test
      */
-    public function test_create_forced_recovery_without_guarantee(): void
+    public function create_forced_recovery_without_guarantee(): void
     {
         $user = User::factory()->create();
 
@@ -201,9 +202,10 @@ class RecoveryTest extends TestCase
     /**
      * Test retrieve tasks list.
      *
-     * @return void
+     *
+     * @test
      */
-    public function testRetrieveTasks(): void
+    public function retrieveTasks(): void
     {
         $user = User::factory()->create();
 
@@ -225,17 +227,18 @@ class RecoveryTest extends TestCase
     /**
      * Test add new task to a recovery.
      *
-     * @return void
+     *
+     * @test
      */
-    public function testAddTask(): void
+    public function addTask(): void
     {
         $user = $this->stubUser();
 
         $recovery = Recovery::factory()->create([
-                'created_by' => $user->id,
-            ]);
+            'created_by' => $user->id,
+        ]);
 
-        $response = $this->actingAs($user)->post("api/recovery/tasks", [
+        $response = $this->actingAs($user)->post('api/recovery/tasks', [
             'title' => 'Test Task',
             'deadline' => date('Y-m-d', strtotime('+5 days')),
             'model_id' => $recovery->id,
@@ -257,7 +260,8 @@ class RecoveryTest extends TestCase
     /**
      * Test update task status.
      *
-     * @return void
+     *
+     * @test
      */
     /* public function testUpdateTaskStatus(): void
     {
@@ -286,7 +290,8 @@ class RecoveryTest extends TestCase
         ]);
     } */
 
-    public function test_generate_pdf() : void {
+    public function generate_pdf(): void
+    {
         $user = $this->stubUser();
 
         $recovery = Recovery::factory()->create([

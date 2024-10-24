@@ -2,10 +2,6 @@
 
 namespace App\Http\Requests\Mandate;
 
-use App\Enums\AdminFunction;
-use App\Enums\AdminType;
-use App\Enums\Quality;
-use App\Rules\Administrator\ArrayElementMatch;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -38,7 +34,7 @@ class UpdateMandateRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

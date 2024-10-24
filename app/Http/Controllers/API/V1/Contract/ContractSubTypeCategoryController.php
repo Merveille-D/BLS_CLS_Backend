@@ -3,19 +3,16 @@
 namespace App\Http\Controllers\API\V1\Contract;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ContractSubTypeCategory\ListContractSubTypeCategoryRequest;
 use App\Http\Requests\ContractSubTypeCategory\StoreContractSubTypeCategoryRequest;
 use App\Http\Requests\ContractSubTypeCategory\UpdateContractSubTypeCategoryRequest;
-use App\Http\Requests\ContractSubTypeCategory\ListContractSubTypeCategoryRequest;
 use App\Models\Contract\ContractSubTypeCategory;
 use App\Repositories\Contract\ContractSubTypeCategoryRepository;
 use Illuminate\Validation\ValidationException;
 
 class ContractSubTypeCategoryController extends Controller
 {
-
-    public function __construct(private ContractSubTypeCategoryRepository $contractSubTypeCategory) {
-
-    }
+    public function __construct(private ContractSubTypeCategoryRepository $contractSubTypeCategory) {}
 
     /**
      * Display a listing of the resource.
@@ -23,7 +20,8 @@ class ContractSubTypeCategoryController extends Controller
     public function index(ListContractSubTypeCategoryRequest $request)
     {
         $contractSubTypeCategories = $this->contractSubTypeCategory->list($request->validated());
-        return api_response(true, "Liste des donnée du sous type de la catégorie", $contractSubTypeCategories, 200);
+
+        return api_response(true, 'Liste des donnée du sous type de la catégorie', $contractSubTypeCategories, 200);
     }
 
     /**
@@ -33,9 +31,10 @@ class ContractSubTypeCategoryController extends Controller
     {
         try {
             $contractSubTypeCategory = $this->contractSubTypeCategory->store($request->validated());
+
             return api_response(true, "Succès de l'enregistrement du sous type de la catégorie", $contractSubTypeCategory, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de l'enregistrement du sous type de la catégorie", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de l'enregistrement du sous type de la catégorie", $e->errors(), 422);
         }
     }
 
@@ -45,9 +44,9 @@ class ContractSubTypeCategoryController extends Controller
     public function show(ContractSubTypeCategory $contractSubTypeCategory)
     {
         try {
-            return api_response(true, "Infos du sous type de la catégorie", $contractSubTypeCategory, 200);
-        }catch( ValidationException $e ) {
-            return api_response(false, "Echec de la récupération des infos du sous type de la catégorie", $e->errors(), 422);
+            return api_response(true, 'Infos du sous type de la catégorie', $contractSubTypeCategory, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la récupération des infos du sous type de la catégorie', $e->errors(), 422);
         }
     }
 
@@ -58,10 +57,11 @@ class ContractSubTypeCategoryController extends Controller
     {
         try {
             $this->contractSubTypeCategory->update($contractSubTypeCategory, $request->all());
-            return api_response(true, "Mis à jour du sous type de la catégorie avec succès", $contractSubTypeCategory, 200);
+
+            return api_response(true, 'Mis à jour du sous type de la catégorie avec succès', $contractSubTypeCategory, 200);
         } catch (ValidationException $e) {
 
-            return api_response(false, "Echec de la mise à jour", $e->errors(), 422);
+            return api_response(false, 'Echec de la mise à jour', $e->errors(), 422);
         }
     }
 
@@ -72,9 +72,10 @@ class ContractSubTypeCategoryController extends Controller
     {
         try {
             $contractSubTypeCategory->delete();
-            return api_response(true, "Succès de la suppression du sous type de la catégorie", null, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de la supression du sous type de la catégorie", $e->errors(), 422);
+
+            return api_response(true, 'Succès de la suppression du sous type de la catégorie', null, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la supression du sous type de la catégorie', $e->errors(), 422);
         }
     }
 }

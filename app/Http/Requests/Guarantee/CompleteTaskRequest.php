@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Guarantee;
 
-use App\Concerns\Traits\Guarantee\StepsValidationRuleTrait;
 use App\Rules\Administrator\ArrayElementMatch;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -28,11 +27,10 @@ class CompleteTaskRequest extends FormRequest
         $task = $this->route('task');
 
         if ($task->status) {
-            throw new HttpResponseException(api_error(false, 'Cette tâche est déjà complétée',  []));
+            throw new HttpResponseException(api_error(false, 'Cette tâche est déjà complétée', []));
         } elseif ($task->type == 'task') {
             return [];
         }
-
 
         $validationRules = $this->validationRulesByStep($task);
 
@@ -41,15 +39,16 @@ class CompleteTaskRequest extends FormRequest
 
     public function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(api_error(false, $validator->errors()->first(),  $validator->errors(), 422));
+        throw new HttpResponseException(api_error(false, $validator->errors()->first(), $validator->errors(), 422));
     }
 
-    public function validationRulesByStep($task) : array {
+    public function validationRulesByStep($task): array
+    {
         $form = $task->form ?? [];
 
         $data = [];
 
-        if (!blank($form)) {
+        if (! blank($form)) {
             $fields = $form['fields'];
 
             foreach ($fields as $field) {
@@ -68,9 +67,8 @@ class CompleteTaskRequest extends FormRequest
                 }
 
                 if ($field['type'] == 'radio') {
-                    $data[$field['name']] = ['required', new ArrayElementMatch(array('yes', 'no'))];
+                    $data[$field['name']] = ['required', new ArrayElementMatch(['yes', 'no'])];
                 }
-
 
             }
         }

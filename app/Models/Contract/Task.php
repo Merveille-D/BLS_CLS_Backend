@@ -12,11 +12,12 @@ use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 #[ScopedBy([CountryScope::class])]
 #[ObservedBy([TaskContractObserver::class])]
 class Task extends Model
 {
-    use HasFactory, HasUuids, Alertable, Transferable;
+    use Alertable, HasFactory, HasUuids, Transferable;
     /**
      * Les attributs qui doivent être castés vers des types natifs.
      *
@@ -36,7 +37,6 @@ class Task extends Model
         'date',
     ];
 
-
     public function contract()
     {
         return $this->belongsTo(Contract::class);
@@ -47,23 +47,27 @@ class Task extends Model
         return $this->morphMany(ContractDocument::class, 'uploadable');
     }
 
-    public function getFolderAttribute() {
+    public function getFolderAttribute()
+    {
         return $this->contract->title;
     }
 
-    public function getValidationAttribute() {
+    public function getValidationAttribute()
+    {
 
         return [
             'method' => 'PUT',
-            'action' => env('APP_URL'). '/api/tasks/' . $this->id,
+            'action' => env('APP_URL') . '/api/tasks/' . $this->id,
         ];
     }
 
-    public function getModuleIdAttribute() : string|null {
+    public function getModuleIdAttribute(): ?string
+    {
         return $this->contract?->id;
     }
 
-    public function creator() {
+    public function creator()
+    {
         return $this->belongsTo(User::class, 'created_by');
     }
 }

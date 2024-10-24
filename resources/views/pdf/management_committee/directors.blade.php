@@ -25,10 +25,10 @@
             @foreach ($directors as $director)
                 <tr>
                     <td height="50px" >{{ $director->name }}</td>
-                    <td>{{ $director->birthdate  }}</td>
-                    <td>{{ $director->birthplace  }}</td>   
-                    <td>{{ $director->nationality  }}</td>
-                    <td>{{ $director->address  }}</td>
+                    <td>{{ $director->birthdate }}</td>
+                    <td>{{ $director->birthplace }}</td>
+                    <td>{{ $director->nationality }}</td>
+                    <td>{{ $director->address }}</td>
                 </tr>
             @endforeach
         </tbody>

@@ -2,7 +2,7 @@
 
 namespace App\Enums\Litigation;
 
-enum PartyCategory : string
+enum PartyCategory: string
 {
     const INTERVENANT = 'intervenant';
     const DEFENDANT = 'defendant';

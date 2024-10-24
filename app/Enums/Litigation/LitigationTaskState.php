@@ -1,9 +1,8 @@
 <?php
+
 namespace App\Enums\Litigation;
 
-use App\Models\Transfer\Transfer;
-
-enum LitigationTaskState : string
+enum LitigationTaskState: string
 {
     const CREATED = 'created';
     const TRANSFER = 'transfer';

@@ -9,10 +9,11 @@ use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 #[ScopedBy([CountryScope::class])]
 class AuditPeriod extends Model
 {
-    use HasFactory, HasUuids, Alertable;
+    use Alertable, HasFactory, HasUuids;
 
     protected $fillable = [
         'title',
@@ -22,16 +23,17 @@ class AuditPeriod extends Model
         'completed_by',
     ];
 
-    public function creator() {
+    public function creator()
+    {
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function getValidationAttribute() {
+    public function getValidationAttribute()
+    {
 
         return [
             'method' => 'PUT',
-            'action' => env('APP_URL'). '/api/audit_periods/' . $this->id,
+            'action' => env('APP_URL') . '/api/audit_periods/' . $this->id,
         ];
     }
-
 }

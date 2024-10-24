@@ -24,7 +24,7 @@ class EditGuaranteeRequest extends FormRequest
         return [
             'name' => 'string',
             'type' => 'string',
-            'contract_id' => 'uuid'
+            'contract_id' => 'uuid',
         ];
     }
 }

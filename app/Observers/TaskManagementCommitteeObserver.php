@@ -9,17 +9,14 @@ class TaskManagementCommitteeObserver
     /**
      * Handle the TaskManagementCommittee "created" event.
      */
-    public function created(TaskManagementCommittee $taskManagementCommittee): void
-    {
-
-    }
+    public function created(TaskManagementCommittee $taskManagementCommittee): void {}
 
     /**
      * Handle the TaskManagementCommittee "updated" event.
      */
     public function updated(TaskManagementCommittee $taskManagementCommittee): void
     {
-        if($taskManagementCommittee->status) {
+        if ($taskManagementCommittee->status) {
             $alertsExist = $taskManagementCommittee->alerts()->delete();
         }
     }

@@ -10,10 +10,11 @@ use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 #[ScopedBy([CountryScope::class])]
 class Notation extends Model
 {
-    use HasFactory, HasUuids, Alertable, Transferable;
+    use Alertable, HasFactory, HasUuids, Transferable;
 
     protected $fillable = [
         'note',
@@ -23,7 +24,7 @@ class Notation extends Model
         'created_by',
         'parent_id',
         'reference',
-        'evaluation_reference'
+        'evaluation_reference',
     ];
 
     protected $appends = ['indicators'];
@@ -38,17 +39,19 @@ class Notation extends Model
         return $this->hasMany(NotationPerformance::class);
     }
 
-    public function getLastNotationAttribute(){
+    public function getLastNotationAttribute()
+    {
 
         $transfer_notation = self::where('parent_id', $this->id)
-        ->whereNotNull('note')
-        ->orderBy('created_at', 'desc')
-        ->first();
+            ->whereNotNull('note')
+            ->orderBy('created_at', 'desc')
+            ->first();
 
         return ($transfer_notation) ? $transfer_notation : self::find($this->id);
     }
 
-    public function getIndicatorsAttribute() {
+    public function getIndicatorsAttribute()
+    {
 
         $indicators = [];
         foreach ($this->performances as $performance) {
@@ -59,10 +62,12 @@ class Notation extends Model
             ];
 
         }
+
         return $indicators;
     }
 
-    public function creator() {
+    public function creator()
+    {
         return $this->belongsTo(User::class, 'created_by');
     }
 }

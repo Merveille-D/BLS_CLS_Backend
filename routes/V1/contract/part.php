@@ -8,11 +8,3 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('parts', PartController::class);
 
 });
-
-
-
-
-
-
-
-

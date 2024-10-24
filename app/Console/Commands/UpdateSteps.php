@@ -5,14 +5,12 @@ namespace App\Console\Commands;
 use App\Concerns\Traits\Guarantee\CollateralDefaultSteps;
 use App\Concerns\Traits\Guarantee\DefaultGuaranteeTaskTrait;
 use App\Concerns\Traits\Guarantee\MortgageDefaultStepTrait;
-use App\Enums\Guarantee\GuaranteeType;
 use App\Models\Guarantee\GuaranteeStep;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 
 class UpdateSteps extends Command
 {
-    use DefaultGuaranteeTaskTrait, MortgageDefaultStepTrait, DefaultGuaranteeTaskTrait, CollateralDefaultSteps;
+    use CollateralDefaultSteps, DefaultGuaranteeTaskTrait, DefaultGuaranteeTaskTrait, MortgageDefaultStepTrait;
     /**
      * The name and signature of the console command.
      *
@@ -63,9 +61,9 @@ class UpdateSteps extends Command
     {
         //remove options from data before create
         $creating = $data;
-        if (isset($creating['options']))
+        if (isset($creating['options'])) {
             unset($creating['options']);
-
+        }
 
         $step = GuaranteeStep::create(array_merge($creating, ['parent_id' => $parentId, 'rank' => $data['rank'] ?? 0]));
 

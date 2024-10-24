@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders\Incident;
 
 use App\Models\Incident\AuthorIncident;

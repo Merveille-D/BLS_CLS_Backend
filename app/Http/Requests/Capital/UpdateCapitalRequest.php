@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests\Capital;
 
-use App\Models\Shareholder\Capital;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
 class UpdateCapitalRequest extends FormRequest
 {
@@ -30,7 +28,6 @@ class UpdateCapitalRequest extends FormRequest
             'amount' => ['numeric', 'min:1'],
             'par_value' => ['numeric', 'min:1'],
 
-
         ];
     }
 
@@ -39,7 +36,7 @@ class UpdateCapitalRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

@@ -7,15 +7,11 @@ use App\Http\Requests\AuthorIncident\StoreAuthorIncidentRequest;
 use App\Http\Requests\AuthorIncident\UpdateAuthorIncidentRequest;
 use App\Models\Incident\AuthorIncident;
 use App\Repositories\Incident\AuthorIncidentRepository;
-use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class AuthorIncidentController extends Controller
 {
-
-    public function __construct(private AuthorIncidentRepository $authorIncident) {
-
-    }
+    public function __construct(private AuthorIncidentRepository $authorIncident) {}
 
     /**
      * Display a listing of the resource.
@@ -23,6 +19,7 @@ class AuthorIncidentController extends Controller
     public function index()
     {
         $author_incidents = AuthorIncident::all();
+
         return api_response(true, "Liste des auteurs d'incidents", $author_incidents, 200);
     }
 
@@ -33,9 +30,10 @@ class AuthorIncidentController extends Controller
     {
         try {
             $authorIncident = $this->authorIncident->store($request->all());
+
             return api_response(true, "Succès de l'enregistrement de l'auteur", $authorIncident, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de l'enregistrement de l'auteur", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de l'enregistrement de l'auteur", $e->errors(), 422);
         }
     }
 
@@ -46,7 +44,7 @@ class AuthorIncidentController extends Controller
     {
         try {
             return api_response(true, "Infos de l'auteur ", $authorIncident, 200);
-        }catch( ValidationException $e ) {
+        } catch (ValidationException $e) {
             return api_response(false, "Echec de la récupération des infos de l'auteur", $e->errors(), 422);
         }
     }
@@ -58,10 +56,11 @@ class AuthorIncidentController extends Controller
     {
         try {
             $this->authorIncident->update($authorIncident, $request->all());
+
             return api_response(true, "Mis à jour de l'auteur avec succès", $authorIncident, 200);
         } catch (ValidationException $e) {
 
-            return api_response(false, "Echec de la mise à jour", $e->errors(), 422);
+            return api_response(false, 'Echec de la mise à jour', $e->errors(), 422);
         }
     }
 
@@ -72,9 +71,10 @@ class AuthorIncidentController extends Controller
     {
         try {
             $authorIncident->delete();
+
             return api_response(true, "Succès de la suppression de l'auteur ", null, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de la supression de l'auteur", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de la supression de l'auteur", $e->errors(), 422);
         }
     }
 }

@@ -49,7 +49,6 @@ return [
     'Did the debtor object?' => 'Le débiteur s\'est-il opposé',
     'Allocation of the claim/sum seized on the account' => 'Attribution de la créance/somme saisie sur le compte',
 
-
     //personnal securities
     'Drafting of Guarantee Contract' => 'Rédaction du contrat de garantie',
     'Bonding Contract Drafting' => 'Rédaction du contrat de cautionnement',
@@ -128,9 +127,6 @@ return [
     'Sale amount' => 'Montant de vente',
     'Insert sale PV' => 'Insérer PV de la vente',
 
-
-
-
     //form
     'Documents' => 'Documents',
     'Date' => 'Date',
@@ -150,7 +146,7 @@ return [
     'Was the command successful?' => 'Le commendement a t-il été fructueux ?',
     'Date of cancellation' => 'Date de radiation',
     'Date of seizure' => 'Date de saisie',
-    'Contract date' =>'Date redaction du contrat',
+    'Contract date' => 'Date redaction du contrat',
     'Is the outcome favorable?' => 'La suite est elle favorable ?',
     'Date of sale' => 'Date de vente',
     'Date of notification' => 'Date de notification',
@@ -171,7 +167,6 @@ return [
     'Publication documents' => 'Documents de la publication',
     'Signed minute documents' => 'Documents de la minute signée',
     'Appeal documents' => 'Documents de recours',
-    'Documents (TF, ID client, IFU client, credit convention)' => 'Documents (TF, pièce d\'identité du client, IFU du client, convention de crédit)'
-
+    'Documents (TF, ID client, IFU client, credit convention)' => 'Documents (TF, pièce d\'identité du client, IFU du client, convention de crédit)',
 
 ];

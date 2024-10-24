@@ -11,17 +11,12 @@ use Illuminate\Validation\ValidationException;
 
 class TransferController extends Controller
 {
-    public function __construct(private TransferRepository $transfer) {
-
-    }
+    public function __construct(private TransferRepository $transfer) {}
 
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-
-    }
+    public function index() {}
 
     /**
      * Store a newly created resource in storage.
@@ -62,10 +57,10 @@ class TransferController extends Controller
 
             $this->transfer->completeTransfer($request->all(), $transfer);
 
-            return api_response(true, "Mis à jour du transfert avec succès", $transfer, 200);
+            return api_response(true, 'Mis à jour du transfert avec succès', $transfer, 200);
         } catch (ValidationException $e) {
 
-            return api_response(false, "Echec de la mise à jour du transfer", $e->errors(), 422);
+            return api_response(false, 'Echec de la mise à jour du transfer', $e->errors(), 422);
         }
     }
 }

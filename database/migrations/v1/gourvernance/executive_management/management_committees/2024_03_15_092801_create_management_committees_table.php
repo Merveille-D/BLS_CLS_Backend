@@ -7,9 +7,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('management_committees', function (Blueprint $table) {
@@ -34,15 +31,12 @@ return new class extends Migration
             $table->uuid('created_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
 
-            $table->enum('status', ManagementCommittee::SESSION_MEETING_STATUS )->default('pending');
+            $table->enum('status', ManagementCommittee::SESSION_MEETING_STATUS)->default('pending');
 
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('management_committees');

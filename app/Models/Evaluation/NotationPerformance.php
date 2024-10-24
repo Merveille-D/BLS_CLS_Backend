@@ -13,7 +13,7 @@ class NotationPerformance extends Model
     protected $fillable = [
         'notation_id',
         'performance_indicator_id',
-        'note'
+        'note',
     ];
 
     public function notation()

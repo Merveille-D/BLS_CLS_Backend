@@ -12,24 +12,21 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
  */
 class PartyRepository
 {
+    public function __construct(private LitigationParty $party_model) {}
 
-    public function __construct(private LitigationParty $party_model)
+    public function getList($request): ResourceCollection
     {
-    }
-
-    public function getList($request) : ResourceCollection {
         $search = $request->search;
         $query = $this->party_model
-                ->when(!blank($search), function($qry) use($search) {
-                    $qry->where('name', 'like', '%'.$search.'%');
-                })
-                ->paginate();
-
+            ->when(! blank($search), function ($qry) use ($search) {
+                $qry->where('name', 'like', '%' . $search . '%');
+            })
+            ->paginate();
 
         return PartyResource::collection($query);
     }
 
-    public function add($request) : JsonResource
+    public function add($request): JsonResource
     {
         $party = $this->party_model->create([
             'name' => $request->name,

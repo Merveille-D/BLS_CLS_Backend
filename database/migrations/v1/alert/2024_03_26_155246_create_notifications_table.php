@@ -7,16 +7,13 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('sent_by')->default('system');
             $table->string('sent_to')->nullable();
-            $table->enum('priority', Alert::STATUS );
+            $table->enum('priority', Alert::STATUS);
             $table->string('type');
             $table->text('data');
             $table->uuidMorphs('notifiable');
@@ -30,9 +27,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('notifications');

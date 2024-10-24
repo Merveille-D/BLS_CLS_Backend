@@ -5,7 +5,6 @@ namespace App\Http\Requests\Notation;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
 class GeneratePdfNotationRequest extends FormRequest
 {
@@ -25,7 +24,7 @@ class GeneratePdfNotationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'notation_id' => ['required','uuid'],
+            'notation_id' => ['required', 'uuid'],
         ];
     }
 
@@ -34,7 +33,7 @@ class GeneratePdfNotationRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

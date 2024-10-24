@@ -10,16 +10,17 @@ use Carbon\Carbon;
 
 class RecoveryObserver
 {
-    use RecoveryNotificationTrait, AddAlertTrait;
+    use AddAlertTrait, RecoveryNotificationTrait;
+
     /**
      * Handle the Recovery "created" event.
      */
     public function created(Recovery $recovery): void
     {
-        if (!$recovery->has_guarantee) {
+        if (! $recovery->has_guarantee) {
             $data = $this->nextStepBasedOnState($recovery);
 
-            $this->new_alert($recovery, 'RAPPEL | '.$recovery->name ?? 'Recouvrement', $data['message'], 'recovery', Carbon::now()->addDays(3), Alert::STATUS[2] ?? 'urgent');
+            $this->new_alert($recovery, 'RAPPEL | ' . $recovery->name ?? 'Recouvrement', $data['message'], 'recovery', Carbon::now()->addDays(3), Alert::STATUS[2] ?? 'urgent');
         }
     }
 
@@ -28,10 +29,10 @@ class RecoveryObserver
      */
     public function updated(Recovery $recovery): void
     {
-        if (!$recovery->has_guarantee) {
+        if (! $recovery->has_guarantee) {
             $data = $this->nextStepBasedOnState($recovery);
 
-            $this->new_alert($recovery, 'RAPPEL | '.$recovery->name ?? 'Recouvrement', $data['message'], 'recovery', Carbon::now()->addDays(3), Alert::STATUS[2] ?? 'urgent');
+            $this->new_alert($recovery, 'RAPPEL | ' . $recovery->name ?? 'Recouvrement', $data['message'], 'recovery', Carbon::now()->addDays(3), Alert::STATUS[2] ?? 'urgent');
         }
     }
 

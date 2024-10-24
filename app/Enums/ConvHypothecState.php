@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Enums;
 
-enum ConvHypothecState {
+enum ConvHypothecState
+{
     const CREATED = 'created';
     const PROPERTY_VERIFIED = 'property_verified';
     const AGREEMENT_SIGNED = 'agreement_signed';

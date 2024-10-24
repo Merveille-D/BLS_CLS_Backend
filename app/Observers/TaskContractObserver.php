@@ -9,17 +9,14 @@ class TaskContractObserver
     /**
      * Handle the Task "created" event.
      */
-    public function created(Task $task): void
-    {
-
-    }
+    public function created(Task $task): void {}
 
     /**
      * Handle the Task "updated" event.
      */
     public function updated(Task $task): void
     {
-        if($task->status) {
+        if ($task->status) {
             $task->alerts()->delete();
         }
     }

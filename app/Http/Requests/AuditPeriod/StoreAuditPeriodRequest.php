@@ -35,7 +35,7 @@ class StoreAuditPeriodRequest extends FormRequest
         $validator->after(function ($validator) {
             $lastAuditPeriod = AuditPeriod::orderBy('created_at', 'desc')->first();
 
-            if ($lastAuditPeriod && !$lastAuditPeriod->status) {
+            if ($lastAuditPeriod && ! $lastAuditPeriod->status) {
                 $validator->errors()->add('status', 'The last audit period must be completed before creating a new one.');
             }
         });
@@ -46,7 +46,7 @@ class StoreAuditPeriodRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

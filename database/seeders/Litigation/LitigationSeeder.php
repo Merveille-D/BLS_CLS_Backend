@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders\Litigation;
 
 use App\Models\Litigation\Litigation;

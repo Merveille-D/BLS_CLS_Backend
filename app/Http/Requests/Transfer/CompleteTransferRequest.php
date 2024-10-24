@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests\Transfer;
 
-use App\Models\Audit\AuditPerformanceIndicator;
-use App\Models\Evaluation\Notation;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -44,14 +42,14 @@ class CompleteTransferRequest extends FormRequest
             'documents.*.file' => ['required_if:type,guarantee', 'file'],
 
             // For Audit
-            'notes.*.audit_performance_indicator_id' => ['required_if:type,audit','uuid'],
+            'notes.*.audit_performance_indicator_id' => ['required_if:type,audit', 'uuid'],
 
             // For Evaluation or Audit
-            'notes' => ['required_if:type,audit,evaluation','array'],
-            'notes.*.note' => ['required_if:type,audit,evaluation','numeric'],
+            'notes' => ['required_if:type,audit,evaluation', 'array'],
+            'notes.*.note' => ['required_if:type,audit,evaluation', 'numeric'],
 
             // For Evaluation
-            'notes.*.performance_indicator_id' => ['required_if:type,evaluation','uuid'],
+            'notes.*.performance_indicator_id' => ['required_if:type,evaluation', 'uuid'],
         ];
 
         return $rules;
@@ -62,7 +60,7 @@ class CompleteTransferRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

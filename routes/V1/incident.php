@@ -8,17 +8,9 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::resource('incidents', IncidentController::class);
-    Route::get('generate_pdf_fiche_suivi_incident', [IncidentController::class, 'generatePdfFicheSuivi'] );
+    Route::get('generate_pdf_fiche_suivi_incident', [IncidentController::class, 'generatePdfFicheSuivi']);
     Route::resource('author_incidents', AuthorIncidentController::class);
     Route::resource('task_incidents', TaskIncidentController::class);
-    Route::get('get_current_task_incidents', [TaskIncidentController::class, 'getCurrentTaskIncident'] );
-    Route::post('complete_task_incidents', [TaskIncidentController::class, 'completeTaskIncident'] );
+    Route::get('get_current_task_incidents', [TaskIncidentController::class, 'getCurrentTaskIncident']);
+    Route::post('complete_task_incidents', [TaskIncidentController::class, 'completeTaskIncident']);
 });
-
-
-
-
-
-
-
-

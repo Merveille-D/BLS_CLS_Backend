@@ -11,10 +11,7 @@ use Illuminate\Validation\ValidationException;
 
 class AuditPeriodController extends Controller
 {
-
-    public function __construct(private AuditPeriodRepository $audit_period) {
-
-    }
+    public function __construct(private AuditPeriodRepository $audit_period) {}
 
     /**
      * Display a listing of the resource.
@@ -22,6 +19,7 @@ class AuditPeriodController extends Controller
     public function index()
     {
         $audit_periods = AuditPeriod::all();
+
         return api_response(true, "Liste des périodes d'audit", $audit_periods, 200);
     }
 
@@ -32,9 +30,10 @@ class AuditPeriodController extends Controller
     {
         try {
             $audit_period = $this->audit_period->store($request->all());
+
             return api_response(true, "Succès de l'enregistrement de la période", $audit_period, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de l'enregistrement", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de l'enregistrement", $e->errors(), 422);
         }
     }
 
@@ -44,9 +43,9 @@ class AuditPeriodController extends Controller
     public function show(AuditPeriod $audit_period)
     {
         try {
-            return api_response(true, "Infos de la période", $audit_period, 200);
-        }catch( ValidationException $e ) {
-            return api_response(false, "Echec de la récupération des infos", $e->errors(), 422);
+            return api_response(true, 'Infos de la période', $audit_period, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la récupération des infos', $e->errors(), 422);
         }
     }
 
@@ -57,10 +56,11 @@ class AuditPeriodController extends Controller
     {
         try {
             $this->audit_period->update($audit_period, $request->all());
+
             return api_response(true, "Mis à jour de la période d'audit avec succès", $audit_period, 200);
         } catch (ValidationException $e) {
 
-            return api_response(false, "Echec de la mise à jour", $e->errors(), 422);
+            return api_response(false, 'Echec de la mise à jour', $e->errors(), 422);
         }
     }
 
@@ -71,9 +71,10 @@ class AuditPeriodController extends Controller
     {
         try {
             $audit_period->delete();
-            return api_response(true, "Succès de la suppression ", null, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de la supression ", $e->errors(), 422);
+
+            return api_response(true, 'Succès de la suppression ', null, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la supression ', $e->errors(), 422);
         }
     }
 }

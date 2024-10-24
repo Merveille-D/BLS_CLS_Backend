@@ -33,7 +33,7 @@ class LegalWatchResource extends JsonResource
             'mail_object' => $this->mail_object,
             'mail_content' => $this->mail_content,
             'mail_addresses' => $this->mail_addresses,
-            'is_sent' => !$this->is_archived && $this->is_sent ? true : false,
+            'is_sent' => ! $this->is_archived && $this->is_sent ? true : false,
         ];
     }
 }

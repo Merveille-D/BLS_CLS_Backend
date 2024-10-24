@@ -4,13 +4,10 @@ namespace Database\Seeders\Litigation;
 
 use App\Enums\Litigation\LitigationTaskState;
 use App\Enums\Litigation\LitigationType;
-use App\Models\Litigation\LitigationParty;
 use App\Models\Litigation\LitigationSetting;
 use App\Models\Litigation\LitigationStep;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class LitigationResourceSeeder extends Seeder
 {
@@ -22,23 +19,23 @@ class LitigationResourceSeeder extends Seeder
         $resources = $this->litigation_natures();
         foreach ($resources as $resource) {
             $exist = LitigationSetting::where('name', $resource)->first();
-            if (!$exist) {
-                LitigationSetting::create(['name' => $resource, 'type' => LitigationType::NATURE] );
+            if (! $exist) {
+                LitigationSetting::create(['name' => $resource, 'type' => LitigationType::NATURE]);
             }
         }
 
         $jurisdictions = $this->litigation_jurisdictions();
         foreach ($jurisdictions as $jurisdiction) {
             $exist = LitigationSetting::where('name', $jurisdiction)->first();
-            if (!$exist) {
-                LitigationSetting::create(['name' => $jurisdiction, 'type' => LitigationType::JURISDICTION] );
+            if (! $exist) {
+                LitigationSetting::create(['name' => $jurisdiction, 'type' => LitigationType::JURISDICTION]);
             }
         }
 
         $party_types = $this->litigation_party_types();
         foreach ($party_types as $party_type) {
             $exist = LitigationSetting::where('name', $party_type)->first();
-            if (!$exist) {
+            if (! $exist) {
                 LitigationSetting::create(['name' => $party_type, 'type' => LitigationType::PARTY_TYPE]);
             }
         }
@@ -46,7 +43,7 @@ class LitigationResourceSeeder extends Seeder
         $qualities = $this->qualities();
         foreach ($qualities as $quality) {
             $exist = LitigationSetting::where('name', $quality)->first();
-            if (!$exist) {
+            if (! $exist) {
                 LitigationSetting::create(['name' => $quality, 'type' => LitigationType::QUALITY]);
             }
         }
@@ -54,15 +51,15 @@ class LitigationResourceSeeder extends Seeder
         $documents = $this->litigation_documents();
         foreach ($documents as $document) {
             $exist = LitigationSetting::where('name', $document)->first();
-            if (!$exist) {
-                LitigationSetting::create(['name' => $document, 'type' => LitigationType::DOCUMENT, 'description' => 'Catégorie de document'] );
+            if (! $exist) {
+                LitigationSetting::create(['name' => $document, 'type' => LitigationType::DOCUMENT, 'description' => 'Catégorie de document']);
             }
         }
 
         $steps = $this->defaultSteps();
 
         foreach ($steps as $step) {
-            if (!LitigationStep::where('code', $step['code'])->exists()) {
+            if (! LitigationStep::where('code', $step['code'])->exists()) {
                 LitigationStep::create($step);
             }
         }
@@ -74,7 +71,7 @@ class LitigationResourceSeeder extends Seeder
             'type' => 'individual',
             'address' => '123, Test Street, Lagos City',
             'phone' => '+22845869535',
-            'email' => 'johncakpo@gmail.com'
+            'email' => 'johncakpo@gmail.com',
         ]);
 
         DB::table('litigation_parties')->insert([
@@ -83,7 +80,7 @@ class LitigationResourceSeeder extends Seeder
             'type' => 'individual',
             'address' => '123, Test Street, Lagos City',
             'phone' => '+2296600252510',
-            'email' => 'jagbo@hotmail.com'
+            'email' => 'jagbo@hotmail.com',
         ]);
 
         DB::table('litigation_parties')->insert([
@@ -92,7 +89,7 @@ class LitigationResourceSeeder extends Seeder
             'type' => 'legal',
             'address' => '123, Test Street, Lagos City',
             'phone' => '+22945253654',
-            'email' => 'societe@afrikskills.com'
+            'email' => 'societe@afrikskills.com',
         ]);
         DB::table('litigation_parties')->insert([
             'id' => '7ace26d8-85kj-4b96-afcd-300d051cf9f8',
@@ -100,7 +97,7 @@ class LitigationResourceSeeder extends Seeder
             'type' => 'legal',
             'address' => '123, Test Street, Lagos City',
             'phone' => '+23121452125',
-            'email' => 'societe@bamoui.com'
+            'email' => 'societe@bamoui.com',
         ]);
         DB::table('litigation_parties')->insert([
             'id' => '7ace26d8-32c0-kiol-afcd-300d051cf9f8',
@@ -108,16 +105,15 @@ class LitigationResourceSeeder extends Seeder
             'type' => 'legal',
             'address' => '123, Test Street, Lagos City',
             'phone' => '+22921145865',
-            'email' => 'societe@afrikskills.com'
+            'email' => 'societe@afrikskills.com',
         ]);
     }
 
     /**
      * nature default seeds
-     *
-     * @return array
      */
-    public function litigation_natures() : array {
+    public function litigation_natures(): array
+    {
         return [
             'Administrative',
             'Civil',
@@ -129,10 +125,9 @@ class LitigationResourceSeeder extends Seeder
 
     /**
      * qualities
-     *
-     * @return array
      */
-    public function qualities() : array {
+    public function qualities(): array
+    {
         return [
             'intervenant',
             'defendant',
@@ -143,24 +138,22 @@ class LitigationResourceSeeder extends Seeder
 
     /**
      * party type default seeds
-     *
-     * @return array
      */
-    public function litigation_party_types() : array {
+    public function litigation_party_types(): array
+    {
         return [
-        'client',
-        'employee',
-        'provider',
-        'partner',
+            'client',
+            'employee',
+            'provider',
+            'partner',
         ];
     }
 
     /**
      * jurisdictions default seeds
-     *
-     * @return array
      */
-    public function litigation_jurisdictions() : array {
+    public function litigation_jurisdictions(): array
+    {
         return [
             'Court of Appeal',
             'Constitutional Court',
@@ -175,7 +168,8 @@ class LitigationResourceSeeder extends Seeder
     }
 
     // documents categories
-    public function litigation_documents() : array {
+    public function litigation_documents(): array
+    {
         return [
             'Summons to appear',
             'Convocation',
@@ -188,8 +182,8 @@ class LitigationResourceSeeder extends Seeder
         ];
     }
 
-
-    public function defaultSteps() : array {
+    public function defaultSteps(): array
+    {
         return [
 
             [

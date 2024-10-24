@@ -10,23 +10,22 @@ use App\Http\Requests\Incident\UpdateIncidentRequest;
 use App\Http\Resources\Incident\IncidentResource;
 use App\Models\Incident\Incident;
 use App\Repositories\Incident\IncidentRepository;
-use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Throwable;
 
 class IncidentController extends Controller
 {
-    public function __construct(private IncidentRepository $incident) {
-
-    }
+    public function __construct(private IncidentRepository $incident) {}
 
     /**
      * Display a listing of the resource.
      */
     public function index(ListIncidentRequest $request)
     {
-        $incidents = Incident::with('authorIncident')->when(request('type') !== null, function($query) {
+        $incidents = Incident::with('authorIncident')->when(request('type') !== null, function ($query) {
             $query->where('type', request('type'));
         })->get();
+
         return api_response(true, "Liste des donnée de l'incident", IncidentResource::collection($incidents), 200);
     }
 
@@ -44,10 +43,9 @@ class IncidentController extends Controller
             $data['current_task'] = $incident->current_task;
             $data['files'] = $incident->files;
 
-
             return api_response(true, "Succès de l'enregistrement dans l'incident", $data, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de l'enregistrement dans l'incident", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de l'enregistrement dans l'incident", $e->errors(), 422);
         }
     }
 
@@ -64,7 +62,7 @@ class IncidentController extends Controller
             $data['files'] = $incident->files;
 
             return api_response(true, "Infos de l'incident", $data, 200);
-        }catch( ValidationException $e ) {
+        } catch (ValidationException $e) {
             return api_response(false, "Echec de la récupération des infos de l'incident", $e->errors(), 422);
         }
     }
@@ -83,10 +81,10 @@ class IncidentController extends Controller
             $data['current_task'] = $incident->current_task;
             $data['files'] = $incident->files;
 
-            return api_response(true, "Mis à jour du texte avec succès", $data, 200);
+            return api_response(true, 'Mis à jour du texte avec succès', $data, 200);
         } catch (ValidationException $e) {
 
-            return api_response(false, "Echec de la mise à jour", $e->errors(), 422);
+            return api_response(false, 'Echec de la mise à jour', $e->errors(), 422);
         }
     }
 
@@ -97,18 +95,21 @@ class IncidentController extends Controller
     {
         try {
             $incident->delete();
+
             return api_response(true, "Succès de la suppression de l'incident", null, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de la supression de l'incident", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de la supression de l'incident", $e->errors(), 422);
         }
     }
 
-    public function generatePdfFicheSuivi(GeneratePdfIncidentRequest $request) {
+    public function generatePdfFicheSuivi(GeneratePdfIncidentRequest $request)
+    {
         try {
 
             $data = $this->incident->generatePdf($request->all());
+
             return $data;
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }

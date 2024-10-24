@@ -17,7 +17,7 @@ class RecoveryStep extends Model
         'type',
         'min_delay',
         'max_delay',
-        'deadline'
+        'deadline',
     ];
 
 }

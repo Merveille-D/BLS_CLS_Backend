@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class GuaranteeTest extends TestCase
@@ -15,16 +14,17 @@ class GuaranteeTest extends TestCase
      * test add new bond guarantee
      *
      * @return void
+     *
+     * @test
      */
-
-    public function test_add_new_bond_guarantee()
+    public function add_new_bond_guarantee()
     {
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)->post('/api/guarantees', [
             'name' => 'Test Guarantee bonding',
             'type' => 'bonding',
-            'contract_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47'
+            'contract_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47',
         ]);
 
         $response->assertStatus(201);
@@ -32,12 +32,12 @@ class GuaranteeTest extends TestCase
         $this->assertDatabaseHas('guarantees', [
             'name' => 'Test Guarantee bonding',
             'type' => 'bonding',
-            'contract_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47'
+            'contract_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47',
         ]);
 
         $this->assertDatabaseHas('module_tasks', [
             'taskable_id' => $response->json('data.id'),
-            'taskable_type' => 'App\Models\Guarantee\Guarantee'
+            'taskable_type' => 'App\Models\Guarantee\Guarantee',
         ]);
     }
 
@@ -45,9 +45,10 @@ class GuaranteeTest extends TestCase
      * test add new stock guarantee
      *
      * @return void
+     *
+     * @test
      */
-
-    public function test_add_new_stock_guarantee()
+    public function add_new_stock_guarantee()
     {
         $user = User::factory()->create();
 
@@ -56,7 +57,7 @@ class GuaranteeTest extends TestCase
             'security' => 'pledge',
             'type' => 'stock',
             'contract_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47',
-            'formalization_type' => 'legal'
+            'formalization_type' => 'legal',
         ]);
 
         $response->assertStatus(201);
@@ -65,12 +66,12 @@ class GuaranteeTest extends TestCase
             'name' => 'Test Guarantee stock',
             'security' => 'pledge',
             'type' => 'stock',
-            'contract_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47'
+            'contract_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47',
         ]);
 
         $this->assertDatabaseHas('module_tasks', [
             'taskable_id' => $response->json('data.id'),
-            'taskable_type' => 'App\Models\Guarantee\Guarantee'
+            'taskable_type' => 'App\Models\Guarantee\Guarantee',
         ]);
     }
 
@@ -78,9 +79,10 @@ class GuaranteeTest extends TestCase
      * test get all guarantees
      *
      * @return void
+     *
+     * @test
      */
-
-    public function test_get_all_guarantees()
+    public function get_all_guarantees()
     {
         $user = User::factory()->create();
         $response = $this->actingAs($user)->getJson('/api/guarantees');
@@ -92,16 +94,17 @@ class GuaranteeTest extends TestCase
      * test get one guarantee
      *
      * @return void
+     *
+     * @test
      */
-
-    public function test_get_one_guarantee()
+    public function get_one_guarantee()
     {
         $user = User::factory()->create();
 
         $guarantee = $this->actingAs($user)->postJson('/api/guarantees', [
             'name' => 'Test Guarantee bonding',
             'type' => 'bonding',
-            'contract_id' => '9c088984-2eb2-4efe-9f46-476d0187af47'
+            'contract_id' => '9c088984-2eb2-4efe-9f46-476d0187af47',
         ]);
 
         $id = $guarantee->json('data.id');
@@ -110,5 +113,4 @@ class GuaranteeTest extends TestCase
 
         $response->assertStatus(200);
     }
-
 }

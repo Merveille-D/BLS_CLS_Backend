@@ -39,11 +39,11 @@ class UpdateProcessRequest extends FormRequest
 
     public function validationRulesByStep($state): array
     {
-        $data = array(
+        $data = [
             'documents' => 'array|required',
             'documents.*.name' => 'required|string',
             'documents.*.file' => 'required|file|max:8192|mimes:pdf,doc,docx',
-        );
+        ];
         switch ($state) {
 
             case RecoveryStepEnum::CREATED:
@@ -53,7 +53,7 @@ class UpdateProcessRequest extends FormRequest
                 $data = $data;
             case RecoveryStepEnum::FORMAL_NOTICE:
                 $data = [
-                    'payement_status' => ['required', new ArrayElementMatch(array('yes', 'no'))],
+                    'payement_status' => ['required', new ArrayElementMatch(['yes', 'no'])],
                 ];
 
             case RecoveryStepEnum::DEBT_PAYEMENT:
@@ -61,7 +61,7 @@ class UpdateProcessRequest extends FormRequest
                 break;
             case RecoveryStepEnum::JURISDICTION:
                 $data = [
-                    'is_seized' => ['required', new ArrayElementMatch(array('yes', 'no'))],
+                    'is_seized' => ['required', new ArrayElementMatch(['yes', 'no'])],
                 ];
                 break;
             case RecoveryStepEnum::SEIZURE:
@@ -69,7 +69,7 @@ class UpdateProcessRequest extends FormRequest
                 break;
             case RecoveryStepEnum::EXECUTORY:
                 $data = [
-                    'is_entrusted' => ['required', new ArrayElementMatch(array('yes', 'no'))],
+                    'is_entrusted' => ['required', new ArrayElementMatch(['yes', 'no'])],
                 ];
                 break;
             case RecoveryStepEnum::ENTRUST_LAWYER:

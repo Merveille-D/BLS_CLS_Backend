@@ -56,6 +56,7 @@ class LegalWatch extends Model
     {
         return $this->hasOne(LitigationSetting::class, 'id', 'nature_id');
     }
+
     /**
      * jurisdiction
      *
@@ -65,6 +66,4 @@ class LegalWatch extends Model
     {
         return $this->hasOne(LitigationSetting::class, 'id', 'jurisdiction_id');
     }
-
-
 }

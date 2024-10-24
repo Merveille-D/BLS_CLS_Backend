@@ -10,12 +10,11 @@ use App\Http\Requests\Notation\UpdateNotationRequest;
 use App\Models\Evaluation\Notation;
 use App\Repositories\Evaluation\NotationRepository;
 use Illuminate\Validation\ValidationException;
+use Throwable;
 
 class NotationController extends Controller
 {
-    public function __construct(private NotationRepository $notation) {
-
-    }
+    public function __construct(private NotationRepository $notation) {}
 
     /**
      * Display a listing of the resource.
@@ -25,7 +24,8 @@ class NotationController extends Controller
         $notations = Notation::whereNull('parent_id')->get()->map(function ($notation) {
             return $this->notation->notationRessource($notation);
         });
-        return api_response(true, "Liste des evaluations", $notations, 200);
+
+        return api_response(true, 'Liste des evaluations', $notations, 200);
     }
 
     /**
@@ -36,9 +36,10 @@ class NotationController extends Controller
         try {
             $notation = $this->notation->store($request->all());
             $notation = $this->notation->notationRessource($notation);
+
             return api_response(true, "Succès de l'enregistrement de l'evaluation", $notation, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de l'enregistrement de l'evaluation", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de l'enregistrement de l'evaluation", $e->errors(), 422);
         }
     }
 
@@ -49,8 +50,9 @@ class NotationController extends Controller
     {
         try {
             $data = $this->notation->notationRessource($notation);
+
             return api_response(true, "Infos de l'évaluation", $data, 200);
-        }catch( ValidationException $e ) {
+        } catch (ValidationException $e) {
             return api_response(false, "Echec de la récupération des infos de l'évaluation", $e->errors(), 422);
         }
     }
@@ -65,8 +67,8 @@ class NotationController extends Controller
             $notation = $this->notation->notationRessource($notation);
 
             return api_response(true, "Succès de la mise à jour de l'evaluation", $notation, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de la mise à jour de l'evaluation", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de la mise à jour de l'evaluation", $e->errors(), 422);
         }
     }
 
@@ -77,9 +79,10 @@ class NotationController extends Controller
     {
         try {
             $this->notation->delete($notation);
-            return api_response(true, "Evaluation supprimé avec succès", $notation, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de la suppression", $e->errors(), 422);
+
+            return api_response(true, 'Evaluation supprimé avec succès', $notation, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la suppression', $e->errors(), 422);
         }
     }
 
@@ -88,18 +91,20 @@ class NotationController extends Controller
         try {
             $notation = $this->notation->createTransfer($request->all());
 
-            return api_response(true, "Transfert de la tache avec succès", $notation, 200);
+            return api_response(true, 'Transfert de la tache avec succès', $notation, 200);
         } catch (ValidationException $e) {
-            return api_response(false, "Echec de la création du transfert", $e->errors(), 422);
+            return api_response(false, 'Echec de la création du transfert', $e->errors(), 422);
         }
     }
 
-    public function generatePdfFicheSuivi(GeneratePdfNotationRequest $request) {
+    public function generatePdfFicheSuivi(GeneratePdfNotationRequest $request)
+    {
         try {
 
             $data = $this->notation->generatePdf($request);
+
             return $data;
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }

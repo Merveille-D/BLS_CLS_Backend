@@ -14,9 +14,7 @@ use Illuminate\Validation\ValidationException;
 
 class TaskController extends Controller
 {
-    public function __construct(private TaskContractRepository $task) {
-
-    }
+    public function __construct(private TaskContractRepository $task) {}
 
     /**
      * Display a listing of the resource.
@@ -24,15 +22,18 @@ class TaskController extends Controller
     public function index(ListTaskContractRequest $request)
     {
         $task_contracts = $this->task->all($request)->map(function ($task) {
-            
+
             $task->transfers = $task->transfers->map(function ($transfer) {
                 $transfer->sender = $transfer->sender;
                 $transfer->collaborators = $transfer->collaborators;
+
                 return $transfer;
             });
+
             return $task;
-        });;
-        return api_response(true, "Liste des taches du contrat", $task_contracts, 200);
+        });
+
+        return api_response(true, 'Liste des taches du contrat', $task_contracts, 200);
     }
 
     /**
@@ -42,12 +43,12 @@ class TaskController extends Controller
     {
         try {
             $task_contract = $this->task->store($request);
+
             return api_response(true, "Succès de l'enregistrement de la tache", $task_contract, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de l'enregistrement de la tache", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de l'enregistrement de la tache", $e->errors(), 422);
         }
     }
-
 
     /**
      * Display the specified resource.
@@ -59,11 +60,13 @@ class TaskController extends Controller
             $data['transfers'] = $task->transfers->map(function ($transfer) {
                 $transfer->sender = $transfer->sender;
                 $transfer->collaborators = $transfer->collaborators;
+
                 return $transfer;
             });
-            return api_response(true, "Information de la tache", $data, 200);
-        }catch( ValidationException $e ) {
-            return api_response(false, "Echec de la récupération des infos de la tache", $e->errors(), 422);
+
+            return api_response(true, 'Information de la tache', $data, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la récupération des infos de la tache', $e->errors(), 422);
         }
     }
 
@@ -79,14 +82,14 @@ class TaskController extends Controller
             $data['transfers'] = $task->transfers->map(function ($transfer) {
                 $transfer->sender = $transfer->sender;
                 $transfer->collaborators = $transfer->collaborators;
+
                 return $transfer;
             });
-    ;
 
             //
-            return api_response(true, "Succès de la mise à jour de la tache", $data, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de la mise à jour de la tache", $e->errors(), 422);
+            return api_response(true, 'Succès de la mise à jour de la tache', $data, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la mise à jour de la tache', $e->errors(), 422);
         }
     }
 
@@ -97,9 +100,10 @@ class TaskController extends Controller
     {
         try {
             $task->delete();
-            return api_response(true, "Succès de la suppression de la tache", null, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de la supression de la tache", $e->errors(), 422);
+
+            return api_response(true, 'Succès de la suppression de la tache', null, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la supression de la tache', $e->errors(), 422);
         }
     }
 
@@ -107,9 +111,10 @@ class TaskController extends Controller
     {
         try {
             $this->task->deleteArray($request);
-            return api_response(true, "Succès de la suppression des taches", null, 200);
+
+            return api_response(true, 'Succès de la suppression des taches', null, 200);
         } catch (ValidationException $e) {
-            return api_response(false, "Echec de la suppression des taches", $e->errors(), 422);
+            return api_response(false, 'Echec de la suppression des taches', $e->errors(), 422);
         }
     }
 
@@ -117,9 +122,10 @@ class TaskController extends Controller
     {
         try {
             $this->task->updateStatus($request);
-            return api_response(true, "Succès de la mise à jour des taches", null, 200);
+
+            return api_response(true, 'Succès de la mise à jour des taches', null, 200);
         } catch (ValidationException $e) {
-            return api_response(false, "Echec de la mise à jour des taches", $e->errors(), 422);
+            return api_response(false, 'Echec de la mise à jour des taches', $e->errors(), 422);
         }
     }
 }

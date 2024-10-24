@@ -2,10 +2,8 @@
 
 use App\Http\Controllers\Alert\AlertController;
 use App\Http\Controllers\Alert\NotificationController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
-
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
@@ -13,12 +11,12 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('notifications', NotificationController::class);
 });
 
-Route::get('trigger_module_alert', [AlertController::class, 'triggerModuleAlert'] );
+Route::get('trigger_module_alert', [AlertController::class, 'triggerModuleAlert']);
 
-Route::get('queue-cmd', function() {
+Route::get('queue-cmd', function () {
     Artisan::call('queue:work', [
         '--stop-when-empty' => true,
     ]);
-    return "Commande queue executée avec succès!";
-});
 
+    return 'Commande queue executée avec succès!';
+});

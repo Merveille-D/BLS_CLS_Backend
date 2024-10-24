@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests\AuthorIncident;
 
-use App\Models\Bank\Bank;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
 class UpdateAuthorIncidentRequest extends FormRequest
 {
@@ -27,7 +25,7 @@ class UpdateAuthorIncidentRequest extends FormRequest
     {
         return [
             'name' => ['string'],
-            'email' => ['email' ],
+            'email' => ['email'],
             'telephone' => ['numeric'],
             'adresse' => ['string'],
         ];
@@ -38,7 +36,7 @@ class UpdateAuthorIncidentRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

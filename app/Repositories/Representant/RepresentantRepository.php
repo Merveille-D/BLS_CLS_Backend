@@ -1,22 +1,20 @@
 <?php
+
 namespace App\Repositories\Representant;
 
-use App\Models\Gourvernance\GourvernanceDocument;
 use App\Models\Gourvernance\Representant;
 use Illuminate\Support\Facades\Auth;
 
 class RepresentantRepository
 {
-    public function __construct(private Representant $representant) {
-
-    }
+    public function __construct(private Representant $representant) {}
 
     /**
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return Representant
      */
-    public function store($request) {
+    public function store($request)
+    {
 
         $request['created_by'] = Auth::user()->id;
         $representant = $this->representant->create($request);
@@ -30,15 +28,14 @@ class RepresentantRepository
     }
 
     /**
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return Representant
      */
-    public function update(Representant $representant, $request) {
+    public function update(Representant $representant, $request)
+    {
 
         $representant->update($request);
+
         return $representant;
     }
-
-
 }

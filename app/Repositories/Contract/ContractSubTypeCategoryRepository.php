@@ -1,46 +1,46 @@
 <?php
+
 namespace App\Repositories\Contract;
 
 use App\Models\Contract\ContractSubTypeCategory;
 
 class ContractSubTypeCategoryRepository
 {
-    public function __construct(private ContractSubTypeCategory $contractSubTypeCategory) {
-
-    }
+    public function __construct(private ContractSubTypeCategory $contractSubTypeCategory) {}
 
     /**
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return ContractSubTypeCategory
      */
-    public function list($request) {
+    public function list($request)
+    {
 
         $contractSubTypeCategories = $this->contractSubTypeCategory->where('contract_type_category_id', $request['contract_type_category_id'])->get();
+
         return $contractSubTypeCategories;
     }
 
     /**
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return ContractSubTypeCategory
      */
-    public function store($request) {
+    public function store($request)
+    {
 
         $contractSubTypeCategory = $this->contractSubTypeCategory->create($request);
+
         return $contractSubTypeCategory;
     }
 
     /**
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return ContractSubTypeCategory
      */
-    public function update(ContractSubTypeCategory $contractSubTypeCategory, $request) {
+    public function update(ContractSubTypeCategory $contractSubTypeCategory, $request)
+    {
 
         $contractSubTypeCategory->update($request);
+
         return $contractSubTypeCategory;
     }
-
-
 }

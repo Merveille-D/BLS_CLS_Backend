@@ -7,11 +7,11 @@ use App\Models\Alert\Alert;
 use App\Models\Guarantee\GuaranteeTask;
 use Carbon\Carbon;
 use Illuminate\Contracts\Events\ShouldHandleEventsAfterCommit;
-use Illuminate\Support\Facades\Log;
 
 class GuaranteeTaskObserver implements ShouldHandleEventsAfterCommit
 {
     use AddAlertTrait;
+
     /**
      * Handle the GuaranteeTask "created" event.
      */
@@ -33,15 +33,15 @@ class GuaranteeTaskObserver implements ShouldHandleEventsAfterCommit
             // $dates = $this->getMilestoneDates(Carbon::parse($max_deadline));
 
             // foreach ($dates as $key => $date) {
-                $this->new_alert(
-                    $guaranteeTask,
-                    'RAPPEL | '. $guaranteeTask->taskable?->name ?? '',
-                    __('security.'.$guaranteeTask->taskable?->next_task?->title ?? ''),
-                    $guaranteeTask->taskable?->security ?? 'guarantee',
-                    /* $date, */now(),
-                    /* Alert::STATUS[$key] ??  */'urgent',
-                    $max_deadline,
-                );
+            $this->new_alert(
+                $guaranteeTask,
+                'RAPPEL | ' . $guaranteeTask->taskable?->name ?? '',
+                __('security.' . $guaranteeTask->taskable?->next_task?->title ?? ''),
+                $guaranteeTask->taskable?->security ?? 'guarantee',
+                /* $date, */ now(),
+                /* Alert::STATUS[$key] ??  */ 'urgent',
+                $max_deadline,
+            );
             // }
         }
     }

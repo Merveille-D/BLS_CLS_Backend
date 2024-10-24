@@ -4,13 +4,9 @@ use App\Models\Shareholder\Shareholder;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Validation\Rule;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('shareholders', function (Blueprint $table) {
@@ -20,7 +16,7 @@ return new class extends Migration
             $table->string('nationality')->nullable();
             $table->string('address')->nullable();
             $table->enum('corporate_type', Shareholder::CORPORATE_TYPES)->nullable();
-            
+
             $table->unsignedBigInteger('actions_number');
             $table->unsignedBigInteger('actions_encumbered');
             $table->unsignedBigInteger('actions_no_encumbered');
@@ -33,9 +29,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('shareholders');

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories\Recovery;
 
 use App\Concerns\Traits\Transfer\AddTransferTrait;
@@ -13,17 +14,19 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class RecoveryTaskRepository
 {
     use AddTransferTrait;
+
     public function __construct(
         private RecoveryTask $task_model,
         private RecoveryRepository $recoveryRepo,
         private Recovery $recovery_model,
     ) {}
 
-    public function getList($request) {
+    public function getList($request)
+    {
         $modele = $this->recovery_model->find($request->id);
 
-        if(!$modele) {
-            return array();
+        if (! $modele) {
+            return [];
         }
 
         return RecoveryTaskResource::collection(
@@ -31,13 +34,15 @@ class RecoveryTaskRepository
         );
     }
 
-    public function getOne($id) {
+    public function getOne($id)
+    {
         return new RecoveryTaskResource($this->task_model->findOrFail($id));
     }
 
-    public function add($request) {
+    public function add($request)
+    {
         $task = new $this->task_model([
-            'code' => 'task-'.rand(10000, 99999),
+            'code' => 'task-' . rand(10000, 99999),
             'title' => $request->title,
             'max_deadline' => $request->deadline,
             'type' => 'task',
@@ -50,10 +55,12 @@ class RecoveryTaskRepository
         return new RecoveryTaskResource($task);
     }
 
-    public function edit($request, $task_id) {
+    public function edit($request, $task_id)
+    {
         $task = $this->task_model->findOrFail($task_id);
-        if ($task->type == 'task')
+        if ($task->type == 'task') {
             $task->title = $request->title;
+        }
 
         $task->max_deadline = $request->deadline;
         $task->save();
@@ -61,28 +68,33 @@ class RecoveryTaskRepository
         return new RecoveryTaskResource($task);
     }
 
-    public function transfer($task, $request) {
+    public function transfer($task, $request)
+    {
         $task = $this->task_model->findOrFail($task);
 
         $this->add_transfer($task, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
+
         return new RecoveryTaskResource($task);
     }
 
-    public function getTransferHistory($task_id, $request) {
+    public function getTransferHistory($task_id, $request)
+    {
         $task = $this->task_model->findOrFail($task_id);
 
         return TransferResource::collection($task->transfers);
     }
 
-    public function delete($task_id) {
+    public function delete($task_id)
+    {
         $task = $this->task_model->findOrFail($task_id);
         if ($task->type == 'task') {
             $task->delete();
         }
     }
 
-    public function complete($task, $request) : JsonResource {
-        if (/* $task->type == 'task' ||  */blank($task->form)) {
+    public function complete($task, $request): JsonResource
+    {
+        if (/* $task->type == 'task' ||  */ blank($task->form)) {
             $task->update([
                 'status' => true,
                 'completed_at' => now(),
@@ -95,11 +107,12 @@ class RecoveryTaskRepository
         return new RecoveryTaskResource($task->refresh());
     }
 
-    public function saveNextTasks($current_task, $radio_field) {
+    public function saveNextTasks($current_task, $radio_field)
+    {
         $steps = $current_task?->step?->children()->where('parent_response', $radio_field)->get();
 
         foreach ($steps as $key => $step) {
-            $task = new GuaranteeTask();
+            $task = new GuaranteeTask;
             $task->code = $step->code;
             $task->title = $step->title;
             $task->rank = $step->rank;
@@ -113,15 +126,17 @@ class RecoveryTaskRepository
 
     }
 
-    public function saveFiles($files,Model $guarantee, string $state) : array|bool {
-        if (count($files)<=0)
+    public function saveFiles($files, Model $guarantee, string $state): array|bool
+    {
+        if (count($files) <= 0) {
             return [];
+        }
 
         foreach ($files as $key => $file_elt) {
 
-            $file_path = storeFile($file_elt['file'], 'guarantee/'.$guarantee->type);
+            $file_path = storeFile($file_elt['file'], 'guarantee/' . $guarantee->type);
 
-            $doc = new GuaranteeDocument();
+            $doc = new GuaranteeDocument;
             $doc->state = $state;
             $doc->type = $guarantee->type;
             $doc->file_name = $file_elt['name'];
@@ -133,5 +148,4 @@ class RecoveryTaskRepository
         return true;
 
     }
-
 }

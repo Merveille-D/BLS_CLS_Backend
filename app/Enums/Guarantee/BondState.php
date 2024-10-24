@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Enums\Guarantee;
 
-enum BondState: string{
+enum BondState: string
+{
     const CREATED = 'created';
     const REDACTION = 'redaction';
     const VERIFICATION = 'verification';

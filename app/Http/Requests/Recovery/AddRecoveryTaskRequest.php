@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Recovery;
 
-use App\Models\Guarantee\Guarantee;
 use App\Models\Recovery\Recovery;
 use Carbon\Carbon;
 use Closure;
@@ -36,14 +35,13 @@ class AddRecoveryTaskRequest extends FormRequest
                 'date', 'date_format:Y-m-d',
                 function (string $attribute, mixed $value, Closure $fail) {
                     $recoveries = Recovery::find(request('model_id'));
-                    if ( Carbon::parse($value) < Carbon::parse($recoveries?->completed_at?->max_deadline)) {
+                    if (Carbon::parse($value) < Carbon::parse($recoveries?->completed_at?->max_deadline)) {
                         $fail("The {$attribute} is invalid.");
                     }
                 },
-            ]
+            ],
         ];
     }
-
 
     public function failedValidation(Validator $validator)
     {

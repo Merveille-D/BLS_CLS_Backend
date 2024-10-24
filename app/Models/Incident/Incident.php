@@ -9,10 +9,32 @@ use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 #[ScopedBy([CountryScope::class])]
 class Incident extends Model
 {
     use HasFactory, HasUuids;
+
+    const TYPES = [
+        'avis-tiers-detenteurs',
+        'requisition',
+        'saisie-conservatoire',
+        'saisie-attribution',
+    ];
+
+    const TYPE_VALUES = [
+        'avis-tiers-detenteurs' => 'incident.atd',
+        'requisition' => 'incident.req',
+        'saisie-conservatoire' => 'incident.sc',
+        'saisie-attribution' => 'incident.sa',
+    ];
+
+    const TYPE_CODES = [
+        'avis-tiers-detenteurs' => 'ATD',
+        'requisition' => 'REQ',
+        'saisie-conservatoire' => 'SC',
+        'saisie-attribution' => 'SA',
+    ];
 
     /**
      * Les attributs qui doivent être castés vers des types natifs.
@@ -37,27 +59,6 @@ class Incident extends Model
         'incident_reference',
     ];
 
-    const TYPES = [
-        'avis-tiers-detenteurs',
-        'requisition',
-        'saisie-conservatoire',
-        'saisie-attribution',
-    ];
-
-    const TYPE_VALUES = [
-        'avis-tiers-detenteurs' => 'incident.atd',
-        'requisition' => 'incident.req',
-        'saisie-conservatoire' => 'incident.sc',
-        'saisie-attribution' => 'incident.sa',
-    ];
-
-    const TYPE_CODES = [
-        'avis-tiers-detenteurs' => 'ATD',
-        'requisition' => 'REQ',
-        'saisie-conservatoire' => 'SC',
-        'saisie-attribution' => 'SA',
-    ];
-
     public function fileUploads()
     {
         return $this->morphMany(IncidentDocument::class, 'uploadable');
@@ -70,16 +71,19 @@ class Incident extends Model
 
     public function authorIncident()
     {
-        return $this->belongsTo(AuthorIncident::class,'author_incident_id');
+        return $this->belongsTo(AuthorIncident::class, 'author_incident_id');
     }
 
-    public function getCurrentTaskAttribute() {
+    public function getCurrentTaskAttribute()
+    {
 
         $current_task_incident = $this->taskIncident->where('status', false)->first();
+
         return new TaskIncidentResource($current_task_incident);
     }
 
-    public function getCategoryAttribute() {
+    public function getCategoryAttribute()
+    {
 
         $value = $this->type;
         $label = __(self::TYPE_VALUES[$value]);
@@ -90,7 +94,8 @@ class Incident extends Model
         ];
     }
 
-    public function getFilesAttribute() {
+    public function getFilesAttribute()
+    {
 
         $files = [];
 
@@ -113,7 +118,8 @@ class Incident extends Model
         return $files;
     }
 
-    public function creator() {
+    public function creator()
+    {
         return $this->belongsTo(User::class, 'created_by');
     }
 }

@@ -8,11 +8,10 @@ use App\Models\Alert\Alert;
 use App\Models\Guarantee\ConvHypothec;
 use Carbon\Carbon;
 use Illuminate\Contracts\Events\ShouldHandleEventsAfterCommit;
-use Illuminate\Support\Facades\Log;
 
 class ConvHypothecObserver implements ShouldHandleEventsAfterCommit
 {
-    use ConvHypothecNotificationTrait, AddAlertTrait;
+    use AddAlertTrait, ConvHypothecNotificationTrait;
 
     /**
      * Handle the ConventionnalHypothec "created" event.
@@ -21,7 +20,7 @@ class ConvHypothecObserver implements ShouldHandleEventsAfterCommit
     {
         $data = $this->nextStepBasedOnState($convHypo->state);
 
-        $this->new_alert($convHypo, 'RAPPEL | '.$convHypo->name ?? 'Hypothèque conventionnelle', $data['message'], 'conventionnal_hypothec', Carbon::now()->addDays(3), Alert::STATUS[2] ?? 'urgent');
+        $this->new_alert($convHypo, 'RAPPEL | ' . $convHypo->name ?? 'Hypothèque conventionnelle', $data['message'], 'conventionnal_hypothec', Carbon::now()->addDays(3), Alert::STATUS[2] ?? 'urgent');
     }
 
     /**
@@ -31,7 +30,7 @@ class ConvHypothecObserver implements ShouldHandleEventsAfterCommit
     {
         $data = $this->nextStepBasedOnState($convHypo->state);
 
-        $this->new_alert($convHypo, 'RAPPEL | '.$convHypo->name ?? 'Hypothèque conventionnelle', $data['message'], 'conventionnal_hypothec', Carbon::now()->addDays(3), Alert::STATUS[2] ?? 'urgent');
+        $this->new_alert($convHypo, 'RAPPEL | ' . $convHypo->name ?? 'Hypothèque conventionnelle', $data['message'], 'conventionnal_hypothec', Carbon::now()->addDays(3), Alert::STATUS[2] ?? 'urgent');
     }
 
     /**

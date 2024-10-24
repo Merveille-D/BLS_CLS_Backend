@@ -35,25 +35,21 @@ class Litigation extends Model
         'has_provisions' => 'boolean',
     ];
 
-    public function creator() {
+    public function creator()
+    {
         return $this->belongsTo(User::class, 'created_by');
     }
 
-
     /**
      * documents
-     *
-     * @return MorphMany
      */
-    public function documents() : MorphMany
+    public function documents(): MorphMany
     {
         return $this->morphMany(LitigationDocument::class, 'documentable');
     }
 
     /**
      * nature
-     *
-     * @return HasOne
      */
     public function nature(): HasOne
     {
@@ -85,42 +81,43 @@ class Litigation extends Model
      *
      * @return void
      */
-    public function lawyers() : MorphToMany
+    public function lawyers(): MorphToMany
     {
         return $this->morphedByMany(LitigationLawyer::class, 'litigationable');
     }
 
-    public function parties() : MorphToMany
+    public function parties(): MorphToMany
     {
         return $this->morphedByMany(LitigationParty::class, 'litigationable')
-                    ->withPivot('category', 'type')
-                    ;
+            ->withPivot('category', 'type');
     }
 
-    public function users() : MorphToMany
+    public function users(): MorphToMany
     {
         return $this->morphedByMany(User::class, 'litigationable');
     }
 
-    public function tasks() {
+    public function tasks()
+    {
         return $this->morphMany(LitigationTask::class, 'taskable');
     }
 
-    public function getNextTaskAttribute() {
+    public function getNextTaskAttribute()
+    {
         return $this->tasks()
-                ->orderByRaw('IF(max_deadline IS NOT NULL, 0, 1)')
-                ->orderBy('max_deadline')
-                ->orderBy('rank')
-                ->where('status', false)->first();
+            ->orderByRaw('IF(max_deadline IS NOT NULL, 0, 1)')
+            ->orderBy('max_deadline')
+            ->orderBy('rank')
+            ->where('status', false)->first();
     }
 
-    public function getCurrentTaskAttribute() {
+    public function getCurrentTaskAttribute()
+    {
         return $this->tasks()
-                    ->orderByRaw('IF(max_deadline IS NOT NULL, 0, 1)')
-                    ->orderByDesc('max_deadline')
-                    ->orderByDesc('rank')
-                    ->where('status', true)
-                    ->first();
+            ->orderByRaw('IF(max_deadline IS NOT NULL, 0, 1)')
+            ->orderByDesc('max_deadline')
+            ->orderByDesc('rank')
+            ->where('status', true)
+            ->first();
     }
-
 }

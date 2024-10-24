@@ -6,14 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PartContract\StorePartRequest;
 use App\Models\Contract\Part;
 use App\Repositories\Contract\PartRepository;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class PartController extends Controller
 {
-    public function __construct(private PartRepository $part) {
-
-    }
+    public function __construct(private PartRepository $part) {}
 
     /**
      * Display a listing of the resource.
@@ -22,9 +21,10 @@ class PartController extends Controller
     {
         try {
             $parts = Part::all();
+
             return api_response(true, 'Liste des parties', $parts);
-        }catch (\Exception $e) {
-            return api_response(false, "Echec de la récupération des parties", $e->getMessage(), 500);
+        } catch (Exception $e) {
+            return api_response(false, 'Echec de la récupération des parties', $e->getMessage(), 500);
         }
     }
 
@@ -35,9 +35,10 @@ class PartController extends Controller
     {
         try {
             $part = $this->part->store($request->all());
+
             return api_response(true, 'Partie ajouté avec succès', $part, 201);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de l'ajout de la partie", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de l'ajout de la partie", $e->errors(), 422);
         }
     }
 
@@ -47,9 +48,9 @@ class PartController extends Controller
     public function show(Part $part)
     {
         try {
-            return api_response(true, "Information de la partie", $part, 200);
-        }catch( ValidationException $e ) {
-            return api_response(false, "Echec de la récupération des infos de la partie", $e->errors(), 422);
+            return api_response(true, 'Information de la partie', $part, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la récupération des infos de la partie', $e->errors(), 422);
         }
     }
 

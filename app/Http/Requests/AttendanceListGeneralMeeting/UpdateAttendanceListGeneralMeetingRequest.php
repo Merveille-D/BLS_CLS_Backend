@@ -29,7 +29,7 @@ class UpdateAttendanceListGeneralMeetingRequest extends FormRequest
             'shareholders' => 'required|array',
             'shareholders.*.id' => ['required', 'uuid'],
             'shareholders.*.type' => ['required', Rule::in(['shareholder', 'not_shareholder'])],
-            'shareholders.*.status' => ['required', 'boolean']
+            'shareholders.*.status' => ['required', 'boolean'],
         ];
     }
 
@@ -38,7 +38,7 @@ class UpdateAttendanceListGeneralMeetingRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

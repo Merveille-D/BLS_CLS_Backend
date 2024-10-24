@@ -10,19 +10,18 @@ class Committee extends Model
 {
     use HasFactory, HasUuids;
 
-    protected $fillable = [
-        'name',
-        'type',
-    ];
-
     const TYPES = [
         'ca',
         'cd',
+    ];
+
+    protected $fillable = [
+        'name',
+        'type',
     ];
 
     public function executiveCommittees()
     {
         return $this->hasMany(ExecutiveCommittee::class);
     }
-
 }

@@ -2,15 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\Concerns\Traits\Guarantee\CollateralDefaultSteps;
-use App\Concerns\Traits\Guarantee\DefaultGuaranteeTaskTrait;
-use App\Concerns\Traits\Guarantee\MortgageDefaultStepTrait;
-use App\Enums\Guarantee\GuaranteeType;
 use App\Models\Guarantee\Guarantee;
 use App\Models\Guarantee\GuaranteeStep;
 use Database\Seeders\Guarantee\GuaranteeSeeder;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 
 class ResetGuarantee extends Command
 {
@@ -36,8 +31,7 @@ class ResetGuarantee extends Command
         $old_steps = GuaranteeStep::query()->delete();
         $olg_guarantees = Guarantee::query()->delete();
 
-
-        $step = new GuaranteeSeeder();
+        $step = new GuaranteeSeeder;
         $step->run();
 
         $this->info('All guarantees steps reset! ');

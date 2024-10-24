@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories\Recovery;
 
 use App\Concerns\Traits\PDF\GeneratePdfTrait;
@@ -16,29 +17,28 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class RecoveryRepository
 {
-    use RecoveryFormFieldTrait, GeneratePdfTrait;
+    use GeneratePdfTrait, RecoveryFormFieldTrait;
 
     public function __construct(
         private Recovery $recovery_model
-    ) {
-    }
+    ) {}
 
-
-    public function getList($request) : ResourceCollection {
+    public function getList($request): ResourceCollection
+    {
         return RecoveryResource::collection($this->recovery_model->paginate());
     }
 
-    public function findById($id) : JsonResource {
+    public function findById($id): JsonResource
+    {
         return new RecoveryResource($this->recovery_model->with('documents')->findOrFail($id));
     }
 
-
-    public function getSteps($recoveryId, $request) {
+    public function getSteps($recoveryId, $request)
+    {
         $recoveryId = $this->recovery_model->findOrFail($recoveryId);
 
         $steps = ($recoveryId->steps);
@@ -50,6 +50,7 @@ class RecoveryRepository
             if ($form) {
                 $step->form = $form;
             }
+
             return $step;
         });
 
@@ -57,9 +58,10 @@ class RecoveryRepository
         // return new RecoveryResource($this->recovery_model->with('documents')->findOrFail($id));
     }
 
-    function addNewTask($request, $recoveryId) : JsonResource {
+    public function addNewTask($request, $recoveryId): JsonResource
+    {
         $recovery = $this->recovery_model->findOrFail($recoveryId);
-        $task = new RecoveryStep();
+        $task = new RecoveryStep;
         $task->name = $request->name;
         $task->code = 'task';
         $task->type = 'task';
@@ -70,13 +72,15 @@ class RecoveryRepository
         ]);
 
         $task = $recovery->steps()->where('recovery_steps.id', $task->id)->first();
+
         return new RecoveryStepResource($task);
     }
 
-    public function updateTask($request, $recoveryId, $taskId) {
+    public function updateTask($request, $recoveryId, $taskId)
+    {
         $recovery = $this->recovery_model->findOrFail($recoveryId);
         $task = ($recovery->steps)->where('id', $taskId)->first();
-        if (!$task) {
+        if (! $task) {
             return false;
         }
         $task->name = $request->name;
@@ -86,10 +90,12 @@ class RecoveryRepository
             'deadline' => $request->deadline,
         ]);
         $task = $recovery->steps()->where('recovery_steps.id', $taskId)->first();
+
         return new RecoveryStepResource($task);
     }
 
-    public function completeTask($recoveryId, $taskId) : JsonResource {
+    public function completeTask($recoveryId, $taskId): JsonResource
+    {
         $recovery = $this->recovery_model->findOrFail($recoveryId);
         $task = ($recovery->steps)->where('id', $taskId)->first();
         $recovery->steps()->updateExistingPivot($task->id, [
@@ -97,16 +103,20 @@ class RecoveryRepository
             'status' => true,
         ]);
         $task = $recovery->steps()->where('recovery_steps.id', $taskId)->first();
+
         return new RecoveryStepResource($task);
     }
 
-    public function deleteTask($recoveryId, $taskId) {
+    public function deleteTask($recoveryId, $taskId)
+    {
         $recovery = $this->recovery_model->findOrFail($recoveryId);
         $recovery->steps()->detach($taskId);
+
         return true;
     }
 
-    public function getOneStep($recovery_id, $step_id) {
+    public function getOneStep($recovery_id, $step_id)
+    {
         $recovery = $this->recovery_model->findOrFail($recovery_id);
 
         $step = ($recovery->steps)->where('id', $step_id)->first();
@@ -115,20 +125,22 @@ class RecoveryRepository
             $step->form = $form;
         }
         $step->status = $step->status ? true : false;
+
         return new RecoveryStepResource($step);
     }
 
-    function init($request) {
-        $data = array(
+    public function init($request)
+    {
+        $data = [
             'status' => 'created',
             'type' => $request->type,
             'reference' => generateReference('REC', $this->recovery_model),
             'name' => $request->name,
             'has_guarantee' => $request->has_guarantee ?? 0,
             'guarantee_id' => $request->guarantee_id ?? null,
-            'contract_id' =>  $request->contract_id ?? null,
+            'contract_id' => $request->contract_id ?? null,
             'created_by' => auth()->id(),
-        );
+        ];
 
         $recovery = $this->recovery_model->create($data);
 
@@ -143,14 +155,15 @@ class RecoveryRepository
         return new RecoveryResource($recovery);
     }
 
-    public function generateSteps($recovery) {
+    public function generateSteps($recovery)
+    {
         $all_steps = RecoveryStep::orderBy('rank')
-            ->when($recovery->has_guarantee == false, function ($query) use ($recovery){
+            ->when($recovery->has_guarantee == false, function ($query) use ($recovery) {
                 return $query->whereType($recovery->type)
-                            ->when($recovery->type == 'forced', function($query) {
-                                $query->where('rank', '<=', '3');
-                            });
-            }, function($query) {
+                    ->when($recovery->type == 'forced', function ($query) {
+                        $query->where('rank', '<=', '3');
+                    });
+            }, function ($query) {
                 return $query->whereType('unknown');
             })
             ->get();
@@ -160,9 +173,10 @@ class RecoveryRepository
         // return $recovery->steps()->syncWithoutDetaching($all_steps);
     }
 
-    public function saveTasks($steps, $recovery) {
+    public function saveTasks($steps, $recovery)
+    {
         foreach ($steps as $key => $step) {
-            $task = new RecoveryTask();
+            $task = new RecoveryTask;
             $task->code = $step->code;
             $task->title = $step->title;
             $task->rank = $step->rank;
@@ -176,24 +190,27 @@ class RecoveryRepository
         }
     }
 
-    public function continueForcedProcess($recovery) {
-        if (!$recovery->payement_status && $recovery->status == RecoveryStepEnum::DEBT_PAYEMENT) {
+    public function continueForcedProcess($recovery)
+    {
+        if (! $recovery->payement_status && $recovery->status == RecoveryStepEnum::DEBT_PAYEMENT) {
             $end_steps = RecoveryStep::orderBy('rank')
-                    ->whereType('forced')
-                    ->where('rank', '>', 3)
-                    ->get();
+                ->whereType('forced')
+                ->where('rank', '>', 3)
+                ->get();
 
             $this->saveTasks($end_steps, $recovery);
         }
     }
 
-    public function updateTaskState($recovery) {
+    public function updateTaskState($recovery)
+    {
         $currentTask = $recovery->next_task;
         // dd($currentTask);
         if ($currentTask) {
             $currentTask->status = true;
-            if ($currentTask->completed_at == null)
+            if ($currentTask->completed_at == null) {
                 $currentTask->completed_at = Carbon::now();
+            }
             $currentTask->save();
         }
 
@@ -201,8 +218,9 @@ class RecoveryRepository
         if ($nextTask) {
             $data = $this->setDeadline($recovery);
 
-            if ($data == [])
+            if ($data == []) {
                 return false;
+            }
 
             $nextTask->update($data);
         }
@@ -210,20 +228,23 @@ class RecoveryRepository
         $this->continueForcedProcess($recovery);
     }
 
-    public function updateProcess($request, $recovery) {
+    public function updateProcess($request, $recovery)
+    {
 
-        $data = array();
+        $data = [];
 
         if ($recovery) {
             $data = $this->updateProcessByState($request, $recovery);
 
             $this->updateTaskState($recovery);
+
             return new RecoveryResource($data);
         }
     }
 
-    function updateProcessByState($request, $recovery) {
-        $data = array();
+    public function updateProcessByState($request, $recovery)
+    {
+        $data = [];
 
         switch ($recovery->status) {
             case RecoveryStepEnum::CREATED:
@@ -247,18 +268,20 @@ class RecoveryRepository
                 break;
 
             default:
-                # code...
+                // code...
                 break;
         }
         $recovery->update($data);
+
         return $recovery->refresh();
     }
 
-    function formalNotice($request, $recovery) : array {
+    public function formalNotice($request, $recovery): array
+    {
         $status = RecoveryStepEnum::FORMAL_NOTICE;
-        $data = array(
+        $data = [
             'status' => $status,
-        );
+        ];
 
         return $this->stepCommonSavingSettings(
             $files = $request->documents,
@@ -267,19 +290,22 @@ class RecoveryRepository
         );
     }
 
-    function debtPayement($request, $recovery) : array {
+    public function debtPayement($request, $recovery): array
+    {
         $status = RecoveryStepEnum::DEBT_PAYEMENT;
-        return $data = array(
+
+        return $data = [
             'status' => $status,
-            'payement_status' => $request->payement_status == "yes" ? true : false
-        );
+            'payement_status' => $request->payement_status == 'yes' ? true : false,
+        ];
     }
 
-    function jurisdiction($request, $recovery) : array {
+    public function jurisdiction($request, $recovery): array
+    {
         $status = RecoveryStepEnum::JURISDICTION;
-        $data = array(
+        $data = [
             'status' => $status,
-        );
+        ];
 
         return $this->stepCommonSavingSettings(
             $files = $request->documents,
@@ -288,21 +314,23 @@ class RecoveryRepository
         );
     }
 
-    function seizure($request, $recovery) : array {
+    public function seizure($request, $recovery): array
+    {
         $status = RecoveryStepEnum::SEIZURE;
-        $data = array(
+        $data = [
             'status' => $status,
-            'is_seized' => $request->is_seized == "yes" ? true : false
-        );
+            'is_seized' => $request->is_seized == 'yes' ? true : false,
+        ];
 
         return $data;
     }
 
-    function executory($request, $recovery) : array {
+    public function executory($request, $recovery): array
+    {
         $status = RecoveryStepEnum::EXECUTORY;
-        $data = array(
+        $data = [
             'status' => $status,
-        );
+        ];
 
         return $this->stepCommonSavingSettings(
             $files = $request->documents,
@@ -311,25 +339,28 @@ class RecoveryRepository
         );
     }
 
-    function entrustLawyer($request, $recovery) : array {
+    public function entrustLawyer($request, $recovery): array
+    {
         $status = RecoveryStepEnum::ENTRUST_LAWYER;
-        $data = array(
+        $data = [
             'status' => $status,
-            $request->is_entrusted == "yes" ? true : false
-        );
+            $request->is_entrusted == 'yes' ? true : false,
+        ];
 
         return $data;
     }
 
-    function stepCommonSavingSettings($files,Model $recovery, array $data) : array {
-        if (count($files)<=0)
+    public function stepCommonSavingSettings($files, Model $recovery, array $data): array
+    {
+        if (count($files) <= 0) {
             return false;
+        }
 
         foreach ($files as $key => $file_elt) {
 
             $file_path = storeFile($file_elt['file'], 'recovery');
 
-            $doc = new RecoveryDocument();
+            $doc = new RecoveryDocument;
             $doc->status = $data['status'];
             $doc->file_name = $file_elt['name'];
             $doc->file_path = $file_path;
@@ -347,26 +378,30 @@ class RecoveryRepository
 
     }
 
-    public function archive($id) : JsonResource {
+    public function archive($id): JsonResource
+    {
         $recovery = $this->findById($id);
         $recovery->update([
-            'is_archived' => !$recovery->is_archived,
+            'is_archived' => ! $recovery->is_archived,
         ]);
 
         return new RecoveryResource($recovery);
     }
 
     // union query of guarantee and conv_hypothec
-    public function getRealizableGuarantees() {
-        $hypothecs =  ConvHypothec::where('has_recovery', false)->select('id', 'reference', 'name', 'created_at')
-                        ->selectRaw("'hypothec' as type");
+    public function getRealizableGuarantees()
+    {
+        $hypothecs = ConvHypothec::where('has_recovery', false)->select('id', 'reference', 'name', 'created_at')
+            ->selectRaw("'hypothec' as type");
         $guarantees = Guarantee::where('has_recovery', false)->select('id', 'reference', 'type', 'name', 'created_at');
 
         $union = $guarantees->union($hypothecs)->orderByDesc('created_at')->get();
+
         return $union;
     }
 
-    public function updateHypothecStatus($recovery, $request) {
+    public function updateHypothecStatus($recovery, $request)
+    {
 
         $guarantee = Guarantee::find($recovery->guarantee_id);
 
@@ -377,19 +412,21 @@ class RecoveryRepository
         }
     }
 
-    public function setDeadline($recovery) {
+    public function setDeadline($recovery)
+    {
         $nextTask = $recovery->next_task;
         $defaultTask = $nextTask?->step;
 
         $minDelay = $defaultTask->min_delay;
         $maxDelay = $defaultTask->max_delay;
         // dd($minDelay, $maxDelay);
-        $data = array();
+        $data = [];
         //date by hypothec state
         // $operationDate = $this->getOperationDateByState($guarantee);
         $operationDate = $recovery->current_task->completed_at ?? null;
-        if ($operationDate == null)
+        if ($operationDate == null) {
             return $data;
+        }
 
         $operationDate = substr($operationDate, 0, 10);
         $formatted_date = Carbon::createFromFormat('Y-m-d', $operationDate);
@@ -397,32 +434,38 @@ class RecoveryRepository
         if ($minDelay && $maxDelay) {
             $data['min_deadline'] = $formatted_date->copy()->addDays($minDelay);
             $data['max_deadline'] = $formatted_date->copy()->addDays($maxDelay);
+
             return $data;
-        }elseif ($minDelay) {
+        } elseif ($minDelay) {
             $data['min_deadline'] = $formatted_date->addDays($minDelay);
+
             return $data;
-        }elseif ($maxDelay) {
+        } elseif ($maxDelay) {
             $data['max_deadline'] = $formatted_date->addDays($maxDelay);
+
             return $data;
         }
+
         return $data;
     }
 
-    public function generatePdf($id) {
+    public function generatePdf($id)
+    {
         $recovery = $this->recovery_model->findOrFail($id);
-        $filename = Str::slug($recovery->name). '_'.date('YmdHis') . '.pdf';
+        $filename = Str::slug($recovery->name) . '_' . date('YmdHis') . '.pdf';
 
-        $pdf =  $this->generateFromView( 'pdf.recovery.recovery',  [
+        $pdf = $this->generateFromView('pdf.recovery.recovery', [
             'model' => $recovery,
-            'details' => $this->getDetails($recovery)
+            'details' => $this->getDetails($recovery),
         ],
-        $filename);
+            $filename);
 
         return $pdf;
 
     }
 
-    public function getDetails($recovery) {
+    public function getDetails($recovery)
+    {
         $details = [
             'Référence' => $recovery->reference,
             'type' => $recovery->readable_type,
@@ -431,5 +474,4 @@ class RecoveryRepository
 
         return $details;
     }
-
 }

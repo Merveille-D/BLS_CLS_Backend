@@ -11,10 +11,7 @@ use Illuminate\Validation\ValidationException;
 
 class EvaluationPeriodController extends Controller
 {
-
-    public function __construct(private EvaluationPeriodRepository $evaluation_period) {
-
-    }
+    public function __construct(private EvaluationPeriodRepository $evaluation_period) {}
 
     /**
      * Display a listing of the resource.
@@ -22,6 +19,7 @@ class EvaluationPeriodController extends Controller
     public function index()
     {
         $evaluation_periods = EvaluationPeriod::all();
+
         return api_response(true, "Liste des périodes d'evaluation", $evaluation_periods, 200);
     }
 
@@ -32,9 +30,10 @@ class EvaluationPeriodController extends Controller
     {
         try {
             $evaluation_period = $this->evaluation_period->store($request->all());
+
             return api_response(true, "Succès de l'enregistrement de la période", $evaluation_period, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de l'enregistrement", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de l'enregistrement", $e->errors(), 422);
         }
     }
 
@@ -44,9 +43,9 @@ class EvaluationPeriodController extends Controller
     public function show(EvaluationPeriod $evaluation_period)
     {
         try {
-            return api_response(true, "Infos de la période", $evaluation_period, 200);
-        }catch( ValidationException $e ) {
-            return api_response(false, "Echec de la récupération des infos ", $e->errors(), 422);
+            return api_response(true, 'Infos de la période', $evaluation_period, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la récupération des infos ', $e->errors(), 422);
         }
     }
 
@@ -57,10 +56,11 @@ class EvaluationPeriodController extends Controller
     {
         try {
             $this->evaluation_period->update($evaluation_period, $request->all());
+
             return api_response(true, "Mis à jour de la période d'evaluation avec succès", $evaluation_period, 200);
         } catch (ValidationException $e) {
 
-            return api_response(false, "Echec de la mise à jour", $e->errors(), 422);
+            return api_response(false, 'Echec de la mise à jour', $e->errors(), 422);
         }
     }
 
@@ -71,9 +71,10 @@ class EvaluationPeriodController extends Controller
     {
         try {
             $evaluation_period->delete();
-            return api_response(true, "Succès de la suppression ", null, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de la supression ", $e->errors(), 422);
+
+            return api_response(true, 'Succès de la suppression ', null, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la supression ', $e->errors(), 422);
         }
     }
 }

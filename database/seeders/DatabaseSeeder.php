@@ -6,14 +6,13 @@ namespace Database\Seeders;
 
 use Database\Seeders\Audit\AuditPerformanceIndicatorSeeder;
 use Database\Seeders\Contract\CategorySeeder;
+use Database\Seeders\Contract\PartSeeder;
 use Database\Seeders\Evaluation\EvaluationPerformanceIndicatorSeeder;
 use Database\Seeders\Guarantee\ConvHypothecSeeder;
+use Database\Seeders\Guarantee\GuaranteeSeeder;
 use Database\Seeders\Incident\AuthorSeeder;
 use Database\Seeders\Litigation\LawyerSeeder;
 use Database\Seeders\Litigation\LitigationResourceSeeder;
-use Database\Seeders\Litigation\LitigationSeeder;
-use Database\Seeders\Contract\PartSeeder;
-use Database\Seeders\Guarantee\GuaranteeSeeder;
 use Database\Seeders\Recovery\RecoveryResourceSeeder;
 use Illuminate\Database\Seeder;
 
@@ -28,9 +27,9 @@ class DatabaseSeeder extends Seeder
         $this->call(LitigationResourceSeeder::class); //containing test data
         $this->call(ConvHypothecSeeder::class);
         $this->call(PermissionTableSeeder::class);
-        $this->call(LawyerSeeder::class); 
-        $this->call(PartSeeder::class); 
-        $this->call(AuthorSeeder::class); 
+        $this->call(LawyerSeeder::class);
+        $this->call(PartSeeder::class);
+        $this->call(AuthorSeeder::class);
 
         $this->call(RecoveryResourceSeeder::class);
         $this->call(GuaranteeSeeder::class);

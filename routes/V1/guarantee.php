@@ -1,10 +1,11 @@
 <?php
-use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\API\V1\Guarantee\ConvHypothecController;
 use App\Http\Controllers\API\V1\Guarantee\ConvHypothecStepController;
 use App\Http\Controllers\API\V1\Guarantee\ConvHypothecTaskController;
 use App\Http\Controllers\API\V1\Guarantee\GuaranteeController;
 use App\Http\Controllers\API\V1\Guarantee\GuaranteeTaskController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,11 +27,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // Route::post('/conventionnal_hypothec/realization/{conv_hypo}', array(ConvHypothecController::class, 'realization'));
     // Route::resource('/conventionnal_hypothec', ConvHypothecController::class);
 
-    Route::put('/guarantees/tasks/transfer/{task_id}', [GuaranteeTaskController::class, 'transfer']);
-    Route::post('/guarantees/tasks/complete/{task}', [GuaranteeTaskController::class, 'complete']);
-    Route::resource('/guarantees/tasks', GuaranteeTaskController::class);
-    Route::post('/guarantees/realization/{guarantee}', [GuaranteeController::class, 'realization']);
-    Route::post('/guarantees/transfer/{guarantee}', [GuaranteeController::class, 'transfer']);
-    Route::get('/guarantees/generate-pdf/{guarantee}', [GuaranteeController::class, 'generatePdf']);
-    Route::resource('/guarantees', GuaranteeController::class);
+    Route::put('guarantees/tasks/transfer/{task_id}', [GuaranteeTaskController::class, 'transfer']);
+    Route::post('guarantees/tasks/complete/{task}', [GuaranteeTaskController::class, 'complete']);
+    Route::resource('guarantees/tasks', GuaranteeTaskController::class);
+    Route::post('guarantees/realization/{guarantee}', [GuaranteeController::class, 'realization']);
+    Route::post('guarantees/transfer/{guarantee}', [GuaranteeController::class, 'transfer']);
+    Route::get('guarantees/generate-pdf/{guarantee}', [GuaranteeController::class, 'generatePdf']);
+    Route::resource('guarantees', GuaranteeController::class);
 });

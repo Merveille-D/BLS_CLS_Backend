@@ -23,6 +23,4 @@ class ExecutiveCommittee extends Model
     {
         return $this->morphTo();
     }
-
-
 }

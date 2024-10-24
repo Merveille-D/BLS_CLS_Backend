@@ -71,7 +71,6 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/V1/management_committee/attendance_management_committee.php'))
                 ->group(base_path('routes/V1/management_committee/task_management_committee.php'))
 
-                
                 ->group(base_path('routes/api.php'));
 
             Route::middleware('web')

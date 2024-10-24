@@ -26,7 +26,7 @@ class ListAuditPerformanceIndicatorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'module' => ['required',Rule::in(AuditPerformanceIndicator::MODULES)],
+            'module' => ['required', Rule::in(AuditPerformanceIndicator::MODULES)],
         ];
     }
 
@@ -35,7 +35,7 @@ class ListAuditPerformanceIndicatorRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

@@ -13,18 +13,16 @@ use Illuminate\Validation\ValidationException;
 
 class CommitteeController extends Controller
 {
+    public function __construct(private CommitteeRepository $committee) {}
 
-    public function __construct(private CommitteeRepository $committee) {
-
-    }
-
-     /**
+    /**
      * Display a listing of the resource.
      */
     public function index(ListCommitteeRequest $request)
     {
         $committees = $this->committee->list($request->validated());
-        return api_response(true, "Liste des comités", $committees, 200);
+
+        return api_response(true, 'Liste des comités', $committees, 200);
     }
 
     /**
@@ -34,9 +32,10 @@ class CommitteeController extends Controller
     {
         try {
             $committee = $this->committee->store($request->all());
+
             return api_response(true, "Succès de l'enregistrement du comité", $committee, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de l'enregistrement du comité", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de l'enregistrement du comité", $e->errors(), 422);
         }
     }
 
@@ -46,9 +45,9 @@ class CommitteeController extends Controller
     public function show(Committee $committee)
     {
         try {
-            return api_response(true, "Infos du comité", $committee, 200);
-        }catch( ValidationException $e ) {
-            return api_response(false, "Echec de la récupération des infos du comité", $e->errors(), 422);
+            return api_response(true, 'Infos du comité', $committee, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la récupération des infos du comité', $e->errors(), 422);
         }
     }
 
@@ -59,9 +58,10 @@ class CommitteeController extends Controller
     {
         try {
             $executive_committees = $this->committee->listExecutives($committee);
-            return api_response(true, "Liste des cadres du comité", ExecutiveCommitteeResource::collection($executive_committees), 200);
-        }catch( ValidationException $e ) {
-            return api_response(false, "Echec de la récupération des infos du comité", $e->errors(), 422);
+
+            return api_response(true, 'Liste des cadres du comité', ExecutiveCommitteeResource::collection($executive_committees), 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la récupération des infos du comité', $e->errors(), 422);
         }
     }
 
@@ -72,10 +72,11 @@ class CommitteeController extends Controller
     {
         try {
             $this->committee->update($committee, $request->all());
-            return api_response(true, "Mis à jour du texte avec succès", $committee, 200);
+
+            return api_response(true, 'Mis à jour du texte avec succès', $committee, 200);
         } catch (ValidationException $e) {
 
-            return api_response(false, "Echec de la mise à jour", $e->errors(), 422);
+            return api_response(false, 'Echec de la mise à jour', $e->errors(), 422);
         }
     }
 
@@ -86,9 +87,10 @@ class CommitteeController extends Controller
     {
         try {
             $committee->delete();
-            return api_response(true, "Succès de la suppression du comité", null, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de la supression du comité", $e->errors(), 422);
+
+            return api_response(true, 'Succès de la suppression du comité', null, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la supression du comité', $e->errors(), 422);
         }
     }
 }

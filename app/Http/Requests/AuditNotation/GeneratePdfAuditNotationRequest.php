@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests\AuditNotation;
 
-use App\Models\Audit\AuditPerformanceIndicator;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
 class GeneratePdfAuditNotationRequest extends FormRequest
 {
@@ -26,7 +24,7 @@ class GeneratePdfAuditNotationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'audit_notation_id' => ['required','uuid'],
+            'audit_notation_id' => ['required', 'uuid'],
         ];
     }
 
@@ -35,7 +33,7 @@ class GeneratePdfAuditNotationRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

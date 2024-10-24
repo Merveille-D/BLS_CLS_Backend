@@ -15,6 +15,7 @@ class ConvHypothecResource extends JsonResource
     public function toArray(Request $request): array
     {
         $id = $request->route('conventionnal_hypothec');
+
         // dd($request->route('conventionnal_hypothec'));
         return [
             'id' => $this->id,

@@ -5,8 +5,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
-    Route::post('complete_transfers',[TransferController::class,'completeTransfer']);
+    Route::post('complete_transfers', [TransferController::class, 'completeTransfer']);
 });
-
-
-

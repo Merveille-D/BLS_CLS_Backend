@@ -26,7 +26,7 @@ class ListShareholderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => [Rule::in(Shareholder::TYPES) ],
+            'type' => [Rule::in(Shareholder::TYPES)],
 
         ];
     }
@@ -36,7 +36,7 @@ class ListShareholderRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

@@ -58,5 +58,4 @@ return [
     'plaintiff' => 'Demandeur',
     'forced_intervenant' => 'Intervenant forcée',
 
-
 ];

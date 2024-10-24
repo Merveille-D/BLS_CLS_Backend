@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests\TaskSessionAdministrator;
 
-use App\Models\Gourvernance\BoardDirectors\Sessions\TaskSessionAdministrator;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
 class StoreTaskSessionAdministratorRequest extends FormRequest
 {
@@ -41,7 +39,7 @@ class StoreTaskSessionAdministratorRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

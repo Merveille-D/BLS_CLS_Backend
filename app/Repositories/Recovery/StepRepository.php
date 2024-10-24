@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories\Guarantee;
 
 use App\Models\Guarantee\ConvHypothecStep;

@@ -31,7 +31,7 @@ class RenewMandateDirectorRequest extends FormRequest
 
                     $last_mandate = Director::find(request()->input('director_id'))->lastMandate();
 
-                    if($last_mandate->expiry_date > now()) {
+                    if ($last_mandate->expiry_date > now()) {
                         $fail('Le mandat de ce directeur n\'est pas encore expiré.');
                     }
                 },
@@ -45,7 +45,7 @@ class RenewMandateDirectorRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

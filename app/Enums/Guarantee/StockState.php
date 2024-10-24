@@ -2,7 +2,6 @@
 
 namespace App\Enums\Guarantee;
 
-
 /**
  * StockState enum class.
  */

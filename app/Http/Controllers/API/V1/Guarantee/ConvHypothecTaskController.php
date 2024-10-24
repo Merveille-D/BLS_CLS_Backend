@@ -6,22 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Hypothec\AddTaskRequest;
 use App\Http\Requests\Hypothec\CompleteTaskRequest;
 use App\Http\Requests\Hypothec\EditTaskRequest;
-use App\Http\Requests\Hypothec\UpdateProcessRequest;
 use App\Http\Requests\Hypothec\UpdateTaskRequest;
-use App\Http\Resources\Guarantee\ConvHypothecStepResource;
-use App\Http\Resources\Task\TaskResource;
 use App\Models\Guarantee\HypothecTask;
 use App\Repositories\Guarantee\HypothecTaskRepository;
-use App\Repositories\Task\TaskRepository;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class ConvHypothecTaskController extends Controller
 {
-
     public function __construct(
         private HypothecTaskRepository $taskRepo,
     ) {}
+
     /**
      * Display a listing of the resource.
      */
@@ -41,7 +37,7 @@ class ConvHypothecTaskController extends Controller
             $task = $this->taskRepo->add($request);
 
             return api_response(true, 'Tache ajoutée avec succès', $task);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error(false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
@@ -63,19 +59,22 @@ class ConvHypothecTaskController extends Controller
             $task = $this->taskRepo->edit($request, $task_id);
 
             return api_response(true, 'Tache modifiée avec succès', $task);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error(false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
 
-    public function complete(CompleteTaskRequest $request, HypothecTask $task) {
+    public function complete(CompleteTaskRequest $request, HypothecTask $task)
+    {
         try {
             DB::beginTransaction();
             $task = $this->taskRepo->complete($task, $request);
             DB::commit();
+
             return api_response(true, 'Transfert éffectué avec succès', $task);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             DB::rollBack();
+
             return api_error(false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
@@ -89,9 +88,11 @@ class ConvHypothecTaskController extends Controller
             DB::beginTransaction();
             $task = $this->taskRepo->transfer($task, $request);
             DB::commit();
+
             return api_response(true, 'Transfert éffectué avec succès', $task);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             DB::rollBack();
+
             return api_error(false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }

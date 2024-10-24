@@ -32,6 +32,6 @@ class AddSettingRequest extends FormRequest
 
     public function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(api_error(false, $validator->errors()->first(),  $validator->errors()));
+        throw new HttpResponseException(api_error(false, $validator->errors()->first(), $validator->errors()));
     }
 }

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class RecoveryFactory extends Factory
 {
     protected $model = Recovery::class;
+
     /**
      * Define the model's default state.
      *

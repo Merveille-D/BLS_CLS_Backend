@@ -11,13 +11,12 @@ use App\Repositories\Recovery\RecoveryRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class RecoveryController extends Controller
 {
-    public function __construct(private RecoveryRepository $recoveryRepo)
-    {
+    public function __construct(private RecoveryRepository $recoveryRepo) {}
 
-    }
     /**
      * Display a listing of the resource.
      */
@@ -35,24 +34,28 @@ class RecoveryController extends Controller
             DB::beginTransaction();
             $data = $this->recoveryRepo->init($request, null);
             DB::commit();
+
             return api_response($success = true, 'Recouvrement initié avec succès', $data);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             DB::rollBack();
             Log::error($th->getMessage());
+
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
 
-    public function updateProcess(UpdateProcessRequest $request,Recovery $recovery)
+    public function updateProcess(UpdateProcessRequest $request, Recovery $recovery)
     {
         try {
             DB::beginTransaction();
             $data = $this->recoveryRepo->updateProcess($request, $recovery);
             DB::commit();
+
             return api_response($success = true, 'Recouvrement mise à jour avec succès', $data);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             DB::rollBack();
             Log::error($th->getMessage());
+
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
@@ -81,55 +84,66 @@ class RecoveryController extends Controller
         return api_response(true, 'Etape recuperée', $data = $this->recoveryRepo->getOneStep($recovery_id, $step_id));
     }
 
-
-    public function addTask(AddTaskRequest $request, $recovery) {
+    public function addTask(AddTaskRequest $request, $recovery)
+    {
         try {
             DB::beginTransaction();
             $data = $this->recoveryRepo->addNewTask($request, $recovery);
             DB::commit();
+
             return api_response($success = true, 'Tache mise à jour avec succès', $data);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             DB::rollBack();
             Log::error($th->getMessage());
+
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
 
-    public function updateTask(AddTaskRequest $request, $recovery, $task) {
+    public function updateTask(AddTaskRequest $request, $recovery, $task)
+    {
         try {
             DB::beginTransaction();
             $data = $this->recoveryRepo->updateTask($request, $recovery, $task);
             DB::commit();
+
             return api_response($success = true, 'Tache mise à jour avec succès', $data);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             DB::rollBack();
             Log::error($th->getMessage());
+
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
 
-    public function completeTask(Request $request, $recovery, $task) {
+    public function completeTask(Request $request, $recovery, $task)
+    {
         try {
             DB::beginTransaction();
             $data = $this->recoveryRepo->completeTask($recovery, $task);
             DB::commit();
+
             return api_response($success = true, 'Tache terminée avec succès', $data);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             DB::rollBack();
             Log::error($th->getMessage());
+
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
 
-    public function deleteTask(Request $request, $recovery, $task) {
+    public function deleteTask(Request $request, $recovery, $task)
+    {
         try {
             DB::beginTransaction();
             $data = $this->recoveryRepo->deleteTask($recovery, $task);
             DB::commit();
+
             return api_response($success = true, 'Tache supprimée avec succès', $data);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             DB::rollBack();
             Log::error($th->getMessage());
+
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
@@ -154,8 +168,9 @@ class RecoveryController extends Controller
     {
         try {
             $data = $this->recoveryRepo->archive($recovery_id);
+
             return api_response($success = true, 'Archivage effectué avec succès', $data);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }
@@ -167,8 +182,9 @@ class RecoveryController extends Controller
     {
         try {
             $data = $this->recoveryRepo->getRealizableGuarantees(request());
+
             return api_response($success = true, 'Garanties realisables recuperées', $data);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }
@@ -180,8 +196,9 @@ class RecoveryController extends Controller
     {
         try {
             $data = $this->recoveryRepo->generatePdf($recovery);
+
             return $data;
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }

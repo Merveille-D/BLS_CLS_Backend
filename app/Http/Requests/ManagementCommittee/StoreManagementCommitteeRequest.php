@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests\ManagementCommittee;
 
-use App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee\ManagementCommittee;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
 class StoreManagementCommitteeRequest extends FormRequest
 {
@@ -36,7 +34,7 @@ class StoreManagementCommitteeRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

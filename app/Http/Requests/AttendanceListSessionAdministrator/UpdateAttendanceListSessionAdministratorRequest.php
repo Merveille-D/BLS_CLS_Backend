@@ -29,7 +29,7 @@ class UpdateAttendanceListSessionAdministratorRequest extends FormRequest
             'administrators' => 'required|array',
             'administrators.*.id' => ['required', 'uuid'],
             'administrators.*.type' => ['required', Rule::in(['administrator', 'not_administrator'])],
-            'administrators.*.status' => ['required', 'boolean']
+            'administrators.*.status' => ['required', 'boolean'],
         ];
     }
 
@@ -38,7 +38,7 @@ class UpdateAttendanceListSessionAdministratorRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

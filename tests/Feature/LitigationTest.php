@@ -6,18 +6,19 @@ use App\Models\Litigation\LitigationParty;
 use App\Models\Litigation\LitigationSetting;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class LitigationTest extends TestCase
 {
     use RefreshDatabase;
+
     /**
      * A basic feature test example.
+     *
+     * @test
      */
-    public function test_retrieve_list()
+    public function retrieve_list()
     {
         $user = User::factory()->create();
         $response = $this->actingAs($user)->get('api/litigation');
@@ -29,7 +30,10 @@ class LitigationTest extends TestCase
         // $response->assertJsonCount(5);
     }
 
-    public function test_save_litigation()
+    /**
+     * @test
+     */
+    public function save_litigation()
     {
         $user = User::factory()->create();
         $file = UploadedFile::fake()->create(
@@ -46,7 +50,7 @@ class LitigationTest extends TestCase
             'jurisdiction_location' => 'Lagos',
             'parties' => [
                 [
-                    'party_id' =>  LitigationParty::first()->id,
+                    'party_id' => LitigationParty::first()->id,
                     'category' => 'intervenant',
                     // 'type_id' => LitigationSetting::whereType('party_type')->first()->id,
                     'type' => 'client',
@@ -81,8 +85,11 @@ class LitigationTest extends TestCase
 
     /**
      * test retrieve single litigation
+     *
+     * @test
      */
-    public function test_retrieve_litigation() : void {
+    public function retrieve_litigation(): void
+    {
         $user = User::factory()->create();
 
         $file = UploadedFile::fake()->create(
@@ -97,7 +104,7 @@ class LitigationTest extends TestCase
             'jurisdiction_location' => 'Lagos',
             'parties' => [
                 [
-                    'party_id' =>  LitigationParty::first()->id,
+                    'party_id' => LitigationParty::first()->id,
                     'category' => 'intervenant',
                     'type' => 'client',
                 ],
@@ -112,7 +119,7 @@ class LitigationTest extends TestCase
 
         $id = $litigation->json('data.id');
 
-        $response = $this->actingAs($user)->get('api/litigation/'.$id);
+        $response = $this->actingAs($user)->get('api/litigation/' . $id);
 
         // Assert that the response has a 200 status code
         $response->assertStatus(200);
@@ -120,8 +127,11 @@ class LitigationTest extends TestCase
 
     /**
      * test generate pdf
+     *
+     * @test
      */
-    public function test_generate_litigation_pdf() : void {
+    public function generate_litigation_pdf(): void
+    {
         $user = User::factory()->create();
         $file = UploadedFile::fake()->create(
             'document.pdf', 2048, 'application/pdf'
@@ -136,7 +146,7 @@ class LitigationTest extends TestCase
             'has_provisions' => true,
             'parties' => [
                 [
-                    'party_id' =>  LitigationParty::first()->id,
+                    'party_id' => LitigationParty::first()->id,
                     'category' => 'intervenant',
                     // 'type_id' => LitigationSetting::whereType('party_type')->first()->id,
                     'type' => 'client',
@@ -152,8 +162,7 @@ class LitigationTest extends TestCase
 
         $id = $litigation_creating->json('data.id');
 
-        $response = $this->get('/api/litigation/generate-pdf/'.$id);
+        $response = $this->get('/api/litigation/generate-pdf/' . $id);
         $response->assertStatus(200);
     }
-
 }

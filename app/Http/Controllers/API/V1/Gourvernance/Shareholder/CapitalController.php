@@ -11,10 +11,7 @@ use Illuminate\Validation\ValidationException;
 
 class CapitalController extends Controller
 {
-
-    public function __construct(private CapitalRepository $capital) {
-
-    }
+    public function __construct(private CapitalRepository $capital) {}
 
     /**
      * Display a listing of the resource.
@@ -22,7 +19,8 @@ class CapitalController extends Controller
     public function index()
     {
         $capitals = Capital::all();
-        return api_response(true, "Historique des capitaux", $capitals, 200);
+
+        return api_response(true, 'Historique des capitaux', $capitals, 200);
     }
 
     /**
@@ -32,9 +30,10 @@ class CapitalController extends Controller
     {
         try {
             $capital = $this->capital->store($request->all());
+
             return api_response(true, "Succès de l'enregistrement du capital", $capital, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de l'enregistrement du capital", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de l'enregistrement du capital", $e->errors(), 422);
         }
     }
 
@@ -44,9 +43,9 @@ class CapitalController extends Controller
     public function show(Capital $capital)
     {
         try {
-            return api_response(true, "Infos du capital", $capital, 200);
-        }catch( ValidationException $e ) {
-            return api_response(false, "Echec de la récupération des infos du capital", $e->errors(), 422);
+            return api_response(true, 'Infos du capital', $capital, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la récupération des infos du capital', $e->errors(), 422);
         }
     }
 
@@ -57,10 +56,11 @@ class CapitalController extends Controller
     {
         try {
             $this->capital->update($capital, $request->all());
-            return api_response(true, "Mis à jour du texte avec succès", $capital, 200);
+
+            return api_response(true, 'Mis à jour du texte avec succès', $capital, 200);
         } catch (ValidationException $e) {
 
-            return api_response(false, "Echec de la mise à jour", $e->errors(), 422);
+            return api_response(false, 'Echec de la mise à jour', $e->errors(), 422);
         }
     }
 
@@ -71,9 +71,10 @@ class CapitalController extends Controller
     {
         try {
             $capital->delete();
-            return api_response(true, "Succès de la suppression du capital", null, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de la supression du capital", $e->errors(), 422);
+
+            return api_response(true, 'Succès de la suppression du capital', null, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la supression du capital', $e->errors(), 422);
         }
     }
 }

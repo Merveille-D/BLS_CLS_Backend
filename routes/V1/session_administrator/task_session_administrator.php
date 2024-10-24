@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\API\V1\Gourvernance\BordDirectors\Sessions\TaskSessionAdministratorController;
-
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,20 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::resource('task_session_administrators', TaskSessionAdministratorController::class);
-    Route::delete('delete_array_task_session_administrators', [TaskSessionAdministratorController::class, 'deleteArrayTaskSessionAdministrator'] );
-    Route::put('update_status_task_session_administrators', [TaskSessionAdministratorController::class, 'updateStatusTaskSessionAdministrator'] );
-    Route::get('generate_pdf_checklist_and_procedures_ca', [TaskSessionAdministratorController::class, 'generatePdfTasks'] );
+    Route::delete('delete_array_task_session_administrators', [TaskSessionAdministratorController::class, 'deleteArrayTaskSessionAdministrator']);
+    Route::put('update_status_task_session_administrators', [TaskSessionAdministratorController::class, 'updateStatusTaskSessionAdministrator']);
+    Route::get('generate_pdf_checklist_and_procedures_ca', [TaskSessionAdministratorController::class, 'generatePdfTasks']);
 
 });
-
-
-
-
-
-
-
-

@@ -26,7 +26,7 @@ class AddTestUser extends Command
      */
     public function handle()
     {
-        $user = new \App\Models\User();
+        $user = new \App\Models\User;
         $user->firstname = $this->argument('firstname');
         $user->lastname = $this->argument('lastname');
         $user->email = $this->argument('email');

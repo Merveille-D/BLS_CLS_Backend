@@ -2,7 +2,7 @@
 
 namespace App\Enums\Litigation;
 
-enum PartyType : string
+enum PartyType: string
 {
     const CLIENT = 'client';
     const EMPLOYEE = 'employee';
