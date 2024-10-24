@@ -32,7 +32,7 @@ class SessionAdministratorController extends Controller
                   ->orWhere('status', 'closed');
         })->get()->map(function ($meeting) {
             $meeting->files = $meeting->files;
-            $meeting->next_task = new TaskSessionAdministratorResource($meeting->next_task);
+            $meeting->next_task = $meeting->next_task;
             return $meeting;
         });
 
@@ -60,7 +60,7 @@ class SessionAdministratorController extends Controller
         try {
             $data = $session_administrator->toArray();
             $data['files'] = $session_administrator->files;
-            $data['next_task'] = new TaskSessionAdministratorResource($session_administrator->next_task);
+            $data['next_task'] = $session_administrator->next_task;
 
             return api_response(true, "Information du CA", $data, 200);
         } catch (ValidationException $e) {

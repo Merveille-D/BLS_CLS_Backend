@@ -32,7 +32,7 @@ class ManagementCommitteeController extends Controller
                   ->orWhere('status', 'closed');
         })->get()->map(function ($meeting) {
             $meeting->files = $meeting->files;
-            $meeting->next_task = new TaskManagementCommitteeResource($meeting->next_task);
+            $meeting->next_task = $meeting->next_task;
             return $meeting;
         });
 
@@ -60,7 +60,7 @@ class ManagementCommitteeController extends Controller
         try {
             $data = $management_committee->toArray();
             $data['files'] = $management_committee->files;
-            $data['next_task'] = new TaskManagementCommitteeResource($management_committee->next_task);
+            $data['next_task'] = $management_committee->next_task;
 
             return api_response(true, "Information du CD", $data, 200);
         } catch (ValidationException $e) {

@@ -136,7 +136,7 @@ class GeneralMeeting extends Model
     public function getNextTaskAttribute()
     {
         $task = $this->tasks()->whereNotNull('deadline')->orderBy('deadline', 'asc')->where('status', false)->first();
-        return $task;
+        return new TaskGeneralMeetingResource($task);;
     }
 
     public function creator() {
