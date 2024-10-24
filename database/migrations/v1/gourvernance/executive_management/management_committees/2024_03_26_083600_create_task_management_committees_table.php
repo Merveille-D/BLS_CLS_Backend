@@ -15,7 +15,9 @@ return new class extends Migration
         Schema::create('task_management_committees', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-            $table->string('libelle');
+            $table->string('libelle')->nullable();
+            $table->string('code')->nullable();
+            
             $table->datetime('deadline')->nullable();
 
             $table->enum('type', TaskManagementCommittee::SESSION_TASK_TYPE );

@@ -33,7 +33,6 @@ class GeneralMeetingController extends Controller
                   ->orWhere('status', 'closed');
         })->get()->map(function ($meeting) {
             $meeting->files = $meeting->files;
-            $meeting->next_task = $meeting->next_task;
             $meeting->next_task = new TaskGeneralMeetingResource($meeting->next_task);
             return $meeting;
         });

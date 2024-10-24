@@ -31,6 +31,7 @@ class TaskManagementCommittee extends Model
         'libelle',
         'deadline',
         'type',
+        'code',
         'status',
         'responsible',
         'supervisor',

@@ -33,6 +33,7 @@ class TaskSessionAdministrator extends Model
         'deadline',
         'type',
         'status',
+        'code',
         'responsible',
         'supervisor',
         'session_administrator_id',
