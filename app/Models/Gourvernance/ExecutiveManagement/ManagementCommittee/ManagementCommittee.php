@@ -2,7 +2,6 @@
 
 namespace App\Models\Gourvernance\ExecutiveManagement\ManagementCommittee;
 
-use App\Http\Resources\GeneralMeeting\TaskGeneralMeetingResource;
 use App\Http\Resources\ManagementCommittee\TaskManagementCommitteeResource;
 use App\Models\Gourvernance\GourvernanceDocument;
 use App\Models\Scopes\CountryScope;

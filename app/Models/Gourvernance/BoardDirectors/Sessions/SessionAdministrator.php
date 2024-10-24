@@ -2,7 +2,7 @@
 
 namespace App\Models\Gourvernance\BoardDirectors\Sessions;
 
-use App\Http\Resources\GeneralMeeting\TaskGeneralMeetingResource;
+use App\Http\Resources\SessionAdministrator\TaskSessionAdministratorResource;
 use App\Models\Gourvernance\GourvernanceDocument;
 use App\Models\Scopes\CountryScope;
 use App\Models\User;
@@ -142,7 +142,7 @@ class SessionAdministrator extends Model
     public function getNextTaskAttribute()
     {
         $task = $this->tasks()->whereNotNull('deadline')->orderBy('deadline', 'asc')->where('status', false)->first();
-        return new TaskGeneralMeetingResource($task);
+        return new TaskSessionAdministratorResource($task);
     }
 
     public function creator() {
