@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('conv_hypothecs', function (Blueprint $table) {
@@ -16,7 +13,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('state');
             $table->string('reference')->unique();
-            $table->enum('step', array('formalization', 'realization'));
+            $table->enum('step', ['formalization', 'realization']);
             $table->uuid('contract_id')->nullable();
             //file
             $table->string('contract_file')->nullable();
@@ -44,9 +41,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('conv_hypothecs');

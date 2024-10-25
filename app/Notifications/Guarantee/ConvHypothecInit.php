@@ -2,8 +2,6 @@
 
 namespace App\Notifications\Guarantee;
 
-use App\Enums\ConvHypothecState;
-use App\Mail\NotificationMail;
 use App\Models\Guarantee\ConventionnalHypothecs\ConventionnalHypothec;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -39,10 +37,10 @@ class ConvHypothecInit extends Notification implements ShouldQueue
     public function toMail(object $notifiable)
     {
         return (new MailMessage)
-                    ->subject('Rappel : VERIFICATION DE LA PROPRIETE DE L\'IMMEUBLE')
-                    ->line('Ce message est un rappel pour compléter l\'étape de la vérification de la propriété de l\'immeuble')
+            ->subject('Rappel : VERIFICATION DE LA PROPRIETE DE L\'IMMEUBLE')
+            ->line('Ce message est un rappel pour compléter l\'étape de la vérification de la propriété de l\'immeuble')
                     // ->action('Notification Action', url('/'))
-                    ->line('Merci de faire diligence!');
+            ->line('Merci de faire diligence!');
     }
 
     /**

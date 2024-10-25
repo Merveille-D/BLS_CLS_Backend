@@ -27,7 +27,7 @@ class StoreCommitteeRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string'],
-            'type' => ['required',  Rule::in(Committee::TYPES) ],
+            'type' => ['required',  Rule::in(Committee::TYPES)],
         ];
     }
 
@@ -36,7 +36,7 @@ class StoreCommitteeRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

@@ -113,8 +113,9 @@ class PermissionTableSeeder extends Seeder
 
             // Permission::createMany($permissions);
             foreach ($permissions as $permission) {
-                if (!Permission::where('name', $permission['name'])->exists())
+                if (! Permission::where('name', $permission['name'])->exists()) {
                     Permission::create($permission);
+                }
             }
         }
         /* Permissions extra */
@@ -133,7 +134,7 @@ class PermissionTableSeeder extends Seeder
         ];
 
         foreach ($roles as $role => $label) {
-            if (!Role::where('name', $role)->exists()) {
+            if (! Role::where('name', $role)->exists()) {
                 $role = Role::create(['name' => $role, 'guard_name' => 'web']);
             }
         }

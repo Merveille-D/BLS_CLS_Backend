@@ -31,7 +31,7 @@ class RenewMandateAdministratorRequest extends FormRequest
 
                     $last_mandate = CaAdministrator::find(request()->input('administrator_id'))->lastMandate();
 
-                    if($last_mandate->expiry_date > now()) {
+                    if ($last_mandate->expiry_date > now()) {
                         $fail('Le mandat de cet administrateur n\'est pas encore expiré.');
                     }
 
@@ -46,7 +46,7 @@ class RenewMandateAdministratorRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

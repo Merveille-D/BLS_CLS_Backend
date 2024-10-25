@@ -8,7 +8,6 @@ use App\Models\Guarantee\ConvHypothecStep;
 use App\Models\Litigation\Litigation;
 use App\Models\Litigation\LitigationParty;
 use App\Models\Litigation\LitigationSetting;
-use App\Models\Recovery\Recovery;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -46,7 +45,6 @@ class FillTestData extends Command
         $party = LitigationParty::first();
         $party->litigations()->attach($litigation, ['category' => 'intervenant', 'type' => 'client']);
 
-
         $hypothec = DB::table('conv_hypothecs')->insert([
             'id' => '9bce26d8-32c0-4b96-afcd-300d051cf9f0',
             'state' => 'created',
@@ -67,7 +65,8 @@ class FillTestData extends Command
         $this->info('Test data has been filled successfully');
     }
 
-    public function updatePivotState($convHypo) {
+    public function updatePivotState($convHypo)
+    {
         if ($convHypo->state == ConvHypothecState::REGISTER && $convHypo->is_approved == true) {
             $all_steps = ConvHypothecStep::orderBy('rank')->whereType('realization')->get();
 
@@ -77,13 +76,14 @@ class FillTestData extends Command
 
         if ($currentStep) {
             $pivotValues = [
-                $currentStep->id => ['status' => true]
+                $currentStep->id => ['status' => true],
             ];
             $convHypo->steps()->syncWithoutDetaching($pivotValues);
         }
     }
 
-    public function currentStep($state) {
+    public function currentStep($state)
+    {
         return ConvHypothecStep::whereCode($state)->first();
     }
 }

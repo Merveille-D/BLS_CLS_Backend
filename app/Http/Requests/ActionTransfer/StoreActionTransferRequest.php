@@ -29,7 +29,7 @@ class StoreActionTransferRequest extends FormRequest
         $actions_no_encumbered_owner = Shareholder::find(request()->input('owner_id'))->actions_no_encumbered;
 
         return [
-            'type' => ['required',  Rule::in(ActionTransfer::TYPES) ],
+            'type' => ['required',  Rule::in(ActionTransfer::TYPES)],
             'owner_id' => 'required|uuid',
             'buyer_id' => [
                 'uuid',
@@ -44,7 +44,7 @@ class StoreActionTransferRequest extends FormRequest
             'count_actions' => [
                 'required',
                 'numeric',
-                function($attribute, $value, $fail) use ($actions_no_encumbered_owner) {
+                function ($attribute, $value, $fail) use ($actions_no_encumbered_owner) {
                     if ($value > $actions_no_encumbered_owner) {
                         $fail('Le nombre d\'actions à transférer doit etre inférieur ou égal au nombre d\'actions non grevée du cédant.');
                     }
@@ -80,7 +80,7 @@ class StoreActionTransferRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

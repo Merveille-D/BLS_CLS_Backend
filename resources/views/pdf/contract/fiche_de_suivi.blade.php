@@ -8,7 +8,7 @@
         </div>
         <div class="center" style="margin-top: 10px;">
             <h1>Fiche de suivi </h1>
-            <p class="subtitle bold">{{$data['title']}}</p>
+            <p class="subtitle bold">{{ $data['title'] }}</p>
             <p class="subtitle italic underline">{{ $data['contract_reference'] }}</p>
             <p class="subtitle gray">{{ date('d-m-Y H:i') }}</p>
         </div>
@@ -32,7 +32,7 @@
             @foreach ($data['first_part'] as $party)
                 <tr>
                     <td>{{ $party['part']->name }}</td>
-                    <td>{{ $party['description']  }}</td>
+                    <td>{{ $party['description'] }}</td>
                 </tr>
             @endforeach
 
@@ -51,7 +51,7 @@
             @foreach ($data['second_part'] as $party)
                 <tr>
                     <td>{{ $party['part']->name }}</td>
-                    <td>{{ $party['description']  }}</td>
+                    <td>{{ $party['description'] }}</td>
                 </tr>
             @endforeach
 
@@ -68,7 +68,7 @@
         </thead>
         <tbody>
             @foreach ($data['tasks'] as $task)
-                <tr  class="{{ $task->status ?: 'gray italic'}}">
+                <tr  class="{{ $task->status ?: 'gray italic' }}">
                     <td>{{ $task->libelle }}</td>
                     <td>{{ $task->deadline }}</td>
                 </tr>

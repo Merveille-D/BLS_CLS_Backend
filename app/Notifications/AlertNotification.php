@@ -15,10 +15,7 @@ class AlertNotification extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      */
-    public function __construct(public Alert $alert)
-    {
-
-    }
+    public function __construct(public Alert $alert) {}
 
     /**
      * Get the notification's delivery channels.
@@ -36,13 +33,13 @@ class AlertNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable)
     {
         return (new MailMessage)
-                    ->from('afrikskills@gmail.com', 'BLS')
-                    ->greeting('Bonjour!')
-                    ->subject($this->alert->title)
-                    ->line($this->alert->message)
-                    ->line('Délai : '. $this->alert->deadline ?? null)
+            ->from('afrikskills@gmail.com', 'BLS')
+            ->greeting('Bonjour!')
+            ->subject($this->alert->title)
+            ->line($this->alert->message)
+            ->line('Délai : ' . $this->alert->deadline ?? null)
                     // ->action('Notification Action', url('/'))
-                    ->line('Merci de faire diligence!');
+            ->line('Merci de faire diligence!');
     }
 
     /**
@@ -55,7 +52,7 @@ class AlertNotification extends Notification implements ShouldQueue
         return [
             'title' => $this->alert->title,
             'message' => $this->alert->message,
-            'alert_id'=> $this->alert->id,
+            'alert_id' => $this->alert->id,
         ];
     }
 

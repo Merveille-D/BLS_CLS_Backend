@@ -10,6 +10,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 class CompleteTaskRequest extends FormRequest
 {
     use StepsValidationRuleTrait;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -28,7 +29,7 @@ class CompleteTaskRequest extends FormRequest
         $task = $this->route('task');
 
         if ($task->status) {
-            throw new HttpResponseException(api_error(false, 'Cette tâche est déjà complétée',  []));
+            throw new HttpResponseException(api_error(false, 'Cette tâche est déjà complétée', []));
         } elseif ($task->type == 'task') {
             return [];
         }
@@ -40,7 +41,7 @@ class CompleteTaskRequest extends FormRequest
 
     public function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(api_error(false, $validator->errors()->first(),  $validator->errors()));
+        throw new HttpResponseException(api_error(false, $validator->errors()->first(), $validator->errors()));
         // throw new HttpResponseException(response()->json(['success' => false, 'errors' => $validator->errors()], 422));
     }
 }

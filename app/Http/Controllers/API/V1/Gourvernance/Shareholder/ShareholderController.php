@@ -10,24 +10,22 @@ use App\Http\Requests\Shareholder\UpdateShareholderRequest;
 use App\Models\Shareholder\Shareholder;
 use App\Repositories\Shareholder\ShareholderRepository;
 use Illuminate\Validation\ValidationException;
+use Throwable;
 
 class ShareholderController extends Controller
 {
-
-    public function __construct(private ShareholderRepository $shareholder) {
-
-    }
+    public function __construct(private ShareholderRepository $shareholder) {}
 
     /**
      * Display a listing of the resource.
      */
     public function index(ListShareholderRequest $request)
     {
-        $shareholders = Shareholder::when(request('type') !== null, function($query) {
-                $query->where('type', request('type'));
-            })->get();
+        $shareholders = Shareholder::when(request('type') !== null, function ($query) {
+            $query->where('type', request('type'));
+        })->get();
 
-        return api_response(true, "Liste des actionnaires", $shareholders, 200);
+        return api_response(true, 'Liste des actionnaires', $shareholders, 200);
     }
 
     /**
@@ -37,9 +35,10 @@ class ShareholderController extends Controller
     {
         try {
             $shareholder = $this->shareholder->store($request->all());
+
             return api_response(true, "Succès de l'enregistrement de l'actionnaires", $shareholder, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de l'enregistrement de l'actionnaires", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de l'enregistrement de l'actionnaires", $e->errors(), 422);
         }
     }
 
@@ -50,7 +49,7 @@ class ShareholderController extends Controller
     {
         try {
             return api_response(true, "Infos de l'actionnaire", $shareholder, 200);
-        }catch( ValidationException $e ) {
+        } catch (ValidationException $e) {
             return api_response(false, "Echec de la récupération des infos de l'actionnaire", $e->errors(), 422);
         }
     }
@@ -62,10 +61,11 @@ class ShareholderController extends Controller
     {
         try {
             $this->shareholder->update($shareholder, $request->all());
+
             return api_response(true, "Mis à jour de l'actionnaire avec succès", $shareholder, 200);
         } catch (ValidationException $e) {
 
-            return api_response(false, "Echec de la mise à jour", $e->errors(), 422);
+            return api_response(false, 'Echec de la mise à jour', $e->errors(), 422);
         }
     }
 
@@ -77,9 +77,10 @@ class ShareholderController extends Controller
         try {
             $shareholder->delete();
             $this->shareholder->updateBankInfo();
+
             return api_response(true, "Succès de la suppression de l'actionnaire", null, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de la supression de l'actionnaire", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de la supression de l'actionnaire", $e->errors(), 422);
         }
     }
 
@@ -87,8 +88,9 @@ class ShareholderController extends Controller
     {
         try {
             $data = $this->shareholder->generatePdfCertificat($request->validated());
+
             return $data;
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }

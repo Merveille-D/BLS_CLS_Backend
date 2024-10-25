@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Enums\Recovery;
 
-enum RecoveryStepEnum: string {
+enum RecoveryStepEnum: string
+{
     const CREATED = 'created';
     const FORMALIZATION = 'formalization';
 

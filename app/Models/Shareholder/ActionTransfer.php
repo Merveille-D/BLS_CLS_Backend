@@ -10,10 +10,20 @@ use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 #[ScopedBy([CountryScope::class])]
 class ActionTransfer extends Model
 {
     use HasFactory, HasUuids;
+
+    const STATUS = ['pending', 'rejected', 'cancelled', 'validated', 'approved'];
+
+    const TYPES = ['shareholder', 'tier'];
+
+    const TYPE_VALUES = [
+        'shareholder' => 'Actionnaire vers Actionnaire',
+        'tier' => 'Actionnaire vers Tiers',
+    ];
 
     protected $fillable = [
         'owner_id',
@@ -28,21 +38,13 @@ class ActionTransfer extends Model
         'created_by',
     ];
 
-    const STATUS = ['pending', 'rejected', 'cancelled', 'validated', 'approved'];
-
-    const TYPES = ['shareholder', 'tier'];
-
-    const TYPE_VALUES = [
-        'shareholder' => 'Actionnaire vers Actionnaire',
-        'tier' => 'Actionnaire vers Tiers',
-    ];
-
     public function fileUploads()
     {
         return $this->morphMany(GourvernanceDocument::class, 'uploadable');
     }
 
-    public function getCategoryAttribute() {
+    public function getCategoryAttribute()
+    {
 
         $value = $this->type;
         $label = self::TYPE_VALUES[$value];
@@ -58,13 +60,16 @@ class ActionTransfer extends Model
         return $this->hasMany(TaskActionTransfer::class);
     }
 
-    public function getCurrentTaskAttribute() {
+    public function getCurrentTaskAttribute()
+    {
 
         $current_task_action_transfer = $this->taskActionTransfers->where('status', false)->first();
+
         return $current_task_action_transfer;
     }
 
-    public function getFilesAttribute() {
+    public function getFilesAttribute()
+    {
 
         $files = [];
 
@@ -76,6 +81,7 @@ class ActionTransfer extends Model
                 ];
             }
         }
+
         return $files;
     }
 
@@ -98,5 +104,4 @@ class ActionTransfer extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
-
 }

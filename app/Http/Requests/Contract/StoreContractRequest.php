@@ -2,12 +2,10 @@
 
 namespace App\Http\Requests\Contract;
 
-use App\Models\Contract\Contract;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class StoreContractRequest extends FormRequest
 {
@@ -29,8 +27,8 @@ class StoreContractRequest extends FormRequest
         $rules = [
             'title' => ['required', 'string'],
             'contract_category_id' => ['required', 'uuid', 'exists:contract_categories,id'],
-            'contract_type_category_id' => [ 'uuid', 'exists:contract_type_categories,id'],
-            'contract_sub_type_category_id' => [ 'uuid', 'exists:contract_sub_type_categories,id'],
+            'contract_type_category_id' => ['uuid', 'exists:contract_type_categories,id'],
+            'contract_sub_type_category_id' => ['uuid', 'exists:contract_sub_type_categories,id'],
             'contract_documents' => ['required', 'array'],
             'contract_documents.*.name' => ['required', 'string'],
             'contract_documents.*.file' => ['required', 'file'],
@@ -79,7 +77,7 @@ class StoreContractRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

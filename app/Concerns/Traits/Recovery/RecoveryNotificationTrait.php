@@ -1,17 +1,16 @@
 <?php
+
 namespace App\Concerns\Traits\Recovery;
 
-use App\Enums\ConvHypothecState;
 use App\Enums\Recovery\RecoveryStepEnum;
-use App\Models\Guarantee\ConvHypothec;
-use App\Models\Recovery\Recovery;
 
 trait RecoveryNotificationTrait
 {
-    function nextStepBasedOnState($recovery) : array {
-        $data = array(
+    public function nextStepBasedOnState($recovery): array
+    {
+        $data = [
             'message' => '',
-        );
+        ];
 
         switch ($recovery->status) {
             case RecoveryStepEnum::CREATED:
@@ -24,24 +23,25 @@ trait RecoveryNotificationTrait
 
             case RecoveryStepEnum::FORMAL_NOTICE:
                 $data['message'] = 'Procéder à la vérification si le débiteur a payé la dette';
-            break;
+                break;
             case RecoveryStepEnum::DEBT_PAYEMENT:
                 $data['message'] = 'Procéder à l\'initiation d\'une procédure de saisie des biens du débiteur';
-            break;
+                break;
             case RecoveryStepEnum::SEIZURE:
                 $data['message'] = 'Procéder à l\'obtention d\'un titre exécutoire';
-            break;
+                break;
             case RecoveryStepEnum::EXECUTORY:
                 $data['message'] = 'Procéder à la saisie de la juridiction compétente';
-            break;
+                break;
             case RecoveryStepEnum::JURISDICTION:
                 $data['message'] = 'Confier la procédure à un avocat';
-            break;
+                break;
 
             default:
                 //
                 break;
         }
+
         return $data;
     }
 }

@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Enums\Guarantee;
 
-enum AutonomousState: string{
+enum AutonomousState: string
+{
     const CREATED = 'created';
     const REDACTION = 'redaction';
     const VERIFICATION = 'verification';
@@ -9,7 +11,6 @@ enum AutonomousState: string{
 
     const PAYEMENT_REQUEST = 'payement_request';
     const REQUEST_VERIFICATION = 'request_verification';
-
 
     const STATES_VALUES = [
         AutonomousState::CREATED => 'Initiation de la garantie',

@@ -8,7 +8,7 @@
         </div>
         <div class="center" style="margin-top: 10px;">
             <h1>Fiche de suivi </h1>
-            <p class="subtitle bold">{{$session_administrator->libelle}} {{ $meeting_type }}</p>
+            <p class="subtitle bold">{{ $session_administrator->libelle }} {{ $meeting_type }}</p>
             <p class="subtitle italic underline">{{ $session_administrator->session_reference }}</p>
             <p class="subtitle gray">{{ date('d-m-Y H:i') }}</p>
         </div>
@@ -22,11 +22,11 @@
         <thead>
             <tr>
                 <th>Date de tenue</th>
-                <th>{{$session_administrator->session_date}}</th>
+                <th>{{ $session_administrator->session_date }}</th>
             </tr>
             <tr>
                 <th>Libellé</th>
-                <th>{{($session_administrator->status == "pending") ? "En cours" : "Terminé"}}</th>
+                <th>{{ ($session_administrator->status == "pending") ? "En cours" : "Terminé" }}</th>
             </tr>
         </thead>
     </table>
@@ -41,7 +41,7 @@
         </thead>
         <tbody>
             @foreach ($tasks as $task)
-                <tr  class="{{ $task->status ?: 'gray italic'}}">
+                <tr  class="{{ $task->status ?: 'gray italic' }}">
                     <td>{{ $task->libelle }}</td>
                     <td>{{ $task->deadline }}</td>
                 </tr>

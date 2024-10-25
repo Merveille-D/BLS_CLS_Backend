@@ -24,9 +24,9 @@ class UpdateAuditNotationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'notes' => ['required','array' ],
-            'notes.*.audit_performance_indicator_id' => ['required','uuid'],
-            'notes.*.note' => ['required','numeric'],
+            'notes' => ['required', 'array'],
+            'notes.*.audit_performance_indicator_id' => ['required', 'uuid'],
+            'notes.*.note' => ['required', 'numeric'],
         ];
     }
 
@@ -35,7 +35,7 @@ class UpdateAuditNotationRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

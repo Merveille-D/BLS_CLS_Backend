@@ -11,10 +11,7 @@ use Illuminate\Validation\ValidationException;
 
 class MandateController extends Controller
 {
-
-    public function __construct(private MandateRepository $mandate) {
-
-    }
+    public function __construct(private MandateRepository $mandate) {}
 
     /**
      * Display a listing of the resource.
@@ -38,9 +35,9 @@ class MandateController extends Controller
     public function show(Mandate $mandate)
     {
         try {
-            return api_response(true, "Infos du mandat", $mandate, 200);
-        }catch( ValidationException $e ) {
-            return api_response(false, "Echec de la récupération des infos", $e->errors(), 422);
+            return api_response(true, 'Infos du mandat', $mandate, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la récupération des infos', $e->errors(), 422);
         }
     }
 
@@ -49,16 +46,16 @@ class MandateController extends Controller
      */
     public function update(UpdateMandateRequest $request, Mandate $mandate)
     {
-        if($mandate->mandatable->lastMandate()->id != $mandate->id) {
+        if ($mandate->mandatable->lastMandate()->id != $mandate->id) {
             return api_response(false, "Ce n'est pas le dernier mandat à modifier", null, 422);
         }
 
         try {
             $this->mandate->update($mandate, $request->all());
 
-            return api_response(true, "Mis à jour du mandat", $mandate, 200);
+            return api_response(true, 'Mis à jour du mandat', $mandate, 200);
         } catch (ValidationException $e) {
-            return api_response(false, "Echec de la mise à jour", $e->errors(), 422);
+            return api_response(false, 'Echec de la mise à jour', $e->errors(), 422);
         }
     }
 

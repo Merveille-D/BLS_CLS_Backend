@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests\AuditNotation;
 
-use App\Models\Audit\AuditPerformanceIndicator;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
 class StoreTransferAuditNotationRequest extends FormRequest
 {
@@ -26,13 +24,13 @@ class StoreTransferAuditNotationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'audit_notation_id' => ['required','uuid'],
+            'audit_notation_id' => ['required', 'uuid'],
 
             'forward_title' => ['string', 'required'],
             'deadline_transfer' => ['date', 'required'],
             'description' => ['string', 'required'],
-            'collaborators' => ['required','array'],
-            'collaborators.*' => ['required','uuid'],
+            'collaborators' => ['required', 'array'],
+            'collaborators.*' => ['required', 'uuid'],
         ];
     }
 
@@ -41,7 +39,7 @@ class StoreTransferAuditNotationRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

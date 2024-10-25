@@ -7,18 +7,18 @@ use App\Http\Requests\Litigation\AddPartyRequest;
 use App\Models\Litigation\LitigationParty;
 use App\Repositories\Litigation\PartyRepository;
 use Illuminate\Http\Request;
+use Throwable;
 
 class LitigationPartyController extends Controller
 {
     /**
      * __construct
      *
-     * @param  mixed $partyRepo
+     * @param  mixed  $partyRepo
      * @return void
      */
-    public function __construct(private PartyRepository $partyRepo) {
+    public function __construct(private PartyRepository $partyRepo) {}
 
-    }
     /**
      * Display a listing of the resource.
      */
@@ -36,7 +36,7 @@ class LitigationPartyController extends Controller
             $data = $this->partyRepo->add($request);
 
             return api_response($success = true, 'Parti ajouté avec succès', $data);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['errors' => ['server' => $th->getMessage()]]);
         }
     }

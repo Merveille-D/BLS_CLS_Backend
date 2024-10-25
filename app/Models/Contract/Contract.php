@@ -5,16 +5,23 @@ namespace App\Models\Contract;
 use App\Concerns\Traits\Alert\Alertable;
 use App\Concerns\Traits\Transfer\Transferable;
 use App\Models\Scopes\CountryScope;
-use App\Models\Transfer\TransferDocument;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 #[ScopedBy([CountryScope::class])]
 class Contract extends Model
 {
-    use HasFactory, HasUuids, Alertable, Transferable;
+    use Alertable, HasFactory, HasUuids, Transferable;
+
+    const STATUS = [
+        'initiated',
+        'revised',
+        'finalized',
+        'classified',
+    ];
 
     protected $fillable = [
         'title',
@@ -31,13 +38,6 @@ class Contract extends Model
         'reference',
     ];
 
-    const STATUS = [
-        'initiated',
-        'revised',
-        'finalized',
-        'classified',
-    ];
-
     public function fileUploads()
     {
         return $this->morphMany(ContractDocument::class, 'uploadable');
@@ -48,7 +48,7 @@ class Contract extends Model
         $transfers = [];
 
         $transfers[] = [
-            'step_name' => "Initiation",
+            'step_name' => 'Initiation',
             'files' => $this->fileUploads->map(function ($fileUpload) {
                 return [
                     'filename' => $fileUpload->name ?? null,
@@ -97,7 +97,8 @@ class Contract extends Model
         return $this->belongsTo(ContractSubTypeCategory::class);
     }
 
-    public function getFirstPartAttribute() {
+    public function getFirstPartAttribute()
+    {
 
         $parts = $this->contractParts()->get();
 
@@ -116,8 +117,8 @@ class Contract extends Model
         return $part1;
     }
 
-
-    public function getSecondPartAttribute() {
+    public function getSecondPartAttribute()
+    {
 
         $parts = $this->contractParts()->get();
 
@@ -132,14 +133,17 @@ class Contract extends Model
                 ];
             }
         }
+
         return $part2;
     }
 
-    public function creator() {
+    public function creator()
+    {
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function tasks() {
+    public function tasks()
+    {
         return $this->hasMany(Task::class);
     }
 }

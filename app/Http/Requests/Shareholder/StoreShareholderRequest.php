@@ -28,10 +28,10 @@ class StoreShareholderRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
-            'type' => ['required',  Rule::in(Shareholder::TYPES) ],
+            'type' => ['required',  Rule::in(Shareholder::TYPES)],
             'nationality' => 'required|string|max:255',
             'address' => 'required|string|max:255',
-            'corporate_type' => ['required_if:type,corporate', Rule::in(Shareholder::CORPORATE_TYPES) ],
+            'corporate_type' => ['required_if:type,corporate', Rule::in(Shareholder::CORPORATE_TYPES)],
             'actions_encumbered' => ['required', 'numeric', 'gt:0'],
             'actions_no_encumbered' => ['required', 'numeric', 'gt:0'],
         ];
@@ -46,20 +46,20 @@ class StoreShareholderRequest extends FormRequest
             $capital = Capital::all();
             if ($capital->isEmpty()) {
                 $validator->errors()->add('capital', "Aucun capital n'est encore enregistré  .");
-            }else {
+            } else {
                 $capital = Capital::latest()->first();
                 $action_number = $capital->amount / $capital->par_value;
                 $shareholder_total_actions = Shareholder::sum('actions_number');
 
-                if($action_number > $shareholder_total_actions) {
+                if ($action_number > $shareholder_total_actions) {
 
                     $diff = $action_number - $shareholder_total_actions;
 
-                    if($actions_number_ask > $diff) {
-                        $validator->errors()->add('actions_number', "Il ne reste que ' . $diff .' actions pour le capital de la banque.");
+                    if ($actions_number_ask > $diff) {
+                        $validator->errors()->add('actions_number', "Il ne reste que ' . {$diff} .' actions pour le capital de la banque.");
                     }
 
-                }else {
+                } else {
                     $validator->errors()->add('actions_number', "Il ne reste plus d'action disponible pour le capital de la banque.");
                 }
             }
@@ -72,7 +72,7 @@ class StoreShareholderRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

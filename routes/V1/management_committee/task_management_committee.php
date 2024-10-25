@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\API\V1\Gourvernance\ExecutiveManagement\ManagementCommittee\TaskManagementCommitteeController;
-
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,20 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::resource('task_management_committees', TaskManagementCommitteeController::class);
-    Route::delete('delete_array_task_management_committees', [TaskManagementCommitteeController::class, 'deleteArrayTaskManagementCommittee'] );
-    Route::put('update_status_task_management_committees', [TaskManagementCommitteeController::class, 'updateStatusTaskManagementCommittee'] );
-    Route::get('generate_pdf_checklist_and_procedures_codir', [TaskManagementCommitteeController::class, 'generatePdfTasks'] );
+    Route::delete('delete_array_task_management_committees', [TaskManagementCommitteeController::class, 'deleteArrayTaskManagementCommittee']);
+    Route::put('update_status_task_management_committees', [TaskManagementCommitteeController::class, 'updateStatusTaskManagementCommittee']);
+    Route::get('generate_pdf_checklist_and_procedures_codir', [TaskManagementCommitteeController::class, 'generatePdfTasks']);
 
 });
-
-
-
-
-
-
-
-

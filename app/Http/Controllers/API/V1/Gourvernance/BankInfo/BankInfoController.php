@@ -13,10 +13,7 @@ use Illuminate\Validation\ValidationException;
 
 class BankInfoController extends Controller
 {
-
-    public function __construct(private BankInfoRepository $bank_info) {
-
-    }
+    public function __construct(private BankInfoRepository $bank_info) {}
 
     /**
      * Display a listing of the resource.
@@ -25,14 +22,14 @@ class BankInfoController extends Controller
     {
         $bank_info = BankInfo::get()->first();
 
-        if(!$bank_info) {
+        if (! $bank_info) {
             $bank_info['total_shareholders'] = Shareholder::count();
         }
 
         $bank_info['majority_shareholder'] = Shareholder::orderBy('actions_number', 'desc')->first();
         $bank_info['capital'] = Capital::get()->last();
 
-        return api_response(true, "Infos de la banque", $bank_info, 200);
+        return api_response(true, 'Infos de la banque', $bank_info, 200);
     }
 
     /**
@@ -43,33 +40,25 @@ class BankInfoController extends Controller
 
         try {
             $bank_info = $this->bank_info->store($request->validated());
-            return api_response(true, "Infos de la banque", $bank_info, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de l'enregistrement", $e->errors(), 422);
+
+            return api_response(true, 'Infos de la banque', $bank_info, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de l'enregistrement", $e->errors(), 422);
         }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(BankInfo $bank_info)
-    {
-       
-    }
+    public function show(BankInfo $bank_info) {}
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBankInfoRequest $request, BankInfo $bank_info)
-    {
-        
-    }
+    public function update(UpdateBankInfoRequest $request, BankInfo $bank_info) {}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(BankInfo $bank_info)
-    {
-       
-    }
+    public function destroy(BankInfo $bank_info) {}
 }

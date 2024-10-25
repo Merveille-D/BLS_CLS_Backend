@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Litigation;
 
 use App\Enums\Litigation\PartyCategory;
-use App\Enums\Litigation\PartyType;
 use App\Rules\Administrator\ArrayElementMatch;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -38,6 +37,6 @@ class AddPartyRequest extends FormRequest
 
     public function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(api_error(false, $validator->errors()->first(),  $validator->errors()));
+        throw new HttpResponseException(api_error(false, $validator->errors()->first(), $validator->errors()));
     }
 }

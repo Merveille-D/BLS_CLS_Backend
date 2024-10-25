@@ -3,11 +3,8 @@
 namespace Database\Seeders\Guarantee;
 
 use App\Enums\ConvHypothecState;
-use App\Models\Guarantee\ConvHypothec;
 use App\Models\Guarantee\ConvHypothecStep;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class ConvHypothecSeeder extends Seeder
 {
@@ -24,8 +21,8 @@ class ConvHypothecSeeder extends Seeder
 
     }
 
-
-    function getSteps() : array {
+    public function getSteps(): array
+    {
         return [
             [
                 'name' => 'Initiation de l\'hypothèque',

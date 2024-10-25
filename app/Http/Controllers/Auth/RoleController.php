@@ -8,6 +8,7 @@ use App\Http\Resources\User\RoleResource;
 use App\Models\Auth\Permission;
 use App\Models\Auth\Role;
 use Illuminate\Http\Request;
+use Throwable;
 
 class RoleController extends Controller
 {
@@ -27,12 +28,13 @@ class RoleController extends Controller
         try {
             $role = Role::create(['name' => $request->name, 'guard_name' => 'web']);
             //assign permissions
-            if($request['permissions'])
+            if ($request['permissions']) {
                 $role->givePermissionTo(Permission::whereIn('id', $request['permissions'])->get());
+            }
 
             return api_response(true, 'Role created successfully', $role, 201);
-        } catch (\Throwable $th) {
-            return api_error(false, $th->getMessage(), ['server' => $th->getMessage() ]);
+        } catch (Throwable $th) {
+            return api_error(false, $th->getMessage(), ['server' => $th->getMessage()]);
         }
 
     }
@@ -54,12 +56,13 @@ class RoleController extends Controller
             $role = Role::find($id);
             $role->update($request->all());
             //assign permissions
-            if($request['permissions'])
+            if ($request['permissions']) {
                 $role->syncPermissions(Permission::whereIn('id', $request['permissions'])->get());
+            }
 
             return api_response(true, 'Role updated successfully', new RoleResource($role));
-        } catch (\Throwable $th) {
-            return api_error(false, $th->getMessage(), ['server' => $th->getMessage() ]);
+        } catch (Throwable $th) {
+            return api_error(false, $th->getMessage(), ['server' => $th->getMessage()]);
         }
     }
 
@@ -71,9 +74,10 @@ class RoleController extends Controller
         try {
             $role = Role::find($id);
             $role->delete();
+
             return api_response(true, 'Role deleted successfully');
-        } catch (\Throwable $th) {
-            return api_error(false, $th->getMessage(), ['server' => $th->getMessage() ]);
+        } catch (Throwable $th) {
+            return api_error(false, $th->getMessage(), ['server' => $th->getMessage()]);
         }
     }
 }

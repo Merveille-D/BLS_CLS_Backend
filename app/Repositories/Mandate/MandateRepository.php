@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories\Mandate;
 
 use App\Models\Gourvernance\Mandate;
@@ -6,16 +7,14 @@ use Carbon\Carbon;
 
 class MandateRepository
 {
-    public function __construct(private Mandate $mandate) {
-
-    }
+    public function __construct(private Mandate $mandate) {}
 
     /**
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return Mandate
      */
-    public function update(Mandate $mandate, $request) {
+    public function update(Mandate $mandate, $request)
+    {
 
         $mandate->update([
             'appointment_date' => $request['appointment_date'],
@@ -25,6 +24,4 @@ class MandateRepository
 
         return $mandate;
     }
-
-
 }

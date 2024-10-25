@@ -12,14 +12,11 @@ class CaAdministrator extends Model
 {
     use HasFactory, HasUuids;
 
-/**
- * Class CaAdministrator
- *
- * @property int $id Primary
- *
- * @package App\Models
- */
-
+    /**
+     * Class CaAdministrator
+     *
+     * @property int $id Primary
+     */
     protected $fillable = [
         'name',
         'birthdate',
@@ -36,17 +33,19 @@ class CaAdministrator extends Model
         'type',
     ];
 
-    public function scopeAdministrator($query) {
+    public function scopeAdministrator($query)
+    {
         return $query->whereNotNull('type');
     }
 
-    public function representing() {
+    public function representing()
+    {
         return $this->hasOne(CaAdministrator::class, 'id', 'permanent_representative_id');
     }
 
     public function mandates()
     {
-        return $this->morphMany(Mandate::class, 'mandatable')->orderBy('created_at', 'desc');;
+        return $this->morphMany(Mandate::class, 'mandatable')->orderBy('created_at', 'desc');
     }
 
     public function lastMandate()
@@ -58,5 +57,4 @@ class CaAdministrator extends Model
     {
         return $this->morphMany(ExecutiveCommittee::class, 'committable');
     }
-
 }

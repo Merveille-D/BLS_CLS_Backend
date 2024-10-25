@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Concerns\Traits\Transfer;
 
 use App\Models\Transfer\Transfer;

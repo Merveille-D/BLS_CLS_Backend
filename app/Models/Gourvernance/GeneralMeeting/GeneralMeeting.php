@@ -10,28 +10,11 @@ use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 #[ScopedBy([CountryScope::class])]
 class GeneralMeeting extends Model
 {
     use HasFactory, HasUuids;
-
-    protected $fillable =  [
-        'libelle',
-        'meeting_reference',
-        'meeting_date',
-        'type',
-        'status',
-        'pv_file',
-        'pv_file_date',
-        'agenda_file',
-        'agenda_file_date',
-        'convocation_file',
-        'convocation_file_date',
-        'attendance_list_file',
-        'attendance_list_file_date',
-        'reference',
-        'created_by',
-    ];
 
     const GENERAL_MEETING_TYPES = [
         'ordinary',
@@ -46,7 +29,6 @@ class GeneralMeeting extends Model
         'closed',
     ];
 
-
     const FILE_FIELD = [
         'pv_file',
         'agenda_file',
@@ -59,7 +41,7 @@ class GeneralMeeting extends Model
         'agenda',
         'convocation',
         'attendance_list',
-        'other'
+        'other',
     ];
 
     const TYPE_FILE_FIELD_VALUE = [
@@ -83,6 +65,24 @@ class GeneralMeeting extends Model
         'agenda_file' => 'agenda_file_date',
         'convocation_file' => 'convocation_file_date',
         'attendance_list_file' => 'attendance_list_file_date',
+    ];
+
+    protected $fillable = [
+        'libelle',
+        'meeting_reference',
+        'meeting_date',
+        'type',
+        'status',
+        'pv_file',
+        'pv_file_date',
+        'agenda_file',
+        'agenda_file_date',
+        'convocation_file',
+        'convocation_file_date',
+        'attendance_list_file',
+        'attendance_list_file_date',
+        'reference',
+        'created_by',
     ];
 
     public function fileUploads()
@@ -110,13 +110,13 @@ class GeneralMeeting extends Model
             'pv_file',
             'convocation_file',
             'agenda_file',
-            'attendance_list_file'
+            'attendance_list_file',
         ];
 
         foreach ($directFiles as $field) {
-            if (!empty($this->$field)) {
+            if (! empty($this->$field)) {
                 $files[] = [
-                    'filename' =>  __(self::FILE_FIELD_VALUE[$type[$field]]),
+                    'filename' => __(self::FILE_FIELD_VALUE[$type[$field]]),
                     'file_url' => $this->$field,
                     'type' => $type[$field],
                 ];
@@ -130,17 +130,19 @@ class GeneralMeeting extends Model
                 'type' => 'other',
             ];
         }
+
         return $files;
     }
 
     public function getNextTaskAttribute()
     {
         $task = $this->tasks()->whereNotNull('deadline')->orderBy('deadline', 'asc')->where('status', false)->first();
-        return new TaskGeneralMeetingResource($task);;
+
+        return new TaskGeneralMeetingResource($task);
     }
 
-    public function creator() {
+    public function creator()
+    {
         return $this->belongsTo(User::class, 'created_by');
     }
 }
-

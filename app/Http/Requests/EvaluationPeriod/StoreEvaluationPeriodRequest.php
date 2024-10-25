@@ -35,7 +35,7 @@ class StoreEvaluationPeriodRequest extends FormRequest
         $validator->after(function ($validator) {
             $lastEvaluationPeriod = EvaluationPeriod::orderBy('created_at', 'desc')->first();
 
-            if ($lastEvaluationPeriod && !$lastEvaluationPeriod->status) {
+            if ($lastEvaluationPeriod && ! $lastEvaluationPeriod->status) {
                 $validator->errors()->add('status', 'The last evaluation period must be completed before creating a new one.');
             }
         });
@@ -46,7 +46,7 @@ class StoreEvaluationPeriodRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

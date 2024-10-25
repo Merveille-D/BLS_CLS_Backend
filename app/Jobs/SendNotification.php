@@ -18,10 +18,7 @@ class SendNotification implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(private Notification $notification)
-    {
-
-    }
+    public function __construct(private Notification $notification) {}
 
     /**
      * Execute the job.

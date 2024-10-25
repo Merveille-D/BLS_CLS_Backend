@@ -1,7 +1,10 @@
 <?php
+
 namespace Database\Seeders\Litigation;
-use Illuminate\Database\Seeder;
+
 use App\Models\Litigation\LitigationLawyer;
+use Illuminate\Database\Seeder;
+
 class LawyerSeeder extends Seeder
 {
     public function run()

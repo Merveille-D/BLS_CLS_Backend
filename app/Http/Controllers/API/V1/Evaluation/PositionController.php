@@ -11,10 +11,7 @@ use Illuminate\Validation\ValidationException;
 
 class PositionController extends Controller
 {
-
-    public function __construct(private PositionRepository $position) {
-
-    }
+    public function __construct(private PositionRepository $position) {}
 
     /**
      * Display a listing of the resource.
@@ -24,18 +21,20 @@ class PositionController extends Controller
         $positions = Position::all()->map(function ($position) {
             $position->collaborators = $position->collaborators->map(function ($collaborator) {
                 $collaborator->position = $collaborator->position;
+
                 return $collaborator;
             });
 
             $position->indicators = $position->indicators->map(function ($indicator) {
                 $indicator->position = $indicator->position;
+
                 return $indicator;
             });
 
             return $position;
         });
 
-        return api_response(true, "Liste des positions", $positions, 200);
+        return api_response(true, 'Liste des positions', $positions, 200);
     }
 
     /**
@@ -45,9 +44,10 @@ class PositionController extends Controller
     {
         try {
             $position = $this->position->store($request->all());
+
             return api_response(true, "Succès de l'enregistrement de la position", $position, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de l'enregistrement de la position", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de l'enregistrement de la position", $e->errors(), 422);
         }
     }
 
@@ -58,9 +58,9 @@ class PositionController extends Controller
     {
         try {
 
-            return api_response(true, "Infos de la position", $position, 200);
-        }catch( ValidationException $e ) {
-            return api_response(false, "Echec de la récupération de la position", $e->errors(), 422);
+            return api_response(true, 'Infos de la position', $position, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la récupération de la position', $e->errors(), 422);
         }
     }
 
@@ -72,10 +72,11 @@ class PositionController extends Controller
         try {
 
             $this->position->update($position, $request->all());
-            return api_response(true, "Mis à jour de la position avec succès", $position, 200);
+
+            return api_response(true, 'Mis à jour de la position avec succès', $position, 200);
         } catch (ValidationException $e) {
 
-            return api_response(false, "Echec de la mise à jour", $e->errors(), 422);
+            return api_response(false, 'Echec de la mise à jour', $e->errors(), 422);
         }
     }
 
@@ -86,9 +87,10 @@ class PositionController extends Controller
     {
         try {
             $position->delete();
-            return api_response(true, "Succès de la suppression de la position", null, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de la supression de la position", $e->errors(), 422);
+
+            return api_response(true, 'Succès de la suppression de la position', null, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la supression de la position', $e->errors(), 422);
         }
     }
 }

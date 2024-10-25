@@ -26,11 +26,11 @@ class StoreAuditNotationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'module_id' => ['required','uuid'],
-            'module' => ['required',Rule::in(AuditPerformanceIndicator::MODULES) ],
-            'notes' => ['required','array' ],
-            'notes.*.audit_performance_indicator_id' => ['required','uuid'],
-            'notes.*.note' => ['required','numeric'],
+            'module_id' => ['required', 'uuid'],
+            'module' => ['required', Rule::in(AuditPerformanceIndicator::MODULES)],
+            'notes' => ['required', 'array'],
+            'notes.*.audit_performance_indicator_id' => ['required', 'uuid'],
+            'notes.*.note' => ['required', 'numeric'],
         ];
     }
 
@@ -39,7 +39,7 @@ class StoreAuditNotationRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

@@ -15,7 +15,7 @@ class ConvHypothecStepResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-         return [
+        return [
             'id' => $this->id,
             'code' => $this->code,
             'title' => $this->title,

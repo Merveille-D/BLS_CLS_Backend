@@ -12,11 +12,49 @@ use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 #[ScopedBy([CountryScope::class])]
 #[ObservedBy([TaskManagementCommitteeObserver::class])]
 class TaskManagementCommittee extends Model
 {
-    use HasFactory, HasUuids, Alertable, Transferable;
+    use Alertable, HasFactory, HasUuids, Transferable;
+
+    const SESSION_TASK_TYPE = [
+        'pre_cd',
+        'checklist',
+        'procedure',
+        'post_cd',
+    ];
+
+    const TASKS = [
+        'pre_cd' => [
+            [
+                'code' => 'pre_cd.lib.1',
+                'days' => -5,
+            ],
+            [
+                'code' => 'pre_cd.lib.2',
+                'days' => -4,
+            ],
+            [
+                'code' => 'pre_cd.lib.3',
+                'days' => 0,
+            ],
+            [
+                'code' => 'pre_cd.lib.4',
+                'days' => 1,
+            ],
+            [
+                'code' => 'pre_cd.lib.5',
+                'days' => 2,
+            ],
+
+        ],
+        'procedure' => [
+        ],
+        'checklist' => [
+        ],
+    ];
 
     /**
      * Les attributs qui doivent être castés vers des types natifs.
@@ -40,66 +78,32 @@ class TaskManagementCommittee extends Model
         'created_by',
     ];
 
-    const SESSION_TASK_TYPE = [
-        'pre_cd',
-        'checklist',
-        'procedure',
-        'post_cd'
-    ];
-
-    public function management_committee()
+    public function managementCommittee()
     {
         return $this->belongsTo(ManagementCommittee::class);
     }
 
-    public function getFolderAttribute() {
-        return $this->management_committee->code;
+    public function getFolderAttribute()
+    {
+        return $this->managementCommittee->code;
     }
 
-    public function getValidationAttribute() {
+    public function getValidationAttribute()
+    {
 
         return [
             'method' => 'PUT',
-            'action' => env('APP_URL'). '/api/task_management_committees/' . $this->id,
+            'action' => config('app.url') . '/api/task_management_committees/' . $this->id,
         ];
     }
 
-    public function getModuleIdAttribute() : string|null {
-        return $this->management_committee?->id;
+    public function getModuleIdAttribute(): ?string
+    {
+        return $this->managementCommittee?->id;
     }
 
-    CONST TASKS = [
-        'pre_cd' => [
-            [
-                'code' => "pre_cd.lib.1",
-                'days' => -5,
-            ],
-            [
-                'code' => "pre_cd.lib.2",
-                'days' => -4,
-            ],
-            [
-                'code' => "pre_cd.lib.3",
-                'days' => 0,
-            ],
-            [
-                'code' => "pre_cd.lib.4",
-                'days' => 1,
-            ],
-            [
-                'code' => "pre_cd.lib.5",
-                'days' => 2,
-            ],
-
-        ],
-        'procedure' => [
-        ],
-        'checklist' => [
-        ],
-    ];
-
-    public function creator() {
+    public function creator()
+    {
         return $this->belongsTo(User::class, 'created_by');
     }
-
 }

@@ -23,5 +23,4 @@ class Subsidiary extends Model
         'code',
     ];
 
-
 }

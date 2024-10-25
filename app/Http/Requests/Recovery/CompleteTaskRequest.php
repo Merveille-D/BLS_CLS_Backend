@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Recovery;
 
-use App\Concerns\Traits\Guarantee\StepsValidationRuleTrait;
 use App\Enums\Recovery\RecoveryStepEnum;
 use App\Rules\Administrator\ArrayElementMatch;
 use Illuminate\Contracts\Validation\Validator;
@@ -29,7 +28,7 @@ class CompleteTaskRequest extends FormRequest
         $task = $this->route('task');
 
         if ($task->status) {
-            throw new HttpResponseException(api_error(false, 'Cette tâche est déjà complétée',  []));
+            throw new HttpResponseException(api_error(false, 'Cette tâche est déjà complétée', []));
         } elseif ($task->type == 'task') {
             return [];
         }
@@ -41,16 +40,16 @@ class CompleteTaskRequest extends FormRequest
 
     public function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(api_error(false, $validator->errors()->first(),  $validator->errors(), 422));
+        throw new HttpResponseException(api_error(false, $validator->errors()->first(), $validator->errors(), 422));
     }
 
     public function validationRulesByStep($state): array
     {
-        $data = array(
+        $data = [
             'documents' => 'array|required',
             'documents.*.name' => 'required|string',
             'documents.*.file' => 'required|file|max:8192|mimes:pdf,doc,docx',
-        );
+        ];
         switch ($state) {
             case RecoveryStepEnum::CREATED:
                 $data = $data;
@@ -77,7 +76,7 @@ class CompleteTaskRequest extends FormRequest
 
             case RecoveryStepEnum::JURISDICTION:
                 $data = [
-                    'is_entrusted' => ['required', new ArrayElementMatch(array('yes', 'no'))],
+                    'is_entrusted' => ['required', new ArrayElementMatch(['yes', 'no'])],
                 ];
                 // $data = [
                 //     'is_seized' => ['required', new ArrayElementMatch(array('yes', 'no'))],
@@ -94,12 +93,13 @@ class CompleteTaskRequest extends FormRequest
         return $data;
     }
 
-    public function validationRulesByStepNew($task) : array {
+    public function validationRulesByStepNew($task): array
+    {
 
         $form = $task->form ?? [];
         $data = [];
 
-        if (!blank($form)) {
+        if (! blank($form)) {
             $fields = $form['fields'];
 
             foreach ($fields as $field) {
@@ -118,9 +118,8 @@ class CompleteTaskRequest extends FormRequest
                 }
 
                 if ($field['type'] == 'radio') {
-                    $data[$field['name']] = ['required', new ArrayElementMatch(array('yes', 'no'))];
+                    $data[$field['name']] = ['required', new ArrayElementMatch(['yes', 'no'])];
                 }
-
 
             }
         }

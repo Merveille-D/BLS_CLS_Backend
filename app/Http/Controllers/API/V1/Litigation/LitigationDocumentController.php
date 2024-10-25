@@ -7,18 +7,18 @@ use App\Http\Controllers\Controller;
 use App\Models\Litigation\LitigationDocument;
 use App\Repositories\Litigation\LitigationRepository;
 use Illuminate\Http\Request;
+use Throwable;
 
 class LitigationDocumentController extends Controller
 {
     /**
      * __construct
      *
-     * @param  mixed $resourceRepo
+     * @param  mixed  $resourceRepo
      * @return void
      */
-    public function __construct(private LitigationRepository $litigationRepo) {
+    public function __construct(private LitigationRepository $litigationRepo) {}
 
-    }
     /**
      * Display a listing of the resource.
      */
@@ -44,7 +44,7 @@ class LitigationDocumentController extends Controller
             $data = $this->litigationRepo->addResource($request, $type = LitigationType::DOCUMENT);
 
             return api_response($success = true, 'Ressource ajoutée avec succès', $data);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['errors' => ['server' => $th->getMessage()]]);
         }
     }

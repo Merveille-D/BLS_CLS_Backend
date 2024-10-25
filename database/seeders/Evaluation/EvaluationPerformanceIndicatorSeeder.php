@@ -1,7 +1,7 @@
 <?php
+
 namespace Database\Seeders\Evaluation;
 
-use App\Models\Audit\AuditPerformanceIndicator;
 use App\Models\Evaluation\PerformanceIndicator;
 use App\Models\Evaluation\Position;
 use Illuminate\Database\Seeder;
@@ -107,8 +107,8 @@ class EvaluationPerformanceIndicatorSeeder extends Seeder
                         'type' => 'quantitative',
                         'description' => 'Considérations sociales/politiques & Activité stratégique que la banque a à gagner en engageant le cabinet',
                     ],
-                    
-                ]
+
+                ],
             ],
         ];
 

@@ -27,7 +27,7 @@ class UpdateCommitteeRequest extends FormRequest
     {
         return [
             'name' => ['string'],
-            'type' => [Rule::in(Committee::TYPES) ],
+            'type' => [Rule::in(Committee::TYPES)],
 
         ];
     }
@@ -37,7 +37,7 @@ class UpdateCommitteeRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

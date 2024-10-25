@@ -16,12 +16,11 @@ class Litigationable extends Model
         'litigationable_type',
         'category',
         'type',
-        'party_id'
+        'party_id',
     ];
 
     public function litigationable()
     {
         return $this->morphTo();
     }
-
 }

@@ -8,10 +8,16 @@ use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 #[ScopedBy([CountryScope::class])]
 class PerformanceIndicator extends Model
 {
     use HasFactory, HasUuids;
+
+    const TYPES = [
+        'quantitative',
+        'qualitative',
+    ];
 
     protected $fillable = [
         'title',
@@ -22,23 +28,18 @@ class PerformanceIndicator extends Model
         'created_by',
     ];
 
-    const TYPES = [
-        'quantitative',
-        'qualitative',
-    ];
-
     public function position()
     {
         return $this->belongsTo(Position::class);
     }
-    
+
     public function notations()
     {
         return $this->hasMany(Notation::class);
     }
 
-    public function creator() {
+    public function creator()
+    {
         return $this->belongsTo(User::class, 'created_by');
     }
-
 }

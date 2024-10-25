@@ -16,8 +16,8 @@
         </thead>
         <tbody>
             @foreach ($model->tasks as $key => $task)
-                <tr  class="{{ $task->status ?: 'gray italic'}}">
-                    <td>{{$task->type == 'task' ? $task->title : __('security.'.$task->title) }}</td>
+                <tr  class="{{ $task->status ?: 'gray italic' }}">
+                    <td>{{ $task->type == 'task' ? $task->title : __('security.'.$task->title) }}</td>
                     <td>{{ $task->completed_at }}</td>
                 </tr>
             @endforeach

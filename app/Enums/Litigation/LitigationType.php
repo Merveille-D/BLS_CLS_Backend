@@ -2,7 +2,7 @@
 
 namespace App\Enums\Litigation;
 
-enum LitigationType : string
+enum LitigationType: string
 {
     const JURISDICTION = 'jurisdiction';
     const NATURE = 'nature';

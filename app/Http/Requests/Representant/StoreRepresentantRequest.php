@@ -28,7 +28,7 @@ class StoreRepresentantRequest extends FormRequest
         return [
             'meeting_id' => ['required', 'uuid'],
             'name' => ['required', 'string'],
-            'type' => ['required',  Rule::in(Representant::MEETING_TYPE) ],
+            'type' => ['required',  Rule::in(Representant::MEETING_TYPE)],
             'grade' => ['required', 'string'],
         ];
     }
@@ -38,7 +38,7 @@ class StoreRepresentantRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

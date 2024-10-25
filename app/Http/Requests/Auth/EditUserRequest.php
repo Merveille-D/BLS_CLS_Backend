@@ -23,12 +23,13 @@ class EditUserRequest extends FormRequest
     {
         //edit user request
         $user = $this->route('user');
+
         return [
-            'firstname'=>'required|string',
-            'lastname'=>'required|string',
-            'email'=>'required|string|email|unique:users,email,'.$user->id,
+            'firstname' => 'required|string',
+            'lastname' => 'required|string',
+            'email' => 'required|string|email|unique:users,email,' . $user->id,
             'role_id' => 'required|uuid|exists:roles,id',
-            'username' => 'required|string|unique:users,username,'.$user->id,
+            'username' => 'required|string|unique:users,username,' . $user->id,
             'subsidiary_id' => 'required|uuid|exists:countries,id',
         ];
     }

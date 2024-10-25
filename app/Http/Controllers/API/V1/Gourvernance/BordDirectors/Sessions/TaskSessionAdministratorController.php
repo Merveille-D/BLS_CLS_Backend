@@ -13,13 +13,11 @@ use App\Http\Resources\SessionAdministrator\TaskSessionAdministratorResource;
 use App\Models\Gourvernance\BoardDirectors\Sessions\TaskSessionAdministrator;
 use App\Repositories\SessionAdministrator\TaskSessionAdministratorRepository;
 use Illuminate\Validation\ValidationException;
+use Throwable;
 
 class TaskSessionAdministratorController extends Controller
 {
-
-    public function __construct(private TaskSessionAdministratorRepository $task) {
-
-    }
+    public function __construct(private TaskSessionAdministratorRepository $task) {}
 
     /**
      * Display a listing of the resource.
@@ -27,7 +25,8 @@ class TaskSessionAdministratorController extends Controller
     public function index(ListTaskSessionAdministratorRequest $request)
     {
         $task_general_meetings = $this->task->all($request);
-        return api_response(true, "Liste des Taches du CA", TaskSessionAdministratorResource::collection($task_general_meetings), 200);
+
+        return api_response(true, 'Liste des Taches du CA', TaskSessionAdministratorResource::collection($task_general_meetings), 200);
     }
 
     /**
@@ -37,9 +36,10 @@ class TaskSessionAdministratorController extends Controller
     {
         try {
             $task_session_administrator = $this->task->store($request);
+
             return api_response(true, "Succès de l'enregistrement de la tache", new TaskSessionAdministratorResource($task_session_administrator), 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de l'enregistrement de la tache", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de l'enregistrement de la tache", $e->errors(), 422);
         }
     }
 
@@ -50,9 +50,9 @@ class TaskSessionAdministratorController extends Controller
     {
         try {
 
-            return api_response(true, "Information de la tache", new TaskSessionAdministratorResource($taskSessionAdministrator), 200);
-        }catch( ValidationException $e ) {
-            return api_response(false, "Echec de la récupération des infos de la tache", $e->errors(), 422);
+            return api_response(true, 'Information de la tache', new TaskSessionAdministratorResource($taskSessionAdministrator), 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la récupération des infos de la tache', $e->errors(), 422);
         }
     }
 
@@ -63,9 +63,10 @@ class TaskSessionAdministratorController extends Controller
     {
         try {
             $this->task->update($taskSessionAdministrator, $request->all());
+
             return api_response(true, "Succès de l'enregistrement de la tache", new TaskSessionAdministratorResource($taskSessionAdministrator), 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de l'enregistrement de la tache", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de l'enregistrement de la tache", $e->errors(), 422);
         }
     }
 
@@ -81,9 +82,10 @@ class TaskSessionAdministratorController extends Controller
     {
         try {
             $this->task->deleteArray($request);
-            return api_response(true, "Succès de la suppression des taches", null, 200);
+
+            return api_response(true, 'Succès de la suppression des taches', null, 200);
         } catch (ValidationException $e) {
-            return api_response(false, "Echec de la suppression des taches", $e->errors(), 422);
+            return api_response(false, 'Echec de la suppression des taches', $e->errors(), 422);
         }
     }
 
@@ -91,18 +93,21 @@ class TaskSessionAdministratorController extends Controller
     {
         try {
             $this->task->updateStatus($request);
-            return api_response(true, "Succès de la mise à jour des taches", null, 200);
+
+            return api_response(true, 'Succès de la mise à jour des taches', null, 200);
         } catch (ValidationException $e) {
-            return api_response(false, "Echec de la mise à jour des taches", $e->errors(), 422);
+            return api_response(false, 'Echec de la mise à jour des taches', $e->errors(), 422);
         }
     }
 
-    public function generatePdfTasks(GeneratePdfSessionAdministratorRequest $request) {
+    public function generatePdfTasks(GeneratePdfSessionAdministratorRequest $request)
+    {
         try {
 
             $data = $this->task->generatePdf($request);
+
             return $data;
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }

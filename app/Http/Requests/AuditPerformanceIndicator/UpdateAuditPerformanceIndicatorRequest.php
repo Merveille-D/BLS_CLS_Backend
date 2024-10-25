@@ -27,8 +27,8 @@ class UpdateAuditPerformanceIndicatorRequest extends FormRequest
     {
         return [
             'title' => ['string'],
-            'module' => [Rule::in(AuditPerformanceIndicator::MODULES) ],
-            'type' => [Rule::in(AuditPerformanceIndicator::TYPES) ],
+            'module' => [Rule::in(AuditPerformanceIndicator::MODULES)],
+            'type' => [Rule::in(AuditPerformanceIndicator::TYPES)],
             'note' => ['numeric'],
             'description' => ['string'],
 
@@ -40,7 +40,7 @@ class UpdateAuditPerformanceIndicatorRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

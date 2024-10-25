@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders\Audit;
 
 use App\Models\Audit\AuditPerformanceIndicator;
@@ -102,7 +103,7 @@ class AuditPerformanceIndicatorSeeder extends Seeder
                         'note' => 10,
                         'type' => 'quantitative',
                         'description' => 'Assurer l’exécution des décisions de justice
-'
+',
                     ],
                 ],
             ],

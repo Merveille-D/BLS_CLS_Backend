@@ -10,12 +10,14 @@ use App\Models\Recovery\RecoveryTask;
 use App\Repositories\Recovery\RecoveryTaskRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class RecoveryTaskController extends Controller
 {
     public function __construct(
         private RecoveryTaskRepository $taskRepo,
     ) {}
+
     /**
      * Display a listing of the resource.
      */
@@ -33,7 +35,7 @@ class RecoveryTaskController extends Controller
             $task = $this->taskRepo->add($request);
 
             return api_response(true, 'Tache ajoutée avec succès', $task, 201);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error(false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
@@ -55,10 +57,11 @@ class RecoveryTaskController extends Controller
             $task = $this->taskRepo->edit($request, $task_id);
 
             return api_response(true, 'Tache modifiée avec succès', $task);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error(false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
+
     /**
      * Update the specified resource in storage.
      */
@@ -68,9 +71,11 @@ class RecoveryTaskController extends Controller
             DB::beginTransaction();
             $task = $this->taskRepo->transfer($task, $request);
             DB::commit();
+
             return api_response(true, 'Transfert éffectué avec succès', $task);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             DB::rollBack();
+
             return api_error(false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
@@ -78,18 +83,21 @@ class RecoveryTaskController extends Controller
     /**
      * complete task
      *
-     * @param  array $request
-     * @param  mixed $task
+     * @param  array  $request
+     * @param  mixed  $task
      * @return void
      */
-    public function complete(CompleteTaskRequest $request, RecoveryTask $task) {
+    public function complete(CompleteTaskRequest $request, RecoveryTask $task)
+    {
         try {
             DB::beginTransaction();
             $task = $this->taskRepo->complete($task, $request);
             DB::commit();
+
             return api_response(true, 'Tâche complétée avec succès', $task);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             DB::rollBack();
+
             return api_error(false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }

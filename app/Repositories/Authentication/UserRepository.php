@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories\Authentication;
 
 use App\Http\Resources\User\UserResource;
@@ -10,7 +11,6 @@ use Illuminate\Support\Facades\Hash;
 
 class UserRepository
 {
-
     /**
      * __construct
      *
@@ -18,23 +18,23 @@ class UserRepository
      */
     public function __construct(
         private User $user_model,
-    ) {
-    }
+    ) {}
 
-    public function getList($request) : ResourceCollection {
+    public function getList($request): ResourceCollection
+    {
         $search = $request->search;
         $query = $this->user_model
-                ->when(!blank($search), function($qry) use($search) {
-                    $qry->where('name', 'like', '%'.$search.'%');
-                })
-                ->orderBy('created_at', 'desc')
-                ->paginate(DEFAULT_DATA_LIMIT);
-
+            ->when(! blank($search), function ($qry) use ($search) {
+                $qry->where('name', 'like', '%' . $search . '%');
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate(DEFAULT_DATA_LIMIT);
 
         return UserResource::collection($query);
     }
 
-    public function add($request) {
+    public function add($request)
+    {
         $user = User::create([
             'firstname' => $request['firstname'],
             'lastname' => $request['lastname'],
@@ -52,39 +52,42 @@ class UserRepository
         return new UserResource($user);
     }
 
-    public function check($request) {
-        $user = User::where('email',$request['email'])->first();
+    public function check($request)
+    {
+        $user = User::where('email', $request['email'])->first();
 
-        if(!$user || !Hash::check($request['password'], $user->password)){
+        if (! $user || ! Hash::check($request['password'], $user->password)) {
             return false;
         }
-        return $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
+
+        return $token = $user->createToken($user->name . '-AuthToken')->plainTextToken;
     }
 
-    public function authenticate($credentials) {
+    public function authenticate($credentials)
+    {
         $auth_mode = config('auth.auth_mode');
         $data = [];
 
         if ($auth_mode == 'database') {
             $user = User::where('username', $credentials['uid'])->first();
 
-            if(!$user || !Hash::check($credentials['password'], $user->password)){
+            if (! $user || ! Hash::check($credentials['password'], $user->password)) {
                 return ['error' => 'Unauthorized'];
             }
-            $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
+            $token = $user->createToken($user->name . '-AuthToken')->plainTextToken;
 
-                $data = [
-                    'access_token' => $token,
-                    'user' => new UserResource($user),
-                ];
+            $data = [
+                'access_token' => $token,
+                'user' => new UserResource($user),
+            ];
 
-        } else if ($auth_mode == 'ldap') {
+        } elseif ($auth_mode == 'ldap') {
             if (Auth::guard('ldap')->attempt($credentials)) {
 
                 $user = Auth::guard('ldap')->user();
                 // Generate Sanctum token
                 $user = $this->user_model->where('username', $user->uid)->first();
-                $token = $user->createToken($user->username.'-AuthToken')->plainTextToken;
+                $token = $user->createToken($user->username . '-AuthToken')->plainTextToken;
 
                 $data = [
                     'access_token' => $token,
@@ -92,15 +95,18 @@ class UserRepository
                 ];
             }
         }
+
         return $data;
 
     }
 
-    public function logout() {
+    public function logout()
+    {
         auth()->user()->tokens()->delete();
     }
 
-    function delete($user_id) {
+    public function delete($user_id)
+    {
         $user = $this->user_model->findOrFail($user_id);
         $user->delete();
     }

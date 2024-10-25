@@ -9,17 +9,14 @@ class TaskActionTransferObserver
     /**
      * Handle the TaskActionTransfer "created" event.
      */
-    public function created(TaskActionTransfer $TaskActionTransfer): void
-    {
-
-    }
+    public function created(TaskActionTransfer $TaskActionTransfer): void {}
 
     /**
      * Handle the TaskActionTransfer "updated" event.
      */
     public function updated(TaskActionTransfer $taskActionTransfer): void
     {
-        if($taskActionTransfer->status) {
+        if ($taskActionTransfer->status) {
             $alertsExist = $taskActionTransfer->alerts()->delete();
         }
     }

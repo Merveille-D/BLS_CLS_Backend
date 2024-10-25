@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories\Shareholder;
 
 use App\Models\Shareholder\ActionTransfer;
@@ -13,23 +14,21 @@ class ActionTransferRepository
         private ActionTransfer $action_transfer,
         public TierRepository $tier,
         public ShareholderRepository $shareholder,
-        ) {
-
-    }
+    ) {}
 
     /**
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return ActionTransfer
      */
-    public function store($request) {
+    public function store($request)
+    {
 
         $request['created_by'] = Auth::user()->id;
 
         $request['transfer_id'] = now()->format('d') . '/' . now()->format('m') . '/' . now()->format('Y');
         $request['reference'] = generateReference('TRANSFER_ACTION', $this->action_transfer);
 
-        if($request['type'] == 'shareholder') {
+        if ($request['type'] == 'shareholder') {
 
             $action_transfer = $this->action_transfer->create($request);
 
@@ -45,7 +44,7 @@ class ActionTransferRepository
                 'actions_number' => $buyer->actions_number + $request['count_actions'],
             ]);
 
-        }else {
+        } else {
 
             $request['tier_id'] = (isset($request['name'])) ? $this->tier->store($request)->id : $request['buyer_id'];
             $request['status'] = 'pending';
@@ -62,38 +61,17 @@ class ActionTransferRepository
     }
 
     /**
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return ActionTransfer
      */
-    public function update(ActionTransfer $action_transfer, $request) {
+    public function update(ActionTransfer $action_transfer, $request)
+    {
 
         //
     }
 
-    private function createTasks($action_transfer) {
-
-        $previousDeadline = null;
-
-        foreach (TaskActionTransfer::TASKS as $key => $task) {
-
-            $deadline = $previousDeadline ? $previousDeadline->addDays($task['delay']) : $action_transfer->created_at->addDays($task['delay']);
-
-            TaskActionTransfer::create([
-                'title' => $task['title'],
-                'code' => $key,
-                'action_transfer_id' => $action_transfer->id,
-                'deadline' => $deadline,
-                'created_by' => Auth::user()->id,
-            ]);
-
-            $previousDeadline = $deadline;
-        }
-
-        return true;
-    }
-
-    public function approvedActionTransfer($request) {
+    public function approvedActionTransfer($request)
+    {
 
         $action_transfer = ActionTransfer::find($request['action_transfer_id']);
 
@@ -115,5 +93,28 @@ class ActionTransferRepository
 
         return $action_transfer;
 
+    }
+
+    private function createTasks($action_transfer)
+    {
+
+        $previousDeadline = null;
+
+        foreach (TaskActionTransfer::TASKS as $key => $task) {
+
+            $deadline = $previousDeadline ? $previousDeadline->addDays($task['delay']) : $action_transfer->created_at->addDays($task['delay']);
+
+            TaskActionTransfer::create([
+                'title' => $task['title'],
+                'code' => $key,
+                'action_transfer_id' => $action_transfer->id,
+                'deadline' => $deadline,
+                'created_by' => Auth::user()->id,
+            ]);
+
+            $previousDeadline = $deadline;
+        }
+
+        return true;
     }
 }

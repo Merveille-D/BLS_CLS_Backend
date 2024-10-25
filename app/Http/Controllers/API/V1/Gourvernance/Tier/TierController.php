@@ -7,15 +7,11 @@ use App\Http\Requests\Tier\StoreTierRequest;
 use App\Http\Requests\Tier\UpdateTierRequest;
 use App\Models\Gourvernance\Tier;
 use App\Repositories\Tier\TierRepository;
-use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class TierController extends Controller
 {
-
-    public function __construct(private TierRepository $tier) {
-
-    }
+    public function __construct(private TierRepository $tier) {}
 
     /**
      * Display a listing of the resource.
@@ -24,9 +20,10 @@ class TierController extends Controller
     {
         try {
             $tiers = Tier::all();
-            return api_response(true, "Liste des tiers", $tiers, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de la récupération des tiers", $e->errors(), 422);
+
+            return api_response(true, 'Liste des tiers', $tiers, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la récupération des tiers', $e->errors(), 422);
         }
     }
 
@@ -37,9 +34,10 @@ class TierController extends Controller
     {
         try {
             $tier = $this->tier->store($request->all());
+
             return api_response(true, "Succès de l'enregistrement du tier", $tier, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de l'enregistrement", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de l'enregistrement", $e->errors(), 422);
         }
     }
 
@@ -49,9 +47,9 @@ class TierController extends Controller
     public function show(Tier $tier)
     {
         try {
-            return api_response(true, "Infos du tier", $tier, 200);
-        }catch( ValidationException $e ) {
-            return api_response(false, "Echec de la récupération des infos", $e->errors(), 422);
+            return api_response(true, 'Infos du tier', $tier, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la récupération des infos', $e->errors(), 422);
         }
     }
 
@@ -63,9 +61,9 @@ class TierController extends Controller
         try {
             $this->tier->update($tier, $request->all());
 
-            return api_response(true, "Mis à jour du tier", $tier, 200);
+            return api_response(true, 'Mis à jour du tier', $tier, 200);
         } catch (ValidationException $e) {
-            return api_response(false, "Echec de la mise à jour", $e->errors(), 422);
+            return api_response(false, 'Echec de la mise à jour', $e->errors(), 422);
         }
     }
 
@@ -76,9 +74,10 @@ class TierController extends Controller
     {
         try {
             $tier->delete();
-            return api_response(true, "Succès de la suppression du tier", null, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de la supression", $e->errors(), 422);
+
+            return api_response(true, 'Succès de la suppression du tier', null, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la supression', $e->errors(), 422);
         }
     }
 }

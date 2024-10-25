@@ -10,17 +10,18 @@ class GuaranteeStep extends Model
 {
     use HasFactory, HasUuids;
 
-    protected $fillable =  [
+    protected $fillable = [
         'guarantee_type', 'code', 'name', 'rank', 'parent_id', 'step_type', 'min_delay', 'max_delay',
-        'formalization_type', 'parent_id', 'parent_response', 'title', 'extra'
+        'formalization_type', 'parent_id', 'parent_response', 'title', 'extra',
     ];
 
     protected $casts = [
-        'extra' => 'array'
+        'extra' => 'array',
     ];
 
     //children relationship
-    public function children() {
+    public function children()
+    {
         return $this->hasMany(GuaranteeStep::class, 'parent_id');
     }
 }

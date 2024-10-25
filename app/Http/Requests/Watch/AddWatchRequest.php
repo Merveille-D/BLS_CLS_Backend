@@ -7,7 +7,6 @@ use App\Rules\Administrator\ArrayElementMatch;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
 class AddWatchRequest extends FormRequest
 {
@@ -39,8 +38,8 @@ class AddWatchRequest extends FormRequest
             'nature_id' => 'nullable|exists:litigation_settings,id',
             'jurisdiction_id' => 'nullable|exists:litigation_settings,id',
             'jurisdiction_location' => 'nullable',
-            'recipient_type' =>  ['required_if:is_archived,false', new ArrayElementMatch(array('admin', 'personnel'))],
-            'mail_object' =>'required_if:is_archived,false',
+            'recipient_type' => ['required_if:is_archived,false', new ArrayElementMatch(['admin', 'personnel'])],
+            'mail_object' => 'required_if:is_archived,false',
             'mail_content' => 'required_if:is_archived,false',
             'mail_addresses' => 'required_if:is_archived,false',
         ];
@@ -48,6 +47,6 @@ class AddWatchRequest extends FormRequest
 
     public function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(api_error(false, $validator->errors()->first(),  $validator->errors()));
+        throw new HttpResponseException(api_error(false, $validator->errors()->first(), $validator->errors()));
     }
 }

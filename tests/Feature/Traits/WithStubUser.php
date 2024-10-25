@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Feature\Traits;
 
 use App\Models\Auth\Role;
@@ -13,7 +14,7 @@ trait WithStubUser
 
         // $role = Role::whereName('super_admin')->first();
 
-        $user =  User::factory()->create([
+        $user = User::factory()->create([
             'subsidiary_id' => $subsidiary->id,
         ]);
 

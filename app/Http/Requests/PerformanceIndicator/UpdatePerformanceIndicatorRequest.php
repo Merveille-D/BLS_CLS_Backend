@@ -28,7 +28,7 @@ class UpdatePerformanceIndicatorRequest extends FormRequest
         return [
             'title' => ['string'],
             'position_id' => ['uuid'],
-            'type' => [Rule::in(PerformanceIndicator::TYPES) ],
+            'type' => [Rule::in(PerformanceIndicator::TYPES)],
             'note' => ['numeric'],
             'description' => ['string'],
 
@@ -40,7 +40,7 @@ class UpdatePerformanceIndicatorRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

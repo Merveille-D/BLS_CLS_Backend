@@ -10,9 +10,8 @@ use Illuminate\Http\Request;
 
 class LitigationLawyerController extends Controller
 {
-    public function __construct(private LawyerRepository $lawyerRepo) {
+    public function __construct(private LawyerRepository $lawyerRepo) {}
 
-    }
     /**
      * Display a listing of the resource.
      */

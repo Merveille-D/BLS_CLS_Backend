@@ -1,9 +1,9 @@
 <?php
+
 namespace App\Repositories\Evaluation;
 
 use App\Concerns\Traits\PDF\GeneratePdfTrait;
 use App\Concerns\Traits\Transfer\AddTransferTrait;
-use App\Models\Evaluation\Collaborator;
 use App\Models\Evaluation\Notation;
 use App\Models\Evaluation\PerformanceIndicator;
 use Illuminate\Support\Facades\Auth;
@@ -14,11 +14,10 @@ class NotationRepository
     use AddTransferTrait;
     use GeneratePdfTrait;
 
-    public function __construct(private Notation $notation) {
+    public function __construct(private Notation $notation) {}
 
-    }
-
-    public function notationRessource($notation) {
+    public function notationRessource($notation)
+    {
 
         $notation->collaborator = $notation->collaborator;
         $notation->collaborator->position = $notation->collaborator->position;
@@ -28,7 +27,7 @@ class NotationRepository
 
             $transfer->notation = Notation::find($transfer->evaluation->first()->evaluation_id);
             $hiddenAttributes = [
-                'collaborator_id', 'performances', 'parent_id', 'created_at', 'updated_at'
+                'collaborator_id', 'performances', 'parent_id', 'created_at', 'updated_at',
             ];
             $transfer->notation->makeHidden($hiddenAttributes);
 
@@ -47,20 +46,21 @@ class NotationRepository
         $notation->last_indicators = $notation->last_notation->indicators;
 
         $hiddenAttributes = [
-            'collaborator_id', 'performances', 'indicators','note', 'status',
-            'observation', 'parent_id', 'created_at', 'updated_at'
+            'collaborator_id', 'performances', 'indicators', 'note', 'status',
+            'observation', 'parent_id', 'created_at', 'updated_at',
         ];
         $notation->makeHidden($hiddenAttributes);
 
         return $notation;
     }
 
-    public function store($request) {
+    public function store($request)
+    {
 
         $request['note'] = array_sum(array_column($request['notes'], 'note'));
         $request['created_by'] = Auth::user()->id;
 
-        $request['evaluation_reference'] ='EVT-' . '-' . now()->format('d') . '/' . now()->format('m') . '/' . now()->format('Y');
+        $request['evaluation_reference'] = 'EVT-' . '-' . now()->format('d') . '/' . now()->format('m') . '/' . now()->format('Y');
         $request['reference'] = generateReference('EVT', $this->notation);
 
         $notation = $this->notation->create($request);
@@ -68,7 +68,7 @@ class NotationRepository
         foreach ($request['notes'] as $note) {
             $notation->performances()->create([
                 'performance_indicator_id' => $note['performance_indicator_id'],
-                'note' => $note['note']
+                'note' => $note['note'],
             ]);
         }
 
@@ -76,11 +76,11 @@ class NotationRepository
     }
 
     /**
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return Notation
      */
-    public function update(Notation $notation, $request) {
+    public function update(Notation $notation, $request)
+    {
 
         $request['note'] = array_sum(array_column($request['notes'], 'note'));
         $request['created_by'] = Auth::user()->id;
@@ -92,17 +92,18 @@ class NotationRepository
         return $notation;
     }
 
-    public function createTransfer($request) {
+    public function createTransfer($request)
+    {
 
         $notation = $this->notation->find($request['notation_id']);
-        $transfer = $this->add_transfer($notation, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
+        $transfer = $this->addTransfer($notation, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
 
         // Add new notation for transfer
         $request['collaborator_id'] = $notation->collaborator_id;
         $request['parent_id'] = $notation->id;
         $request['created_by'] = Auth::user()->id;
         $request['status'] = $request['forward_title'];
-        $request['evaluation_reference'] ='EVT-' . '-' . now()->format('d') . '/' . now()->format('m') . '/' . now()->format('Y');
+        $request['evaluation_reference'] = 'EVT-' . '-' . now()->format('d') . '/' . now()->format('m') . '/' . now()->format('Y');
         $request['reference'] = generateReference('EVT', $this->notation);
 
         $new_notation = $this->notation->create($request);
@@ -124,7 +125,8 @@ class NotationRepository
         return $notation;
     }
 
-    public function completeTransfer($request) {
+    public function completeTransfer($request)
+    {
 
         $notation = $this->notation->find($request['notation_id']);
 
@@ -138,45 +140,49 @@ class NotationRepository
         return $notation;
     }
 
-    public function delete(Notation $notation) {
+    public function delete(Notation $notation)
+    {
         $transfer_evaluations = Notation::where('parent_id', $notation->id)->get();
 
-        $transfer_evaluations->each(function($evaluation) {
+        $transfer_evaluations->each(function ($evaluation) {
             $evaluation->delete();
         });
 
         $notation->delete();
     }
 
-    public function updateNotes($notation, $notes) {
+    public function updateNotes($notation, $notes)
+    {
         foreach ($notes as $note) {
             $performance = $notation->performances()->where('performance_indicator_id', $note['performance_indicator_id'])->first();
 
             if ($performance) {
                 $performance->update([
-                    'note' => $note['note']
+                    'note' => $note['note'],
                 ]);
             }
         }
     }
 
-    public function generatePdf($request){
+    public function generatePdf($request)
+    {
 
         $notation = Notation::find($request['notation_id']);
 
         $data = $this->notationRessource($notation);
 
-        $filename = Str::slug($notation->evaluation_reference). '_'.date('YmdHis') . '.pdf';
+        $filename = Str::slug($notation->evaluation_reference) . '_' . date('YmdHis') . '.pdf';
 
-        $pdf =  $this->generateFromView( 'pdf.evaluation.fiche_evaluation',  [
+        $pdf = $this->generateFromView('pdf.evaluation.fiche_evaluation', [
             'data' => $data,
-            'details' => $this->getDetails($data)
-        ],$filename);
+            'details' => $this->getDetails($data),
+        ], $filename);
 
         return $pdf;
     }
 
-    public function getDetails($data) {
+    public function getDetails($data)
+    {
         $details = [
             'N° de dossier' => $data['evaluation_reference'],
             'Statut actuel' => $data['status'],
@@ -184,6 +190,7 @@ class NotationRepository
             'Poste' => $data['collaborator']['position']['title'],
             'Créé par' => $data['creator']['firstname'] . '' . $data['creator']['lastname'],
         ];
+
         return $details;
     }
 }

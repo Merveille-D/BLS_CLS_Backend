@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories\BankInfo;
 
 use App\Models\Gourvernance\BankInfo\BankInfo;
@@ -6,20 +7,18 @@ use App\Models\Shareholder\Shareholder;
 
 class BankInfoRepository
 {
-    public function __construct(private BankInfo $bank_info) {
-
-    }
+    public function __construct(private BankInfo $bank_info) {}
 
     /**
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return BankInfo
      */
-    public function store($request) {
+    public function store($request)
+    {
 
         $requestData = $request;
-        
-        if(isset($requestData['logo'])) {
+
+        if (isset($requestData['logo'])) {
 
             $path = uploadFile($request['logo'], 'bank_infos');
             // $requestData = $request->except('logo');
@@ -29,26 +28,27 @@ class BankInfoRepository
 
         $requestData['total_shareholders'] = Shareholder::count();
 
-        $bank_info = BankInfo::first(); 
+        $bank_info = BankInfo::first();
         if ($bank_info) {
 
-            $bank_info->update($requestData); 
+            $bank_info->update($requestData);
 
         } else {
-            $bank_info = BankInfo::create($requestData); 
+            $bank_info = BankInfo::create($requestData);
         }
 
         return $bank_info;
     }
 
     /**
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return BankInfo
      */
-    public function update(BankInfo $bank_info, $request) {
+    public function update(BankInfo $bank_info, $request)
+    {
 
         $bank_info->update($request);
+
         return $bank_info;
     }
 }

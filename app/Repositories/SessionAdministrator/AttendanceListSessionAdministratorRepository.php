@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories\SessionAdministrator;
 
 use App\Concerns\Traits\PDF\GeneratePdfTrait;
@@ -12,20 +13,21 @@ class AttendanceListSessionAdministratorRepository
 {
     use GeneratePdfTrait;
 
-    public function __construct(private AttendanceListSessionAdministrator $attendance) {
+    public function __construct(private AttendanceListSessionAdministrator $attendance) {}
 
-    }
-
-    public function list() {
+    public function list()
+    {
 
         $administrators = CaAdministrator::select('name', 'id')->get()->map(function ($administrator) {
-            $administrator->type = "administrator";
-            $administrator->status = (AttendanceListSessionAdministrator::where('session_id', request('session_adminisrator_id'))->where('administrator_id', $administrator->id)->exists()) ? true : false ;
+            $administrator->type = 'administrator';
+            $administrator->status = (AttendanceListSessionAdministrator::where('session_id', request('session_adminisrator_id'))->where('administrator_id', $administrator->id)->exists()) ? true : false;
+
             return $administrator;
         });
         $representants = Representant::select('grade', 'name', 'id')->get()->map(function ($representant) {
-            $representant->type = "not_administrator";
-            $representant->status = (AttendanceListSessionAdministrator::where('session_id', request('session_adminisrator_id'))->where('representant_id', $representant->id)->exists()) ? true : false ;
+            $representant->type = 'not_administrator';
+            $representant->status = (AttendanceListSessionAdministrator::where('session_id', request('session_adminisrator_id'))->where('representant_id', $representant->id)->exists()) ? true : false;
+
             return $representant;
         });
 
@@ -35,18 +37,18 @@ class AttendanceListSessionAdministratorRepository
     }
 
     /**
-     * @param Request $request
-     * @param AttendanceListSessionAdministrator $attendanceListSessionAdministrator
-     *
+     * @param  Request  $request
+     * @param  AttendanceListSessionAdministrator  $attendanceListSessionAdministrator
      * @return AttendanceListSessionAdministrator
      */
-    public function update($request) {
+    public function update($request)
+    {
 
         foreach ($request['administrators'] as $administrator) {
 
             if ($administrator['status']) {
                 $data = [
-                    'session_id' => $request['session_administrator_id']
+                    'session_id' => $request['session_administrator_id'],
                 ];
 
                 if ($administrator['type'] == 'administrator') {
@@ -55,18 +57,20 @@ class AttendanceListSessionAdministratorRepository
                     $data['representant_id'] = $administrator['id'];
                 }
                 $this->attendance->create($data);
-            }else {
+            } else {
                 $this->attendance->where('session_id', $request['session_administrator_id'])
-                                ->where($administrator['type'] == 'administrator' ? 'administrator_id' : 'representant_id', $administrator['id'])
-                                ->delete();
+                    ->where($administrator['type'] == 'administrator' ? 'administrator_id' : 'representant_id', $administrator['id'])
+                    ->delete();
             }
         }
+
         return 0;
     }
 
-    public function generatePdf($session_administrator){
+    public function generatePdf($session_administrator)
+    {
 
-        $meeting_type =  __(SessionAdministrator::SESSION_MEETING_TYPES_VALUES[$session_administrator->type]);
+        $meeting_type = __(SessionAdministrator::SESSION_MEETING_TYPES_VALUES[$session_administrator->type]);
 
         $administrators_id = $session_administrator->attendanceList()->pluck('administrator_id');
         $administrators = CaAdministrator::whereIn('id', $administrators_id)->get();
@@ -76,13 +80,14 @@ class AttendanceListSessionAdministratorRepository
 
         $administrators = $administrators->merge($representants);
 
-        $filename = Str::slug('Liste de présence | ' . $session_administrator->libelle). '_'.date('YmdHis') . '.pdf';
+        $filename = Str::slug('Liste de présence | ' . $session_administrator->libelle) . '_' . date('YmdHis') . '.pdf';
 
-        $pdf =  $this->generateFromView( 'pdf.session_administrator.attendance',  [
+        $pdf = $this->generateFromView('pdf.session_administrator.attendance', [
             'administrators' => $administrators,
             'session_administrator' => $session_administrator,
             'meeting_type' => $meeting_type,
         ], $filename);
+
         return $pdf;
     }
 }

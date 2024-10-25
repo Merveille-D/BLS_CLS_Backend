@@ -1,10 +1,11 @@
 <?php
+
 namespace App\Enums;
 
-enum Quality {
-    const SHAREHOLDER= 'shareholder';
+enum Quality
+{
+    const SHAREHOLDER = 'shareholder';
     const NONSHAREHOLDER = 'non_shareholder';
-
 
     const QUALITIES = [
         Quality::SHAREHOLDER,

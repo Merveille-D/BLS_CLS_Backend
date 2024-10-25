@@ -24,10 +24,10 @@ class StoreNotationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'collaborator_id' => ['required','uuid'],
-            'notes' => ['required','array' ],
-            'notes.*.performance_indicator_id' => ['required','uuid'],
-            'notes.*.note' => ['required','numeric'],
+            'collaborator_id' => ['required', 'uuid'],
+            'notes' => ['required', 'array'],
+            'notes.*.performance_indicator_id' => ['required', 'uuid'],
+            'notes.*.note' => ['required', 'numeric'],
         ];
     }
 
@@ -36,7 +36,7 @@ class StoreNotationRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

@@ -29,7 +29,7 @@ class UpdateAttendanceListManagementCommitteeRequest extends FormRequest
             'directors' => 'required|array',
             'directors.*.id' => ['required', 'uuid'],
             'directors.*.type' => ['required', Rule::in(['director', 'not_director'])],
-            'directors.*.status' => ['required', 'boolean']
+            'directors.*.status' => ['required', 'boolean'],
         ];
     }
 
@@ -38,7 +38,7 @@ class UpdateAttendanceListManagementCommitteeRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

@@ -139,7 +139,7 @@
                     Nous soussigné, certifions que <strong>M. {{ $shareholder->name }}</strong>,<br>
                     domicilié à
                     <strong>{{ $shareholder->address }}</strong>, <br> est titulaire de
-                    <strong>{{ convertNumberToLetter($shareholder->actions_number)}} ({{$shareholder->actions_number}}) </strong> action(s) dans le capital
+                    <strong>{{ convertNumberToLetter($shareholder->actions_number) }} ({{ $shareholder->actions_number }}) </strong> action(s) dans le capital
                     de la société.
                 </p>
             </div>

@@ -8,16 +8,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class AddGuaranteeRequest extends FormRequest
 {
-    protected function prepareForValidation()
-    {
-        // set security field to property when type is mortgage
-        if ($this->type === 'mortgage') {
-            $this->merge([
-                'security' => 'property',
-            ]);
-        }
-    }
-
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -41,5 +31,15 @@ class AddGuaranteeRequest extends FormRequest
             'formalization_type' => 'nullable|string|in:legal,conventional',
             'autonomous_id' => 'required_if:type,autonomous_counter|uuid|exists:guarantees,id',
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        // set security field to property when type is mortgage
+        if ($this->type === 'mortgage') {
+            $this->merge([
+                'security' => 'property',
+            ]);
+        }
     }
 }

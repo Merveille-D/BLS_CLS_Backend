@@ -7,14 +7,13 @@ use App\Repositories\Alert\AlertRepository;
 
 class AlertController extends Controller
 {
-    public function __construct(private AlertRepository $alert) {
+    public function __construct(private AlertRepository $alert) {}
 
-    }
-
-    public function triggerModuleAlert() {
+    public function triggerModuleAlert()
+    {
 
         $response = $this->alert->triggerModuleAlert();
-        return api_response( $response, "Resultat de l'envoi des alertes", null, 200);
-    }
 
+        return api_response($response, "Resultat de l'envoi des alertes", null, 200);
+    }
 }

@@ -10,7 +10,6 @@ use App\Models\Guarantee\GuaranteeStep;
 
 trait PersonalDefaultSteps
 {
-
     //save the default steps for the collateral guarantee
     public function savePersonalSecuritiesSteps()
     {
@@ -33,32 +32,7 @@ trait PersonalDefaultSteps
         }
     }
 
-    private function createPersonalStep($data, $parentId = null)
-    {
-        //remove options from data before create
-        $creating = $data;
-        if (isset($creating['options']))
-            unset($creating['options']);
-
-        $step = GuaranteeStep::create(array_merge($creating, ['parent_id' => $parentId, 'rank' => $data['rank'] ?? 0]));
-
-        if (isset($data['options'])) {
-            foreach ($data['options'] as $option => $subSteps) {
-                $parent_response = null;
-                if (in_array($option, ['yes', 'no'])) {
-                    $parent_response = $option;
-                }
-                foreach ($subSteps as $subStep) {
-                    $subStep['parent_response'] = $parent_response;
-                    $this->createStep($subStep, $step->id);
-                }
-            }
-        }
-    }
-
-
-
-    function getBondSteps(): array
+    public function getBondSteps(): array
     {
         return [
             [
@@ -79,26 +53,26 @@ trait PersonalDefaultSteps
                 'rank' => 2,
                 'min_delay' => null,
                 'max_delay' => 10,
-                "extra" => [
-                    "form" => [
-                        "title" => "Bonding Contract Drafting",
-                        "fields" => [
+                'extra' => [
+                    'form' => [
+                        'title' => 'Bonding Contract Drafting',
+                        'fields' => [
                             [
-                                "name" => "completed_at",
-                                "type" => "date",
-                                "label" => "Date",
-                                "required" => true
+                                'name' => 'completed_at',
+                                'type' => 'date',
+                                'label' => 'Date',
+                                'required' => true,
                             ],
                             [
-                                "name" => "documents",
-                                "type" => "file",
-                                "label" => "Documents",
-                                "required" => true
+                                'name' => 'documents',
+                                'type' => 'file',
+                                'label' => 'Documents',
+                                'required' => true,
                             ],
 
-                        ]
-                    ]
-                ]
+                        ],
+                    ],
+                ],
             ],
             // completer
             [
@@ -130,26 +104,26 @@ trait PersonalDefaultSteps
                 'rank' => 5,
                 'min_delay' => null,
                 'max_delay' => 180,
-                "extra" => [
-                    "form" => [
-                        "title" => 'Debtor\'s Debt Status Communication to the Surety Every 7 Months',
-                        "fields" => [
+                'extra' => [
+                    'form' => [
+                        'title' => 'Debtor\'s Debt Status Communication to the Surety Every 7 Months',
+                        'fields' => [
                             [
-                                "name" => "completed_at",
-                                "type" => "date",
-                                "label" => "Date",
-                                "required" => true
+                                'name' => 'completed_at',
+                                'type' => 'date',
+                                'label' => 'Date',
+                                'required' => true,
                             ],
                             [
-                                "name" => "documents",
-                                "type" => "file",
-                                "label" => "Documents",
-                                "required" => true
+                                'name' => 'documents',
+                                'type' => 'file',
+                                'label' => 'Documents',
+                                'required' => true,
                             ],
 
-                        ]
-                    ]
-                ]
+                        ],
+                    ],
+                ],
 
             ],
 
@@ -162,26 +136,26 @@ trait PersonalDefaultSteps
                 'rank' => 1,
                 'min_delay' => null,
                 'max_delay' => 10,
-                "extra" => [
-                    "form" => [
-                        "title" => 'Formal Notice to the Principal Debtor',
-                        "fields" => [
+                'extra' => [
+                    'form' => [
+                        'title' => 'Formal Notice to the Principal Debtor',
+                        'fields' => [
                             [
-                                "name" => "completed_at",
-                                "type" => "date",
-                                "label" => "Date",
-                                "required" => true
+                                'name' => 'completed_at',
+                                'type' => 'date',
+                                'label' => 'Date',
+                                'required' => true,
                             ],
                             [
-                                "name" => "documents",
-                                "type" => "file",
-                                "label" => "Documents",
-                                "required" => true
+                                'name' => 'documents',
+                                'type' => 'file',
+                                'label' => 'Documents',
+                                'required' => true,
                             ],
 
-                        ]
-                    ]
-                ]
+                        ],
+                    ],
+                ],
             ],
             [
                 'title' => 'Debtor\'s Performance',
@@ -191,51 +165,51 @@ trait PersonalDefaultSteps
                 'rank' => 2,
                 'min_delay' => null,
                 'max_delay' => 10,
-                "extra" => [
-                    "form" => [
-                        "title" => 'Debtor\'s Performance',
-                        "fields" => [
+                'extra' => [
+                    'form' => [
+                        'title' => 'Debtor\'s Performance',
+                        'fields' => [
                             [
-                                "name" => "completed_at",
-                                "type" => "date",
-                                "label" => "Date",
-                                "required" => true
+                                'name' => 'completed_at',
+                                'type' => 'date',
+                                'label' => 'Date',
+                                'required' => true,
                             ],
                             [
-                                "name" => "is_executed",
-                                "type" => "radio",
-                                "label" => "Performance by the debtor",
-                                "required" => true
+                                'name' => 'is_executed',
+                                'type' => 'radio',
+                                'label' => 'Performance by the debtor',
+                                'required' => true,
                             ],
 
-                        ]
-                    ]
-                ],
-                "options" => [
-                    "yes" => [
-                        [
-                            "title" => 'Termination of the bond',
-                            "code" => "Termination_bond",
-                            'guarantee_type' => GuaranteeType::BONDING,
-                            "min_delay" => null,
-                            "max_delay" => 10,
-                            "extra" => [
-                                "form" => [
-                                    "title" => 'Termination of the bond',
-                                    "fields" => [
-                                        [
-                                            "name" => "completed_at",
-                                            "type" => "date",
-                                            "label" => "Date",
-                                            "required" => true
-                                        ],
-
-                                    ]
-                                ]
-                            ]
                         ],
                     ],
-                    "no" => [
+                ],
+                'options' => [
+                    'yes' => [
+                        [
+                            'title' => 'Termination of the bond',
+                            'code' => 'Termination_bond',
+                            'guarantee_type' => GuaranteeType::BONDING,
+                            'min_delay' => null,
+                            'max_delay' => 10,
+                            'extra' => [
+                                'form' => [
+                                    'title' => 'Termination of the bond',
+                                    'fields' => [
+                                        [
+                                            'name' => 'completed_at',
+                                            'type' => 'date',
+                                            'label' => 'Date',
+                                            'required' => true,
+                                        ],
+
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    'no' => [
                         [
                             'title' => 'Surety Notification Within a Month of Debtor\'s Formal Notice',
                             'guarantee_type' => GuaranteeType::BONDING,
@@ -244,20 +218,20 @@ trait PersonalDefaultSteps
                             'rank' => 3,
                             'min_delay' => null,
                             'max_delay' => 30,
-                            "extra" => [
-                                "form" => [
-                                    "title" => 'Surety Notification Within a Month of Debtor\'s Formal Notice',
-                                    "fields" => [
+                            'extra' => [
+                                'form' => [
+                                    'title' => 'Surety Notification Within a Month of Debtor\'s Formal Notice',
+                                    'fields' => [
                                         [
-                                            "name" => "completed_at",
-                                            "type" => "date",
-                                            "label" => "Date",
-                                            "required" => true
+                                            'name' => 'completed_at',
+                                            'type' => 'date',
+                                            'label' => 'Date',
+                                            'required' => true,
                                         ],
 
-                                    ]
-                                ]
-                            ]
+                                    ],
+                                ],
+                            ],
                         ],
                         [
                             'title' => 'Formal Notice to the guarantor',
@@ -267,26 +241,26 @@ trait PersonalDefaultSteps
                             'rank' => 4,
                             'min_delay' => null,
                             'max_delay' => 10,
-                            "extra" => [
-                                "form" => [
-                                    "title" => 'Formal Notice to the guarantor',
-                                    "fields" => [
+                            'extra' => [
+                                'form' => [
+                                    'title' => 'Formal Notice to the guarantor',
+                                    'fields' => [
                                         [
-                                            "name" => "completed_at",
-                                            "type" => "date",
-                                            "label" => "Date",
-                                            "required" => true
+                                            'name' => 'completed_at',
+                                            'type' => 'date',
+                                            'label' => 'Date',
+                                            'required' => true,
                                         ],
                                         [
-                                            "name" => "documents",
-                                            "type" => "file",
-                                            "label" => "Documents",
-                                            "required" => true
+                                            'name' => 'documents',
+                                            'type' => 'file',
+                                            'label' => 'Documents',
+                                            'required' => true,
                                         ],
 
-                                    ]
-                                ]
-                            ]
+                                    ],
+                                ],
+                            ],
                         ],
                         [
                             'title' => 'Payment by the deposit',
@@ -296,36 +270,35 @@ trait PersonalDefaultSteps
                             'rank' => 5,
                             'min_delay' => null,
                             'max_delay' => 10,
-                            "extra" => [
-                                "form" => [
-                                    "title" => 'Payment by the deposit',
-                                    "fields" => [
+                            'extra' => [
+                                'form' => [
+                                    'title' => 'Payment by the deposit',
+                                    'fields' => [
                                         [
-                                            "name" => "completed_at",
-                                            "type" => "date",
-                                            "label" => "Date",
-                                            "required" => true
+                                            'name' => 'completed_at',
+                                            'type' => 'date',
+                                            'label' => 'Date',
+                                            'required' => true,
                                         ],
                                         [
-                                            "name" => "is_paid",
-                                            "type" => "radio",
-                                            "label" => "Payment by the deposit",
-                                            "required" => true
+                                            'name' => 'is_paid',
+                                            'type' => 'radio',
+                                            'label' => 'Payment by the deposit',
+                                            'required' => true,
                                         ],
 
-                                    ]
-                                ]
-                            ]
+                                    ],
+                                ],
+                            ],
                         ],
 
-                    ]
+                    ],
 
-                ]
+                ],
             ],
 
         ];
     }
-
 
     public function getAutonomousSteps()
     {
@@ -348,26 +321,26 @@ trait PersonalDefaultSteps
                 'rank' => 2,
                 'min_delay' => null,
                 'max_delay' => 10,
-                "extra" => [
-                    "form" => [
-                        "title" => 'Drafting of Autonomous Guarantee Contract',
-                        "fields" => [
+                'extra' => [
+                    'form' => [
+                        'title' => 'Drafting of Autonomous Guarantee Contract',
+                        'fields' => [
                             [
-                                "name" => "completed_at",
-                                "type" => "date",
-                                "label" => "Date",
-                                "required" => true
+                                'name' => 'completed_at',
+                                'type' => 'date',
+                                'label' => 'Date',
+                                'required' => true,
                             ],
                             [
-                                "name" => "documents",
-                                "type" => "file",
-                                "label" => "Documents",
-                                "required" => true
+                                'name' => 'documents',
+                                'type' => 'file',
+                                'label' => 'Documents',
+                                'required' => true,
                             ],
 
-                        ]
-                    ]
-                ]
+                        ],
+                    ],
+                ],
             ],
             [
                 'title' => 'Autonomous guarantee Contract Validity Verification',
@@ -377,20 +350,20 @@ trait PersonalDefaultSteps
                 'rank' => 3,
                 'min_delay' => null,
                 'max_delay' => 10,
-                "extra" => [
-                    "form" => [
-                        "title" => 'Autonomous guarantee Contract Validity Verification',
-                        "fields" => [
+                'extra' => [
+                    'form' => [
+                        'title' => 'Autonomous guarantee Contract Validity Verification',
+                        'fields' => [
                             [
-                                "name" => "completed_at",
-                                "type" => "date",
-                                "label" => "Date",
-                                "required" => true
+                                'name' => 'completed_at',
+                                'type' => 'date',
+                                'label' => 'Date',
+                                'required' => true,
                             ],
 
-                        ]
-                    ]
-                ]
+                        ],
+                    ],
+                ],
             ],
             //CHOISIR LA duree du contrat : gdd ou gdi [revocable/non revokable]
             [
@@ -401,26 +374,26 @@ trait PersonalDefaultSteps
                 'rank' => 4,
                 'min_delay' => null,
                 'max_delay' => 10,
-                "extra" => [
-                    "form" => [
-                        "title" => 'Signing of the Autonomous Guarantee Contract',
-                        "fields" => [
+                'extra' => [
+                    'form' => [
+                        'title' => 'Signing of the Autonomous Guarantee Contract',
+                        'fields' => [
                             [
-                                "name" => "completed_at",
-                                "type" => "date",
-                                "label" => "Date",
-                                "required" => true
+                                'name' => 'completed_at',
+                                'type' => 'date',
+                                'label' => 'Date',
+                                'required' => true,
                             ],
                             [
-                                "name" => "contract_type",
-                                "type" => "select",
-                                "label" => "Choose the contract duration",
-                                "required" => true
+                                'name' => 'contract_type',
+                                'type' => 'select',
+                                'label' => 'Choose the contract duration',
+                                'required' => true,
                             ],
 
-                        ]
-                    ]
-                ]
+                        ],
+                    ],
+                ],
             ],
 
             //realization
@@ -432,26 +405,26 @@ trait PersonalDefaultSteps
                 'rank' => 1,
                 'min_delay' => null,
                 'max_delay' => 10,
-                "extra" => [
-                    "form" => [
-                        "title" => 'Payment Request to the guarantor',
-                        "fields" => [
+                'extra' => [
+                    'form' => [
+                        'title' => 'Payment Request to the guarantor',
+                        'fields' => [
                             [
-                                "name" => "completed_at",
-                                "type" => "date",
-                                "label" => "Date",
-                                "required" => true
+                                'name' => 'completed_at',
+                                'type' => 'date',
+                                'label' => 'Date',
+                                'required' => true,
                             ],
                             [
-                                "name" => "documents",
-                                "type" => "file",
-                                "label" => "Documents",
-                                "required" => true
+                                'name' => 'documents',
+                                'type' => 'file',
+                                'label' => 'Documents',
+                                'required' => true,
                             ],
 
-                        ]
-                    ]
-                ]
+                        ],
+                    ],
+                ],
             ],
             //radio payement, date de paiement
             [
@@ -462,20 +435,20 @@ trait PersonalDefaultSteps
                 'rank' => 2,
                 'min_delay' => null,
                 'max_delay' => 5,
-                "extra" => [
-                    "form" => [
-                        "title" => 'Guarantor\'s Request Verification',
-                        "fields" => [
+                'extra' => [
+                    'form' => [
+                        'title' => 'Guarantor\'s Request Verification',
+                        'fields' => [
                             [
-                                "name" => "completed_at",
-                                "type" => "date",
-                                "label" => "Date",
-                                "required" => true
+                                'name' => 'completed_at',
+                                'type' => 'date',
+                                'label' => 'Date',
+                                'required' => true,
                             ],
 
-                        ]
-                    ]
-                ]
+                        ],
+                    ],
+                ],
             ],
             [
                 'title' => 'Payment by the guarantor',
@@ -485,30 +458,29 @@ trait PersonalDefaultSteps
                 'rank' => 5,
                 'min_delay' => null,
                 'max_delay' => 10,
-                "extra" => [
-                    "form" => [
-                        "title" => 'Payment by the guarantor',
-                        "fields" => [
+                'extra' => [
+                    'form' => [
+                        'title' => 'Payment by the guarantor',
+                        'fields' => [
                             [
-                                "name" => "completed_at",
-                                "type" => "date",
-                                "label" => "Date",
-                                "required" => true
+                                'name' => 'completed_at',
+                                'type' => 'date',
+                                'label' => 'Date',
+                                'required' => true,
                             ],
                             [
-                                "name" => "is_paid",
-                                "type" => "radio",
-                                "label" => "Payment by the guarantor",
-                                "required" => true
+                                'name' => 'is_paid',
+                                'type' => 'radio',
+                                'label' => 'Payment by the guarantor',
+                                'required' => true,
                             ],
 
-                        ]
-                    ]
-                ]
+                        ],
+                    ],
+                ],
             ],
         ];
     }
-
 
     public function getCounterAutonomousStep()
     {
@@ -531,26 +503,26 @@ trait PersonalDefaultSteps
                 'rank' => 2,
                 'min_delay' => null,
                 'max_delay' => 10,
-                "extra" => [
-                    "form" => [
-                        "title" => 'Drafting of Counter-Guarantee Contract',
-                        "fields" => [
+                'extra' => [
+                    'form' => [
+                        'title' => 'Drafting of Counter-Guarantee Contract',
+                        'fields' => [
                             [
-                                "name" => "completed_at",
-                                "type" => "date",
-                                "label" => "Date",
-                                "required" => true
+                                'name' => 'completed_at',
+                                'type' => 'date',
+                                'label' => 'Date',
+                                'required' => true,
                             ],
                             [
-                                "name" => "documents",
-                                "type" => "file",
-                                "label" => "Documents",
-                                "required" => true
+                                'name' => 'documents',
+                                'type' => 'file',
+                                'label' => 'Documents',
+                                'required' => true,
                             ],
 
-                        ]
-                    ]
-                ]
+                        ],
+                    ],
+                ],
             ],
             [
                 'title' => 'Counter-Guarantee Contract Validity Verification',
@@ -560,20 +532,20 @@ trait PersonalDefaultSteps
                 'rank' => 3,
                 'min_delay' => null,
                 'max_delay' => 10,
-                "extra" => [
-                    "form" => [
-                        "title" => "Counter-Guarantee Contract Validity Verification",
-                        "fields" => [
+                'extra' => [
+                    'form' => [
+                        'title' => 'Counter-Guarantee Contract Validity Verification',
+                        'fields' => [
                             [
-                                "name" => "completed_at",
-                                "type" => "date",
-                                "label" => "Date",
-                                "required" => true
+                                'name' => 'completed_at',
+                                'type' => 'date',
+                                'label' => 'Date',
+                                'required' => true,
                             ],
 
-                        ]
-                    ]
-                ]
+                        ],
+                    ],
+                ],
             ],
             //CHOISIR LA duree du contrat : gdd ou gdi [revocable/non revokable]
             [
@@ -584,26 +556,26 @@ trait PersonalDefaultSteps
                 'rank' => 4,
                 'min_delay' => null,
                 'max_delay' => 10,
-                "extra" => [
-                    "form" => [
-                        "title" => 'Signing of the Autonomous Guarantee Contract',
-                        "fields" => [
+                'extra' => [
+                    'form' => [
+                        'title' => 'Signing of the Autonomous Guarantee Contract',
+                        'fields' => [
                             [
-                                "name" => "completed_at",
-                                "type" => "date",
-                                "label" => "Date",
-                                "required" => true
+                                'name' => 'completed_at',
+                                'type' => 'date',
+                                'label' => 'Date',
+                                'required' => true,
                             ],
                             [
-                                "name" => "contract_type",
-                                "type" => "select",
-                                "label" => "Choose the contract duration",
-                                "required" => true
+                                'name' => 'contract_type',
+                                'type' => 'select',
+                                'label' => 'Choose the contract duration',
+                                'required' => true,
                             ],
 
-                        ]
-                    ]
-                ]
+                        ],
+                    ],
+                ],
             ],
 
             //realization
@@ -615,26 +587,26 @@ trait PersonalDefaultSteps
                 'rank' => 1,
                 'min_delay' => null,
                 'max_delay' => 10,
-                "extra" => [
-                    "form" => [
-                        "title" => 'Payment Request to the counter-guarantor',
-                        "fields" => [
+                'extra' => [
+                    'form' => [
+                        'title' => 'Payment Request to the counter-guarantor',
+                        'fields' => [
                             [
-                                "name" => "completed_at",
-                                "type" => "date",
-                                "label" => "Date",
-                                "required" => true
+                                'name' => 'completed_at',
+                                'type' => 'date',
+                                'label' => 'Date',
+                                'required' => true,
                             ],
                             [
-                                "name" => "documents",
-                                "type" => "file",
-                                "label" => "Documents",
-                                "required" => true
+                                'name' => 'documents',
+                                'type' => 'file',
+                                'label' => 'Documents',
+                                'required' => true,
                             ],
 
-                        ]
-                    ]
-                ]
+                        ],
+                    ],
+                ],
             ],
             [
                 'title' => 'Beneficiary\'s request for payment to the guarantor',
@@ -644,26 +616,26 @@ trait PersonalDefaultSteps
                 'rank' => 1,
                 'min_delay' => null,
                 'max_delay' => 10,
-                "extra" => [
-                    "form" => [
-                        "title" => 'Beneficiary\'s request for payment to the guarantor',
-                        "fields" => [
+                'extra' => [
+                    'form' => [
+                        'title' => 'Beneficiary\'s request for payment to the guarantor',
+                        'fields' => [
                             [
-                                "name" => "completed_at",
-                                "type" => "date",
-                                "label" => "Date",
-                                "required" => true
+                                'name' => 'completed_at',
+                                'type' => 'date',
+                                'label' => 'Date',
+                                'required' => true,
                             ],
                             [
-                                "name" => "documents",
-                                "type" => "file",
-                                "label" => "Documents",
-                                "required" => true
+                                'name' => 'documents',
+                                'type' => 'file',
+                                'label' => 'Documents',
+                                'required' => true,
                             ],
 
-                        ]
-                    ]
-                ]
+                        ],
+                    ],
+                ],
             ],
             //radio payement, date de paiement
             [
@@ -674,19 +646,19 @@ trait PersonalDefaultSteps
                 'rank' => 2,
                 'min_delay' => null,
                 'max_delay' => 5,
-                "extra" => [
-                    "form" => [
-                        "title" => 'Counter-guarantor\'s Request Verification',
-                        "fields" => [
+                'extra' => [
+                    'form' => [
+                        'title' => 'Counter-guarantor\'s Request Verification',
+                        'fields' => [
                             [
-                                "name" => "completed_at",
-                                "type" => "date",
-                                "label" => "Date",
-                                "required" => true
+                                'name' => 'completed_at',
+                                'type' => 'date',
+                                'label' => 'Date',
+                                'required' => true,
                             ],
-                        ]
-                    ]
-                ]
+                        ],
+                    ],
+                ],
             ],
             [
                 'title' => 'Payment by the counter-guarantor',
@@ -696,27 +668,51 @@ trait PersonalDefaultSteps
                 'rank' => 5,
                 'min_delay' => null,
                 'max_delay' => 10,
-                "extra" => [
-                    "form" => [
-                        "title" => 'Payment by the counter-guarantor',
-                        "fields" => [
+                'extra' => [
+                    'form' => [
+                        'title' => 'Payment by the counter-guarantor',
+                        'fields' => [
                             [
-                                "name" => "completed_at",
-                                "type" => "date",
-                                "label" => "Date",
-                                "required" => true
+                                'name' => 'completed_at',
+                                'type' => 'date',
+                                'label' => 'Date',
+                                'required' => true,
                             ],
                             [
-                                "name" => "is_paid",
-                                "type" => "radio",
-                                "label" => "Payment by the counter-guarantor",
-                                "required" => true
+                                'name' => 'is_paid',
+                                'type' => 'radio',
+                                'label' => 'Payment by the counter-guarantor',
+                                'required' => true,
                             ],
 
-                        ]
-                    ]
-                ]
+                        ],
+                    ],
+                ],
             ],
         ];
+    }
+
+    private function createPersonalStep($data, $parentId = null)
+    {
+        //remove options from data before create
+        $creating = $data;
+        if (isset($creating['options'])) {
+            unset($creating['options']);
+        }
+
+        $step = GuaranteeStep::create(array_merge($creating, ['parent_id' => $parentId, 'rank' => $data['rank'] ?? 0]));
+
+        if (isset($data['options'])) {
+            foreach ($data['options'] as $option => $subSteps) {
+                $parent_response = null;
+                if (in_array($option, ['yes', 'no'])) {
+                    $parent_response = $option;
+                }
+                foreach ($subSteps as $subStep) {
+                    $subStep['parent_response'] = $parent_response;
+                    $this->createStep($subStep, $step->id);
+                }
+            }
+        }
     }
 }

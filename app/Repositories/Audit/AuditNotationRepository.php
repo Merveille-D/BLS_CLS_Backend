@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories\Audit;
 
 use App\Concerns\Traits\PDF\GeneratePdfTrait;
@@ -13,11 +14,10 @@ class AuditNotationRepository
     use AddTransferTrait;
     use GeneratePdfTrait;
 
-    public function __construct(private AuditNotation $audit_notation) {
+    public function __construct(private AuditNotation $audit_notation) {}
 
-    }
-
-    public function all() {
+    public function all()
+    {
         return $this->audit_notation->whereNull('parent_id')->get()
             ->makeHidden(['performances', 'indicators'])
             ->map(function ($audit_notation) {
@@ -27,15 +27,16 @@ class AuditNotationRepository
 
                 $hiddenAttributes = [
                     'indicators', 'status', 'note', 'observation', 'date',
-                    'created_by', 'parent_id', 'created_at', 'updated_at'
+                    'created_by', 'parent_id', 'created_at', 'updated_at',
                 ];
                 $audit_notation->makeHidden($hiddenAttributes);
 
                 return $audit_notation;
-        });
+            });
     }
 
-    public function auditNotationRessource($audit_notation) {
+    public function auditNotationRessource($audit_notation)
+    {
 
         $audit_notation->title = $audit_notation->title;
         $audit_notation->created = $audit_notation->creator;
@@ -43,7 +44,7 @@ class AuditNotationRepository
 
             $transfer->notation = AuditNotation::find($transfer->audit->first()->audit_id);
             $hiddenAttributes = [
-                'performances', 'parent_id', 'created_at', 'updated_at'
+                'performances', 'parent_id', 'created_at', 'updated_at',
             ];
             $transfer->notation->makeHidden($hiddenAttributes);
 
@@ -63,25 +64,24 @@ class AuditNotationRepository
 
         $hiddenAttributes = [
             'performances', 'indicators', 'status', 'note', 'observation',
-            'parent_id', 'created_at', 'updated_at'
+            'parent_id', 'created_at', 'updated_at',
         ];
         $audit_notation->makeHidden($hiddenAttributes);
 
         return $audit_notation;
     }
 
-
     /**
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return AuditNotation
      */
-    public function store($request) {
+    public function store($request)
+    {
 
         $request['note'] = array_sum(array_column($request['notes'], 'note'));
         $request['created_by'] = Auth::user()->id;
 
-        $request['audit_reference'] ='ADT-' . '-' . now()->format('d') . '/' . now()->format('m') . '/' . now()->format('Y');
+        $request['audit_reference'] = 'ADT-' . '-' . now()->format('d') . '/' . now()->format('m') . '/' . now()->format('Y');
         $request['reference'] = generateReference('ADT', $this->audit_notation);
 
         $audit_notation = $this->audit_notation->create($request);
@@ -89,14 +89,15 @@ class AuditNotationRepository
         foreach ($request['notes'] as $note) {
             $audit_notation->performances()->create([
                 'audit_performance_indicator_id' => $note['audit_performance_indicator_id'],
-                'note' => $note['note']
+                'note' => $note['note'],
             ]);
         }
 
         return $audit_notation;
     }
 
-    public function update(AuditNotation $audit_notation, $request) {
+    public function update(AuditNotation $audit_notation, $request)
+    {
 
         $request['note'] = array_sum(array_column($request['notes'], 'note'));
         $request['created_by'] = Auth::user()->id;
@@ -104,13 +105,15 @@ class AuditNotationRepository
         $audit_notation->last_audit_notation->update($request);
 
         $this->updateNotes($audit_notation->last_audit_notation, $request['notes']);
+
         return $audit_notation;
     }
 
-    public function createTransfer($request) {
+    public function createTransfer($request)
+    {
 
         $audit_notation = $this->audit_notation->find($request['audit_notation_id']);
-        $transfer = $this->add_transfer($audit_notation, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
+        $transfer = $this->addTransfer($audit_notation, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
 
         // Add new notation for transfer
         $request['module_id'] = $audit_notation->module_id;
@@ -118,7 +121,7 @@ class AuditNotationRepository
         $request['parent_id'] = $audit_notation->id;
         $request['created_by'] = Auth::user()->id;
         $request['status'] = $request['forward_title'];
-        $request['audit_reference'] ='ADT-' . '-' . now()->format('d') . '/' . now()->format('m') . '/' . now()->format('Y');
+        $request['audit_reference'] = 'ADT-' . '-' . now()->format('d') . '/' . now()->format('m') . '/' . now()->format('Y');
         $request['reference'] = generateReference('ADT', $this->audit_notation);
 
         $new_audit_notation = $this->audit_notation->create($request);
@@ -138,7 +141,8 @@ class AuditNotationRepository
         return $audit_notation;
     }
 
-    public function completeTransfer($request) {
+    public function completeTransfer($request)
+    {
 
         $audit_notation = $this->audit_notation->find($request['audit_notation_id']);
 
@@ -152,46 +156,49 @@ class AuditNotationRepository
         return $audit_notation;
     }
 
-    public function delete(AuditNotation $audit_notation) {
+    public function delete(AuditNotation $audit_notation)
+    {
         $transfer_audits = AuditNotation::where('parent_id', $audit_notation->id)->get();
 
-        $transfer_audits->each(function($audit) {
+        $transfer_audits->each(function ($audit) {
             $audit->delete();
         });
 
         $audit_notation->delete();
     }
 
-
-    public function updateNotes($audit_notation, $notes) {
+    public function updateNotes($audit_notation, $notes)
+    {
         foreach ($notes as $note) {
             $performance = $audit_notation->performances()->where('audit_performance_indicator_id', $note['audit_performance_indicator_id'])->first();
 
             if ($performance) {
                 $performance->update([
-                    'note' => $note['note']
+                    'note' => $note['note'],
                 ]);
             }
         }
     }
 
-    public function generatePdf($request){
+    public function generatePdf($request)
+    {
 
         $audit_notation = AuditNotation::find($request['audit_notation_id']);
 
         $data = $this->auditNotationRessource($audit_notation);
 
-        $filename = Str::slug($audit_notation->audit_reference). '_'.date('YmdHis') . '.pdf';
+        $filename = Str::slug($audit_notation->audit_reference) . '_' . date('YmdHis') . '.pdf';
 
-        $pdf =  $this->generateFromView( 'pdf.audit.fiche_audit',  [
+        $pdf = $this->generateFromView('pdf.audit.fiche_audit', [
             'data' => $data,
-            'details' => $this->getDetails($data)
-        ],$filename);
+            'details' => $this->getDetails($data),
+        ], $filename);
 
         return $pdf;
     }
 
-    public function getDetails($data) {
+    public function getDetails($data)
+    {
         $details = [
             'N° de dossier' => $data['audit_reference'],
             'Statut actuel' => $data['status'],
@@ -202,7 +209,4 @@ class AuditNotationRepository
 
         return $details;
     }
-
-
-
 }

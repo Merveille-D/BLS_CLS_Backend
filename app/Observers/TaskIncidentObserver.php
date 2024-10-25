@@ -9,17 +9,14 @@ class TaskIncidentObserver
     /**
      * Handle the TaskIncident "created" event.
      */
-    public function created(TaskIncident $taskIncident): void
-    {
-
-    }
+    public function created(TaskIncident $taskIncident): void {}
 
     /**
      * Handle the TaskIncident "updated" event.
      */
     public function updated(TaskIncident $taskIncident): void
     {
-        if($taskIncident->status) {
+        if ($taskIncident->status) {
             $alertsExist = $taskIncident->alerts()->delete();
         }
     }

@@ -8,14 +8,14 @@ use App\Http\Requests\Guarantee\EditGuaranteeRequest;
 use App\Http\Requests\Transfer\AddTransferRequest;
 use App\Models\Guarantee\Guarantee;
 use App\Repositories\Guarantee\GuaranteeRepository;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class GuaranteeController extends Controller
 {
     public function __construct(
         private GuaranteeRepository $guaranteeRepo
-    ){}
+    ) {}
 
     /**
      * Display a listing of the resource.
@@ -34,9 +34,11 @@ class GuaranteeController extends Controller
             DB::beginTransaction();
             $data = $this->guaranteeRepo->add($request);
             DB::commit();
+
             return api_response($success = true, 'Garantie initié avec succès', $data, 201);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             DB::rollBack();
+
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
@@ -58,18 +60,22 @@ class GuaranteeController extends Controller
             DB::beginTransaction();
             $data = $this->guaranteeRepo->edit($guarantee, $request);
             DB::commit();
+
             return api_response($success = true, 'Garantie modifié avec succès', $data);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             DB::rollBack();
+
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
 
-    public function realization(Guarantee $guarantee) {
+    public function realization(Guarantee $guarantee)
+    {
         try {
             $data = $this->guaranteeRepo->realization($guarantee);
+
             return api_response($success = true, 'Procédure de réalisation  éffectuée avec succès', $data);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
@@ -89,8 +95,9 @@ class GuaranteeController extends Controller
     {
         try {
             $data = $this->guaranteeRepo->generatePdf($guarantee);
+
             return $data;
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }
@@ -104,9 +111,11 @@ class GuaranteeController extends Controller
             DB::beginTransaction();
             $data = $this->guaranteeRepo->transfer($request, $guarantee);
             DB::commit();
+
             return api_response($success = true, 'La garantie a été transférée avec succès', $data, 200);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             DB::rollBack();
+
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }

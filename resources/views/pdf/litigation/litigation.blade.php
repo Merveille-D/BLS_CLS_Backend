@@ -18,8 +18,8 @@
             @foreach ($litigation->parties as $key => $party)
                 <tr>
                     <td>{{ $party->name }}</td>
-                    <td>{{ $party->pivot->category  }}</td>
-                    <td>{{ $party->pivot->type  }}</td>
+                    <td>{{ $party->pivot->category }}</td>
+                    <td>{{ $party->pivot->type }}</td>
                 </tr>
             @endforeach
 
@@ -80,8 +80,8 @@
         </thead>
         <tbody>
             @foreach ($litigation->tasks as $key => $task)
-                <tr  class="{{ $task->status ?: 'gray italic'}}">
-                    <td>{{$task->type == 'task' ? $task->title : __('litigation.'.$task->title) }}</td>
+                <tr  class="{{ $task->status ?: 'gray italic' }}">
+                    <td>{{ $task->type == 'task' ? $task->title : __('litigation.'.$task->title) }}</td>
                     <td>{{ $task->completed_at }}</td>
                 </tr>
             @endforeach

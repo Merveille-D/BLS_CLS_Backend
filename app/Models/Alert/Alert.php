@@ -20,9 +20,7 @@ use Illuminate\Notifications\Notifiable;
 #[ObservedBy([AlertObserver::class])]
 class Alert extends Model
 {
-    use HasFactory, Notifiable, HasUuids, SoftDeletes;
-
-    protected $fillable = ['state', 'sent_by', 'sent_to', 'deadline', 'title', 'message', 'type', 'trigger_at', 'priority'];
+    use HasFactory, HasUuids, Notifiable, SoftDeletes;
 
     const STATUS = [
         'info',
@@ -73,6 +71,8 @@ class Alert extends Model
         //     'type' => 'evaluation',
         // ],
     ];
+
+    protected $fillable = ['state', 'sent_by', 'sent_to', 'deadline', 'title', 'message', 'type', 'trigger_at', 'priority'];
 
     public function alertable()
     {

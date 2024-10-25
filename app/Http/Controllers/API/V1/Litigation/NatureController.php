@@ -7,18 +7,18 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Litigation\AddNatureRequest;
 use App\Repositories\Litigation\LitigationRepository;
 use Illuminate\Http\Request;
+use Throwable;
 
 class NatureController extends Controller
 {
     /**
      * __construct
      *
-     * @param  mixed $litigationRepo
+     * @param  mixed  $litigationRepo
      * @return void
      */
-    public function __construct(private readonly LitigationRepository $litigationRepo) {
+    public function __construct(private readonly LitigationRepository $litigationRepo) {}
 
-    }
     /**
      * Display a listing of the resource.
      */
@@ -36,7 +36,7 @@ class NatureController extends Controller
             $data = $this->litigationRepo->addResource($request, $type = LitigationType::NATURE);
 
             return api_response($success = true, 'Ressource ajoutée avec succès', $data);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['errors' => ['server' => $th->getMessage()]]);
         }
     }

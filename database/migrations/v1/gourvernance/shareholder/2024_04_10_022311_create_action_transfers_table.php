@@ -7,9 +7,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('action_transfers', function (Blueprint $table) {
@@ -32,9 +29,9 @@ return new class extends Migration
             $table->string('transfer_id');
             $table->string('reference');
 
-            $table->enum('type', ActionTransfer::TYPES );
+            $table->enum('type', ActionTransfer::TYPES);
 
-            $table->enum('status', ActionTransfer::STATUS )->default('approved');
+            $table->enum('status', ActionTransfer::STATUS)->default('approved');
 
             $table->uuid('created_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
@@ -44,9 +41,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('action_transfers');

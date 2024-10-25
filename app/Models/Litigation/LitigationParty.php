@@ -12,10 +12,10 @@ class LitigationParty extends Model
     use HasFactory, HasUuids;
 
     protected $fillable = [
-        'name', 'category', 'type', 'phone', 'email'
+        'name', 'category', 'type', 'phone', 'email',
     ];
 
-    public function litigations() : MorphToMany
+    public function litigations(): MorphToMany
     {
         return $this->morphToMany(Litigation::class, 'litigationable');
     }

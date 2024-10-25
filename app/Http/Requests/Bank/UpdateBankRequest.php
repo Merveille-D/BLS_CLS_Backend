@@ -27,7 +27,7 @@ class UpdateBankRequest extends FormRequest
     {
         return [
             'title' => ['string'],
-            'type' => [Rule::in(Bank::TYPES) ],
+            'type' => [Rule::in(Bank::TYPES)],
             'file' => ['file'],
             'link' => ['string'],
 
@@ -39,7 +39,7 @@ class UpdateBankRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

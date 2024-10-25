@@ -8,10 +8,17 @@ use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 #[ScopedBy([CountryScope::class])]
 class Bank extends Model
 {
     use HasFactory, HasUuids;
+
+    const TYPES = [
+        'link',
+        'file',
+        'other',
+    ];
 
     protected $fillable = [
         'title',
@@ -22,13 +29,8 @@ class Bank extends Model
         'created_by',
     ];
 
-    const TYPES = [
-        'link',
-        'file',
-        'other',
-    ];
-
-    public function creator() {
+    public function creator()
+    {
         return $this->belongsTo(User::class, 'created_by');
     }
 }

@@ -5,7 +5,6 @@ namespace App\Models\Recovery;
 use App\Concerns\Traits\Recovery\RecoveryFormFieldTrait;
 use App\Models\ModuleTask;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class RecoveryTask extends ModuleTask
 {
@@ -18,7 +17,8 @@ class RecoveryTask extends ModuleTask
         return $this->belongsTo(RecoveryStep::class, 'step_id');
     }
 
-    public function getFormAttribute() {
+    public function getFormAttribute()
+    {
         $form = $this->getCustomFormFields($this);
 
         return $form;

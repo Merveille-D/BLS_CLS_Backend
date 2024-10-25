@@ -8,10 +8,12 @@ use App\Http\Resources\Watch\LegalWatchResource;
 use App\Models\Watch\LegalWatch;
 use App\Repositories\Watch\LegalWatchRepository;
 use Illuminate\Http\Request;
+use Throwable;
 
 class LegalWatchController extends Controller
 {
     public function __construct(private LegalWatchRepository $watchRepo) {}
+
     /**
      * Display a listing of the resource.
      */
@@ -29,7 +31,7 @@ class LegalWatchController extends Controller
             $data = $this->watchRepo->add($request);
 
             return api_response($success = true, 'Veille ajoutée avec succès', $data);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
@@ -49,8 +51,9 @@ class LegalWatchController extends Controller
     {
         try {
             $legalWatch->update($request->all());
+
             return api_response($success = true, 'Veille modifiée avec succès', $data = new LegalWatchResource($legalWatch));
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }
@@ -62,8 +65,9 @@ class LegalWatchController extends Controller
     {
         try {
             $legalWatch->delete();
+
             return api_response($success = true, 'Veille supprimée avec succès', $data = []);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }
@@ -75,8 +79,9 @@ class LegalWatchController extends Controller
     {
         try {
             $data = $this->watchRepo->generatePdf($recovery);
+
             return $data;
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }

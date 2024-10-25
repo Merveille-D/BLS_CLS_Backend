@@ -14,7 +14,18 @@ use Illuminate\Database\Eloquent\Model;
 #[ObservedBy(GuaranteeTaskObserver::class)]
 class GuaranteeTask extends Model
 {
-    use HasFactory, HasUuids, Transferable, GuaranteeFormFieldTrait, Alertable;
+    use Alertable, GuaranteeFormFieldTrait, HasFactory, HasUuids, Transferable;
+
+    // public function createdBy()
+    // {
+    //     return $this->belongsTo(User::class, 'created_by');
+    // }
+    const MODULES = [
+        'conv_hypothec' => ConvHypothec::class,
+        'guarantee' => Guarantee::class,
+        // 'litigation' => Litigation::class,
+        // 'recovery' => Recovery::class
+    ];
 
     protected $table = 'module_tasks';
 
@@ -54,24 +65,12 @@ class GuaranteeTask extends Model
         return $this->morphTo();
     }
 
-    // public function createdBy()
-    // {
-    //     return $this->belongsTo(User::class, 'created_by');
-    // }
-
-    const MODULES = [
-        'conv_hypothec' => ConvHypothec::class,
-        'guarantee' => Guarantee::class,
-        // 'litigation' => Litigation::class,
-        // 'recovery' => Recovery::class
-    ];
-
     public function getFormAttribute()
     {
         // if ($this->taskable->security == 'personal') {
         //     $form = $this->loadFormAttributeBasedOnType($this->taskable);
         // } else {
-            $form = $this->loadFormAttributeBasedTask($this);
+        $form = $this->loadFormAttributeBasedTask($this);
         // }
 
         return $form;
@@ -94,7 +93,8 @@ class GuaranteeTask extends Model
         ');
     }
 
-    public function getModuleIdAttribute() : string|null {
+    public function getModuleIdAttribute(): ?string
+    {
         return $this->taskable?->id;
     }
 }

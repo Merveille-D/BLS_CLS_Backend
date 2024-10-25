@@ -8,11 +8,3 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('contract_type_categories', ContractTypeCategoryController::class);
 
 });
-
-
-
-
-
-
-
-

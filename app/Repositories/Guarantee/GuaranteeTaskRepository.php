@@ -1,14 +1,12 @@
 <?php
+
 namespace App\Repositories\Guarantee;
 
 use App\Concerns\Traits\Transfer\AddTransferTrait;
-use App\Http\Resources\Guarantee\ConvHypothecStepResource;
 use App\Http\Resources\Guarantee\GuaranteeTaskResource;
 use App\Http\Resources\Transfer\TransferResource;
-use App\Models\Guarantee\ConvHypothecStep;
 use App\Models\Guarantee\GuaranteeDocument;
 use App\Models\Guarantee\GuaranteeTask;
-use App\Models\Guarantee\HypothecTask;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Log;
@@ -16,35 +14,39 @@ use Illuminate\Support\Facades\Log;
 class GuaranteeTaskRepository
 {
     use AddTransferTrait;
+
     public function __construct(
         private GuaranteeTask $task_model,
         private GuaranteeRepository $guaranteeRepo
     ) {}
 
-    public function getList($request) {
+    public function getList($request)
+    {
         // dd(app($this->task_model::MODULES[$request->modele]),$request->id);
         $modele = app($this->task_model::MODULES[$request->modele])?->find($request->id);
 
-        if(!$modele) {
-            return array();
+        if (! $modele) {
+            return [];
         }
 
         $tasks = GuaranteeTaskResource::collection(
             $modele?->tasks()
-            ->defaultOrder()
-            ->get()
+                ->defaultOrder()
+                ->get()
         );
 
         return $tasks;
     }
 
-    public function getOne($id) {
+    public function getOne($id)
+    {
         return new GuaranteeTaskResource($this->task_model->findOrFail($id));
     }
 
-    public function add($request) {
+    public function add($request)
+    {
         $task = new $this->task_model([
-            'code' => 'task-'.rand(1000, 9999),
+            'code' => 'task-' . rand(1000, 9999),
             'title' => $request->title,
             'max_deadline' => $request->deadline,
             'type' => 'task',
@@ -57,14 +59,17 @@ class GuaranteeTaskRepository
         return new GuaranteeTaskResource($task);
     }
 
-    public function getModeleByType($type, $model_id) {
+    public function getModeleByType($type, $model_id)
+    {
         return $modele = app($this->task_model::MODULES[$type])?->find($model_id);
     }
 
-    public function edit($request, $task_id) {
+    public function edit($request, $task_id)
+    {
         $task = $this->task_model->findOrFail($task_id);
-        if ($task->type == 'task')
+        if ($task->type == 'task') {
             $task->title = $request->title;
+        }
 
         $task->max_deadline = $request->deadline;
         $task->save();
@@ -72,31 +77,36 @@ class GuaranteeTaskRepository
         return new GuaranteeTaskResource($task);
     }
 
-    public function transfer($task, $request) {
+    public function transfer($task, $request)
+    {
         $task = $this->task_model->findOrFail($task);
 
-        $this->add_transfer($task, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
+        $this->addTransfer($task, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
+
         return new GuaranteeTaskResource($task);
     }
 
-    public function getTransferHistory($task_id, $request) {
+    public function getTransferHistory($task_id, $request)
+    {
         $task = $this->task_model->findOrFail($task_id);
 
         return TransferResource::collection($task->transfers);
     }
 
-    public function delete($task_id) {
+    public function delete($task_id)
+    {
         $task = $this->task_model->findOrFail($task_id);
         if ($task->status == false) {
             $task->delete();
         }
     }
 
-    public function complete($task, $request) : JsonResource {
+    public function complete($task, $request): JsonResource
+    {
         $guarantee = $task->taskable;
         $radio_field = null;
 
-        if (/* $task->type == 'task' ||  */blank($task->form)) {
+        if (/* $task->type == 'task' ||  */ blank($task->form)) {
             $guarantee->status = $task->code;
         } else {
             $fields = $task?->form['fields'];
@@ -104,23 +114,25 @@ class GuaranteeTaskRepository
             foreach ($fields as $field) {
 
                 if ($field['type'] == 'text' || $field['type'] == 'select') {
-                    $data[]  =  [$field['name'] => $request->{$field['name']}];
-                }elseif ($field['type'] == 'file') {
+                    $data[] = [$field['name'] => $request->{$field['name']}];
+                } elseif ($field['type'] == 'file') {
                     $this->saveFiles($request->documents, $guarantee, $task->code);
                 } elseif ($field['type'] == 'date') {
-                    if ($field['name'] == 'completed_at')
+                    if ($field['name'] == 'completed_at') {
                         $task->completed_at = $request->completed_at;
-                    else
-                        $data[]  =  [$field['name'] => $request->{$field['name']}];
-                }elseif ($field['type'] == 'radio') {
+                    } else {
+                        $data[] = [$field['name'] => $request->{$field['name']}];
+                    }
+                } elseif ($field['type'] == 'radio') {
                     $radio_field = $request->{$field['name']};
-                    $data[]  =  [$field['name'] => $request->{$field['name']} == 'yes' ? true : false];
+                    $data[] = [$field['name'] => $request->{$field['name']} == 'yes' ? true : false];
                 }
             }
             $guarantee->status = $task->code;
 
-            if ($request->is_paid)
+            if ($request->is_paid) {
                 $guarantee->is_paid = $request->is_paid;
+            }
             if ($request->contract_type) {
                 $guarantee->contract_type = $request->contract_type;
 
@@ -136,10 +148,11 @@ class GuaranteeTaskRepository
         return new GuaranteeTaskResource($task->refresh());
     }
 
-    public function saveNextTasks($current_task, $radio_field) {
+    public function saveNextTasks($current_task, $radio_field)
+    {
         $steps = $current_task?->step?->children()->where('parent_response', $radio_field)->get();
         foreach ($steps as $key => $step) {
-            $task = new GuaranteeTask();
+            $task = new GuaranteeTask;
             $task->code = $step->code;
             $task->title = $step->title;
             $task->step_id = $step->id;
@@ -155,7 +168,8 @@ class GuaranteeTaskRepository
     }
 
     // function that change phase to formalized or realized when all tasks for the phase are completed
-    public function updatePhaseState($guarantee) {
+    public function updatePhaseState($guarantee)
+    {
         $current_phase = $guarantee->phase;
         $tasks = $guarantee->tasks()->whereType($current_phase)->where('status', false)->get();
         // Log::info($tasks->count());
@@ -165,15 +179,17 @@ class GuaranteeTaskRepository
         }
     }
 
-    public function saveFiles($files,Model $guarantee, string $state) : array|bool {
-        if (count($files)<=0)
+    public function saveFiles($files, Model $guarantee, string $state): array|bool
+    {
+        if (count($files) <= 0) {
             return [];
+        }
 
         foreach ($files as $key => $file_elt) {
 
-            $file_path = storeFile($file_elt['file'], 'guarantee/'.$guarantee->type);
+            $file_path = storeFile($file_elt['file'], 'guarantee/' . $guarantee->type);
 
-            $doc = new GuaranteeDocument();
+            $doc = new GuaranteeDocument;
             $doc->state = $state;
             $doc->type = $guarantee->type;
             $doc->file_name = $file_elt['name'];
@@ -185,5 +201,4 @@ class GuaranteeTaskRepository
         return true;
 
     }
-
 }

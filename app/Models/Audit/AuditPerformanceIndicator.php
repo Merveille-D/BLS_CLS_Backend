@@ -8,19 +8,11 @@ use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 #[ScopedBy([CountryScope::class])]
 class AuditPerformanceIndicator extends Model
 {
     use HasFactory, HasUuids;
-
-    protected $fillable = [
-        'title',
-        'module',
-        'type',
-        'note',
-        'description',
-        'created_by',
-    ];
 
     const MODULES = [
         'contracts',
@@ -40,14 +32,22 @@ class AuditPerformanceIndicator extends Model
         'qualitative',
     ];
 
+    protected $fillable = [
+        'title',
+        'module',
+        'type',
+        'note',
+        'description',
+        'created_by',
+    ];
+
     public function auditNotations()
     {
         return $this->hasMany(AuditNotation::class);
     }
 
-    public function creator() {
+    public function creator()
+    {
         return $this->belongsTo(User::class, 'created_by');
     }
-
-
 }

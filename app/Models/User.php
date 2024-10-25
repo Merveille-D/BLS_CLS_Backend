@@ -4,7 +4,6 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use App\Models\Auth\Country;
 use App\Models\Auth\Subsidiary;
 use App\Models\Litigation\Litigation;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -19,7 +18,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements LdapAuthenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasUuids, HasRoles, AuthenticatesWithLdap;
+    use AuthenticatesWithLdap, HasApiTokens, HasFactory, HasRoles, HasUuids, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -63,7 +62,7 @@ class User extends Authenticatable implements LdapAuthenticatable
         return $this->belongsTo(Subsidiary::class);
     }
 
-    public function litigations() : MorphToMany
+    public function litigations(): MorphToMany
     {
         return $this->morphToMany(Litigation::class, 'litigationable');
     }

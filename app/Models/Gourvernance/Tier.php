@@ -14,20 +14,20 @@ class Tier extends Model
 {
     use HasFactory, HasUuids;
 
-    protected $fillable = [
-        'name',
-        'grade',
-        'created_by',
-    ];
-
     const MEETING_TYPE = [
         'general_meeting',
         'session_administrator',
         'management_committee',
     ];
 
-    public function creator() {
+    protected $fillable = [
+        'name',
+        'grade',
+        'created_by',
+    ];
+
+    public function creator()
+    {
         return $this->belongsTo(User::class, 'created_by');
     }
-
 }

@@ -6,7 +6,6 @@ use GuzzleHttp\Psr7\Request;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
 class UpdateTaskContractRequest extends FormRequest
 {
@@ -33,8 +32,8 @@ class UpdateTaskContractRequest extends FormRequest
             'forward_title' => ['string', 'required_with_all:deadline_transfer,description,collaborators'],
             'deadline_transfer' => ['date', 'required_with_all:forward_title,description,collaborators'],
             'description' => ['string', 'required_with_all:forward_title,deadline_transfer,collaborators'],
-            'collaborators' => ['required_with_all:forward_title,deadline_transfer,description','array'],
-            'collaborators.*' => ['required_with_all:forward_title,deadline_transfer,description','uuid'],
+            'collaborators' => ['required_with_all:forward_title,deadline_transfer,description', 'array'],
+            'collaborators.*' => ['required_with_all:forward_title,deadline_transfer,description', 'uuid'],
         ];
 
         if (request()->input('status') === true && request()->input('type') === 'milestone') {
@@ -52,7 +51,7 @@ class UpdateTaskContractRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

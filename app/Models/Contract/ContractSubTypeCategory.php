@@ -19,5 +19,4 @@ class ContractSubTypeCategory extends Model
     {
         return $this->belongsTo(ContractTypeCategory::class);
     }
-
 }

@@ -4,27 +4,23 @@ namespace App\Concerns\Traits\Transfer;
 
 use App\Models\Transfer\Transfer;
 use Carbon\Carbon;
-use DateInterval;
-use DateTime;
-use DateTimeImmutable;
 use Illuminate\Database\Eloquent\Model;
 
 trait AddTransferTrait
 {
-
     /**
-     * add_transfer
+     * addTransfer
      *
-     * @param  mixed $model
-     * @param  mixed $title
-     * @param  mixed $deadline
-     * @param  mixed $description
-     * @param  mixed $collaborators
+     * @param  mixed  $model
+     * @param  mixed  $title
+     * @param  mixed  $deadline
+     * @param  mixed  $description
+     * @param  mixed  $collaborators
      * @return void
      */
-    public function add_transfer(Model $model, string $title, $deadline, $description = "", $collaborators)
+    public function addTransfer(Model $model, string $title, $deadline, $description, $collaborators)
     {
-        $transfer = new Transfer();
+        $transfer = new Transfer;
         $transfer->title = $title;
         $transfer->description = $description ?? null;
         $transfer->deadline = Carbon::parse($deadline);
@@ -36,7 +32,8 @@ trait AddTransferTrait
         return $transfer;
     }
 
-    public function update_transfer(Model $model, $collaborators) {
+    public function updateTransfer(Model $model, $collaborators)
+    {
         // $transfer = $model->transfers->first();
 
         // $existing_collaborators = $transfer->collaborators;

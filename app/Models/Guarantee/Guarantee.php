@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Testing\Fluent\Concerns\Has;
 
 #[ScopedBy([CountryScope::class])]
 #[ObservedBy([GuaranteeObserver::class])]
@@ -45,48 +44,57 @@ class Guarantee extends Model
     ];
 
     //creator relationship
-    public function creator() {
+    public function creator()
+    {
         return $this->belongsTo(User::class, 'created_by');
     }
 
     //documents relationship
-    public function documents() {
+    public function documents()
+    {
         return $this->morphMany(GuaranteeDocument::class, 'documentable');
     }
 
-    public function tasks() {
+    public function tasks()
+    {
         return $this->morphMany(GuaranteeTask::class, 'taskable');
     }
 
-    public function getNextTaskAttribute() {
+    public function getNextTaskAttribute()
+    {
         return $this->tasks()
-                ->defaultOrder()
-
-                ->where('status', false)->first();
-    }
-    public function getNextTasksAttribute() {
-        return $this->tasks()
-                ->defaultOrder()
-                ->where('status', false)->get();
+            ->defaultOrder()
+            ->where('status', false)->first();
     }
 
-    public function getCurrentTaskAttribute() {
+    public function getNextTasksAttribute()
+    {
         return $this->tasks()
-                    ->defaultOrder()
-                    ->where('status', true)
-                    ->get()->last();
+            ->defaultOrder()
+            ->where('status', false)->get();
+    }
+
+    public function getCurrentTaskAttribute()
+    {
+        return $this->tasks()
+            ->defaultOrder()
+            ->where('status', true)
+            ->get()->last();
     }
 
     //readable_type
-    public function getReadableTypeAttribute() {
+    public function getReadableTypeAttribute()
+    {
         return GuaranteeType::VALUES[$this->type];
     }
 
     //readable_phase
-    public function getReadablePhaseAttribute() {
-        if ($this->phase == 'formalization')
+    public function getReadablePhaseAttribute()
+    {
+        if ($this->phase == 'formalization') {
             return 'Formalisation';
-        else
+        } else {
             return 'Réalisation';
+        }
     }
 }

@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Enums\Guarantee;
 
-enum GuaranteeType : string {
+enum GuaranteeType: string
+{
     const MORTGAGE = 'mortgage'; //hypothèque
 
     const BONDING = 'bonding'; //cautionnement
@@ -14,7 +16,6 @@ enum GuaranteeType : string {
     const SHAREHOLDER_RIGHTS = 'shareholder_rights'; //droit d'associé
     const TRADE_FUND = 'trade_fund'; //fond de commerce
     const BANK_ACCOUNT = 'bank_account'; //creance / compte bancaire
-
 
     const TYPES = [
         GuaranteeType::MORTGAGE,

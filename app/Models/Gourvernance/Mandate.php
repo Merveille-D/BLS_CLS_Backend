@@ -10,6 +10,11 @@ class Mandate extends Model
 {
     use HasFactory, HasUuids;
 
+    const STATUS = [
+        'active',
+        'expired',
+    ];
+
     protected $fillable = [
         'appointment_date',
         'renewal_date',
@@ -17,14 +22,8 @@ class Mandate extends Model
         'status',
     ];
 
-    const STATUS = [
-        'active',
-        'expired',
-    ];
-
     public function mandatable()
     {
         return $this->morphTo();
     }
-
 }

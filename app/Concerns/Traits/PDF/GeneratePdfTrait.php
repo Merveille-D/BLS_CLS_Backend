@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Concerns\Traits\PDF;
 
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -11,6 +12,7 @@ trait GeneratePdfTrait
         $data['bankLogo'] = generateBase64Image('afrikskills-logo.webp') ?? generateBase64Image('bls-logo.png');
         // return view($view_path, $data);
         $pdf = Pdf::loadView($view_path, $data);
+
         return $pdf->stream($filename, $options);
     }
 }

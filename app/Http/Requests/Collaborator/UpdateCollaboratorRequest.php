@@ -2,12 +2,9 @@
 
 namespace App\Http\Requests\Collaborator;
 
-use App\Models\Evaluation\Collaborator;
-use App\Models\Evaluation\PerformanceIndicator;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
 class UpdateCollaboratorRequest extends FormRequest
 {
@@ -40,7 +37,7 @@ class UpdateCollaboratorRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

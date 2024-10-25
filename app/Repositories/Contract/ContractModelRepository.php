@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories\Contract;
 
 use App\Http\Resources\Contract\ContractModelResource;
@@ -7,9 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ContractModelRepository
 {
-    public function __construct(private ContractModel $contract_model) {
-
-    }
+    public function __construct(private ContractModel $contract_model) {}
 
     public function list($request)
     {
@@ -17,9 +16,9 @@ class ContractModelRepository
         $parentId = $request['parent_id'] ?? null;
 
         $contract_models = $this->contract_model->when(
-            $parentId, 
-            fn($query) => $query->where('parent_id', $parentId),
-            fn($query) => $query->whereNull('parent_id')
+            $parentId,
+            fn ($query) => $query->where('parent_id', $parentId),
+            fn ($query) => $query->whereNull('parent_id')
         )->get();
 
         return [
@@ -28,15 +27,10 @@ class ContractModelRepository
         ];
     }
 
-    
-    private function getParent($parentId)
+    public function store($request)
     {
-        return $this->contract_model->where('id', $parentId)->first();
-    }
 
-    public function store($request) {
-
-        if(isset($request['file'])) {
+        if (isset($request['file'])) {
             $path = uploadFile($request['file'], 'contract_model_documents');
             $request['file_path'] = $path;
         }
@@ -48,10 +42,16 @@ class ContractModelRepository
         return $contract_model;
     }
 
-    public function update(ContractModel $contract_model, $request) {
+    public function update(ContractModel $contract_model, $request)
+    {
 
         $contract_model->update($request);
+
         return $contract_model;
     }
 
+    private function getParent($parentId)
+    {
+        return $this->contract_model->where('id', $parentId)->first();
+    }
 }

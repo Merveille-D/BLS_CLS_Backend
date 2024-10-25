@@ -3,8 +3,6 @@
 namespace App\Notifications\Guarantee;
 
 use App\Concerns\Traits\Guarantee\ConvHypothecNotificationTrait;
-use App\Enums\ConvHypothecState;
-use App\Mail\NotificationMail;
 use App\Models\Guarantee\ConventionnalHypothecs\ConventionnalHypothec;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -14,7 +12,7 @@ use Illuminate\Support\Facades\Mail;
 
 class ConvHypothecNextStep extends Notification implements ShouldQueue
 {
-    use Queueable, ConvHypothecNotificationTrait;
+    use ConvHypothecNotificationTrait, Queueable;
 
     /**
      * Create a new notification instance.
@@ -40,11 +38,12 @@ class ConvHypothecNextStep extends Notification implements ShouldQueue
     public function toMail(object $notifiable)
     {
         $data = $this->nextStepBasedOnState($this->convHypo->state);
+
         return (new MailMessage)
-                    ->subject($data['subject'])
-                    ->line($data['message'])
-                    ->action('Accéder à l\'application', url(env('FRONTEND_URL') ?? '/'))
-                    ->line('merci d\'avoir choisir notre application!');
+            ->subject($data['subject'])
+            ->line($data['message'])
+            ->action('Accéder à l\'application', url(config('app.frontend_url') ?? '/'))
+            ->line('merci d\'avoir choisir notre application!');
     }
 
     /**
@@ -55,6 +54,7 @@ class ConvHypothecNextStep extends Notification implements ShouldQueue
     public function toArray(object $notifiable): array
     {
         $data = $this->nextStepBasedOnState($this->convHypo->state);
+
         return [
             'title' => $data['subject'],
             'message' => $data['message'],

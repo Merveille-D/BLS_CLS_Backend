@@ -1,9 +1,9 @@
 <?php
+
 namespace Database\Seeders\Contract;
 
 use App\Models\Contract\ContractCategory;
 use App\Models\Contract\ContractTypeCategory;
-use App\Models\Contract\Part;
 use Illuminate\Database\Seeder;
 
 class CategorySeeder extends Seeder
@@ -77,7 +77,7 @@ class CategorySeeder extends Seeder
                             ],
                             [
                                 'value' => 'Contre garantie autonomes',
-                            ]
+                            ],
                         ],
                     ],
                     [
@@ -104,7 +104,7 @@ class CategorySeeder extends Seeder
                 'value' => $value['value'],
             ]);
 
-            if(isset($value['type_categories'])) {
+            if (isset($value['type_categories'])) {
 
                 foreach ($value['type_categories'] as $item) {
 
@@ -113,7 +113,7 @@ class CategorySeeder extends Seeder
                         'contract_category_id' => $category->id,
                     ]);
 
-                    if(isset($value['sub_type_categories'])) {
+                    if (isset($value['sub_type_categories'])) {
 
                         foreach ($item['sub_type_categories'] as $sub_type_category) {
 

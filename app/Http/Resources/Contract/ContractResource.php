@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Contract;
 
-use App\Models\Contract\ContractModel;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -19,7 +18,7 @@ class ContractResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'date_signature' => $this->date_signature,
-            'date_effective' => $this->date_effective, 
+            'date_effective' => $this->date_effective,
             'date_expiration' => $this->date_expiration,
             'date_renewal' => $this->date_renewal,
             'status' => $this->status,
@@ -27,7 +26,7 @@ class ContractResource extends JsonResource
             'contract_reference' => $this->contract_reference,
             'reference' => $this->reference,
             'created_at' => $this->created_at,
-            'first_part' =>  $this->first_part,
+            'first_part' => $this->first_part,
             'second_part' => $this->second_part,
             'category' => $this->contractCategory,
             'type_category' => $this->contractTypeCategory,
@@ -36,6 +35,7 @@ class ContractResource extends JsonResource
             'transfers' => $this->transfers->map(function ($transfer) {
                 $transfer->sender = $transfer->sender;
                 $transfer->collaborators = $transfer->collaborators;
+
                 return $transfer;
             }),
         ];

@@ -1,17 +1,17 @@
 <?php
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
 
-if (!function_exists('sanitize_file_name')) {
+if (! function_exists('sanitize_file_name')) {
     function sanitize_file_name($filename): string
     {
         // Remove invalid characters (except alphanumeric, ., -, and _)
         $sanitized = preg_replace('/[^a-zA-Z0-9\.\_-]/', '_', $filename);
 
-        $sanitized = trim($sanitized, ".-_");
+        $sanitized = trim($sanitized, '.-_');
 
         if (strlen($sanitized) > 255) {
             $extension = pathinfo($filename, PATHINFO_EXTENSION);
@@ -22,21 +22,21 @@ if (!function_exists('sanitize_file_name')) {
     }
 }
 
-if (!function_exists('api_response')) {
+if (! function_exists('api_response')) {
     function api_response(bool $success = true, string $message = '', $data = [], $code = 200)
     {
         return response()->json(['success' => $success, 'message' => $message, 'data' => $data], $code);
     }
 }
 
-if (!function_exists('api_error')) {
+if (! function_exists('api_error')) {
     function api_error(bool $success = false, string $message = '', $data = [], $code = 500)
     {
         return response()->json(['success' => $success, 'message' => $message, 'errors' => $data], $code);
     }
 }
 
-if (!function_exists('generateReference')) {
+if (! function_exists('generateReference')) {
     function generateReference($prefix, Model $model)
     {
         $currentDate = date('YmdHis');
@@ -47,7 +47,7 @@ if (!function_exists('generateReference')) {
     }
 }
 
-if (!function_exists('completeWithZeros')) {
+if (! function_exists('completeWithZeros')) {
     function completeWithZeros($number, $length = 4)
     {
         $numberStr = (string) $number;
@@ -63,7 +63,7 @@ if (!function_exists('completeWithZeros')) {
     }
 }
 
-if (!function_exists('uploadFile')) {
+if (! function_exists('uploadFile')) {
     function uploadFile($file, $path)
     {
 
@@ -76,16 +76,17 @@ if (!function_exists('uploadFile')) {
     }
 }
 
-if (!function_exists('getFileName')) {
+if (! function_exists('getFileName')) {
     function getFileName($file)
     {
 
         $name_file = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+
         return $name_file;
     }
 }
 
-if (!function_exists('searchElementIndice')) {
+if (! function_exists('searchElementIndice')) {
     function searchElementIndice($tableau, $indiceRecherche)
     {
         foreach ($tableau as $indice => $element) {
@@ -99,15 +100,17 @@ if (!function_exists('searchElementIndice')) {
                 }
             }
         }
+
         return null;
     }
 }
 
-if (!function_exists("formatDateTime")) {
+if (! function_exists('formatDateTime')) {
     function formatDateTime($dateTime, $locale = null)
     {
-        if (in_array($dateTime, [NULL, "null"]))
-            return "";
+        if (in_array($dateTime, [null, 'null'])) {
+            return '';
+        }
 
         $locale = $locale ?: config('app.locale');
 
@@ -137,10 +140,9 @@ if (!function_exists("formatDateTime")) {
 //         return $alert;
 // }
 
-
-
-if (!function_exists("convertNumberToLetter")) {
-    function convertNumberToLetter($nombre) {
+if (! function_exists('convertNumberToLetter')) {
+    function convertNumberToLetter($nombre)
+    {
         $unites = ['zéro', 'un', 'deux', 'trois', 'quatre', 'cinq', 'six', 'sept', 'huit', 'neuf'];
         $dizaines = ['', 'dix', 'vingt', 'trente', 'quarante', 'cinquante', 'soixante', 'soixante', 'quatre-vingt', 'quatre-vingt'];
         $specials = ['dix', 'onze', 'douze', 'treize', 'quatorze', 'quinze', 'seize', 'dix-sept', 'dix-huit', 'dix-neuf'];

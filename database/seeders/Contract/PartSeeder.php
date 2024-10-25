@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders\Contract;
 
 use App\Models\Contract\Part;

@@ -5,18 +5,20 @@ namespace App\Http\Controllers\API\V1\Guarantee;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Hypothec\InitConvHypothecRequest;
 use App\Http\Requests\Hypothec\UpdateProcessRequest;
-use App\Models\Guarantee\ConventionnalHypothecs\ConventionnalHypothec;
 use App\Models\Guarantee\ConvHypothec;
 use App\Repositories\Guarantee\ConvHypothecRepository;
 use Essa\APIToolKit\Api\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class ConvHypothecController extends Controller
 {
     use ApiResponse;
+
     public function __construct(private ConvHypothecRepository $hypothecRepo) {}
+
     /**
      * Display a listing of the resource.
      */
@@ -34,9 +36,11 @@ class ConvHypothecController extends Controller
             DB::beginTransaction();
             $data = $this->hypothecRepo->initFormalizationProcess($request, null);
             DB::commit();
+
             return api_response($success = true, 'Hypotheque conventionnelle initié avec succès', $data);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             DB::rollBack();
+
             return api_response($success = false, 'Une erreur s\'est produite lors de l\'operation', ['error' => $th->getMessage()]);
         }
     }
@@ -50,23 +54,28 @@ class ConvHypothecController extends Controller
             DB::beginTransaction();
             $data = $this->hypothecRepo->updateProcess($request, $convHypo);
             DB::commit();
+
             return api_response($success = true, 'Hypotheque conventionnelle mise à jour avec succès', $data);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             DB::rollBack();
             Log::error($th->getMessage());
+
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
 
-    public function realization($convHypo) {
+    public function realization($convHypo)
+    {
         try {
             DB::beginTransaction();
             $data = $this->hypothecRepo->realization($convHypo);
             DB::commit();
+
             return api_response($success = true, 'Procédure de réalisation  éffectuée avec succès', $data);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             DB::rollBack();
             Log::error($th->getMessage());
+
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }

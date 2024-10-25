@@ -16,7 +16,7 @@ class TaskManagementCommitteeResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'libelle' => $this->code ? __('governance.'. $this->code) : $this->libelle,
+            'libelle' => $this->code ? __('governance.' . $this->code) : $this->libelle,
             'deadline' => $this->deadline,
             'type' => $this->type,
             'status' => $this->status,

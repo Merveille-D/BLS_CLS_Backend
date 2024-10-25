@@ -1,8 +1,8 @@
 <?php
+
 namespace App\Repositories\Transfer;
 
 use App\Http\Resources\Transfer\TransferResource;
-use App\Models\Audit\AuditNotation;
 use App\Models\Transfer\Transfer;
 use App\Models\Transfer\TransferDocument;
 use App\Repositories\Audit\AuditNotationRepository;
@@ -15,22 +15,22 @@ class TransferRepository
         private Transfer $transfer,
         public AuditNotationRepository $audit,
         public NotationRepository $evaluation
-    ) {
-    }
+    ) {}
 
-
-    public function getList() : ResourceCollection {
+    public function getList(): ResourceCollection
+    {
         $query = $this->transfer->paginate();
 
         return TransferResource::collection($query);
     }
 
-
-    public function show($transfer) {
+    public function show($transfer)
+    {
         return new TransferResource($transfer);
     }
 
-    public function add($request) {
+    public function add($request)
+    {
         $transfer = Transfer::create([
             'title' => $request['title'],
             'deadline' => $request['deadline'],
@@ -43,7 +43,8 @@ class TransferRepository
         return new TransferResource($transfer);
     }
 
-    public function update($request, $transfer) {
+    public function update($request, $transfer)
+    {
         $transfer->update([
             'title' => $request['title'],
             'deadline' => $request['deadline'],
@@ -56,27 +57,29 @@ class TransferRepository
         return new TransferResource($transfer);
     }
 
-    public function delete($transfer) {
+    public function delete($transfer)
+    {
         $transfer->delete();
     }
 
-    public function completeTransfer($request, $transfer) {
+    public function completeTransfer($request, $transfer)
+    {
 
         $model = $transfer->transferable;
 
-        if($request['type'] === 'audit') {
+        if ($request['type'] === 'audit') {
             $request['audit_notation_id'] = $transfer->audit->first()->audit_id;
             $this->audit->completeTransfer($request);
         }
 
-        if($request['type'] === 'evaluation') {
+        if ($request['type'] === 'evaluation') {
             $request['notation_id'] = $transfer->evaluation->first()->evaluation_id;
             $this->evaluation->completeTransfer($request);
         }
 
-        if($request['type'] === 'contract') {
-            foreach($request['contract_documents'] as $item) {
-                $fileUpload = new TransferDocument();
+        if ($request['type'] === 'contract') {
+            foreach ($request['contract_documents'] as $item) {
+                $fileUpload = new TransferDocument;
 
                 $fileUpload->name = $item['name'];
                 $fileUpload->file = uploadFile($item['file'], 'transfert_documents');
@@ -89,9 +92,9 @@ class TransferRepository
             ]);
         }
 
-        if($request['type'] === 'guarantee') {
-            foreach($request['documents'] as $item) {
-                $fileUpload = new TransferDocument();
+        if ($request['type'] === 'guarantee') {
+            foreach ($request['documents'] as $item) {
+                $fileUpload = new TransferDocument;
 
                 $fileUpload->name = $item['name'];
                 $fileUpload->file = uploadFile($item['file'], 'guarantee/transfer');
@@ -110,5 +113,4 @@ class TransferRepository
 
         return new TransferResource($transfer);
     }
-
 }

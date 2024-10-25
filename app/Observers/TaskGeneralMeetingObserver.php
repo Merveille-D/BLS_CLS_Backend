@@ -9,17 +9,14 @@ class TaskGeneralMeetingObserver
     /**
      * Handle the TaskGeneralMeeting "created" event.
      */
-    public function created(TaskGeneralMeeting $taskGeneralMeeting): void
-    {
-
-    }
+    public function created(TaskGeneralMeeting $taskGeneralMeeting): void {}
 
     /**
      * Handle the TaskGeneralMeeting "updated" event.
      */
     public function updated(TaskGeneralMeeting $taskGeneralMeeting): void
     {
-        if($taskGeneralMeeting->status) {
+        if ($taskGeneralMeeting->status) {
             $alertsExist = $taskGeneralMeeting->alerts()->delete();
         }
     }

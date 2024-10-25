@@ -10,6 +10,7 @@ use Carbon\Carbon;
 class LitigationTaskObserver
 {
     use AddAlertTrait;
+
     /**
      * Handle the LitigationTask "created" event.
      */
@@ -28,15 +29,15 @@ class LitigationTaskObserver
             // $dates = $this->getMilestoneDates(Carbon::parse($max_deadline));
 
             // foreach ($dates as $key => $date) {
-                $this->new_alert(
-                    $litigationTask,
-                    'RAPPEL | '. $litigationTask->taskable?->name ?? '',
-                    __('litigation.'.$litigationTask->taskable?->next_task?->title ?? ''),
-                    'litigation',
-                    /* $date */now(),
-                    /* Alert::STATUS[$key] ??  */'urgent',
-                    $max_deadline,
-                );
+            $this->newAlert(
+                $litigationTask,
+                'RAPPEL | ' . $litigationTask->taskable?->name ?? '',
+                __('litigation.' . $litigationTask->taskable?->next_task?->title ?? ''),
+                'litigation',
+                /* $date */ now(),
+                /* Alert::STATUS[$key] ??  */ 'urgent',
+                $max_deadline,
+            );
             // }
         }
     }

@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class PersonalGuaranteeTest extends TestCase
@@ -15,9 +14,10 @@ class PersonalGuaranteeTest extends TestCase
      * test add new bonding guarantee
      *
      * @return void
+     *
+     * @test
      */
-
-    public function test_add_and_complete_bonding_guarantee()
+    public function add_and_complete_bonding_guarantee()
     {
         $user = User::factory()->create();
 
@@ -33,21 +33,23 @@ class PersonalGuaranteeTest extends TestCase
             'name' => 'Test Guarantee stock',
             'security' => 'personal',
             'type' => 'bonding',
-            'contract_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47'
+            'contract_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47',
         ]);
 
         $this->assertDatabaseHas('module_tasks', [
             'taskable_id' => $response->json('data.id'),
-            'taskable_type' => 'App\Models\Guarantee\Guarantee'
+            'taskable_type' => 'App\Models\Guarantee\Guarantee',
         ]);
     }
+
     /**
      * test add new bond guarantee
      *
      * @return void
+     *
+     * @test
      */
-
-    public function test_add_and_complete_autonomous_guarantee()
+    public function add_and_complete_autonomous_guarantee()
     {
         $user = User::factory()->create();
 
@@ -63,12 +65,12 @@ class PersonalGuaranteeTest extends TestCase
             'name' => 'Test Guarantee stock',
             'security' => 'personal',
             'type' => 'autonomous',
-            'contract_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47'
+            'contract_id' => '9c077984-2eb2-4efe-9f46-476d0187bf47',
         ]);
 
         $this->assertDatabaseHas('module_tasks', [
             'taskable_id' => $response->json('data.id'),
-            'taskable_type' => 'App\Models\Guarantee\Guarantee'
+            'taskable_type' => 'App\Models\Guarantee\Guarantee',
         ]);
     }
 }

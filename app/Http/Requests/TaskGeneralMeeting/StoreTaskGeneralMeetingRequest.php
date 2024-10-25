@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests\TaskGeneralMeeting;
 
-use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
 class StoreTaskGeneralMeetingRequest extends FormRequest
 {
@@ -41,7 +39,7 @@ class StoreTaskGeneralMeetingRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

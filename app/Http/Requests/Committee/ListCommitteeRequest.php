@@ -26,7 +26,7 @@ class ListCommitteeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => [Rule::in(Committee::TYPES) ],
+            'type' => [Rule::in(Committee::TYPES)],
 
         ];
     }
@@ -36,7 +36,7 @@ class ListCommitteeRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

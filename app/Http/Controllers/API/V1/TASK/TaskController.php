@@ -9,14 +9,14 @@ use App\Http\Requests\Hypothec\UpdateTaskRequest;
 use App\Http\Resources\Guarantee\ConvHypothecStepResource;
 use App\Models\Guarantee\HypothecTask;
 use App\Repositories\Task\TaskRepository;
-use Illuminate\Http\Request;
+use Throwable;
 
 class TaskController extends Controller
 {
-
     public function __construct(
         private TaskRepository $taskRepo,
     ) {}
+
     /**
      * Display a listing of the resource.
      */
@@ -37,7 +37,7 @@ class TaskController extends Controller
             $task = $this->taskRepo->add($request);
 
             return api_response(true, 'Tache ajoutée avec succès', new ConvHypothecStepResource($task));
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error(false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
@@ -59,10 +59,11 @@ class TaskController extends Controller
             $task = $this->taskRepo->edit($task, $request);
 
             return api_response(true, 'Tache modifiée avec succès', new ConvHypothecStepResource($task));
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error(false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }
+
     /**
      * Update the specified resource in storage.
      */
@@ -72,7 +73,7 @@ class TaskController extends Controller
             $task = $this->taskRepo->transfer($task, $request);
 
             return api_response(true, 'Transfert éffectué avec succès', new ConvHypothecStepResource($task));
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error(false, 'Une erreur s\'est produite lors de l\'operation', ['server' => $th->getMessage()]);
         }
     }

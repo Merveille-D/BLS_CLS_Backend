@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Incident;
 
-use App\Models\Bank\Bank;
 use App\Models\Incident\Incident;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -27,7 +26,7 @@ class ListIncidentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => [Rule::in(Incident::TYPES) ],
+            'type' => [Rule::in(Incident::TYPES)],
 
         ];
     }
@@ -37,7 +36,7 @@ class ListIncidentRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

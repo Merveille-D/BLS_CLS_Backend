@@ -6,19 +6,21 @@ use App\Models\Auth\Country;
 use App\Models\Auth\Role;
 use App\Models\Auth\Subsidiary;
 use App\Models\User;
-use Database\Factories\Auth\CountryFactory;
 use Database\Factories\Auth\SubsidiaryFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class AuthTest extends TestCase
 {
     use RefreshDatabase;
+
     /**
      * test retrieve all users
+     *
+     * @test
      */
-    public function test_retrieve_all_users() : void {
+    public function retrieve_all_users(): void
+    {
         $user = User::factory()->create();
         $response = $this->actingAs($user)->getJson('/api/users');
 
@@ -27,8 +29,11 @@ class AuthTest extends TestCase
 
     /**
      * test retrieve current logged in user
+     *
+     * @test
      */
-    public function test_retrieve_current_user() : void {
+    public function retrieve_current_user(): void
+    {
         $user = User::factory()->create();
         $role = Role::factory()->create();
 
@@ -37,22 +42,22 @@ class AuthTest extends TestCase
             'lastname' => 'Adimi',
             'username' => 'julienadimi',
             'email' => 'test@example.com',
-            'role_id' => $role->id
+            'role_id' => $role->id,
         ]);
 
         $response = $this->postJson('/api/login', [
             'email' => 'test@example.com',
-            'password' => 'password'
+            'password' => 'password',
         ]);
 
         $token = $response->json('data.access_token');
 
-        $response = $this->withHeader('Authorization', 'Bearer '.$token)->getJson('/api/current-user');
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)->getJson('/api/current-user');
 
         $response->assertStatus(200);
 
         $response->assertJson([
-            'success' => true
+            'success' => true,
         ]);
 
         $response->assertJsonStructure([
@@ -62,32 +67,38 @@ class AuthTest extends TestCase
                 'lastname',
                 'email',
                 'created_at',
-                'updated_at'
-            ]
+                'updated_at',
+            ],
         ]);
 
     }
 
     /**
      * test creation role
+     *
+     * @test
      */
-    public function test_create_role() : void {
+    public function create_role(): void
+    {
         $user = User::factory()->create();
         $response = $this->actingAs($user)->postJson('/api/roles', [
-            'name' => 'administrator'
+            'name' => 'administrator',
         ]);
 
         $response->assertStatus(201);
 
         $this->assertDatabaseHas('roles', [
-            'name' => 'administrator'
+            'name' => 'administrator',
         ]);
     }
 
     /**
      * test retrieve all roles
+     *
+     * @test
      */
-    public function test_retrieve_all_roles() : void {
+    public function retrieve_all_roles(): void
+    {
         $user = User::factory()->create();
         $response = $this->actingAs($user)->getJson('/api/roles');
 
@@ -96,8 +107,11 @@ class AuthTest extends TestCase
 
     /**
      * test creating new user
+     *
+     * @test
      */
-    public function test_create_new_user() : void {
+    public function create_new_user(): void
+    {
         $user = User::factory()->create();
         $country = Subsidiary::factory()->create();
 
@@ -112,11 +126,11 @@ class AuthTest extends TestCase
         $response = $this->actingAs($user)->postJson('/api/users', [
             'firstname' => 'Julien',
             'lastname' => 'Adimi',
-            'username' =>  'julienadimi',
+            'username' => 'julienadimi',
             'email' => 'test@test.com',
             'password' => 'password',
             'role_id' => $role_id,
-            'subsidiary_id' => $country->id
+            'subsidiary_id' => $country->id,
         ]);
 
         $response->assertStatus(201);
@@ -132,19 +146,22 @@ class AuthTest extends TestCase
         $this->assertDatabaseHas('model_has_roles', [
             'role_id' => $role_id,
             'model_id' => $response->json('data.id'),
-            'model_type' => 'App\Models\User'
+            'model_type' => 'App\Models\User',
         ]);
     }
 
     /**
      * test creation country
+     *
+     * @test
      */
-    public function test_create_country() : void {
+    public function create_country(): void
+    {
         $user = User::factory()->create();
         $response = $this->actingAs($user)->postJson('/api/subsidiaries', [
             'name' => 'Access bank',
             'address' => 'Lagos',
-            'country' => 'Nigeria'
+            'country' => 'Nigeria',
         ]);
 
         $response->assertStatus(201);
@@ -152,20 +169,23 @@ class AuthTest extends TestCase
         $this->assertDatabaseHas('subsidiaries', [
             'name' => 'Access bank',
             'address' => 'Lagos',
-            'country' => 'Nigeria'
+            'country' => 'Nigeria',
         ]);
     }
 
     /**
      * test depassing country limit
+     *
+     * @test
      */
-    public function test_depassing_country_limit() : void {
+    public function depassing_country_limit(): void
+    {
         $user = User::factory()->create();
         SubsidiaryFactory::times(5)->create();
         $response = $this->actingAs($user)->postJson('/api/subsidiaries', [
             'name' => 'Access bank',
             'address' => 'Lagos',
-            'country' => 'Nigeria'
+            'country' => 'Nigeria',
         ]);
 
         $response->assertStatus(422);
@@ -174,11 +194,14 @@ class AuthTest extends TestCase
 
     /**
      * test retrieve all countries
+     *
+     * @test
      */
-    public function test_retrieve_all_subsidiaries() : void {
+    public function retrieve_all_subsidiaries(): void
+    {
         $user = User::factory()
-        ->hasRoles(Role::whereName('super_admin')->first())
-        ->create();
+            ->hasRoles(Role::whereName('super_admin')->first())
+            ->create();
         $response = $this->actingAs($user)->getJson('/api/subsidiaries');
 
         $response->assertStatus(200);
@@ -192,16 +215,19 @@ class AuthTest extends TestCase
                     'address',
                     'country',
                     'created_at',
-                    'updated_at'
-                ]
-            ]
+                    'updated_at',
+                ],
+            ],
         ]);
     }
 
     /**
      * test user login
+     *
+     * @test
      */
-    public function test_user_login() : void {
+    public function user_login(): void
+    {
         $role = Role::factory()->create();
         $user = User::factory()->create();
         $country = Subsidiary::factory()->create();
@@ -212,7 +238,7 @@ class AuthTest extends TestCase
             'username' => 'julienadimi',
             'email' => 'test@example.com',
             'role_id' => $role->id,
-            'subsidiary_id' => $country->id
+            'subsidiary_id' => $country->id,
         ]);
 
         $this->assertDatabaseHas('users', [
@@ -225,28 +251,30 @@ class AuthTest extends TestCase
 
         $response = $this->postJson('/api/login', [
             'username' => 'julienadimi',
-            'password' => 'password'
+            'password' => 'password',
         ]);
 
         $response->assertStatus(200);
 
         $response->assertJson([
-            'success' => true
+            'success' => true,
         ]);
 
         $response->assertJsonStructure([
             'data' => [
-                'access_token'
-            ]
+                'access_token',
+            ],
         ]);
 
     }
 
     /**
      * test user logout
+     *
+     * @test
      */
-
-    public function test_user_logout() : void {
+    public function user_logout(): void
+    {
         $role = Role::factory()->create();
         $user = User::factory()->create();
 
@@ -255,24 +283,23 @@ class AuthTest extends TestCase
             'lastname' => 'Adimi',
             'username' => 'julienadimi',
             'email' => 'test@example.com',
-            'role_id' => $role->id
+            'role_id' => $role->id,
         ]);
 
         $response = $this->postJson('/api/login', [
             'email' => 'test@example.com',
-            'password' => 'password'
+            'password' => 'password',
         ]);
 
         $token = $response->json('data.access_token');
 
-        $response = $this->withHeader('Authorization', 'Bearer '.$token)->postJson('/api/logout');
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)->postJson('/api/logout');
 
         $response->assertStatus(200);
 
         $response->assertJson([
-            'success' => true
+            'success' => true,
         ]);
 
     }
-
 }

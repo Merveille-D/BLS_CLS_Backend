@@ -27,9 +27,9 @@ class UpdateTaskActionTransferRequest extends FormRequest
     {
         $rules = [];
 
-        if (!$request->has('type')) {
+        if (! $request->has('type')) {
             $rules['type'] = 'required';
-        }else {
+        } else {
             $task = searchElementIndice(TaskActionTransfer::TASKS, $request->input('type'));
             $rules = $task['rules'];
             $rules['task_action_transfer_id'] = ['required', 'uuid'];
@@ -39,8 +39,8 @@ class UpdateTaskActionTransferRequest extends FormRequest
         $rules['forward_title'] = ['string', 'required_with_all:deadline_transfer,description,collaborators'];
         $rules['deadline_transfer'] = ['date', 'required_with_all:forward_title,description,collaborators'];
         $rules['description'] = ['string', 'required_with_all:forward_title,deadline_transfer,collaborators'];
-        $rules['collaborators'] = ['required_with_all:forward_title,deadline_transfer,description','array'];
-        $rules['collaborators.*'] = ['required_with_all:forward_title,deadline_transfer,description','uuid'];
+        $rules['collaborators'] = ['required_with_all:forward_title,deadline_transfer,description', 'array'];
+        $rules['collaborators.*'] = ['required_with_all:forward_title,deadline_transfer,description', 'uuid'];
 
         return $rules;
     }
@@ -50,7 +50,7 @@ class UpdateTaskActionTransferRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

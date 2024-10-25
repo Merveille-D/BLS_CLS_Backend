@@ -1,18 +1,19 @@
 <?php
+
 namespace App\Concerns\Traits\Guarantee;
 
 use App\Enums\ConvHypothecState;
 use App\Rules\Administrator\ArrayElementMatch;
-use App\Rules\IsBooleanRule;
 
 trait StepsValidationRuleTrait
 {
-    public function validationRulesByStep($state) : array {
-        $data = array(
+    public function validationRulesByStep($state): array
+    {
+        $data = [
             'documents' => 'array|required',
             'documents.*.name' => 'required|string',
             'documents.*.file' => 'required|file|max:8192|mimes:pdf,doc,docx',
-        );
+        ];
         switch ($state) {
             case ConvHypothecState::CREATED:
                 $data = $data;
@@ -32,20 +33,20 @@ trait StepsValidationRuleTrait
                 break;
             case ConvHypothecState::REGISTER_REQUESTED:
                 $data = array_merge($data, [
-                    'is_approved' => ['required', new ArrayElementMatch(array('yes', 'no'))],
+                    'is_approved' => ['required', new ArrayElementMatch(['yes', 'no'])],
                     'registration_date' => 'required|date|date_format:Y-m-d',
                 ]);
                 break;
             case ConvHypothecState::REGISTER:
                 $data = array_merge($data, [
-                    'actor_type' => ['required',  new ArrayElementMatch(array('holder', 'third_party_holder'))],
+                    'actor_type' => ['required',  new ArrayElementMatch(['holder', 'third_party_holder'])],
                     'date_signification' => 'required|date|date_format:Y-m-d',
                 ]);
                 break;
             case ConvHypothecState::SIGNIFICATION_REGISTERED:
-                $data = array(
-                    'is_verified' => ['required', new ArrayElementMatch(array('yes', 'no'))],
-                );
+                $data = [
+                    'is_verified' => ['required', new ArrayElementMatch(['yes', 'no'])],
+                ];
                 break;
 
             case ConvHypothecState::ORDER_PAYMENT_VERIFIED:
@@ -61,11 +62,11 @@ trait StepsValidationRuleTrait
                 ]);
                 break;
 
-            // case ConvHypothecState::EXPROPRIATION_SPECIFICATION:
-            //     $data = [
-            //         'date_sell' => 'required|date|date_format:Y-m-d',
-            //     ];
-            //     break;
+                // case ConvHypothecState::EXPROPRIATION_SPECIFICATION:
+                //     $data = [
+                //         'date_sell' => 'required|date|date_format:Y-m-d',
+                //     ];
+                //     break;
             case ConvHypothecState::EXPROPRIATION_SPECIFICATION:
                 $data = array_merge($data, [
                     'summation_date' => 'required|date|date_format:Y-m-d',

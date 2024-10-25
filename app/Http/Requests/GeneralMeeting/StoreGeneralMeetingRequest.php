@@ -28,7 +28,7 @@ class StoreGeneralMeetingRequest extends FormRequest
         return [
             'libelle' => ['required', 'string'],
             'meeting_date' => ['required', 'date'],
-            'type' => ['required',  Rule::in(GeneralMeeting::GENERAL_MEETING_TYPES) ],
+            'type' => ['required',  Rule::in(GeneralMeeting::GENERAL_MEETING_TYPES)],
         ];
     }
 
@@ -37,7 +37,7 @@ class StoreGeneralMeetingRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

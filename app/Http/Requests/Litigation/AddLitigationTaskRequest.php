@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Litigation;
 
-use App\Models\Guarantee\Guarantee;
 use App\Models\Litigation\Litigation;
 use Carbon\Carbon;
 use Closure;
@@ -12,13 +11,6 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 class AddLitigationTaskRequest extends FormRequest
 {
-    protected function prepareForValidation()
-    {
-        // Add the 'modele' attribute to the request input
-        $this->merge([
-            'modele' => 'litigation',
-        ]);
-    }
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -44,17 +36,24 @@ class AddLitigationTaskRequest extends FormRequest
                 function (string $attribute, mixed $value, Closure $fail) {
                     $litigation = Litigation::find(request('model_id'));
                     // dd($litigation->current_task->completed_at, Carbon::parse($value));
-                    if ( Carbon::parse($value) < Carbon::parse($litigation->current_task->completed_at)) {
+                    if (Carbon::parse($value) < Carbon::parse($litigation->current_task->completed_at)) {
                         $fail("The {$attribute} is invalid.");
                     }
                 },
-            ]
+            ],
         ];
     }
-
 
     public function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json(['success' => false, 'message' => $validator->errors()->first(), 'errors' => $validator->errors()], 422));
+    }
+
+    protected function prepareForValidation()
+    {
+        // Add the 'modele' attribute to the request input
+        $this->merge([
+            'modele' => 'litigation',
+        ]);
     }
 }

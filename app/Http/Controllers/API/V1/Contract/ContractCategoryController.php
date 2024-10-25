@@ -11,10 +11,7 @@ use Illuminate\Validation\ValidationException;
 
 class ContractCategoryController extends Controller
 {
-
-    public function __construct(private ContractCategoryRepository $contractCategory) {
-
-    }
+    public function __construct(private ContractCategoryRepository $contractCategory) {}
 
     /**
      * Display a listing of the resource.
@@ -22,7 +19,8 @@ class ContractCategoryController extends Controller
     public function index()
     {
         $contractCategories = ContractCategory::all();
-        return api_response(true, "Liste des donnée de la catégorie", $contractCategories, 200);
+
+        return api_response(true, 'Liste des donnée de la catégorie', $contractCategories, 200);
     }
 
     /**
@@ -32,9 +30,10 @@ class ContractCategoryController extends Controller
     {
         try {
             $contractCategory = $this->contractCategory->store($request->validated());
+
             return api_response(true, "Succès de l'enregistrement de la catégorie", $contractCategory, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de l'enregistrement de la catégorie", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de l'enregistrement de la catégorie", $e->errors(), 422);
         }
     }
 
@@ -44,9 +43,9 @@ class ContractCategoryController extends Controller
     public function show(ContractCategory $contractCategory)
     {
         try {
-            return api_response(true, "Infos de la catégorie", $contractCategory, 200);
-        }catch( ValidationException $e ) {
-            return api_response(false, "Echec de la récupération des infos de la catégorie", $e->errors(), 422);
+            return api_response(true, 'Infos de la catégorie', $contractCategory, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la récupération des infos de la catégorie', $e->errors(), 422);
         }
     }
 
@@ -57,10 +56,11 @@ class ContractCategoryController extends Controller
     {
         try {
             $this->contractCategory->update($contractCategory, $request->all());
-            return api_response(true, "Mis à jour de la catégorie avec succès", $contractCategory, 200);
+
+            return api_response(true, 'Mis à jour de la catégorie avec succès', $contractCategory, 200);
         } catch (ValidationException $e) {
 
-            return api_response(false, "Echec de la mise à jour", $e->errors(), 422);
+            return api_response(false, 'Echec de la mise à jour', $e->errors(), 422);
         }
     }
 
@@ -71,9 +71,10 @@ class ContractCategoryController extends Controller
     {
         try {
             $contractCategory->delete();
-            return api_response(true, "Succès de la suppression de la catégorie", null, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de la supression de la catégorie", $e->errors(), 422);
+
+            return api_response(true, 'Succès de la suppression de la catégorie', null, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la supression de la catégorie', $e->errors(), 422);
         }
     }
 }

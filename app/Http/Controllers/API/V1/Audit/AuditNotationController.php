@@ -10,12 +10,11 @@ use App\Models\Audit\AuditNotation;
 use App\Repositories\Audit\AuditNotationRepository;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Throwable;
 
 class AuditNotationController extends Controller
 {
-    public function __construct(private AuditNotationRepository $audit_notation) {
-
-    }
+    public function __construct(private AuditNotationRepository $audit_notation) {}
 
     /**
      * Display a listing of the resource.
@@ -23,13 +22,14 @@ class AuditNotationController extends Controller
     public function index(Request $request)
     {
         $audit_notations = AuditNotation::whereNull('parent_id')
-        ->when($request->module !== null, function($query) use ($request) {
-            $query->where('module', $request->module);
-        })
-        ->get()->map(function ($audit_notation) {
-            return $this->audit_notation->auditNotationRessource($audit_notation);
-        });
-        return api_response(true, "Liste des audits", $audit_notations, 200);
+            ->when($request->module !== null, function ($query) use ($request) {
+                $query->where('module', $request->module);
+            })
+            ->get()->map(function ($audit_notation) {
+                return $this->audit_notation->auditNotationRessource($audit_notation);
+            });
+
+        return api_response(true, 'Liste des audits', $audit_notations, 200);
     }
 
     /**
@@ -40,9 +40,10 @@ class AuditNotationController extends Controller
         try {
             $audit_notation = $this->audit_notation->store($request->all());
             $audit_notation = $this->audit_notation->auditNotationRessource($audit_notation);
+
             return api_response(true, "Succès de l'enregistrement de l'audit", $audit_notation, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de l'enregistrement de l'audit", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de l'enregistrement de l'audit", $e->errors(), 422);
         }
     }
 
@@ -53,8 +54,9 @@ class AuditNotationController extends Controller
     {
         try {
             $data = $this->audit_notation->auditNotationRessource($audit_notation);
+
             return api_response(true, "Infos de l'audit", $data, 200);
-        }catch( ValidationException $e ) {
+        } catch (ValidationException $e) {
             return api_response(false, "Echec de la récupération des infos de l'audit", $e->errors(), 422);
         }
     }
@@ -69,8 +71,8 @@ class AuditNotationController extends Controller
             $audit_notation = $this->audit_notation->auditNotationRessource($audit_notation);
 
             return api_response(true, "Succès de la mise à jour de l'audit", $audit_notation, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de la mise à jour de l'audit", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de la mise à jour de l'audit", $e->errors(), 422);
         }
     }
 
@@ -81,9 +83,10 @@ class AuditNotationController extends Controller
     {
         try {
             $this->audit_notation->delete($audit_notation);
-            return api_response(true, "Audit supprimé avec succès", $audit_notation, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de la suppression", $e->errors(), 422);
+
+            return api_response(true, 'Audit supprimé avec succès', $audit_notation, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la suppression', $e->errors(), 422);
         }
     }
 
@@ -94,16 +97,18 @@ class AuditNotationController extends Controller
 
             return api_response(true, "Transfert de l'audit avec succès", $audit_notation, 200);
         } catch (ValidationException $e) {
-            return api_response(false, "Echec de la création du transfert", $e->errors(), 422);
+            return api_response(false, 'Echec de la création du transfert', $e->errors(), 422);
         }
     }
 
-    public function generatePdfFicheSuivi(GeneratePdfAuditNotationRequest $request) {
+    public function generatePdfFicheSuivi(GeneratePdfAuditNotationRequest $request)
+    {
         try {
 
             $data = $this->audit_notation->generatePdf($request);
+
             return $data;
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }

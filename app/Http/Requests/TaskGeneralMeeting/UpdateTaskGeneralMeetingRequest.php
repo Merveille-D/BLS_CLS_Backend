@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests\TaskGeneralMeeting;
 
-use App\Models\Gourvernance\GeneralMeeting\TaskGeneralMeeting;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
 class UpdateTaskGeneralMeetingRequest extends FormRequest
 {
@@ -35,9 +33,10 @@ class UpdateTaskGeneralMeetingRequest extends FormRequest
             'forward_title' => ['string', 'required_with_all:deadline_transfer,description,collaborators'],
             'deadline_transfer' => ['date', 'required_with_all:forward_title,description,collaborators'],
             'description' => ['string', 'required_with_all:forward_title,deadline_transfer,collaborators'],
-            'collaborators' => ['required_with_all:forward_title,deadline_transfer,description','array'],
-            'collaborators.*' => ['required_with_all:forward_title,deadline_transfer,description','uuid'],
+            'collaborators' => ['required_with_all:forward_title,deadline_transfer,description', 'array'],
+            'collaborators.*' => ['required_with_all:forward_title,deadline_transfer,description', 'uuid'],
         ];
+
         return $rules;
     }
 
@@ -46,7 +45,7 @@ class UpdateTaskGeneralMeetingRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories\Shareholder;
 
 use App\Concerns\Traits\PDF\GeneratePdfTrait;
@@ -12,23 +13,22 @@ use Illuminate\Support\Str;
 class ShareholderRepository
 {
     use GeneratePdfTrait;
-    public function __construct(private Shareholder $shareholder) {
 
-    }
+    public function __construct(private Shareholder $shareholder) {}
 
     /**
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return Shareholder
      */
-    public function store($request) {
+    public function store($request)
+    {
 
         $request['actions_number'] = $request['actions_encumbered'] + $request['actions_no_encumbered'];
 
         $capital = Capital::get()->last();
 
-        if($capital) {
-            $total_actions = $capital->amount / $capital->par_value ;
+        if ($capital) {
+            $total_actions = $capital->amount / $capital->par_value;
             $percentage = ($request['actions_number'] / $total_actions) * 100;
         }
 
@@ -43,33 +43,35 @@ class ShareholderRepository
     }
 
     /**
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return Shareholder
      */
-    public function update(Shareholder $shareholder, $request) {
+    public function update(Shareholder $shareholder, $request)
+    {
 
         $request['actions_number'] = $request['actions_encumbered'] + $request['actions_no_encumbered'];
 
         $capital = Capital::get()->last();
 
-        if($capital) {
-            $total_actions = $capital->amount / $capital->par_value ;
+        if ($capital) {
+            $total_actions = $capital->amount / $capital->par_value;
             $percentage = ($request['actions_number'] / $total_actions) * 100;
         }
 
         $request['percentage'] = $percentage ?? null;
 
         $shareholder->update($request);
+
         return $shareholder;
     }
 
-    public function updateBankInfo() {
+    public function updateBankInfo()
+    {
 
         $bank_info = BankInfo::get()->first();
-        if($bank_info) {
+        if ($bank_info) {
             $bank_info->update([
-                'total_shareholders' => Shareholder::count()
+                'total_shareholders' => Shareholder::count(),
             ]);
         }
     }
@@ -78,13 +80,13 @@ class ShareholderRepository
     {
         $shareholder = Shareholder::find($request['shareholder_id']);
 
-        $filename = Str::slug('Certificat actions'). '_'.date('YmdHis') . '.pdf';
+        $filename = Str::slug('Certificat actions') . '_' . date('YmdHis') . '.pdf';
         $logo = generateBase64Image('afrikskills-logo.webp') ?? generateBase64Image('bls-logo.png');
         $pdf = Pdf::loadView('pdf.certificat.certificat', [
             'shareholder' => $shareholder,
-            'logo' => $logo
+            'logo' => $logo,
         ])->setPaper('A4', 'landscape');
-        return $pdf->stream($filename,);
-    }
 
+        return $pdf->stream($filename);
+    }
 }

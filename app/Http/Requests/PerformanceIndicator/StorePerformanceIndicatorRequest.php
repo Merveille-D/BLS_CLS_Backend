@@ -27,8 +27,8 @@ class StorePerformanceIndicatorRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string'],
-            'position_id' => ['required','uuid'],
-            'type' => ['required',  Rule::in(PerformanceIndicator::TYPES) ],
+            'position_id' => ['required', 'uuid'],
+            'type' => ['required',  Rule::in(PerformanceIndicator::TYPES)],
             'note' => ['required', 'numeric'],
             'description' => ['required', 'string'],
         ];
@@ -39,7 +39,7 @@ class StorePerformanceIndicatorRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

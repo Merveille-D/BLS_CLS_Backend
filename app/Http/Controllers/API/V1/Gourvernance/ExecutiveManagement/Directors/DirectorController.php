@@ -9,14 +9,13 @@ use App\Http\Requests\Director\RenewMandateDirectorRequest;
 use App\Http\Requests\Director\UpdateDirectorRequest;
 use App\Models\Gourvernance\ExecutiveManagement\Directors\Director;
 use App\Repositories\ManagementCommittee\DirectorRepository;
-use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Throwable;
 
 class DirectorController extends Controller
 {
-    public function __construct(private DirectorRepository $director) {
+    public function __construct(private DirectorRepository $director) {}
 
-    }
     /**
      * Display a listing of the resource.
      */
@@ -24,6 +23,7 @@ class DirectorController extends Controller
     {
         $directors = Director::get()->map(function ($director) {
             $director->mandates = $director->mandates;
+
             return $director;
         });
 
@@ -52,9 +52,9 @@ class DirectorController extends Controller
             $data = $director->toArray();
             $data['mandates'] = $director->mandates;
 
-            return api_response(true, "Infos du directeur", $data, 200);
-        }catch( ValidationException $e ) {
-            return api_response(false, "Echec de la récupération des infos du directeur", $e->errors(), 422);
+            return api_response(true, 'Infos du directeur', $data, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la récupération des infos du directeur', $e->errors(), 422);
         }
     }
 
@@ -69,10 +69,10 @@ class DirectorController extends Controller
             $data = $director->toArray();
             $data['mandates'] = $director->mandates;
 
-            return api_response(true, "Mis à jour du directeur avec succès", $data, 200);
+            return api_response(true, 'Mis à jour du directeur avec succès', $data, 200);
         } catch (ValidationException $e) {
 
-            return api_response(false, "Echec de la mise à jour", $e->errors(), 422);
+            return api_response(false, 'Echec de la mise à jour', $e->errors(), 422);
         }
     }
 
@@ -83,9 +83,10 @@ class DirectorController extends Controller
     {
         try {
             $director->delete();
-            return api_response(true, "Succès de la suppression du directeur", null, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de la supression du directeur", $e->errors(), 422);
+
+            return api_response(true, 'Succès de la suppression du directeur', null, 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec de la supression du directeur', $e->errors(), 422);
         }
     }
 
@@ -94,9 +95,9 @@ class DirectorController extends Controller
         try {
             $committee = $this->director->toggle($director, $request->validated());
 
-            return api_response(true, "Succès du toggle du cadre", 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec du toggle du cadre", $e->errors(), 422);
+            return api_response(true, 'Succès du toggle du cadre', 200);
+        } catch (ValidationException $e) {
+            return api_response(false, 'Echec du toggle du cadre', $e->errors(), 422);
         }
     }
 
@@ -104,18 +105,21 @@ class DirectorController extends Controller
     {
         try {
             $director = $this->director->renewMandate($request->all());
-            return api_response(true, "Renouvellement du mandat avec succès", $director, 200);
+
+            return api_response(true, 'Renouvellement du mandat avec succès', $director, 200);
         } catch (ValidationException $e) {
 
-            return api_response(false, "Echec de la mise à jour", $e->errors(), 422);
+            return api_response(false, 'Echec de la mise à jour', $e->errors(), 422);
         }
     }
 
-    public function generatePdf() {
+    public function generatePdf()
+    {
         try {
             $data = $this->director->generatePdf();
+
             return $data;
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return api_error($success = false, 'Une erreur s\'est produite lors de l\'opération', ['server' => $th->getMessage()]);
         }
     }

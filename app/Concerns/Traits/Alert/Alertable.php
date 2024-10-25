@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Concerns\Traits\Alert;
 
 use App\Models\Alert\Alert;

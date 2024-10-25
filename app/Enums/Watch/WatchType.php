@@ -2,7 +2,7 @@
 
 namespace App\Enums\Watch;
 
-enum WatchType : string
+enum WatchType: string
 {
     const LEGISLATION = 'legislation';
     const REGULATION = 'regulation';

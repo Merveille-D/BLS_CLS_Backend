@@ -10,11 +10,22 @@ use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 #[ScopedBy([CountryScope::class])]
 #[ObservedBy([ShareholderObserver::class])]
 class Shareholder extends Model
 {
     use HasFactory, HasUuids;
+
+    const TYPES = [
+        'individual',
+        'corporate',
+    ];
+
+    const CORPORATE_TYPES = [
+        'company',
+        'institution',
+    ];
 
     protected $fillable = [
         'name',
@@ -29,17 +40,8 @@ class Shareholder extends Model
         'created_by',
     ];
 
-    const TYPES = [
-        'individual',
-        'corporate',
-    ];
-
-    const CORPORATE_TYPES = [
-        'company',
-        'institution',
-    ];
-
-    public function creator() {
+    public function creator()
+    {
         return $this->belongsTo(User::class, 'created_by');
     }
 }

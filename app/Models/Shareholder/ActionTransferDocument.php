@@ -13,6 +13,6 @@ class ActionTransferDocument extends Model
     protected $fillable = [
         'name',
         'file',
-        'uploadable'
+        'uploadable',
     ];
 }

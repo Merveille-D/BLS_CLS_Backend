@@ -12,9 +12,7 @@ use Illuminate\Validation\ValidationException;
 
 class AuditPerformanceIndicatorController extends Controller
 {
-    public function __construct(private AuditPerformanceIndicatorRepository $auditPerformanceIndicator) {
-
-    }
+    public function __construct(private AuditPerformanceIndicatorRepository $auditPerformanceIndicator) {}
 
     /**
      * Display a listing of the resource.
@@ -22,7 +20,8 @@ class AuditPerformanceIndicatorController extends Controller
     public function index(ListAuditPerformanceIndicatorRequest $request)
     {
         $audit_performance_indicators = AuditPerformanceIndicator::where('module', request('module'))->get();
-        return api_response(true, "Liste des indicateurs de performance", $audit_performance_indicators, 200);
+
+        return api_response(true, 'Liste des indicateurs de performance', $audit_performance_indicators, 200);
     }
 
     /**
@@ -32,9 +31,10 @@ class AuditPerformanceIndicatorController extends Controller
     {
         try {
             $auditPerformanceIndicator = $this->auditPerformanceIndicator->store($request->all());
+
             return api_response(true, "Succès de l'enregistrement de l'indicateur de performance", $auditPerformanceIndicator, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de l'enregistrement de l'indicateur de performance", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de l'enregistrement de l'indicateur de performance", $e->errors(), 422);
         }
     }
 
@@ -45,7 +45,7 @@ class AuditPerformanceIndicatorController extends Controller
     {
         try {
             return api_response(true, "Infos de l'indicateur de performance", $auditPerformanceIndicator, 200);
-        }catch( ValidationException $e ) {
+        } catch (ValidationException $e) {
             return api_response(false, "Echec de la récupération des infos de l'indicateur de performance", $e->errors(), 422);
         }
     }
@@ -57,10 +57,11 @@ class AuditPerformanceIndicatorController extends Controller
     {
         try {
             $this->auditPerformanceIndicator->update($auditPerformanceIndicator, $request->all());
+
             return api_response(true, "Mis à jour de l'indicateur de performance", $auditPerformanceIndicator, 200);
         } catch (ValidationException $e) {
 
-            return api_response(false, "Echec de la mise à jour", $e->errors(), 422);
+            return api_response(false, 'Echec de la mise à jour', $e->errors(), 422);
         }
     }
 
@@ -71,9 +72,10 @@ class AuditPerformanceIndicatorController extends Controller
     {
         try {
             $auditPerformanceIndicator->delete();
+
             return api_response(true, "Succès de la suppression de l'indicateur de performance", null, 200);
-        }catch (ValidationException $e) {
-                return api_response(false, "Echec de la supression de l'indicateur de performance", $e->errors(), 422);
+        } catch (ValidationException $e) {
+            return api_response(false, "Echec de la supression de l'indicateur de performance", $e->errors(), 422);
         }
     }
 }

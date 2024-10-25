@@ -48,7 +48,6 @@ return [
     'Did the debtor object?' => 'Did the debtor object?',
     'Allocation of the claim/sum seized on the account' => 'Allocation of the claim/sum seized on the account',
 
-
     //personnal securities
     'Drafting of Guarantee Contract' => 'Drafting of Guarantee Contract',
     'Bonding Contract Drafting' => 'Bonding Contract Drafting',
@@ -99,7 +98,6 @@ return [
     'Credit disbursement under conditions' => 'Credit disbursement under conditions',
     'Receipt of the registration certificate' => 'Receipt of the registration certificate',
 
-
     'Is the registration approved?' => 'Is the registration approved?',
     'Registration date' => 'Registration date',
     'Proof of registration' => 'Proof of registration',
@@ -112,8 +110,6 @@ return [
     'Date of publication' => 'Date of publication',
     'Sale amount' => 'Sale amount',
     'Insert sale PV' => 'Insert sale PV',
-
-
 
     //form
     'Documents' => 'Documents',
@@ -157,6 +153,6 @@ return [
     'Publication documents' => 'Publication documents',
     'Signed minute documents' => 'Signed minute documents',
     'Appeal documents' => 'Appeal documents',
-    'Documents (TF, ID client, IFU client, credit convention)' => 'Documents (TF, ID client, IFU client, credit convention)'
+    'Documents (TF, ID client, IFU client, credit convention)' => 'Documents (TF, ID client, IFU client, credit convention)',
 
 ];
