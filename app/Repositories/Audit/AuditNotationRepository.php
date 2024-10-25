@@ -113,7 +113,7 @@ class AuditNotationRepository
     {
 
         $audit_notation = $this->audit_notation->find($request['audit_notation_id']);
-        $transfer = $this->add_transfer($audit_notation, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
+        $transfer = $this->addTransfer($audit_notation, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
 
         // Add new notation for transfer
         $request['module_id'] = $audit_notation->module_id;

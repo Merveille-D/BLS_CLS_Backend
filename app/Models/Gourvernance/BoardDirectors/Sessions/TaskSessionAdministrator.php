@@ -89,14 +89,14 @@ class TaskSessionAdministrator extends Model
         'created_by',
     ];
 
-    public function session_administrator()
+    public function sessionAdministrator()
     {
         return $this->belongsTo(SessionAdministrator::class);
     }
 
     public function getFolderAttribute()
     {
-        return $this->session_administrator->code;
+        return $this->sessionAdministrator->code;
     }
 
     public function getValidationAttribute()
@@ -104,13 +104,13 @@ class TaskSessionAdministrator extends Model
 
         return [
             'method' => 'PUT',
-            'action' => env('APP_URL') . '/api/task_session_administrators/' . $this->id,
+            'action' => config('app.url') . '/api/task_session_administrators/' . $this->id,
         ];
     }
 
     public function getModuleIdAttribute(): ?string
     {
-        return $this->session_administrator?->id;
+        return $this->sessionAdministrator?->id;
     }
 
     public function creator()

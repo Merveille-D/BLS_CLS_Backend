@@ -19,7 +19,7 @@ class GuaranteeTaskObserver implements ShouldHandleEventsAfterCommit
     {
         // if ($guaranteeTask->code == 'created') {
         //     dd($guaranteeTask->taskable?->next_task?->title);
-        //     $this->new_alert($guaranteeTask, 'RAPPEL | '. $guaranteeTask->taskable?->next_task?->title ?? 'Tâche', $data['message'] ?? 'TEST', $guaranteeTask->taskable?->security ?? 'guarantee', Carbon::now()->addDays(3), Alert::STATUS[2] ?? 'urgent');
+        //     $this->newAlert($guaranteeTask, 'RAPPEL | '. $guaranteeTask->taskable?->next_task?->title ?? 'Tâche', $data['message'] ?? 'TEST', $guaranteeTask->taskable?->security ?? 'guarantee', Carbon::now()->addDays(3), Alert::STATUS[2] ?? 'urgent');
         // }
     }
 
@@ -33,7 +33,7 @@ class GuaranteeTaskObserver implements ShouldHandleEventsAfterCommit
             // $dates = $this->getMilestoneDates(Carbon::parse($max_deadline));
 
             // foreach ($dates as $key => $date) {
-            $this->new_alert(
+            $this->newAlert(
                 $guaranteeTask,
                 'RAPPEL | ' . $guaranteeTask->taskable?->name ?? '',
                 __('security.' . $guaranteeTask->taskable?->next_task?->title ?? ''),

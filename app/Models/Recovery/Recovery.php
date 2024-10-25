@@ -90,7 +90,7 @@ class Recovery extends Model
 
             return [
                 'method' => 'POST',
-                'action' => env('APP_URL') . '/api/recovery/update/' . $this->id,
+                'action' => config('app.url') . '/api/recovery/update/' . $this->id,
                 'form' => $form,
             ];
         }

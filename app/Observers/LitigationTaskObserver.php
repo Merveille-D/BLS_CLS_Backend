@@ -29,7 +29,7 @@ class LitigationTaskObserver
             // $dates = $this->getMilestoneDates(Carbon::parse($max_deadline));
 
             // foreach ($dates as $key => $date) {
-            $this->new_alert(
+            $this->newAlert(
                 $litigationTask,
                 'RAPPEL | ' . $litigationTask->taskable?->name ?? '',
                 __('litigation.' . $litigationTask->taskable?->next_task?->title ?? ''),

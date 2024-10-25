@@ -121,7 +121,7 @@ class ConvHypothec extends Model
 
         return [
             'method' => 'POST',
-            'action' => env('APP_URL') . '/api/conventionnal_hypothec/update/' . $this->id,
+            'action' => config('app.url') . '/api/conventionnal_hypothec/update/' . $this->id,
             'form' => $form,
         ];
     }

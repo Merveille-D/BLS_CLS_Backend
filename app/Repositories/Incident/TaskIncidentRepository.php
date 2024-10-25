@@ -60,7 +60,7 @@ class TaskIncidentRepository
             $this->createNextTasks($taskIncident);
         } else {
             if (isset($request['forward_title'])) {
-                $this->add_transfer($taskIncident, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
+                $this->addTransfer($taskIncident, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
             }
         }
 

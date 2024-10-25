@@ -96,7 +96,7 @@ class NotationRepository
     {
 
         $notation = $this->notation->find($request['notation_id']);
-        $transfer = $this->add_transfer($notation, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
+        $transfer = $this->addTransfer($notation, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
 
         // Add new notation for transfer
         $request['collaborator_id'] = $notation->collaborator_id;

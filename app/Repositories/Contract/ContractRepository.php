@@ -122,7 +122,7 @@ class ContractRepository
             $last_transfer = $contract->transfers()->orderby('created_at', 'desc')->first();
             if ($last_transfer->sender_id === Auth::user()->id) {
                 if (($last_transfer->status == true) && isset($request['forward_title'])) {
-                    $this->add_transfer($contract, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
+                    $this->addTransfer($contract, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
                 }
             }
         }

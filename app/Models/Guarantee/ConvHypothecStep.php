@@ -20,7 +20,7 @@ class ConvHypothecStep extends Model
         return $this->hasMany(ConvHypothecStep::class, 'stepable_id');
     }
 
-    public function conv_hypothecs()
+    public function convHypothecs()
     {
         return $this->belongsToMany(ConvHypothec::class, 'hypothec_step', 'step_id', 'hypothec_id');
     }
@@ -45,7 +45,7 @@ class ConvHypothecStep extends Model
 
     public function getDatebyStatus($state)
     {
-        $hypo = $this->conv_hypothecs()
+        $hypo = $this->convHypothecs()
             ->whereHypothecId($this->pivot->hypothec_id)
             ->whereStepId($this->pivot->step_id)
             ->first();

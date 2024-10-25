@@ -78,14 +78,14 @@ class TaskManagementCommittee extends Model
         'created_by',
     ];
 
-    public function management_committee()
+    public function managementCommittee()
     {
         return $this->belongsTo(ManagementCommittee::class);
     }
 
     public function getFolderAttribute()
     {
-        return $this->management_committee->code;
+        return $this->managementCommittee->code;
     }
 
     public function getValidationAttribute()
@@ -93,13 +93,13 @@ class TaskManagementCommittee extends Model
 
         return [
             'method' => 'PUT',
-            'action' => env('APP_URL') . '/api/task_management_committees/' . $this->id,
+            'action' => config('app.url') . '/api/task_management_committees/' . $this->id,
         ];
     }
 
     public function getModuleIdAttribute(): ?string
     {
-        return $this->management_committee?->id;
+        return $this->managementCommittee?->id;
     }
 
     public function creator()

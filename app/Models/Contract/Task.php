@@ -57,7 +57,7 @@ class Task extends Model
 
         return [
             'method' => 'PUT',
-            'action' => env('APP_URL') . '/api/tasks/' . $this->id,
+            'action' => config('app.url') . '/api/tasks/' . $this->id,
         ];
     }
 

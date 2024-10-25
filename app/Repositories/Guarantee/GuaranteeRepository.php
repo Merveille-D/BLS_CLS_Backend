@@ -261,10 +261,10 @@ class GuaranteeRepository
 
         $last_transfer = $guarantee->transfers()->orderby('created_at', 'desc')->first();
         if (blank($last_transfer)) {
-            $this->add_transfer($guarantee, $data['forward_title'], $data['deadline_transfer'], $data['description'], $data['collaborators']);
+            $this->addTransfer($guarantee, $data['forward_title'], $data['deadline_transfer'], $data['description'], $data['collaborators']);
         } elseif ($last_transfer?->sender_id === auth()->id()) {
             if (($last_transfer->status == true) && isset($data['forward_title'])) {
-                $this->add_transfer($guarantee, $data['forward_title'], $data['deadline_transfer'], $data['description'], $data['collaborators']);
+                $this->addTransfer($guarantee, $data['forward_title'], $data['deadline_transfer'], $data['description'], $data['collaborators']);
             }
         }
 

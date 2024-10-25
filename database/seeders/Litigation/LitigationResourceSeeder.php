@@ -16,7 +16,7 @@ class LitigationResourceSeeder extends Seeder
      */
     public function run(): void
     {
-        $resources = $this->litigation_natures();
+        $resources = $this->litigationNatures();
         foreach ($resources as $resource) {
             $exist = LitigationSetting::where('name', $resource)->first();
             if (! $exist) {
@@ -24,7 +24,7 @@ class LitigationResourceSeeder extends Seeder
             }
         }
 
-        $jurisdictions = $this->litigation_jurisdictions();
+        $jurisdictions = $this->litigationJurisdictions();
         foreach ($jurisdictions as $jurisdiction) {
             $exist = LitigationSetting::where('name', $jurisdiction)->first();
             if (! $exist) {
@@ -32,7 +32,7 @@ class LitigationResourceSeeder extends Seeder
             }
         }
 
-        $party_types = $this->litigation_party_types();
+        $party_types = $this->litigationPartyTypes();
         foreach ($party_types as $party_type) {
             $exist = LitigationSetting::where('name', $party_type)->first();
             if (! $exist) {
@@ -48,7 +48,7 @@ class LitigationResourceSeeder extends Seeder
             }
         }
 
-        $documents = $this->litigation_documents();
+        $documents = $this->litigationDocuments();
         foreach ($documents as $document) {
             $exist = LitigationSetting::where('name', $document)->first();
             if (! $exist) {
@@ -112,7 +112,7 @@ class LitigationResourceSeeder extends Seeder
     /**
      * nature default seeds
      */
-    public function litigation_natures(): array
+    public function litigationNatures(): array
     {
         return [
             'Administrative',
@@ -139,7 +139,7 @@ class LitigationResourceSeeder extends Seeder
     /**
      * party type default seeds
      */
-    public function litigation_party_types(): array
+    public function litigationPartyTypes(): array
     {
         return [
             'client',
@@ -152,7 +152,7 @@ class LitigationResourceSeeder extends Seeder
     /**
      * jurisdictions default seeds
      */
-    public function litigation_jurisdictions(): array
+    public function litigationJurisdictions(): array
     {
         return [
             'Court of Appeal',
@@ -168,7 +168,7 @@ class LitigationResourceSeeder extends Seeder
     }
 
     // documents categories
-    public function litigation_documents(): array
+    public function litigationDocuments(): array
     {
         return [
             'Summons to appear',

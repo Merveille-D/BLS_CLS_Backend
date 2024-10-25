@@ -20,7 +20,7 @@ class TransferObserver implements ShouldHandleEventsAfterCommit
         // $dates = $this->getMilestoneDates($transfer->deadline);
 
         // foreach ($dates as $key => $date) {
-        $this->new_alert(
+        $this->newAlert(
             $transfer, $transfer->title,
             $transfer->description,
             'transfer',

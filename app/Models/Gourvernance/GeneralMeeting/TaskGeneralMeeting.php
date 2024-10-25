@@ -121,14 +121,14 @@ class TaskGeneralMeeting extends Model
         'created_by',
     ];
 
-    public function general_meeting()
+    public function generalMeeting()
     {
         return $this->belongsTo(GeneralMeeting::class);
     }
 
     public function getFolderAttribute()
     {
-        return $this->general_meeting->libelle;
+        return $this->generalMeeting->libelle;
     }
 
     public function getValidationAttribute()
@@ -136,13 +136,13 @@ class TaskGeneralMeeting extends Model
 
         return [
             'method' => 'PUT',
-            'action' => env('APP_URL') . '/api/task_general_meetings/' . $this->id,
+            'action' => config('app.url') . '/api/task_general_meetings/' . $this->id,
         ];
     }
 
     public function getModuleIdAttribute(): ?string
     {
-        return $this->general_meeting?->id;
+        return $this->generalMeeting?->id;
     }
 
     public function creator()

@@ -63,7 +63,7 @@ class TaskSessionAdministratorRepository
         $taskSessionAdministrator->update($request);
 
         if (isset($request['forward_title'])) {
-            $this->add_transfer($taskSessionAdministrator, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
+            $this->addTransfer($taskSessionAdministrator, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
         }
 
         return $taskSessionAdministrator;

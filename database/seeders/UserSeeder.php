@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
         //create permissions
         $role = Role::firstOrCreate(['name' => 'super_admin', 'guard_name' => 'web']);
 
-        foreach ($this->users_list() as $user) {
+        foreach ($this->usersList() as $user) {
             $user = User::create($user);
             $user->assignRole($role);
 
@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
         }
     }
 
-    public function users_list()
+    public function usersList()
     {
         $country = Subsidiary::create(['name' => 'Ecobank du Togo', 'country' => 'Togo', 'address' => 'Lomé']);
 

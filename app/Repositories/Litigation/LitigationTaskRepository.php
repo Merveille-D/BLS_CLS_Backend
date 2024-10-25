@@ -71,7 +71,7 @@ class LitigationTaskRepository
     {
         $task = $this->task_model->findOrFail($task);
 
-        $this->add_transfer($task, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
+        $this->addTransfer($task, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
 
         return new LitigationTaskResource($task);
     }

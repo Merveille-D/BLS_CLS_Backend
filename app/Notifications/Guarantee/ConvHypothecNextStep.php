@@ -42,7 +42,7 @@ class ConvHypothecNextStep extends Notification implements ShouldQueue
         return (new MailMessage)
             ->subject($data['subject'])
             ->line($data['message'])
-            ->action('Accéder à l\'application', url(env('FRONTEND_URL') ?? '/'))
+            ->action('Accéder à l\'application', url(config('app.frontend_url') ?? '/'))
             ->line('merci d\'avoir choisir notre application!');
     }
 

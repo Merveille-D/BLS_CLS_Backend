@@ -33,7 +33,7 @@ class AuditPeriod extends Model
 
         return [
             'method' => 'PUT',
-            'action' => env('APP_URL') . '/api/audit_periods/' . $this->id,
+            'action' => config('app.url') . '/api/audit_periods/' . $this->id,
         ];
     }
 }

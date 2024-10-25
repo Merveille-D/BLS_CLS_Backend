@@ -54,7 +54,7 @@ class TaskActionTransferRepository
         }
 
         if (isset($request['forward_title'])) {
-            $this->add_transfer($taskActionTransfer, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
+            $this->addTransfer($taskActionTransfer, $request['forward_title'], $request['deadline_transfer'], $request['description'], $request['collaborators']);
         } else {
             $request['status'] = true;
             $request['completed_by'] = Auth::user()->id;

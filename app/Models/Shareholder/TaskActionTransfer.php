@@ -131,7 +131,7 @@ class TaskActionTransfer extends Model
 
         return [
             'method' => 'POST',
-            'action' => env('APP_URL') . '/api/complete_task_action_transfers?type=' . $this->code . '&task_action_transfer_id=' . $this->id,
+            'action' => config('app.url') . '/api/complete_task_action_transfers?type=' . $this->code . '&task_action_transfer_id=' . $this->id,
             'form' => $this->form,
         ];
     }

@@ -5,7 +5,7 @@ use Illuminate\Support\Str;
 if (! function_exists('format_file_path')) {
     function format_file_path($path)
     {
-        $url = env('APP_URL') . '/storage/' . $path;
+        $url = config('app.url') . '/storage/' . $path;
 
         return $url;
     }

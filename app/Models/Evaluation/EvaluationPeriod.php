@@ -33,7 +33,7 @@ class EvaluationPeriod extends Model
 
         return [
             'method' => 'PUT',
-            'action' => env('APP_URL') . '/api/evaluation_periods/' . $this->id,
+            'action' => config('app.url') . '/api/evaluation_periods/' . $this->id,
         ];
     }
 }

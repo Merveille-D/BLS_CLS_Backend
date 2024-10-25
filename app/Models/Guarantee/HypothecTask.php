@@ -88,7 +88,7 @@ class HypothecTask extends Model
 
         return [
             'method' => 'POST',
-            'action' => env('APP_URL') . '/api/conventionnal_hypothec/update/' . $this->taskable->id,
+            'action' => config('app.url') . '/api/conventionnal_hypothec/update/' . $this->taskable->id,
             'form' => $form,
         ];
     }
