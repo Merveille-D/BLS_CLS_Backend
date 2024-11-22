@@ -17,7 +17,7 @@ return new class extends Migration
             $table->enum('type', Representant::MEETING_TYPE);
 
             $table->uuid('created_by')->nullable();
-            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+            // $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
 
             $table->timestamps();
         });
